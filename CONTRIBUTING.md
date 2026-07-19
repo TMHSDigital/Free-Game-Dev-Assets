@@ -39,6 +39,7 @@ This repo catalogs **links and metadata** for free (preferably commercially usab
 - [ ] Attribution / share-alike / NC / ND flags recorded
 - [ ] Marketplace EULA checked if Unity/Fab/Unreal/itch
 - [ ] Supplier looks reputable (not an anonymous laundering risk — see [`docs/provenance.md`](docs/provenance.md))
+- [ ] Not on the [`docs/high-risk.md`](docs/high-risk.md) blocklist (MB-Lab, default Shadertoy, ND music, etc.)
 - [ ] Entry does not claim rights we don’t have
 
 ## Research notes

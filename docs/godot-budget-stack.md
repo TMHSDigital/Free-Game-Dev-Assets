@@ -9,8 +9,11 @@ Synthesized from local research on Godot 4 physics / destruction pipelines. Focu
 | Industrial / tech props | [Kenney](../catalog/3d/kenney.md) | Space Kit + Industrial Kit work well for server racks, pipes, consoles, flat-shaded looks |
 | Modular low-poly / characters | [Quaternius](../catalog/3d/quaternius.md), [KayKit](../catalog/3d/kaykit.md) | Prototyping and stylized kits |
 | PBR surfaces | [ambientCG](../catalog/3d/ambientcg.md) | Seamless materials |
+| HDRI / IBL | [Poly Haven](../catalog/environment/poly-haven.md) | CC0 calibrated environments |
+| Oceans / water | [Boujie Water](../catalog/shaders-vfx/boujie-water.md) | MIT Godot ocean shader |
 | Pro SFX (free annual dumps) | [Sonniss #GameAudioGDC](../catalog/audio/sonniss-gdc.md) | Commercial OK; no AI/ML training; no standalone resale |
 | Granular tech foley | [Freesound](../catalog/audio/freesound.md) | **Filter CC0 only** (fans, HDD whir, sparks, etc.) |
+| Music (with credit) | [Incompetech](../catalog/audio/incompetech.md) | CC-BY — avoid ND tracks elsewhere |
 
 Paid Sonniss impact packs can fill metal/glass destruction gaps on a small budget — they are **not** catalogued here as free.
 

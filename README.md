@@ -26,12 +26,14 @@ This repository **indexes and documents** sources. It does **not** rehost third-
 | Category | Focus | Index |
 | --- | --- | --- |
 | **3D** | Models, scans, PBR textures & materials | [`catalog/3d/`](catalog/3d/) |
+| **Environment** | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
 | **2D** | Sprites, UI/HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
-| **Audio** | SFX, music, foley libraries | [`catalog/audio/`](catalog/audio/) |
+| **Characters** | Generators & modular humanoids | [`catalog/characters/`](catalog/characters/) |
+| **Audio** | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Animation** | MoCap databases & character clips | [`catalog/animation/`](catalog/animation/) |
 | **Shaders & VFX** | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
 | **Fonts** | OFL and commercial-ok typefaces | [`catalog/fonts/`](catalog/fonts/) |
-| **Tools** | Editors, pipeline utilities, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
+| **Tools** | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 
 Master index: [`catalog/README.md`](catalog/README.md)
 
@@ -83,23 +85,28 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 | Rigged low-poly characters | Quaternius | [`catalog/3d/quaternius.md`](catalog/3d/quaternius.md) |
 | Atlas-optimized kits | KayKit | [`catalog/3d/kaykit.md`](catalog/3d/kaykit.md) |
 | Seamless PBR materials | ambientCG | [`catalog/3d/ambientcg.md`](catalog/3d/ambientcg.md) |
+| HDRIs / calibrated env | Poly Haven | [`catalog/environment/poly-haven.md`](catalog/environment/poly-haven.md) |
 | Hand-drawn 2D vectors | Glitch archive | [`catalog/2d/glitch-archive.md`](catalog/2d/glitch-archive.md) |
 | Input prompt icons | Xelu | [`catalog/2d/xelu-input-prompts.md`](catalog/2d/xelu-input-prompts.md) |
 | Pro SFX dumps | Sonniss #GameAudioGDC | [`catalog/audio/sonniss-gdc.md`](catalog/audio/sonniss-gdc.md) |
+| Attribution music | Incompetech | [`catalog/audio/incompetech.md`](catalog/audio/incompetech.md) |
 | Pixel / terminal font | Departure Mono | [`catalog/fonts/departure-mono.md`](catalog/fonts/departure-mono.md) |
+| Localization fonts | Noto Sans | [`catalog/fonts/noto-sans.md`](catalog/fonts/noto-sans.md)
 
 ---
 
 ## Licenses & provenance
 
-Read [`docs/licenses.md`](docs/licenses.md) and [`docs/provenance.md`](docs/provenance.md) before mixing packs into a commercial build. Short version:
+Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), and [`docs/ai-assets.md`](docs/ai-assets.md) before mixing packs into a commercial build. Short version:
 
 - **CC0** — safest default for closed-source games; attribution not required
 - **CC-BY** — commercial OK; keep credits
 - **CC-BY-SA** — commercial OK with caveats; prefer extractable asset bundles over encrypting SA files into the binary
+- **CC-*-ND** — generally **unusable in games** (interactive sync/remix = derivative)
 - **SIL OFL** — preferred for fonts embedded in games
-- **Marketplace “free”** (Unity / Fab / Unreal / many itch packs) — engine or pack EULA applies; do not rehost
-- **Trust the supplier** — anonymous “CC0” mega-dumps can be license-laundered rips; prefer known creators and keep a paper trail
+- **ODbL / OSM** — game binary usually OK as a Produced Work; credit OSM; watch redistributed geodata
+- **Marketplace “free”** (Unity / Fab / Unreal) — often commercial in-engine, no redistribution, sometimes engine-locked
+- **Trust the supplier** — skip anonymous mega-dumps and known traps (MB-Lab, default Shadertoy, Maps scrapes)
 
 Catalog metadata in *this* repo is CC0. Linked assets remain under their own licenses.
 
@@ -143,14 +150,13 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 ├── CONTRIBUTING.md        ← how to add / verify entries
 ├── LICENSE                ← CC0 for catalog metadata & docs
 ├── docs/
-│   ├── licenses.md        ← license cheat sheet
-│   ├── provenance.md      ← license-laundering / paper trail
+│   ├── licenses.md / provenance.md / high-risk.md / ai-assets.md
 │   └── godot-budget-stack.md
 └── catalog/
-    ├── TEMPLATE.md        ← copy this for new entries
-    ├── 3d/  2d/  audio/  animation/
-    ├── shaders-vfx/  fonts/  tools/
-    └── README.md          ← master index
+    ├── TEMPLATE.md
+    ├── 3d/ environment/ 2d/ characters/
+    ├── audio/ animation/ shaders-vfx/ fonts/ tools/
+    └── README.md
 ```
 
 ---

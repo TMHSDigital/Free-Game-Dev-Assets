@@ -10,6 +10,22 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [ldtk](ldtk.md) | LDtk | MIT | active |
 | [pixelorama](pixelorama.md) | Pixelorama | MIT | active |
 | [material-maker](material-maker.md) | Material Maker | MIT | active |
+| [gaea](gaea.md) | Gaea Community Edition | custom | active (`commercial: false`) |
+
+## Pipeline
+
+| ID | Name | License | Status |
+| --- | --- | --- | --- |
+| [gltf-transform](gltf-transform.md) | glTF Transform | MIT | active |
+| [osm2world](osm2world.md) | OSM2World | LGPL-3.0* | needs-review |
+| [fmod-studio](fmod-studio.md) | FMOD Studio | custom | needs-review |
+
+## Speech / TTS (local, permissive)
+
+| ID | Name | License | Status |
+| --- | --- | --- | --- |
+| [kokoro-82m](kokoro-82m.md) | Kokoro-82M | Apache-2.0 | active |
+| [piper-plus](piper-plus.md) | Piper Plus | MIT* | needs-review |
 
 ## Godot 4 add-ons
 
@@ -22,4 +38,6 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [godot-mod-loader](godot-mod-loader.md) | Godot Mod Loader | MIT | active |
 | [godotsteam](godotsteam.md) | GodotSteam | custom | needs-review |
 
-See also: [`docs/godot-budget-stack.md`](../../docs/godot-budget-stack.md).
+See also: [`docs/godot-budget-stack.md`](../../docs/godot-budget-stack.md) · [`docs/ai-assets.md`](../../docs/ai-assets.md).
+
+\* Confirm on the live project page.

@@ -15,4 +15,4 @@ status: active
 
 # Xelu input prompts
 
-Complete keyboard/gamepad prompt icon sets under CC0. Standard pick for rebindable control hints.
+Complete keyboard/gamepad prompt icon sets under CC0 (Those Awesome Guys). Industry-standard coverage including modern pads / Deck-oriented prompts; SVG + raster. Still the default over fragmented itch icon packs.
