@@ -15,4 +15,10 @@ status: active
 
 # Sonniss #GameAudioGDC
 
-Annual professional SFX dumps (multi‑GB). Royalty-free for games; standalone resale and AI/ML training typically forbidden. Read [current license](https://sonniss.com/gdc-bundle-license/).
+Annual professional SFX dumps (multi‑GB). Royalty-free for games; typically **no attribution**. Standalone resale and **AI/ML training are prohibited** under the bundle terms.
+
+## Notes
+
+- Bundle hub: [sonniss.com/gameaudiogdc](https://sonniss.com/gameaudiogdc/) · seasonal portal often at [gdc.sonniss.com](https://gdc.sonniss.com/)
+- License: [gdc-bundle-license](https://sonniss.com/gdc-bundle-license/)
+- Sonniss also sells small paid impact packs (metal/glass/destruction) — useful, but not free; not catalogued as free entries here

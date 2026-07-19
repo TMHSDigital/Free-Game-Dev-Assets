@@ -6,7 +6,8 @@ This repo catalogs **links and metadata** for free (preferably commercially usab
 
 - Asset libraries, packs, and aggregators with a clear free tier
 - Tools useful for creating or processing game assets
-- Engines/plugins only when they ship substantial free asset libraries
+- Free engine add-ons / plugins that materially help asset or production pipelines (e.g. Godot Asset Library tools)
+- Engines only when they ship substantial free asset libraries
 
 ## What does not
 
@@ -37,6 +38,7 @@ This repo catalogs **links and metadata** for free (preferably commercially usab
 - [ ] Commercial use explicitly allowed (or marked false)
 - [ ] Attribution / share-alike / NC / ND flags recorded
 - [ ] Marketplace EULA checked if Unity/Fab/Unreal/itch
+- [ ] Supplier looks reputable (not an anonymous laundering risk — see [`docs/provenance.md`](docs/provenance.md))
 - [ ] Entry does not claim rights we don’t have
 
 ## Research notes

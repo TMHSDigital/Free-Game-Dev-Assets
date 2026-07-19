@@ -12,7 +12,8 @@ This repository **indexes and documents** sources. It does **not** rehost third-
 - [Quick start](#quick-start)
 - [How entries work](#how-entries-work)
 - [Safe starting points](#safe-starting-points)
-- [Licenses](#licenses)
+- [Licenses & provenance](#licenses--provenance)
+- [Godot-oriented stack](#godot-oriented-stack)
 - [Scope](#scope)
 - [Contributing](#contributing)
 - [Repository layout](#repository-layout)
@@ -30,7 +31,7 @@ This repository **indexes and documents** sources. It does **not** rehost third-
 | **Animation** | MoCap databases & character clips | [`catalog/animation/`](catalog/animation/) |
 | **Shaders & VFX** | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
 | **Fonts** | OFL and commercial-ok typefaces | [`catalog/fonts/`](catalog/fonts/) |
-| **Tools** | Editors & asset pipeline utilities | [`catalog/tools/`](catalog/tools/) |
+| **Tools** | Editors, pipeline utilities, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 
 Master index: [`catalog/README.md`](catalog/README.md)
 
@@ -89,17 +90,24 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 
 ---
 
-## Licenses
+## Licenses & provenance
 
-Read [`docs/licenses.md`](docs/licenses.md) before mixing packs into a commercial build. Short version:
+Read [`docs/licenses.md`](docs/licenses.md) and [`docs/provenance.md`](docs/provenance.md) before mixing packs into a commercial build. Short version:
 
 - **CC0** — safest default for closed-source games; attribution not required
 - **CC-BY** — commercial OK; keep credits
 - **CC-BY-SA** — commercial OK with caveats; prefer extractable asset bundles over encrypting SA files into the binary
 - **SIL OFL** — preferred for fonts embedded in games
 - **Marketplace “free”** (Unity / Fab / Unreal / many itch packs) — engine or pack EULA applies; do not rehost
+- **Trust the supplier** — anonymous “CC0” mega-dumps can be license-laundered rips; prefer known creators and keep a paper trail
 
 Catalog metadata in *this* repo is CC0. Linked assets remain under their own licenses.
+
+## Godot-oriented stack
+
+Research-backed shortlist for Godot 4 projects (Kenney industrial/tech kits, Sonniss/Freesound audio, Phantom Camera, Input Helper, Dialogic, GodotSteam, Mod Loader, etc.):
+
+→ [`docs/godot-budget-stack.md`](docs/godot-budget-stack.md)
 
 ---
 
@@ -135,7 +143,9 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 ├── CONTRIBUTING.md        ← how to add / verify entries
 ├── LICENSE                ← CC0 for catalog metadata & docs
 ├── docs/
-│   └── licenses.md        ← license cheat sheet
+│   ├── licenses.md        ← license cheat sheet
+│   ├── provenance.md      ← license-laundering / paper trail
+│   └── godot-budget-stack.md
 └── catalog/
     ├── TEMPLATE.md        ← copy this for new entries
     ├── 3d/  2d/  audio/  animation/

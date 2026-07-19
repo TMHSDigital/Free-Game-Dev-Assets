@@ -27,9 +27,14 @@ Quick reference for assets you might list or use. **Always re-check the source p
 | **Unity / Fab / Unreal free assets** | Engine-specific | “Free” ≠ redistributable. Often locked to that engine’s EULA; do not rehost. Catalog as engine-store links only. |
 | **itch.io free packs** | Varies | Check each pack page. Many are CC0 or custom commercial-ok. |
 
+## Provenance (license laundering)
+
+A “CC0” badge on a random upload is not enough. Copyrighted content is sometimes re-uploaded to free directories under fake permissive labels. Prefer trusted suppliers, keep a paper trail, and see [`provenance.md`](provenance.md).
+
 ## Practical rules for this repo
 
 1. Prefer **CC0 / public domain / OFL / clearly commercial-ok custom** licenses.
-2. Mark **attribution required** and **share-alike** explicitly on every entry.
-3. Never treat “free download” as a license.
-4. When unsure, leave `commercial: unknown` and `status: needs-review` — do not guess.
+2. Prefer **reputable creators** over anonymous mega-dumps (see provenance guide).
+3. Mark **attribution required** and **share-alike** explicitly on every entry.
+4. Never treat “free download” as a license.
+5. When unsure, leave `commercial: unknown` and `status: needs-review` — do not guess.

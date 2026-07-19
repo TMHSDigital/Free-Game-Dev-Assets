@@ -10,6 +10,8 @@ One markdown file per source under a category folder. Copy [`TEMPLATE.md`](TEMPL
 | Animation | [`animation/`](animation/) | MoCap, character clips |
 | Shaders & VFX | [`shaders-vfx/`](shaders-vfx/) | Shaders, particle textures, FX |
 | Fonts | [`fonts/`](fonts/) | OFL / commercial-ok type |
-| Tools | [`tools/`](tools/) | Editors & asset pipeline tools |
+| Tools | [`tools/`](tools/) | Editors, pipeline tools, Godot add-ons |
+
+Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md)
 
 Status legend: `active` = license spot-checked · `needs-review` = useful but verify before shipping · `deprecated` = keep for history only.
