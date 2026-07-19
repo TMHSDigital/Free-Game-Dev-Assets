@@ -86,6 +86,8 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 | Atlas-optimized kits | KayKit | [`catalog/3d/kaykit.md`](catalog/3d/kaykit.md) |
 | Seamless PBR materials | ambientCG | [`catalog/3d/ambientcg.md`](catalog/3d/ambientcg.md) |
 | HDRIs / calibrated env | Poly Haven | [`catalog/environment/poly-haven.md`](catalog/environment/poly-haven.md) |
+| Extra PBR + SBSAR | TextureCan | [`catalog/3d/texturecan.md`](catalog/3d/texturecan.md) |
+| UI icons (brand-free) | Lucide | [`catalog/2d/lucide-icons.md`](catalog/2d/lucide-icons.md) |
 | Hand-drawn 2D vectors | Glitch archive | [`catalog/2d/glitch-archive.md`](catalog/2d/glitch-archive.md) |
 | Input prompt icons | Xelu | [`catalog/2d/xelu-input-prompts.md`](catalog/2d/xelu-input-prompts.md) |
 | Pro SFX dumps | Sonniss #GameAudioGDC | [`catalog/audio/sonniss-gdc.md`](catalog/audio/sonniss-gdc.md) |
@@ -97,7 +99,7 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 
 ## Licenses & provenance
 
-Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), and [`docs/ai-assets.md`](docs/ai-assets.md) before mixing packs into a commercial build. Short version:
+Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/ai-assets.md`](docs/ai-assets.md), and [`docs/trust-score.md`](docs/trust-score.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R04`). Short version:
 
 - **CC0** — safest default for closed-source games; attribution not required
 - **CC-BY** — commercial OK; keep credits
@@ -151,7 +153,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 ├── LICENSE                ← CC0 for catalog metadata & docs
 ├── docs/
 │   ├── licenses.md / provenance.md / high-risk.md / ai-assets.md
-│   └── godot-budget-stack.md
+│   ├── trust-score.md / research-index.md / godot-budget-stack.md
 └── catalog/
     ├── TEMPLATE.md
     ├── 3d/ environment/ 2d/ characters/

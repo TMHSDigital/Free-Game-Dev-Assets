@@ -44,4 +44,4 @@ This repo catalogs **links and metadata** for free (preferably commercially usab
 
 ## Research notes
 
-Local Gemini / deep-research drafts may live under `RESEARCH/` (gitignored). Promote durable findings into catalog entries and `docs/` — don’t rely on the draft as the public source of truth.
+Local Gemini / deep-research drafts live under `RESEARCH/` as `R0N-<topic>.md` (mostly gitignored; see [`docs/research-index.md`](docs/research-index.md)). Promote durable findings into catalog entries and `docs/` — don’t rely on drafts as the public source of truth.

@@ -1,5 +1,6 @@
 # Local research drafts (may contain bulky embeds)
-RESEARCH/
+RESEARCH/*
+!RESEARCH/README.md
 
 # Secrets / local env
 .env

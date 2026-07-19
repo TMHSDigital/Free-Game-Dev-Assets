@@ -14,6 +14,6 @@ One markdown file per source under a category folder. Copy [`TEMPLATE.md`](TEMPL
 | Fonts | [`fonts/`](fonts/) | OFL / commercial-ok type |
 | Tools | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
 
-Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md)
+Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/trust-score.md`](../docs/trust-score.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md) · [`docs/research-index.md`](../docs/research-index.md)
 
 Status legend: `active` = license spot-checked · `needs-review` = useful but verify before shipping · `deprecated` = keep for history only.

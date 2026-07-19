@@ -11,6 +11,7 @@ Synthesized from local research on Godot 4 physics / destruction pipelines. Focu
 | PBR surfaces | [ambientCG](../catalog/3d/ambientcg.md) | Seamless materials |
 | HDRI / IBL | [Poly Haven](../catalog/environment/poly-haven.md) | CC0 calibrated environments |
 | Oceans / water | [Boujie Water](../catalog/shaders-vfx/boujie-water.md) | MIT Godot ocean shader |
+| Foliage scatter | [ProtonScatter](../catalog/tools/proton-scatter.md) | MIT Godot 4 scatter |
 | Pro SFX (free annual dumps) | [Sonniss #GameAudioGDC](../catalog/audio/sonniss-gdc.md) | Commercial OK; no AI/ML training; no standalone resale |
 | Granular tech foley | [Freesound](../catalog/audio/freesound.md) | **Filter CC0 only** (fans, HDD whir, sparks, etc.) |
 | Music (with credit) | [Incompetech](../catalog/audio/incompetech.md) | CC-BY — avoid ND tracks elsewhere |

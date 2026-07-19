@@ -25,7 +25,8 @@ Quick reference for assets you might list or use. **Always re-check the source p
 | License | Commercial use | Notes |
 | --- | --- | --- |
 | **Sonniss #GameAudioGDC** | Yes | Royalty-free for games; typically no attribution. Standalone resale and AI/ML training usually prohibited — read current terms. |
-| **Unity / Fab / Unreal free assets** | Engine-specific | Commercial use in-engine often OK; **no standalone redistribution**; may be engine-locked. Catalog as outbound links only with `engine-restricted` notes. |
+| **Unity / Fab / Unreal free assets** | Engine-specific | Commercial use in-engine often OK; **no standalone redistribution**. On Fab, distinguish **Standard License** (research: multi-engine) vs **Epic Content License** (Unreal-locked). Always check the badge. |
+| **LPC / OGA-BY / CC-BY-SA sprites** | Copyleft art | Commercial OK with attribution + share-alike on **asset derivatives**; keep sheets external/extractable. |
 | **itch.io free packs** | Varies | Check each pack page. Many are CC0 or custom commercial-ok. |
 | **MakeHuman exports** | Special | App source may be AGPL; **official binary exports** are commonly under a **CC0 exception** — verify the current exception page before shipping. |
 | **MB-Lab exports** | AGPL risk | Treat generated meshes as **unsafe** for closed-source games — see [`high-risk.md`](high-risk.md). |

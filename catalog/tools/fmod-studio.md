@@ -15,4 +15,4 @@ status: needs-review
 
 # FMOD Studio
 
-Audio middleware. Research cites free commercial use under indie revenue/funding caps — **verify current FMOD licensing** before relying on “free.”
+Audio middleware. Round 3 research: indie tier often free under ~**$200k USD annual gross** with unlimited assets — **verify current FMOD licensing**. Compare [Wwise indie](wwise.md) (budget-cap model; DLC caveats).
