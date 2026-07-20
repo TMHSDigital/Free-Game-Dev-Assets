@@ -21,3 +21,12 @@ status: active
 
 - CC0 commercial embed OK; donation optional
 - Complements [kenney-rpg-audio](kenney-rpg-audio.md) / [kenney-impact-sounds](kenney-impact-sounds.md) for other genres
+
+## Evidence
+
+- Live pack page: License **Creative Commons CC0**.
+
+## Related
+
+- [kenney-rpg-audio](kenney-rpg-audio.md)
+- [kenney-impact-sounds](kenney-impact-sounds.md)
