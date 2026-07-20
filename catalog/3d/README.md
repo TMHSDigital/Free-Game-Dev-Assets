@@ -17,8 +17,8 @@
 | [texture-ninja](texture-ninja.md) | Texture Ninja | CC0 | yes | active |
 | [magicavoxel](magicavoxel.md) | MagicaVoxel | custom | yes | active |
 | [smithsonian-open-access](smithsonian-open-access.md) | Smithsonian Open Access | CC0 | yes | active |
-| [charge-materials](charge-materials.md) | Charge materials | CC-BY | yes | needs-review |
-| [fab-megascans-standard](fab-megascans-standard.md) | Fab/Quixel (Standard) | custom | yes* | needs-review |
+| [charge-materials](charge-materials.md) | Charge materials | CC-BY? | unknown | needs-review |
+| [fab-megascans-standard](fab-megascans-standard.md) | Fab/Quixel (Standard) | custom | unknown* | needs-review |
 | [poly-pizza](poly-pizza.md) | Poly Pizza | varies | unknown | needs-review |
 
-\* Fab Standard vs Epic Content License — verify per asset. Poly Haven models are catalogued under [`environment/poly-haven`](../environment/poly-haven.md) (CC0).
+\* Fab Standard vs Epic Content License — verify per asset; Fab/Epic license pages unreachable this harden pass. Poly Haven models are under [`environment/poly-haven`](../environment/poly-haven.md) (CC0).
