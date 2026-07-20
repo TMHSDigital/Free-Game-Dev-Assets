@@ -8,6 +8,8 @@ Sources that fail our commercial-safety bar. Keep out of `status: active` listin
 | **MB-Lab exports** | AGPL v3 can attach to generated meshes — unsafe for closed-source games. Prefer MakeHuman (CC0 export exception) or CharMorph. |
 | **Shadertoy (default)** | Default **CC BY-NC-SA 3.0** unless an author states otherwise. Do not port into commercial builds without explicit permission. |
 | **Bandai Namco mocap datasets** | CC-BY-NC — research/non-commercial only. |
+| **Ubisoft LaFAN1 / La Forge Animation Dataset** | CC-BY-NC-ND 4.0 — non-commercial, no derivatives; unusable for shipping games. |
+| **SFU Motion Capture Database** | Explicitly free for research only — “cannot be used for commercial products or resale.” |
 | **ElevenLabs / similar free TTS tiers** | Free tiers often **non-commercial**; commercial rights sit behind paid plans. Prefer local Apache/MIT TTS (Kokoro, Piper Plus). |
 | **Google Maps / Earth meshes** | Scraping via RenderDoc/plugins violates ToS — not public domain. |
 | **ColorADD symbols** | Proprietary accessibility coding system; needs a paid license. |

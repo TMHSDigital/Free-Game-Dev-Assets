@@ -30,5 +30,7 @@ status: active
 
 ## Related
 
+- [microsoft-movebox](../animation/microsoft-movebox.md) — Kinect→Rocketbox mocap tool
 - [mixamo](../animation/mixamo.md) — retarget clips onto humanoids
+- [quaternius-universal-animation-library](../animation/quaternius-universal-animation-library.md) — CC0 humanoid clips
 - [blender-human-base-meshes](blender-human-base-meshes.md) — topology-focused bases
