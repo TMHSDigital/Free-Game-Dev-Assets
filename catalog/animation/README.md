@@ -16,8 +16,9 @@
 | [creature-2d-runtimes](creature-2d-runtimes.md) | Creature 2D Runtimes | Apache-2.0 | yes | active |
 | [meta-animated-drawings](meta-animated-drawings.md) | Meta Animated Drawings | MIT | yes | active |
 | [microsoft-movebox](microsoft-movebox.md) | MoveBox (Rocketbox) | MIT | yes | active |
-| [rokoko-vision](rokoko-vision.md) | Rokoko Vision | custom | unknown | needs-review |
+| [rokoko-vision](rokoko-vision.md) | Rokoko Vision (Create) | custom | yes* | active |
 
-\* Standard License caps (~1M users / $1M revenue); AI training needs AI Permit.
+\* Standard License caps (~1M users / $1M revenue); AI training needs AI Permit.  
+\* Rokoko Vision: free Starter quotas; generated motion commercial per Create FAQ.
 
 Avoid **LaFAN1** (NC-ND) and **SFU MoCap** (research-only) — [`docs/high-risk.md`](../../docs/high-risk.md).

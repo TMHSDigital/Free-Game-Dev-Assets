@@ -1,34 +1,36 @@
 ---
 id: rokoko-vision
-name: Rokoko Vision
+name: Rokoko Vision (Create)
 url: https://www.rokoko.com/products/vision
 category: animation
 subcategories: [mocap, ai]
 license: custom
-commercial: unknown
-attribution_required: unknown
+commercial: true
+attribution_required: false
 formats: [FBX, BVH]
-tags: [freemium, video-to-fbx, ai]
+tags: [freemium, video-to-fbx, ai, text-to-motion]
 verified: 2026-07-19
-status: needs-review
+status: active
 ---
 
-# Rokoko Vision
+# Rokoko Vision (Create)
 
-Markerless video→skeleton (now under Rokoko Create). Marketing: free Starter with **~30 s Vision AI processing / month**, FBX export; paid tiers expand quotas. Product page reachable; **legal ToS URL 404 this run** — keep needs-review until commercial rights are confirmed on a live legal page.
+Markerless video→skeleton (Vision 3.0) inside **Rokoko Create**, plus text-to-motion. Free Starter: ~30 s Vision processing / month, FBX export; paid plans raise quotas. Generated clips are stated **commercial-OK**.
 
 ## Notes
 
-- Start: [create.rokoko.com](https://create.rokoko.com/)
-- Complements CMU / Quaternius for custom captured clips when ToS allows
-- Do not treat “Start for free” as proof of commercial redistribution rights
+- App: [create.rokoko.com](https://create.rokoko.com/) — edit/export via Rokoko Studio (HIK / Mixamo / UE skeletons)
+- Free tier is quota-limited; not a substitute for large mocap libraries ([cmu-mocap](cmu-mocap.md), [accad-mocap](accad-mocap.md), [mixamo](mixamo.md))
+- Site `/terms` is store ToS; commercial grant for generated motion is on Create FAQ — re-check if plans change
+- You still own/need rights to the **input video** you upload
 
 ## Evidence
 
-- Live Vision product page (2026-07-19): “Get 30 seconds of processing per month for free”; Starter $0 includes “Record & export mocap” / “Export to .FBX”
-- Live `rokoko.com/legal/terms`: **HTTP 404** this run — insufficient for `active`
+- Live Create FAQ: “Can I use the generated motion data commercially? Yes, all generated data with text-to-motion and with video-to-motion can be used commercially.”
+- Live Vision page: Starter $0 — “Record & export mocap”, “Export to .FBX”, “Vision AI video processing: 30s/month”.
 
 ## Related
 
 - [mixamo](mixamo.md)
+- [accad-mocap](accad-mocap.md)
 - [microsoft-movebox](microsoft-movebox.md)
