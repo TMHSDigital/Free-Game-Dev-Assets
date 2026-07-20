@@ -9,9 +9,9 @@
 | [kenney-impact-sounds](kenney-impact-sounds.md) | Kenney Impact Sounds | CC0 | yes | active |
 | [mixkit-sfx](mixkit-sfx.md) | Mixkit Sound Effects | custom | yes | active |
 | [bigsoundbank](bigsoundbank.md) | BigSoundBank | CC0 | yes | active |
+| [pixabay-audio](pixabay-audio.md) | Pixabay Audio | custom | yes | active |
+| [zapsplat](zapsplat.md) | Zapsplat | custom | yes† | active |
 | [freesound](freesound.md) | Freesound | varies | filter | needs-review |
-| [pixabay-audio](pixabay-audio.md) | Pixabay Audio | custom | yes* | needs-review |
-| [zapsplat](zapsplat.md) | Zapsplat | custom | yes* | needs-review |
 
 ## Impulse responses
 
@@ -31,4 +31,5 @@
 
 Avoid **ND**-licensed music in games — see [`docs/licenses.md`](../../docs/licenses.md) / [`docs/high-risk.md`](../../docs/high-risk.md).
 
-\* Confirm current terms / tier.
+\* Confirm current terms / tier.  
+† Basic (free) tier requires attribution; Premium does not.
