@@ -22,6 +22,8 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [basis-universal](basis-universal.md) | Basis Universal | Apache-2.0 | active |
 | [ktx-software](ktx-software.md) | KTX-Software | Apache-2.0 | active |
 | [meshoptimizer](meshoptimizer.md) | meshoptimizer | MIT | active |
+| [google-draco](google-draco.md) | Google Draco | Apache-2.0 | active |
+| [assimp](assimp.md) | assimp | BSD-3-Clause | active |
 | [free-tex-packer](free-tex-packer.md) | Free Tex Packer | MIT | active |
 | [osm2world](osm2world.md) | OSM2World | LGPL-3.0* | needs-review |
 
@@ -37,6 +39,8 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | ID | Name | License | Status |
 | --- | --- | --- | --- |
 | [ubisoft-chroma](ubisoft-chroma.md) | Ubisoft Chroma | Apache-2.0 | active |
+| [sim-daltonism](sim-daltonism.md) | Sim Daltonism | Apache-2.0 | active |
+| [daltonlens](daltonlens.md) | DaltonLens | BSD-2-Clause | active |
 | [color-oracle](color-oracle.md) | Color Oracle | MIT* | needs-review |
 | [polyglot-gamedev](polyglot-gamedev.md) | Polyglot Gamedev | CC0 | active |
 
@@ -45,6 +49,8 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | ID | Name | License | Status |
 | --- | --- | --- | --- |
 | [kokoro-82m](kokoro-82m.md) | Kokoro-82M | Apache-2.0 | active |
+| [sherpa-onnx](sherpa-onnx.md) | sherpa-onnx | Apache-2.0 | active |
+| [melotts](melotts.md) | MeloTTS | MIT | active |
 | [piper-plus](piper-plus.md) | Piper Plus | MIT* | needs-review |
 
 ## Godot 4 add-ons
