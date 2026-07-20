@@ -24,7 +24,7 @@
 | ID | Name | License | Commercial | Status |
 | --- | --- | --- | --- | --- |
 | [voxengo-impulses](voxengo-impulses.md) | Voxengo Free IRs | custom | yes | active |
-| [convology-xt](convology-xt.md) | Convology XT Free Factory | custom | yes* | needs-review |
+| [convology-xt](convology-xt.md) | Convology XT Free Factory | custom | unknown | needs-review |
 
 ## Music (attribution usually required)
 
@@ -37,5 +37,4 @@
 
 Avoid **ND**-licensed music in games — see [`docs/licenses.md`](../../docs/licenses.md) / [`docs/high-risk.md`](../../docs/high-risk.md).
 
-\* Confirm current terms / tier.  
 † Basic (free) tier requires attribution; Premium does not.
