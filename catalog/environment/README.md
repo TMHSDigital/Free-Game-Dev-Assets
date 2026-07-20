@@ -12,7 +12,7 @@
 | [ms-building-footprints](ms-building-footprints.md) | MS Building Footprints | CDLA-Permissive-2.0 | yes | active |
 | [openstreetmap](openstreetmap.md) | OpenStreetMap | ODbL | yes* | active |
 | [jaxa-alos-aw3d30](jaxa-alos-aw3d30.md) | JAXA ALOS AW3D30 | custom | yes* | active |
-| [copernicus-dem-glo30](copernicus-dem-glo30.md) | Copernicus DEM GLO-30 | custom | yes* | needs-review |
-| [usgs-earth-explorer](usgs-earth-explorer.md) | USGS EarthExplorer | public-domain* | yes* | needs-review |
+| [copernicus-dem-glo30](copernicus-dem-glo30.md) | Copernicus DEM GLO-30 | custom | yes* | active |
+| [usgs-earth-explorer](usgs-earth-explorer.md) | USGS EarthExplorer | public-domain* | yes* | active |
 
 \* Attribution / endorsement / geo / notify-JAXA rules — see entry + [`docs/licenses.md`](../../docs/licenses.md). Avoid **FABDEM** (NC) — [`docs/high-risk.md`](../../docs/high-risk.md).
