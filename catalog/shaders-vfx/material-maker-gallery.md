@@ -15,19 +15,20 @@ status: needs-review
 
 # Material Maker Community Gallery
 
-Community procedural graphs with explicit per-item licenses (filterable **CC0 / CC-BY / CC-BY-SA**). Useful PBR/stylized sources — still verify each material before shipping. Complements the Material Maker editor under tools.
+Community procedural materials/nodes/brushes/environments with **per-item** licenses. Gallery filters: **CC-BY / CC0 / CC-BY-SA**. Useful discovery hub — not a single commercial grant. Prefer the **CC0** filter for zero-friction embeds.
 
 ## Notes
 
-- Prefer **CC0** filter for zero-attribution commercial embeds; CC-BY needs credit; CC-BY-SA has share-alike on derivatives
-- Export/bake to textures for engine use; keep license metadata with source graphs if you redistribute `.mm`
-- Pair with [material-maker](../tools/material-maker.md) editor
+- CC-BY → credit author; CC-BY-SA → share-alike on asset derivatives (keep graphs/textures extractable)
+- Site `/terms` is privacy/cookies, not an IP license for gallery items
+- Bake/export for engines; keep license metadata if you redistribute `.mm`
+- Pair with [material-maker](../tools/material-maker.md); for ready CC0 PBR prefer [ambientcg](../3d/ambientcg.md)
 
 ## Evidence
 
-- Live gallery (2026-07-19): License filters labeled **CC-BY**, **CC0**, **CC-BY-SA** on `materialmaker.org/materials` — confirms per-item, not a single site-wide grant
+- Live gallery license filters: links labeled **CC-BY**, **CC0**, **CC-BY-SA** (`license_mask` query params) — confirms per-item, not site-wide.
 
 ## Related
 
-- [material-maker](../tools/material-maker.md) — editor
-- [ambientcg](../3d/ambientcg.md) — CC0 PBR alternative
+- [material-maker](../tools/material-maker.md)
+- [ambientcg](../3d/ambientcg.md)
