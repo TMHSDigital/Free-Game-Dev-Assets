@@ -25,7 +25,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [google-draco](google-draco.md) | Google Draco | Apache-2.0 | active |
 | [assimp](assimp.md) | assimp | BSD-3-Clause | active |
 | [free-tex-packer](free-tex-packer.md) | Free Tex Packer | MIT | active |
-| [osm2world](osm2world.md) | OSM2World | LGPL-3.0* | needs-review |
+| [osm2world](osm2world.md) | OSM2World | MIT | active |
 
 ## Audio middleware
 
@@ -41,7 +41,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [ubisoft-chroma](ubisoft-chroma.md) | Ubisoft Chroma | Apache-2.0 | active |
 | [sim-daltonism](sim-daltonism.md) | Sim Daltonism | Apache-2.0 | active |
 | [daltonlens](daltonlens.md) | DaltonLens | BSD-2-Clause | active |
-| [color-oracle](color-oracle.md) | Color Oracle | MIT* | needs-review |
+| [color-oracle](color-oracle.md) | Color Oracle | MIT | active |
 | [polyglot-gamedev](polyglot-gamedev.md) | Polyglot Gamedev | CC0 | active |
 
 ## Speech / TTS (local, permissive)
@@ -51,14 +51,14 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [kokoro-82m](kokoro-82m.md) | Kokoro-82M | Apache-2.0 | active |
 | [sherpa-onnx](sherpa-onnx.md) | sherpa-onnx | Apache-2.0 | active |
 | [melotts](melotts.md) | MeloTTS | MIT | active |
-| [piper-plus](piper-plus.md) | Piper Plus | MIT* | needs-review |
+| [piper-plus](piper-plus.md) | Piper Plus | MIT | active |
 
 ## Godot 4 add-ons
 
 | ID | Name | License | Status |
 | --- | --- | --- | --- |
 | [proton-scatter](proton-scatter.md) | ProtonScatter | MIT | active |
-| [scatter2d](scatter2d.md) | Scatter2D | MIT | needs-review |
+| [scatter2d](scatter2d.md) | Scatter2D | MIT | active |
 | [phantom-camera](phantom-camera.md) | Phantom Camera | MIT | active |
 | [godot-guide](godot-guide.md) | G.U.I.D.E. | MIT | active |
 | [godot-input-helper](godot-input-helper.md) | Input Helper | MIT | active |
@@ -67,5 +67,3 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [godotsteam](godotsteam.md) | GodotSteam | custom | needs-review |
 
 See: [`docs/godot-budget-stack.md`](../../docs/godot-budget-stack.md) · [`docs/ai-assets.md`](../../docs/ai-assets.md) · [`docs/research-index.md`](../../docs/research-index.md).
-
-\* Confirm on the live project page.

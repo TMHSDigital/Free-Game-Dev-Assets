@@ -19,14 +19,13 @@ Free stand-alone auto-rigger for bipeds (and some creature proportions). Export 
 
 ## Notes
 
-- Reallusion staff (forum) state: commercial game use OK if no Reallusion content is embedded — character generators included.
-- Could not fetch a durable public EULA URL this run (legacy legal pages 404). Re-check ActorCore/AccuRig terms before shipping.
+- Product page is live; durable public EULA still missing — forum commercial-OK claims are not a substitute for ToS.
 - ActorCore motions/content are separately licensed — do not assume free AccuRig implies free ActorCore packs.
 
 ## Evidence
 
-- Product page: “Free download now!” stand-alone AccuRIG / ActorCore auto-rig.
-- Reallusion Discussions (Pete_RL, 2025-08-27): own geometry + AccuRig OK for commercial games / in-game character generators when no Reallusion content is used.
+- Live product page title/meta: “Free download now! … auto rig tool makes any mesh come to life…”
+- No public EULA URL confirmed this run → stay `needs-review`.
 
 ## Related
 

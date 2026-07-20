@@ -15,4 +15,17 @@ status: needs-review
 
 # FMOD Studio
 
-Audio middleware. Round 3 research: indie tier often free under ~**$200k USD annual gross** with unlimited assets — **verify current FMOD licensing**. Compare [Wwise indie](wwise.md) (budget-cap model; DLC caveats).
+Audio middleware with an indie free tier (historically ~$200k USD annual gross). Useful, but **live license text could not be fetched this run** (empty responses from fmod.com).
+
+## Notes
+
+- Keep comparing [Wwise indie](wwise.md) (budget-cap model; DLC caveats).
+- Do not treat as `active` until a live licensing page quote is captured.
+
+## Evidence
+
+- Target URL `https://www.fmod.com/licensing` — fetch returned empty body (2026-07-19). Re-open manually before promoting.
+
+## Related
+
+- [wwise](wwise.md)

@@ -15,4 +15,16 @@ status: needs-review
 
 # Wwise Indie
 
-Audiokinetic middleware. Research (Jul 2026): free under ~**$250k production budget**; DLC/live-ops may need extras. Compare with [FMOD](fmod-studio.md) (revenue-based indie tier). Verify live pricing page.
+Audiokinetic middleware — free under a production-budget cap (historically ~$250k). DLC/live-ops may need extras. Compare [FMOD](fmod-studio.md).
+
+## Notes
+
+- Pricing/download pages returned **HTTP 403** this run — cannot confirm current indie thresholds.
+
+## Evidence
+
+- `audiokinetic.com` pricing/download: HTTP 403 (2026-07-19). Leave `needs-review` until a live quote is possible.
+
+## Related
+
+- [fmod-studio](fmod-studio.md)
