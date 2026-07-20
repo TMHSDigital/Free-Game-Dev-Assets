@@ -11,6 +11,7 @@
 | [kenney-pixel-vehicle-pack](kenney-pixel-vehicle-pack.md) | Kenney Pixel Vehicle Pack | CC0 | yes | active |
 | [ox72-dungeon-tileset](ox72-dungeon-tileset.md) | 0x72 Dungeon Tileset | CC0 | yes | active |
 | [openpeeps](openpeeps.md) | Open Peeps | CC0 | yes | active |
+| [paleto-vol01](paleto-vol01.md) | Paleto Vol.01 | CC0 | yes | active |
 | [craftpix](craftpix.md) | CraftPix freebies | custom | yes | active |
 | [game-icons-net](game-icons-net.md) | Game-Icons.net | CC-BY-3.0 | yes | active |
 | [lucide-icons](lucide-icons.md) | Lucide Icons | ISC | yes | active |
