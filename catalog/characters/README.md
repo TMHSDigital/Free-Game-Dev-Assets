@@ -12,8 +12,8 @@
 | [quaternius-ultimate-monsters](quaternius-ultimate-monsters.md) | Quaternius Ultimate Monsters | CC0 | yes | active |
 | [kaykit-adventurers](kaykit-adventurers.md) | KayKit Adventurers | CC0 | yes | active |
 | [mpfb](mpfb.md) | MPFB (MakeHuman for Blender) | CC0* | yes | active |
-| [makehuman](makehuman.md) | MakeHuman | CC0 export* | yes* | needs-review |
-| [charmorph](charmorph.md) | CharMorph | varies | yes* | needs-review |
-| [vroid-studio](vroid-studio.md) | VRoid Studio | custom | yes* | needs-review |
+| [makehuman](makehuman.md) | MakeHuman | CC0 | yes | active |
+| [charmorph](charmorph.md) | CharMorph | varies (AGPL/`mb_*`) | unknown | needs-review |
+| [vroid-studio](vroid-studio.md) | VRoid Studio | custom | unknown | needs-review |
 
-\* Confirm live exception / ToS. MPFB: **exports/assets CC0**; addon code GPL. Avoid **MB-Lab** — [`docs/high-risk.md`](../../docs/high-risk.md).
+\* MPFB/MakeHuman: **core exports/assets CC0**; app/addon code AGPL/GPL. Avoid **MB-Lab** and CharMorph **`mb_*`** AGPL bases — [`docs/high-risk.md`](../../docs/high-risk.md).

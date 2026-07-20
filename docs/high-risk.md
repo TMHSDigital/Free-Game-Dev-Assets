@@ -5,7 +5,7 @@ Sources that fail our commercial-safety bar. Keep out of `status: active` listin
 | Source | Why |
 | --- | --- |
 | **SMPL / SMPL-X (free academic license)** | Free download is **non-commercial scientific/education/artistic only**; commercial use needs a paid Meshcapade / MPI license. |
-| **MB-Lab exports** | AGPL v3 can attach to generated meshes — unsafe for closed-source games. Prefer MakeHuman (CC0 export exception) or CharMorph. |
+| **MB-Lab / CharMorph `mb_*` bases** | AGPL v3 can attach to generated meshes — unsafe for closed-source games. CharMorph-db ships `mb_female` under AGPL (Antonia is CC-BY-3.0). Prefer MakeHuman / MPFB (CC0 core exports). |
 | **Shadertoy (default)** | Default **CC BY-NC-SA 3.0** unless an author states otherwise. Do not port into commercial builds without explicit permission. |
 | **Bandai Namco mocap datasets** | CC-BY-NC — research/non-commercial only. |
 | **Ubisoft LaFAN1 / La Forge Animation Dataset** | CC-BY-NC-ND 4.0 — non-commercial, no derivatives; unusable for shipping games. |
