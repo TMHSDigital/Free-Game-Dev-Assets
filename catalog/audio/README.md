@@ -7,6 +7,12 @@
 | [sonniss-gdc](sonniss-gdc.md) | Sonniss #GameAudioGDC | custom | yes | active |
 | [kenney-rpg-audio](kenney-rpg-audio.md) | Kenney RPG Audio | CC0 | yes | active |
 | [kenney-impact-sounds](kenney-impact-sounds.md) | Kenney Impact Sounds | CC0 | yes | active |
+| [kenney-ui-audio](kenney-ui-audio.md) | Kenney UI Audio | CC0 | yes | active |
+| [kenney-interface-sounds](kenney-interface-sounds.md) | Kenney Interface Sounds | CC0 | yes | active |
+| [kenney-sci-fi-sounds](kenney-sci-fi-sounds.md) | Kenney Sci-fi Sounds | CC0 | yes | active |
+| [gboxmikefozzy-footsteps](gboxmikefozzy-footsteps.md) | GboxMikeFozzy Footsteps | CC0 | yes | active |
+| [congusbongus-footsteps-surfaces](congusbongus-footsteps-surfaces.md) | Congusbongus Footsteps | CC-BY-3.0 | yes | active |
+| [fesliyan-footsteps](fesliyan-footsteps.md) | Fesliyan Footsteps | custom | yes | active |
 | [mixkit-sfx](mixkit-sfx.md) | Mixkit Sound Effects | custom | yes | active |
 | [bigsoundbank](bigsoundbank.md) | BigSoundBank | CC0 | yes | active |
 | [pixabay-audio](pixabay-audio.md) | Pixabay Audio | custom | yes | active |
