@@ -8,6 +8,7 @@ This repository **indexes and documents** sources. It does **not** rehost third-
 
 ## Contents
 
+- [Website](#website)
 - [Browse the catalog](#browse-the-catalog)
 - [Quick start](#quick-start)
 - [How entries work](#how-entries-work)
@@ -18,6 +19,21 @@ This repository **indexes and documents** sources. It does **not** rehost third-
 - [Contributing](#contributing)
 - [Repository layout](#repository-layout)
 - [License](#license)
+
+---
+
+## Website
+
+**https://tmhsdigital.github.io/Free-Game-Dev-Assets/**
+
+The site is generated from catalog frontmatter on every push (GitHub Actions → Pages). Add or edit one file under `catalog/<category>/<id>.md` and the browse UI, filters, and counts update automatically.
+
+Local preview:
+
+```bash
+node site/build.mjs
+npx --yes serve site/dist
+```
 
 ---
 
@@ -41,7 +57,7 @@ Master index: [`catalog/README.md`](catalog/README.md)
 
 ## Quick start
 
-1. Open a category folder above (or the [master index](catalog/README.md)).
+1. Use the [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) or open a category folder (or the [master index](catalog/README.md)).
 2. Prefer entries with `status: active` and `commercial: true`.
 3. Follow the source URL and **re-check the live license** before shipping.
 4. Keep attribution / notices files for anything that isn’t CC0.
@@ -154,6 +170,8 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 ├── docs/
 │   ├── licenses.md / provenance.md / high-risk.md / ai-assets.md
 │   ├── trust-score.md / research-index.md / godot-budget-stack.md
+├── site/                  ← GitHub Pages source (build scans catalog/)
+│   ├── build.mjs / config.json / public/
 └── catalog/
     ├── TEMPLATE.md
     ├── 3d/ environment/ 2d/ characters/

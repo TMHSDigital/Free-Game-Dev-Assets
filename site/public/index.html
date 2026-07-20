@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Free Game Dev Assets</title>
+    <meta
+      name="description"
+      content="Curated free game assets and tools with commercial-use and license metadata."
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top">Free Game Dev Assets</a>
+      <nav class="topnav" aria-label="Primary">
+        <a href="#catalog">Catalog</a>
+        <a href="#starters">Starters</a>
+        <a href="#guides">Guides</a>
+        <a id="repo-link" href="https://github.com/TMHSDigital/Free-Game-Dev-Assets" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">Free Game Dev Assets</h1>
+        <p class="hero-lead">
+          Free assets and tools for commercial games — filtered by license,
+          attribution, and review status.
+        </p>
+        <p class="hero-actions">
+          <a class="btn" href="#catalog">Browse catalog</a>
+          <a class="text-link" href="#starters">Jump to safe starters</a>
+        </p>
+      </section>
+
+      <section class="section" id="starters" aria-labelledby="starters-title">
+        <div class="section-head">
+          <h2 id="starters-title">Safe starting points</h2>
+          <p>High-signal CC0 / clearly permissive sources for early production.</p>
+        </div>
+        <table class="starter-table" id="starter-table">
+          <thead>
+            <tr>
+              <th scope="col">Need</th>
+              <th scope="col">Source</th>
+              <th scope="col">License</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="section" id="catalog" aria-labelledby="catalog-title">
+        <div class="section-head">
+          <h2 id="catalog-title">Catalog</h2>
+          <p id="catalog-blurb">Search and filter every indexed source.</p>
+        </div>
+
+        <div class="controls" role="search">
+          <label class="search-field">
+            <span class="sr-only">Search catalog</span>
+            <input
+              id="search"
+              type="search"
+              placeholder="Name, license, tag, format…"
+              autocomplete="off"
+            />
+          </label>
+
+          <div class="filter-row" id="category-filters" aria-label="Categories"></div>
+
+          <div class="filter-row meta-filters">
+            <label class="check">
+              <input type="checkbox" id="filter-active" checked />
+              Active
+            </label>
+            <label class="check">
+              <input type="checkbox" id="filter-review" checked />
+              Needs review
+            </label>
+            <label class="check">
+              <input type="checkbox" id="filter-commercial" />
+              Commercial OK
+            </label>
+            <label class="check">
+              <input type="checkbox" id="filter-no-attr" />
+              No attribution
+            </label>
+            <p class="result-count" id="result-count" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="entry-list" id="entry-grid"></div>
+        <p class="empty" id="empty-state" hidden>No entries match these filters.</p>
+      </section>
+
+      <section class="section" id="guides" aria-labelledby="guides-title">
+        <div class="section-head">
+          <h2 id="guides-title">Guides</h2>
+          <p>Read before shipping a commercial build.</p>
+        </div>
+        <ul class="guide-list" id="guide-list"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Catalog metadata is CC0. Linked assets keep their own licenses — re-check
+        the live source before shipping.
+      </p>
+      <p>
+        <a id="footer-repo" href="https://github.com/TMHSDigital/Free-Game-Dev-Assets">Contribute on GitHub</a>
+        · add entries from <code>catalog/TEMPLATE.md</code>
+      </p>
+    </footer>
+
+    <dialog class="entry-dialog" id="entry-dialog">
+      <form method="dialog" class="dialog-chrome">
+        <button value="close" class="dialog-close" aria-label="Close">Close</button>
+      </form>
+      <div class="dialog-body" id="dialog-body"></div>
+    </dialog>
+
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

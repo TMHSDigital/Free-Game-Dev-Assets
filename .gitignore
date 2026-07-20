@@ -20,3 +20,6 @@ Desktop.ini
 *.log
 __pycache__/
 .cache/
+
+# Generated GitHub Pages output (built in CI)
+site/dist/

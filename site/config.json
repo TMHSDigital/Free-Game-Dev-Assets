@@ -1,0 +1,42 @@
+{
+  "site": {
+    "title": "Free Game Dev Assets",
+    "tagline": "Free assets and tools for commercial games — with license metadata.",
+    "repo": "https://github.com/TMHSDigital/Free-Game-Dev-Assets",
+    "baseUrl": "/Free-Game-Dev-Assets"
+  },
+  "categories": {
+    "3d": { "label": "3D", "blurb": "Models, scans, PBR textures" },
+    "environment": { "label": "Environment", "blurb": "HDRI, terrain, geodata" },
+    "2d": { "label": "2D", "blurb": "Sprites, UI, icons, palettes" },
+    "characters": { "label": "Characters", "blurb": "Generators & modular humanoids" },
+    "audio": { "label": "Audio", "blurb": "SFX, music, foley, IRs" },
+    "animation": { "label": "Animation", "blurb": "MoCap & character clips" },
+    "shaders-vfx": { "label": "Shaders & VFX", "blurb": "Shaders, particles, FX" },
+    "fonts": { "label": "Fonts", "blurb": "OFL / commercial-ok type" },
+    "tools": { "label": "Tools", "blurb": "Editors, pipeline, TTS, add-ons" }
+  },
+  "featured": [
+    { "id": "kenney", "need": "Modular low-poly 3D / UI" },
+    { "id": "quaternius", "need": "Rigged low-poly characters" },
+    { "id": "kaykit", "need": "Atlas-optimized kits" },
+    { "id": "ambientcg", "need": "Seamless PBR materials" },
+    { "id": "poly-haven", "need": "HDRIs / calibrated env" },
+    { "id": "texturecan", "need": "Extra PBR + SBSAR" },
+    { "id": "lucide-icons", "need": "UI icons (brand-free)" },
+    { "id": "glitch-archive", "need": "Hand-drawn 2D vectors" },
+    { "id": "xelu-input-prompts", "need": "Input prompt icons" },
+    { "id": "sonniss-gdc", "need": "Pro SFX dumps" },
+    { "id": "incompetech", "need": "Attribution music" },
+    { "id": "departure-mono", "need": "Pixel / terminal font" },
+    { "id": "noto-sans", "need": "Localization fonts" }
+  ],
+  "guides": [
+    { "id": "licenses", "title": "Licenses", "path": "docs/licenses.md" },
+    { "id": "provenance", "title": "Provenance", "path": "docs/provenance.md" },
+    { "id": "high-risk", "title": "High risk", "path": "docs/high-risk.md" },
+    { "id": "ai-assets", "title": "AI assets", "path": "docs/ai-assets.md" },
+    { "id": "trust-score", "title": "Trust score", "path": "docs/trust-score.md" },
+    { "id": "godot-budget-stack", "title": "Godot budget stack", "path": "docs/godot-budget-stack.md" }
+  ]
+}

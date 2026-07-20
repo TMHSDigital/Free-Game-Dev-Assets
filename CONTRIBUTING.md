@@ -18,11 +18,14 @@ This repo catalogs **links and metadata** for free (preferably commercially usab
 
 ## Adding an entry
 
+One new markdown file is enough — the website rebuilds from frontmatter on deploy.
+
 1. Copy [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md).
 2. Save it as `catalog/<category>/<id>.md` using a short kebab-case `id`.
 3. Fill every frontmatter field. Prefer primary URLs over mirror/aggregator pages.
-4. Add one line to the matching category `README.md` index.
-5. Verify the license on the live source page the day you submit.
+4. Verify the license on the live source page the day you submit.
+5. Optional: add a line to the matching category `README.md` for GitHub browsing (the site does not require this).
+6. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
 
 ### Frontmatter rules
 
