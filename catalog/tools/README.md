@@ -12,6 +12,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [pixelorama](pixelorama.md) | Pixelorama | MIT | active |
 | [material-maker](material-maker.md) | Material Maker | MIT | active |
 | [gaea](gaea.md) | Gaea Community Edition | custom | active (`commercial: false`) |
+| [accurig](accurig.md) | AccuRig (Reallusion) | custom | needs-review |
 
 ## Pipeline & compression
 
