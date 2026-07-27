@@ -7,6 +7,12 @@
 | [waterways](waterways.md) | Waterways | MIT | yes | active |
 | [gdquest-godot-shaders](gdquest-godot-shaders.md) | GDQuest Godot Shaders | MIT* | yes* | active |
 | [godot-demo-projects](godot-demo-projects.md) | Godot Demo Projects | MIT | yes | active |
+| [godot-psx-style-demo](godot-psx-style-demo.md) | Godot PSX Style Demo | MIT | yes | active |
+| [godot-volumetric-cloud-demo](godot-volumetric-cloud-demo.md) | Godot Volumetric Cloud Demo | MIT | yes | active |
+| [ultimate-retro-shader-collection](ultimate-retro-shader-collection.md) | Ultimate Retro Shader Collection | MIT | yes | active |
+| [kenney-particle-pack](kenney-particle-pack.md) | Kenney Particle Pack | CC0 | yes | active |
+| [kenney-smoke-particles](kenney-smoke-particles.md) | Kenney Smoke Particles | CC0 | yes | active |
+| [kenney-light-masks](kenney-light-masks.md) | Kenney Light Masks | CC0 | yes | active |
 | [godot-shaders](godot-shaders.md) | Godot Shaders | varies (CC0/MIT/GPL) | yes* | needs-review |
 | [material-maker-gallery](material-maker-gallery.md) | Material Maker Gallery | varies | unknown | needs-review |
 
