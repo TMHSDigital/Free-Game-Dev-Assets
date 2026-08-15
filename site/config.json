@@ -25,7 +25,7 @@
     { "id": "texturecan", "need": "Extra PBR + SBSAR" },
     { "id": "lucide-icons", "need": "UI icons (brand-free)" },
     { "id": "glitch-archive", "need": "Hand-drawn 2D vectors" },
-    { "id": "xelu-input-prompts", "need": "Input prompt icons" },
+    { "id": "kenney-input-prompts", "need": "Input prompts (Deck / Switch 2 / Quest)" },
     { "id": "sonniss-gdc", "need": "Pro SFX dumps" },
     { "id": "incompetech", "need": "Attribution music" },
     { "id": "departure-mono", "need": "Pixel / terminal font" },

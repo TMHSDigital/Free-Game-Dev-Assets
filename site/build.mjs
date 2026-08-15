@@ -131,6 +131,10 @@ function loadEntries() {
       status: String(meta.status),
       path: rel,
       summary: summaryFromBody(body),
+      ...(meta.grid_dimensions ? { grid_dimensions: String(meta.grid_dimensions) } : {}),
+      ...(meta.camera_perspective ? { camera_perspective: String(meta.camera_perspective) } : {}),
+      ...(Array.isArray(meta.hardware_tags) ? { hardware_tags: meta.hardware_tags } : {}),
+      ...(meta.attribution_string ? { attribution_string: String(meta.attribution_string) } : {}),
     });
   }
 

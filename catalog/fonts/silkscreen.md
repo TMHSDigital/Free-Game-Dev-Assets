@@ -30,4 +30,5 @@ Pixel/display family on Google Fonts under SIL OFL 1.1. Useful for chunky HUD ti
 ## Related
 
 - [press-start-2p](press-start-2p.md) — arcade pixel classic
+- [dotgothic16](dotgothic16.md) — JP-capable pixel gothic
 - [departure-mono](departure-mono.md) — pixel mono

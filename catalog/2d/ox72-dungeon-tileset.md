@@ -28,5 +28,6 @@ Classic CC0 16×16 dungeon tiles (Robert / 0x72). Explicit commercial + modify +
 
 ## Related
 
+- [ox72-dungeontileset-ii](ox72-dungeontileset-ii.md) — newer sibling (prefer unless you want vol. I palette)
 - [kenney-pixel-platformer](kenney-pixel-platformer.md)
 - [glitch-archive](glitch-archive.md)

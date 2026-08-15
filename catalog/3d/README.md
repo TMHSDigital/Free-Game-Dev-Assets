@@ -10,6 +10,8 @@
 | [quaternius-stylized-nature-megakit](quaternius-stylized-nature-megakit.md) | Quaternius Stylized Nature MegaKit | CC0 | yes | active |
 | [quaternius-fantasy-props-megakit](quaternius-fantasy-props-megakit.md) | Quaternius Fantasy Props MegaKit | CC0 | yes | active |
 | [kaykit](kaykit.md) | KayKit | CC0 | yes | active |
+| [kaykit-prototype-bits](kaykit-prototype-bits.md) | KayKit Prototype Bits | CC0 | yes | active |
+| [kaykit-resource-bits](kaykit-resource-bits.md) | KayKit Resource Bits | CC0 | yes | active |
 | [kaykit-furniture-bits](kaykit-furniture-bits.md) | KayKit Furniture Bits | CC0 | yes | active |
 | [the-base-mesh](the-base-mesh.md) | The Base Mesh | CC0 | yes | active |
 | [ambientcg](ambientcg.md) | ambientCG | CC0 | yes | active |

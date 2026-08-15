@@ -29,5 +29,6 @@ Soft/modern pixel sans (eifetx) — readable pixel UI and soft indie titles with
 ## Related
 
 - [silkscreen](silkscreen.md)
+- [dotgothic16](dotgothic16.md)
 - [vt323](vt323.md)
 - [press-start-2p](press-start-2p.md)

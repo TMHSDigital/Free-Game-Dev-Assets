@@ -78,6 +78,8 @@ Each source is one markdown file with YAML frontmatter plus short notes. Add new
 | `formats` | Common download / interchange formats |
 | `verified` | Date of the last license spot-check (`YYYY-MM-DD`) |
 | `status` | See legend below |
+| `grid_dimensions` / `camera_perspective` / `hardware_tags` | Optional — 2D tile size, projection (`isometric_3_4`, `top_down`, `side_scroller`, `2d_flat`), input-device coverage |
+| `attribution_string` | Optional copy-paste credit when `attribution_required` |
 
 ### Status legend
 
@@ -105,7 +107,7 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 | Extra PBR + SBSAR | TextureCan | [`catalog/3d/texturecan.md`](catalog/3d/texturecan.md) |
 | UI icons (brand-free) | Lucide | [`catalog/2d/lucide-icons.md`](catalog/2d/lucide-icons.md) |
 | Hand-drawn 2D vectors | Glitch archive | [`catalog/2d/glitch-archive.md`](catalog/2d/glitch-archive.md) |
-| Input prompt icons | Xelu | [`catalog/2d/xelu-input-prompts.md`](catalog/2d/xelu-input-prompts.md) |
+| Input prompt icons | Kenney Input Prompts | [`catalog/2d/kenney-input-prompts.md`](catalog/2d/kenney-input-prompts.md) |
 | Pro SFX dumps | Sonniss #GameAudioGDC | [`catalog/audio/sonniss-gdc.md`](catalog/audio/sonniss-gdc.md) |
 | Attribution music | Incompetech | [`catalog/audio/incompetech.md`](catalog/audio/incompetech.md) |
 | Pixel / terminal font | Departure Mono | [`catalog/fonts/departure-mono.md`](catalog/fonts/departure-mono.md) |
@@ -115,10 +117,10 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 
 ## Licenses & provenance
 
-Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/ai-assets.md`](docs/ai-assets.md), and [`docs/trust-score.md`](docs/trust-score.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R04`). Short version:
+Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/ai-assets.md`](docs/ai-assets.md), and [`docs/trust-score.md`](docs/trust-score.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R05`). Short version:
 
 - **CC0** — safest default for closed-source games; attribution not required
-- **CC-BY** — commercial OK; keep credits
+- **CC-BY** — commercial OK; keep credits (BY-3.0 often wants the **author named**; BY-4.0 is usually satisfied by a credits-screen link)
 - **CC-BY-SA** — commercial OK with caveats; prefer extractable asset bundles over encrypting SA files into the binary
 - **CC-*-ND** — generally **unusable in games** (interactive sync/remix = derivative)
 - **SIL OFL** — preferred for fonts embedded in games
@@ -170,6 +172,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 ├── docs/
 │   ├── licenses.md / provenance.md / high-risk.md / ai-assets.md
 │   ├── trust-score.md / research-index.md / godot-budget-stack.md
+├── RESEARCH/README.md     ← research archive index (drafts gitignored)
 ├── site/                  ← GitHub Pages source (build scans catalog/)
 │   ├── build.mjs / config.json / public/
 └── catalog/

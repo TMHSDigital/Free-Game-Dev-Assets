@@ -28,6 +28,8 @@ status: active
 
 ## Related
 
+- [ox72-dungeontileset-ii](ox72-dungeontileset-ii.md)
+- [ninja-adventure](ninja-adventure.md)
 - [kenney-1-bit-pack](kenney-1-bit-pack.md)
 - [ox72-dungeon-tileset](ox72-dungeon-tileset.md)
 - [kenney](../3d/kenney.md)

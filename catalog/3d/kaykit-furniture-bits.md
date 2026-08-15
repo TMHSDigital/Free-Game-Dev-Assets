@@ -29,6 +29,8 @@ status: active
 
 ## Related
 
+- [kaykit-prototype-bits](kaykit-prototype-bits.md)
+- [kaykit-resource-bits](kaykit-resource-bits.md)
 - [kenney-furniture-kit](kenney-furniture-kit.md)
 - [kaykit](kaykit.md)
 - [quaternius-fantasy-props-megakit](quaternius-fantasy-props-megakit.md)

@@ -24,26 +24,31 @@ One new markdown file is enough — the website rebuilds from frontmatter on dep
 2. Save it as `catalog/<category>/<id>.md` using a short kebab-case `id`.
 3. Fill every frontmatter field. Prefer primary URLs over mirror/aggregator pages.
 4. Verify the license on the live source page the day you submit.
-5. Optional: add a line to the matching category `README.md` for GitHub browsing (the site does not require this).
-6. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
+5. For `status: active`, include an `## Evidence` line with a short quote from that page.
+6. Optional 2D/UI fields: `grid_dimensions`, `camera_perspective`, `hardware_tags`, `attribution_string` (see [`TEMPLATE.md`](catalog/TEMPLATE.md)).
+7. Optional: add a line to the matching category `README.md` for GitHub browsing (the site does not require this).
+8. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
 
 ### Frontmatter rules
 
 - `license`: exact short name from the source (e.g. `CC0`, `CC-BY-3.0`, `SIL OFL`, `custom`).
 - `commercial`: `true` / `false` / `unknown`.
 - `attribution_required`: `true` / `false`.
+- `attribution_string`: optional copy-paste credit.
+- `grid_dimensions` / `camera_perspective` / `hardware_tags`: optional 2D/UI metadata.
 - `verified`: ISO date (`YYYY-MM-DD`) of your last license check.
 - `status`: `active` | `needs-review` | `deprecated`.
 
 ## License verification checklist
 
 - [ ] License text or badge visible on the source
-- [ ] Commercial use explicitly allowed (or marked false)
+- [ ] Commercial use explicitly allowed (or marked false) — **free download ≠ commercial**
 - [ ] Attribution / share-alike / NC / ND flags recorded
 - [ ] Marketplace EULA checked if Unity/Fab/Unreal/itch
 - [ ] Supplier looks reputable (not an anonymous laundering risk — see [`docs/provenance.md`](docs/provenance.md))
-- [ ] Not on the [`docs/high-risk.md`](docs/high-risk.md) blocklist (MB-Lab, default Shadertoy, ND music, etc.)
+- [ ] Not on the [`docs/high-risk.md`](docs/high-risk.md) blocklist (MB-Lab, default Shadertoy, ND music, Unity Companion, etc.)
 - [ ] Entry does not claim rights we don’t have
+- [ ] Tool entries distinguish **software license** from **exported asset** ownership
 
 ## Research notes
 

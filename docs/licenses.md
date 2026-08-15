@@ -7,7 +7,8 @@ Quick reference for assets you might list or use. **Always re-check the source p
 | License | Commercial use | Attribution | Notes |
 | --- | --- | --- | --- |
 | **CC0** | Yes | Not required | Safest default for closed-source games. Can embed in DRM builds. |
-| **CC-BY** | Yes | Required | Credit the author; keep a notices file. |
+| **CC-BY-4.0** | Yes | Required | Credit the author; a credits-screen link to the source usually satisfies. Keep a notices file. |
+| **CC-BY-3.0** | Yes | Required | Same commercial grant; some projects expect the **author named** (not only a site URL). Example: Game-Icons.net wants `Icons made by {author}. Available on https://game-icons.net`. |
 | **CC-BY-SA** | Yes | Required | Share-alike applies to **derivatives of the asset**, not your whole game as code. Prefer shipping SA assets in extractable bundles (`.pck`, loose folders) rather than encrypted into the binary. |
 | **CC-BY-NC** | No | Required | Fine for prototypes / jam games; **reject for commercial catalogs** unless clearly marked non-commercial. |
 | **CC-BY-ND** | Yes | Required | No derivatives — **reject for games**. Interactive sync / remix is generally treated as a derivative; ND music and art are unsafe. |
@@ -25,13 +26,17 @@ Quick reference for assets you might list or use. **Always re-check the source p
 | License | Commercial use | Notes |
 | --- | --- | --- |
 | **Sonniss #GameAudioGDC** | Yes | Royalty-free for games; typically no attribution. Standalone resale and AI/ML training usually prohibited — read current terms. |
-| **Unity / Fab / Unreal free assets** | Engine-specific | Commercial use in-engine often OK; **no standalone redistribution**. On Fab, distinguish **Standard License** (research: multi-engine) vs **Epic Content License** (Unreal-locked). Always check the badge. |
+| **Unity / Fab / Unreal free assets** | Engine-specific | Commercial use in-engine often OK; **no standalone redistribution** of raw `.fbx`/`.png`. Unity **Companion License** / Starter Assets: Unity-only; seat is typically one legal entity — contractors outside the org may need their own seats. On Fab, distinguish **Standard License** (research: multi-engine) vs **Epic Content License** (Unreal-locked). Always check the badge. |
+| **itch.io free packs** | Varies | Check each pack page. Many are CC0 or custom commercial-ok. **Free ≠ commercial** — e.g. Sprout Lands free tier is non-commercial; paid tier is commercial. |
 | **LPC / OGA-BY / CC-BY-SA sprites** | Copyleft art | Commercial OK with attribution + share-alike on **asset derivatives**; keep sheets external/extractable. |
-| **itch.io free packs** | Varies | Check each pack page. Many are CC0 or custom commercial-ok. |
 | **MakeHuman exports** | Special | App source may be AGPL; **official binary exports** are commonly under a **CC0 exception** — verify the current exception page before shipping. |
 | **MB-Lab exports** | AGPL risk | Treat generated meshes as **unsafe** for closed-source games — see [`high-risk.md`](high-risk.md). |
 | **FMOD Studio (indie)** | Custom | Often free under revenue/funding caps — verify current thresholds. |
 | **Wwise free / evaluation** | Custom | Often asset-count or non-commercial caps — verify before shipping. |
+
+## Copyleft tools vs generated output
+
+GPL/AGPL on an **editor or generator** (Tiled, Blockbench, Pixelorama, etc.) usually does **not** copyleft the PNG/glTF/WAV you export — unless the maintainer says otherwise. Catalog `license` on `tools/` is the **software** license. Keep generated assets under whatever terms you assign; don’t ship the GPL editor source inside the game binary unless you mean to.
 
 ## Provenance (license laundering)
 

@@ -1,5 +1,9 @@
 # 2D — sprites, GUI, icons, palettes
 
+Do not mix tile grids or camera projections without scaling/reprojection. Typical buckets: **micro** 8–12px (Urizen 12×12, Bit Bonanza 10×10), **standard** 16×16, **dense** 32×32+. `isometric_3_4` (Ninja Adventure, Dungeon Tileset II) is not ortho top-down or side-scroller.
+
+Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
+
 | ID | Name | License | Commercial | Status |
 | --- | --- | --- | --- | --- |
 | [glitch-archive](glitch-archive.md) | Glitch archive | CC0 | yes | active |
@@ -9,7 +13,12 @@
 | [kenney-1-bit-pack](kenney-1-bit-pack.md) | Kenney 1-Bit Pack | CC0 | yes | active |
 | [kenney-tiny-dungeon](kenney-tiny-dungeon.md) | Kenney Tiny Dungeon | CC0 | yes | active |
 | [kenney-pixel-vehicle-pack](kenney-pixel-vehicle-pack.md) | Kenney Pixel Vehicle Pack | CC0 | yes | active |
+| [kenney-input-prompts](kenney-input-prompts.md) | Kenney Input Prompts | CC0 | yes | active |
 | [ox72-dungeon-tileset](ox72-dungeon-tileset.md) | 0x72 Dungeon Tileset | CC0 | yes | active |
+| [ox72-dungeontileset-ii](ox72-dungeontileset-ii.md) | 0x72 Dungeon Tileset II | CC0 | yes | active |
+| [ninja-adventure](ninja-adventure.md) | Ninja Adventure | CC0 | yes | active |
+| [bit-bonanza](bit-bonanza.md) | Bit Bonanza | CC0 | yes | active |
+| [urizen-onebit](urizen-onebit.md) | Urizen 1Bit | CC0 | yes | active |
 | [openpeeps](openpeeps.md) | Open Peeps | CC0 | yes | active |
 | [paleto-vol01](paleto-vol01.md) | Paleto Vol.01 | CC0 | yes | active |
 | [craftpix](craftpix.md) | CraftPix freebies | custom | yes | active |

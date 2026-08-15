@@ -21,6 +21,7 @@ Sources that fail our commercial-safety bar. Keep out of `status: active` listin
 | **Meshy AI free tier** | Ownership / training-data restrictions on free outputs — high uncertainty. |
 | **Cascadeur Free** | Research: non-commercial / proprietary `.casc` export limits — paid tiers differ. |
 | **Unreal Starter Content** | Engine EULA — **UE-only**; do not port meshes/textures to other engines. |
+| **Unity Companion License / Starter Assets** | Unity-only embedding in shipped Unity games; no raw-file redistribution; extra seats for outside contractors. Not a multi-engine CC0 kit. |
 | **Fab “Epic Content License”** | Engine-locked to Unreal. Only **Fab Standard License** claims may be multi-engine — verify badge per asset. |
 | **LPC / CC-BY-SA sprites** | Commercial OK with SA obligations on asset derivatives; keep sheets extractable; not “CC0-like.” |
 | **Font Awesome brand icons** | Brand marks only for representing those brands — not generic UI decoration. |

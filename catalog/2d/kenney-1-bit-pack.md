@@ -30,4 +30,6 @@ status: active
 
 - [kenney-tiny-dungeon](kenney-tiny-dungeon.md)
 - [ox72-dungeon-tileset](ox72-dungeon-tileset.md)
+- [ox72-dungeontileset-ii](ox72-dungeontileset-ii.md)
+- [bit-bonanza](bit-bonanza.md)
 - [kenney](../3d/kenney.md)

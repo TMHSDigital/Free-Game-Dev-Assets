@@ -19,7 +19,7 @@ status: active
 
 ## Notes
 
-- Complements [kenney-ui-pack](kenney-ui-pack.md) and [xelu-input-prompts](xelu-input-prompts.md)
+- Complements [kenney-ui-pack](kenney-ui-pack.md) and [kenney-input-prompts](kenney-input-prompts.md)
 - v1.1 added 70 cursors (2024)
 
 ## Evidence
@@ -29,5 +29,6 @@ status: active
 ## Related
 
 - [kenney-ui-pack](kenney-ui-pack.md)
+- [kenney-input-prompts](kenney-input-prompts.md)
 - [xelu-input-prompts](xelu-input-prompts.md)
 - [kenney](../3d/kenney.md)

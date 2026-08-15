@@ -21,4 +21,5 @@ status: active
 
 - Excellent default for jams and vertical slices
 - **Space Kit** and **Industrial Kit** are strong for tech/server-room props (racks, pipes, consoles) and flat-shaded pipelines
-- Also ships 2D / audio packs — still catalogued under `3d` as the flagship library
+- 2D **Input Prompts** (64×64, CC0) are catalogued separately — Switch 2 / Quest / Deck coverage
+- Also ships other 2D / audio packs — still catalogued under `3d` as the flagship library
