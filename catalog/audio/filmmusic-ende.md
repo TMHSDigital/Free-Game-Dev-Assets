@@ -1,7 +1,7 @@
 ---
 id: filmmusic-ende
 name: FilmMusic / Sascha Ende (ENDE.APP)
-url: https://filmmusic.io/standard-license
+url: https://ende.app/en/standard-license
 category: audio
 subcategories: [music]
 license: CC-BY-4.0
@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [MP3, WAV]
 tags: [music, cc-by, no-nd, games-ok]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,7 +25,8 @@ Royalty-free music (formerly FilmMusic.io; now ENDE.APP). Standard grant is **CC
 
 ## Evidence
 
-- Live [Standard license](https://filmmusic.io/standard-license) (2026-07-19): “CC BY 4.0 … use it in videos, podcasts, or games. Commercially? Yes, absolutely!” + “Attribution Optional” gift; links official CC BY 4.0
+- Live [Standard license](https://ende.app/en/standard-license) (2026-08-24): "CC BY 4.0"
+- Same page (2026-08-24): "use it in videos, podcasts, or games. Commercially? Yes, absolutely!"
 
 ## Related
 

@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [WAV, MP3]
 tags: [cc0, field-recording, royalty-free, footsteps-capable]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,7 +25,8 @@ status: active
 
 ## Evidence
 
-- Live [licenses.html](https://bigsoundbank.com/licenses.html) (2026-07-19): “Royalty-Free Sound License (CC0-like)” — share/adapt/commercial “Without any restrictions… Creative Commons CC0 1.0 Universal”
+- Live [licenses.html](https://bigsoundbank.com/licenses.html) (2026-08-24): "Creative Commons CC0 1.0 Universal"
+- Same page (2026-08-24): "including for commercial purposes. Without any restrictions"
 
 ## Related
 

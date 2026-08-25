@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [Blend]
 tags: [blender-studio, poses]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ Humanoid pose library asset bundle from Blender Studio (demo-files). **CC-BY** �
 
 ## Evidence
 
-- Live [Demo Files](https://www.blender.org/download/demo-files/) (2026-07-19): “Ellie Pose Library v2.0.0 … by Blender Studio … 24 MB – **CC-BY**”
+- Live [Demo Files](https://www.blender.org/download/demo-files/) (2026-08-24): "CC-BY" on the Ellie Pose Library card (24 MB, Blender Studio)
 
 ## Related
 
