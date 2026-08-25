@@ -9,19 +9,25 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, Blend]
 tags: [low-poly, atlas, mobile-friendly, characters]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
 # KayKit
 
-CC0 character and modular environment packs. Models share a single **1024×1024 gradient atlas** — downsample to **128×128** for mobile/web without losing the look (not a multi-material PBR workflow).
+CC0 character and modular environment packs. Models share a single 1024x1024 gradient atlas; downsample to 128x128 for mobile/web without losing the look. Not a multi-material PBR workflow. The itch profile mixes free CC0 packs with paid bundles; license is on the pack page.
 
 ## Notes
 
+- Itch profile is a storefront and does not print a library-wide license
+- Adventurers page (checked this session): single atlas, FBX/glTF, author ask not to resell unmodified copies
 - Prototype / resource / furniture Bits packs are catalogued separately
-- Adventurers + Character Animations on itch.io
-- Ideal when draw-call / texture-memory budgets are tight
+- Paid Complete KayKit and mystery-series packs sit on the same profile; do not copy this hub's CC0 onto those without reading the pack page
+
+## Evidence
+
+- Live pack page [KayKit Adventurers](https://kaylousberg.itch.io/kaykit-adventurers) (2026-08-24): "Free for personal and commercial use, no attribution required."
+- Same page (2026-08-24): "(CC0 Licensed)"
 
 ## Related
 
