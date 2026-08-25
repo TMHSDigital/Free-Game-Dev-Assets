@@ -24,3 +24,4 @@ __pycache__/
 # Generated GitHub Pages output (built in CI)
 site/dist/
 
+CLAUDE.md
