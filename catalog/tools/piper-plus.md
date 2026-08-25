@@ -20,7 +20,7 @@ MIT fork of archived rhasspy/piper — local neural TTS (JA/EN/ZH/KO/ES/FR/PT/SV
 ## Notes
 
 - Engine/code is MIT (`LICENSE.md` on `dev`). Voice/model packs may still carry their own terms — check each HF/model card before bundling.
-- Compare [sherpa-onnx](sherpa-onnx.md) / [melotts](melotts.md) for alternate local TTS paths.
+- Compare [sherpa-onnx](sherpa-onnx.md) / [melotts](melotts.md) for alternate local TTS paths. [espeak-ng](espeak-ng.md) is GPL-3.0 formant TTS; this fork exists to avoid that copyleft.
 
 ## Evidence
 
@@ -32,3 +32,4 @@ MIT fork of archived rhasspy/piper — local neural TTS (JA/EN/ZH/KO/ES/FR/PT/SV
 - [sherpa-onnx](sherpa-onnx.md)
 - [melotts](melotts.md)
 - [kokoro-82m](kokoro-82m.md)
+- [espeak-ng](espeak-ng.md)

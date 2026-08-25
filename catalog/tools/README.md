@@ -24,6 +24,8 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [materialize](materialize.md) | Materialize | GPL-3.0 | active |
 | [lmms](lmms.md) | LMMS | GPL-2.0 | active |
 | [bfxr](bfxr.md) | Bfxr | MIT | active |
+| [sfxr](sfxr.md) | sfxr | MIT | active |
+| [audacity](audacity.md) | Audacity | GPL-3.0 | active |
 
 ## Pipeline & compression
 
@@ -35,9 +37,12 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [meshoptimizer](meshoptimizer.md) | meshoptimizer | MIT | active |
 | [google-draco](google-draco.md) | Google Draco | Apache-2.0 | active |
 | [assimp](assimp.md) | assimp | BSD-3-Clause | active |
-| [free-tex-packer](free-tex-packer.md) | Free Tex Packer | MIT | active |
+| [free-tex-packer](free-tex-packer.md) | Free Tex Packer | MIT | needs-review |
 | [osm2world](osm2world.md) | OSM2World | MIT | active |
 | [instant-meshes](instant-meshes.md) | Instant Meshes | BSD-3-Clause | active |
+| [meshlab](meshlab.md) | MeshLab | GPL-3.0 | active |
+| [cloudcompare](cloudcompare.md) | CloudCompare | GPL-2.0 | active |
+| [xnormal](xnormal.md) | xNormal | custom | needs-review |
 
 ## Audio middleware
 
@@ -56,7 +61,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [color-oracle](color-oracle.md) | Color Oracle | MIT | active |
 | [polyglot-gamedev](polyglot-gamedev.md) | Polyglot Gamedev | CC0 | active |
 
-## Speech / TTS (local, permissive)
+## Speech / TTS (local)
 
 | ID | Name | License | Status |
 | --- | --- | --- | --- |
@@ -64,6 +69,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [sherpa-onnx](sherpa-onnx.md) | sherpa-onnx | Apache-2.0 | active |
 | [melotts](melotts.md) | MeloTTS | MIT | active |
 | [piper-plus](piper-plus.md) | Piper Plus | MIT | active |
+| [espeak-ng](espeak-ng.md) | eSpeak NG | GPL-3.0 | active |
 
 ## Godot 4 add-ons
 

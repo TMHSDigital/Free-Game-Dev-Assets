@@ -33,6 +33,9 @@ Browser port of DrPetter's sfxr, the 8-bit sound effect generator. Press a categ
 
 ## Related
 
+- [chiptone](chiptone.md)
+- [sfxr](sfxr.md)
+- [bfxr](bfxr.md)
 - [tenacity](tenacity.md)
 - [../audio/kenney-interface-sounds](../audio/kenney-interface-sounds.md)
 - [../audio/kenney-impact-sounds](../audio/kenney-impact-sounds.md)

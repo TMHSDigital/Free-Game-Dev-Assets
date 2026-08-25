@@ -36,3 +36,4 @@ Standalone Bounding Box Software tool that builds a PBR set from a photo: height
 - [../3d/ambientcg](../3d/ambientcg.md)
 - [../3d/cgbookcase](../3d/cgbookcase.md)
 - [krita](krita.md)
+- [xnormal](xnormal.md)

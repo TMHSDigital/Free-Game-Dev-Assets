@@ -33,6 +33,7 @@ Community fork of Audacity, maintained on Codeberg, for trimming and cleaning th
 ## Related
 
 - [jsfxr](jsfxr.md)
+- [audacity](audacity.md)
 - [../audio/kenney-impact-sounds](../audio/kenney-impact-sounds.md)
 - [../audio/freesound](../audio/freesound.md)
 - [../audio/voxengo-impulses](../audio/voxengo-impulses.md)
