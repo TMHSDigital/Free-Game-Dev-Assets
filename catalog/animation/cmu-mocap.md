@@ -9,10 +9,27 @@ commercial: true
 attribution_required: false
 formats: [BVH]
 tags: [academic, mocap, research]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
 # CMU MoCap Database
 
-2500+ free human motion clips for academic/commercial use. Raw BVH — expect cleanup and retargeting before engine import.
+Free human motion clips from Carnegie Mellon Graphics Lab. Site grant is "free for all uses" with no separate commercial carve-out and no attribution requirement on the pages loaded this session. Raw academic capture. Expect cleanup and retargeting before engine import.
+
+## Notes
+
+- Homepage points at cgspeed BVH conversions for Max/MotionBuilder
+- ASF/AMC scale note on FAQs: multiply by 0.056444 to get meters
+- FAQs cover format and markers, not a second license document
+- Pair with [accad-mocap](accad-mocap.md) / [rokoko-vision](rokoko-vision.md) when you need cleaner modern clips
+
+## Evidence
+
+- Live homepage (2026-08-24): "This dataset of motions is free for all uses."
+
+## Related
+
+- [accad-mocap](accad-mocap.md)
+- [rokoko-vision](rokoko-vision.md)
+- [mixamo](mixamo.md)
