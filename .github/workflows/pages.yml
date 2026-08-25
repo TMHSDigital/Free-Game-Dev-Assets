@@ -31,6 +31,9 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Validate catalog
+        run: node site/validate.mjs
+
       - name: Build site
         run: node site/build.mjs
 
