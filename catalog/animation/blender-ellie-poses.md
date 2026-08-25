@@ -1,7 +1,7 @@
 ---
 id: blender-ellie-poses
 name: Blender Studio Ellie Pose Library
-url: https://www.blender.org/download/demo-files/
+url: https://www.blender.org/download/demo/asset-bundles/ellie-pose-library/ellie-pose-library-v2.0.0.zip
 category: animation
 subcategories: [poses, rigging]
 license: CC-BY
@@ -16,11 +16,12 @@ status: active
 
 # Blender Studio Ellie Pose Library
 
-Humanoid pose library asset bundle from Blender Studio (demo-files). **CC-BY** — credit Blender Studio; fine for commercial games if attribution is kept.
+Humanoid pose library from Blender Studio. The verified card on the [demo-files](https://www.blender.org/download/demo-files/#assets) listing is **Ellie Pose Library v2.0.0** (Asset Bundles section, 24 MB, CC-BY). That listing mixes CC0 and CC-BY cards on one page; this entry is only the Ellie card, not Cube Diorama or Human Base Meshes.
 
 ## Notes
 
-- Download: Ellie Pose Library v2.0.0 zip on the demo-files Asset Bundles section (Blender 4.0+)
+- Direct zip (v2.0.0, Blender 4.0+): listed `url`. Version bumps change the filename; re-check the Asset Bundles card if the zip 404s.
+- License evidence lives on the demo-files listing, not inside the zip.
 - Attribution example: `Ellie Pose Library © Blender Studio — CC-BY`
 
 ## Evidence
