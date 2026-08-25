@@ -30,4 +30,4 @@ MIT code to animate children’s-style human figure drawings (FAIR paper impleme
 ## Related
 
 - [kaykit-character-animations](kaykit-character-animations.md) — 3D clip packs
-- [creature-2d-runtimes](creature-2d-runtimes.md) — 2D creature runtime
+- [creature-2d-runtimes](../tools/creature-2d-runtimes.md) — 2D creature runtime

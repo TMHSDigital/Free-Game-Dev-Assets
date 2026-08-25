@@ -3,7 +3,7 @@ id: luizmelo-martial-hero
 name: LuizMelo Martial Hero
 url: https://luizmelo.itch.io/martial-hero
 publisher: LuizMelo
-category: animation
+category: 2d
 subcategories: [2d, sprites, character]
 license: CC0
 commercial: true
@@ -31,5 +31,7 @@ CC0 2D animated hero sheets (idle/run/jump/fall/attacks/hit/death). Solid free p
 
 ## Related
 
+- [pixel-frog](pixel-frog.md)
+- [ansimuz-sunnyland](ansimuz-sunnyland.md)
 - [luizmelo-monsters-creatures-fantasy](luizmelo-monsters-creatures-fantasy.md)
 - [luizmelo-evil-wizard](luizmelo-evil-wizard.md)

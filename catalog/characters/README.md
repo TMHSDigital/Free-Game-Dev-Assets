@@ -1,4 +1,6 @@
-# Characters — generators & modular humanoids
+# Characters — generators and finished packs
+
+One folder. `subcategories` tells the two jobs apart: `generator` for tools that emit a mesh, `library` / `rigged` / `creatures` / `vrm` for packs you download ready to retarget. See [`docs/provenance.md`](../../docs/provenance.md).
 
 | ID | Name | License | Commercial | Status |
 | --- | --- | --- | --- | --- |

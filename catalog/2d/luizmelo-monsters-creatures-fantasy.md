@@ -3,7 +3,7 @@ id: luizmelo-monsters-creatures-fantasy
 name: LuizMelo Monsters Creatures Fantasy
 url: https://luizmelo.itch.io/monsters-creatures-fantasy
 publisher: LuizMelo
-category: animation
+category: 2d
 subcategories: [2d, sprites, character]
 license: CC0
 commercial: true
@@ -32,4 +32,4 @@ CC0 2D animated enemy pack (Skeleton, Mushroom, Goblin, Flying Eye) with idle/wa
 
 - [luizmelo-martial-hero](luizmelo-martial-hero.md)
 - [luizmelo-evil-wizard](luizmelo-evil-wizard.md)
-- [kaykit-character-animations](kaykit-character-animations.md)
+- [pixel-frog](pixel-frog.md)

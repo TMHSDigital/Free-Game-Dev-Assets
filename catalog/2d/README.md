@@ -1,6 +1,6 @@
 # 2D — sprites, GUI, icons, palettes
 
-Do not mix tile grids or camera projections without scaling/reprojection. Typical buckets: **micro** 8–12px (Urizen 12×12, Bit Bonanza 10×10), **standard** 16×16, **dense** 32×32+. `isometric_3_4` (Ninja Adventure, Dungeon Tileset II) is not ortho top-down or side-scroller.
+Do not mix tile grids or camera projections without scaling/reprojection. Typical buckets: **micro** 8–12px (Urizen 12×12, Bit Bonanza 10×10), **standard** 16×16, **dense** 32×32+. `isometric_3_4` (Ninja Adventure, Dungeon Tileset II) is not ortho top-down or side-scroller. Baked 2D character cycles (LuizMelo and similar) live here, not under `animation/`.
 
 Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 
@@ -23,6 +23,9 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | [paleto-vol01](paleto-vol01.md) | Paleto Vol.01 | CC0 | yes | active |
 | [pixel-frog](pixel-frog.md) | Pixel Frog | varies | varies | active |
 | [ansimuz-sunnyland](ansimuz-sunnyland.md) | SunnyLand (ansimuz) | CC0 | yes | active |
+| [luizmelo-martial-hero](luizmelo-martial-hero.md) | LuizMelo Martial Hero | CC0 | yes | active |
+| [luizmelo-evil-wizard](luizmelo-evil-wizard.md) | LuizMelo Evil Wizard | CC0 | yes | active |
+| [luizmelo-monsters-creatures-fantasy](luizmelo-monsters-creatures-fantasy.md) | LuizMelo Monsters Fantasy | CC0 | yes | active |
 | [penzilla](penzilla.md) | Penzilla | custom | yes | needs-review |
 | [material-symbols](material-symbols.md) | Material Symbols | Apache-2.0 | yes | active |
 | [craftpix](craftpix.md) | CraftPix freebies | custom | yes | active |

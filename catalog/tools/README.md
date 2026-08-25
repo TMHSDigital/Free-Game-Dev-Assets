@@ -85,6 +85,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [godot-guide](godot-guide.md) | G.U.I.D.E. | MIT | active |
 | [godot-input-helper](godot-input-helper.md) | Input Helper | MIT | active |
 | [dialogic](dialogic.md) | Dialogic | MIT | active |
+| [creature-2d-runtimes](creature-2d-runtimes.md) | Creature 2D Runtimes | Apache-2.0 | active |
 | [godot-mod-loader](godot-mod-loader.md) | Godot Mod Loader | MIT | active |
 | [beehave](beehave.md) | Beehave | MIT | active |
 | [limboai](limboai.md) | LimboAI | MIT | active |

@@ -3,7 +3,7 @@ id: luizmelo-evil-wizard
 name: LuizMelo Evil Wizard
 url: https://luizmelo.itch.io/evil-wizard
 publisher: LuizMelo
-category: animation
+category: 2d
 subcategories: [2d, sprites, character]
 license: CC0
 commercial: true
@@ -33,3 +33,4 @@ CC0 2D animated boss/enemy wizard (idle/move/attack/hit/death). Quick boss kit f
 
 - [luizmelo-martial-hero](luizmelo-martial-hero.md)
 - [luizmelo-monsters-creatures-fantasy](luizmelo-monsters-creatures-fantasy.md)
+- [pixel-frog](pixel-frog.md)

@@ -2,7 +2,7 @@
 id: creature-2d-runtimes
 name: Creature 2D Runtimes (Godot)
 url: https://github.com/kestrelm/Creature_Godot
-category: animation
+category: tools
 subcategories: [skeletal-2d]
 license: Apache-2.0
 commercial: true
@@ -30,5 +30,6 @@ Godot plugin/runtime for Creature mesh-deformation 2D animation. **Apache 2.0** 
 
 ## Related
 
-- [meta-animated-drawings](meta-animated-drawings.md)
-- [kaykit-character-animations](kaykit-character-animations.md)
+- [meta-animated-drawings](../animation/meta-animated-drawings.md)
+- [dialogic](dialogic.md)
+- [pixelorama](pixelorama.md)
