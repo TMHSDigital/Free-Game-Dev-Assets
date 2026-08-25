@@ -2,6 +2,7 @@
 id: kenney-1-bit-pack
 name: Kenney 1-Bit Pack
 url: https://kenney.nl/assets/1-bit-pack
+publisher: Kenney
 category: 2d
 subcategories: [tileset, pixel, roguelike]
 license: CC0

@@ -2,6 +2,7 @@
 id: congusbongus-footsteps-surfaces
 name: Congusbongus Footsteps on Surfaces
 url: https://opengameart.org/content/footsteps-on-different-surfaces
+publisher: OpenGameArt
 category: audio
 subcategories: [sfx, footsteps]
 license: CC-BY-3.0

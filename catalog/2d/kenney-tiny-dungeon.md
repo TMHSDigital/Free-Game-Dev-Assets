@@ -2,6 +2,7 @@
 id: kenney-tiny-dungeon
 name: Kenney Tiny Dungeon
 url: https://kenney.nl/assets/tiny-dungeon
+publisher: Kenney
 category: 2d
 subcategories: [tileset, pixel, dungeon]
 license: CC0

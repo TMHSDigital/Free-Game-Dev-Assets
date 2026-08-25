@@ -2,6 +2,7 @@
 id: luizmelo-evil-wizard
 name: LuizMelo Evil Wizard
 url: https://luizmelo.itch.io/evil-wizard
+publisher: LuizMelo
 category: animation
 subcategories: [2d, sprites, character]
 license: CC0

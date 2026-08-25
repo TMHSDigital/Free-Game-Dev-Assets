@@ -2,6 +2,7 @@
 id: quaternius-ultimate-monsters
 name: Quaternius Ultimate Monsters
 url: https://quaternius.com/packs/ultimatemonsters.html
+publisher: Quaternius
 category: characters
 subcategories: [creatures, enemies, animated]
 license: CC0

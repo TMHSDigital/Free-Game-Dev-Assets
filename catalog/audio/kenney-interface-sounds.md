@@ -2,6 +2,7 @@
 id: kenney-interface-sounds
 name: Kenney Interface Sounds
 url: https://kenney.nl/assets/interface-sounds
+publisher: Kenney
 category: audio
 subcategories: [sfx, ui]
 license: CC0

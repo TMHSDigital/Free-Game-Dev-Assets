@@ -2,6 +2,7 @@
 id: kenney-nature-kit
 name: Kenney Nature Kit
 url: https://kenney.nl/assets/nature-kit
+publisher: Kenney
 category: 3d
 subcategories: [foliage, nature, environment-props]
 license: CC0

@@ -2,6 +2,7 @@
 id: kaykit-resource-bits
 name: KayKit Resource Bits
 url: https://kaylousberg.itch.io/resource-bits
+publisher: KayKit
 category: 3d
 subcategories: [models, props, resources]
 license: CC0

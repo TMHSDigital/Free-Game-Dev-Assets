@@ -2,6 +2,7 @@
 id: kenney-rpg-audio
 name: Kenney RPG Audio
 url: https://kenney.nl/assets/rpg-audio
+publisher: Kenney
 category: audio
 subcategories: [sfx, footsteps, foley]
 license: CC0

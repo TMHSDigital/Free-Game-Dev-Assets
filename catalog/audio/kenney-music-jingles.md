@@ -2,6 +2,7 @@
 id: kenney-music-jingles
 name: Kenney Music Jingles
 url: https://kenney.nl/assets/music-jingles
+publisher: Kenney
 category: audio
 subcategories: [music, jingles, stingers]
 license: CC0

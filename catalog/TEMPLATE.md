@@ -12,6 +12,7 @@ tags: [low-poly, modular]
 verified: 2026-07-19
 status: active
 # Optional (omit if N/A):
+# publisher: Kenney   # rights holder when that publisher has more than one entry; not a generic host
 # license_spdx: CC0-1.0
 # attribution_string: "Credit line if attribution_required"
 # commercial: varies   # aggregators only; not a blanket commercial grant

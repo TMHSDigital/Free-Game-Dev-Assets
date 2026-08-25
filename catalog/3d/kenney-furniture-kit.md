@@ -2,6 +2,7 @@
 id: kenney-furniture-kit
 name: Kenney Furniture Kit
 url: https://kenney.nl/assets/furniture-kit
+publisher: Kenney
 category: 3d
 subcategories: [interior, furniture, props]
 license: CC0

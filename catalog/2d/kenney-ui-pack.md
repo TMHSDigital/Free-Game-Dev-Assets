@@ -2,6 +2,7 @@
 id: kenney-ui-pack
 name: Kenney UI Pack
 url: https://kenney.nl/assets/ui-pack
+publisher: Kenney
 category: 2d
 subcategories: [ui, gui]
 license: CC0

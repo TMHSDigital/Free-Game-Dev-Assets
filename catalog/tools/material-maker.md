@@ -2,6 +2,7 @@
 id: material-maker
 name: Material Maker
 url: https://www.materialmaker.org
+publisher: Material Maker
 category: tools
 subcategories: [materials, procedural]
 license: MIT

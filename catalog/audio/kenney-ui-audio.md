@@ -2,6 +2,7 @@
 id: kenney-ui-audio
 name: Kenney UI Audio
 url: https://kenney.nl/assets/ui-audio
+publisher: Kenney
 category: audio
 subcategories: [sfx, ui]
 license: CC0

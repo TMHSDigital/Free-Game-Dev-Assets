@@ -2,6 +2,7 @@
 id: pixelify-sans
 name: Pixelify Sans
 url: https://fonts.google.com/specimen/Pixelify+Sans
+publisher: Google Fonts
 category: fonts
 subcategories: [pixel, display, sans]
 license: SIL OFL

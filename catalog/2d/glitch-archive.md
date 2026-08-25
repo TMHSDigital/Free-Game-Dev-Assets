@@ -2,6 +2,7 @@
 id: glitch-archive
 name: Glitch (CC0 asset release)
 url: https://opengameart.org/content/huge-cc0-asset-release-from-glitch
+publisher: OpenGameArt
 category: 2d
 subcategories: [sprites, vectors, environments]
 license: CC0

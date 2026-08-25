@@ -2,6 +2,7 @@
 id: gboxmikefozzy-footsteps
 name: GboxMikeFozzy Footsteps (OGA)
 url: https://opengameart.org/content/footsteps-0
+publisher: OpenGameArt
 category: audio
 subcategories: [sfx, footsteps]
 license: CC0

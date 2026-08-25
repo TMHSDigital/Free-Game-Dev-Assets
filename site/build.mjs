@@ -142,6 +142,7 @@ function loadEntries() {
       ...(meta.camera_perspective ? { camera_perspective: String(meta.camera_perspective) } : {}),
       ...(Array.isArray(meta.hardware_tags) ? { hardware_tags: meta.hardware_tags } : {}),
       ...(meta.attribution_string ? { attribution_string: String(meta.attribution_string) } : {}),
+      ...(meta.publisher ? { publisher: String(meta.publisher) } : {}),
     });
   }
 

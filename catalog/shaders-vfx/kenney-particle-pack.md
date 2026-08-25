@@ -2,6 +2,7 @@
 id: kenney-particle-pack
 name: Kenney Particle Pack
 url: https://kenney.nl/assets/particle-pack
+publisher: Kenney
 category: shaders-vfx
 subcategories: [particles, textures, 2d-vfx]
 license: CC0

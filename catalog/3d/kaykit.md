@@ -2,6 +2,7 @@
 id: kaykit
 name: KayKit (Kay Lousberg)
 url: https://kaylousberg.itch.io
+publisher: KayKit
 category: 3d
 subcategories: [characters, environments, animations]
 license: CC0

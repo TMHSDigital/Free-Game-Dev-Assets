@@ -2,6 +2,7 @@
 id: quaternius-fantasy-props-megakit
 name: Quaternius Fantasy Props MegaKit
 url: https://quaternius.com/packs/fantasypropsmegakit.html
+publisher: Quaternius
 category: 3d
 subcategories: [interior, props, furniture, weapons]
 license: CC0

@@ -2,6 +2,7 @@
 id: material-symbols
 name: Material Symbols
 url: https://fonts.google.com/icons
+publisher: Google Fonts
 category: 2d
 subcategories: [icons, ui]
 license: Apache-2.0

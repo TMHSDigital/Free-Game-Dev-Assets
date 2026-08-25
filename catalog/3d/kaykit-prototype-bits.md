@@ -2,6 +2,7 @@
 id: kaykit-prototype-bits
 name: KayKit Prototype Bits
 url: https://kaylousberg.itch.io/prototype-bits
+publisher: KayKit
 category: 3d
 subcategories: [models, props, prototype]
 license: CC0

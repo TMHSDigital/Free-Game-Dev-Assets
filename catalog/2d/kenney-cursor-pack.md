@@ -2,6 +2,7 @@
 id: kenney-cursor-pack
 name: Kenney Cursor Pack
 url: https://kenney.nl/assets/cursor-pack
+publisher: Kenney
 category: 2d
 subcategories: [ui, cursors]
 license: CC0

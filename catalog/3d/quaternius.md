@@ -2,6 +2,7 @@
 id: quaternius
 name: Quaternius
 url: https://quaternius.com
+publisher: Quaternius
 category: 3d
 subcategories: [characters, environments, props]
 license: CC0

@@ -2,6 +2,7 @@
 id: luizmelo-martial-hero
 name: LuizMelo Martial Hero
 url: https://luizmelo.itch.io/martial-hero
+publisher: LuizMelo
 category: animation
 subcategories: [2d, sprites, character]
 license: CC0

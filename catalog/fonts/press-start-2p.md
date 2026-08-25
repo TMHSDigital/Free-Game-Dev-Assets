@@ -2,6 +2,7 @@
 id: press-start-2p
 name: Press Start 2P
 url: https://fonts.google.com/specimen/Press+Start+2P
+publisher: Google Fonts
 category: fonts
 subcategories: [pixel, display]
 license: SIL OFL

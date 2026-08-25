@@ -2,6 +2,7 @@
 id: ox72-dungeon-tileset
 name: 0x72 16×16 Dungeon Tileset
 url: https://0x72.itch.io/16x16-dungeon-tileset
+publisher: 0x72
 category: 2d
 subcategories: [sprites, tiles, pixel]
 license: CC0

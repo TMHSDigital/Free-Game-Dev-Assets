@@ -2,6 +2,7 @@
 id: noto-sans
 name: Noto Sans (incl. CJK)
 url: https://fonts.google.com/noto
+publisher: Google Fonts
 category: fonts
 subcategories: [sans, cjk, localization]
 license: SIL OFL

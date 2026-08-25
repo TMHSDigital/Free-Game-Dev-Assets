@@ -2,6 +2,7 @@
 id: kenney-light-masks
 name: Kenney Light Masks
 url: https://kenney.nl/assets/light-masks
+publisher: Kenney
 category: shaders-vfx
 subcategories: [light-cookies, masks, 2d-vfx]
 license: CC0

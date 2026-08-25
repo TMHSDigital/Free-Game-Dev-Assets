@@ -2,6 +2,7 @@
 id: kenney-sci-fi-sounds
 name: Kenney Sci-fi Sounds
 url: https://kenney.nl/assets/sci-fi-sounds
+publisher: Kenney
 category: audio
 subcategories: [sfx]
 license: CC0

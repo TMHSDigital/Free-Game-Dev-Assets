@@ -35,6 +35,7 @@ One new markdown file is enough — the website rebuilds from frontmatter on dep
 - `commercial`: `true` / `false` / `unknown` / `varies`. Use `varies` for aggregators where some files are commercial-ok and others are not. The site still shows these under Commercial OK, labeled **per-file review**, so they are not silently excluded and not silently treated as a blanket grant.
 - `attribution_required`: `true` / `false`.
 - `attribution_string`: optional copy-paste credit.
+- `publisher`: optional. Set when the same rights-holding publisher has more than one catalog entry (Kenney, Quaternius, KayKit, Google Fonts, OpenGameArt, LuizMelo, 0x72, Blender Studio, Material Maker). Do not set this to a generic host (GitHub, Hugging Face).
 - `grid_dimensions` / `camera_perspective` / `hardware_tags`: optional 2D/UI metadata.
 - `verified`: ISO date (`YYYY-MM-DD`) of your last license check.
 - `status`: `active` | `needs-review` | `deprecated`.

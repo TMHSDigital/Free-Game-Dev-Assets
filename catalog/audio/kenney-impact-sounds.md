@@ -2,6 +2,7 @@
 id: kenney-impact-sounds
 name: Kenney Impact Sounds
 url: https://kenney.nl/assets/impact-sounds
+publisher: Kenney
 category: audio
 subcategories: [sfx, foley, impact]
 license: CC0

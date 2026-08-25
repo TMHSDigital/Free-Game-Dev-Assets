@@ -2,6 +2,7 @@
 id: kaykit-adventurers
 name: KayKit Adventurers Character Pack
 url: https://kaylousberg.itch.io/kaykit-adventurers
+publisher: KayKit
 category: characters
 subcategories: [rigged, animated, modular-accessories]
 license: CC0

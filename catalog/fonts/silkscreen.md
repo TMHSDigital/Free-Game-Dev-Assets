@@ -2,6 +2,7 @@
 id: silkscreen
 name: Silkscreen
 url: https://fonts.google.com/specimen/Silkscreen
+publisher: Google Fonts
 category: fonts
 subcategories: [pixel, display]
 license: SIL OFL

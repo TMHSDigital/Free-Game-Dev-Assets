@@ -2,6 +2,7 @@
 id: kenney-input-prompts
 name: Kenney Input Prompts
 url: https://kenney.nl/assets/input-prompts
+publisher: Kenney
 category: 2d
 subcategories: [ui, input]
 license: CC0

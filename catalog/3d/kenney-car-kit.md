@@ -2,6 +2,7 @@
 id: kenney-car-kit
 name: Kenney Car Kit
 url: https://kenney.nl/assets/car-kit
+publisher: Kenney
 category: 3d
 subcategories: [vehicles, transport]
 license: CC0

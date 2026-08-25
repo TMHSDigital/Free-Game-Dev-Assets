@@ -2,6 +2,7 @@
 id: quaternius-stylized-nature-megakit
 name: Quaternius Stylized Nature MegaKit
 url: https://quaternius.com/packs/stylizednaturemegakit.html
+publisher: Quaternius
 category: 3d
 subcategories: [foliage, nature, trees]
 license: CC0

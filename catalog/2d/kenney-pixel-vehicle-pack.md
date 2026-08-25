@@ -2,6 +2,7 @@
 id: kenney-pixel-vehicle-pack
 name: Kenney Pixel Vehicle Pack
 url: https://kenney.nl/assets/pixel-vehicle-pack
+publisher: Kenney
 category: 2d
 subcategories: [sprites, vehicles]
 license: CC0

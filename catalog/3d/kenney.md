@@ -2,6 +2,7 @@
 id: kenney
 name: Kenney
 url: https://kenney.nl
+publisher: Kenney
 category: 3d
 subcategories: [models, environments, ui, audio]
 license: CC0

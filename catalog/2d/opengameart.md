@@ -2,6 +2,7 @@
 id: opengameart
 name: OpenGameArt
 url: https://opengameart.org
+publisher: OpenGameArt
 category: 2d
 subcategories: [sprites, tilesets, aggregator]
 license: varies

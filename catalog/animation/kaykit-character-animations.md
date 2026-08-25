@@ -2,6 +2,7 @@
 id: kaykit-character-animations
 name: KayKit Character Animations
 url: https://kaylousberg.itch.io/kaykit-character-animations
+publisher: KayKit
 category: animation
 subcategories: [character]
 license: CC0

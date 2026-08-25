@@ -2,6 +2,7 @@
 id: kaykit-furniture-bits
 name: KayKit Furniture Bits
 url: https://kaylousberg.itch.io/furniture-bits
+publisher: KayKit
 category: 3d
 subcategories: [interior, furniture, props]
 license: CC0

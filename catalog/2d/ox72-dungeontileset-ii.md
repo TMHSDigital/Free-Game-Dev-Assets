@@ -2,6 +2,7 @@
 id: ox72-dungeontileset-ii
 name: 0x72 Dungeon Tileset II
 url: https://0x72.itch.io/dungeontileset-ii
+publisher: 0x72
 category: 2d
 subcategories: [sprites, tiles, pixel]
 license: CC0

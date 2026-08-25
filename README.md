@@ -80,6 +80,7 @@ Each source is one markdown file with YAML frontmatter plus short notes. Add new
 | `status` | See legend below |
 | `grid_dimensions` / `camera_perspective` / `hardware_tags` | Optional — 2D tile size, projection (`isometric_3_4`, `top_down`, `side_scroller`, `2d_flat`), input-device coverage |
 | `attribution_string` | Optional copy-paste credit when `attribution_required` |
+| `publisher` | Optional rights-holding publisher when that publisher has more than one entry. Not a generic host. |
 
 ### Status legend
 

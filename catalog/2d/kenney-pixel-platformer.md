@@ -2,6 +2,7 @@
 id: kenney-pixel-platformer
 name: Kenney Pixel Platformer
 url: https://kenney.nl/assets/pixel-platformer
+publisher: Kenney
 category: 2d
 subcategories: [sprites, tiles, platformer]
 license: CC0
