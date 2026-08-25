@@ -1,7 +1,7 @@
 ---
 id: accad-mocap
 name: ACCAD Open Motion Project
-url: https://accad.osu.edu/research/motion-lab/system-data
+url: https://accad.osu.edu/research/motion-lab/mocap-system-and-data
 category: animation
 subcategories: [mocap]
 license: CC-BY-3.0
@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [BVH, C3D, FBX, AMC]
 tags: [academic, locomotion, walking, running]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,7 +25,7 @@ Ohio State ACCAD free mocap samples (walk/run/gestures/dance/breakdance, etc.) i
 
 ## Evidence
 
-- Live page footer: “Open Motion Project by ACCAD/The Ohio State University is licensed under a Creative Commons Attribution 3.0 Unported License.”
+- Live page footer (2026-08-24): "Open Motion Project by ACCAD/The Ohio State University is licensed under a Creative Commons Attribution 3.0 Unported License."
 - CC BY 3.0 deed: share/adapt “for any purpose, even commercially” with attribution.
 
 ## Related

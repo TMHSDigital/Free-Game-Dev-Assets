@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, USD]
 tags: [auto-rig, reallusion, actorcore, freemium]
-verified: 2026-07-19
+verified: 2026-08-24
 status: needs-review
 ---
 
@@ -25,7 +25,7 @@ Free stand-alone auto-rigger for bipeds (and some creature proportions). Export 
 ## Evidence
 
 - Live product page title/meta: “Free download now! … auto rig tool makes any mesh come to life…”
-- No public EULA URL confirmed this run → stay `needs-review`.
+- Live product page (2026-08-24): still no public EULA URL. Re-check confirms `needs-review`.
 
 ## Related
 
