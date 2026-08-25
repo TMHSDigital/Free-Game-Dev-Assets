@@ -34,6 +34,7 @@
 | [filmmusic-ende](filmmusic-ende.md) | FilmMusic / Sascha Ende | CC-BY-4.0 | yes | active |
 | [soundimage](soundimage.md) | Soundimage.org | custom | yes | active |
 | [purple-planet](purple-planet.md) | Purple Planet | custom | yes | active |
+| [kenney-music-jingles](kenney-music-jingles.md) | Kenney Music Jingles | CC0 | yes | active |
 
 Avoid **ND**-licensed music in games — see [`docs/licenses.md`](../../docs/licenses.md) / [`docs/high-risk.md`](../../docs/high-risk.md).
 

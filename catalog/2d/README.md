@@ -34,6 +34,7 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | [lpc-revised-basics](lpc-revised-basics.md) | LPC Revised Basics | varies (SA) | yes† | active |
 | [opengameart](opengameart.md) | OpenGameArt | varies | unknown | needs-review |
 | [lospec](lospec.md) | Lospec | varies | unknown | needs-review |
+| [dcss-tiles](dcss-tiles.md) | Dungeon Crawl Stone Soup Tiles | varies | unknown | needs-review |
 
 † Commercial OK with attribution + share-alike / GPL obligations on asset derivatives — see [`docs/high-risk.md`](../../docs/high-risk.md).  
 †† CC0 on SVG copyright; brand trademarks still apply — identify brands only.

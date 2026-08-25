@@ -29,7 +29,9 @@
     { "id": "sonniss-gdc", "need": "Pro SFX dumps" },
     { "id": "incompetech", "need": "Attribution music" },
     { "id": "departure-mono", "need": "Pixel / terminal font" },
-    { "id": "noto-sans", "need": "Localization fonts" }
+    { "id": "noto-sans", "need": "Localization fonts" },
+    { "id": "kenney-music-jingles", "need": "No-attribution music stingers" },
+    { "id": "jsfxr", "need": "Generate your own retro SFX" }
   ],
   "guides": [
     { "id": "licenses", "title": "Licenses", "path": "docs/licenses.md" },

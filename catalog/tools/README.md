@@ -13,6 +13,10 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [material-maker](material-maker.md) | Material Maker | MIT | active |
 | [gaea](gaea.md) | Gaea Community Edition | custom | active (`commercial: false`) |
 | [accurig](accurig.md) | AccuRig (Reallusion) | custom | needs-review |
+| [krita](krita.md) | Krita | GPL-3.0 | active |
+| [inkscape](inkscape.md) | Inkscape | GPL-2.0 | active |
+| [tenacity](tenacity.md) | Tenacity | GPL-2.0 | active |
+| [jsfxr](jsfxr.md) | jsfxr | public-domain | active |
 
 ## Pipeline & compression
 
@@ -64,6 +68,9 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [godot-input-helper](godot-input-helper.md) | Input Helper | MIT | active |
 | [dialogic](dialogic.md) | Dialogic | MIT | active |
 | [godot-mod-loader](godot-mod-loader.md) | Godot Mod Loader | MIT | active |
+| [beehave](beehave.md) | Beehave | MIT | active |
+| [limboai](limboai.md) | LimboAI | MIT | active |
+| [terrain3d](terrain3d.md) | Terrain3D | MIT | active |
 | [godotsteam](godotsteam.md) | GodotSteam | custom | needs-review |
 
 See: [`docs/godot-budget-stack.md`](../../docs/godot-budget-stack.md) · [`docs/ai-assets.md`](../../docs/ai-assets.md) · [`docs/research-index.md`](../../docs/research-index.md).
