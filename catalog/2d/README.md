@@ -36,6 +36,7 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | [xelu-input-prompts](xelu-input-prompts.md) | Xelu input prompts | CC0 | yes | active |
 | [universal-lpc-generator](universal-lpc-generator.md) | Universal LPC Generator | varies (SA) | yes† | active |
 | [lpc-revised-basics](lpc-revised-basics.md) | LPC Revised Basics | varies (SA) | yes† | active |
+| [openclipart](openclipart.md) | Openclipart | CC0 | yes | active |
 | [opengameart](opengameart.md) | OpenGameArt | varies | unknown | needs-review |
 | [lospec](lospec.md) | Lospec | varies | unknown | needs-review |
 | [dcss-tiles](dcss-tiles.md) | Dungeon Crawl Stone Soup Tiles | varies | unknown | needs-review |

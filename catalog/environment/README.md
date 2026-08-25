@@ -4,6 +4,7 @@
 | --- | --- | --- | --- | --- |
 | [poly-haven](poly-haven.md) | Poly Haven | CC0 | yes | active |
 | [nasa-3d-resources](nasa-3d-resources.md) | NASA 3D Resources | public-domain* | yes* | active |
+| [nasa-image-video-library](nasa-image-video-library.md) | NASA Image and Video Library | custom | unknown | needs-review |
 | [natural-earth](natural-earth.md) | Natural Earth | public-domain | yes | active |
 | [nasadem](nasadem.md) | NASADEM | CC0 | yes | active |
 | [etopo-2022](etopo-2022.md) | ETOPO 2022 | CC0 | yes | active |
