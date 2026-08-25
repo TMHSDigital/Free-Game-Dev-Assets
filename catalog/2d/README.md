@@ -23,6 +23,8 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | [paleto-vol01](paleto-vol01.md) | Paleto Vol.01 | CC0 | yes | active |
 | [pixel-frog](pixel-frog.md) | Pixel Frog | varies | yes | active |
 | [ansimuz-sunnyland](ansimuz-sunnyland.md) | SunnyLand (ansimuz) | CC0 | yes | active |
+| [penzilla](penzilla.md) | Penzilla | custom | yes | needs-review |
+| [material-symbols](material-symbols.md) | Material Symbols | Apache-2.0 | yes | active |
 | [craftpix](craftpix.md) | CraftPix freebies | custom | yes | active |
 | [game-icons-net](game-icons-net.md) | Game-Icons.net | CC-BY-3.0 | yes | active |
 | [lucide-icons](lucide-icons.md) | Lucide Icons | ISC | yes | active |

@@ -36,6 +36,7 @@
 | [purple-planet](purple-planet.md) | Purple Planet | custom | yes | active |
 | [kenney-music-jingles](kenney-music-jingles.md) | Kenney Music Jingles | CC0 | yes | active |
 | [freepd](freepd.md) | FreePD | unknown | unknown | deprecated |
+| [free-music-archive](free-music-archive.md) | Free Music Archive | varies | unknown | needs-review |
 
 Avoid **ND**-licensed music in games — see [`docs/licenses.md`](../../docs/licenses.md) / [`docs/high-risk.md`](../../docs/high-risk.md).
 

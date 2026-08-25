@@ -35,4 +35,6 @@ status: active
 - [ambientcg](ambientcg.md)
 - [texturecan](texturecan.md)
 - [texture-ninja](texture-ninja.md)
+- [sharetextures](sharetextures.md)
+- [threedtextures-me](threedtextures-me.md)
 - [../environment/poly-haven](../environment/poly-haven.md)

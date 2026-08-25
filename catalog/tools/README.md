@@ -20,6 +20,8 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [chiptone](chiptone.md) | ChipTone | CC0 | active |
 | [gimp](gimp.md) | GIMP | GPL-3.0 | active |
 | [libresprite](libresprite.md) | LibreSprite | GPL-2.0 | active |
+| [goxel](goxel.md) | Goxel | GPL-3.0 | active |
+| [materialize](materialize.md) | Materialize | GPL-3.0 | active |
 
 ## Pipeline & compression
 
