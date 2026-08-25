@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [Blend, FBX]
 tags: [low-poly, ps1, cc0, itch]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,7 +25,7 @@ Single CC0 low-poly humanoid with IK helpers and an editable texture — quick P
 
 ## Evidence
 
-- itch page metadata: `Asset license` → Creative Commons Zero v1.0 Universal; page title/body state “CC0 licence.”
+- itch page metadata (2026-08-24): Asset license "Creative Commons Zero v1.0 Universal"
 
 ## Related
 

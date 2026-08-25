@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [OTF, TTF]
 tags: [a11y, low-vision, ui, ofl]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,8 +25,8 @@ Braille Institute’s low-vision–first UI sans — maximized letter distinctio
 
 ## Evidence
 
-- Live brailleinstitute.org/freefont: “free for everyone—from personal use to all commercial applications.”
-- Live `OFL.txt` (googlefonts/atkinson-hyperlegible): SIL OFL 1.1, Copyright 2020 Braille Institute of America, Inc.
+- Live `OFL.txt` (googlefonts/atkinson-hyperlegible, 2026-08-24): "This Font Software is licensed under the SIL Open Font License, Version 1.1."
+- Braille Institute `/freefont` (2026-08-24): page is script-heavy; commercial-use sentence from the prior check was not re-extracted as HTML this session. OFL file is the license evidence.
 
 ## Related
 

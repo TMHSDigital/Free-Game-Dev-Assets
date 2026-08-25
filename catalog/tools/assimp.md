@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, glTF, OBJ, DAE, many]
 tags: [bsd, importer, converter, pipeline]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ BSD-3-Clause multi-format 3D importer/converter for pipeline glue (FBX→glTF, e
 
 ## Evidence
 
-- Live LICENSE (2026-07-19): BSD-style Redistribution terms + name endorsement clause; notes non-BSD test models exception
+- Live LICENSE (2026-08-24): "Redistribution and use of this software in source and binary forms, with or without modification, are permitted"
 
 ## Related
 
