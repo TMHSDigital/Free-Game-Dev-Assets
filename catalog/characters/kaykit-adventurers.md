@@ -32,4 +32,5 @@ Stylized low-poly dungeon adventurers (5 base + extras on higher itch tiers), ri
 
 - [kaykit](../3d/kaykit.md)
 - [kaykit-character-animations](../animation/kaykit-character-animations.md)
+- [kaykit-skeletons](kaykit-skeletons.md)
 - [quaternius-universal-base-characters](quaternius-universal-base-characters.md)
