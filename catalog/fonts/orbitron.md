@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [OTF, TTF]
 tags: [sci-fi, geometric, display, ofl]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -26,7 +26,7 @@ Matt McInerney / League of Moveable Type geometric display face — Eurostile-ad
 ## Evidence
 
 - Live League page: “Open Font License” link to repo `OFL.txt`
-- Live `google/fonts` `ofl/orbitron/OFL.txt`: SIL OFL 1.1 with Reserved Font Name “Orbitron”
+- Live `google/fonts` `ofl/orbitron/OFL.txt` (2026-08-24): SIL OFL 1.1 with Reserved Font Name “Orbitron”
 
 ## Related
 

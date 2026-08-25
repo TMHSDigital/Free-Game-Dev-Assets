@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [HGT, GeoTIFF]
 tags: [srtm, 30m, global-land]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,8 +24,8 @@ status: active
 
 ## Evidence
 
-- LP DAAC product page: “openly shared, without restriction” per EOSDIS Data Use Guidance.
-- Live EOSDIS guidance: NASA-led mission data unmarked by a license are **CC0**; acknowledge NASA as source.
+- LP DAAC product page (2026-08-24): “openly shared, without restriction” per EOSDIS Data Use Guidance.
+- Live EOSDIS guidance (2026-08-24): NASA-led mission data unmarked by a license are **CC0**; acknowledge NASA as source.
 
 ## Related
 

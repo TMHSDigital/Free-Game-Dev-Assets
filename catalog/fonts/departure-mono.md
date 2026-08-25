@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [OTF, TTF]
 tags: [pixel, terminal, retro-ui]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -26,6 +26,7 @@ Helena Zhang’s monospaced pixel face under SIL OFL 1.1. Strong fit for termina
 
 ## Evidence
 
+- Live site meta description (2026-08-24): "licensed under the SIL OFL"
 - GitHub README Licenses table: Font = SIL OFL; Site = MIT
 - `public/assets/LICENSE`: “This Font Software is licensed under the SIL Open Font License, Version 1.1.” (Copyright 2022–2024 Helena Zhang). OFL permits bundling/embedding/selling with software; fonts must not be sold by themselves.
 

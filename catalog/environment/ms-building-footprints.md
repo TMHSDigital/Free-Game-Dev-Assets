@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [GeoJSON, CSV]
 tags: [buildings, footprints, height-estimates]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,8 +24,8 @@ status: active
 
 ## Evidence
 
-- Repo `LICENSE`: “licensed by Microsoft under CLDA Permissive 2.0” (CDLA Permissive 2.0).
-- README: “freely available for download and use under CDLA Permissive 2.0.”
+- Repo `LICENSE` (2026-08-24): “licensed by Microsoft under CLDA Permissive 2.0” (CDLA Permissive 2.0).
+- README (2026-08-24): “freely available for download and use under CDLA Permissive 2.0.”
 - Live CDLA Permissive 2.0: use/modify/share Data; no restriction on Results.
 
 ## Related

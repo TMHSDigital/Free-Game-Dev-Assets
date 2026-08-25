@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [shapefile, GeoTIFF]
 tags: [vector, raster, coastlines, political]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ Public-domain vector + raster map data at 1:10m / 1:50m / 1:110m (coastlines, ad
 
 ## Evidence
 
-- Live Terms of Use: “All versions of Natural Earth raster + vector map data … are in the public domain… including … commercial purposes. No permission is needed… Crediting the authors is unnecessary.”
+- Live Terms of Use (2026-08-24): “All versions of Natural Earth raster + vector map data … are in the public domain… including … commercial purposes. No permission is needed… Crediting the authors is unnecessary.”
 
 ## Related
 

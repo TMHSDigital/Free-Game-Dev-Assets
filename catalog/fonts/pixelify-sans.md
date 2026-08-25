@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [TTF]
 tags: [pixel, modern, ui, ofl]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ Soft/modern pixel sans (eifetx) — readable pixel UI and soft indie titles with
 
 ## Evidence
 
-- Live `ofl/pixelifysans/OFL.txt`: SIL OFL 1.1 — Copyright 2021 The Pixelify Sans Project Authors.
+- Live `ofl/pixelifysans/OFL.txt` (2026-08-24): SIL OFL 1.1 — Copyright 2021 The Pixelify Sans Project Authors.
 
 ## Related
 

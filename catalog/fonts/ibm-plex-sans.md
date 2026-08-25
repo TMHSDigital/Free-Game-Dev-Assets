@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [OTF, TTF, WOFF2]
 tags: [ui, sans, ofl, plex]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ IBM’s OFL UI sans (Plex family also ships Mono/Serif/Condensed). Clean tech/co
 
 ## Evidence
 
-- Live `IBM/plex` `LICENSE.txt`: “licensed under the SIL Open Font License, Version 1.1.” Copyright © 2017 IBM Corp. with Reserved Font Name “Plex”.
+- Live `IBM/plex` `LICENSE.txt` (2026-08-24): “licensed under the SIL Open Font License, Version 1.1.” Copyright © 2017 IBM Corp. with Reserved Font Name “Plex”.
 
 ## Related
 

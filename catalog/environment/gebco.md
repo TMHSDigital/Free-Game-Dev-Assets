@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [netCDF, GeoTIFF, ASCII]
 tags: [ocean, terrain, 15-arc-second]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,7 +25,7 @@ Global ocean + land terrain model (~15″). Best free bathymetry source for unde
 
 ## Evidence
 
-- Live Terms of use: “The GEBCO Grid is placed in the public domain and may be used free of charge… Commercially exploit The GEBCO Grid… Users must: Acknowledge the source…”
+- Live [Terms of use](https://www.gebco.net/data-products/gridded-bathymetry/terms-of-use) (2026-08-24): “The GEBCO Grid is placed in the public domain and may be used free of charge… Commercially exploit The GEBCO Grid… Users must: Acknowledge the source…”
 
 ## Related
 

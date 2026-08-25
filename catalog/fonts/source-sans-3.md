@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [OTF, TTF, WOFF, variable]
 tags: [ui, sans, ofl, adobe]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,7 +25,7 @@ Adobe’s OFL UI/workhorse sans (static + variable). Broad Latin coverage for me
 ## Evidence
 
 - Live GitHub `adobe-fonts/source-sans`: “OFL-1.1 license”
-- Live `LICENSE.md`: “licensed under the SIL Open Font License, Version 1.1.” Copyright 2010–2024 Adobe, Reserved Font Name “Source”.
+- Live `LICENSE.md` (2026-08-24): “licensed under the SIL Open Font License, Version 1.1.” Copyright 2010–2024 Adobe, Reserved Font Name “Source”.
 
 ## Related
 
