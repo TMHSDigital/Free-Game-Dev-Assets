@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [SVG, WOFF, WOFF2]
 tags: [icons, mit, svg, ui, bootstrap]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,8 @@ status: active
 
 ## Evidence
 
-- Live site (2026-07-19): “Free, high quality, open source icon library…”; GitHub [LICENSE](https://github.com/twbs/icons/blob/main/LICENSE) = **MIT License** (Copyright The Bootstrap Authors)
+- Live site (2026-08-24): "MIT, docs CC BY 3.0"
+- Live GitHub `LICENSE` (2026-08-24): "The MIT License (MIT) Copyright (c) 2019-2024 The Bootstrap Authors"
 
 ## Related
 
