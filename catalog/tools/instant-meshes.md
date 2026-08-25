@@ -34,5 +34,6 @@ Interactive field-aligned remesher from Jakob / Tarini / Panozzo / Sorkine-Hornu
 
 - [meshoptimizer](meshoptimizer.md)
 - [assimp](assimp.md)
+- [quadriflow](quadriflow.md)
 - [../3d/smithsonian-open-access](../3d/smithsonian-open-access.md)
 - [materialize](materialize.md)

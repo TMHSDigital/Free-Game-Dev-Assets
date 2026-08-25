@@ -30,7 +30,7 @@ Paid Sonniss impact packs can fill metal/glass destruction gaps on a small budge
 | Steamworks bindings | [GodotSteam](../catalog/tools/godotsteam.md) (verify license + Steamworks) |
 | Mod loading | [Godot Mod Loader](../catalog/tools/godot-mod-loader.md) (MIT) |
 | 2D textured polygons / terrain | [SmartShape2D](../catalog/tools/smartshape2d.md) (MIT) |
-| Heightmap terrain | [Terrain3D](../catalog/tools/terrain3d.md) (MIT) |
+| Heightmap terrain | [Terrain3D](../catalog/tools/terrain3d.md) (MIT). [Gaea Community Edition](../catalog/tools/gaea.md) is `needs-review`; EULA is a PDF this session, not a free commercial grant |
 | Behavior trees | [Beehave](../catalog/tools/beehave.md) (MIT) |
 | Utility AI | [LimboAI](../catalog/tools/limboai.md) (MIT) |
 

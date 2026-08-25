@@ -29,5 +29,6 @@ US federal 3D models (spacecraft, planetary props). NASA media used in 3D models
 
 ## Related
 
-- [usgs-earth-explorer](usgs-earth-explorer.md) — US terrain/imagery (still needs-review)
-- [poly-haven](poly-haven.md) — CC0 HDRI/env
+- [nasa-image-video-library](nasa-image-video-library.md)
+- [usgs-earth-explorer](usgs-earth-explorer.md)
+- [poly-haven](poly-haven.md)

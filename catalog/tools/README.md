@@ -11,7 +11,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [tiled](tiled.md) | Tiled Map Editor | GPL-3.0 | active |
 | [pixelorama](pixelorama.md) | Pixelorama | MIT | active |
 | [material-maker](material-maker.md) | Material Maker | MIT | active |
-| [gaea](gaea.md) | Gaea Community Edition | custom | active (`commercial: false`) |
+| [gaea](gaea.md) | Gaea Community Edition | custom | needs-review |
 | [accurig](accurig.md) | AccuRig (Reallusion) | custom | needs-review |
 | [krita](krita.md) | Krita | GPL-3.0 | active |
 | [inkscape](inkscape.md) | Inkscape | GPL-2.0 | active |
@@ -37,9 +37,12 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [meshoptimizer](meshoptimizer.md) | meshoptimizer | MIT | active |
 | [google-draco](google-draco.md) | Google Draco | Apache-2.0 | active |
 | [assimp](assimp.md) | assimp | BSD-3-Clause | active |
-| [free-tex-packer](free-tex-packer.md) | Free Tex Packer | MIT | needs-review |
+| [free-tex-packer](free-tex-packer.md) | Free Tex Packer | MIT | active |
 | [osm2world](osm2world.md) | OSM2World | MIT | active |
 | [instant-meshes](instant-meshes.md) | Instant Meshes | BSD-3-Clause | active |
+| [quadriflow](quadriflow.md) | QuadriFlow | BSD-3-Clause | active |
+| [meshroom](meshroom.md) | Meshroom | MPL-2.0 | active |
+| [colmap](colmap.md) | COLMAP | BSD-3-Clause | active |
 | [meshlab](meshlab.md) | MeshLab | GPL-3.0 | active |
 | [cloudcompare](cloudcompare.md) | CloudCompare | GPL-2.0 | active |
 | [xnormal](xnormal.md) | xNormal | custom | needs-review |

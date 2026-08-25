@@ -1,32 +1,33 @@
 ---
 id: free-tex-packer
 name: Free Tex Packer
-url: https://free-tex-packer.com/
+url: https://github.com/odrick/free-tex-packer
 category: tools
 subcategories: [atlas, pipeline]
 license: MIT
-commercial: unknown
+commercial: true
 attribution_required: false
 formats: [PNG, JSON]
-tags: [spritesheet, atlas]
+tags: [spritesheet, atlas, open-source]
 verified: 2026-08-24
-status: needs-review
+status: active
 ---
 
 # Free Tex Packer
 
-Was a web/desktop sprite atlas packer with engine metadata exports. This session the apex URL returned a 481-byte "Loading..." shell with no license text. A follow-redirect landed on `ww1.free-tex-packer.com` (privacy-policy copy, not the packer UI). GitHub [odrick/free-tex-packer](https://github.com/odrick/free-tex-packer) still exists; `LICENSE` / `LICENSE.md` at repo root 404. Do not treat MIT as re-verified. Stay `needs-review` until a license file or a working app page can be quoted.
+Open-source sprite atlas packer (web UI, Electron desktop, Godot/Unity/Phaser JSON). The old apex `free-tex-packer.com` is a "Loading..." shell this session; a follow-through host is not the app. Use the GitHub repo. `LICENSE.md` is MIT. That is a license on the packer, not on the sprites you feed it.
 
 ## Notes
 
-- Previous catalog pass marked this MIT. That grant was not re-read this session
-- Do not ship a download from ww1.* hosts
+- Do not download from `ww1.free-tex-packer.com`
+- Self-host `dist/web` or build the Electron app from this repo
+- Exported atlas metadata is yours to the extent your input art is. MIT does not launder a ripped sprite sheet
+- Checklist: MIT file visible, commercial use of the *software* permitted, no NC/ND, not a marketplace, author named, not blocklisted, tool vs atlas contents distinguished
 
 ## Evidence
 
-- Live https://free-tex-packer.com/ (2026-08-24): body "Loading..." only. No MIT/license sentence
-- Followed fetch (2026-08-24): `ww1.free-tex-packer.com` privacy-policy page, not the packer
-- GitHub `LICENSE` (2026-08-24): HTTP 404
+- Live GitHub `LICENSE.md` (2026-08-24): "MIT License" / "Permission is hereby granted, free of charge"
+- Live `https://free-tex-packer.com/` (2026-08-24): body "Loading..." only. Not used as the publisher URL
 
 ## Related
 
