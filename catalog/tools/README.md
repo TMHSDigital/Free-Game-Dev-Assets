@@ -22,6 +22,8 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [libresprite](libresprite.md) | LibreSprite | GPL-2.0 | active |
 | [goxel](goxel.md) | Goxel | GPL-3.0 | active |
 | [materialize](materialize.md) | Materialize | GPL-3.0 | active |
+| [lmms](lmms.md) | LMMS | GPL-2.0 | active |
+| [bfxr](bfxr.md) | Bfxr | MIT | active |
 
 ## Pipeline & compression
 
@@ -35,6 +37,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [assimp](assimp.md) | assimp | BSD-3-Clause | active |
 | [free-tex-packer](free-tex-packer.md) | Free Tex Packer | MIT | active |
 | [osm2world](osm2world.md) | OSM2World | MIT | active |
+| [instant-meshes](instant-meshes.md) | Instant Meshes | BSD-3-Clause | active |
 
 ## Audio middleware
 
