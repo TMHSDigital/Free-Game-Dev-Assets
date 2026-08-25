@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [GeoTIFF]
 tags: [landcover, sentinel, 10m]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ status: active
 
 ## Evidence
 
-- Live data-access License: “provided free of charge, without restriction of use… Creative Commons Attribution 4.0 International License.”
+- Live data-access License (2026-08-24): “provided free of charge, without restriction of use… Creative Commons Attribution 4.0 International License.”
 
 ## Related
 

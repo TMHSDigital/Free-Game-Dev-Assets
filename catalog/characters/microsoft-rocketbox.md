@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [FBX]
 tags: [rigged, vr, research-origin, diverse]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,7 +25,7 @@ status: active
 
 ## Evidence
 
-- `LICENSE.md`: MIT License, Copyright (c) 2020 Microsoft — rights include use, modify, sell.
+- `LICENSE.md` (2026-08-24): MIT License, Copyright (c) 2020 Microsoft — rights include use, modify, sell.
 - README changelog: “12/2020: Updated license to MIT.”
 
 ## Related

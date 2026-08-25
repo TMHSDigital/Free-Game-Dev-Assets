@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [OGG, WAV]
 tags: [ui, click, button, cc0]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ status: active
 
 ## Evidence
 
-- Live pack page: License **Creative Commons CC0** (link to CC0 1.0).
+- Live pack page (2026-08-24): License **Creative Commons CC0** (link to CC0 1.0). Files 50×.
 
 ## Related
 

@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [GeoTIFF, netCDF]
 tags: [noaa, relief, 15-arc-second]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ NOAA global relief model integrating topo + bathy (15″ / 30″ / 60″; ice-su
 
 ## Evidence
 
-- NCEI metadata Constraints: “produced by NOAA and are not subject to copyright protection in the United States. NOAA waives … rights … through Creative Commons Zero 1.0” (SPDX CC0-1.0).
+- NCEI metadata Constraints (2026-08-24): “produced by NOAA and are not subject to copyright protection in the United States. NOAA waives … rights … through Creative Commons Zero 1.0” (SPDX CC0-1.0).
 
 ## Related
 

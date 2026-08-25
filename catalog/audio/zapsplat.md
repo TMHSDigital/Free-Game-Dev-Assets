@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [MP3, WAV]
 tags: [sfx, free-tier, attribution-basic]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,7 +25,7 @@ Large SFX/music library. **Basic (free)** account: commercial use in games/apps 
 
 ## Evidence
 
-- Live [Standard License](https://www.zapsplat.com/license-type/standard-license/) (updated 8 May 2026): Basic — “personal, commercial, and broadcast”; “Games, apps, and software”; “Attribution Required… credit to ZapSplat”. Premium — attribution not required.
+- Live [Standard License](https://www.zapsplat.com/license-type/standard-license/) (updated 8 May 2026; re-checked 2026-08-24): Basic — “personal, commercial, and broadcast”; “Games, apps, and software”; “Attribution Required… credit to ZapSplat”. Premium — attribution not required.
 
 ## Related
 

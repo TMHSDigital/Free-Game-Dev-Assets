@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [glTF, Godot]
 tags: [godot, mannequin, controller, cc-by]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,8 +25,9 @@ Open mannequin mesh plus a third-person controller sample for Godot. Good placeh
 
 ## Evidence
 
-- Root `LICENSE`: dual license — source MIT; art assets CC-BY-4.0 with attribution to GDQuest and contributors.
+- Root `LICENSE` (2026-08-24): dual license — source MIT; art assets CC-BY-4.0 with attribution to GDQuest and contributors.
 - README restates the same split.
+- Live LICENSE (2026-08-24): "Art assets (images, audio files) are CC-By 4.0"
 
 ## Related
 

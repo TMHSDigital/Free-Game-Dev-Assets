@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [VRM]
 tags: [vrm, cc0, web, metaverse]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -25,9 +25,9 @@ Curated VRM avatar registry. The original **100Avatars** series (R1–R3) is **C
 
 ## Evidence
 
-- Live `projects.json`: `100Avatars R1/R2/R3` → `license: CC0`.
-- Site license guide: CC0 = commercial use, no attribution required.
-- Repo `LICENSE`: registry CC0; avatars per collection.
+- Live site footer (2026-08-24): "All avatars CC0."
+- `data/projects.json` on the previously cited GitHub path returned 404 this session; per-collection filtering could not be re-checked.
+- Repo `LICENSE`: registry CC0; avatars per collection. (Not re-fetched as a readable file this session.)
 
 ## Related
 

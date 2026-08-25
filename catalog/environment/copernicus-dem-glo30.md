@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 formats: [GeoTIFF, COG, DTED]
 tags: [terrain, government, attribution, tandem-x]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -27,8 +27,8 @@ Radar DSM ~30 m (TanDEM-X / WorldDEM lineage) via CDSE. **Full, Free & Open** li
 
 ## Evidence
 
-- CDSE COP-DEM page: “GLO-30 and GLO-90 datasets are available worldwide with a free license” + DLR/Airbus credit notices.
-- Live ESA CCM licence PDF (Issue 21/02/2025): “Full, Free & Open Licence for the use of the Copernicus WorldDEM-30” — Art. 4 rights (a–d) reproduction/distribution/public communication/adaptation; Art. 5 free of charge; Art. 3 worldwide.
+- CDSE COP-DEM page (2026-08-24): “GLO-30 and GLO-90 datasets are available worldwide with a free license” + DLR/Airbus credit notices.
+- Live ESA CCM licence PDF (Issue 21/02/2025; not re-downloaded this session): “Full, Free & Open Licence for the use of the Copernicus WorldDEM-30” — Art. 4 rights (a–d) reproduction/distribution/public communication/adaptation; Art. 5 free of charge; Art. 3 worldwide.
 
 ## Related
 
