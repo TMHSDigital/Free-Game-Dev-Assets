@@ -5,7 +5,7 @@ url: https://pixelfrog-assets.itch.io/
 category: 2d
 subcategories: [sprites, tiles, pixel, platformer]
 license: varies
-commercial: true
+commercial: varies
 attribution_required: false
 formats: [PNG]
 tags: [pixel, platformer, itch, modular]

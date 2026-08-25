@@ -5,7 +5,7 @@ url: https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Gen
 category: 2d
 subcategories: [sprites, paper-doll, tileset-adjacent]
 license: varies
-commercial: true
+commercial: varies
 attribution_required: true
 attribution_string: "Credit all authors listed in the generator export (except CC0 layers)."
 formats: [PNG]

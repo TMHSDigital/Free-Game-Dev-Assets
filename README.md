@@ -73,7 +73,7 @@ Each source is one markdown file with YAML frontmatter plus short notes. Add new
 | Field | Meaning |
 | --- | --- |
 | `license` | Short license name as stated by the source (`CC0`, `CC-BY-3.0`, `SIL OFL`, `custom`, `varies`) |
-| `commercial` | `true` / `false` / `unknown` |
+| `commercial` | `true` / `false` / `unknown` / `varies`. `varies` means per-file review; the site filter still shows these with a **per-file review** badge |
 | `attribution_required` | Whether credits are mandatory |
 | `formats` | Common download / interchange formats |
 | `verified` | Date of the last license spot-check (`YYYY-MM-DD`) |
@@ -89,7 +89,7 @@ Each source is one markdown file with YAML frontmatter plus short notes. Add new
 | `needs-review` | Useful discovery — verify the live page before shipping |
 | `deprecated` | Kept for history; prefer alternatives |
 
-Aggregators (OpenGameArt, itch collections, Poly Pizza, font indexes) are usually `license: varies`. Treat each pack or file as its own review.
+Aggregators (OpenGameArt, itch collections, Poly Pizza, font indexes) are usually `license: varies` and `commercial: varies`. Treat each pack or file as its own review. The site Commercial OK filter still lists them, labeled **per-file review**.
 
 ---
 

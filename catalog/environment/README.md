@@ -15,6 +15,6 @@
 | [jaxa-alos-aw3d30](jaxa-alos-aw3d30.md) | JAXA ALOS AW3D30 | custom | yes* | active |
 | [copernicus-dem-glo30](copernicus-dem-glo30.md) | Copernicus DEM GLO-30 | custom | yes* | active |
 | [usgs-earth-explorer](usgs-earth-explorer.md) | USGS EarthExplorer | public-domain* | yes* | active |
-| [opentopography](opentopography.md) | OpenTopography | varies | yes | active |
+| [opentopography](opentopography.md) | OpenTopography | varies | varies | active |
 
 \* Attribution / endorsement / geo / notify-JAXA rules — see entry + [`docs/licenses.md`](../../docs/licenses.md). Avoid **FABDEM** (NC) — [`docs/high-risk.md`](../../docs/high-risk.md).

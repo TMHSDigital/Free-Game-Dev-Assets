@@ -19,7 +19,7 @@ Prefer **SIL OFL** for embedding in commercial games. See [docs/licenses.md](../
 | [vt323](vt323.md) | VT323 | SIL OFL | yes | active |
 | [fontshare](fontshare.md) | Fontshare | varies | unknown | needs-review |
 | [velvetyne](velvetyne.md) | Velvetyne | SIL OFL | yes | active |
-| [fontsource](fontsource.md) | Fontsource | varies | yes | active |
-| [open-foundry](open-foundry.md) | Open Foundry | varies | unknown | active |
+| [fontsource](fontsource.md) | Fontsource | varies | varies | active |
+| [open-foundry](open-foundry.md) | Open Foundry | varies | varies | active |
 
 Aggregators (Fontesk, JustFreeFonts, etc.) are intentionally omitted unless the source itself is the distribution path. Fontsource is listed because it is that path (npm). Open Foundry is a display-only index: download from the upstream OFL.txt. Fontshare is a warning: mixed `itf_ffl` / OFL, terms page not readable as text.

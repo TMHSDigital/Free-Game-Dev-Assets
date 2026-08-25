@@ -5,7 +5,7 @@ url: https://open-foundry.com
 category: fonts
 subcategories: [aggregator, display, foundry]
 license: varies
-commercial: unknown
+commercial: varies
 attribution_required: true
 formats: [OTF, TTF]
 tags: [ofl, aggregator, display-only]

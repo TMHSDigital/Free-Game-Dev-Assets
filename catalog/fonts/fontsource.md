@@ -5,7 +5,7 @@ url: https://fontsource.org
 category: fonts
 subcategories: [aggregator, sans, npm]
 license: varies
-commercial: true
+commercial: varies
 attribution_required: true
 formats: [TTF, WOFF, WOFF2, npm]
 tags: [ofl, npm, self-host, aggregator]

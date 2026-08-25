@@ -31,8 +31,8 @@ One new markdown file is enough — the website rebuilds from frontmatter on dep
 
 ### Frontmatter rules
 
-- `license`: exact short name from the source (e.g. `CC0`, `CC-BY-3.0`, `SIL OFL`, `custom`).
-- `commercial`: `true` / `false` / `unknown`.
+- `license`: exact short name from the source (e.g. `CC0`, `CC-BY-3.0`, `SIL OFL`, `custom`, `varies`).
+- `commercial`: `true` / `false` / `unknown` / `varies`. Use `varies` for aggregators where some files are commercial-ok and others are not. The site still shows these under Commercial OK, labeled **per-file review**, so they are not silently excluded and not silently treated as a blanket grant.
 - `attribution_required`: `true` / `false`.
 - `attribution_string`: optional copy-paste credit.
 - `grid_dimensions` / `camera_perspective` / `hardware_tags`: optional 2D/UI metadata.

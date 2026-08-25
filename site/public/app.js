@@ -25,12 +25,14 @@
   function edgeColor(entry) {
     if (entry.commercial === true) return "var(--ok)";
     if (entry.commercial === false) return "var(--danger)";
-    return "var(--warn)";
+    if (entry.commercial === "varies") return "var(--warn)";
+    return "var(--unknown)";
   }
 
   function commercialLabel(v) {
     if (v === true) return "commercial OK";
     if (v === false) return "non-commercial";
+    if (v === "varies") return "per-file review";
     return "commercial ?";
   }
 
@@ -47,7 +49,7 @@
     if (entry.status === "active" && !state.active) return false;
     if (entry.status === "needs-review" && !state.review) return false;
     if (entry.status === "deprecated" && !state.active) return false;
-    if (state.commercialOnly && entry.commercial !== true) return false;
+    if (state.commercialOnly && entry.commercial !== true && entry.commercial !== "varies") return false;
     if (state.noAttr && entry.attribution_required !== false) return false;
 
     const q = state.q.trim().toLowerCase();
@@ -142,7 +144,7 @@
     const stats = data.stats || {};
     $("#result-count").textContent = `${list.length} / ${data.entries.length}`;
     $("#catalog-blurb").textContent =
-      `${stats.total || data.entries.length} sources · ${stats.active || 0} active · ${stats.commercialOk || 0} commercial-ok`;
+      `${stats.total || data.entries.length} sources · ${stats.active || 0} active · ${stats.commercialOk || 0} commercial-ok · ${stats.commercialVaries || 0} per-file`;
 
     if (!list.length) {
       grid.innerHTML = "";

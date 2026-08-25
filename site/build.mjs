@@ -118,7 +118,14 @@ function loadEntries() {
       category: String(meta.category),
       subcategories: Array.isArray(meta.subcategories) ? meta.subcategories : [],
       license: String(meta.license),
-      commercial: meta.commercial === true ? true : meta.commercial === false ? false : "unknown",
+      commercial:
+        meta.commercial === true
+          ? true
+          : meta.commercial === false
+            ? false
+            : meta.commercial === "varies"
+              ? "varies"
+              : "unknown",
       attribution_required:
         meta.attribution_required === true
           ? true
@@ -177,6 +184,7 @@ function main() {
     active: entries.filter((e) => e.status === "active").length,
     needsReview: entries.filter((e) => e.status === "needs-review").length,
     commercialOk: entries.filter((e) => e.commercial === true).length,
+    commercialVaries: entries.filter((e) => e.commercial === "varies").length,
     categories: Object.keys(config.categories).length,
   };
 
@@ -199,7 +207,7 @@ function main() {
   );
 
   console.log(
-    `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok)`
+    `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok, ${stats.commercialVaries} per-file)`
   );
   if (errors.length) process.exitCode = 0; // soft-fail missing fields as warnings
 }

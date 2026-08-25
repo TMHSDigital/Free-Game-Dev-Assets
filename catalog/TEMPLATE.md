@@ -14,6 +14,7 @@ status: active
 # Optional (omit if N/A):
 # license_spdx: CC0-1.0
 # attribution_string: "Credit line if attribution_required"
+# commercial: varies   # aggregators only; not a blanket commercial grant
 # grid_dimensions: 16x16
 # camera_perspective: top_down   # isometric_3_4 | side_scroller | 2d_flat
 # hardware_tags: [steam_deck, switch_2]

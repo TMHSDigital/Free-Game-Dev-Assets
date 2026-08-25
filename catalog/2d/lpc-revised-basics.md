@@ -5,7 +5,7 @@ url: https://opengameart.org/content/lpc-revised-character-basics
 category: 2d
 subcategories: [sprites, pixel-art]
 license: varies
-commercial: true
+commercial: varies
 attribution_required: true
 attribution_string: "LPC Revised Character Basics by Death's Darling and contributors. Suggested format; credit the authors named on the OpenGameArt page (CC-BY-SA 3.0 / GPL 3.0 / OGA-BY 3.0)."
 formats: [PNG]

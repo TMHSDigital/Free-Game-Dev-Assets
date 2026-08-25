@@ -21,7 +21,7 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | [urizen-onebit](urizen-onebit.md) | Urizen 1Bit | CC0 | yes | active |
 | [openpeeps](openpeeps.md) | Open Peeps | CC0 | yes | active |
 | [paleto-vol01](paleto-vol01.md) | Paleto Vol.01 | CC0 | yes | active |
-| [pixel-frog](pixel-frog.md) | Pixel Frog | varies | yes | active |
+| [pixel-frog](pixel-frog.md) | Pixel Frog | varies | varies | active |
 | [ansimuz-sunnyland](ansimuz-sunnyland.md) | SunnyLand (ansimuz) | CC0 | yes | active |
 | [penzilla](penzilla.md) | Penzilla | custom | yes | needs-review |
 | [material-symbols](material-symbols.md) | Material Symbols | Apache-2.0 | yes | active |
@@ -34,8 +34,8 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | [bootstrap-icons](bootstrap-icons.md) | Bootstrap Icons | MIT | yes | active |
 | [simple-icons](simple-icons.md) | Simple Icons | CC0 | yes†† | active |
 | [xelu-input-prompts](xelu-input-prompts.md) | Xelu input prompts | CC0 | yes | active |
-| [universal-lpc-generator](universal-lpc-generator.md) | Universal LPC Generator | varies (SA) | yes† | active |
-| [lpc-revised-basics](lpc-revised-basics.md) | LPC Revised Basics | varies (SA) | yes† | active |
+| [universal-lpc-generator](universal-lpc-generator.md) | Universal LPC Generator | varies (SA) | varies† | active |
+| [lpc-revised-basics](lpc-revised-basics.md) | LPC Revised Basics | varies (SA) | varies† | active |
 | [openclipart](openclipart.md) | Openclipart | CC0 | yes | active |
 | [opengameart](opengameart.md) | OpenGameArt | varies | unknown | needs-review |
 | [lospec](lospec.md) | Lospec | varies | unknown | needs-review |

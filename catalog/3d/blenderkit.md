@@ -5,7 +5,7 @@ url: https://www.blenderkit.com
 category: 3d
 subcategories: [models, materials, hdri]
 license: varies
-commercial: true
+commercial: varies
 attribution_required: false
 formats: [Blend, glTF, HDR]
 tags: [blender, marketplace, royalty-free, cc0]

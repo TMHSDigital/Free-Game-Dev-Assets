@@ -5,7 +5,7 @@ url: https://opentopography.org
 category: environment
 subcategories: [heightmaps, dem, lidar]
 license: varies
-commercial: true
+commercial: varies
 attribution_required: true
 formats: [GeoTIFF, LAS, LAZ]
 tags: [terrain, lidar, nsf, portal]
