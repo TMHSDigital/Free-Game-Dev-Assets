@@ -118,7 +118,7 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 
 ## Licenses & provenance
 
-Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/ai-assets.md`](docs/ai-assets.md), and [`docs/trust-score.md`](docs/trust-score.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R05`). Short version:
+Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/ai-assets.md`](docs/ai-assets.md), [`docs/trust-score.md`](docs/trust-score.md), and [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R05`). Short version:
 
 - **CC0** — safest default for closed-source games; attribution not required
 - **CC-BY** — commercial OK; keep credits (BY-3.0 often wants the **author named**; BY-4.0 is usually satisfied by a credits-screen link)
@@ -173,6 +173,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 ├── docs/
 │   ├── licenses.md / provenance.md / high-risk.md / ai-assets.md
 │   ├── trust-score.md / research-index.md / godot-budget-stack.md
+│   ├── game-vs-video-licensing.md
 ├── RESEARCH/README.md     ← research archive index (drafts gitignored)
 ├── site/                  ← GitHub Pages source (build scans catalog/)
 │   ├── build.mjs / config.json / public/

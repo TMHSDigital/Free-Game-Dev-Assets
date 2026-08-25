@@ -44,6 +44,7 @@ One new markdown file is enough — the website rebuilds from frontmatter on dep
 
 - [ ] License text or badge visible on the source
 - [ ] Commercial use explicitly allowed (or marked false) — **free download ≠ commercial**
+- [ ] Interactive/game use confirmed, not just "commercial use" in the abstract (see [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md))
 - [ ] Attribution / share-alike / NC / ND flags recorded
 - [ ] Marketplace EULA checked if Unity/Fab/Unreal/itch
 - [ ] Supplier looks reputable (not an anonymous laundering risk — see [`docs/provenance.md`](docs/provenance.md))
