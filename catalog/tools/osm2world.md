@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [glTF, OBJ]
 tags: [openstreetmap, odbl-adjacent]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,8 +24,8 @@ Converts OpenStreetMap into textured 3D (glTF/glb/OBJ). Tool is MIT; **OSM geoda
 
 ## Evidence
 
-- osm2world.org: “Fully open source… Use it freely for any purpose.”
-- Live `LICENSE.txt`: MIT permission grant — use/modify/sell permitted.
+- osm2world.org (2026-08-24): “Fully open source… Use it freely for any purpose.”
+- Live `LICENSE.txt` (2026-08-24): MIT permission grant — use/modify/sell permitted.
 
 ## Related
 

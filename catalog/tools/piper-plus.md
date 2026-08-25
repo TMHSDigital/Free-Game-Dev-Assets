@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [model, binary]
 tags: [ai, tts, offline, local]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,8 +24,8 @@ MIT fork of archived rhasspy/piper — local neural TTS (JA/EN/ZH/KO/ES/FR/PT/SV
 
 ## Evidence
 
-- Repo About + badge: **License: MIT**; README: “The only MIT-licensed Piper fork … suitable for commercial and embedded use.”
-- Live `LICENSE.md` (dev): MIT License, Copyright Michael Hansen / ayutaz — use/modify/sell permitted.
+- Repo About + badge: **License: MIT**; README_EN (2026-08-24): “suitable for commercial and embedded use.”
+- Live `LICENSE.md` (dev) (2026-08-24): MIT License, Copyright Michael Hansen / ayutaz — use/modify/sell permitted.
 
 ## Related
 

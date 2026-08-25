@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [godot-addon]
 tags: [godot-4, 2d, r04]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -24,7 +24,7 @@ Godot 4 MIT 2D scatter addon (HungryProton fork by Alessandro Rasulo) — shapes
 
 ## Evidence
 
-- Live `LICENSE.md` (v4): MIT-style grant (“Permission is hereby granted… sell copies”) — HungryProton + Alessandro Rasulo.
+- Live `LICENSE.md` (v4) (2026-08-24): MIT-style grant (“Permission is hereby granted… sell copies”) — HungryProton + Alessandro Rasulo.
 
 ## Related
 
