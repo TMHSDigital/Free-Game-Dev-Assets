@@ -17,6 +17,7 @@
 | [ambientcg](ambientcg.md) | ambientCG | CC0 | yes | active |
 | [texturecan](texturecan.md) | TextureCan | CC0 | yes | active |
 | [texture-ninja](texture-ninja.md) | Texture Ninja | CC0 | yes | active |
+| [cgbookcase](cgbookcase.md) | cgbookcase | CC0 | yes | active |
 | [magicavoxel](magicavoxel.md) | MagicaVoxel | custom | yes | active |
 | [smithsonian-open-access](smithsonian-open-access.md) | Smithsonian Open Access | CC0 | yes | active |
 | [charge-materials](charge-materials.md) | Charge materials | CC-BY? | unknown | needs-review |

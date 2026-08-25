@@ -9,7 +9,7 @@ Synthesized from local research on Godot 4 physics / destruction pipelines. Focu
 | Industrial / tech props | [Kenney](../catalog/3d/kenney.md) | Space Kit + Industrial Kit work well for server racks, pipes, consoles, flat-shaded looks |
 | Modular low-poly / characters | [Quaternius](../catalog/3d/quaternius.md), [KayKit](../catalog/3d/kaykit.md) | Prototyping and stylized kits; [Prototype Bits](../catalog/3d/kaykit-prototype-bits.md) for greybox |
 | Input glyphs | [Kenney Input Prompts](../catalog/2d/kenney-input-prompts.md) | CC0 64×64 incl. Deck / Switch 2 / Quest |
-| PBR surfaces | [ambientCG](../catalog/3d/ambientcg.md) | Seamless materials |
+| PBR surfaces | [ambientCG](../catalog/3d/ambientcg.md), [cgbookcase](../catalog/3d/cgbookcase.md) | Seamless materials; cgbookcase is extra photoscans |
 | HDRI / IBL | [Poly Haven](../catalog/environment/poly-haven.md) | CC0 calibrated environments |
 | Oceans / water | [Boujie Water](../catalog/shaders-vfx/boujie-water.md) | MIT Godot ocean shader |
 | Foliage scatter | [ProtonScatter](../catalog/tools/proton-scatter.md) | MIT Godot 4 scatter |
@@ -29,6 +29,7 @@ Paid Sonniss impact packs can fill metal/glass destruction gaps on a small budge
 | Dialogue / timeline UI | [Dialogic](../catalog/tools/dialogic.md) (MIT) |
 | Steamworks bindings | [GodotSteam](../catalog/tools/godotsteam.md) (verify license + Steamworks) |
 | Mod loading | [Godot Mod Loader](../catalog/tools/godot-mod-loader.md) (MIT) |
+| 2D textured polygons / terrain | [SmartShape2D](../catalog/tools/smartshape2d.md) (MIT) |
 
 Godot **4.4+** ships **Jolt Physics** as a built-in option — prefer the engine docs over third-party mirrors when configuring.
 

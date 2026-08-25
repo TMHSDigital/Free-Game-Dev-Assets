@@ -17,5 +17,6 @@ Prefer **SIL OFL** for embedding in commercial games. See [docs/licenses.md](../
 | [silkscreen](silkscreen.md) | Silkscreen | SIL OFL | yes | active |
 | [source-sans-3](source-sans-3.md) | Source Sans 3 | SIL OFL | yes | active |
 | [vt323](vt323.md) | VT323 | SIL OFL | yes | active |
+| [fontshare](fontshare.md) | Fontshare | varies | unknown | needs-review |
 
-Aggregators (Fontesk, JustFreeFonts, etc.) are intentionally omitted — verify each face at the publisher; prefer primary OFL sources.
+Aggregators (Fontesk, JustFreeFonts, etc.) are intentionally omitted — verify each face at the publisher; prefer primary OFL sources. Fontshare is listed as a warning: mixed `itf_ffl` / OFL, terms page not readable as text.

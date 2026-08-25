@@ -17,6 +17,9 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [inkscape](inkscape.md) | Inkscape | GPL-2.0 | active |
 | [tenacity](tenacity.md) | Tenacity | GPL-2.0 | active |
 | [jsfxr](jsfxr.md) | jsfxr | public-domain | active |
+| [chiptone](chiptone.md) | ChipTone | CC0 | active |
+| [gimp](gimp.md) | GIMP | GPL-3.0 | active |
+| [libresprite](libresprite.md) | LibreSprite | GPL-2.0 | active |
 
 ## Pipeline & compression
 
@@ -63,6 +66,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | --- | --- | --- | --- |
 | [proton-scatter](proton-scatter.md) | ProtonScatter | MIT | active |
 | [scatter2d](scatter2d.md) | Scatter2D | MIT | active |
+| [smartshape2d](smartshape2d.md) | SmartShape2D | MIT | active |
 | [phantom-camera](phantom-camera.md) | Phantom Camera | MIT | active |
 | [godot-guide](godot-guide.md) | G.U.I.D.E. | MIT | active |
 | [godot-input-helper](godot-input-helper.md) | Input Helper | MIT | active |
