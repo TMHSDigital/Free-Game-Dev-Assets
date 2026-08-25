@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [OGG]
 tags: [footsteps, subway, field-recording, cc0]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -19,13 +19,13 @@ Small CC0 footstep set recorded in a subway and cleaned in Audacity. Handy start
 
 ## Notes
 
-- Author note: “None at all, use freely :)”
+- Author notice: “None at all, use freely :)”
 - Pair with [congusbongus-footsteps-surfaces](congusbongus-footsteps-surfaces.md) for multi-surface coverage
 - Prefer [bigsoundbank](bigsoundbank.md) / [mixkit-sfx](mixkit-sfx.md) when you need volume
 
 ## Evidence
 
-- Live OGA page license badge: **CC0**; Copyright/Attribution Notice: “None at all, use freely :)”
+- Live OGA page (2026-08-24): license badge: **CC0**; Copyright/Attribution Notice: “None at all, use freely :)”
 
 ## Related
 

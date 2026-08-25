@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [PNG]
 tags: [pixel, platformer, boss, cc0]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -19,12 +19,14 @@ CC0 2D animated boss/enemy wizard (idle/move/attack/hit/death). Quick boss kit f
 
 ## Notes
 
-- Same LuizMelo CC0 commercial terms as sibling packs
-- Credits appreciated, not required
+- Itch Asset license field: Creative Commons Zero v1.0 Universal
+- Credits are not required; author would appreciate them
+- PNG sheets; expect a side-view platformer layout
 
 ## Evidence
 
-- Live itch page: “used freely and commercially — CC0(creative commons zero).”
+- Live itch page (2026-08-24): “used freely and commercially — CC0(creative commons zero).”
+- Same page (2026-08-24): Asset license "Creative Commons Zero v1.0 Universal"
 
 ## Related
 

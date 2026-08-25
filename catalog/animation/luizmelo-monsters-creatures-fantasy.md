@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [PNG]
 tags: [pixel, platformer, spritesheet, cc0]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -19,12 +19,13 @@ CC0 2D animated enemy pack (Skeleton, Mushroom, Goblin, Flying Eye) with idle/wa
 
 ## Notes
 
-- Credits appreciated, not required
-- More LuizMelo CC0 animated packs: [martial-hero](luizmelo-martial-hero.md), [evil-wizard](luizmelo-evil-wizard.md)
+- Credits are not required, but greatly appreciated
+- PNG sheets; four creatures, each with a small frame set
 
 ## Evidence
 
-- Live itch page: “can be used in commercial and non-commercial projects… License: CC0 (Creative Commons Zero).”
+- Live itch page (2026-08-24): “can be used in commercial and non-commercial projects… License: CC0 (Creative Commons Zero).”
+- Same page (2026-08-24): Asset license "Creative Commons Zero v1.0 Universal"
 
 ## Related
 

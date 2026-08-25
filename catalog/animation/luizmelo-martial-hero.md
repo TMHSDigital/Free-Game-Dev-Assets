@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [PNG]
 tags: [pixel, platformer, player, cc0]
-verified: 2026-07-19
+verified: 2026-08-24
 status: active
 ---
 
@@ -19,12 +19,14 @@ CC0 2D animated hero sheets (idle/run/jump/fall/attacks/hit/death). Solid free p
 
 ## Notes
 
-- Live page: free + commercial under CC0; credits appreciated
+- Live page: free plus commercial under CC0; credits appreciated, not required
+- Itch Asset license field: Creative Commons Zero v1.0 Universal
 - Pair with [luizmelo-monsters-creatures-fantasy](luizmelo-monsters-creatures-fantasy.md) for enemies
 
 ## Evidence
 
-- Live itch page: “used freely and commercially — CC0 (creative commons zero).”
+- Live itch page (2026-08-24): “used freely and commercially — CC0 (creative commons zero).”
+- Same page (2026-08-24): Asset license "Creative Commons Zero v1.0 Universal"
 
 ## Related
 
