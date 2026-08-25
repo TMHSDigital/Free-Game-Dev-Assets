@@ -6,7 +6,7 @@ category: fonts
 subcategories: [pixel, display, sans]
 license: SIL OFL
 commercial: true
-attribution_required: true
+attribution_required: false
 formats: [TTF]
 tags: [pixel, modern, ui, ofl]
 verified: 2026-08-24

@@ -7,6 +7,7 @@ subcategories: [humanoid, rigged, library]
 license: MIT
 commercial: true
 attribution_required: true
+attribution_string: "Microsoft Rocketbox Copyright (c) 2020 Microsoft. Keep LICENSE.md with redistributed FBX."
 formats: [FBX]
 tags: [rigged, vr, research-origin, diverse]
 verified: 2026-08-24

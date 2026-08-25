@@ -6,7 +6,7 @@ category: fonts
 subcategories: [sans, ui]
 license: SIL OFL
 commercial: true
-attribution_required: true
+attribution_required: false
 formats: [OTF, TTF, WOFF2]
 tags: [ui, sans, ofl, plex]
 verified: 2026-08-24
@@ -19,6 +19,7 @@ IBM’s OFL UI sans (Plex family also ships Mono/Serif/Condensed). Clean tech/co
 
 ## Notes
 
+- Keep OFL.txt with redistributed font files. OFL does not require in-product credits.
 - Full family under same OFL at `github.com/IBM/plex` — this entry covers the Sans cut; Mono is fine to pull from the same repo
 - Keep `LICENSE.txt` / OFL with redistributed files
 

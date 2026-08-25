@@ -7,6 +7,7 @@ subcategories: [sfx, ui]
 license: custom
 commercial: true
 attribution_required: true
+attribution_string: "Sound effects from ZapSplat.com"
 formats: [MP3, WAV]
 tags: [sfx, free-tier, attribution-basic]
 verified: 2026-08-24

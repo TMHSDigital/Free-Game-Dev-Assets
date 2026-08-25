@@ -7,6 +7,7 @@ subcategories: [models, planetary, public-domain]
 license: public-domain
 commercial: true
 attribution_required: true
+attribution_string: "NASA 3D Resources / NASA. Suggested format; NASA asks to be acknowledged as the source and forbids implied endorsement."
 formats: [OBJ, STL, various]
 tags: [government, space, low-provenance-risk]
 verified: 2026-07-19

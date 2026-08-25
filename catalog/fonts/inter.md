@@ -6,7 +6,7 @@ category: fonts
 subcategories: [sans, ui]
 license: SIL OFL
 commercial: true
-attribution_required: true
+attribution_required: false
 formats: [OTF, TTF, variable]
 tags: [ui, sans, ofl, variable]
 verified: 2026-07-19
@@ -19,6 +19,7 @@ Rasmus Andersson’s UI/workhorse sans under SIL OFL 1.1. Broad language coverag
 
 ## Notes
 
+- Keep OFL.txt with redistributed font files. OFL does not require in-product credits.
 - Primary: [rsms.me/inter](https://rsms.me/inter/) · source [github.com/rsms/inter](https://github.com/rsms/inter)
 - OFL: embed/bundle/sell with software OK; do not sell font files alone; keep OFL text with redistributed binaries
 - Attribution example: `Inter © The Inter Project Authors — SIL OFL 1.1`

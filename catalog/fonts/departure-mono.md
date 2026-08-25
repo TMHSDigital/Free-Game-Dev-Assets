@@ -6,7 +6,7 @@ category: fonts
 subcategories: [pixel, mono]
 license: SIL OFL
 commercial: true
-attribution_required: true
+attribution_required: false
 formats: [OTF, TTF]
 tags: [pixel, terminal, retro-ui]
 verified: 2026-08-24
@@ -19,6 +19,7 @@ Helena Zhang’s monospaced pixel face under SIL OFL 1.1. Strong fit for termina
 
 ## Notes
 
+- Keep OFL.txt with redistributed font files. OFL does not require in-product credits.
 - Primary download: [departuremono.com](https://departuremono.com) / [GitHub releases](https://github.com/rektdeckard/departure-mono/releases)
 - Pixel-perfect sizes: increments of **11px** (per upstream README)
 - When redistributing font files, keep the OFL copyright + license text with the build (credits/licenses folder is fine)

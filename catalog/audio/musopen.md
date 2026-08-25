@@ -20,6 +20,7 @@ Public-domain / open classical recordings and scores. The production need this w
 ## Notes
 
 - Do not infer CC0 or "public domain recordings" from memory or from other catalogs
+- No `attribution_string`: every license URL returned 403 this session. Score PD and recording rights are separate questions.
 - Interactive use of a recording still needs the *recording's* grant, not only the composition's PD status
 - Prefer [incompetech](incompetech.md) or [kenney-music-jingles](kenney-music-jingles.md) until this page can be quoted
 - Checklist: license page not reachable, commercial unknown, attribution unknown, not a marketplace we could read, reputable org historically but unverified today, not on the high-risk table by name, catalog claims no rights

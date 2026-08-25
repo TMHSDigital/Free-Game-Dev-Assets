@@ -7,6 +7,7 @@ subcategories: [heightmaps, dem, bathymetry]
 license: public-domain
 commercial: true
 attribution_required: true
+attribution_string: "GEBCO Compilation Group. Users must acknowledge the source of The GEBCO Grid."
 formats: [netCDF, GeoTIFF, ASCII]
 tags: [ocean, terrain, 15-arc-second]
 verified: 2026-08-24

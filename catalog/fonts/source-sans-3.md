@@ -6,7 +6,7 @@ category: fonts
 subcategories: [sans, ui]
 license: SIL OFL
 commercial: true
-attribution_required: true
+attribution_required: false
 formats: [OTF, TTF, WOFF, variable]
 tags: [ui, sans, ofl, adobe]
 verified: 2026-08-24
@@ -19,6 +19,7 @@ Adobe’s OFL UI/workhorse sans (static + variable). Broad Latin coverage for me
 
 ## Notes
 
+- Keep OFL.txt with redistributed font files. OFL does not require in-product credits.
 - Repo ships `LICENSE.md` (OFL 1.1). Pair with Source Code Pro from Adobe if you need matching mono (separate cut — verify that repo’s OFL).
 - Don’t sell font files alone; keep license with redistributed binaries
 

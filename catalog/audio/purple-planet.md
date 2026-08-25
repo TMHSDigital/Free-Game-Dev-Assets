@@ -20,6 +20,7 @@ Was a thematic / ambient / cinematic loop library with a custom free-for-games a
 ## Notes
 
 - Do not ship from memory of the old terms
+- No `attribution_string`: the live domain is a dead Kajabi shell with no license text. The old in-game credit line is not re-verified.
 - Incompetech and Soundimage remain reachable alternatives in this catalog
 
 ## Evidence

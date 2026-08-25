@@ -7,6 +7,7 @@ subcategories: [aggregator, sans, display]
 license: varies
 commercial: unknown
 attribution_required: true
+attribution_string: "Credit the designer named on the Fontshare family page. Per-family; ITF FFL terms were not readable as text."
 formats: [OTF, TTF, WOFF, variable]
 tags: [foundry, itf, mixed-license]
 verified: 2026-08-24

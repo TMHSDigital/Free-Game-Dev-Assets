@@ -20,6 +20,7 @@ MyMiniFactory collection of 3D-scanned cultural artefacts aimed at **physical 3D
 ## Notes
 
 - Host is a print marketplace. Per-object licenses on MMF historically include CC-BY-NC-SA. That family is **non-commercial**. None of those words were recoverable this session, so they are not recorded as fact
+- No `attribution_string`: MyMiniFactory terms and per-object pages returned 403. A guessed credit line would be a liability.
 - STL/OBJ from a print pipeline are rarely game-ready (scale, solids, no PBR)
 - Marketplace EULA could not be fetched (403). itch/Fab-style extra terms may still apply on download
 - Checklist: no license badge extracted, commercial unknown, attribution unknown, marketplace terms unreachable, not anonymous but terms blocked, not on the high-risk table by name, catalog claims no rights

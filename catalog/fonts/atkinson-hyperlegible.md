@@ -6,7 +6,7 @@ category: fonts
 subcategories: [sans, accessibility, ui]
 license: SIL OFL
 commercial: true
-attribution_required: true
+attribution_required: false
 formats: [OTF, TTF]
 tags: [a11y, low-vision, ui, ofl]
 verified: 2026-08-24
@@ -19,6 +19,7 @@ Braille Institute’s low-vision–first UI sans — maximized letter distinctio
 
 ## Notes
 
+- Keep OFL.txt with redistributed font files. OFL does not require in-product credits.
 - Site: free “from personal use to all commercial applications.”
 - OFL 1.1 on GitHub/`google/fonts` — keep license text with font files
 - Trademark: Hyperlegible® — don’t imply Braille Institute endorsement

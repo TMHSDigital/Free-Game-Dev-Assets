@@ -7,6 +7,7 @@ subcategories: [sprites, pixel-art]
 license: varies
 commercial: true
 attribution_required: true
+attribution_string: "LPC Revised Character Basics by Death's Darling and contributors. Suggested format; credit the authors named on the OpenGameArt page (CC-BY-SA 3.0 / GPL 3.0 / OGA-BY 3.0)."
 formats: [PNG]
 tags: [lpc, opengameart, cc-by-sa, gpl, oga-by, copyleft-assets]
 verified: 2026-07-19

@@ -20,6 +20,7 @@ Procedural materials freebie from Blender Studio’s *Charge* gallery. Historica
 ## Notes
 
 - Prefer [ambientcg](ambientcg.md) / [poly-haven](../environment/poly-haven.md) for clear CC0 PBR
+- No `attribution_string` this session: the gallery card had no readable license or required credit wording. Do not invent one.
 - Blender.org website CC-BY does **not** substitute for this asset’s grant
 - If you obtain the `.blend`, read any LICENSE/README inside before shipping
 

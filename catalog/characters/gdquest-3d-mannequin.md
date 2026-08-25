@@ -7,6 +7,7 @@ subcategories: [mannequin, godot]
 license: CC-BY-4.0
 commercial: true
 attribution_required: true
+attribution_string: "GDQuest and contributors (https://www.gdquest.com/)"
 formats: [glTF, Godot]
 tags: [godot, mannequin, controller, cc-by]
 verified: 2026-08-24

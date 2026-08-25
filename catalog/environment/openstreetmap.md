@@ -7,6 +7,7 @@ subcategories: [geodata, maps]
 license: ODbL
 commercial: true
 attribution_required: true
+attribution_string: "© OpenStreetMap contributors"
 formats: [OSM, PBF]
 tags: [odbl, produced-work, geo]
 verified: 2026-07-19
