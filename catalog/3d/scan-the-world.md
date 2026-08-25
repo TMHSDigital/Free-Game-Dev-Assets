@@ -9,7 +9,7 @@ commercial: unknown
 attribution_required: true
 formats: [STL, OBJ]
 tags: [photogrammetry, museum, print, aggregator]
-verified: 2026-08-24
+verified: 2026-08-25
 status: needs-review
 ---
 
@@ -27,9 +27,8 @@ MyMiniFactory collection of 3D-scanned cultural artefacts aimed at **physical 3D
 
 ## Evidence
 
-- Live landing (2026-08-24): "freely share digital, 3D scanned cultural artefacts for physical 3D printing"
-- Live MyMiniFactory terms URLs (2026-08-24): HTTP 403. License body not reachable this session
-- Live `/scantheworld/manifesto/` (2026-08-24): page loaded; no CC / commercial sentence extracted from HTML
+- Live landing (2026-08-25): "freely share digital, 3D scanned cultural artefacts for physical 3D printing"
+- Same landing (2026-08-25): print-share language is not a commercial-game grant. No CC string. Per-object MMF terms still not quoted.
 
 ## Related
 

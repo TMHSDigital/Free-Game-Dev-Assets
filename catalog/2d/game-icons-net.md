@@ -28,3 +28,10 @@ status: active
 
 - Live about page (2026-08-15): CC BY 3.0; suggested mention “Icons made by {author}. Available on https://game-icons.net”
 - `game-icons/icons` `license.txt`: “CC 3.0 BY or CC0 if mentioned below.”
+
+## Related
+
+- [lucide-icons](lucide-icons.md)
+- [phosphor-icons](phosphor-icons.md)
+- [heroicons](heroicons.md)
+- [tabler-icons](tabler-icons.md)

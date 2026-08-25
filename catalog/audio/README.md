@@ -33,7 +33,7 @@
 | [incompetech](incompetech.md) | Incompetech | CC-BY-4.0 | yes | active |
 | [filmmusic-ende](filmmusic-ende.md) | FilmMusic / Sascha Ende | CC-BY-4.0 | yes | active |
 | [soundimage](soundimage.md) | Soundimage.org | custom | yes | active |
-| [purple-planet](purple-planet.md) | Purple Planet | custom | yes | active |
+| [purple-planet](purple-planet.md) | Purple Planet | custom | unknown | deprecated |
 | [kenney-music-jingles](kenney-music-jingles.md) | Kenney Music Jingles | CC0 | yes | active |
 | [freepd](freepd.md) | FreePD | unknown | unknown | deprecated |
 | [free-music-archive](free-music-archive.md) | Free Music Archive | varies | unknown | needs-review |

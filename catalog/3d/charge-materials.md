@@ -9,7 +9,7 @@ commercial: unknown
 attribution_required: true
 formats: [Blend]
 tags: [blender-studio, eevee, bake-out, license-unverified]
-verified: 2026-07-19
+verified: 2026-08-25
 status: needs-review
 ---
 
@@ -26,7 +26,7 @@ Procedural materials freebie from Blender Studio’s *Charge* gallery. Historica
 
 ## Evidence
 
-- Live gallery (2026-07-19): “Charge Material Asset Library - Freebie” listed; no CC-BY/CC0 text extracted from the asset surface → cannot promote to `active`
+- Live gallery (2026-08-25): "Charge Material Asset Library - Freebie" listed. No CC-BY, CC0, or required-credit sentence on the card. Stay `needs-review`.
 
 ## Related
 

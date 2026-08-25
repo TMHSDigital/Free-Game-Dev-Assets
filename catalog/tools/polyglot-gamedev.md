@@ -5,28 +5,29 @@ url: https://docs.google.com/spreadsheets/d/17f0dQawb-s_Fd7DHgmVvJoEGDMH_yoSd8EY
 category: tools
 subcategories: [localization]
 license: CC0
-commercial: unknown
+commercial: true
 attribution_required: false
 formats: [CSV, spreadsheet]
 tags: [l10n, ui-strings, r04]
-verified: 2026-08-24
-status: needs-review
+verified: 2026-08-25
+status: active
 ---
 
 # Polyglot Gamedev
 
-Crowdsourced UI/menu string translations. Previously catalogued as CC0. This session the Google Sheet loaded as a preview shell with no readable license cell, CSV export returned 400, and the Reddit wiki 403'd. Do not treat CC0 as confirmed until a live grant is readable.
+Crowdsourced UI/menu string translations for indie games. The live Google Sheet states CC0, commercial use, and no required credit.
 
 ## Notes
 
-- Even if CC0 is later confirmed, this is bootstrap UI strings, not a full ICU/plural/gender engine
-- Re-fetch the first tab / license note in a logged-in browser if you need to ship
+- Bootstrap UI strings, not a full ICU/plural/gender engine
+- Sheet copy warns translation quality is not guaranteed
+- Reddit wiki still 403; the sheet is the grant
 
 ## Evidence
 
-- Live Google Sheet URL (2026-08-24): HTML preview loaded; no "CC0", "Creative Commons", or "public domain" string was present in the response
-- CSV export (2026-08-24): HTTP 400
-- Reddit `/r/gamedev/wiki/polyglot` (2026-08-24): HTTP 403
+- Live Google Sheet (2026-08-25): "It can be used for commercial or non-commercial purposes."
+- Same sheet (2026-08-25): "Credit and attribution are appreciated, but not required. CC0 Zero Copyright"
+- Same sheet (2026-08-25): "a solid launchpad for indiedevs to start localizing their games"
 
 ## Related
 

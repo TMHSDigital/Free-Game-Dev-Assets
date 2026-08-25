@@ -10,7 +10,7 @@ attribution_required: true
 attribution_string: "Credit the designer named on the Fontshare family page. Per-family; ITF FFL terms were not readable as text."
 formats: [OTF, TTF, WOFF, variable]
 tags: [foundry, itf, mixed-license]
-verified: 2026-08-24
+verified: 2026-08-25
 status: needs-review
 ---
 
@@ -29,6 +29,7 @@ Indian Type Foundry's free-font site. Quality display and UI faces (Satoshi, Gen
 
 - `api.fontshare.com/v2/fonts` (2026-08-24): `license_type` is `itf_ffl` on 64 families and `sil_ofl` on 36
 - Live `/licenses`, `/legal`, `/eula` (2026-08-24): "Enable javascript to use this application" with no license body. Terms page not reachable as text this session
+- Live homepage (2026-08-25): still a JS shell. ITF FFL body still unreadable as text. Stay `needs-review`.
 
 ## Related
 

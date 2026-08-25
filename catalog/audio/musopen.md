@@ -9,7 +9,7 @@ commercial: unknown
 attribution_required: true
 formats: [MP3]
 tags: [music, public-domain, recordings]
-verified: 2026-08-24
+verified: 2026-08-25
 status: needs-review
 ---
 
@@ -27,7 +27,8 @@ Public-domain / open classical recordings and scores. The production need this w
 
 ## Evidence
 
-- Live musopen.org and `/about/license/` (2026-08-24): HTTP 403 Cloudflare challenge. License body not reachable this session
+- Live musopen.org, `/license/`, and `/about/license/` (2026-08-25): HTTP 403 Cloudflare. License body not reachable this session
+- Wayback capture of musopen.org `/about/license/` (2026-08-25): HTTP 404. No archived grant to quote.
 
 ## Related
 

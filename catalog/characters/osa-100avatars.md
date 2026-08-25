@@ -9,7 +9,7 @@ commercial: true
 attribution_required: false
 formats: [VRM]
 tags: [vrm, cc0, web, metaverse]
-verified: 2026-08-24
+verified: 2026-08-25
 status: active
 ---
 
@@ -22,12 +22,13 @@ Curated VRM avatar registry. The original **100Avatars** series (R1–R3) is **C
 - Registry metadata/repo is CC0; **per-collection license** lives in `data/projects.json` — always filter by license before shipping.
 - Community collections include CC-BY and CC0 NFT-origin sets; treat non-100Avatars rows as separate reviews.
 - VRM pipeline: UniVRM (Unity), three-vrm (web), VRM4U (Unreal).
+- Parked 2026-08-25: homepage body is i18n keys. `projects.json` still absent. `madjin/100Avatars` README has no CC0 sentence.
 
 ## Evidence
 
-- Live site footer (2026-08-24): "All avatars CC0."
+- Live homepage meta description (2026-08-25): "CC0 licensed open-source avatars for any project. No attribution required."
+- Same HTML (2026-08-25): visible copy is i18n keys such as `home.hero.title`. Footer "All avatars CC0." was not in the static body.
 - `data/projects.json` on the previously cited GitHub path returned 404 this session; per-collection filtering could not be re-checked.
-- Repo `LICENSE`: registry CC0; avatars per collection. (Not re-fetched as a readable file this session.)
 
 ## Related
 
