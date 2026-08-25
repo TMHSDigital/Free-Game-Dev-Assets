@@ -11,6 +11,9 @@ Sources that fail our commercial-safety bar. Keep out of `status: active` listin
 | **Bandai Namco mocap datasets** | CC-BY-NC — research/non-commercial only. |
 | **Ubisoft LaFAN1 / La Forge Animation Dataset** | CC-BY-NC-ND 4.0 — non-commercial, no derivatives; unusable for shipping games. |
 | **SFU Motion Capture Database** | Explicitly free for research only — “cannot be used for commercial products or resale.” |
+| **AMASS** | Live `license.html` (2026-08-25): “non-commercial scientific research” and “use for commercial purposes, is prohibited.” Meshes are SMPL, so the SMPL commercial lock also applies. |
+| **Human3.6M** | Live EULA (2026-08-25): “GRANT OF LICENSE FREE OF CHARGE FOR ACADEMIC USE ONLY.” Free tier is academic; commercial licensing is a separate paid path. |
+| **Ready Player Me** | Homepage and `/legal` connection refused (2026-08-25). GitHub `animation-library` LICENSE.md: animations “licensed for use with Ready Player Me Avatars”; use with other characters “is prohibited.” Avatar mesh terms were not readable this session. Do not catalog until the live site terms load. |
 | **ElevenLabs / similar free TTS tiers** | Free tiers often **non-commercial**; commercial rights sit behind paid plans. Prefer local Apache/MIT TTS (Kokoro, Piper Plus). |
 | **Google Maps / Earth meshes** | Scraping via RenderDoc/plugins violates ToS — not public domain. |
 | **ColorADD symbols** | Proprietary accessibility coding system; needs a paid license. |

@@ -17,4 +17,4 @@
 \* Standard License caps (~1M users / $1M revenue); AI training needs AI Permit.  
 \* Rokoko Vision: free Starter quotas; generated motion commercial per Create FAQ.
 
-Avoid **LaFAN1** (NC-ND) and **SFU MoCap** (research-only) — [`docs/high-risk.md`](../../docs/high-risk.md).
+Avoid **LaFAN1** (NC-ND), **SFU MoCap** (research-only), **AMASS** (non-commercial + SMPL), and **Human3.6M** (academic-only) — [`docs/high-risk.md`](../../docs/high-risk.md).
