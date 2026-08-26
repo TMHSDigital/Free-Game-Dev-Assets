@@ -35,6 +35,8 @@ Themed CC0 low-poly kits with rigged characters, modular towns, weapons, and env
 - [quaternius-downtown-city-megakit](quaternius-downtown-city-megakit.md)
 - [quaternius-sushi-restaurant-kit](quaternius-sushi-restaurant-kit.md)
 - [quaternius-medieval-village-megakit](quaternius-medieval-village-megakit.md)
+- [quaternius-modular-sci-fi-megakit](quaternius-modular-sci-fi-megakit.md)
+- [quaternius-ultimate-space-kit](quaternius-ultimate-space-kit.md)
 - [kenney](kenney.md)
 - [kaykit](kaykit.md)
 - [quaternius-universal-animation-library](../animation/quaternius-universal-animation-library.md)

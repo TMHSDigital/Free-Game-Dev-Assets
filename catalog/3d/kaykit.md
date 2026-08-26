@@ -35,5 +35,7 @@ CC0 character and modular environment packs. Models share a single 1024x1024 gra
 - [kaykit-prototype-bits](kaykit-prototype-bits.md)
 - [kaykit-resource-bits](kaykit-resource-bits.md)
 - [kaykit-furniture-bits](kaykit-furniture-bits.md)
+- [kaykit-restaurant-bits](kaykit-restaurant-bits.md)
+- [kaykit-dungeon-pack](kaykit-dungeon-pack.md)
 - [kaykit-adventurers](../characters/kaykit-adventurers.md)
 - [kaykit-character-animations](../animation/kaykit-character-animations.md)

@@ -47,6 +47,8 @@ Thousands of modular low-poly 3D kits, 2D sheets, UI, and audio packs. Per-pack 
 - [kenney-pirate-kit](kenney-pirate-kit.md)
 - [kenney-modular-dungeon-kit](kenney-modular-dungeon-kit.md)
 - [kenney-modular-cave-kit](kenney-modular-cave-kit.md)
+- [kenney-mini-forest](kenney-mini-forest.md)
+- [kenney-mini-skate](kenney-mini-skate.md)
 - [kenney-car-kit](kenney-car-kit.md)
 - [kenney-nature-kit](kenney-nature-kit.md)
 - [quaternius](quaternius.md)

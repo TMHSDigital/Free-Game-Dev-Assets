@@ -25,6 +25,12 @@
 | [kenney-pirate-kit](kenney-pirate-kit.md) | Kenney Pirate Kit | CC0 | yes | active |
 | [kenney-modular-dungeon-kit](kenney-modular-dungeon-kit.md) | Kenney Modular Dungeon Kit | CC0 | yes | active |
 | [kenney-modular-cave-kit](kenney-modular-cave-kit.md) | Kenney Modular Cave Kit | CC0 | yes | active |
+| [kenney-mini-forest](kenney-mini-forest.md) | Kenney Mini Forest | CC0 | yes | active |
+| [kenney-mini-skate](kenney-mini-skate.md) | Kenney Mini Skate | CC0 | yes | active |
+| [quaternius-modular-sci-fi-megakit](quaternius-modular-sci-fi-megakit.md) | Quaternius Modular Sci-Fi Megakit | CC0 | yes | active |
+| [quaternius-ultimate-space-kit](quaternius-ultimate-space-kit.md) | Quaternius Ultimate Space Kit | CC0 | yes | active |
+| [kaykit-restaurant-bits](kaykit-restaurant-bits.md) | KayKit Restaurant Bits | CC0 | yes | active |
+| [kaykit-dungeon-pack](kaykit-dungeon-pack.md) | KayKit Dungeon Pack | CC0 | yes | active |
 | [kaykit](kaykit.md) | KayKit | CC0 | yes | active |
 | [kaykit-prototype-bits](kaykit-prototype-bits.md) | KayKit Prototype Bits | CC0 | yes | active |
 | [kaykit-resource-bits](kaykit-resource-bits.md) | KayKit Resource Bits | CC0 | yes | active |

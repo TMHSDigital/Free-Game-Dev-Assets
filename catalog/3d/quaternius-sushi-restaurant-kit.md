@@ -32,6 +32,7 @@ status: active
 
 ## Related
 
+- [kaykit-restaurant-bits](kaykit-restaurant-bits.md)
 - [kenney-food-kit](kenney-food-kit.md)
 - [kenney-furniture-kit](kenney-furniture-kit.md)
 - [quaternius](quaternius.md)
