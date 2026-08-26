@@ -41,3 +41,6 @@ CodeWalker is not catalogued here: the GitHub repo has no LICENSE file, and it r
 - [Kenney City Kit (Suburban)](../catalog/3d/kenney-city-kit-suburban.md)
 - [Kenney City Kit (Industrial)](../catalog/3d/kenney-city-kit-industrial.md)
 - [Kenney Furniture Kit](../catalog/3d/kenney-furniture-kit.md)
+- [Kenney Factory Kit](../catalog/3d/kenney-factory-kit.md)
+- [Kenney Food Kit](../catalog/3d/kenney-food-kit.md)
+- [Kenney Train Kit](../catalog/3d/kenney-train-kit.md)

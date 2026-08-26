@@ -35,4 +35,5 @@ status: active
 - [kenney-city-kit-commercial](kenney-city-kit-commercial.md)
 - [kenney-city-kit-suburban](kenney-city-kit-suburban.md)
 - [kenney](kenney.md)
+- [kenney-factory-kit](kenney-factory-kit.md)
 - [kenney-nature-kit](kenney-nature-kit.md)

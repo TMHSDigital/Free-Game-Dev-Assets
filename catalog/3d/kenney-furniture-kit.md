@@ -35,3 +35,4 @@ status: active
 - [kenney](kenney.md)
 - [kenney-city-kit-roads](kenney-city-kit-roads.md)
 - [kenney-city-kit-commercial](kenney-city-kit-commercial.md)
+- [kenney-food-kit](kenney-food-kit.md)

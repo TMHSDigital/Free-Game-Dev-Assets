@@ -10,6 +10,12 @@
 | [kenney-city-kit-commercial](kenney-city-kit-commercial.md) | Kenney City Kit (Commercial) | CC0 | yes | active |
 | [kenney-city-kit-suburban](kenney-city-kit-suburban.md) | Kenney City Kit (Suburban) | CC0 | yes | active |
 | [kenney-city-kit-industrial](kenney-city-kit-industrial.md) | Kenney City Kit (Industrial) | CC0 | yes | active |
+| [kenney-factory-kit](kenney-factory-kit.md) | Kenney Factory Kit | CC0 | yes | active |
+| [kenney-food-kit](kenney-food-kit.md) | Kenney Food Kit | CC0 | yes | active |
+| [kenney-graveyard-kit](kenney-graveyard-kit.md) | Kenney Graveyard Kit | CC0 | yes | active |
+| [kenney-fantasy-town-kit](kenney-fantasy-town-kit.md) | Kenney Fantasy Town Kit | CC0 | yes | active |
+| [kenney-modular-space-kit](kenney-modular-space-kit.md) | Kenney Modular Space Kit | CC0 | yes | active |
+| [kenney-train-kit](kenney-train-kit.md) | Kenney Train Kit | CC0 | yes | active |
 | [quaternius](quaternius.md) | Quaternius | CC0 | yes | active |
 | [quaternius-stylized-nature-megakit](quaternius-stylized-nature-megakit.md) | Quaternius Stylized Nature MegaKit | CC0 | yes | active |
 | [quaternius-fantasy-props-megakit](quaternius-fantasy-props-megakit.md) | Quaternius Fantasy Props MegaKit | CC0 | yes | active |
