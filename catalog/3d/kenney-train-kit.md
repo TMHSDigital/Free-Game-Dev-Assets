@@ -32,5 +32,7 @@ status: active
 ## Related
 
 - [kenney-car-kit](kenney-car-kit.md)
+- [kenney-watercraft-kit](kenney-watercraft-kit.md)
+- [kenney-racing-kit](kenney-racing-kit.md)
 - [kenney-city-kit-roads](kenney-city-kit-roads.md)
 - [kenney](kenney.md)

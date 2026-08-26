@@ -40,5 +40,6 @@ CC0 character and modular environment packs. Models share a single 1024x1024 gra
 - [kaykit-platformer](kaykit-platformer.md)
 - [kaykit-halloween-bits](kaykit-halloween-bits.md)
 - [kaykit-holiday-bits](kaykit-holiday-bits.md)
+- [kaykit-block-bits](kaykit-block-bits.md)
 - [kaykit-adventurers](../characters/kaykit-adventurers.md)
 - [kaykit-character-animations](../animation/kaykit-character-animations.md)

@@ -30,6 +30,7 @@ status: active
 
 ## Related
 
+- [kaykit-block-bits](kaykit-block-bits.md)
 - [kaykit](kaykit.md)
 - [kaykit-resource-bits](kaykit-resource-bits.md)
 - [kaykit-character-animations](../animation/kaykit-character-animations.md)

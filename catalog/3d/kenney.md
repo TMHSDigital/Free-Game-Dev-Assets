@@ -57,6 +57,8 @@ Thousands of modular low-poly 3D kits, 2D sheets, UI, and audio packs. Per-pack 
 - [kenney-retro-fantasy-kit](kenney-retro-fantasy-kit.md)
 - [kenney-retro-urban-kit](kenney-retro-urban-kit.md)
 - [kenney-car-kit](kenney-car-kit.md)
+- [kenney-racing-kit](kenney-racing-kit.md)
+- [kenney-watercraft-kit](kenney-watercraft-kit.md)
 - [kenney-nature-kit](kenney-nature-kit.md)
 - [quaternius](quaternius.md)
 - [kaykit](kaykit.md)

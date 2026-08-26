@@ -31,5 +31,7 @@ status: active
 ## Related
 
 - [kenney](kenney.md)
+- [kenney-watercraft-kit](kenney-watercraft-kit.md)
+- [quaternius-pirate-kit](quaternius-pirate-kit.md)
 - [kenney-city-kit-roads](kenney-city-kit-roads.md)
 - [kenney-nature-kit](kenney-nature-kit.md)

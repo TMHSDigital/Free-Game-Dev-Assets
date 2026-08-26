@@ -51,3 +51,5 @@ CodeWalker is not catalogued here: the GitHub repo has no LICENSE file, and it r
 - [KayKit Halloween Bits](../catalog/3d/kaykit-halloween-bits.md)
 - [Kenney Retro Urban Kit](../catalog/3d/kenney-retro-urban-kit.md)
 - [Quaternius Zombie Apocalypse Kit](../catalog/3d/quaternius-zombie-apocalypse-kit.md)
+- [Kenney Racing Kit](../catalog/3d/kenney-racing-kit.md)
+- [Kenney Watercraft Kit](../catalog/3d/kenney-watercraft-kit.md)
