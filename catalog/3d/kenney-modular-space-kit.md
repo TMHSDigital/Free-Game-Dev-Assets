@@ -32,5 +32,7 @@ status: active
 ## Related
 
 - [kenney](kenney.md)
+- [kenney-modular-dungeon-kit](kenney-modular-dungeon-kit.md)
+- [kenney-modular-cave-kit](kenney-modular-cave-kit.md)
 - [kenney-factory-kit](kenney-factory-kit.md)
 - [quaternius](quaternius.md)

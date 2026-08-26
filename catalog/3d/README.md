@@ -19,6 +19,12 @@
 | [quaternius](quaternius.md) | Quaternius | CC0 | yes | active |
 | [quaternius-stylized-nature-megakit](quaternius-stylized-nature-megakit.md) | Quaternius Stylized Nature MegaKit | CC0 | yes | active |
 | [quaternius-fantasy-props-megakit](quaternius-fantasy-props-megakit.md) | Quaternius Fantasy Props MegaKit | CC0 | yes | active |
+| [quaternius-downtown-city-megakit](quaternius-downtown-city-megakit.md) | Quaternius Downtown City MegaKit | CC0 | yes | active |
+| [quaternius-sushi-restaurant-kit](quaternius-sushi-restaurant-kit.md) | Quaternius Sushi Restaurant Kit | CC0 | yes | active |
+| [quaternius-medieval-village-megakit](quaternius-medieval-village-megakit.md) | Quaternius Medieval Village MegaKit | CC0 | yes | active |
+| [kenney-pirate-kit](kenney-pirate-kit.md) | Kenney Pirate Kit | CC0 | yes | active |
+| [kenney-modular-dungeon-kit](kenney-modular-dungeon-kit.md) | Kenney Modular Dungeon Kit | CC0 | yes | active |
+| [kenney-modular-cave-kit](kenney-modular-cave-kit.md) | Kenney Modular Cave Kit | CC0 | yes | active |
 | [kaykit](kaykit.md) | KayKit | CC0 | yes | active |
 | [kaykit-prototype-bits](kaykit-prototype-bits.md) | KayKit Prototype Bits | CC0 | yes | active |
 | [kaykit-resource-bits](kaykit-resource-bits.md) | KayKit Resource Bits | CC0 | yes | active |

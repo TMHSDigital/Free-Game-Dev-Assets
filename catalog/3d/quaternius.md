@@ -10,7 +10,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, Blend]
 tags: [low-poly, rigged, characters]
-verified: 2026-08-24
+verified: 2026-08-25
 status: active
 ---
 
@@ -27,11 +27,14 @@ Themed CC0 low-poly kits with rigged characters, modular towns, weapons, and env
 
 ## Evidence
 
-- Live pack page [Downtown City MegaKit](https://quaternius.com/packs/downtowncitymegakit.html) (2026-08-24): License "CC0"
-- Same page (2026-08-24): "Free to use in personal, educational and commercial projects."
+- Live pack page [Downtown City MegaKit](https://quaternius.com/packs/downtowncitymegakit.html) (2026-08-25): License "CC0"
+- Same page (2026-08-25): "Free to use in personal, educational and commercial projects."
 
 ## Related
 
+- [quaternius-downtown-city-megakit](quaternius-downtown-city-megakit.md)
+- [quaternius-sushi-restaurant-kit](quaternius-sushi-restaurant-kit.md)
+- [quaternius-medieval-village-megakit](quaternius-medieval-village-megakit.md)
 - [kenney](kenney.md)
 - [kaykit](kaykit.md)
 - [quaternius-universal-animation-library](../animation/quaternius-universal-animation-library.md)
