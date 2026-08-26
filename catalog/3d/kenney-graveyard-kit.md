@@ -32,5 +32,6 @@ status: active
 ## Related
 
 - [kenney-nature-kit](kenney-nature-kit.md)
+- [kaykit-halloween-bits](kaykit-halloween-bits.md)
 - [kenney](kenney.md)
 - [kenney-city-kit-suburban](kenney-city-kit-suburban.md)

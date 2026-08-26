@@ -34,5 +34,6 @@ status: active
 ## Related
 
 - [kenney-modular-dungeon-kit](kenney-modular-dungeon-kit.md)
+- [kenney-mini-dungeon](kenney-mini-dungeon.md)
 - [kaykit-furniture-bits](kaykit-furniture-bits.md)
 - [kaykit](kaykit.md)

@@ -27,10 +27,16 @@
 | [kenney-modular-cave-kit](kenney-modular-cave-kit.md) | Kenney Modular Cave Kit | CC0 | yes | active |
 | [kenney-mini-forest](kenney-mini-forest.md) | Kenney Mini Forest | CC0 | yes | active |
 | [kenney-mini-skate](kenney-mini-skate.md) | Kenney Mini Skate | CC0 | yes | active |
+| [kenney-mini-dungeon](kenney-mini-dungeon.md) | Kenney Mini Dungeon | CC0 | yes | active |
+| [kenney-mini-arena](kenney-mini-arena.md) | Kenney Mini Arena | CC0 | yes | active |
+| [kenney-platformer-kit](kenney-platformer-kit.md) | Kenney Platformer Kit | CC0 | yes | active |
+| [kenney-castle-kit](kenney-castle-kit.md) | Kenney Castle Kit | CC0 | yes | active |
 | [quaternius-modular-sci-fi-megakit](quaternius-modular-sci-fi-megakit.md) | Quaternius Modular Sci-Fi Megakit | CC0 | yes | active |
 | [quaternius-ultimate-space-kit](quaternius-ultimate-space-kit.md) | Quaternius Ultimate Space Kit | CC0 | yes | active |
 | [kaykit-restaurant-bits](kaykit-restaurant-bits.md) | KayKit Restaurant Bits | CC0 | yes | active |
 | [kaykit-dungeon-pack](kaykit-dungeon-pack.md) | KayKit Dungeon Pack | CC0 | yes | active |
+| [kaykit-platformer](kaykit-platformer.md) | KayKit Platformer Pack | CC0 | yes | active |
+| [kaykit-halloween-bits](kaykit-halloween-bits.md) | KayKit Halloween Bits | CC0 | yes | active |
 | [kaykit](kaykit.md) | KayKit | CC0 | yes | active |
 | [kaykit-prototype-bits](kaykit-prototype-bits.md) | KayKit Prototype Bits | CC0 | yes | active |
 | [kaykit-resource-bits](kaykit-resource-bits.md) | KayKit Resource Bits | CC0 | yes | active |

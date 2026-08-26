@@ -34,4 +34,5 @@ status: active
 - [kenney-city-kit-suburban](kenney-city-kit-suburban.md)
 - [kenney-nature-kit](kenney-nature-kit.md)
 - [quaternius-fantasy-props-megakit](quaternius-fantasy-props-megakit.md)
+- [kenney-castle-kit](kenney-castle-kit.md)
 - [kenney](kenney.md)

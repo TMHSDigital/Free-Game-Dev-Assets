@@ -31,5 +31,7 @@ status: active
 ## Related
 
 - [kenney-mini-forest](kenney-mini-forest.md)
+- [kenney-mini-dungeon](kenney-mini-dungeon.md)
+- [kenney-mini-arena](kenney-mini-arena.md)
 - [kenney-city-kit-suburban](kenney-city-kit-suburban.md)
 - [kenney](kenney.md)

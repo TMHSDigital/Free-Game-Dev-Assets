@@ -33,6 +33,7 @@ status: active
 
 - [kenney-modular-cave-kit](kenney-modular-cave-kit.md)
 - [kenney-modular-space-kit](kenney-modular-space-kit.md)
+- [kenney-mini-dungeon](kenney-mini-dungeon.md)
 - [kaykit-dungeon-pack](kaykit-dungeon-pack.md)
 - [kenney-fantasy-town-kit](kenney-fantasy-town-kit.md)
 - [kenney](kenney.md)
