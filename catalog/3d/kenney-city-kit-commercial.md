@@ -34,5 +34,6 @@ status: active
 - [kenney-city-kit-roads](kenney-city-kit-roads.md)
 - [kenney-city-kit-suburban](kenney-city-kit-suburban.md)
 - [kenney-city-kit-industrial](kenney-city-kit-industrial.md)
+- [kenney-retro-urban-kit](kenney-retro-urban-kit.md)
 - [kenney](kenney.md)
 - [kenney-furniture-kit](kenney-furniture-kit.md)

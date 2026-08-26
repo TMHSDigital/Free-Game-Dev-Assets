@@ -34,4 +34,5 @@ status: active
 
 - [kenney-modular-space-kit](kenney-modular-space-kit.md)
 - [quaternius-ultimate-space-kit](quaternius-ultimate-space-kit.md)
+- [quaternius-cyberpunk-game-kit](quaternius-cyberpunk-game-kit.md)
 - [quaternius](quaternius.md)

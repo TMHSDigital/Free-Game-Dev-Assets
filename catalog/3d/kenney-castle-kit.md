@@ -32,6 +32,8 @@ status: active
 ## Related
 
 - [kenney-fantasy-town-kit](kenney-fantasy-town-kit.md)
+- [kenney-tower-defense-kit](kenney-tower-defense-kit.md)
+- [kenney-retro-fantasy-kit](kenney-retro-fantasy-kit.md)
 - [kenney-mini-arena](kenney-mini-arena.md)
 - [quaternius-medieval-village-megakit](quaternius-medieval-village-megakit.md)
 - [kenney](kenney.md)

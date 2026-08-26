@@ -31,12 +31,18 @@
 | [kenney-mini-arena](kenney-mini-arena.md) | Kenney Mini Arena | CC0 | yes | active |
 | [kenney-platformer-kit](kenney-platformer-kit.md) | Kenney Platformer Kit | CC0 | yes | active |
 | [kenney-castle-kit](kenney-castle-kit.md) | Kenney Castle Kit | CC0 | yes | active |
+| [kenney-tower-defense-kit](kenney-tower-defense-kit.md) | Kenney Tower Defense Kit | CC0 | yes | active |
+| [kenney-retro-fantasy-kit](kenney-retro-fantasy-kit.md) | Kenney Retro Fantasy Kit | CC0 | yes | active |
+| [kenney-retro-urban-kit](kenney-retro-urban-kit.md) | Kenney Retro Urban Kit | CC0 | yes | active |
 | [quaternius-modular-sci-fi-megakit](quaternius-modular-sci-fi-megakit.md) | Quaternius Modular Sci-Fi Megakit | CC0 | yes | active |
 | [quaternius-ultimate-space-kit](quaternius-ultimate-space-kit.md) | Quaternius Ultimate Space Kit | CC0 | yes | active |
+| [quaternius-zombie-apocalypse-kit](quaternius-zombie-apocalypse-kit.md) | Quaternius Zombie Apocalypse Kit | CC0 | yes | active |
+| [quaternius-cyberpunk-game-kit](quaternius-cyberpunk-game-kit.md) | Quaternius Cyberpunk Game Kit | CC0 | yes | active |
 | [kaykit-restaurant-bits](kaykit-restaurant-bits.md) | KayKit Restaurant Bits | CC0 | yes | active |
 | [kaykit-dungeon-pack](kaykit-dungeon-pack.md) | KayKit Dungeon Pack | CC0 | yes | active |
 | [kaykit-platformer](kaykit-platformer.md) | KayKit Platformer Pack | CC0 | yes | active |
 | [kaykit-halloween-bits](kaykit-halloween-bits.md) | KayKit Halloween Bits | CC0 | yes | active |
+| [kaykit-holiday-bits](kaykit-holiday-bits.md) | KayKit Holiday Bits | CC0 | yes | active |
 | [kaykit](kaykit.md) | KayKit | CC0 | yes | active |
 | [kaykit-prototype-bits](kaykit-prototype-bits.md) | KayKit Prototype Bits | CC0 | yes | active |
 | [kaykit-resource-bits](kaykit-resource-bits.md) | KayKit Resource Bits | CC0 | yes | active |

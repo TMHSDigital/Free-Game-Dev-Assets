@@ -35,4 +35,5 @@ status: active
 
 - [kenney-graveyard-kit](kenney-graveyard-kit.md)
 - [kaykit-restaurant-bits](kaykit-restaurant-bits.md)
+- [kaykit-holiday-bits](kaykit-holiday-bits.md)
 - [kaykit](kaykit.md)

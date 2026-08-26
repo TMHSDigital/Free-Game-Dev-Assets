@@ -49,3 +49,5 @@ CodeWalker is not catalogued here: the GitHub repo has no LICENSE file, and it r
 - [KayKit Restaurant Bits](../catalog/3d/kaykit-restaurant-bits.md)
 - [Kenney Mini Skate](../catalog/3d/kenney-mini-skate.md)
 - [KayKit Halloween Bits](../catalog/3d/kaykit-halloween-bits.md)
+- [Kenney Retro Urban Kit](../catalog/3d/kenney-retro-urban-kit.md)
+- [Quaternius Zombie Apocalypse Kit](../catalog/3d/quaternius-zombie-apocalypse-kit.md)
