@@ -15,6 +15,7 @@ This repo catalogs **links and metadata** for free (preferably commercially usab
 - Broken, abandoned, or license-unclear sources (use `status: needs-review` or open an issue)
 - Redistributed ZIP/GLB/WAV files of third-party work
 - Assets that are free only for non-commercial / personal use (unless clearly tagged `commercial: false`)
+- GTA V / RDR2 extracts, FiveM MLO leaks, Tebex reuploads, and anonymous `fivem-props` dumps (see [`docs/fivem.md`](docs/fivem.md) and [`docs/high-risk.md`](docs/high-risk.md))
 
 ## Adding an entry
 
@@ -48,7 +49,7 @@ One new markdown file is enough — the website rebuilds from frontmatter on dep
 - [ ] Attribution / share-alike / NC / ND flags recorded
 - [ ] Marketplace EULA checked if Unity/Fab/Unreal/itch
 - [ ] Supplier looks reputable (not an anonymous laundering risk — see [`docs/provenance.md`](docs/provenance.md))
-- [ ] Not on the [`docs/high-risk.md`](docs/high-risk.md) blocklist (MB-Lab, default Shadertoy, ND music, Unity Companion, etc.)
+- [ ] Not on the [`docs/high-risk.md`](docs/high-risk.md) blocklist (MB-Lab, default Shadertoy, ND music, Unity Companion, GTA/FiveM rips, etc.)
 - [ ] Entry does not claim rights we don’t have
 - [ ] Tool entries distinguish **software license** from **exported asset** ownership
 

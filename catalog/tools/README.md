@@ -6,6 +6,7 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 
 | ID | Name | License | Status |
 | --- | --- | --- | --- |
+| [blender](blender.md) | Blender | GPL-2.0-or-later | active |
 | [blockbench](blockbench.md) | Blockbench | GPL-3.0 | active |
 | [ldtk](ldtk.md) | LDtk | MIT | active |
 | [tiled](tiled.md) | Tiled Map Editor | GPL-3.0 | active |
@@ -92,4 +93,12 @@ These are editors/utilities and free engine add-ons, not asset packs. Tool licen
 | [terrain3d](terrain3d.md) | Terrain3D | MIT | active |
 | [godotsteam](godotsteam.md) | GodotSteam | custom | needs-review |
 
-See: [`docs/godot-budget-stack.md`](../../docs/godot-budget-stack.md) · [`docs/ai-assets.md`](../../docs/ai-assets.md) · [`docs/research-index.md`](../../docs/research-index.md).
+## GTA-format tooling
+
+Software only. Not a GTA V asset grant. See [`docs/fivem.md`](../../docs/fivem.md).
+
+| ID | Name | License | Status |
+| --- | --- | --- | --- |
+| [sollumz](sollumz.md) | Sollumz | GPL-3.0 | active |
+
+See: [`docs/godot-budget-stack.md`](../../docs/godot-budget-stack.md) · [`docs/ai-assets.md`](../../docs/ai-assets.md) · [`docs/fivem.md`](../../docs/fivem.md) · [`docs/research-index.md`](../../docs/research-index.md).

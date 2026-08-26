@@ -28,5 +28,8 @@ Sources that fail our commercial-safety bar. Keep out of `status: active` listin
 | **Fab “Epic Content License”** | Engine-locked to Unreal. Only **Fab Standard License** claims may be multi-engine — verify badge per asset. |
 | **LPC / CC-BY-SA sprites** | Commercial OK with SA obligations on asset derivatives; keep sheets extractable; not “CC0-like.” |
 | **Font Awesome brand icons** | Brand marks only for representing those brands — not generic UI decoration. |
+| **GTA V / RDR2 game files and rips** | Rockstar / Take-Two IP. Owning the game (or running FiveM) licenses play, not redistribution of extracted `ydr` / `ytd` / `ymap` / MLO interiors. Not a free asset library. See [`fivem.md`](fivem.md). |
+| **FiveM “free props” dumps** | Anonymous GitHub trees, MLO leaks, escrow bypasses, and Tebex reuploads are stolen or unlicensed regardless of a CC0 badge. Do not catalog. |
+| **Cfx Marketplace / forum Releases (as a blanket source)** | Per-resource terms. Cfx is not a commercial grant. Live Finding Resources (2026-08-25): “Use resources at your own risk.” Do not treat the marketplace as CC0. |
 
 When in doubt: `status: needs-review` or omit entirely.

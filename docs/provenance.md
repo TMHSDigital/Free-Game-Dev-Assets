@@ -15,6 +15,7 @@ Free directories are useful — and a common place for **license laundering**: c
 - Licenses that only appear in a forum post, not on the download page
 - “Free for commercial use” with no named license text
 - Assets that look ripped from a known commercial game or engine sample without provenance
+- FiveM / GTA V “prop packs,” leaked MLOs, or GTA5-Mods dumps labeled CC0 (see [`fivem.md`](fivem.md))
 
 ## Paper trail (recommended for production)
 

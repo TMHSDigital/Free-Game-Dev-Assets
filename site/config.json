@@ -42,6 +42,7 @@
     { "id": "ai-assets", "title": "AI assets", "path": "docs/ai-assets.md" },
     { "id": "trust-score", "title": "Trust score", "path": "docs/trust-score.md" },
     { "id": "game-vs-video", "title": "Games vs video licensing", "path": "docs/game-vs-video-licensing.md" },
-    { "id": "godot-budget-stack", "title": "Godot budget stack", "path": "docs/godot-budget-stack.md" }
+    { "id": "godot-budget-stack", "title": "Godot budget stack", "path": "docs/godot-budget-stack.md" },
+    { "id": "fivem", "title": "FiveM / GTA-format", "path": "docs/fivem.md" }
   ]
 }
