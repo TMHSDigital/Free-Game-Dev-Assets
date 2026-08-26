@@ -34,6 +34,9 @@ Thousands of modular low-poly 3D kits, 2D sheets, UI, and audio packs. Per-pack 
 ## Related
 
 - [kenney-city-kit-roads](kenney-city-kit-roads.md)
+- [kenney-city-kit-commercial](kenney-city-kit-commercial.md)
+- [kenney-city-kit-suburban](kenney-city-kit-suburban.md)
+- [kenney-city-kit-industrial](kenney-city-kit-industrial.md)
 - [kenney-furniture-kit](kenney-furniture-kit.md)
 - [kenney-car-kit](kenney-car-kit.md)
 - [kenney-nature-kit](kenney-nature-kit.md)

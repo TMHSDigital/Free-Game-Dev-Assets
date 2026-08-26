@@ -37,4 +37,7 @@ CodeWalker is not catalogued here: the GitHub repo has no LICENSE file, and it r
 - [`licenses.md`](licenses.md)
 - [Sollumz](../catalog/tools/sollumz.md)
 - [Kenney City Kit (Roads)](../catalog/3d/kenney-city-kit-roads.md)
+- [Kenney City Kit (Commercial)](../catalog/3d/kenney-city-kit-commercial.md)
+- [Kenney City Kit (Suburban)](../catalog/3d/kenney-city-kit-suburban.md)
+- [Kenney City Kit (Industrial)](../catalog/3d/kenney-city-kit-industrial.md)
 - [Kenney Furniture Kit](../catalog/3d/kenney-furniture-kit.md)

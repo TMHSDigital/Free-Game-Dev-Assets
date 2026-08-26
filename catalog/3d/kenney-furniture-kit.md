@@ -34,3 +34,4 @@ status: active
 - [quaternius-fantasy-props-megakit](quaternius-fantasy-props-megakit.md)
 - [kenney](kenney.md)
 - [kenney-city-kit-roads](kenney-city-kit-roads.md)
+- [kenney-city-kit-commercial](kenney-city-kit-commercial.md)

@@ -22,7 +22,6 @@ status: active
 
 - Live pack page states Creative Commons CC0 and 90 files. It does not list interchange formats; `formats` matches other Kenney 3D kits in this catalog (Furniture Kit, Car Kit).
 - CC0 lets you re-export to other engines, including GTA-format drawables you author yourself. That path still does not license Rockstar assets. See [`docs/fivem.md`](../../docs/fivem.md).
-- Same series also lists City Kit (Commercial) and City Kit (Suburban) on Kenney.nl. Those URLs were not verified as separate catalog entries this session.
 - Attribution example (optional): `Roads by Kenney.nl (CC0)`
 
 ## Evidence
@@ -31,8 +30,9 @@ status: active
 
 ## Related
 
+- [kenney-city-kit-commercial](kenney-city-kit-commercial.md)
+- [kenney-city-kit-suburban](kenney-city-kit-suburban.md)
+- [kenney-city-kit-industrial](kenney-city-kit-industrial.md)
 - [kenney](kenney.md)
-- [kenney-furniture-kit](kenney-furniture-kit.md)
 - [kenney-car-kit](kenney-car-kit.md)
-- [kenney-nature-kit](kenney-nature-kit.md)
 - [../tools/sollumz](../tools/sollumz.md)
