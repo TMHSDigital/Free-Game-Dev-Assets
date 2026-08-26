@@ -10,7 +10,7 @@ commercial: true
 attribution_required: false
 formats: [glTF, FBX, Blend]
 tags: [cc0, furniture, interior, kenney]
-verified: 2026-07-19
+verified: 2026-08-25
 status: active
 ---
 
@@ -21,14 +21,16 @@ status: active
 ## Notes
 
 - Complements [kaykit-furniture-bits](kaykit-furniture-bits.md) stylized look
+- Original Kenney CC0, not a GTA extract. Format conversion does not license Rockstar assets. See [docs/fivem.md](../../docs/fivem.md).
 - Attribution example (optional): `Furniture by Kenney.nl (CC0)`
 
 ## Evidence
 
-- Live pack page (2026-07-19): Category 3D; tags furniture/interior/table/chair/bed; License = Creative Commons **CC0**; 140 files
+- Live pack page (2026-08-25): Category 3D; tags furniture/interior/table/chair/bed; License = Creative Commons **CC0**; 140 files
 
 ## Related
 
 - [kaykit-furniture-bits](kaykit-furniture-bits.md)
 - [quaternius-fantasy-props-megakit](quaternius-fantasy-props-megakit.md)
 - [kenney](kenney.md)
+- [kenney-city-kit-roads](kenney-city-kit-roads.md)

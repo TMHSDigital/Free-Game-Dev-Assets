@@ -10,7 +10,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, PNG]
 tags: [low-poly, modular, beginner-friendly, huge-library]
-verified: 2026-08-24
+verified: 2026-08-25
 status: active
 ---
 
@@ -28,11 +28,13 @@ Thousands of modular low-poly 3D kits, 2D sheets, UI, and audio packs. Per-pack 
 
 ## Evidence
 
-- Live pack page [City Kit (Roads)](https://kenney.nl/assets/city-kit-roads) (2026-08-24): License field "Creative Commons CC0"
+- Live pack page [City Kit (Roads)](https://kenney.nl/assets/city-kit-roads) (2026-08-25): License field "Creative Commons CC0"
 - Live homepage (2026-08-24): "Thousands of completely free game assets for you to use." (not a license grant)
 
 ## Related
 
+- [kenney-city-kit-roads](kenney-city-kit-roads.md)
+- [kenney-furniture-kit](kenney-furniture-kit.md)
 - [kenney-car-kit](kenney-car-kit.md)
 - [kenney-nature-kit](kenney-nature-kit.md)
 - [quaternius](quaternius.md)

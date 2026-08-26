@@ -55,4 +55,4 @@ Most game-ok libraries still split two acts:
 
 Sonniss GDC dumps and Kenney audio are written as game libraries. Still read the pack page; do not assume every "free SFX" site on the same itch listing is in the same class.
 
-Related: [`licenses.md`](licenses.md), [`high-risk.md`](high-risk.md), [`provenance.md`](provenance.md).
+Related: [`licenses.md`](licenses.md), [`high-risk.md`](high-risk.md), [`provenance.md`](provenance.md), [`fivem.md`](fivem.md).
