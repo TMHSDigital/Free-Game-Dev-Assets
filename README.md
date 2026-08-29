@@ -3,7 +3,7 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
-[![Sources](https://img.shields.io/badge/sources-265-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-274-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -11,7 +11,7 @@ A curated public catalog of **free and commercially usable** assets, libraries, 
 
 This repository **indexes and documents** sources. It does **not** rehost third-party binary packs. Every entry points to the original publisher so licenses stay authoritative at the source.
 
-**[Browse 265 sources →](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)**
+**[Browse 274 sources →](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)**
 
 ---
 
@@ -53,13 +53,13 @@ npx --yes serve site/dist
 | --- | ---: | --- | --- |
 | **3D** | 65 | Models, scans, PBR textures & materials | [`catalog/3d/`](catalog/3d/) |
 | **Tools** | 62 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
-| **2D** | 37 | Sprites, UI/HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
-| **Audio** | 25 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
-| **Characters** | 21 | Generators & modular humanoids | [`catalog/characters/`](catalog/characters/) |
-| **Fonts** | 17 | OFL and commercial-ok typefaces | [`catalog/fonts/`](catalog/fonts/) |
-| **Environment** | 14 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
-| **Shaders & VFX** | 13 | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
-| **Animation** | 11 | MoCap databases & character clips | [`catalog/animation/`](catalog/animation/) |
+| **2D** | 39 | Sprites, UI/HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
+| **Audio** | 26 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
+| **Characters** | 23 | Generators & modular humanoids | [`catalog/characters/`](catalog/characters/) |
+| **Fonts** | 18 | OFL and commercial-ok typefaces | [`catalog/fonts/`](catalog/fonts/) |
+| **Environment** | 15 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
+| **Shaders & VFX** | 14 | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
+| **Animation** | 12 | MoCap databases & character clips | [`catalog/animation/`](catalog/animation/) |
 
 Master index: [`catalog/README.md`](catalog/README.md)
 
@@ -115,12 +115,14 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 | Atlas-optimized kits | KayKit | [`catalog/3d/kaykit.md`](catalog/3d/kaykit.md) |
 | Seamless PBR materials | ambientCG | [`catalog/3d/ambientcg.md`](catalog/3d/ambientcg.md) |
 | HDRIs / calibrated env | Poly Haven | [`catalog/environment/poly-haven.md`](catalog/environment/poly-haven.md) |
+| Second CC0 HDRI publisher | Open HDRI | [`catalog/environment/open-hdri.md`](catalog/environment/open-hdri.md) |
 | Extra PBR + SBSAR | TextureCan | [`catalog/3d/texturecan.md`](catalog/3d/texturecan.md) |
 | UI icons (brand-free) | Lucide | [`catalog/2d/lucide-icons.md`](catalog/2d/lucide-icons.md) |
 | Hand-drawn 2D vectors | Glitch archive | [`catalog/2d/glitch-archive.md`](catalog/2d/glitch-archive.md) |
 | Input prompt icons | Kenney Input Prompts | [`catalog/2d/kenney-input-prompts.md`](catalog/2d/kenney-input-prompts.md) |
 | Pro SFX dumps | Sonniss #GameAudioGDC | [`catalog/audio/sonniss-gdc.md`](catalog/audio/sonniss-gdc.md) |
 | Attribution music | Incompetech | [`catalog/audio/incompetech.md`](catalog/audio/incompetech.md) |
+| No-attribution music loops | Abstraction Music Loop Bundle | [`catalog/audio/tallbeard-abstraction-music-loop-bundle.md`](catalog/audio/tallbeard-abstraction-music-loop-bundle.md) |
 | Pixel / terminal font | Departure Mono | [`catalog/fonts/departure-mono.md`](catalog/fonts/departure-mono.md) |
 | Localization fonts | Noto Sans | [`catalog/fonts/noto-sans.md`](catalog/fonts/noto-sans.md)
 
@@ -128,7 +130,7 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 
 ## Licenses & provenance
 
-Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/fivem.md`](docs/fivem.md), [`docs/ai-assets.md`](docs/ai-assets.md), [`docs/trust-score.md`](docs/trust-score.md), and [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R05`). Short version:
+Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/fivem.md`](docs/fivem.md), [`docs/ai-assets.md`](docs/ai-assets.md), [`docs/trust-score.md`](docs/trust-score.md), and [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R06`). Short version:
 
 - **CC0** — safest default for closed-source games; attribution not required
 - **CC-BY** — commercial OK; keep credits (BY-3.0 often wants the **author named**; BY-4.0 is usually satisfied by a credits-screen link)

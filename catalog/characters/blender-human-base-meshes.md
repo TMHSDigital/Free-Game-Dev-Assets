@@ -30,5 +30,7 @@ Production topology humanoid scaffolds from Blender Studio. The verified card on
 ## Related
 
 - [../animation/blender-ellie-poses](../animation/blender-ellie-poses.md)
+- [blender-studio-rain](blender-studio-rain.md)
+- [blender-studio-critter](blender-studio-critter.md)
 - [makehuman](makehuman.md)
 - [../3d/the-base-mesh](../3d/the-base-mesh.md)

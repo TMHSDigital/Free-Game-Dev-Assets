@@ -33,3 +33,4 @@ Fontworks’ 16px-grid gothic pixel face — JP-capable HUD/title type that Pres
 - [press-start-2p](press-start-2p.md)
 - [pixelify-sans](pixelify-sans.md)
 - [noto-sans](noto-sans.md)
+- [ark-pixel-font](ark-pixel-font.md)

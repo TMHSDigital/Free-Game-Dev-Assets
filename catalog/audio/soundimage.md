@@ -10,7 +10,7 @@ attribution_required: true
 attribution_string: "Music by Eric Matyas www.soundimage.org"
 formats: [MP3, WAV]
 tags: [music, loops, game-oriented]
-verified: 2026-08-24
+verified: 2026-08-29
 status: active
 ---
 
@@ -24,6 +24,7 @@ Loop-oriented music and atmospheres by Eric Matyas under a custom Soundimage Int
 - Required credit format: [attribution-info](https://soundimage.org/attribution-info/)
 - Homepage: Ogg for games, MP3 for film/video
 - Formats field stays MP3/WAV as in the catalog schema; the live site emphasizes Ogg plus MP3
+- Live About and License also prohibits use "in media that is obscene or pornographic"
 
 ## Evidence
 
@@ -31,6 +32,7 @@ Loop-oriented music and atmospheres by Eric Matyas under a custom Soundimage Int
 - Live About and License (2026-08-24): "worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license"
 - Live Attribution Info (2026-08-24): "credit me in your actual game, video, interactive novel, podcast, etc."
 - Same page (2026-08-24): "Music by Eric Matyas www.soundimage.org"
+- Live About and License (2026-08-29): "The use of the Licensed Material in media that is obscene or pornographic is prohibited."
 
 ## Related
 

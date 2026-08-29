@@ -33,3 +33,4 @@ Pixel-Boy + AAA CC0 16×16 top-down ninja town pack: 50+ characters, 30+ monster
 
 - [ox72-dungeontileset-ii](ox72-dungeontileset-ii.md)
 - [kenney-tiny-dungeon](kenney-tiny-dungeon.md)
+- [screaming-brain-studios](screaming-brain-studios.md)

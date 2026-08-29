@@ -31,5 +31,10 @@ Sources that fail our commercial-safety bar. Keep out of `status: active` listin
 | **GTA V / RDR2 game files and rips** | Rockstar / Take-Two IP. Owning the game (or running FiveM) licenses play, not redistribution of extracted `ydr` / `ytd` / `ymap` / MLO interiors. Not a free asset library. See [`fivem.md`](fivem.md). |
 | **FiveM “free props” dumps** | Anonymous GitHub trees, MLO leaks, escrow bypasses, and Tebex reuploads are stolen or unlicensed regardless of a CC0 badge. Do not catalog. |
 | **Cfx Marketplace / forum Releases (as a blanket source)** | Per-resource terms. Cfx is not a commercial grant. Live Finding Resources (2026-08-25): “Use resources at your own risk.” Do not treat the marketplace as CC0. |
+| **HDRLabs sIBL archive** | Live `hdrlabs.com/sibl/archive.html` HTTP 404 (2026-08-29). Wayback 2023-01-01: “licensed under the Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.” NC-SA. Use [poly-haven](../catalog/environment/poly-haven.md) / [open-hdri](../catalog/environment/open-hdri.md). |
+| **Truebones Mixamo 2400 dump** | Mixamo clip repack, not the ZOO SKU. Mixamo terms already live on [`catalog/animation/mixamo.md`](../catalog/animation/mixamo.md); a third-party dump does not create a new grant. The ZOO entry is a different product and stays `needs-review`. |
+| **Khronos glTF Sample Sponza** | `Models/Sponza/LICENSE.md`: model files under the **CryEngine Limited License Agreement**, not CC-BY. Metadata files are CC-BY-4.0. Do not treat the Khronos sample tree as a bulk CC0/CC-BY kit. |
+| **Sprout Lands (Cup Nooble) free itch tier** | Live itch: free pack is **non-commercial**; commercial needs paid premium. Not CC0. |
+| **Pixel Crawler (Anokolisa)** | Live itch page had no license text (“permanently free” only). Do not infer CC0 from a gist. |
 
 When in doubt: `status: needs-review` or omit entirely.

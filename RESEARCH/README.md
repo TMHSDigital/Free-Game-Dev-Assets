@@ -9,6 +9,8 @@ Deep-research drafts live here. They are **gitignored** (often bulky / drafty) e
 | **R03** | `R03-catalog-gaps-expansion.md` | Poly Haven, music, characters, TTS, AI policy, ODbL, high-risk list |
 | **R04** | `R04-catalog-round3.md` | DEM/scatter, LPC/2D, icons/a11y, pipeline compressors, Mixamo/Fab notes |
 | **R05** | `R05-gap-analysis-expansion.md` | Grid/perspective schema, Kenney prompts, KayKit Bits, 16×16 CC0 packs, DotGothic16, license spectrum |
+| **R06** | `R06-catalog-comprehensiveness-claude.md` | Wave 1: second CC0 HDRI, iso 2D hub, CC0 loops, Ark Pixel, Blender Studio rigs, Unity Labs flipbooks, GameArt2D freebies, Truebones ZOO |
+| **R06** | `R06-catalog-comprehensiveness-gemini.md` | Supplement only. Many rows already in `catalog/`. Rejects in `reject-log.md`. |
 
 Promote durable findings into `catalog/` and `docs/` — do not treat these drafts as the public source of truth.
 

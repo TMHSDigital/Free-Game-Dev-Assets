@@ -17,6 +17,8 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | [ox72-dungeon-tileset](ox72-dungeon-tileset.md) | 0x72 Dungeon Tileset | CC0 | yes | active |
 | [ox72-dungeontileset-ii](ox72-dungeontileset-ii.md) | 0x72 Dungeon Tileset II | CC0 | yes | active |
 | [ninja-adventure](ninja-adventure.md) | Ninja Adventure | CC0 | yes | active |
+| [screaming-brain-studios](screaming-brain-studios.md) | Screaming Brain Studios iso tiles | CC0 | yes | active |
+| [gameart2d-freebies](gameart2d-freebies.md) | GameArt2D freebies | CC0 | yes | active |
 | [bit-bonanza](bit-bonanza.md) | Bit Bonanza | CC0 | yes | active |
 | [urizen-onebit](urizen-onebit.md) | Urizen 1Bit | CC0 | yes | active |
 | [openpeeps](openpeeps.md) | Open Peeps | CC0 | yes | active |

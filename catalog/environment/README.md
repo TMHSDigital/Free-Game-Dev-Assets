@@ -3,6 +3,7 @@
 | ID | Name | License | Commercial | Status |
 | --- | --- | --- | --- | --- |
 | [poly-haven](poly-haven.md) | Poly Haven | CC0 | yes | active |
+| [open-hdri](open-hdri.md) | Open HDRI | CC0 | yes | active |
 | [nasa-3d-resources](nasa-3d-resources.md) | NASA 3D Resources | public-domain* | yes* | active |
 | [nasa-image-video-library](nasa-image-video-library.md) | NASA Image and Video Library | custom | unknown | needs-review |
 | [natural-earth](natural-earth.md) | Natural Earth | public-domain | yes | active |
@@ -17,4 +18,4 @@
 | [usgs-earth-explorer](usgs-earth-explorer.md) | USGS EarthExplorer | public-domain* | yes* | active |
 | [opentopography](opentopography.md) | OpenTopography | varies | varies | active |
 
-\* Attribution / endorsement / geo / notify-JAXA rules — see entry + [`docs/licenses.md`](../../docs/licenses.md). Avoid **FABDEM** (NC) — [`docs/high-risk.md`](../../docs/high-risk.md).
+\* Attribution / endorsement / geo / notify-JAXA rules — see entry + [`docs/licenses.md`](../../docs/licenses.md). Avoid **FABDEM** (NC) and **HDRLabs sIBL** (CC-BY-NC-SA) — [`docs/high-risk.md`](../../docs/high-risk.md).

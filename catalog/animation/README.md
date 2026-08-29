@@ -3,6 +3,7 @@
 | ID | Name | License | Commercial | Status |
 | --- | --- | --- | --- | --- |
 | [cmu-mocap](cmu-mocap.md) | CMU MoCap Database | custom | yes | active |
+| [truebones-zoo](truebones-zoo.md) | Truebones ZOO | custom | yes | needs-review |
 | [accad-mocap](accad-mocap.md) | ACCAD Open Motion | CC-BY-3.0 | yes | active |
 | [kaykit-character-animations](kaykit-character-animations.md) | KayKit Character Animations | CC0 | yes | active |
 | [quaternius-universal-animation-library](quaternius-universal-animation-library.md) | Quaternius UAL | CC0 | yes | active |
@@ -17,4 +18,4 @@
 \* Standard License caps (~1M users / $1M revenue); AI training needs AI Permit.  
 \* Rokoko Vision: free Starter quotas; generated motion commercial per Create FAQ.
 
-Avoid **LaFAN1** (NC-ND), **SFU MoCap** (research-only), **AMASS** (non-commercial + SMPL), and **Human3.6M** (academic-only) — [`docs/high-risk.md`](../../docs/high-risk.md).
+Avoid **LaFAN1** (NC-ND), **SFU MoCap** (research-only), **AMASS** (non-commercial + SMPL), **Human3.6M** (academic-only), and the **Truebones Mixamo 2400 dump** (Mixamo repack, not the ZOO SKU) — [`docs/high-risk.md`](../../docs/high-risk.md).

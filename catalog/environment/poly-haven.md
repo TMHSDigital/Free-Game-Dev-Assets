@@ -32,4 +32,5 @@ Photometrically oriented **CC0** HDRIs (up to 8K), seamless PBR textures, and en
 ## Related
 
 - [ambientcg](../3d/ambientcg.md) — CC0 PBR materials
+- [open-hdri](open-hdri.md)
 - [nasa-3d-resources](nasa-3d-resources.md)

@@ -37,4 +37,5 @@ status: active
 - [kenney-ui-audio](kenney-ui-audio.md)
 - [kenney-rpg-audio](kenney-rpg-audio.md)
 - [incompetech](incompetech.md)
+- [tallbeard-abstraction-music-loop-bundle](tallbeard-abstraction-music-loop-bundle.md)
 - [../tools/jsfxr](../tools/jsfxr.md)

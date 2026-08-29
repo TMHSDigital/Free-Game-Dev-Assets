@@ -23,6 +23,7 @@ Free human motion clips from Carnegie Mellon Graphics Lab. Site grant is "free f
 - ASF/AMC scale note on FAQs: multiply by 0.056444 to get meters
 - FAQs cover format and markers, not a second license document
 - Pair with [accad-mocap](accad-mocap.md) / [rokoko-vision](rokoko-vision.md) when you need cleaner modern clips
+- DAHOX `cmu-mocap-gltf` is a format conversion of this grant, not a second license. Prefer this primary if you need the original terms.
 
 ## Evidence
 

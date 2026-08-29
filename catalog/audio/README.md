@@ -35,6 +35,7 @@
 | [soundimage](soundimage.md) | Soundimage.org | custom | yes | active |
 | [purple-planet](purple-planet.md) | Purple Planet | custom | unknown | deprecated |
 | [kenney-music-jingles](kenney-music-jingles.md) | Kenney Music Jingles | CC0 | yes | active |
+| [tallbeard-abstraction-music-loop-bundle](tallbeard-abstraction-music-loop-bundle.md) | Abstraction Music Loop Bundle | CC0 | yes | active |
 | [freepd](freepd.md) | FreePD | unknown | unknown | deprecated |
 | [free-music-archive](free-music-archive.md) | Free Music Archive | varies | unknown | needs-review |
 | [ccmixter](ccmixter.md) | ccMixter | varies | unknown | needs-review |

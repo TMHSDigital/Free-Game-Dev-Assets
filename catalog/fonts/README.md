@@ -6,6 +6,7 @@ Prefer **SIL OFL** for embedding in commercial games. See [docs/licenses.md](../
 | --- | --- | --- | --- | --- |
 | [atkinson-hyperlegible](atkinson-hyperlegible.md) | Atkinson Hyperlegible | SIL OFL | yes | active |
 | [dotgothic16](dotgothic16.md) | DotGothic16 | SIL OFL | yes | active |
+| [ark-pixel-font](ark-pixel-font.md) | Ark Pixel Font | SIL OFL | yes | active |
 | [departure-mono](departure-mono.md) | Departure Mono | SIL OFL | yes | active |
 | [ibm-plex-sans](ibm-plex-sans.md) | IBM Plex Sans | SIL OFL | yes | active |
 | [inter](inter.md) | Inter | SIL OFL | yes | active |

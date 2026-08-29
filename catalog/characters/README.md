@@ -5,6 +5,8 @@ One folder. `subcategories` tells the two jobs apart: `generator` for tools that
 | ID | Name | License | Commercial | Status |
 | --- | --- | --- | --- | --- |
 | [blender-human-base-meshes](blender-human-base-meshes.md) | Blender Studio base meshes | CC0 | yes | active |
+| [blender-studio-rain](blender-studio-rain.md) | Blender Studio Rain | CC-BY-4.0 | yes | active |
+| [blender-studio-critter](blender-studio-critter.md) | Blender Studio Critter | CC-BY-4.0 | yes | active |
 | [microsoft-rocketbox](microsoft-rocketbox.md) | Microsoft Rocketbox | MIT | yes | active |
 | [osa-100avatars](osa-100avatars.md) | Open Source Avatars (100Avatars) | CC0 | yes | active |
 | [gdquest-3d-mannequin](gdquest-3d-mannequin.md) | GDQuest 3D Mannequin | CC-BY-4.0 | yes | active |

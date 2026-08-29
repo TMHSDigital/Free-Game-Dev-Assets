@@ -22,6 +22,7 @@
     { "id": "kaykit", "need": "Atlas-optimized kits" },
     { "id": "ambientcg", "need": "Seamless PBR materials" },
     { "id": "poly-haven", "need": "HDRIs / calibrated env" },
+    { "id": "open-hdri", "need": "Second CC0 HDRI publisher" },
     { "id": "texturecan", "need": "Extra PBR + SBSAR" },
     { "id": "lucide-icons", "need": "UI icons (brand-free)" },
     { "id": "glitch-archive", "need": "Hand-drawn 2D vectors" },
@@ -31,6 +32,7 @@
     { "id": "departure-mono", "need": "Pixel / terminal font" },
     { "id": "noto-sans", "need": "Localization fonts" },
     { "id": "kenney-music-jingles", "need": "No-attribution music stingers" },
+    { "id": "tallbeard-abstraction-music-loop-bundle", "need": "No-attribution music loops" },
     { "id": "jsfxr", "need": "Generate your own retro SFX" },
     { "id": "cgbookcase", "need": "Extra CC0 PBR (photoscans)" },
     { "id": "ansimuz-sunnyland", "need": "CC0 16-bit platformer kit" }
