@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Browse the catalog
+    url: https://tmhsdigital.github.io/Free-Game-Dev-Assets/
+    about: Search and filter sources on the website
+  - name: Contributing guide
+    url: https://github.com/TMHSDigital/Free-Game-Dev-Assets/blob/main/CONTRIBUTING.md
+    about: How to add or correct a catalog entry

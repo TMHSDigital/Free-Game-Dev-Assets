@@ -1,0 +1,41 @@
+name: Correction
+description: Broken link, stale license, or wrong commercial/attribution flag
+title: "[correction] "
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: A wrong license claim is worse than a missing entry. Quote the live page.
+  - type: input
+    id: entry
+    attributes:
+      label: Catalog entry
+      description: Filename or URL, e.g. `catalog/3d/kenney.md`
+      placeholder: catalog/category/id.md
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What's wrong
+      options:
+        - Dead / redirected URL
+        - License text changed
+        - Commercial or attribution flag is wrong
+        - Should be deprecated
+        - Other metadata
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Live source URL
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Short quote from the live page (under 15 words is enough) plus the date you checked.
+    validations:
+      required: true

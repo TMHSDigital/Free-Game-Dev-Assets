@@ -1,0 +1,27 @@
+name: Validate catalog
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - "catalog/**"
+      - "docs/**"
+      - "site/**"
+      - "README.md"
+      - ".github/workflows/ci.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate catalog
+        run: node site/validate.mjs

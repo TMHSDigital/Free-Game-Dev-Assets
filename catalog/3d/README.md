@@ -41,8 +41,6 @@
 | [quaternius-zombie-apocalypse-kit](quaternius-zombie-apocalypse-kit.md) | Quaternius Zombie Apocalypse Kit | CC0 | yes | active |
 | [quaternius-cyberpunk-game-kit](quaternius-cyberpunk-game-kit.md) | Quaternius Cyberpunk Game Kit | CC0 | yes | active |
 | [quaternius-pirate-kit](quaternius-pirate-kit.md) | Quaternius Pirate Kit | CC0 | yes | active |
-| [quaternius-sci-fi-essentials-kit](quaternius-sci-fi-essentials-kit.md) | Quaternius Sci-Fi Essentials Kit | CC0 | yes | active |
-| [quaternius-cube-world-kit](quaternius-cube-world-kit.md) | Quaternius Cube World Kit | CC0 | yes | active |
 | [kaykit-restaurant-bits](kaykit-restaurant-bits.md) | KayKit Restaurant Bits | CC0 | yes | active |
 | [kaykit-dungeon-pack](kaykit-dungeon-pack.md) | KayKit Dungeon Pack | CC0 | yes | active |
 | [kaykit-platformer](kaykit-platformer.md) | KayKit Platformer Pack | CC0 | yes | active |

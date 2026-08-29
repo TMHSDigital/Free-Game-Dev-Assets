@@ -1,0 +1,62 @@
+name: New source
+description: Suggest a free, commercially usable asset library, pack, or tool
+title: "[source] "
+labels: ["new-source"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check [CONTRIBUTING.md](https://github.com/TMHSDigital/Free-Game-Dev-Assets/blob/main/CONTRIBUTING.md) and search the [catalog](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) first. Duplicates and paid-only marketplaces will be closed.
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      placeholder: Kenney, Poly Haven, Lucide, …
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Publisher URL
+      description: Primary source page, not a mirror or aggregator listing.
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - 3d
+        - 2d
+        - characters
+        - audio
+        - animation
+        - environment
+        - shaders-vfx
+        - fonts
+        - tools
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: License as stated on the live page
+      description: Quote the short name (CC0, CC-BY-4.0, SIL OFL, custom, …). Do not guess.
+    validations:
+      required: true
+  - type: dropdown
+    id: commercial
+    attributes:
+      label: Commercial / game use
+      options:
+        - Explicitly allowed
+        - Explicitly forbidden
+        - Unclear / per-file
+        - Video/YouTube only (not games)
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Why it belongs
+      description: What production need it closes, and any license traps you already spotted.

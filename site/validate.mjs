@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const CATALOG = path.join(ROOT, "catalog");
 const CONFIG_PATH = path.join(__dirname, "config.json");
-const EXPECTED_COUNT = 225;
+const EXPECTED_COUNT = 265;
 const REQUIRED = [
   "id",
   "name",
@@ -243,7 +243,9 @@ function main() {
   }
 
   if (entryFiles.length !== EXPECTED_COUNT) {
-    errors.push(`entry count ${entryFiles.length} !== ${EXPECTED_COUNT}`);
+    errors.push(
+      `entry count ${entryFiles.length} !== ${EXPECTED_COUNT} (update EXPECTED_COUNT in site/validate.mjs when adding or removing entries)`
+    );
   }
 
   for (const item of config.featured || []) {

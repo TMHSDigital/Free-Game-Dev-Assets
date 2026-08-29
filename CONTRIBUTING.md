@@ -2,6 +2,8 @@
 
 This repo catalogs **links and metadata** for free (preferably commercially usable) game assets and related tools. It does not host binary asset dumps.
 
+Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## What belongs here
 
 - Asset libraries, packs, and aggregators with a clear free tier
@@ -24,11 +26,14 @@ One new markdown file is enough — the website rebuilds from frontmatter on dep
 1. Copy [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md).
 2. Save it as `catalog/<category>/<id>.md` using a short kebab-case `id`.
 3. Fill every frontmatter field. Prefer primary URLs over mirror/aggregator pages.
-4. Verify the license on the live source page the day you submit.
-5. For `status: active`, include an `## Evidence` line with a short quote from that page.
-6. Optional 2D/UI fields: `grid_dimensions`, `camera_perspective`, `hardware_tags`, `attribution_string` (see [`TEMPLATE.md`](catalog/TEMPLATE.md)).
-7. Optional: add a line to the matching category `README.md` for GitHub browsing (the site does not require this).
-8. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
+4. `id` must be unique across the **whole** catalog. A mixed kit already listed in another category is a duplicate, not a second entry.
+5. Verify the license on the live source page the day you submit.
+6. For `status: active`, include an `## Evidence` line with a short quote from that page.
+7. Bump `EXPECTED_COUNT` in [`site/validate.mjs`](site/validate.mjs) by the number of files you added (or lowered if you removed some).
+8. Run `node site/validate.mjs` — it must exit 0.
+9. Optional 2D/UI fields: `grid_dimensions`, `camera_perspective`, `hardware_tags`, `attribution_string` (see [`TEMPLATE.md`](catalog/TEMPLATE.md)).
+10. Optional: add a line to the matching category `README.md` for GitHub browsing (the site does not require this).
+11. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
 
 ### Frontmatter rules
 

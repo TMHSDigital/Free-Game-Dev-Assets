@@ -1,8 +1,17 @@
 # Free Game Dev Assets
 
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
+[![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
+[![Sources](https://img.shields.io/badge/sources-265-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 A curated public catalog of **free and commercially usable** assets, libraries, and tools for game development and related interactive work.
 
 This repository **indexes and documents** sources. It does **not** rehost third-party binary packs. Every entry points to the original publisher so licenses stay authoritative at the source.
+
+**[Browse 265 sources →](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)**
 
 ---
 
@@ -31,6 +40,7 @@ The site is generated from catalog frontmatter on every push (GitHub Actions →
 Local preview:
 
 ```bash
+node site/validate.mjs
 node site/build.mjs
 npx --yes serve site/dist
 ```
@@ -39,17 +49,17 @@ npx --yes serve site/dist
 
 ## Browse the catalog
 
-| Category | Focus | Index |
-| --- | --- | --- |
-| **3D** | Models, scans, PBR textures & materials | [`catalog/3d/`](catalog/3d/) |
-| **Environment** | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
-| **2D** | Sprites, UI/HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
-| **Characters** | Generators & modular humanoids | [`catalog/characters/`](catalog/characters/) |
-| **Audio** | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
-| **Animation** | MoCap databases & character clips | [`catalog/animation/`](catalog/animation/) |
-| **Shaders & VFX** | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
-| **Fonts** | OFL and commercial-ok typefaces | [`catalog/fonts/`](catalog/fonts/) |
-| **Tools** | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
+| Category | Entries | Focus | Index |
+| --- | ---: | --- | --- |
+| **3D** | 65 | Models, scans, PBR textures & materials | [`catalog/3d/`](catalog/3d/) |
+| **Tools** | 62 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
+| **2D** | 37 | Sprites, UI/HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
+| **Audio** | 25 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
+| **Characters** | 21 | Generators & modular humanoids | [`catalog/characters/`](catalog/characters/) |
+| **Fonts** | 17 | OFL and commercial-ok typefaces | [`catalog/fonts/`](catalog/fonts/) |
+| **Environment** | 14 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
+| **Shaders & VFX** | 13 | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
+| **Animation** | 11 | MoCap databases & character clips | [`catalog/animation/`](catalog/animation/) |
 
 Master index: [`catalog/README.md`](catalog/README.md)
 
@@ -68,7 +78,7 @@ If you’re prototyping under a tight deadline, start with the [safe starting po
 
 ## How entries work
 
-Each source is one markdown file with YAML frontmatter plus short notes. Add new ones from [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md).
+Each source is one markdown file with YAML frontmatter plus short notes. Add new ones from [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md). `id` must be unique across the whole catalog, not just the category folder.
 
 | Field | Meaning |
 | --- | --- |
@@ -159,7 +169,7 @@ Research-backed shortlist for Godot 4 projects (Kenney industrial/tech kits, Son
 
 PRs welcome for new sources, license corrections, dead links, and clearer notes.
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verification steps.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verification steps. Run `node site/validate.mjs` before opening a PR. Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ---
 
@@ -169,7 +179,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 .
 ├── README.md              ← you are here
 ├── CONTRIBUTING.md        ← how to add / verify entries
-├── LICENSE                ← CC0 for catalog metadata & docs
+├── LICENSE                ← CC0-1.0 for catalog metadata & docs
 ├── docs/
 │   ├── licenses.md / provenance.md / high-risk.md / fivem.md / ai-assets.md
 │   ├── trust-score.md / research-index.md / godot-budget-stack.md
@@ -188,6 +198,6 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 
 ## License
 
-Catalog metadata and documentation in this repository are dedicated to the public domain under [CC0 1.0](LICENSE).
+Catalog metadata and documentation in this repository are dedicated to the public domain under [CC0 1.0 Universal](LICENSE).
 
 Third-party assets linked from the catalog remain under their original licenses. Always verify terms on the source site before use.
