@@ -33,5 +33,6 @@ CC0 low-poly cars/kart racers (45 files) for traffic, racing prototypes, and cit
 - [kenney-racing-kit](kenney-racing-kit.md)
 - [kenney-watercraft-kit](kenney-watercraft-kit.md)
 - [kenney-train-kit](kenney-train-kit.md)
+- [ggbotnet-psx-cars](ggbotnet-psx-cars.md)
 - [kenney-nature-kit](kenney-nature-kit.md)
 - [quaternius](quaternius.md)

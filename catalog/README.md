@@ -4,14 +4,14 @@ One markdown file per source under a category folder. Copy [`TEMPLATE.md`](TEMPL
 
 | Category | Entries | Path | Focus |
 | --- | ---: | --- | --- |
-| 3D | 65 | [`3d/`](3d/) | Models, scans, PBR textures |
+| 3D | 67 | [`3d/`](3d/) | Models, scans, PBR textures |
 | Tools | 62 | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
-| 2D | 39 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
-| Audio | 26 | [`audio/`](audio/) | SFX, music, foley, IRs |
+| 2D | 41 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
+| Audio | 27 | [`audio/`](audio/) | SFX, music, foley, IRs |
 | Characters | 23 | [`characters/`](characters/) | Generators & modular humanoids |
-| Fonts | 18 | [`fonts/`](fonts/) | OFL / commercial-ok type |
+| Fonts | 21 | [`fonts/`](fonts/) | OFL / commercial-ok type |
 | Environment | 15 | [`environment/`](environment/) | HDRI, terrain, geodata |
-| Shaders & VFX | 14 | [`shaders-vfx/`](shaders-vfx/) | Shaders, particle textures, FX |
+| Shaders & VFX | 16 | [`shaders-vfx/`](shaders-vfx/) | Shaders, particle textures, FX |
 | Animation | 12 | [`animation/`](animation/) | MoCap, character clips |
 
 Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/fivem.md`](../docs/fivem.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/trust-score.md`](../docs/trust-score.md) · [`docs/game-vs-video-licensing.md`](../docs/game-vs-video-licensing.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md) · [`docs/research-index.md`](../docs/research-index.md)

@@ -12,6 +12,8 @@
 | [ultimate-retro-shader-collection](ultimate-retro-shader-collection.md) | Ultimate Retro Shader Collection | MIT | yes | active |
 | [kenney-particle-pack](kenney-particle-pack.md) | Kenney Particle Pack | CC0 | yes | active |
 | [unity-labs-vfx-flipbooks](unity-labs-vfx-flipbooks.md) | Unity Labs VFX flipbooks | CC0 | yes | active |
+| [3dtexel-decals](3dtexel-decals.md) | 3DTexel decals (human CC0) | CC0 | yes | active |
+| [effekseer-samples](effekseer-samples.md) | Effekseer sample effects | CC0 | yes | active |
 | [kenney-smoke-particles](kenney-smoke-particles.md) | Kenney Smoke Particles | CC0 | yes | active |
 | [kenney-light-masks](kenney-light-masks.md) | Kenney Light Masks | CC0 | yes | active |
 | [godot-shaders](godot-shaders.md) | Godot Shaders | varies (CC0/MIT/GPL) | yes* | needs-review |

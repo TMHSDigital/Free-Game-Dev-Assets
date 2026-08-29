@@ -30,3 +30,4 @@ Free convolution reverb IR pack (IM Reverbs) from Voxengo — halls, rooms, cave
 ## Related
 
 - [convology-xt](convology-xt.md)
+- [echothief](echothief.md)

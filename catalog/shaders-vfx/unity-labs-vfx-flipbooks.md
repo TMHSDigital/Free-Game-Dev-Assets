@@ -32,5 +32,7 @@ Smoke / fire / explosion image sequences from Unity Labs Paris (Thomas Iche, 201
 ## Related
 
 - [kenney-particle-pack](kenney-particle-pack.md)
+- [3dtexel-decals](3dtexel-decals.md)
+- [effekseer-samples](effekseer-samples.md)
 - [kenney-smoke-particles](kenney-smoke-particles.md)
 - [godot-demo-projects](godot-demo-projects.md)

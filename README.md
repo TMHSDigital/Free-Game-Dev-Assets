@@ -3,7 +3,7 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
-[![Sources](https://img.shields.io/badge/sources-274-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-284-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -11,7 +11,7 @@ A curated public catalog of **free and commercially usable** assets, libraries, 
 
 This repository **indexes and documents** sources. It does **not** rehost third-party binary packs. Every entry points to the original publisher so licenses stay authoritative at the source.
 
-**[Browse 274 sources →](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)**
+**[Browse 284 sources →](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)**
 
 ---
 
@@ -51,14 +51,14 @@ npx --yes serve site/dist
 
 | Category | Entries | Focus | Index |
 | --- | ---: | --- | --- |
-| **3D** | 65 | Models, scans, PBR textures & materials | [`catalog/3d/`](catalog/3d/) |
+| **3D** | 67 | Models, scans, PBR textures & materials | [`catalog/3d/`](catalog/3d/) |
 | **Tools** | 62 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
-| **2D** | 39 | Sprites, UI/HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
-| **Audio** | 26 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
+| **2D** | 41 | Sprites, UI/HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
+| **Audio** | 27 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Characters** | 23 | Generators & modular humanoids | [`catalog/characters/`](catalog/characters/) |
-| **Fonts** | 18 | OFL and commercial-ok typefaces | [`catalog/fonts/`](catalog/fonts/) |
+| **Fonts** | 21 | OFL and commercial-ok typefaces | [`catalog/fonts/`](catalog/fonts/) |
 | **Environment** | 15 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
-| **Shaders & VFX** | 14 | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
+| **Shaders & VFX** | 16 | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
 | **Animation** | 12 | MoCap databases & character clips | [`catalog/animation/`](catalog/animation/) |
 
 Master index: [`catalog/README.md`](catalog/README.md)

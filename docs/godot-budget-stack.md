@@ -10,11 +10,12 @@ Synthesized from local research on Godot 4 physics / destruction pipelines. Focu
 | Modular low-poly / characters | [Quaternius](../catalog/3d/quaternius.md), [KayKit](../catalog/3d/kaykit.md) | Prototyping and stylized kits; [Prototype Bits](../catalog/3d/kaykit-prototype-bits.md) for greybox |
 | Input glyphs | [Kenney Input Prompts](../catalog/2d/kenney-input-prompts.md) | CC0 64×64 incl. Deck / Switch 2 / Quest |
 | PBR surfaces | [ambientCG](../catalog/3d/ambientcg.md), [cgbookcase](../catalog/3d/cgbookcase.md) | Seamless materials; cgbookcase is extra photoscans |
-| HDRI / IBL | [Poly Haven](../catalog/environment/poly-haven.md) | CC0 calibrated environments |
+| HDRI / IBL | [Poly Haven](../catalog/environment/poly-haven.md), [Open HDRI](../catalog/environment/open-hdri.md) | Two CC0 IBL vendors; Open HDRI is unclipped linear EXRs |
 | Oceans / water | [Boujie Water](../catalog/shaders-vfx/boujie-water.md) | MIT Godot ocean shader |
 | Foliage scatter | [ProtonScatter](../catalog/tools/proton-scatter.md) | MIT Godot 4 scatter |
 | Pro SFX (free annual dumps) | [Sonniss #GameAudioGDC](../catalog/audio/sonniss-gdc.md) | Commercial OK; no AI/ML training; no standalone resale |
 | Granular tech foley | [Freesound](../catalog/audio/freesound.md) | **Filter CC0 only** (fans, HDD whir, sparks, etc.) |
+| Music (no attribution) | [Abstraction Music Loop Bundle](../catalog/audio/tallbeard-abstraction-music-loop-bundle.md) | CC0 loops; listing names shipping a game you sell |
 | Music (with credit) | [Incompetech](../catalog/audio/incompetech.md) | CC-BY — avoid ND tracks elsewhere |
 
 Paid Sonniss impact packs can fill metal/glass destruction gaps on a small budget — they are **not** catalogued here as free.

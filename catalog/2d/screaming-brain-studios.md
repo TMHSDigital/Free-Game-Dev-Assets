@@ -27,7 +27,7 @@ True 2:1 isometric PNG tiles (not cartoon cubes). Hub this wave: one publisher p
   - Floor: [isotilepack](https://screamingbrainstudios.itch.io/isotilepack) (1,008 floor tiles)
   - Wall: [isowallpack](https://screamingbrainstudios.itch.io/isowallpack)
   - Overworld: [iso-overworld-pack](https://screamingbrainstudios.itch.io/iso-overworld-pack) (360 overworld tiles)
-- Object pack URL did not resolve this session (404s on guessed slugs). Do not inherit CC0 onto an unresolved product page.
+  - Object: [isometric-object-pack](https://screamingbrainstudios.itch.io/isometric-object-pack)
 - Town comment from the author: some textures are modified/resized from the old public-domain Golgotha collection. Author still ships them as CC0.
 - Magenta/teal/black key colors per pack. True 2:1 iso; `camera_perspective` is `isometric_3_4` for catalog filter grouping with other iso 2D, not a claim that these are 3/4 painted sprites.
 - Tiled `.tsx` sheets ship in several packs; fix image paths after unzip.
@@ -39,6 +39,7 @@ True 2:1 isometric PNG tiles (not cartoon cubes). Hub this wave: one publisher p
 - Live Floor pack (2026-08-29): Asset license "Creative Commons Zero v1.0 Universal"
 - Live Wall pack (2026-08-29): Asset license "Creative Commons Zero v1.0 Universal"
 - Live Overworld pack (2026-08-29): Asset license "Creative Commons Zero v1.0 Universal"
+- Live Object pack (2026-08-29): Asset license "Creative Commons Zero v1.0 Universal"
 
 ## Related
 

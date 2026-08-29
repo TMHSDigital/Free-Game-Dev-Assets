@@ -8,6 +8,7 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | --- | --- | --- | --- | --- |
 | [glitch-archive](glitch-archive.md) | Glitch archive | CC0 | yes | active |
 | [kenney-ui-pack](kenney-ui-pack.md) | Kenney UI Pack | CC0 | yes | active |
+| [playpug-simple-vector-ui](playpug-simple-vector-ui.md) | PlayPug Simple Vector UI | CC0 | yes | active |
 | [kenney-cursor-pack](kenney-cursor-pack.md) | Kenney Cursor Pack | CC0 | yes | active |
 | [kenney-pixel-platformer](kenney-pixel-platformer.md) | Kenney Pixel Platformer | CC0 | yes | active |
 | [kenney-1-bit-pack](kenney-1-bit-pack.md) | Kenney 1-Bit Pack | CC0 | yes | active |
@@ -17,6 +18,7 @@ Optional frontmatter: `grid_dimensions`, `camera_perspective`, `hardware_tags`.
 | [ox72-dungeon-tileset](ox72-dungeon-tileset.md) | 0x72 Dungeon Tileset | CC0 | yes | active |
 | [ox72-dungeontileset-ii](ox72-dungeontileset-ii.md) | 0x72 Dungeon Tileset II | CC0 | yes | active |
 | [ninja-adventure](ninja-adventure.md) | Ninja Adventure | CC0 | yes | active |
+| [sparklin-superpowers](sparklin-superpowers.md) | Sparklin Superpowers packs | CC0 | yes | active |
 | [screaming-brain-studios](screaming-brain-studios.md) | Screaming Brain Studios iso tiles | CC0 | yes | active |
 | [gameart2d-freebies](gameart2d-freebies.md) | GameArt2D freebies | CC0 | yes | active |
 | [bit-bonanza](bit-bonanza.md) | Bit Bonanza | CC0 | yes | active |

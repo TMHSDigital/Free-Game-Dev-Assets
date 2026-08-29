@@ -33,3 +33,5 @@ Google’s SIL OFL family with broad script coverage including CJK — default p
 ## Related
 
 - [departure-mono](departure-mono.md) — pixel mono HUD/UI
+- [amiri](amiri.md)
+- [reem-kufi](reem-kufi.md)

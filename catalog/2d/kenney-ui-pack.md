@@ -31,5 +31,6 @@ status: active
 
 - [kenney-pixel-platformer](kenney-pixel-platformer.md)
 - [kenney-input-prompts](kenney-input-prompts.md)
+- [playpug-simple-vector-ui](playpug-simple-vector-ui.md)
 - [kenney](../3d/kenney.md)
 - [xelu-input-prompts](xelu-input-prompts.md)
