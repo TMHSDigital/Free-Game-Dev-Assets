@@ -7,6 +7,8 @@ Prefer **SIL OFL** for embedding in commercial games. See [docs/licenses.md](../
 | [atkinson-hyperlegible](atkinson-hyperlegible.md) | Atkinson Hyperlegible | SIL OFL | yes | active |
 | [dotgothic16](dotgothic16.md) | DotGothic16 | SIL OFL | yes | active |
 | [ark-pixel-font](ark-pixel-font.md) | Ark Pixel Font | SIL OFL | yes | active |
+| [quanpixel](quanpixel.md) | QuanPixel | SIL OFL | yes | active |
+| [ggbotnet-fonts-cc0](ggbotnet-fonts-cc0.md) | GGBotNet Fonts CC0 | CC0 | yes | active |
 | [amiri](amiri.md) | Amiri | SIL OFL | yes | active |
 | [reem-kufi](reem-kufi.md) | Reem Kufi | SIL OFL | yes | active |
 | [league-gothic](league-gothic.md) | League Gothic | SIL OFL | yes | active |

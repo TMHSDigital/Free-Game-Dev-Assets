@@ -20,6 +20,7 @@ Field IRs from unusual spaces (domes, kilns, lava tubes, fortresses) by Dr. Chri
 ## Notes
 
 - Prefer [voxengo-impulses](voxengo-impulses.md) until EchoThief publishes a games-named grant.
+- Wave 3 recheck (2026-08-29): homepage still "copyright 2013-2026 Dr. Chris Warren"; zip download present; no license or games sentence.
 - Academic citations of the library are not a substitute for a live license.
 
 ## Evidence
@@ -31,4 +32,5 @@ Field IRs from unusual spaces (domes, kilns, lava tubes, fortresses) by Dr. Chri
 ## Related
 
 - [voxengo-impulses](voxengo-impulses.md)
+- [adventure-kid-irs](adventure-kid-irs.md)
 - [convology-xt](convology-xt.md)

@@ -35,4 +35,5 @@ TakWolf pan-CJK gothic pixel face (10 / 12 / 16px, monospaced and proportional, 
 - [dotgothic16](dotgothic16.md)
 - [noto-sans](noto-sans.md)
 - [press-start-2p](press-start-2p.md)
+- [quanpixel](quanpixel.md)
 - [pixelify-sans](pixelify-sans.md)

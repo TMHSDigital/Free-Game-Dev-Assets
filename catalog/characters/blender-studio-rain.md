@@ -33,6 +33,7 @@ Production humanoid character rig from Blender Studio (Rain v3 on the live card)
 
 ## Related
 
+- [blender-studio-one](blender-studio-one.md)
 - [blender-studio-critter](blender-studio-critter.md)
 - [blender-human-base-meshes](blender-human-base-meshes.md)
 - [../animation/blender-ellie-poses](../animation/blender-ellie-poses.md)

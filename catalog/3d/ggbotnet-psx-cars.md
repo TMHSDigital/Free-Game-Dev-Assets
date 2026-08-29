@@ -2,6 +2,7 @@
 id: ggbotnet-psx-cars
 name: GGBotNet PSX Style Cars
 url: https://ggbot.itch.io/psx-style-cars
+publisher: GGBotNet
 category: 3d
 subcategories: [vehicles, low-poly]
 license: CC0
@@ -22,7 +23,7 @@ Low-poly PS1-look cars (station wagon, sedan, hatch, van, police/taxi, wreck, 19
 - Live pack: "This game assets is licensed under a CC0 1.0 Universal."
 - Scale is inconsistent across cars (author note). Expect to normalize.
 - Formats: Blend, OBJ, PNG atlases, OGG SFX. No glTF on the listing this session.
-- Same account also ships CC0 and OFL fonts. Do not inherit this car grant onto fonts. Check the font collection license per zip.
+- Same account also ships CC0 and OFL fonts. CC0 all-in-1 is [../fonts/ggbotnet-fonts-cc0](../fonts/ggbotnet-fonts-cc0.md). Do not inherit this car grant onto the OFL collection.
 - Built for Miziziziz Retro3DGraphicsCollection; that GitHub tree is not this license source.
 
 ## Evidence
@@ -32,6 +33,7 @@ Low-poly PS1-look cars (station wagon, sedan, hatch, van, police/taxi, wreck, 19
 
 ## Related
 
+- [../fonts/ggbotnet-fonts-cc0](../fonts/ggbotnet-fonts-cc0.md)
 - [kenney-car-kit](kenney-car-kit.md)
 - [kenney-racing-kit](kenney-racing-kit.md)
 - [../2d/kenney-pixel-vehicle-pack](../2d/kenney-pixel-vehicle-pack.md)

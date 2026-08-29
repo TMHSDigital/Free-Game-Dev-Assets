@@ -24,6 +24,7 @@
 | ID | Name | License | Commercial | Status |
 | --- | --- | --- | --- | --- |
 | [voxengo-impulses](voxengo-impulses.md) | Voxengo Free IRs | custom | yes | active |
+| [adventure-kid-irs](adventure-kid-irs.md) | Adventure Kid IRs (AKRT) | CC-BY-4.0 | yes | active |
 | [echothief](echothief.md) | EchoThief IRs | unknown | unknown | needs-review |
 | [convology-xt](convology-xt.md) | Convology XT Free Factory | custom | unknown | needs-review |
 

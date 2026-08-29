@@ -6,6 +6,8 @@
 | [kenney-car-kit](kenney-car-kit.md) | Kenney Car Kit | CC0 | yes | active |
 | [ggbotnet-psx-cars](ggbotnet-psx-cars.md) | GGBotNet PSX Style Cars | CC0 | yes | active |
 | [3dmodelscc0-melee-weapons](3dmodelscc0-melee-weapons.md) | 3dmodelscc0 Melee Weapons | CC0 | yes | active |
+| [3dmodelscc0-city](3dmodelscc0-city.md) | 3dmodelscc0 City Environment | CC0 | yes | active |
+| [3dmodelscc0-guns](3dmodelscc0-guns.md) | 3dmodelscc0 Guns and Explosives | CC0 | yes | active |
 | [kenney-nature-kit](kenney-nature-kit.md) | Kenney Nature Kit | CC0 | yes | active |
 | [kenney-furniture-kit](kenney-furniture-kit.md) | Kenney Furniture Kit | CC0 | yes | active |
 | [kenney-city-kit-roads](kenney-city-kit-roads.md) | Kenney City Kit (Roads) | CC0 | yes | active |

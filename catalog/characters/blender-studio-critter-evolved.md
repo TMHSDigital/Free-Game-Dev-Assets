@@ -1,29 +1,29 @@
 ---
-id: blender-studio-critter
-name: Blender Studio Critter
-url: https://studio.blender.org/characters/critter/
+id: blender-studio-critter-evolved
+name: Blender Studio Critter Evolved
+url: https://studio.blender.org/characters/critter-evolved/
 publisher: Blender Studio
 category: characters
 subcategories: [rigged, creatures]
 license: CC-BY-4.0
 commercial: true
 attribution_required: true
-attribution_string: "Critter (c) Blender Studio (CC BY 4.0)"
+attribution_string: "Critter Evolved (c) Blender Studio (CC BY 4.0)"
 formats: [Blend]
 tags: [blender-studio, creature, rig]
 verified: 2026-08-29
 status: active
 ---
 
-# Blender Studio Critter
+# Blender Studio Critter Evolved
 
-Creature rig from Blender Studio (Singularity). Closes the non-Quaternius creature-rig gap. Same CC-BY-4.0 grant as Rain. Login required to download. Requires Blender 5.0+.
+Evolved Critter rig from Blender Studio (Singularity). Used for the final shot of that open movie. Same CC-BY-4.0 grant as Critter. Login required to download. Requires Blender 5.0+.
 
 ## Notes
 
 - Live page: "This character requires at least Blender 5.0, and WILL NOT WORK on lower versions!"
-- Attribution to Blender Studio, same tooltip as Rain.
-- Sibling listing Critter Evolved is [blender-studio-critter-evolved](blender-studio-critter-evolved.md).
+- Distinct URL from [blender-studio-critter](blender-studio-critter.md). Do not inherit that card onto Evolved.
+- Attribution to Blender Studio. Use the `attribution_string`.
 - Not a Mixamo-style FBX dump. Expect Blender-first, then export.
 
 ## Evidence
@@ -33,8 +33,7 @@ Creature rig from Blender Studio (Singularity). Closes the non-Quaternius creatu
 
 ## Related
 
-- [blender-studio-critter-evolved](blender-studio-critter-evolved.md)
+- [blender-studio-critter](blender-studio-critter.md)
+- [blender-studio-one](blender-studio-one.md)
 - [blender-studio-space-creatures](blender-studio-space-creatures.md)
-- [blender-studio-rain](blender-studio-rain.md)
 - [quaternius-ultimate-monsters](quaternius-ultimate-monsters.md)
-- [blender-human-base-meshes](blender-human-base-meshes.md)
