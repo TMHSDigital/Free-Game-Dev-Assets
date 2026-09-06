@@ -12,6 +12,7 @@
     "characters": { "label": "Characters", "blurb": "Generators & modular humanoids" },
     "audio": { "label": "Audio", "blurb": "SFX, music, foley, IRs" },
     "animation": { "label": "Animation", "blurb": "MoCap & character clips" },
+    "video": { "label": "Video", "blurb": "Stock footage, archival clips" },
     "shaders-vfx": { "label": "Shaders & VFX", "blurb": "Shaders, particles, FX" },
     "fonts": { "label": "Fonts", "blurb": "OFL / commercial-ok type" },
     "tools": { "label": "Tools", "blurb": "Editors, pipeline, TTS, add-ons" }

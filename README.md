@@ -3,7 +3,7 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
-[![Sources](https://img.shields.io/badge/sources-293-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-294-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -11,7 +11,7 @@ A curated public catalog of **free and commercially usable** assets, libraries, 
 
 This repository **indexes and documents** sources. It does **not** rehost third-party binary packs. Every entry points to the original publisher so licenses stay authoritative at the source.
 
-**[Browse 293 sources →](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)**
+**[Browse 294 sources →](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)**
 
 ---
 
@@ -62,6 +62,7 @@ npx --yes serve site/dist
 | **Environment** | 15 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
 | **Shaders & VFX** | 17 | Shaders, particle/FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
 | **Animation** | 12 | MoCap databases & character clips | [`catalog/animation/`](catalog/animation/) |
+| **Video** | 1 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
 
 Master index: [`catalog/README.md`](catalog/README.md)
 
@@ -194,7 +195,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 └── catalog/
     ├── TEMPLATE.md
     ├── 3d/ environment/ 2d/ characters/
-    ├── audio/ animation/ shaders-vfx/ fonts/ tools/
+    ├── audio/ animation/ video/ shaders-vfx/ fonts/ tools/
     └── README.md
 ```
 

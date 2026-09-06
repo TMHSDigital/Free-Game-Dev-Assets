@@ -39,3 +39,4 @@ Searchable NASA stills, video, and audio (launch audio, mission clips, press kit
 - [nasadem](nasadem.md)
 - [../3d/smithsonian-open-access](../3d/smithsonian-open-access.md)
 - [../audio/kenney-sci-fi-sounds](../audio/kenney-sci-fi-sounds.md)
+- [../video/destockd](../video/destockd.md)
