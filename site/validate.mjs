@@ -60,6 +60,8 @@ const BINARY_EXT = new Set([
   ".pak",
 ]);
 const SKIP_WALK = new Set([".git", "node_modules", "dist", "RESEARCH"]);
+/** Generated output and README documentation stills — not third-party packs. */
+const ALLOWED_BINARY_PREFIXES = ["site/dist/", "docs/images/readme/"];
 const EMOJI_RE = /\p{Extended_Pictographic}/u;
 const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -269,7 +271,7 @@ function main() {
     const ext = path.extname(file).toLowerCase();
     if (!BINARY_EXT.has(ext)) continue;
     const rel = relFromRoot(file);
-    if (rel.startsWith("site/dist/")) continue;
+    if (ALLOWED_BINARY_PREFIXES.some((p) => rel.startsWith(p))) continue;
     errors.push(`binary asset file: ${rel}`);
   }
 
