@@ -15,7 +15,54 @@ This repository **indexes and documents** sources. It does **not** rehost third-
 
 **[Browse 294 sources →](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)**
 
----
+<table>
+  <tr>
+    <td align="center" width="25%">
+      <a href="catalog/3d/kenney.md"><img src="docs/images/readme/kenney-3d.png" alt="Kenney modular low-poly city" width="220" /></a><br />
+      <b><a href="catalog/3d/kenney.md">Kenney</a></b><br />
+      <sub>CC0 · modular 3D</sub>
+    </td>
+    <td align="center" width="25%">
+      <a href="catalog/3d/quaternius.md"><img src="docs/images/readme/quaternius-downtown.jpg" alt="Quaternius Downtown City MegaKit" width="220" /></a><br />
+      <b><a href="catalog/3d/quaternius.md">Quaternius</a></b><br />
+      <sub>CC0 · rigged kits</sub>
+    </td>
+    <td align="center" width="25%">
+      <a href="catalog/3d/kaykit.md"><img src="docs/images/readme/kaykit-characters.png" alt="KayKit adventurer and robot characters" width="220" /></a><br />
+      <b><a href="catalog/3d/kaykit.md">KayKit</a></b><br />
+      <sub>CC0 · atlas characters</sub>
+    </td>
+    <td align="center" width="25%">
+      <a href="catalog/environment/poly-haven.md"><img src="docs/images/readme/polyhaven-hdri.png" alt="Poly Haven HDRI with lighting spheres" width="220" /></a><br />
+      <b><a href="catalog/environment/poly-haven.md">Poly Haven</a></b><br />
+      <sub>CC0 · HDRI / PBR</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="25%">
+      <a href="catalog/2d/kenney-ui-pack.md"><img src="docs/images/readme/kenney-ui.png" alt="Kenney UI pack panels and buttons" width="220" /></a><br />
+      <b><a href="catalog/2d/kenney-ui-pack.md">Kenney UI</a></b><br />
+      <sub>CC0 · HUD / menus</sub>
+    </td>
+    <td align="center" width="25%">
+      <a href="catalog/2d/kenney-input-prompts.md"><img src="docs/images/readme/kenney-prompts.png" alt="Kenney Xbox Series input prompt icons" width="220" /></a><br />
+      <b><a href="catalog/2d/kenney-input-prompts.md">Input prompts</a></b><br />
+      <sub>CC0 · 64×64 glyphs</sub>
+    </td>
+    <td align="center" width="25%">
+      <a href="catalog/3d/ambientcg.md"><img src="docs/images/readme/ambientcg.jpg" alt="ambientCG photogrammetry ground material sphere" width="220" /></a><br />
+      <b><a href="catalog/3d/ambientcg.md">ambientCG</a></b><br />
+      <sub>CC0 · seamless PBR</sub>
+    </td>
+    <td align="center" width="25%">
+      <a href="catalog/fonts/departure-mono.md"><img src="docs/images/readme/departure-mono.png" alt="Departure Mono pixel type specimen" width="220" /></a><br />
+      <b><a href="catalog/fonts/departure-mono.md">Departure Mono</a></b><br />
+      <sub>SIL OFL · pixel type</sub>
+    </td>
+  </tr>
+</table>
+
+<sub>Publisher promotional stills (CC0 / SIL OFL), used here as documentation only. Full packs stay on the source sites.</sub>
 
 ---
 
@@ -41,13 +88,16 @@ This repository **indexes and documents** sources. It does **not** rehost third-
 
 The site is generated from catalog frontmatter on every push (GitHub Actions → Pages). Add or edit one file under `catalog/<category>/<id>.md` and the browse UI, filters, and counts update automatically.
 
-Local preview:
+<details>
+<summary>Local preview</summary>
 
 ```bash
 node site/validate.mjs
 node site/build.mjs
 npx --yes serve site/dist
 ```
+
+</details>
 
 ---
 
@@ -85,6 +135,9 @@ If you’re prototyping under a tight deadline, start with the [safe starting po
 
 Each source is one markdown file with YAML frontmatter plus short notes. Add new ones from [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md). `id` must be unique across the whole catalog, not just the category folder.
 
+<details>
+<summary>Frontmatter fields</summary>
+
 | Field | Meaning |
 | --- | --- |
 | `license` | Short license name as stated by the source (`CC0`, `CC-BY-3.0`, `SIL OFL`, `custom`, `varies`) |
@@ -97,7 +150,10 @@ Each source is one markdown file with YAML frontmatter plus short notes. Add new
 | `attribution_string` | Optional copy-paste credit when `attribution_required` |
 | `publisher` | Optional rights-holding publisher when that publisher has more than one entry. Not a generic host. |
 
-### Status legend
+</details>
+
+<details>
+<summary>Status legend</summary>
 
 | Status | Meaning |
 | --- | --- |
@@ -105,13 +161,18 @@ Each source is one markdown file with YAML frontmatter plus short notes. Add new
 | `needs-review` | Useful discovery — verify the live page before shipping |
 | `deprecated` | Kept for history; prefer alternatives |
 
+</details>
+
 Aggregators (OpenGameArt, itch collections, Poly Pizza, font indexes) are usually `license: varies` and `commercial: varies`. Treat each pack or file as its own review. The site Commercial OK filter still lists them, labeled **per-file review**.
 
 ---
 
 ## Safe starting points
 
-High-signal CC0 / clearly permissive sources that cover most early production needs:
+High-signal CC0 / clearly permissive sources that cover most early production needs. Previews of several of these are in the gallery above.
+
+<details>
+<summary>Full starter list</summary>
 
 | Need | Source | Entry |
 | --- | --- | --- |
@@ -129,13 +190,18 @@ High-signal CC0 / clearly permissive sources that cover most early production ne
 | Attribution music | Incompetech | [`catalog/audio/incompetech.md`](catalog/audio/incompetech.md) |
 | No-attribution music loops | Abstraction Music Loop Bundle | [`catalog/audio/tallbeard-abstraction-music-loop-bundle.md`](catalog/audio/tallbeard-abstraction-music-loop-bundle.md) |
 | Pixel / terminal font | Departure Mono | [`catalog/fonts/departure-mono.md`](catalog/fonts/departure-mono.md) |
-| Localization fonts | Noto Sans | [`catalog/fonts/noto-sans.md`](catalog/fonts/noto-sans.md)
+| Localization fonts | Noto Sans | [`catalog/fonts/noto-sans.md`](catalog/fonts/noto-sans.md) |
+
+</details>
 
 ---
 
 ## Licenses & provenance
 
-Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/fivem.md`](docs/fivem.md), [`docs/ai-assets.md`](docs/ai-assets.md), [`docs/trust-score.md`](docs/trust-score.md), and [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R06`). Short version:
+Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provenance.md), [`docs/high-risk.md`](docs/high-risk.md), [`docs/fivem.md`](docs/fivem.md), [`docs/ai-assets.md`](docs/ai-assets.md), [`docs/trust-score.md`](docs/trust-score.md), and [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) before mixing packs into a commercial build. Research drafts: [`docs/research-index.md`](docs/research-index.md) (`R01`–`R06`).
+
+<details>
+<summary>Short version</summary>
 
 - **CC0** — safest default for closed-source games; attribution not required
 - **CC-BY** — commercial OK; keep credits (BY-3.0 often wants the **author named**; BY-4.0 is usually satisfied by a credits-screen link)
@@ -145,6 +211,8 @@ Read [`docs/licenses.md`](docs/licenses.md), [`docs/provenance.md`](docs/provena
 - **ODbL / OSM** — game binary usually OK as a Produced Work; credit OSM; watch redistributed geodata
 - **Marketplace “free”** (Unity / Fab / Unreal) — often commercial in-engine, no redistribution, sometimes engine-locked
 - **Trust the supplier** — skip anonymous mega-dumps and known traps (MB-Lab, default Shadertoy, Maps scrapes, GTA/FiveM rips)
+
+</details>
 
 Catalog metadata in *this* repo is CC0. Linked assets remain under their own licenses.
 
@@ -182,6 +250,9 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 
 ## Repository layout
 
+<details>
+<summary>Directory tree</summary>
+
 ```text
 .
 ├── README.md              ← you are here
@@ -191,6 +262,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
 │   ├── licenses.md / provenance.md / high-risk.md / fivem.md / ai-assets.md
 │   ├── trust-score.md / research-index.md / godot-budget-stack.md
 │   ├── game-vs-video-licensing.md
+│   └── images/readme/     ← publisher stills used in this README
 ├── RESEARCH/README.md     ← research archive index (drafts gitignored)
 ├── site/                  ← GitHub Pages source (build scans catalog/)
 │   ├── build.mjs / config.json / public/
@@ -200,6 +272,8 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and verificatio
     ├── audio/ animation/ video/ shaders-vfx/ fonts/ tools/
     └── README.md
 ```
+
+</details>
 
 ---
 
