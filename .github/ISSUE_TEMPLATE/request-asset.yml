@@ -1,0 +1,56 @@
+name: Request an asset / report a gap
+description: You need something the catalog does not cover and have no source in mind
+title: "[gap] "
+labels: ["gap"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when you searched the [catalog](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) and came up empty. If you already know a source, use **New source** instead. Gaps feed the research queue and the Gaps sections of the [stacks](https://github.com/TMHSDigital/Free-Game-Dev-Assets/tree/main/stacks).
+  - type: textarea
+    id: need
+    attributes:
+      label: What you need
+      description: Be concrete about the asset, not the game. "Straight-down character sprites that turn in four directions, 16x16" beats "RPG art".
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - 3d
+        - 2d
+        - characters
+        - audio
+        - animation
+        - video
+        - environment
+        - shaders-vfx
+        - fonts
+        - tools
+        - not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: licence
+    attributes:
+      label: Licence constraint
+      description: The most restrictive terms you can accept.
+      options:
+        - No credit at all (CC0 / public domain)
+        - Credit is fine (CC-BY)
+        - Any licence that allows commercial game use
+        - Copyleft is fine (GPL, CC-BY-SA)
+    validations:
+      required: true
+  - type: input
+    id: format
+    attributes:
+      label: Formats or engine
+      placeholder: glTF for Godot 4, PNG sprite sheets, OGG loops, …
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you already tried
+      description: Catalog entries or outside sources you looked at, and why they did not fit (wrong perspective, licence, style, quality).
