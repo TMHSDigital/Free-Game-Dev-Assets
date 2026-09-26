@@ -31,6 +31,7 @@ people and brands out of anything prominent, such as a title screen.
 | [pexels-videos](pexels-videos.md) | Pexels Videos | custom | yes | active |
 | [pixabay-videos](pixabay-videos.md) | Pixabay Videos | custom | yes | active |
 | [coverr](coverr.md) | Coverr | custom | yes | active |
+| [dareful](dareful.md) | Dareful | CC-BY-4.0 | yes | active |
 | [mixkit-stock-video](mixkit-stock-video.md) | Mixkit Stock Video | custom | yes | needs-review |
 | [prelinger-archives](prelinger-archives.md) | Prelinger Archives | varies | varies | needs-review |
 | [nasa-image-video-library](nasa-image-video-library.md) | NASA Image and Video Library | custom | unknown | needs-review |

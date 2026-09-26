@@ -3,7 +3,7 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
-[![Sources](https://img.shields.io/badge/sources-319-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-334-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -11,7 +11,7 @@ Free assets and tools for commercial games. Each entry records the licence as it
 states it and the date someone read it there; active entries quote the source's own words.
 The catalog indexes sources and never rehosts them: check the source before you ship.
 
-- **[Browse 319 sources](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)** on the site, filtered by licence, credit and review status.
+- **[Browse 334 sources](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)** on the site, filtered by licence, credit and review status.
 - **Starter stacks**, one pick per need and what the whole set owes:
   [2D pixel platformer](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-pixel-platformer/) ·
   [2D top-down pixel game](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-top-down-pixel/) ·
@@ -100,7 +100,7 @@ a credit.
 
 ## Browse the catalog
 
-The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 319 entries
+The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 334 entries
 and filters them by category, commercial use, attribution, review status and 2D camera
 view. Press `/` to search. Filtered views and individual entries have their own URLs, so you can send
 someone exactly what you are looking at.
@@ -108,15 +108,15 @@ someone exactly what you are looking at.
 | Category | Entries | Focus | Index |
 | --- | ---: | --- | --- |
 | **3D** | 70 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
-| **Tools** | 66 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
+| **Tools** | 77 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 | **2D** | 54 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
 | **Audio** | 30 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
-| **Characters** | 27 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
-| **Fonts** | 23 | OFL and commercial-ok typefaces, CJK | [`catalog/fonts/`](catalog/fonts/) |
+| **Characters** | 28 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
+| **Fonts** | 25 | OFL and commercial-ok typefaces, CJK | [`catalog/fonts/`](catalog/fonts/) |
 | **Environment** | 13 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
 | **Shaders & VFX** | 17 | Shaders, particle and FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
 | **Animation** | 12 | Motion capture and character clips | [`catalog/animation/`](catalog/animation/) |
-| **Video** | 7 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
+| **Video** | 8 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
 
 ## Reading an entry
 

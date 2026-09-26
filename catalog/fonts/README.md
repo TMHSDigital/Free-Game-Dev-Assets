@@ -50,5 +50,7 @@ Match the font's design grid to your tile grid where you can: DotGothic16 is dra
 | [velvetyne](velvetyne.md) | Velvetyne | SIL OFL | yes | active |
 | [fontsource](fontsource.md) | Fontsource | varies | varies | active |
 | [open-foundry](open-foundry.md) | Open Foundry | varies | varies | active |
+| [kenney-fonts](kenney-fonts.md) | Kenney Fonts | CC0 | yes | active |
+| [monogram](monogram.md) | Monogram | CC0 | yes | active |
 
 Aggregators (Fontesk, JustFreeFonts, etc.) are intentionally omitted unless the source itself is the distribution path. Fontsource is listed because it is that path (npm). Open Foundry is a display-only index: download from the upstream OFL.txt. Fontshare is a warning: mixed `itf_ffl` / OFL, terms page not readable as text.

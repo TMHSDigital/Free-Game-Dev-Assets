@@ -5,15 +5,15 @@ One markdown file per source under a category folder. Copy [`TEMPLATE.md`](TEMPL
 | Category | Entries | Path | Focus |
 | --- | ---: | --- | --- |
 | 3D | 70 | [`3d/`](3d/) | Models, scans, PBR textures |
-| Tools | 66 | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
+| Tools | 77 | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
 | 2D | 54 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
 | Audio | 30 | [`audio/`](audio/) | SFX, music, foley, IRs |
-| Characters | 27 | [`characters/`](characters/) | Generators & modular humanoids |
-| Fonts | 23 | [`fonts/`](fonts/) | OFL / commercial-ok type |
+| Characters | 28 | [`characters/`](characters/) | Generators & modular humanoids |
+| Fonts | 25 | [`fonts/`](fonts/) | OFL / commercial-ok type |
 | Environment | 13 | [`environment/`](environment/) | HDRI, terrain, geodata |
 | Shaders & VFX | 17 | [`shaders-vfx/`](shaders-vfx/) | Shaders, particle textures, FX |
 | Animation | 12 | [`animation/`](animation/) | MoCap, character clips |
-| Video | 7 | [`video/`](video/) | Stock footage, archival clips |
+| Video | 8 | [`video/`](video/) | Stock footage, archival clips |
 
 Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/fivem.md`](../docs/fivem.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/trust-score.md`](../docs/trust-score.md) · [`docs/fonts.md`](../docs/fonts.md) · [`docs/geodata.md`](../docs/geodata.md) · [`docs/game-vs-video-licensing.md`](../docs/game-vs-video-licensing.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md) · [`docs/research-index.md`](../docs/research-index.md)
 
