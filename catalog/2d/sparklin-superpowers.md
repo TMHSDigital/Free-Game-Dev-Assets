@@ -13,6 +13,7 @@ formats: [PNG]
 tags: [pixel, itch]
 verified: 2026-08-29
 status: active
+maintenance: inactive
 ---
 
 # Sparklin Superpowers asset packs
@@ -21,6 +22,7 @@ Pixel-Boy packs from Sparklin Labs (vehicles, prehistoric platformer, space shoo
 
 ## Notes
 
+- Maintenance: no push to the GitHub repository sparklinlabs/superpowers-asset-packs since 2019-09-21, per the GitHub API on 2026-09-26.
 - Repo README (2026-08-29): assets "released under the Creative Commons Zero (CC0) license." `LICENSE.txt` is the full CC0 1.0 deed.
 - Same README: "You can use the assets found in this repository in your own games, even commercial ones. Attribution is not required but appreciated."
 - 2D folders named on 2026-08-29 (exclude ninja): `prehistoric-platformer`, `space-shooter`, `top-down-shooter`, `western-fps-2d`, `rpg-battle-system`, `medieval-fantasy`, `backgrounds`.

@@ -16,6 +16,7 @@ import {
   checkEvidenceDates,
   checkFormatVocabulary,
   checkLicenseVocabulary,
+  checkMaintenance,
   checkPublisherConsistency,
   checkSpdxConsistency,
   checkStacks,
@@ -305,6 +306,7 @@ function main() {
     errors.push(...checkValueAliases(rel, meta, aliases));
     errors.push(...checkFormatVocabulary(rel, meta, formatVocab));
     errors.push(...checkTagsRestatePublisher(rel, meta));
+    errors.push(...checkMaintenance(rel, meta));
     errors.push(...checkActiveIsSettled(rel, meta));
     if (meta.id) {
       const id = String(meta.id);

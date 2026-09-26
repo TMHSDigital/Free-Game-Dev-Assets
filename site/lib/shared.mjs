@@ -8,6 +8,12 @@ export const PERSPECTIVE_LABELS = {
   "2d_flat": "flat UI",
 };
 
+/** What each `maintenance` value tells a reader (checks.mjs V22). */
+export const MAINTENANCE_NOTES = {
+  archived: "The source repository is archived: read-only, no fixes or updates.",
+  inactive: "The source has had no new commits for over three years.",
+};
+
 /** One-line meaning of each status, matching the homepage legend. */
 export const STATUS_NOTES = {
   active: "License spot-checked at the source; the entry carries dated evidence.",

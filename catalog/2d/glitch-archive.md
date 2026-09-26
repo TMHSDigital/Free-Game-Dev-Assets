@@ -13,6 +13,7 @@ formats: [PNG, SVG, FLA]
 tags: [hand-drawn, vector, large-pack]
 verified: 2026-08-29
 status: active
+maintenance: archived
 ---
 
 # Glitch archive
@@ -21,6 +22,7 @@ status: active
 
 ## Notes
 
+- Maintenance: the GitHub repository tinyspeck/glitch-items is archived (read-only), per the GitHub API on 2026-09-26; last push 2013-12-16.
 - Logo and trademark are excluded. Only files in the repo tree are covered.
 - Original announcement: glitchthegame.com/public-domain-game-art/ (not re-fetched on 2026-08-29). Community PNG/SVG conversions are usually easier than Adobe FLA.
 - FLA packages need Flash-era tools or community rips; do not treat FLA as engine-ready.

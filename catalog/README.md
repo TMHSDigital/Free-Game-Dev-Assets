@@ -17,6 +17,6 @@ One markdown file per source under a category folder. Copy [`TEMPLATE.md`](TEMPL
 
 Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/fivem.md`](../docs/fivem.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/trust-score.md`](../docs/trust-score.md) · [`docs/fonts.md`](../docs/fonts.md) · [`docs/geodata.md`](../docs/geodata.md) · [`docs/game-vs-video-licensing.md`](../docs/game-vs-video-licensing.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md) · [`docs/research-index.md`](../docs/research-index.md)
 
-Optional frontmatter (2D/UI): `grid_dimensions`, `camera_perspective`, `hardware_tags`, `attribution_string`. See [`TEMPLATE.md`](TEMPLATE.md).
+Optional frontmatter (2D/UI): `grid_dimensions`, `camera_perspective`, `hardware_tags`, `attribution_string`. Any entry: `maintenance` (`archived` or `inactive`, for a source repository that is archived or has had no push in three years; the site shows it as a badge and the weekly link check reports a GitHub source whose state disagrees). See [`TEMPLATE.md`](TEMPLATE.md).
 
 Status legend: `active` = license spot-checked · `needs-review` = useful but verify before shipping · `deprecated` = keep for history only.

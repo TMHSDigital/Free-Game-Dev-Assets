@@ -8,6 +8,10 @@
  * - stale: `verified` is older than --stale-days (365 by default)
  * - blocked: 401/403/429, which is usually a site refusing robots rather
  *   than a dead link; listed for a manual check, never counted as a problem
+ * - maintenance: a github.com source whose repository is archived or has had
+ *   no push in three years while its `maintenance` field does not say so, or
+ *   the other way round. Uses the GitHub API; set GITHUB_TOKEN to lift the
+ *   60-requests-an-hour anonymous limit.
  *
  * Writes a Markdown report (stdout, or --report) and, under GitHub Actions,
  * `problems=<n>` to $GITHUB_OUTPUT so the workflow can open or update one
@@ -17,6 +21,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { maintenanceFromRepo } from "./checks.mjs";
 import { parseFrontmatter } from "./lib/frontmatter.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -43,8 +48,8 @@ function loadEntries() {
       else if (d.name.endsWith(".md") && d.name !== "README.md" && d.name !== "TEMPLATE.md") {
         const parsed = parseFrontmatter(fs.readFileSync(full, "utf8"));
         if (!parsed?.meta.url) continue;
-        const { id, url, verified, status } = parsed.meta;
-        out.push({ id: String(id), url: String(url), verified: verified ? String(verified) : null, status: String(status), rel: path.relative(ROOT, full).split(path.sep).join("/") });
+        const { id, url, verified, status, maintenance } = parsed.meta;
+        out.push({ id: String(id), url: String(url), verified: verified ? String(verified) : null, status: String(status), maintenance: maintenance ? String(maintenance) : null, rel: path.relative(ROOT, full).split(path.sep).join("/") });
       }
     }
   };
@@ -91,9 +96,49 @@ async function run(entries) {
   return results;
 }
 
+/**
+ * GitHub sources whose repository state and `maintenance` field disagree.
+ * One API call per github.com repository, one at a time: a few dozen calls,
+ * well inside the limit with a token. An API failure is listed, not guessed.
+ */
+async function checkMaintenance(entries) {
+  const headers = { "user-agent": UA, accept: "application/vnd.github+json" };
+  if (process.env.GITHUB_TOKEN) headers.authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  const out = [];
+  for (const e of entries) {
+    let host;
+    try {
+      host = new URL(e.url).hostname;
+    } catch {
+      continue;
+    }
+    if (host !== "github.com") continue;
+    const repo = repoOf(e.url);
+    if (!repo.includes("/")) continue;
+    try {
+      const res = await fetch(`https://api.github.com/repos/${repo}`, { headers, signal: AbortSignal.timeout(TIMEOUT_MS) });
+      if (!res.ok) {
+        out.push({ ...e, detail: `GitHub API HTTP ${res.status} for ${repo}` });
+        if (res.status === 403 || res.status === 429) break; // rate limited: the rest would fail too
+        continue;
+      }
+      const data = await res.json();
+      const want = maintenanceFromRepo(data);
+      if (want !== e.maintenance) {
+        const state = data.archived ? "archived" : `last push ${String(data.pushed_at).slice(0, 10)}`;
+        out.push({ ...e, detail: `${repo} is ${state}; maintenance is ${e.maintenance || "unset"}, expected ${want || "unset"}` });
+      }
+    } catch (err) {
+      out.push({ ...e, detail: `GitHub API ${err.name || "error"} for ${repo}` });
+    }
+  }
+  return out;
+}
+
 const staleDays = Number(arg("--stale-days", "365"));
 const entries = loadEntries().filter((e) => e.status !== "deprecated");
 const results = await run(entries);
+const maintenance = await checkMaintenance(entries);
 const cutoff = new Date(Date.now() - staleDays * 86400000).toISOString().slice(0, 10);
 const rows = entries.map((e, i) => ({ ...e, ...results[i] }));
 const pick = (kind) => rows.filter((r) => r.kind === kind);
@@ -103,7 +148,7 @@ const line = (r) => `- [ ] [\`${r.id}\`](${REPO}/blob/main/${r.rel}): ${r.url}${
 const dead = pick("dead");
 const moved = pick("moved");
 const blocked = pick("blocked");
-const problems = dead.length + moved.length + stale.length;
+const problems = dead.length + moved.length + stale.length + maintenance.length;
 const date = new Date().toISOString().slice(0, 10);
 const report = [
   `Link check of ${entries.length} active and needs-review entries, run ${date}.`,
@@ -122,6 +167,10 @@ const report = [
   "",
   ...(stale.length ? stale.map((e) => `- [ ] [\`${e.id}\`](${REPO}/blob/main/${e.rel}): verified ${e.verified}`) : ["None."]),
   "",
+  `### GitHub repository state differs from \`maintenance\` (${maintenance.length})`,
+  "",
+  ...(maintenance.length ? maintenance.map(line) : ["None."]),
+  "",
   `<details><summary>Refused the checker (${blocked.length}): usually bot blocking, check by hand</summary>`,
   "",
   ...(blocked.length ? blocked.map(line) : ["None."]),
@@ -134,4 +183,4 @@ const reportPath = arg("--report", null);
 if (reportPath) fs.writeFileSync(reportPath, report);
 else process.stdout.write(report);
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `problems=${problems}\n`);
-console.error(`${entries.length} checked: ${dead.length} dead, ${moved.length} moved, ${stale.length} stale, ${blocked.length} blocked`);
+console.error(`${entries.length} checked: ${dead.length} dead, ${moved.length} moved, ${stale.length} stale, ${maintenance.length} maintenance, ${blocked.length} blocked`);

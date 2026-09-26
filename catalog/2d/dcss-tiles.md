@@ -11,6 +11,7 @@ formats: [PNG]
 tags: [roguelike, tileset, dungeon, monsters, items, mixed-license]
 verified: 2026-08-24
 status: needs-review
+maintenance: inactive
 grid_dimensions: 32x32
 camera_perspective: top_down
 ---
@@ -21,6 +22,7 @@ Thousands of 32x32 top-down tiles covering monsters, items, dungeon features, an
 
 ## Notes
 
+- Maintenance: no push to the GitHub repository crawl/tiles since 2020-09-05, per the GitHub API on 2026-09-26.
 - The project publishes `TILES_UNDER_UNKNOWN_LICENSE.md` and `ARTISTS.md` alongside the art; read both before using anything, and treat the unknown-license list as unusable
 - The upstream statement is that the majority is CC0 and new submissions are CC0 unless specified otherwise, with older pieces being the problem
 - Derived from rltiles, which is where much of the older and less traceable provenance comes from

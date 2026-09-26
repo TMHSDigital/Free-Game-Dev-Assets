@@ -22,6 +22,8 @@ import {
   evidenceDates,
   markdownAnchors,
   checkLicenseVocabulary,
+  checkMaintenance,
+  maintenanceFromRepo,
   checkPublisherConsistency,
   checkSpdxConsistency,
   checkStacks,
@@ -697,6 +699,18 @@ accepts("V19 keeps a tag that only mentions a licence word", checkValueAliases("
   accepts("families name only licence values the vocabulary has", unknown);
 }
 
+/* V22: maintenance ------------------------------------------------------ */
+rejects("V22 rejects an unknown maintenance value", checkMaintenance("bad.md", { maintenance: "dead" }), 'maintenance "dead" is not one of archived | inactive');
+accepts("V22 accepts archived", checkMaintenance("ok.md", { maintenance: "archived" }));
+accepts("V22 leaves the field optional", checkMaintenance("ok.md", {}));
+{
+  const now = Date.parse("2026-09-26T00:00:00Z");
+  const same = (label, actual, expected) => (actual === expected ? accepts(label, []) : accepts(label, [`got ${actual}, want ${expected}`]));
+  same("an archived repo is archived", maintenanceFromRepo({ archived: true, pushed_at: "2026-09-01T00:00:00Z" }, now), "archived");
+  same("no push in over three years is inactive", maintenanceFromRepo({ archived: false, pushed_at: "2023-01-01T00:00:00Z" }, now), "inactive");
+  same("a recent push is neither", maintenanceFromRepo({ archived: false, pushed_at: "2025-01-01T00:00:00Z" }, now), null);
+}
+
 /* V21: tag restating the publisher ------------------------------------- */
 rejects("V21 rejects the publisher as a tag", checkTagsRestatePublisher("bad.md", { publisher: "Blender Studio", tags: ["blender-studio", "open-movie"] }), 'tag "blender-studio" restates publisher');
 accepts("V21 allows another publisher's name as a tag", checkTagsRestatePublisher("ok.md", { publisher: "Envato", tags: ["kenney-style"] }));
@@ -722,4 +736,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 21 checks`);
+console.log(`checks.test ok: ${passed} assertions across 22 checks`);

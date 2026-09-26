@@ -12,6 +12,7 @@ formats: [OBJ]
 tags: [retopo, remesh, quad]
 verified: 2026-08-24
 status: active
+maintenance: inactive
 ---
 
 # QuadriFlow
@@ -20,6 +21,7 @@ Huang / Zhou / Niessner / Shewchuk / Guibas quadrangulation (SIGGRAPH 2018). Sam
 
 ## Notes
 
+- Maintenance: no push to the GitHub repository hjwdzh/QuadriFlow since 2019-12-07, per the GitHub API on 2026-09-26.
 - Build from source. No first-party Windows zip on the repo page on 2026-08-24
 - `LICENSE.txt` also has a "you are under no obligation to provide Enhancements" paragraph. That is extra BSD language, not a second grant for game assets
 - Prefer Instant Meshes if you want a GUI. QuadriFlow is the batch/research CLI sibling

@@ -54,6 +54,10 @@
     side_scroller: "side-scroller",
     "2d_flat": "flat UI",
   };
+  const MAINTENANCE_NOTES = {
+    archived: "The source repository is archived: read-only, no fixes or updates.",
+    inactive: "The source has had no new commits for over three years.",
+  };
   // Searchable words per perspective. A 3/4 pack is what most people mean by a top-down
   // RPG, so it answers "top down" too.
   const PERSPECTIVE_SEARCH = {
@@ -317,12 +321,16 @@
         ? `<span class="tax">${escapeHtml(PERSPECTIVE_LABELS[entry.camera_perspective] || entry.camera_perspective)}</span>`
         : "",
     ].join("");
+    // The same badge as build.mjs maintenanceFlagHtml (titles from shared.mjs MAINTENANCE_NOTES).
+    const maintenance = entry.maintenance
+      ? ` <span class="maintenance-flag" title="${escapeHtml(MAINTENANCE_NOTES[entry.maintenance] || "")}">${escapeHtml(entry.maintenance)}</span>`
+      : "";
     return `<article class="entry-card" id="entry-${escapeHtml(entry.id)}" data-id="${escapeHtml(entry.id)}" data-status="${escapeHtml(entry.status)}" style="--edge:${edgeColor(entry)}">
   <span class="entry-edge" aria-hidden="true"></span>
   <div class="entry-body">
     <div class="entry-top">
       <h4><a class="entry-link" href="entry/${escapeHtml(entry.id)}/" data-id="${escapeHtml(entry.id)}">${escapeHtml(entry.name)}</a></h4>
-      <span class="entry-flags">${flags}</span>
+      <span class="entry-flags">${flags}${maintenance}</span>
     </div>
     <p>${escapeHtml(entry.summary || "")}</p>
     <div class="meta-line">
@@ -332,6 +340,7 @@
     <div class="entry-links">
       <a href="${escapeHtml(entry.url)}" rel="noopener noreferrer">Open source</a>
       <a href="${escapeHtml(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">Entry and evidence</a>
+      <button type="button" class="link-button shortlist-toggle" data-shortlist="${escapeHtml(entry.id)}" aria-pressed="false" aria-label="Shortlist ${escapeHtml(entry.name)}" hidden>Add to shortlist</button>
     </div>
   </div>
 </article>`;

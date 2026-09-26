@@ -170,6 +170,18 @@
           <div class="filter-row active-filters" id="active-filters" hidden></div>
         </div>
 
+        <section class="shortlist" id="shortlist" aria-labelledby="shortlist-title" tabindex="-1" hidden>
+          <h3 id="shortlist-title">Your shortlist (<span id="shortlist-count">0</span>)</h3>
+          <p class="filter-note">Kept in this browser only. The CREDITS file lists what these entries owe: credit lines, notices to keep, files to check one by one, and open questions.</p>
+          <ul class="shortlist-items" id="shortlist-items"></ul>
+          <p class="shortlist-actions">
+            <button type="button" class="btn-ghost" data-shortlist-action="md">Download CREDITS.md</button>
+            <button type="button" class="btn-ghost" data-shortlist-action="txt">Download CREDITS.txt</button>
+            <button type="button" class="link-button" data-shortlist-action="clear">Clear shortlist</button>
+          </p>
+          <p class="filter-note" id="shortlist-storage" hidden>This browser is not saving site data, so the shortlist lasts only until you leave the page.</p>
+        </section>
+
         <div class="entry-list" id="entry-grid"><!--ENTRY_ROWS--></div>
         <p class="empty" id="empty-state" hidden>
           No entries match these filters.
@@ -206,5 +218,6 @@
 
     <script src="./data.js" defer></script>
     <script src="./app.js" defer></script>
+    <script type="module" src="./shortlist.js"></script>
   </body>
 </html>

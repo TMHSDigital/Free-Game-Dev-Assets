@@ -40,7 +40,8 @@
       "royalty-free": "restates the licence terms; license and commercial record them",
       "freeware": "restates the licence terms; license and commercial record them",
       "free": "every entry is free; the licence fields say on what terms",
-      "non-commercial": "restates commercial: false, which the Commercial OK filter uses"
+      "non-commercial": "restates commercial: false, which the Commercial OK filter uses",
+      "archived": "restates the maintenance field, which shows as a badge"
     }
   }
 }

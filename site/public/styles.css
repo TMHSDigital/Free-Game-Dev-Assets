@@ -1430,3 +1430,79 @@ input:focus-visible,
     white-space: normal;
   }
 }
+
+/* Shortlist (shortlist.js). The toggle sits in the card's link row, above
+   the stretched title link, and is hidden until the script can run it. */
+.shortlist-toggle {
+  position: relative;
+  z-index: 1;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.shortlist-toggle[aria-pressed="true"] {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.shortlist {
+  margin: 0 0 1.25rem;
+  padding: 0.75rem;
+  border: 1px solid var(--accent);
+  background: var(--surface);
+}
+
+.shortlist h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.shortlist-items {
+  margin: 0.5rem 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+}
+
+.shortlist-items li {
+  overflow-wrap: anywhere;
+}
+
+.shortlist-licence {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.shortlist-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+  margin: 0;
+}
+
+.shortlist .btn-ghost {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 0.35rem 0.6rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.shortlist .btn-ghost:hover {
+  border-color: var(--ink);
+}
+
+/* Archived or long-inactive source (the `maintenance` field). */
+.maintenance-flag {
+  margin-left: 0.4rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--warn);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink);
+  white-space: nowrap;
+}

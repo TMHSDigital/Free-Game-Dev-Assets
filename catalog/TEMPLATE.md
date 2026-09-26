@@ -10,8 +10,8 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, FBX, PNG]
-# subcategories and formats spelling: see CONTRIBUTING.md
-tags: [low-poly, modular]
+# subcategories and formats spelling: see CONTRIBUTING.md (formats must be in site/format-vocabulary.json)
+tags: [low-poly, modular]   # describe the content; never the licence or the publisher (V19, V21)
 verified: 2026-07-19
 status: active
 # Optional (omit if N/A):
@@ -21,6 +21,7 @@ status: active
 # grid_dimensions: 16x16          # 2D and UI entries only
 # camera_perspective: top_down   # isometric_3_4 | side_scroller | 2d_flat. 2D and UI entries only; 3D and characters leave it out
 # hardware_tags: [steam_deck, switch_2]
+# maintenance: archived   # or inactive (no push in 3 years); from the source repository, with a dated Notes line
 ---
 
 # Example Source

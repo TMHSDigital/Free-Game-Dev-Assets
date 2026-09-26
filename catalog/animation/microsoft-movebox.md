@@ -10,9 +10,10 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [Unity]
-tags: [kinect, azure-kinect, rocketbox, archived]
+tags: [kinect, azure-kinect, rocketbox]
 verified: 2026-07-19
 status: active
+maintenance: archived
 ---
 
 # MoveBox for Microsoft Rocketbox
@@ -21,6 +22,7 @@ MIT Unity toolbox to drive [Microsoft Rocketbox](../characters/microsoft-rocketb
 
 ## Notes
 
+- Maintenance: the GitHub repository microsoft/MoveBox-for-Microsoft-Rocketbox is archived (read-only), per the GitHub API on 2026-09-26; last push 2024-01-29.
 - Tied to Rocketbox skeleton / Unity capture studio scenes
 - Not a general clip library — capture/retarget tool
 - Keep MIT notice; Attribution example (optional): `MoveBox © Microsoft — MIT`

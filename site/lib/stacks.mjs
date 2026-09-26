@@ -156,34 +156,7 @@ export function parseStack(text, { file, terms = [] }) {
   };
 }
 
-/**
- * What the picks owe, one row per entry (an entry picked for two needs is
- * listed once with both). `picked` is [{ need, entry }] with payload entries.
- */
-export function owes(picked) {
-  const byId = new Map();
-  for (const { need, entry } of picked) {
-    if (byId.has(entry.id)) byId.get(entry.id).needs.push(need);
-    else byId.set(entry.id, { entry, needs: [need] });
-  }
-  const items = [...byId.values()];
-  const credit = (i) => i.entry.attribution_required;
-  return {
-    credits: items.filter((i) => credit(i) === true).map((i) => ({ ...i, line: i.entry.attribution_string || null })),
-    noCredit: items.filter((i) => credit(i) === false),
-    unclear: items.filter((i) => credit(i) !== true && credit(i) !== false),
-    perFile: items.filter((i) => i.entry.commercial === "varies"),
-    openQuestions: items.filter((i) => i.entry.status === "needs-review"),
-  };
-}
-
-/** Every canned credit line, one per line, in pick order. */
-export function copyAllText(owed) {
-  return owed.credits
-    .filter((c) => c.line)
-    .map((c) => c.line)
-    .join("\n");
-}
+export { copyAllText, owes } from "./owes.mjs";
 
 /**
  * The stack files under <root>/stacks: `files` are the top-level .md files

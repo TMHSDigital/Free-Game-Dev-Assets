@@ -368,6 +368,36 @@ export function checkTagsRestatePublisher(rel, meta) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V22 */
+/**
+ * Optional `maintenance`: `archived` (the source repository is archived) or
+ * `inactive` (no commits for over three years). check-links.mjs reports a
+ * GitHub source whose state disagrees with it.
+ */
+export const MAINTENANCE_VALUES = new Set(["archived", "inactive"]);
+
+/** Three years without a push reads as inactive. */
+export const INACTIVE_DAYS = Math.round(3 * 365.25);
+
+/**
+ * The `maintenance` value a GitHub repository's API record implies, or null.
+ * `repo` is { archived, pushed_at } from GET /repos/{owner}/{repo}.
+ */
+export function maintenanceFromRepo(repo, now = Date.now()) {
+  if (repo.archived) return "archived";
+  const pushed = Date.parse(repo.pushed_at);
+  if (!Number.isNaN(pushed) && now - pushed > INACTIVE_DAYS * 86400000) return "inactive";
+  return null;
+}
+
+export function checkMaintenance(rel, meta) {
+  if (empty(meta.maintenance)) return [];
+  const v = String(meta.maintenance);
+  return MAINTENANCE_VALUES.has(v)
+    ? []
+    : [`${rel} maintenance "${v}" is not one of ${[...MAINTENANCE_VALUES].join(" | ")}`];
+}
+
 /* ----------------------------------------------------------------- V20 */
 /**
  * `formats` is a closed list (site/format-vocabulary.json). V13 and V19 only

@@ -12,6 +12,7 @@ formats: [gdshader, Godot]
 tags: [godot, godot-4, psx, affine, dither, vertex-snap]
 verified: 2026-07-27
 status: active
+maintenance: inactive
 ---
 
 # Godot PSX Style Demo
@@ -20,6 +21,7 @@ MIT Godot 4 shader set recreating PS1 quirks: vertex snap, affine mapping, color
 
 ## Notes
 
+- Maintenance: no push to the GitHub repository MenacingMecha/godot-psx-style-demo since 2023-09-21, per the GitHub API on 2026-09-26.
 - Godot 4.x only on `master`; use v1.x branch for Godot 3
 - Demo floor texture is separately CC0 (Stealthix) — shaders themselves are MIT
 - Requires a `precision_multiplier` shader global (see README)
