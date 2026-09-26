@@ -26,6 +26,7 @@ const DIST = path.join(__dirname, "dist");
 const CONFIG_PATH = path.join(__dirname, "config.json");
 const VOCAB_PATH = path.join(__dirname, "license-vocabulary.json");
 const SPDX_ALLOWED_PATH = path.join(__dirname, "spdx-allowed.json");
+const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
 // Social preview image: a first-party screenshot of this site, kept with the
 // other first-party stills (the validator allows binaries there) and copied
 // into dist at build time.
@@ -49,6 +50,14 @@ function walkMarkdown(dir, out = []) {
     out.push(full);
   }
   return out;
+}
+
+/** The Licence-filter family a license value belongs to (license-vocabulary.json `families`). */
+function licenseFamily(vocab, license) {
+  for (const [key, fam] of Object.entries(vocab.families || {})) {
+    if (Array.isArray(fam.licenses) && fam.licenses.includes(license)) return key;
+  }
+  return "mixed";
 }
 
 function loadEntries(vocab) {
@@ -113,6 +122,8 @@ function loadEntries(vocab) {
       ...(meta.attribution_string ? { attribution_string: String(meta.attribution_string) } : {}),
       ...(meta.publisher ? { publisher: String(meta.publisher) } : {}),
       ...(meta.license_spdx ? { license_spdx: String(meta.license_spdx) } : {}),
+      ...(meta.maintenance ? { maintenance: String(meta.maintenance) } : {}),
+      licenseFamily: licenseFamily(vocab, String(meta.license)),
       attributionClass: vocab.licenses[String(meta.license)]?.attribution || "any",
       licenseRank:
         ATTRIBUTION_RANK[
@@ -481,6 +492,7 @@ function checkPages(files) {
 function main() {
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
   const vocab = JSON.parse(fs.readFileSync(VOCAB_PATH, "utf8"));
+  const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
   const { entries, errors, bodies } = loadEntries(vocab);
   const spdxAllowed = JSON.parse(fs.readFileSync(SPDX_ALLOWED_PATH, "utf8"));
   const { stacks, errors: stackErrors } = loadStacks(entries, vocab, spdxAllowed);
@@ -531,6 +543,15 @@ function main() {
     guides: config.guides,
     featured,
     stats,
+    // Choices for the Licence and Format filters (app.js).
+    filters: {
+      licenseFamilies: Object.fromEntries(
+        Object.entries(vocab.families || {})
+          .filter(([key]) => !key.startsWith("_"))
+          .map(([key, fam]) => [key, fam.label])
+      ),
+      formatGroups: formatVocab.groups,
+    },
     entries,
   };
 

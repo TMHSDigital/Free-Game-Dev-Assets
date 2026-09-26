@@ -688,6 +688,15 @@ accepts("V19 lets a tag use a word retired only as a subcategory", checkValueAli
 rejects("V19 rejects a tag that restates the licence", checkValueAliases("bad.md", { tags: ["cc0"] }, aliases), 'tags must not carry "cc0"');
 accepts("V19 keeps a tag that only mentions a licence word", checkValueAliases("ok.md", { tags: ["odbl-adjacent", "free-tier"] }, aliases));
 
+/* Licence families: every licence in exactly one Licence-filter group ---- */
+{
+  const fams = Object.entries(vocab.families).filter(([k]) => !k.startsWith("_"));
+  const homeless = Object.keys(vocab.licenses).filter((l) => fams.filter(([, f]) => f.licenses.includes(l)).length !== 1);
+  accepts("every licence value sits in exactly one family", homeless);
+  const unknown = fams.flatMap(([, f]) => f.licenses).filter((l) => !(l in vocab.licenses));
+  accepts("families name only licence values the vocabulary has", unknown);
+}
+
 /* V21: tag restating the publisher ------------------------------------- */
 rejects("V21 rejects the publisher as a tag", checkTagsRestatePublisher("bad.md", { publisher: "Blender Studio", tags: ["blender-studio", "open-movie"] }), 'tag "blender-studio" restates publisher');
 accepts("V21 allows another publisher's name as a tag", checkTagsRestatePublisher("ok.md", { publisher: "Envato", tags: ["kenney-style"] }));

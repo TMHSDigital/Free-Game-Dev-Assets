@@ -23,9 +23,14 @@
     commercialOnly: false,
     noAttr: false,
     perspective: "any",
+    license: "any",
+    format: "any",
     sort: "name",
   };
   const state = { ...DEFAULTS };
+  // Licence families and format groups come from the build (license-vocabulary.json, format-vocabulary.json).
+  const LICENSE_FAMILIES = data.filters?.licenseFamilies || {};
+  const FORMAT_GROUPS = data.filters?.formatGroups || {};
 
   const categoryLabels = data.categories || {};
   const repo = data.site?.repo || "https://github.com/TMHSDigital/Free-Game-Dev-Assets";
@@ -116,6 +121,8 @@
     pick("cat", "category", ["all", ...Object.keys(categoryLabels)]);
     pick("sort", "sort", Object.keys(SORTS));
     pick("view", "perspective", ["any", ...Object.keys(PERSPECTIVE_LABELS)]);
+    pick("licence", "license", ["any", ...Object.keys(LICENSE_FAMILIES)]);
+    pick("format", "format", ["any", ...Object.keys(FORMAT_GROUPS)]);
     if (p.has("q")) state.q = p.get("q");
     const bool = (key, field) => {
       const v = p.get(key);
@@ -136,6 +143,8 @@
     if (state.q.trim()) p.set("q", state.q.trim());
     if (state.sort !== DEFAULTS.sort) p.set("sort", state.sort);
     if (state.perspective !== DEFAULTS.perspective) p.set("view", state.perspective);
+    if (state.license !== DEFAULTS.license) p.set("licence", state.license);
+    if (state.format !== DEFAULTS.format) p.set("format", state.format);
     const bool = (key, field) => {
       if (state[field] !== DEFAULTS[field]) p.set(key, state[field] ? "1" : "0");
     };
@@ -168,6 +177,11 @@
     if (state.noAttr && entry.attribution_required !== false) return false;
     if (state.perspective !== "any" && entry.camera_perspective !== state.perspective)
       return false;
+    if (state.license !== "any" && entry.licenseFamily !== state.license) return false;
+    if (state.format !== "any") {
+      const wanted = FORMAT_GROUPS[state.format]?.formats || [];
+      if (!(entry.formats || []).some((f) => wanted.includes(f))) return false;
+    }
     return true;
   }
 
@@ -385,6 +399,10 @@
         key: "perspective",
         label: `view: ${PERSPECTIVE_LABELS[state.perspective] || state.perspective}`,
       });
+    if (state.license !== DEFAULTS.license)
+      chips.push({ key: "license", label: `licence: ${LICENSE_FAMILIES[state.license] || state.license}` });
+    if (state.format !== DEFAULTS.format)
+      chips.push({ key: "format", label: `format: ${FORMAT_GROUPS[state.format]?.label || state.format}` });
     if (!state.active) chips.push({ key: "active", label: "hiding active" });
     if (!state.review) chips.push({ key: "review", label: "hiding needs-review" });
     if (state.deprecated) chips.push({ key: "deprecated", label: "showing deprecated" });
@@ -683,6 +701,25 @@
       apply();
     });
 
+    const selects = [
+      ["#license-family", "license", LICENSE_FAMILIES],
+      ["#format-group", "format", Object.fromEntries(Object.entries(FORMAT_GROUPS).map(([k, g]) => [k, g.label]))],
+    ];
+    for (const [sel, field, choices] of selects) {
+      const el = $(sel);
+      el.insertAdjacentHTML(
+        "beforeend",
+        Object.entries(choices)
+          .map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`)
+          .join("")
+      );
+      el.value = state[field];
+      el.addEventListener("change", (e) => {
+        state[field] = e.target.value;
+        apply();
+      });
+    }
+
     const sort = $("#sort");
     sort.value = state.sort;
     sort.addEventListener("change", (e) => {
@@ -789,6 +826,8 @@
     $("#filter-no-attr").checked = state.noAttr;
     $("#sort").value = state.sort;
     $("#perspective").value = state.perspective;
+    $("#license-family").value = state.license;
+    $("#format-group").value = state.format;
   }
 
   /* --------------------------------------------------------------- init */
