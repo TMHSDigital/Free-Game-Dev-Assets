@@ -1506,3 +1506,14 @@ input:focus-visible,
   color: var(--ink);
   white-space: nowrap;
 }
+
+/* Kept hidden until shortlist.js runs: the ghost-button display rules would
+   otherwise override the hidden attribute. */
+.shortlist-toggle[hidden],
+.shortlist[hidden] {
+  display: none;
+}
+
+.page-actions .shortlist-toggle {
+  cursor: pointer;
+}
