@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, Blend]
-tags: [cc0, first-person, fps, arms, ik, fingers, opengameart]
+tags: [first-person, fps, arms, ik, fingers, opengameart]
 verified: 2026-09-23
 status: active
 ---

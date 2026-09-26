@@ -9,7 +9,7 @@ license_spdx: OFL-1.1
 commercial: true
 attribution_required: true
 formats: [OTF, TTF, WOFF]
-tags: [ofl, foundry, libre]
+tags: [foundry, libre]
 attribution_string: "[Font name] by [designer] / Velvetyne Type Foundry"
 verified: 2026-08-24
 status: active

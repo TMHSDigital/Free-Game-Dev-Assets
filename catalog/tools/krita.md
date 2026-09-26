@@ -8,7 +8,7 @@ license: GPL-3.0
 commercial: true
 attribution_required: false
 formats: [KRA, PNG, TIFF, PSD, EXR]
-tags: [painting, texture-work, open-source, dcc]
+tags: [painting, texture-work, dcc]
 verified: 2026-08-24
 status: active
 ---

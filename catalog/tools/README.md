@@ -55,6 +55,16 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [sfxr](sfxr.md) | sfxr | MIT | active |
 | [audacity](audacity.md) | Audacity | GPL-3.0 | active |
 | [blender-cell-fracture](blender-cell-fracture.md) | Cell Fracture (Blender extension) | GPL-3.0-or-later | active |
+| [godot-engine](godot-engine.md) | Godot Engine | MIT | active |
+| [trenchbroom](trenchbroom.md) | TrenchBroom | GPL-3.0-or-later | active |
+| [ogmo-editor](ogmo-editor.md) | Ogmo Editor 3 | MIT | active |
+| [beepbox](beepbox.md) | BeepBox | MIT | active |
+| [bosca-ceoil-blue](bosca-ceoil-blue.md) | Bosca Ceoil Blue | MIT | active |
+| [furnace](furnace.md) | Furnace | GPL-2.0-or-later | active |
+| [openmpt](openmpt.md) | OpenMPT | BSD-3-Clause | active |
+| [synfig](synfig.md) | Synfig Studio | GPL-3.0 | active |
+| [opentoonz](opentoonz.md) | OpenToonz | BSD-3-Clause | active |
+| [pencil2d](pencil2d.md) | Pencil2D | GPL-2.0-only | active |
 
 ## Pipeline & compression
 
@@ -80,7 +90,7 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 
 | ID | Name | License | Status |
 | --- | --- | --- | --- |
-| [fmod-studio](fmod-studio.md) | FMOD Studio | custom | needs-review |
+| [fmod-studio](fmod-studio.md) | FMOD Studio | custom | active |
 | [wwise](wwise.md) | Wwise Indie | custom | needs-review |
 
 ## Accessibility & localization
@@ -171,6 +181,7 @@ only release are Godot 3.
 | [voronoishatter](voronoishatter.md) | VoronoiShatter | MIT | active |
 | [godot-destruction-plugin](godot-destruction-plugin.md) | Godot Destruction Plugin | MIT | active |
 | [godot-voxel-destruction](godot-voxel-destruction.md) | Godot Voxel Destruction | MIT | active |
+| [func-godot](func-godot.md) | func_godot | MIT | active |
 
 ## GTA-format tooling
 

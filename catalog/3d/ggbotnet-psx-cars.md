@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [Blend, OBJ, PNG, OGG]
-tags: [cc0, psx, cars, low-poly]
+tags: [psx, cars, low-poly]
 verified: 2026-08-29
 status: active
 ---

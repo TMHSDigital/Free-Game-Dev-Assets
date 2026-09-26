@@ -9,7 +9,7 @@ license: CC-BY
 commercial: unknown
 attribution_required: unknown
 formats: [Blend]
-tags: [blender-studio, eevee, bake-out, license-unverified]
+tags: [eevee, bake-out, license-unverified]
 verified: 2026-08-25
 status: needs-review
 ---

@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, 1-bit, 12x12, tileset, itch]
+tags: [1-bit, 12x12, tileset, itch]
 grid_dimensions: 12x12
 camera_perspective: isometric_3_4
 verified: 2026-08-15

@@ -9,7 +9,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [MP3, WAV]
-tags: [royalty-free, curated, no-attribution]
+tags: [curated]
 verified: 2026-09-23
 status: active
 ---

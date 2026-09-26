@@ -13,6 +13,7 @@ formats: [FBX]
 tags: [rigged, vr, research-origin, diverse]
 verified: 2026-09-26
 status: active
+maintenance: inactive
 ---
 
 # Microsoft Rocketbox
@@ -21,6 +22,7 @@ status: active
 
 ## Notes
 
+- Maintenance: no push to the GitHub repository microsoft/Microsoft-Rocketbox since 2022-10-02, per the GitHub API on 2026-09-26.
 - README still mentions the older “research/academic” blog framing; **LICENSE.md is MIT** (updated Dec 2020) — keep the copyright notice.
 - Unity import helpers ship in-repo; Unreal batch importer contributed later. Retarget animations carefully (skeleton is library-specific).
 - Paper citation requested for *research* use; MIT still requires copyright notice in distributions.

@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, 16x16, rpg, roguelike, ui, overworld]
+tags: [16x16, rpg, roguelike, ui, overworld]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 verified: 2026-09-22

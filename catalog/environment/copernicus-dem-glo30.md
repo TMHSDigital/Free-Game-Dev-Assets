@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 attribution_string: "© DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved."
 formats: [GeoTIFF, COG, DTED]
-tags: [terrain, government, attribution, tandem-x]
+tags: [terrain, government, tandem-x]
 verified: 2026-08-25
 status: active
 ---

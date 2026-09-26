@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OGG, WAV]
-tags: [ui, interface, click, cc0]
+tags: [ui, interface, click]
 verified: 2026-08-24
 status: active
 ---

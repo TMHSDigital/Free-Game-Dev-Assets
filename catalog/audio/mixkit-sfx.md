@@ -9,7 +9,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [WAV, MP3]
-tags: [sfx, royalty-free, envato, no-signup]
+tags: [sfx, no-signup]
 verified: 2026-09-23
 status: active
 ---

@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, pixel, platformer, tiles, kenney]
+tags: [pixel, platformer, tiles]
 grid_dimensions: 18x18
 camera_perspective: side_scroller
 verified: 2026-07-19

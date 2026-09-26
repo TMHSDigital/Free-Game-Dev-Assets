@@ -9,7 +9,7 @@ license_spdx: GPL-2.0-or-later
 commercial: true
 attribution_required: false
 formats: [Blend, glTF, FBX, OBJ, USD]
-tags: [dcc, open-source, modeling]
+tags: [dcc, modeling]
 verified: 2026-08-25
 status: active
 ---

@@ -8,7 +8,7 @@ license: unknown
 commercial: false
 attribution_required: unknown
 formats: [STL, OBJ]
-tags: [photogrammetry, museum, print, aggregator, non-commercial]
+tags: [photogrammetry, museum, print, aggregator]
 verified: 2026-09-23
 status: needs-review
 ---
@@ -33,5 +33,5 @@ MyMiniFactory's collection of 3D-scanned cultural artefacts, made for **physical
 ## Related
 
 - [smithsonian-open-access](smithsonian-open-access.md)
-- [../environment/nasa-3d-resources](../environment/nasa-3d-resources.md)
+- [nasa-3d-resources](nasa-3d-resources.md)
 - [poly-pizza](poly-pizza.md)

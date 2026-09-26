@@ -18,6 +18,7 @@
     "BSD-2-Clause": { "spdx": "BSD-2-Clause", "attribution": "notice" },
     "BSD-3-Clause": { "spdx": "BSD-3-Clause", "attribution": "notice" },
     "MPL-2.0": { "spdx": "MPL-2.0", "attribution": "notice" },
+    "GPL-2.0-only": { "spdx": "GPL-2.0-only", "attribution": "notice" },
     "GPL-2.0-or-later": { "spdx": "GPL-2.0-or-later", "attribution": "notice" },
     "GPL-3.0-or-later": { "spdx": "GPL-3.0-or-later", "attribution": "notice" },
     "GPL-2.0": {
@@ -59,6 +60,15 @@
       "attribution": "any",
       "note": "Source does not state it plainly. Pairs with status: needs-review."
     }
+  },
+  "families": {
+    "_doc": "Groups for the site's Licence filter. Every license value above belongs to exactly one family (lib.test.mjs checks this).",
+    "public-domain": { "label": "CC0 / public domain", "licenses": ["CC0", "Unlicense", "public-domain"] },
+    "cc-by": { "label": "CC-BY (credit)", "licenses": ["CC-BY", "CC-BY-3.0", "CC-BY-4.0"] },
+    "permissive": { "label": "Permissive (MIT, Apache, BSD, OFL)", "licenses": ["MIT", "ISC", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "SIL OFL", "CDLA-Permissive-2.0"] },
+    "copyleft": { "label": "Copyleft (GPL, MPL, ODbL)", "licenses": ["GPL-2.0", "GPL-2.0-only", "GPL-2.0-or-later", "GPL-3.0", "GPL-3.0-or-later", "MPL-2.0", "ODbL"] },
+    "custom": { "label": "Publisher's own terms", "licenses": ["custom"] },
+    "mixed": { "label": "Varies or unknown", "licenses": ["varies", "unknown"] }
   },
   "attribution_waiver_marker": "- Attribution waived:",
   "deprecation_reason_marker": "- Deprecated:"

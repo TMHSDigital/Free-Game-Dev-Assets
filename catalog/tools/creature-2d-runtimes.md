@@ -9,9 +9,10 @@ license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [Godot]
-tags: [2d, soft-body, godot, apache]
+tags: [2d, soft-body, godot]
 verified: 2026-07-19
 status: active
+maintenance: inactive
 ---
 
 # Creature 2D Runtimes (Godot)
@@ -20,6 +21,7 @@ Godot plugin/runtime for Creature mesh-deformation 2D animation. **Apache 2.0** 
 
 ## Notes
 
+- Maintenance: no push to the GitHub repository kestrelm/Creature_Godot since 2020-06-07, per the GitHub API on 2026-09-26.
 - Repo: `kestrelm/Creature_Godot` (Godot 3 path under `creaturegodot3/`)
 - **Godot 3 only, and unmaintained.** Checked 2026-09-23: last push 2020-06-07, no GitHub releases, and the README refers only to Godot 3. There is no Godot 4 runtime in the repository. It is listed beside the Godot 4 add-ons for completeness, not because it runs in Godot 4; porting it is on you
 - Other engine runtimes exist under Kestrel Moon — verify each repo’s LICENSE

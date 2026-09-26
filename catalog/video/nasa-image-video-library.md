@@ -3,7 +3,7 @@ id: nasa-image-video-library
 name: NASA Image and Video Library
 url: https://images.nasa.gov
 publisher: NASA
-category: environment
+category: video
 subcategories: [images, video, audio]
 license: custom
 commercial: unknown
@@ -17,7 +17,7 @@ status: needs-review
 
 # NASA Image and Video Library
 
-Searchable NASA stills, video, and audio (launch audio, mission clips, press kits). This is not a CC0 SFX pack. US government NASA media is generally not copyrighted in the United States, with three traps that keep this out of `active`: (1) `images.nasa.gov` returned a JS shell with no license sentence on 2026-08-24, so the grant is the Brand Center guidelines, not the library UI; (2) the commercial section talks about editorial use in "published works that are not promotional" plus a ban on implying NASA endorsement, which does not clearly cover shipping media inside a commercial game; (3) third-party stills on NASA pages stay with their marked owners. [nasa-3d-resources](nasa-3d-resources.md) is the 3D sibling and is `active` on the same guidelines. This library entry stays `needs-review` until a game-use sentence exists or counsel reads the promotional clause.
+Searchable NASA stills, video, and audio (launch audio, mission clips, press kits). This is not a CC0 SFX pack. US government NASA media is generally not copyrighted in the United States, with three traps that keep this out of `active`: (1) `images.nasa.gov` returned a JS shell with no license sentence on 2026-08-24, so the grant is the Brand Center guidelines, not the library UI; (2) the commercial section talks about editorial use in "published works that are not promotional" plus a ban on implying NASA endorsement, which does not clearly cover shipping media inside a commercial game; (3) third-party stills on NASA pages stay with their marked owners. [nasa-3d-resources](../3d/nasa-3d-resources.md) is the 3D sibling and is `active` on the same guidelines. This library entry stays `needs-review` until a game-use sentence exists or counsel reads the promotional clause.
 
 ## Notes
 
@@ -36,8 +36,8 @@ Searchable NASA stills, video, and audio (launch audio, mission clips, press kit
 
 ## Related
 
-- [nasa-3d-resources](nasa-3d-resources.md)
-- [nasadem](nasadem.md)
+- [nasa-3d-resources](../3d/nasa-3d-resources.md)
+- [nasadem](../environment/nasadem.md)
 - [../3d/smithsonian-open-access](../3d/smithsonian-open-access.md)
 - [../audio/kenney-sci-fi-sounds](../audio/kenney-sci-fi-sounds.md)
-- [../video/destockd](../video/destockd.md)
+- [../video/destockd](destockd.md)

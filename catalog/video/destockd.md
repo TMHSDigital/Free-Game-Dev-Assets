@@ -40,6 +40,6 @@ CLIP-indexed shot search over FedFlix films on the Internet Archive. About 41,00
 
 ## Related
 
-- [nasa-image-video-library](../environment/nasa-image-video-library.md)
+- [nasa-image-video-library](nasa-image-video-library.md)
 - [smithsonian-open-access](../3d/smithsonian-open-access.md)
 - [FedFlix on Internet Archive](https://archive.org/details/FedFlix)

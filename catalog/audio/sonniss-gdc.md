@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [WAV]
-tags: [professional, large, royalty-free]
+tags: [professional, large]
 verified: 2026-08-24
 status: active
 ---

@@ -293,6 +293,29 @@ eq("per-file bucket", ow.perFile.map((i) => i.entry.id).join(","), "c");
 eq("open questions bucket", ow.openQuestions.map((i) => i.entry.id).join(","), "c");
 eq("unclear bucket", ow.unclear.map((i) => i.entry.id).join(","), "d");
 eq("copy all joins canned lines in pick order", copyAllText(ow), 'Art by "A" <x>\nMusic by B');
+
+/* entry page: maintenance and shortlist toggle ----------------------------- */
+has("maintenance row on an archived entry", page({ maintenance: "archived" }), "<dt>Maintenance</dt><dd>archived: The source repository is archived");
+lacks("no maintenance row by default", page(), "<dt>Maintenance</dt>");
+has("entry page has a shortlist toggle", page(), 'data-shortlist="e1"');
+has("entry page loads the shortlist module", page(), '<script type="module" src="../../shortlist.js"></script>');
+/* shortlist: CREDITS file -------------------------------------------------- */
+import { creditsFile } from "./owes.mjs";
+const eF = { ...base, id: "f", name: "Font F", license: "SIL OFL", attributionClass: "notice", attribution_required: false, status: "active", commercial: true };
+const owShort = owes([eA, eB, eC, eD, eE, eF].map((entry) => ({ need: "shortlist", entry })));
+eq("notices bucket holds carry-the-licence entries", owShort.notices.map((i) => i.entry.id).join(","), "f");
+const md = creditsFile(owShort, { format: "md", pageUrl: (e) => `https://x.test/entry/${e.id}/`, date: "2026-09-26" });
+has("md credits carry the canned line", md, '- Art by "A" <x>');
+has("md credits flag a missing canned line", md, "- [Eps](https://x.test/entry/e/): no canned credit line");
+has("md lists notices to keep", md, "## Notices to keep with the files");
+has("md lists per-file review", md, "## Check each file");
+has("md lists open questions", md, "## Open questions");
+has("md lists unclear credit", md, "## Unclear credit");
+has("md is dated", md, "on 2026-09-26");
+const txt = creditsFile(owShort, { format: "txt", pageUrl: (e) => `https://x.test/entry/${e.id}/` });
+lacks("txt has no markdown links", txt, "](");
+has("txt gives the page url plainly", txt, "Gamma (CC-BY-4.0) <https://x.test/entry/c/>");
+eq("an empty shortlist still makes a file", creditsFile(owes([])).startsWith("# Credits"), true);
 const stackMeta = { id: "s1", title: 'Make a "thing" </script>', task: "A task <b>.", walked: "2026-09-20" };
 const sp = (over = {}) =>
   stackPageHtml({

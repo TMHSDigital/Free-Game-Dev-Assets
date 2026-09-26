@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [GIF, PNG]
-tags: [cc0, match-3, gems, jewels, animated, puzzle, casual, mobile]
+tags: [match-3, gems, jewels, animated, puzzle, casual, mobile]
 grid_dimensions: 52x52
 verified: 2026-09-23
 status: active

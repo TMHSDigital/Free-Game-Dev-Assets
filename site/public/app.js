@@ -23,9 +23,14 @@
     commercialOnly: false,
     noAttr: false,
     perspective: "any",
+    license: "any",
+    format: "any",
     sort: "name",
   };
   const state = { ...DEFAULTS };
+  // Licence families and format groups come from the build (license-vocabulary.json, format-vocabulary.json).
+  const LICENSE_FAMILIES = data.filters?.licenseFamilies || {};
+  const FORMAT_GROUPS = data.filters?.formatGroups || {};
 
   const categoryLabels = data.categories || {};
   const repo = data.site?.repo || "https://github.com/TMHSDigital/Free-Game-Dev-Assets";
@@ -48,6 +53,10 @@
     isometric_3_4: "3/4 view",
     side_scroller: "side-scroller",
     "2d_flat": "flat UI",
+  };
+  const MAINTENANCE_NOTES = {
+    archived: "The source repository is archived: read-only, no fixes or updates.",
+    inactive: "The source has had no new commits for over three years.",
   };
   // Searchable words per perspective. A 3/4 pack is what most people mean by a top-down
   // RPG, so it answers "top down" too.
@@ -116,6 +125,8 @@
     pick("cat", "category", ["all", ...Object.keys(categoryLabels)]);
     pick("sort", "sort", Object.keys(SORTS));
     pick("view", "perspective", ["any", ...Object.keys(PERSPECTIVE_LABELS)]);
+    pick("licence", "license", ["any", ...Object.keys(LICENSE_FAMILIES)]);
+    pick("format", "format", ["any", ...Object.keys(FORMAT_GROUPS)]);
     if (p.has("q")) state.q = p.get("q");
     const bool = (key, field) => {
       const v = p.get(key);
@@ -136,6 +147,8 @@
     if (state.q.trim()) p.set("q", state.q.trim());
     if (state.sort !== DEFAULTS.sort) p.set("sort", state.sort);
     if (state.perspective !== DEFAULTS.perspective) p.set("view", state.perspective);
+    if (state.license !== DEFAULTS.license) p.set("licence", state.license);
+    if (state.format !== DEFAULTS.format) p.set("format", state.format);
     const bool = (key, field) => {
       if (state[field] !== DEFAULTS[field]) p.set(key, state[field] ? "1" : "0");
     };
@@ -168,6 +181,11 @@
     if (state.noAttr && entry.attribution_required !== false) return false;
     if (state.perspective !== "any" && entry.camera_perspective !== state.perspective)
       return false;
+    if (state.license !== "any" && entry.licenseFamily !== state.license) return false;
+    if (state.format !== "any") {
+      const wanted = FORMAT_GROUPS[state.format]?.formats || [];
+      if (!(entry.formats || []).some((f) => wanted.includes(f))) return false;
+    }
     return true;
   }
 
@@ -209,19 +227,20 @@
   /* ------------------------------------------------------------- search */
 
   // Each entry's searchable text, normalised once at load, in three fields.
-  // Name and tags are what a reader means by a word, so a hit there ranks
-  // above one in the other metadata, which ranks above a summary-only hit.
+  // Name, publisher and tags are what a reader means by a word, so a hit there
+  // ranks above one in the other metadata, which ranks above a summary-only
+  // hit. Tags no longer repeat the publisher or licence (V19, V21), so those
+  // fields are searched directly.
   const FIELD_WEIGHTS = [3, 2, 1];
   const searchIndex = new Map(
     data.entries.map((e) => [
       e.id,
       [
-        normalize([e.name, ...(e.tags || [])].join(" ")),
+        normalize([e.name, e.publisher || "", ...(e.tags || [])].join(" ")),
         normalize(
           [
             e.license,
             e.category,
-            e.publisher || "",
             PERSPECTIVE_SEARCH[e.camera_perspective] || "",
             ...(e.formats || []),
             ...(e.subcategories || []),
@@ -302,12 +321,16 @@
         ? `<span class="tax">${escapeHtml(PERSPECTIVE_LABELS[entry.camera_perspective] || entry.camera_perspective)}</span>`
         : "",
     ].join("");
+    // The same badge as build.mjs maintenanceFlagHtml (titles from shared.mjs MAINTENANCE_NOTES).
+    const maintenance = entry.maintenance
+      ? ` <span class="maintenance-flag" title="${escapeHtml(MAINTENANCE_NOTES[entry.maintenance] || "")}">${escapeHtml(entry.maintenance)}</span>`
+      : "";
     return `<article class="entry-card" id="entry-${escapeHtml(entry.id)}" data-id="${escapeHtml(entry.id)}" data-status="${escapeHtml(entry.status)}" style="--edge:${edgeColor(entry)}">
   <span class="entry-edge" aria-hidden="true"></span>
   <div class="entry-body">
     <div class="entry-top">
       <h4><a class="entry-link" href="entry/${escapeHtml(entry.id)}/" data-id="${escapeHtml(entry.id)}">${escapeHtml(entry.name)}</a></h4>
-      <span class="entry-flags">${flags}</span>
+      <span class="entry-flags">${flags}${maintenance}</span>
     </div>
     <p>${escapeHtml(entry.summary || "")}</p>
     <div class="meta-line">
@@ -317,6 +340,7 @@
     <div class="entry-links">
       <a href="${escapeHtml(entry.url)}" rel="noopener noreferrer">Open source</a>
       <a href="${escapeHtml(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">Entry and evidence</a>
+      <button type="button" class="link-button shortlist-toggle" data-shortlist="${escapeHtml(entry.id)}" aria-pressed="false" aria-label="Shortlist ${escapeHtml(entry.name)}" hidden>Add to shortlist</button>
     </div>
   </div>
 </article>`;
@@ -384,6 +408,10 @@
         key: "perspective",
         label: `view: ${PERSPECTIVE_LABELS[state.perspective] || state.perspective}`,
       });
+    if (state.license !== DEFAULTS.license)
+      chips.push({ key: "license", label: `licence: ${LICENSE_FAMILIES[state.license] || state.license}` });
+    if (state.format !== DEFAULTS.format)
+      chips.push({ key: "format", label: `format: ${FORMAT_GROUPS[state.format]?.label || state.format}` });
     if (!state.active) chips.push({ key: "active", label: "hiding active" });
     if (!state.review) chips.push({ key: "review", label: "hiding needs-review" });
     if (state.deprecated) chips.push({ key: "deprecated", label: "showing deprecated" });
@@ -682,6 +710,25 @@
       apply();
     });
 
+    const selects = [
+      ["#license-family", "license", LICENSE_FAMILIES],
+      ["#format-group", "format", Object.fromEntries(Object.entries(FORMAT_GROUPS).map(([k, g]) => [k, g.label]))],
+    ];
+    for (const [sel, field, choices] of selects) {
+      const el = $(sel);
+      el.insertAdjacentHTML(
+        "beforeend",
+        Object.entries(choices)
+          .map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`)
+          .join("")
+      );
+      el.value = state[field];
+      el.addEventListener("change", (e) => {
+        state[field] = e.target.value;
+        apply();
+      });
+    }
+
     const sort = $("#sort");
     sort.value = state.sort;
     sort.addEventListener("change", (e) => {
@@ -788,6 +835,8 @@
     $("#filter-no-attr").checked = state.noAttr;
     $("#sort").value = state.sort;
     $("#perspective").value = state.perspective;
+    $("#license-family").value = state.license;
+    $("#format-group").value = state.format;
   }
 
   /* --------------------------------------------------------------- init */

@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [SVG, WOFF, WOFF2]
-tags: [icons, mit, svg, ui, bootstrap]
+tags: [icons, svg, ui, bootstrap]
 camera_perspective: 2d_flat
 verified: 2026-08-24
 status: active

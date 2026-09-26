@@ -6,7 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { commercialLabel, esc, latestAllowedDate, PERSPECTIVE_LABELS, verifiedAge } from "./lib/shared.mjs";
+import { commercialLabel, esc, latestAllowedDate, MAINTENANCE_NOTES, PERSPECTIVE_LABELS, verifiedAge } from "./lib/shared.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { entryPageHtml } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver } from "./lib/links.mjs";
@@ -26,6 +26,7 @@ const DIST = path.join(__dirname, "dist");
 const CONFIG_PATH = path.join(__dirname, "config.json");
 const VOCAB_PATH = path.join(__dirname, "license-vocabulary.json");
 const SPDX_ALLOWED_PATH = path.join(__dirname, "spdx-allowed.json");
+const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
 // Social preview image: a first-party screenshot of this site, kept with the
 // other first-party stills (the validator allows binaries there) and copied
 // into dist at build time.
@@ -49,6 +50,14 @@ function walkMarkdown(dir, out = []) {
     out.push(full);
   }
   return out;
+}
+
+/** The Licence-filter family a license value belongs to (license-vocabulary.json `families`). */
+function licenseFamily(vocab, license) {
+  for (const [key, fam] of Object.entries(vocab.families || {})) {
+    if (Array.isArray(fam.licenses) && fam.licenses.includes(license)) return key;
+  }
+  return "mixed";
 }
 
 function loadEntries(vocab) {
@@ -113,6 +122,8 @@ function loadEntries(vocab) {
       ...(meta.attribution_string ? { attribution_string: String(meta.attribution_string) } : {}),
       ...(meta.publisher ? { publisher: String(meta.publisher) } : {}),
       ...(meta.license_spdx ? { license_spdx: String(meta.license_spdx) } : {}),
+      ...(meta.maintenance ? { maintenance: String(meta.maintenance) } : {}),
+      licenseFamily: licenseFamily(vocab, String(meta.license)),
       attributionClass: vocab.licenses[String(meta.license)]?.attribution || "any",
       licenseRank:
         ATTRIBUTION_RANK[
@@ -138,6 +149,12 @@ function edgeVar(entry) {
  * <article> with a real heading link, not a <button> wrapping a heading:
  * that gives every entry a permalink and keeps heading navigation working.
  */
+function maintenanceFlagHtml(entry) {
+  if (!entry.maintenance) return "";
+  const title = MAINTENANCE_NOTES[entry.maintenance] || "";
+  return ` <span class="maintenance-flag" title="${esc(title)}">${esc(entry.maintenance)}</span>`;
+}
+
 function entryRowHtml(entry, repo, now) {
   const age = verifiedAge(entry.verified, now);
   const ageText =
@@ -162,7 +179,7 @@ function entryRowHtml(entry, repo, now) {
   <div class="entry-body">
     <div class="entry-top">
       <h4><a class="entry-link" href="entry/${esc(entry.id)}/" data-id="${esc(entry.id)}">${esc(entry.name)}</a></h4>
-      <span class="entry-flags">${flags}</span>
+      <span class="entry-flags">${flags}${maintenanceFlagHtml(entry)}</span>
     </div>
     <p>${esc(entry.summary || "")}</p>
     <div class="meta-line">
@@ -172,6 +189,7 @@ function entryRowHtml(entry, repo, now) {
     <div class="entry-links">
       <a href="${esc(entry.url)}" rel="noopener noreferrer">Open source</a>
       <a href="${esc(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">Entry and evidence</a>
+      <button type="button" class="link-button shortlist-toggle" data-shortlist="${esc(entry.id)}" aria-pressed="false" aria-label="Shortlist ${esc(entry.name)}" hidden>Add to shortlist</button>
     </div>
   </div>
 </article>`;
@@ -481,6 +499,7 @@ function checkPages(files) {
 function main() {
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
   const vocab = JSON.parse(fs.readFileSync(VOCAB_PATH, "utf8"));
+  const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
   const { entries, errors, bodies } = loadEntries(vocab);
   const spdxAllowed = JSON.parse(fs.readFileSync(SPDX_ALLOWED_PATH, "utf8"));
   const { stacks, errors: stackErrors } = loadStacks(entries, vocab, spdxAllowed);
@@ -531,11 +550,22 @@ function main() {
     guides: config.guides,
     featured,
     stats,
+    // Choices for the Licence and Format filters (app.js).
+    filters: {
+      licenseFamilies: Object.fromEntries(
+        Object.entries(vocab.families || {})
+          .filter(([key]) => !key.startsWith("_"))
+          .map(([key, fam]) => [key, fam.label])
+      ),
+      formatGroups: formatVocab.groups,
+    },
     entries,
   };
 
   if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true, force: true });
   copyDir(PUBLIC, DIST);
+  // The shortlist builds its CREDITS file with the same code as the stack pages.
+  fs.copyFileSync(path.join(__dirname, "lib", "owes.mjs"), path.join(DIST, "owes.js"));
   const hasCard = fs.existsSync(OG_CARD_SRC);
   if (hasCard) fs.copyFileSync(OG_CARD_SRC, path.join(DIST, OG_CARD_NAME));
   // data.json is the public machine-readable catalog (see site/README.md);

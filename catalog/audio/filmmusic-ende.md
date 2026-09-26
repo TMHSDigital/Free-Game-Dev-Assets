@@ -9,7 +9,7 @@ license_spdx: CC-BY-4.0
 commercial: true
 attribution_required: false
 formats: [MP3, WAV]
-tags: [music, cc-by, no-nd, games-ok]
+tags: [music, no-nd, games-ok]
 verified: 2026-08-24
 status: active
 ---

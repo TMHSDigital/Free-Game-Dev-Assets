@@ -26,6 +26,9 @@ jobs:
 
       - name: Check links
         id: check
+        env:
+          # Read-only use of the GitHub API for the archived / inactive check.
+          GITHUB_TOKEN: ${{ github.token }}
         run: node site/check-links.mjs --report link-report.md
 
       - name: Open or update the report issue

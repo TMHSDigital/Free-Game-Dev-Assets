@@ -8,7 +8,7 @@ license: custom
 commercial: unknown
 attribution_required: false
 formats: [PNG, TGA, EXR]
-tags: [baker, normals, freeware, windows]
+tags: [baker, normals, windows]
 verified: 2026-08-24
 status: needs-review
 ---

@@ -25,4 +25,4 @@ owes from the picked entries. Each stack has a page at `stack/<id>/` on the site
   facts come from the entry, so a re-verified entry updates every stack that uses it.
 - A pick must be a listed entry. A deprecated pick fails `node site/validate.mjs`;
   repick or move the need to Gaps.
-- Gaps: plain bullets for what the catalog does not yet cover for the task.
+- Gaps: plain bullets for what the catalog does not yet cover for the task. Readers report new gaps with the "Request an asset / report a gap" issue form, which is the queue these bullets are drawn from.

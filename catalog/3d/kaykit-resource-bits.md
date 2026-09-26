@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OBJ, FBX, glTF]
-tags: [cc0, low-poly, atlas, crafting, kaykit]
+tags: [low-poly, atlas, crafting]
 verified: 2026-08-15
 status: active
 ---

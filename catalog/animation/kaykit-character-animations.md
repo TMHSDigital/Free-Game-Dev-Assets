@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF]
-tags: [low-poly, cc0, characters]
+tags: [low-poly, characters]
 verified: 2026-08-24
 status: active
 ---

@@ -345,6 +345,79 @@ export function checkValueAliases(rel, meta, aliases) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V21 */
+/**
+ * A tag that repeats the entry's own `publisher` drifted like the licence
+ * tags did (`kenney` was missing on 14 Kenney entries), and search already
+ * matches the publisher field, so the tag adds nothing but a way to be wrong.
+ * The licence-restating tags are retired in site/value-aliases.json (V19).
+ */
+export function slugify(text) {
+  return String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+export function checkTagsRestatePublisher(rel, meta) {
+  const errors = [];
+  if (empty(meta.publisher)) return errors;
+  const own = slugify(meta.publisher);
+  for (const t of Array.isArray(meta.tags) ? meta.tags.map(String) : []) {
+    if (t === own) {
+      errors.push(`${rel} tag "${t}" restates publisher "${meta.publisher}"; search and grouping use the publisher field`);
+    }
+  }
+  return errors;
+}
+
+/* ----------------------------------------------------------------- V22 */
+/**
+ * Optional `maintenance`: `archived` (the source repository is archived) or
+ * `inactive` (no commits for over three years). check-links.mjs reports a
+ * GitHub source whose state disagrees with it.
+ */
+export const MAINTENANCE_VALUES = new Set(["archived", "inactive"]);
+
+/** Three years without a push reads as inactive. */
+export const INACTIVE_DAYS = Math.round(3 * 365.25);
+
+/**
+ * The `maintenance` value a GitHub repository's API record implies, or null.
+ * `repo` is { archived, pushed_at } from GET /repos/{owner}/{repo}.
+ */
+export function maintenanceFromRepo(repo, now = Date.now()) {
+  if (repo.archived) return "archived";
+  const pushed = Date.parse(repo.pushed_at);
+  if (!Number.isNaN(pushed) && now - pushed > INACTIVE_DAYS * 86400000) return "inactive";
+  return null;
+}
+
+export function checkMaintenance(rel, meta) {
+  if (empty(meta.maintenance)) return [];
+  const v = String(meta.maintenance);
+  return MAINTENANCE_VALUES.has(v)
+    ? []
+    : [`${rel} maintenance "${v}" is not one of ${[...MAINTENANCE_VALUES].join(" | ")}`];
+}
+
+/* ----------------------------------------------------------------- V20 */
+/**
+ * `formats` is a closed list (site/format-vocabulary.json). V13 and V19 only
+ * catch spellings of a value already in use; a new synonym (`JPEG` beside
+ * `JPG`, `glTF KHR_draco` beside `glTF`) got in before either could see it,
+ * and the Format filter matches on exact values.
+ */
+export function checkFormatVocabulary(rel, meta, formatVocab) {
+  const errors = [];
+  const allowed = new Set(formatVocab.formats);
+  for (const v of Array.isArray(meta.formats) ? meta.formats.map(String) : []) {
+    if (!allowed.has(v)) {
+      errors.push(
+        `${rel} formats "${v}" is not in site/format-vocabulary.json (use a listed spelling, or add the new format there first)`
+      );
+    }
+  }
+  return errors;
+}
+
 /* ----------------------------------------------------------------- V14 */
 /**
  * `active` tells a reader the licence, the commercial stance and the credit

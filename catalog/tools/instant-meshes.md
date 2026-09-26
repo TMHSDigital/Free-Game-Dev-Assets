@@ -9,9 +9,10 @@ license_spdx: BSD-3-Clause
 commercial: true
 attribution_required: false
 formats: [OBJ]
-tags: [retopo, remesh, quad, open-source]
+tags: [retopo, remesh, quad]
 verified: 2026-08-24
 status: active
+maintenance: inactive
 ---
 
 # Instant Meshes
@@ -20,6 +21,7 @@ Interactive field-aligned remesher from Jakob / Tarini / Panozzo / Sorkine-Hornu
 
 ## Notes
 
+- Maintenance: no push to the GitHub repository wjakob/instant-meshes since 2022-01-03, per the GitHub API on 2026-09-26.
 - Evidence: `LICENSE.txt` in [wjakob/instant-meshes](https://github.com/wjakob/instant-meshes). README also links prebuilt Windows / macOS / Linux zips on S3
 - The binary expects a sibling `datasets` folder or the Open panel is empty. Those demo meshes are for the paper UI, not a shippable kit
 - Workflow: orientation field, then position field, then Export mesh. Brush tools exist; they are easy to overfit

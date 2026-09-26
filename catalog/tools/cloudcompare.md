@@ -9,7 +9,7 @@ license_spdx: GPL-2.0-or-later
 commercial: true
 attribution_required: false
 formats: [LAS, E57, PLY, OBJ]
-tags: [lidar, point-cloud, gpl]
+tags: [lidar, point-cloud]
 verified: 2026-09-22
 status: active
 ---

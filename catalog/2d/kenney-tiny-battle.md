@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, 16x16, strategy, wargame, units, top-down]
+tags: [16x16, strategy, wargame, units, top-down]
 grid_dimensions: 16x16
 camera_perspective: top_down
 verified: 2026-09-22

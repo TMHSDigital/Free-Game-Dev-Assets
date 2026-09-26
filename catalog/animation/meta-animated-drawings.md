@@ -9,9 +9,10 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [Python]
-tags: [mit, 2d, research, archived, fair]
+tags: [2d, research, fair]
 verified: 2026-07-19
 status: active
+maintenance: archived
 ---
 
 # Meta Animated Drawings
@@ -20,6 +21,7 @@ MIT code to animate children’s-style human figure drawings (FAIR paper impleme
 
 ## Notes
 
+- Maintenance: the GitHub repository facebookresearch/AnimatedDrawings is archived (read-only), per the GitHub API on 2026-09-26; last push 2025-09-03.
 - Local Python install; example configs under `examples/`
 - Keep MIT copyright notice with redistributed code
 - Attribution example (optional): `Animated Drawings © Meta Platforms — MIT`

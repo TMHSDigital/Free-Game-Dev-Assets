@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF]
-tags: [cc0, low-poly, stylized, adventurers, kaykit]
+tags: [low-poly, stylized, adventurers]
 verified: 2026-07-19
 status: active
 ---

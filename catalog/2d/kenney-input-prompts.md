@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, SVG]
-tags: [cc0, gamepad, keyboard, hud, steam-deck, switch-2, quest]
+tags: [gamepad, keyboard, hud, steam-deck, switch-2, quest]
 grid_dimensions: 64x64
 camera_perspective: 2d_flat
 hardware_tags: [steam_deck, steam_controller, steam_frame, valve_index, switch, switch_2, xbox, playstation, meta_quest, playdate, wii, gamecube]

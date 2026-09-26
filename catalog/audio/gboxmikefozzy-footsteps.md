@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OGG]
-tags: [footsteps, subway, field-recording, cc0]
+tags: [footsteps, subway, field-recording]
 verified: 2026-08-24
 status: active
 ---

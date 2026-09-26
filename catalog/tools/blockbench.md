@@ -8,7 +8,7 @@ license: GPL-3.0
 commercial: true
 attribution_required: false
 formats: [glTF, BBMODEL]
-tags: [low-poly, editor, open-source]
+tags: [low-poly, editor]
 verified: 2026-08-24
 status: active
 ---

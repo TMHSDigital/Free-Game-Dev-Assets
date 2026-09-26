@@ -9,7 +9,7 @@ license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [WAV, espeak-ng-data]
-tags: [tts, formant, gpl, offline]
+tags: [tts, formant, offline]
 verified: 2026-09-22
 status: active
 ---

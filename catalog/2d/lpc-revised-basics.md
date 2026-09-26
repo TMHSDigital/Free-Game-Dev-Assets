@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 attribution_string: "LPC Revised Character Basics by Eliza Wyatt, Stephen Challener (Redshrike), Durrani, BenCreating, Johannes Sjölund (Wulax), Thecilekli and BlueCarrot16 (OGA-BY 3.0). See the Credits files for per-item authors."
 formats: [PNG]
-tags: [lpc, opengameart, cc-by-sa, gpl, oga-by, copyleft-assets]
+tags: [lpc, opengameart]
 camera_perspective: isometric_3_4
 verified: 2026-09-24
 status: active

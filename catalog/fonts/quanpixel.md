@@ -9,7 +9,7 @@ license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [TTF]
-tags: [pixel, cjk, ofl, 8x8]
+tags: [pixel, cjk, 8x8]
 verified: 2026-08-29
 status: active
 ---

@@ -9,7 +9,7 @@ commercial: unknown
 attribution_required: true
 attribution_string: "Music \"{title}\" by {artist} Available at ccMixter.org {url} Under {CC license} {license-url}"
 formats: [MP3, WAV]
-tags: [aggregator, creative-commons, remix, youtube-first]
+tags: [aggregator, remix, youtube-first]
 verified: 2026-08-24
 status: needs-review
 ---

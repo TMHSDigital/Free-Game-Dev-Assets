@@ -14,10 +14,13 @@ import {
   checkDeprecationReason,
   checkEntryUrl,
   checkEvidenceDates,
+  checkFormatVocabulary,
   checkLicenseVocabulary,
+  checkMaintenance,
   checkPublisherConsistency,
   checkSpdxConsistency,
   checkStacks,
+  checkTagsRestatePublisher,
   checkTaxonomyValues,
   checkValueAliases,
   checkValueSpellings,
@@ -35,6 +38,7 @@ const CONFIG_PATH = path.join(__dirname, "config.json");
 const SPDX_ALLOWED_PATH = path.join(__dirname, "spdx-allowed.json");
 const VOCAB_PATH = path.join(__dirname, "license-vocabulary.json");
 const ALIASES_PATH = path.join(__dirname, "value-aliases.json");
+const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
 const STACKS = path.join(ROOT, "stacks");
 const REQUIRED = [
   "id",
@@ -235,6 +239,7 @@ function main() {
   );
   const vocab = JSON.parse(fs.readFileSync(VOCAB_PATH, "utf8"));
   const aliases = JSON.parse(fs.readFileSync(ALIASES_PATH, "utf8"));
+  const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
   const categories = catalogCategories();
   const entryFiles = walkFiles(CATALOG, [], (f) => {
     const base = path.basename(f);
@@ -299,6 +304,9 @@ function main() {
     errors.push(...checkDeprecationReason(rel, meta, body, vocab));
     errors.push(...checkTaxonomyValues(rel, meta));
     errors.push(...checkValueAliases(rel, meta, aliases));
+    errors.push(...checkFormatVocabulary(rel, meta, formatVocab));
+    errors.push(...checkTagsRestatePublisher(rel, meta));
+    errors.push(...checkMaintenance(rel, meta));
     errors.push(...checkActiveIsSettled(rel, meta));
     if (meta.id) {
       const id = String(meta.id);

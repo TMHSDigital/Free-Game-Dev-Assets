@@ -11,7 +11,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Rain (c) Blender Studio (CC BY 4.0)"
 formats: [Blend]
-tags: [blender-studio, humanoid, rig]
+tags: [humanoid, rig]
 verified: 2026-08-29
 status: active
 ---

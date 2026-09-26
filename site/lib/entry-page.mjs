@@ -3,6 +3,7 @@ import {
   commercialLabel,
   entryPageUrl,
   esc,
+  MAINTENANCE_NOTES,
   PERSPECTIVE_LABELS,
   STATUS_NOTES,
   verifiedAge,
@@ -69,6 +70,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     ["Credit", esc(c.value)],
     ["Status", `${esc(entry.status)}: ${esc(STATUS_NOTES[entry.status] || "")}`],
     ["Verified", `<span class="verified is-${age.bucket}">${esc(ageText)}</span>`],
+    entry.maintenance ? ["Maintenance", `${esc(entry.maintenance)}: ${esc(MAINTENANCE_NOTES[entry.maintenance] || "")}`] : null,
     entry.publisher ? ["Publisher", esc(entry.publisher)] : null,
     ["Formats", esc((entry.formats || []).join(", ") || "none listed")],
     entry.camera_perspective
@@ -156,6 +158,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
         <a class="btn" href="${esc(entry.url)}" rel="noopener noreferrer">Go to source</a>
         <a class="btn-ghost" href="${esc(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">View the file on GitHub</a>
         <a class="btn-ghost" href="${esc(issue)}" rel="noopener noreferrer">Report a problem with this entry</a>
+        <button type="button" class="btn-ghost shortlist-toggle" data-shortlist="${esc(entry.id)}" aria-pressed="false" hidden>Add to shortlist</button>
       </p>
       ${usedIn}
       <div class="entry-content">${restHtml}</div>
@@ -167,6 +170,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
     </footer>
     <script src="../../entry.js" defer></script>
+    <script type="module" src="../../shortlist.js"></script>
   </body>
 </html>
 `;

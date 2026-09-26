@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, rpg, characters, roguelike, overworld, front-facing]
+tags: [rpg, characters, roguelike, overworld, front-facing]
 camera_perspective: isometric_3_4
 verified: 2026-09-22
 status: active

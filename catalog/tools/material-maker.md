@@ -10,7 +10,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [PNG, mm]
-tags: [pbr, procedural, open-source]
+tags: [pbr, procedural]
 verified: 2026-08-24
 status: active
 ---

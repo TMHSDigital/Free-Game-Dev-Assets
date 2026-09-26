@@ -18,12 +18,16 @@ import {
   checkDeprecationReason,
   checkEntryUrl,
   checkEvidenceDates,
+  checkFormatVocabulary,
   evidenceDates,
   markdownAnchors,
   checkLicenseVocabulary,
+  checkMaintenance,
+  maintenanceFromRepo,
   checkPublisherConsistency,
   checkSpdxConsistency,
   checkStacks,
+  checkTagsRestatePublisher,
   checkTaxonomyValues,
   checkValueAliases,
   checkValueSpellings,
@@ -682,7 +686,49 @@ rejects("V19 rejects a retired subcategory", checkValueAliases("bad.md", { subca
 rejects("V19 rejects a retired format", checkValueAliases("bad.md", { formats: ["JPEG"] }, aliases), 'use "JPG"');
 rejects("V19 rejects a licence as a subcategory", checkValueAliases("bad.md", { subcategories: ["public-domain"] }, aliases), "a licence, not a kind of content");
 rejects("V19 rejects an internal review tag", checkValueAliases("bad.md", { tags: ["r04"] }, aliases), "internal review marker");
-accepts("V19 lets a tag use a word retired only as a subcategory", checkValueAliases("ok.md", { tags: ["tiles", "public-domain"] }, aliases));
+accepts("V19 lets a tag use a word retired only as a subcategory", checkValueAliases("ok.md", { tags: ["tiles", "gui"] }, aliases));
+rejects("V19 rejects a tag that restates the licence", checkValueAliases("bad.md", { tags: ["cc0"] }, aliases), 'tags must not carry "cc0"');
+accepts("V19 keeps a tag that only mentions a licence word", checkValueAliases("ok.md", { tags: ["odbl-adjacent", "free-tier"] }, aliases));
+
+/* Licence families: every licence in exactly one Licence-filter group ---- */
+{
+  const fams = Object.entries(vocab.families).filter(([k]) => !k.startsWith("_"));
+  const homeless = Object.keys(vocab.licenses).filter((l) => fams.filter(([, f]) => f.licenses.includes(l)).length !== 1);
+  accepts("every licence value sits in exactly one family", homeless);
+  const unknown = fams.flatMap(([, f]) => f.licenses).filter((l) => !(l in vocab.licenses));
+  accepts("families name only licence values the vocabulary has", unknown);
+}
+
+/* V22: maintenance ------------------------------------------------------ */
+rejects("V22 rejects an unknown maintenance value", checkMaintenance("bad.md", { maintenance: "dead" }), 'maintenance "dead" is not one of archived | inactive');
+accepts("V22 accepts archived", checkMaintenance("ok.md", { maintenance: "archived" }));
+accepts("V22 leaves the field optional", checkMaintenance("ok.md", {}));
+{
+  const now = Date.parse("2026-09-26T00:00:00Z");
+  const same = (label, actual, expected) => (actual === expected ? accepts(label, []) : accepts(label, [`got ${actual}, want ${expected}`]));
+  same("an archived repo is archived", maintenanceFromRepo({ archived: true, pushed_at: "2026-09-01T00:00:00Z" }, now), "archived");
+  same("no push in over three years is inactive", maintenanceFromRepo({ archived: false, pushed_at: "2023-01-01T00:00:00Z" }, now), "inactive");
+  same("a recent push is neither", maintenanceFromRepo({ archived: false, pushed_at: "2025-01-01T00:00:00Z" }, now), null);
+}
+
+/* V21: tag restating the publisher ------------------------------------- */
+rejects("V21 rejects the publisher as a tag", checkTagsRestatePublisher("bad.md", { publisher: "Blender Studio", tags: ["blender-studio", "open-movie"] }), 'tag "blender-studio" restates publisher');
+accepts("V21 allows another publisher's name as a tag", checkTagsRestatePublisher("ok.md", { publisher: "Envato", tags: ["kenney-style"] }));
+accepts("V21 ignores an entry with no publisher", checkTagsRestatePublisher("ok.md", { tags: ["kenney"] }));
+
+/* V20: closed format list ---------------------------------------------- */
+const formatVocab = JSON.parse(fs.readFileSync(path.join(__dirname, "format-vocabulary.json"), "utf8"));
+rejects("V20 rejects a format missing from the vocabulary", checkFormatVocabulary("bad.md", { formats: ["glTF KHR_draco"] }, formatVocab), 'formats "glTF KHR_draco" is not in site/format-vocabulary.json');
+rejects("V20 is case-sensitive", checkFormatVocabulary("bad.md", { formats: ["png"] }, formatVocab), 'formats "png"');
+accepts("V20 accepts listed formats", checkFormatVocabulary("ok.md", { formats: ["PNG", "glTF", "GLB"] }, formatVocab));
+accepts(
+  "V20 vocabulary lists every format a filter group names",
+  Object.values(formatVocab.groups).flatMap((g) => g.formats).filter((f) => !formatVocab.formats.includes(f))
+);
+accepts(
+  "V20 vocabulary carries no retired spelling",
+  formatVocab.formats.filter((f) => Object.prototype.hasOwnProperty.call(aliases.formats, f))
+);
 
 /* ----------------------------------------------------------------------- */
 if (failures.length) {
@@ -690,4 +736,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 19 checks`);
+console.log(`checks.test ok: ${passed} assertions across 22 checks`);

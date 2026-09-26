@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [EXR]
-tags: [cc0, vfx, flipbook, engine-agnostic]
+tags: [vfx, flipbook, engine-agnostic]
 verified: 2026-08-29
 status: active
 ---

@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [Python, WAV]
-tags: [mit, local, multilingual, tts]
+tags: [local, multilingual, tts]
 verified: 2026-07-19
 status: active
 ---

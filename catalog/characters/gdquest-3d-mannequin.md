@@ -11,9 +11,10 @@ commercial: true
 attribution_required: true
 attribution_string: "GDQuest and contributors (https://www.gdquest.com/)"
 formats: [glTF, Godot]
-tags: [godot, mannequin, controller, cc-by]
+tags: [godot, mannequin, controller]
 verified: 2026-08-24
 status: active
+maintenance: inactive
 ---
 
 # GDQuest Open 3D Mannequin
@@ -22,6 +23,7 @@ Open mannequin mesh plus a third-person controller sample for Godot. Good placeh
 
 ## Notes
 
+- Maintenance: no push to the GitHub repository gdquest-demos/godot-3d-mannequin since 2021-08-04, per the GitHub API on 2026-09-26.
 - Repo targets **Godot 3.2+** controller scenes — treat the mesh/animations as the reusable catalog value; expect porting work for Godot 4.
 - Attribute: `GDQuest and contributors (https://www.gdquest.com/)`.
 - Not a character generator — one stylized mannequin, not a wardrobe system.

@@ -9,7 +9,7 @@ license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [ONNX, C++, Python, WASM]
-tags: [apache, local, offline, tts, asr]
+tags: [local, offline, tts, asr]
 verified: 2026-07-19
 status: active
 ---

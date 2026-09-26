@@ -9,7 +9,7 @@ license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [VOX, glTF, OBJ, PLY]
-tags: [voxel, open-source, dcc]
+tags: [voxel, dcc]
 verified: 2026-09-22
 status: active
 ---

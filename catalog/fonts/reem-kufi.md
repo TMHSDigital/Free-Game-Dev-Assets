@@ -10,7 +10,7 @@ license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [TTF, OTF]
-tags: [arabic, ofl, kufi, headline]
+tags: [arabic, kufi, headline]
 verified: 2026-08-29
 status: active
 ---

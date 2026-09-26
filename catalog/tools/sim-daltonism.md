@@ -9,7 +9,7 @@ license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [desktop-app, mobile-app]
-tags: [apache, a11y, colorblind, simulator, macos, ios]
+tags: [a11y, colorblind, simulator, macos, ios]
 verified: 2026-07-19
 status: active
 ---

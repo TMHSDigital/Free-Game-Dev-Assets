@@ -10,7 +10,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Reverb IRs (c) Adventure Kid (CC BY 4.0)"
 formats: [WAV]
-tags: [impulse-response, reverb, cc-by, springs]
+tags: [impulse-response, reverb, springs]
 verified: 2026-08-29
 status: active
 ---

@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend]
-tags: [cc0, animals, quadruped, animated, quaternius]
+tags: [animals, quadruped, animated]
 verified: 2026-08-25
 status: active
 ---

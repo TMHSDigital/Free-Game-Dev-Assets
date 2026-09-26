@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [EXR]
-tags: [hdri, cc0, unclipped, 32-bit]
+tags: [hdri, unclipped, 32-bit]
 verified: 2026-08-29
 status: active
 ---
@@ -33,5 +33,5 @@ Second CC0 HDRI publisher besides Poly Haven. Real-world captured unclipped line
 ## Related
 
 - [poly-haven](poly-haven.md)
-- [nasa-3d-resources](nasa-3d-resources.md)
+- [nasa-3d-resources](../3d/nasa-3d-resources.md)
 - [../3d/ambientcg](../3d/ambientcg.md)

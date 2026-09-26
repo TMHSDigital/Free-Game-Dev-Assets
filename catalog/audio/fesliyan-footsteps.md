@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [MP3]
-tags: [footsteps, royalty-free, freemium]
+tags: [footsteps, freemium]
 verified: 2026-08-24
 status: active
 ---

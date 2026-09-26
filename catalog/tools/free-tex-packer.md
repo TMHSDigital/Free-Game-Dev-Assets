@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [PNG, JSON]
-tags: [spritesheet, atlas, open-source]
+tags: [spritesheet, atlas]
 verified: 2026-08-24
 status: active
 ---

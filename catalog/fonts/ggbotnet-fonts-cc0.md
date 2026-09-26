@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [TTF, OTF, WOFF, WOFF2]
-tags: [cc0, pixel, fonts, retro]
+tags: [pixel, fonts, retro]
 verified: 2026-08-29
 status: active
 ---

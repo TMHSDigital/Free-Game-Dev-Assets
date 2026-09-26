@@ -3,7 +3,7 @@ id: nasa-3d-resources
 name: NASA 3D Resources
 url: https://science.nasa.gov/3d-resources/
 publisher: NASA
-category: environment
+category: 3d
 subcategories: [models, planetary]
 license: public-domain
 commercial: true
@@ -32,6 +32,6 @@ US federal 3D models (spacecraft, planetary props). NASA media used in 3D models
 
 ## Related
 
-- [nasa-image-video-library](nasa-image-video-library.md)
-- [usgs-earth-explorer](usgs-earth-explorer.md)
-- [poly-haven](poly-haven.md)
+- [nasa-image-video-library](../video/nasa-image-video-library.md)
+- [usgs-earth-explorer](../environment/usgs-earth-explorer.md)
+- [poly-haven](../environment/poly-haven.md)
