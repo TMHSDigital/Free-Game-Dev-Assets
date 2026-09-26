@@ -104,7 +104,7 @@ two carry obligations the rest do not.
 | [universal-lpc-generator](universal-lpc-generator.md) | Universal LPC Generator | varies (SA) | varies† | active |
 | [lpc-revised-basics](lpc-revised-basics.md) | LPC Revised Basics | varies (OGA-BY for every item) | yes | active |
 | [openclipart](openclipart.md) | Openclipart | CC0 | yes | active |
-| [opengameart](opengameart.md) | OpenGameArt | varies | unknown | needs-review |
+| [opengameart](opengameart.md) | OpenGameArt | varies | yes | needs-review |
 | [lospec](lospec.md) | Lospec | varies | unknown | needs-review |
 | [dcss-tiles](dcss-tiles.md) | Dungeon Crawl Stone Soup Tiles | varies | unknown | needs-review |
 

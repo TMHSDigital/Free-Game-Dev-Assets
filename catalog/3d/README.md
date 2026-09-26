@@ -130,7 +130,7 @@ than pack-wide. Triangle counts are geometry and survive re-hosting; file sizes 
 | [magicavoxel](magicavoxel.md) | MagicaVoxel | custom | yes | active |
 | [smithsonian-open-access](smithsonian-open-access.md) | Smithsonian Open Access | CC0 | yes | active |
 | [charge-materials](charge-materials.md) | Charge materials | CC-BY? | unknown | needs-review |
-| [fab-megascans-standard](fab-megascans-standard.md) | Fab/Quixel (Standard) | custom | unknown* | needs-review |
+| [fab-megascans-standard](fab-megascans-standard.md) | Fab/Quixel (Standard) | custom | yes | active |
 | [poly-pizza](poly-pizza.md) | Poly Pizza | varies | unknown | needs-review |
 | [sketchfab](sketchfab.md) | Sketchfab | varies | unknown | needs-review |
 | [nasa-3d-resources](nasa-3d-resources.md) | NASA 3D Resources | public-domain* | yes* | active |
