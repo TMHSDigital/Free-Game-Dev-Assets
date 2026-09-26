@@ -345,6 +345,26 @@ export function checkValueAliases(rel, meta, aliases) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V20 */
+/**
+ * `formats` is a closed list (site/format-vocabulary.json). V13 and V19 only
+ * catch spellings of a value already in use; a new synonym (`JPEG` beside
+ * `JPG`, `glTF KHR_draco` beside `glTF`) got in before either could see it,
+ * and the Format filter matches on exact values.
+ */
+export function checkFormatVocabulary(rel, meta, formatVocab) {
+  const errors = [];
+  const allowed = new Set(formatVocab.formats);
+  for (const v of Array.isArray(meta.formats) ? meta.formats.map(String) : []) {
+    if (!allowed.has(v)) {
+      errors.push(
+        `${rel} formats "${v}" is not in site/format-vocabulary.json (use a listed spelling, or add the new format there first)`
+      );
+    }
+  }
+  return errors;
+}
+
 /* ----------------------------------------------------------------- V14 */
 /**
  * `active` tells a reader the licence, the commercial stance and the credit

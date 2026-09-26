@@ -18,6 +18,7 @@ import {
   checkDeprecationReason,
   checkEntryUrl,
   checkEvidenceDates,
+  checkFormatVocabulary,
   evidenceDates,
   markdownAnchors,
   checkLicenseVocabulary,
@@ -684,10 +685,24 @@ rejects("V19 rejects a licence as a subcategory", checkValueAliases("bad.md", { 
 rejects("V19 rejects an internal review tag", checkValueAliases("bad.md", { tags: ["r04"] }, aliases), "internal review marker");
 accepts("V19 lets a tag use a word retired only as a subcategory", checkValueAliases("ok.md", { tags: ["tiles", "public-domain"] }, aliases));
 
+/* V20: closed format list ---------------------------------------------- */
+const formatVocab = JSON.parse(fs.readFileSync(path.join(__dirname, "format-vocabulary.json"), "utf8"));
+rejects("V20 rejects a format missing from the vocabulary", checkFormatVocabulary("bad.md", { formats: ["glTF KHR_draco"] }, formatVocab), 'formats "glTF KHR_draco" is not in site/format-vocabulary.json');
+rejects("V20 is case-sensitive", checkFormatVocabulary("bad.md", { formats: ["png"] }, formatVocab), 'formats "png"');
+accepts("V20 accepts listed formats", checkFormatVocabulary("ok.md", { formats: ["PNG", "glTF", "GLB"] }, formatVocab));
+accepts(
+  "V20 vocabulary lists every format a filter group names",
+  Object.values(formatVocab.groups).flatMap((g) => g.formats).filter((f) => !formatVocab.formats.includes(f))
+);
+accepts(
+  "V20 vocabulary carries no retired spelling",
+  formatVocab.formats.filter((f) => Object.prototype.hasOwnProperty.call(aliases.formats, f))
+);
+
 /* ----------------------------------------------------------------------- */
 if (failures.length) {
   console.error(`checks.test failed (${failures.length}):`);
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 19 checks`);
+console.log(`checks.test ok: ${passed} assertions across 20 checks`);

@@ -1,0 +1,208 @@
+{
+  "_comment": "The closed list of `formats` values (checks.mjs V20). Add a new value here in the same change that first uses it; spell it as the format's own documentation does. `groups` drive the site's Format filter: an entry matches a group when any of its formats is listed there.",
+  "formats": [
+    "3MF",
+    "AAX",
+    "ABC",
+    "AMC",
+    "ASCII",
+    "ASE",
+    "AU",
+    "AUP3",
+    "basis",
+    "BBMODEL",
+    "BIN",
+    "BIP",
+    "Blend",
+    "blender-extension",
+    "BVH",
+    "C++",
+    "C3D",
+    "cli",
+    "COG",
+    "CSV",
+    "DAE",
+    "DEM",
+    "desktop-app",
+    "DRC",
+    "DTED",
+    "E57",
+    "efk",
+    "EPS",
+    "espeak-ng-data",
+    "EXR",
+    "FBX",
+    "Figma",
+    "FLA",
+    "FLAC",
+    "gdextension",
+    "gdshader",
+    "GeoJSON",
+    "GeoTIFF",
+    "GIF",
+    "GLB",
+    "glTF",
+    "Godot",
+    "godot-addon",
+    "gpl-palette",
+    "HDR",
+    "HGT",
+    "HTML",
+    "JavaScript",
+    "JPG",
+    "JSON",
+    "KRA",
+    "ktx",
+    "ktx2",
+    "LAS",
+    "LAZ",
+    "ldtk",
+    "library",
+    "middleware",
+    "MIDI",
+    "mm",
+    "MMP",
+    "mobile-app",
+    "model",
+    "MP3",
+    "MP4",
+    "MPEG2",
+    "netCDF",
+    "npm",
+    "OBJ",
+    "OGG",
+    "OGV",
+    "ONNX",
+    "OSM",
+    "OTF",
+    "PAL",
+    "PBF",
+    "PDF",
+    "PLY",
+    "PNG",
+    "PSD",
+    "pxo",
+    "Python",
+    "R16",
+    "React",
+    "SBSAR",
+    "SFMdata",
+    "shapefile",
+    "Sketch",
+    "STL",
+    "SVG",
+    "TGA",
+    "TIFF",
+    "tmx",
+    "TTF",
+    "TXT",
+    "Unity",
+    "Unreal",
+    "USD",
+    "various",
+    "VDB",
+    "VOX",
+    "VRM",
+    "VST",
+    "Vue",
+    "WASM",
+    "WAV",
+    "WOFF",
+    "WOFF2",
+    "XCF",
+    "XML",
+    "YBN",
+    "YCD",
+    "YDD",
+    "YDR",
+    "YFT",
+    "YMAP",
+    "YTYP"
+  ],
+  "groups": {
+    "gltf": {
+      "label": "glTF / GLB",
+      "formats": [
+        "glTF",
+        "GLB"
+      ]
+    },
+    "fbx": {
+      "label": "FBX",
+      "formats": [
+        "FBX"
+      ]
+    },
+    "obj": {
+      "label": "OBJ",
+      "formats": [
+        "OBJ"
+      ]
+    },
+    "blend": {
+      "label": "Blend",
+      "formats": [
+        "Blend"
+      ]
+    },
+    "png": {
+      "label": "PNG",
+      "formats": [
+        "PNG"
+      ]
+    },
+    "svg": {
+      "label": "SVG",
+      "formats": [
+        "SVG"
+      ]
+    },
+    "hdr": {
+      "label": "EXR / HDR",
+      "formats": [
+        "EXR",
+        "HDR"
+      ]
+    },
+    "wav": {
+      "label": "WAV / FLAC",
+      "formats": [
+        "WAV",
+        "FLAC"
+      ]
+    },
+    "ogg": {
+      "label": "OGG / MP3",
+      "formats": [
+        "OGG",
+        "MP3"
+      ]
+    },
+    "font": {
+      "label": "TTF / OTF / WOFF",
+      "formats": [
+        "TTF",
+        "OTF",
+        "WOFF",
+        "WOFF2"
+      ]
+    },
+    "godot": {
+      "label": "Godot",
+      "formats": [
+        "Godot",
+        "godot-addon",
+        "gdshader",
+        "gdextension"
+      ]
+    },
+    "video": {
+      "label": "Video (MP4 / OGV)",
+      "formats": [
+        "MP4",
+        "OGV",
+        "MPEG2"
+      ]
+    }
+  }
+}
