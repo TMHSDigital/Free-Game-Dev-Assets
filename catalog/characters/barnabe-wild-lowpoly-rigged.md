@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [Blend, FBX]
-tags: [low-poly, psx, cc0, itch]
+tags: [low-poly, psx, itch]
 verified: 2026-08-24
 status: active
 ---

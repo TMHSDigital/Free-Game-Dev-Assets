@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF, OBJ]
-tags: [cc0, dungeon, modular, kaykit]
+tags: [dungeon, modular]
 verified: 2026-08-25
 status: active
 ---

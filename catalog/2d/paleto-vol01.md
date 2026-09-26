@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [ASE, PNG, PDF, HTML]
-tags: [cc0, palettes, pixel-art, fantasy, horror, ocean, retro]
+tags: [palettes, pixel-art, fantasy, horror, ocean, retro]
 verified: 2026-07-20
 status: active
 ---

@@ -8,7 +8,7 @@ license: GPL-3.0
 commercial: true
 attribution_required: false
 formats: [PNG, TGA]
-tags: [pbr, baker, open-source]
+tags: [pbr, baker]
 verified: 2026-08-24
 status: active
 ---

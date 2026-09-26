@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [Python]
-tags: [mit, 2d, research, archived, fair]
+tags: [2d, research, archived, fair]
 verified: 2026-07-19
 status: active
 ---

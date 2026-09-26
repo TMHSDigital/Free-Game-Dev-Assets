@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OGG, WAV]
-tags: [sci-fi, space, engine, cc0]
+tags: [sci-fi, space, engine]
 verified: 2026-08-24
 status: active
 ---

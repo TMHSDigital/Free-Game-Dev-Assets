@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OBJ, FBX, glTF]
-tags: [cc0, blocks, prototype, kaykit]
+tags: [blocks, prototype]
 verified: 2026-08-25
 status: active
 ---

@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [WAV, MP3]
-tags: [cc0, field-recording, royalty-free, footsteps-capable]
+tags: [field-recording, footsteps-capable]
 verified: 2026-08-24
 status: active
 ---

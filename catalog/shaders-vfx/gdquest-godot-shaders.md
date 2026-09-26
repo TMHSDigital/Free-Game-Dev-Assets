@@ -10,7 +10,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [gdshader, Godot]
-tags: [godot, 2d, 3d, demos, gdquest]
+tags: [godot, 2d, 3d, demos]
 verified: 2026-07-19
 status: active
 ---

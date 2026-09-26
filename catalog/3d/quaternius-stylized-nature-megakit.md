@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF, Blend, OBJ]
-tags: [cc0, ghibli-ish, trees, plants, quaternius]
+tags: [ghibli-ish, trees, plants]
 verified: 2026-07-19
 status: active
 ---

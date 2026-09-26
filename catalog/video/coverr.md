@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [MP4]
-tags: [stock, b-roll, no-attribution, no-ai-training]
+tags: [stock, b-roll, no-ai-training]
 verified: 2026-09-23
 status: active
 ---

@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, GLB]
-tags: [cc0, weapons, melee]
+tags: [weapons, melee]
 verified: 2026-08-29
 status: active
 ---

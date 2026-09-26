@@ -8,7 +8,7 @@ license: varies
 commercial: unknown
 attribution_required: unknown
 formats: [Blend, glTF, FBX]
-tags: [blender, humanoid, agpl-assets, mb-lab-derived]
+tags: [blender, humanoid, mb-lab-derived]
 verified: 2026-07-19
 status: needs-review
 ---

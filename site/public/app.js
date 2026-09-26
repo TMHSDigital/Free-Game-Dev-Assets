@@ -209,19 +209,20 @@
   /* ------------------------------------------------------------- search */
 
   // Each entry's searchable text, normalised once at load, in three fields.
-  // Name and tags are what a reader means by a word, so a hit there ranks
-  // above one in the other metadata, which ranks above a summary-only hit.
+  // Name, publisher and tags are what a reader means by a word, so a hit there
+  // ranks above one in the other metadata, which ranks above a summary-only
+  // hit. Tags no longer repeat the publisher or licence (V19, V21), so those
+  // fields are searched directly.
   const FIELD_WEIGHTS = [3, 2, 1];
   const searchIndex = new Map(
     data.entries.map((e) => [
       e.id,
       [
-        normalize([e.name, ...(e.tags || [])].join(" ")),
+        normalize([e.name, e.publisher || "", ...(e.tags || [])].join(" ")),
         normalize(
           [
             e.license,
             e.category,
-            e.publisher || "",
             PERSPECTIVE_SEARCH[e.camera_perspective] || "",
             ...(e.formats || []),
             ...(e.subcategories || []),

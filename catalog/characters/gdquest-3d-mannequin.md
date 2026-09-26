@@ -11,7 +11,7 @@ commercial: true
 attribution_required: true
 attribution_string: "GDQuest and contributors (https://www.gdquest.com/)"
 formats: [glTF, Godot]
-tags: [godot, mannequin, controller, cc-by]
+tags: [godot, mannequin, controller]
 verified: 2026-08-24
 status: active
 ---

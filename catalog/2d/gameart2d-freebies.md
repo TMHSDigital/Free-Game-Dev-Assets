@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, platformer, gui, side-scroller]
+tags: [platformer, gui, side-scroller]
 camera_perspective: side_scroller
 verified: 2026-08-29
 status: active

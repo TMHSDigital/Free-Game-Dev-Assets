@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, WAV]
-tags: [cc0, pixel, platformer, itch, 16-bit]
+tags: [pixel, platformer, itch, 16-bit]
 camera_perspective: side_scroller
 verified: 2026-08-24
 status: active

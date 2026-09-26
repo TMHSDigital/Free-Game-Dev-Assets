@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, FBX, Blend]
-tags: [cc0, trees, rocks, foliage, kenney]
+tags: [trees, rocks, foliage]
 verified: 2026-07-19
 status: active
 ---

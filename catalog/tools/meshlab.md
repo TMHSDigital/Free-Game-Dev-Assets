@@ -8,7 +8,7 @@ license: GPL-3.0
 commercial: true
 attribution_required: false
 formats: [OBJ, PLY, glTF, 3MF]
-tags: [mesh, cleanup, scan, gpl]
+tags: [mesh, cleanup, scan]
 verified: 2026-08-24
 status: active
 ---

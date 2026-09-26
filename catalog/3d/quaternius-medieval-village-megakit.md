@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend, glTF]
-tags: [cc0, medieval, modular, quaternius]
+tags: [medieval, modular]
 verified: 2026-08-25
 status: active
 ---

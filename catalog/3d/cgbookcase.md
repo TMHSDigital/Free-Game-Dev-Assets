@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [pbr, seamless, photogrammetry, cc0, concrete, metal, brick]
+tags: [pbr, seamless, photogrammetry, concrete, metal, brick]
 verified: 2026-08-24
 status: active
 ---

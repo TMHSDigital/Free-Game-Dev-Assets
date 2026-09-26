@@ -10,7 +10,7 @@ license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [OTF, TTF]
-tags: [display, ofl, condensed, gothic]
+tags: [display, condensed, gothic]
 verified: 2026-08-29
 status: active
 ---

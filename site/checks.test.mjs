@@ -25,6 +25,7 @@ import {
   checkPublisherConsistency,
   checkSpdxConsistency,
   checkStacks,
+  checkTagsRestatePublisher,
   checkTaxonomyValues,
   checkValueAliases,
   checkValueSpellings,
@@ -683,7 +684,14 @@ rejects("V19 rejects a retired subcategory", checkValueAliases("bad.md", { subca
 rejects("V19 rejects a retired format", checkValueAliases("bad.md", { formats: ["JPEG"] }, aliases), 'use "JPG"');
 rejects("V19 rejects a licence as a subcategory", checkValueAliases("bad.md", { subcategories: ["public-domain"] }, aliases), "a licence, not a kind of content");
 rejects("V19 rejects an internal review tag", checkValueAliases("bad.md", { tags: ["r04"] }, aliases), "internal review marker");
-accepts("V19 lets a tag use a word retired only as a subcategory", checkValueAliases("ok.md", { tags: ["tiles", "public-domain"] }, aliases));
+accepts("V19 lets a tag use a word retired only as a subcategory", checkValueAliases("ok.md", { tags: ["tiles", "gui"] }, aliases));
+rejects("V19 rejects a tag that restates the licence", checkValueAliases("bad.md", { tags: ["cc0"] }, aliases), 'tags must not carry "cc0"');
+accepts("V19 keeps a tag that only mentions a licence word", checkValueAliases("ok.md", { tags: ["odbl-adjacent", "free-tier"] }, aliases));
+
+/* V21: tag restating the publisher ------------------------------------- */
+rejects("V21 rejects the publisher as a tag", checkTagsRestatePublisher("bad.md", { publisher: "Blender Studio", tags: ["blender-studio", "open-movie"] }), 'tag "blender-studio" restates publisher');
+accepts("V21 allows another publisher's name as a tag", checkTagsRestatePublisher("ok.md", { publisher: "Envato", tags: ["kenney-style"] }));
+accepts("V21 ignores an entry with no publisher", checkTagsRestatePublisher("ok.md", { tags: ["kenney"] }));
 
 /* V20: closed format list ---------------------------------------------- */
 const formatVocab = JSON.parse(fs.readFileSync(path.join(__dirname, "format-vocabulary.json"), "utf8"));
@@ -705,4 +713,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 20 checks`);
+console.log(`checks.test ok: ${passed} assertions across 21 checks`);

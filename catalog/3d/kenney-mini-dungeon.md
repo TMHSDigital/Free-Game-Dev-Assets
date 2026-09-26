@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, FBX, Blend]
-tags: [cc0, dungeon, mini, kenney]
+tags: [dungeon, mini]
 verified: 2026-08-25
 status: active
 ---

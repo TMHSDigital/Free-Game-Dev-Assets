@@ -8,7 +8,7 @@ license: varies
 commercial: varies
 attribution_required: true
 formats: [OTF, TTF]
-tags: [ofl, aggregator, display-only]
+tags: [aggregator, display-only]
 attribution_string: "See the licence on the typeface's own GitHub or foundry page"
 verified: 2026-08-24
 status: active

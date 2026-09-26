@@ -9,7 +9,7 @@ license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [Godot]
-tags: [2d, soft-body, godot, apache]
+tags: [2d, soft-body, godot]
 verified: 2026-07-19
 status: active
 ---

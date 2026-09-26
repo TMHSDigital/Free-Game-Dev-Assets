@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, SVG, XML, OGG]
-tags: [cc0, board-game, cards, dice, chips, tokens, mobile]
+tags: [board-game, cards, dice, chips, tokens, mobile]
 verified: 2026-09-23
 status: active
 ---

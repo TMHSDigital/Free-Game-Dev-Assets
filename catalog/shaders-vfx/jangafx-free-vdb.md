@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [VDB]
-tags: [cc0, vdb, volumes, explosion, smoke]
+tags: [vdb, volumes, explosion, smoke]
 verified: 2026-08-29
 status: active
 ---

@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, ui, 9-slice, vector]
+tags: [ui, 9-slice, vector]
 camera_perspective: 2d_flat
 verified: 2026-08-29
 status: active

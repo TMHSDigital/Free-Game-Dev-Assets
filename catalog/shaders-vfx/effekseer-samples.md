@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [efk]
-tags: [cc0, particles, vfx, effekseer]
+tags: [particles, vfx, effekseer]
 verified: 2026-08-29
 status: active
 ---

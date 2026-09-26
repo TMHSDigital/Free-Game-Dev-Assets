@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [ldtk, JSON]
-tags: [2d, levels, open-source]
+tags: [2d, levels]
 verified: 2026-08-24
 status: active
 ---

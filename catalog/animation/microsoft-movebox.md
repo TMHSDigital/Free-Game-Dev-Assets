@@ -10,7 +10,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [Unity]
-tags: [mit, kinect, azure-kinect, rocketbox, archived]
+tags: [kinect, azure-kinect, rocketbox, archived]
 verified: 2026-07-19
 status: active
 ---

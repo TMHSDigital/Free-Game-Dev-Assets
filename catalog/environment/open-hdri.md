@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [EXR]
-tags: [hdri, cc0, unclipped, 32-bit]
+tags: [hdri, unclipped, 32-bit]
 verified: 2026-08-29
 status: active
 ---

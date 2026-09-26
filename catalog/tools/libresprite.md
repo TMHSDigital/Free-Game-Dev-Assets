@@ -8,7 +8,7 @@ license: GPL-2.0
 commercial: true
 attribution_required: false
 formats: [ASE, PNG, GIF]
-tags: [pixel-art, editor, aseprite-fork, open-source]
+tags: [pixel-art, editor, aseprite-fork]
 verified: 2026-08-24
 status: active
 ---

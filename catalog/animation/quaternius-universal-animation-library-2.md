@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF, GLB, Blend]
-tags: [cc0, retarget, combat, parkour, zombie]
+tags: [retarget, combat, parkour, zombie]
 verified: 2026-07-19
 status: active
 ---

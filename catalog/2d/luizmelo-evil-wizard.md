@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [pixel, platformer, boss, cc0]
+tags: [pixel, platformer, boss]
 camera_perspective: side_scroller
 verified: 2026-08-24
 status: active

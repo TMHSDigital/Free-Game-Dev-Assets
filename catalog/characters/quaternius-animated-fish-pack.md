@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend]
-tags: [cc0, fish, aquatic, animated, quaternius]
+tags: [fish, aquatic, animated]
 verified: 2026-08-25
 status: active
 ---

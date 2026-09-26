@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Credit: AW3D30 (JAXA)"
 formats: [GeoTIFF]
-tags: [terrain, government, attribution]
+tags: [terrain, government]
 verified: 2026-07-19
 status: active
 ---

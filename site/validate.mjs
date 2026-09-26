@@ -19,6 +19,7 @@ import {
   checkPublisherConsistency,
   checkSpdxConsistency,
   checkStacks,
+  checkTagsRestatePublisher,
   checkTaxonomyValues,
   checkValueAliases,
   checkValueSpellings,
@@ -303,6 +304,7 @@ function main() {
     errors.push(...checkTaxonomyValues(rel, meta));
     errors.push(...checkValueAliases(rel, meta, aliases));
     errors.push(...checkFormatVocabulary(rel, meta, formatVocab));
+    errors.push(...checkTagsRestatePublisher(rel, meta));
     errors.push(...checkActiveIsSettled(rel, meta));
     if (meta.id) {
       const id = String(meta.id);

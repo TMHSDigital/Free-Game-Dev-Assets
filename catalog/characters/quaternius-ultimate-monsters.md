@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, Blend, OBJ, glTF]
-tags: [cc0, monsters, animated, enemies, quaternius]
+tags: [monsters, animated, enemies]
 verified: 2026-07-19
 status: active
 ---

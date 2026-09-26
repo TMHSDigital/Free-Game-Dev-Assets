@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, cursor, pointer, ui, kenney]
+tags: [cursor, pointer, ui]
 camera_perspective: 2d_flat
 verified: 2026-07-19
 status: active

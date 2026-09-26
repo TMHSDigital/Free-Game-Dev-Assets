@@ -9,7 +9,7 @@ license_spdx: GPL-2.0-or-later
 commercial: true
 attribution_required: false
 formats: [WAV, FLAC, OGG, MP3, AUP3]
-tags: [audio, editor, sfx, open-source, dcc]
+tags: [audio, editor, sfx, dcc]
 verified: 2026-09-23
 status: active
 ---

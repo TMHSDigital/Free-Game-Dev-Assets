@@ -9,7 +9,7 @@ license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [SVG, PNG, PDF, EPS]
-tags: [vector, svg, ui, icons, open-source, dcc]
+tags: [vector, svg, ui, icons, dcc]
 verified: 2026-09-22
 status: active
 ---

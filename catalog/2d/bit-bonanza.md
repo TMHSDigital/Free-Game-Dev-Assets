@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, 1-bit, 10x10, rpg, icons, itch]
+tags: [1-bit, 10x10, rpg, icons, itch]
 grid_dimensions: 10x10
 camera_perspective: 2d_flat
 verified: 2026-08-15

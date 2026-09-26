@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF, Blend, OBJ]
-tags: [cc0, modular, fantasy, outfits, quaternius]
+tags: [modular, fantasy, outfits]
 verified: 2026-07-19
 status: active
 ---

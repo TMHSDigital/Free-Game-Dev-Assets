@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, vehicles, cars, pixel, kenney]
+tags: [vehicles, cars, pixel]
 verified: 2026-07-19
 status: active
 ---

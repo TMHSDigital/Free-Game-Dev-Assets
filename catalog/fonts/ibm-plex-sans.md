@@ -9,7 +9,7 @@ license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [OTF, TTF, WOFF2]
-tags: [ui, sans, ofl, plex]
+tags: [ui, sans, plex]
 verified: 2026-08-24
 status: active
 ---

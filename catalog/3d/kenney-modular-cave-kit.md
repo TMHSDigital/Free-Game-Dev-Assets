@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, FBX, Blend]
-tags: [cc0, cave, modular, kenney]
+tags: [cave, modular]
 verified: 2026-08-25
 status: active
 ---

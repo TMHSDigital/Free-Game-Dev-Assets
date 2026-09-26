@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [SVG, PNG, Sketch, Figma]
-tags: [cc0, illustration, characters, mix-match]
+tags: [illustration, characters, mix-match]
 camera_perspective: 2d_flat
 verified: 2026-07-19
 status: active

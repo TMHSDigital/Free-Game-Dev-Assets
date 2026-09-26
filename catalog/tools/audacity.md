@@ -8,7 +8,7 @@ license: GPL-3.0
 commercial: true
 attribution_required: false
 formats: [WAV, FLAC, OGG, MP3, AUP3]
-tags: [audio, editor, gpl, muse-group]
+tags: [audio, editor, muse-group]
 verified: 2026-08-24
 status: active
 ---

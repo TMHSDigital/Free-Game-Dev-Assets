@@ -8,7 +8,7 @@ license: varies
 commercial: varies
 attribution_required: true
 formats: [TTF, WOFF, WOFF2, npm]
-tags: [ofl, npm, self-host, aggregator]
+tags: [npm, self-host, aggregator]
 attribution_string: "See the OFL.txt / LICENSE in the @fontsource/<family> package you installed"
 verified: 2026-08-24
 status: active

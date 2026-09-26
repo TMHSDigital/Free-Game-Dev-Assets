@@ -9,7 +9,7 @@ license_spdx: GPL-2.0-or-later
 commercial: true
 attribution_required: false
 formats: [WAV, OGG, MIDI, MMP]
-tags: [daw, open-source, gpl]
+tags: [daw]
 verified: 2026-09-22
 status: active
 ---

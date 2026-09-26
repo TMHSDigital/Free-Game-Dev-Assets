@@ -9,7 +9,7 @@ license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [YDR, YDD, YFT, YBN, YTYP, YCD, YMAP, Blend]
-tags: [blender-addon, gta-format, fivem, open-source]
+tags: [blender-addon, gta-format, fivem]
 verified: 2026-09-22
 status: active
 ---

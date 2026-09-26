@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OGG, WAV]
-tags: [cc0, footsteps, rpg, weapons, kenney]
+tags: [footsteps, rpg, weapons]
 verified: 2026-07-19
 status: active
 ---

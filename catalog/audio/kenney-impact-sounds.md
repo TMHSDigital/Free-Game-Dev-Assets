@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OGG, WAV]
-tags: [cc0, impact, foley, kenney]
+tags: [impact, foley]
 verified: 2026-07-19
 status: active
 ---

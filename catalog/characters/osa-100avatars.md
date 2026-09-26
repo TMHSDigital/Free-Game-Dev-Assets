@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [VRM]
-tags: [vrm, cc0, web, metaverse]
+tags: [vrm, web, metaverse]
 verified: 2026-08-25
 status: active
 ---

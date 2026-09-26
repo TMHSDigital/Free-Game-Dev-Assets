@@ -9,7 +9,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [MP4]
-tags: [stock, b-roll, no-attribution, envato, games-not-named]
+tags: [stock, b-roll, games-not-named]
 verified: 2026-09-23
 status: needs-review
 ---

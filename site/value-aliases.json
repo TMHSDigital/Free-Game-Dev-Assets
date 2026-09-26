@@ -18,6 +18,29 @@
   "retired": {
     "subcategories": {
       "public-domain": "a licence, not a kind of content; the license field records it"
+    },
+    "tags": {
+      "cc0": "restates the licence; the license field records it and the Licence filter uses it",
+      "cc-by": "restates the licence; the license field records it and the Licence filter uses it",
+      "cc-by-sa": "restates the licence; the license field records it (the body lists a mix under varies)",
+      "oga-by": "restates the licence; the license field records it (the body lists a mix under varies)",
+      "creative-commons": "restates the licence; the license field records it (the body lists a mix under varies)",
+      "mit": "restates the licence; the license field records it and the Licence filter uses it",
+      "gpl": "restates the licence; the license field records it and the Licence filter uses it",
+      "ofl": "restates the licence; the license field records it and the Licence filter uses it",
+      "apache": "restates the licence; the license field records it and the Licence filter uses it",
+      "bsd": "restates the licence; the license field records it and the Licence filter uses it",
+      "odbl": "restates the licence; the license field records it",
+      "public-domain": "restates the licence; the license field records it and the Licence filter uses it",
+      "copyleft-assets": "restates the licence; the license field records it (the body lists a mix under varies)",
+      "agpl-assets": "restates the licence; the license field records it (the body lists a mix under varies)",
+      "open-source": "restates the licence; the license field records it and the Licence filter uses it",
+      "attribution": "restates attribution_required, which the No attribution filter uses",
+      "no-attribution": "restates attribution_required, which the No attribution filter uses",
+      "royalty-free": "restates the licence terms; license and commercial record them",
+      "freeware": "restates the licence terms; license and commercial record them",
+      "free": "every entry is free; the licence fields say on what terms",
+      "non-commercial": "restates commercial: false, which the Commercial OK filter uses"
     }
   }
 }

@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, 1-bit, 8x8, roguelike, rpg, top-down]
+tags: [1-bit, 8x8, roguelike, rpg, top-down]
 grid_dimensions: 8x8
 camera_perspective: top_down
 verified: 2026-09-22

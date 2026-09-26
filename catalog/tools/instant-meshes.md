@@ -9,7 +9,7 @@ license_spdx: BSD-3-Clause
 commercial: true
 attribution_required: false
 formats: [OBJ]
-tags: [retopo, remesh, quad, open-source]
+tags: [retopo, remesh, quad]
 verified: 2026-08-24
 status: active
 ---

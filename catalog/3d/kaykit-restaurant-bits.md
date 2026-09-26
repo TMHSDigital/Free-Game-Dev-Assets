@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OBJ, FBX, glTF]
-tags: [cc0, restaurant, food, kaykit]
+tags: [restaurant, food]
 verified: 2026-08-25
 status: active
 ---

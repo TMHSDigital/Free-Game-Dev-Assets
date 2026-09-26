@@ -10,7 +10,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Ellie Pose Library (c) Blender Studio. CC-BY. Suggested format; card does not specify wording."
 formats: [Blend]
-tags: [blender-studio, poses]
+tags: [poses]
 verified: 2026-08-24
 status: active
 ---

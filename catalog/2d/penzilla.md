@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: unknown
 formats: [PNG]
-tags: [pixel, gui, itch, royalty-free]
+tags: [pixel, gui, itch]
 verified: 2026-08-24
 status: needs-review
 ---

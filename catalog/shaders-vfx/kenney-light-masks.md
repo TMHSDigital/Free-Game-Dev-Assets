@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cc0, light, cookie, shader, vfx, kenney]
+tags: [light, cookie, shader, vfx]
 verified: 2026-07-27
 status: active
 ---

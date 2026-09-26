@@ -11,7 +11,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Critter (c) Blender Studio (CC BY 4.0)"
 formats: [Blend]
-tags: [blender-studio, creature, rig]
+tags: [creature, rig]
 verified: 2026-08-29
 status: active
 ---
