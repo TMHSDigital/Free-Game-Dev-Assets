@@ -33,5 +33,5 @@ MyMiniFactory's collection of 3D-scanned cultural artefacts, made for **physical
 ## Related
 
 - [smithsonian-open-access](smithsonian-open-access.md)
-- [../environment/nasa-3d-resources](../environment/nasa-3d-resources.md)
+- [nasa-3d-resources](nasa-3d-resources.md)
 - [poly-pizza](poly-pizza.md)

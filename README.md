@@ -107,16 +107,16 @@ someone exactly what you are looking at.
 
 | Category | Entries | Focus | Index |
 | --- | ---: | --- | --- |
-| **3D** | 69 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
+| **3D** | 70 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
 | **Tools** | 66 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 | **2D** | 54 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
 | **Audio** | 30 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Characters** | 27 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
 | **Fonts** | 23 | OFL and commercial-ok typefaces, CJK | [`catalog/fonts/`](catalog/fonts/) |
-| **Environment** | 15 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
+| **Environment** | 13 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
 | **Shaders & VFX** | 17 | Shaders, particle and FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
 | **Animation** | 12 | Motion capture and character clips | [`catalog/animation/`](catalog/animation/) |
-| **Video** | 6 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
+| **Video** | 7 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
 
 ## Reading an entry
 

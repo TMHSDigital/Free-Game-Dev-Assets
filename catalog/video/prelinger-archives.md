@@ -38,4 +38,4 @@ About 10,000 "ephemeral" films (advertising, educational, industrial and amateur
 ## Related
 
 - [destockd](destockd.md)
-- [../environment/nasa-image-video-library](../environment/nasa-image-video-library.md)
+- [nasa-image-video-library](nasa-image-video-library.md)

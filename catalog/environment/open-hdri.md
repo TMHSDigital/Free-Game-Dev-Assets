@@ -33,5 +33,5 @@ Second CC0 HDRI publisher besides Poly Haven. Real-world captured unclipped line
 ## Related
 
 - [poly-haven](poly-haven.md)
-- [nasa-3d-resources](nasa-3d-resources.md)
+- [nasa-3d-resources](../3d/nasa-3d-resources.md)
 - [../3d/ambientcg](../3d/ambientcg.md)

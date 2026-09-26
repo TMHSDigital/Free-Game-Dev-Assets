@@ -35,4 +35,4 @@ Museum 3D scans and media released under CC0 when marked with the Creative Commo
 ## Related
 
 - [scan-the-world](scan-the-world.md)
-- [nasa-3d-resources](../environment/nasa-3d-resources.md)
+- [nasa-3d-resources](nasa-3d-resources.md)
