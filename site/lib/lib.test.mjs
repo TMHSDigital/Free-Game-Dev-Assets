@@ -7,6 +7,7 @@ import {
   commercialLabel,
   entryPageUrl,
   esc,
+  isRealDate,
   STATUS_NOTES,
   verifiedAge,
 } from "./shared.mjs";
@@ -37,12 +38,21 @@ function throws(label, fn, needle) {
 }
 
 /* shared ----------------------------------------------------------------- */
+for (const date of ["2026-01-01", "2026-12-31", "2026-04-30", "2024-02-29", "2000-02-29", "0000-02-29", "0099-12-31"]) {
+  eq(`isRealDate accepts ${date}`, isRealDate(date), true);
+}
+for (const date of ["2025-13-01", "2026-02-30", "2025-02-29", "1900-02-29", "2100-02-29", "2026-04-31", "2026-00-01", "2026-01-00", "2026-01-32", "0099-02-29", "2026-1-01", "2026-01-1", "2026-01-01\n", " 2026-01-01", "2026-01-01T00:00:00Z", "", null, undefined, 20260101]) {
+  eq(`isRealDate rejects ${JSON.stringify(date)}`, isRealDate(date), false);
+}
 eq("esc escapes all five characters", esc(`<a href="x">'&'</a>`), "&lt;a href=&quot;x&quot;&gt;&#39;&amp;&#39;&lt;/a&gt;");
 eq("commercialLabel true", commercialLabel(true), "commercial OK");
 eq("commercialLabel varies", commercialLabel("varies"), "per-file review");
 eq("commercialLabel unknown", commercialLabel("unknown"), "commercial ?");
 eq("verifiedAge fresh", verifiedAge("2026-09-01", Date.parse("2026-09-24T00:00:00Z")).bucket, "fresh");
 eq("verifiedAge missing", verifiedAge(null, Date.now()).bucket, "unknown");
+for (const date of ["2025-13-01", "2026-02-30", "2025-02-29", "1900-02-29", "2026-04-31"]) {
+  eq(`verifiedAge rejects ${date}`, verifiedAge(date, Date.parse("2026-09-24T00:00:00Z")).bucket, "unknown");
+}
 eq("entryPageUrl trims the site slash", entryPageUrl({ siteUrl: "https://x.test/site/" }, "a-b"), "https://x.test/site/entry/a-b/");
 has("STATUS_NOTES covers needs-review", STATUS_NOTES["needs-review"], "open");
 
@@ -241,6 +251,10 @@ throws("licence in a why sentence", badStack((m) => m.replace("Five loops.", "Fi
 throws("licence phrase in a why sentence", badStack((m) => m.replace("Five loops.", "Five public domain loops.")), '("public domain")');
 throws("missing walked", badStack((m) => m.replace("walked: 2026-09-20\n", "")), "frontmatter is missing walked");
 throws("bad walked date", badStack((m) => m.replace("2026-09-20", "20 Sept")), "walked is not YYYY-MM-DD");
+for (const date of ["2025-13-01", "2026-02-30", "2025-02-29", "1900-02-29", "2026-04-31"]) {
+  throws(`impossible walked date ${date}`, badStack((m) => m.replace("2026-09-20", date)), "walked is not YYYY-MM-DD");
+}
+eq("leap-day walked date", parseStack(stackMd.replace("2026-09-20", "2000-02-29"), { file: "stacks/s1.md" }).meta.walked, "2000-02-29");
 throws("empty pick section", badStack((m) => m.replace("- **Music, no credit:** [Chips](../catalog/audio/subspaceaudio-5-chiptunes.md). Five loops.", "")), 'section "Audio" has no picks');
 throws("gaps line not a bullet", badStack((m) => m.replace("- No parallax layers yet.", "No parallax layers yet.")), "stacks/s1.md:24: a Gaps line is a bullet");
 eq("licence terms skip plain words", licenceTerms({ licenses: { custom: {}, MIT: { spdx: "MIT" }, CC0: { spdx: "CC0-1.0" } } }, ["OFL-1.1"]).sort().join(","), "CC0,CC0-1.0,MIT,OFL-1.1");

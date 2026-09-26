@@ -157,6 +157,22 @@ accepts(
 );
 
 /* V8 / V10 -------------------------------------------------------------- */
+for (const date of ["2025-13-01", "2026-02-30", "2025-02-29", "1900-02-29", "2026-04-31"]) {
+  rejects(
+    `V8 rejects impossible Evidence date ${date}`,
+    checkEvidenceDates("bad.md", { verified: "2026-01-01" }, `# X${EV(date)}`, TODAY),
+    `Evidence date ${date} is not a real YYYY-MM-DD date`
+  );
+}
+rejects(
+  "V8 rejects an impossible date even alongside valid Evidence",
+  checkEvidenceDates("bad.md", { verified: "2026-09-20" }, `# X${EV("2026-02-30")}\n- Rechecked 2026-09-20.\n`, TODAY),
+  "Evidence date 2026-02-30 is not a real YYYY-MM-DD date"
+);
+accepts(
+  "V8 accepts real leap-day Evidence",
+  checkEvidenceDates("ok.md", { verified: "2000-02-29" }, `# X${EV("2000-02-29")}`, TODAY)
+);
 rejects(
   "V8 rejects a verified date newer than its newest Evidence date",
   checkEvidenceDates(

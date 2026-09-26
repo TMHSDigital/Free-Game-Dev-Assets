@@ -20,6 +20,7 @@ import {
   checkValueSpellings,
 } from "./checks.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
+import { isRealDate } from "./lib/shared.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -81,7 +82,6 @@ const SKIP_WALK = new Set([".git", "node_modules", "dist", "RESEARCH"]);
 const ALLOWED_BINARY_PREFIXES = ["site/dist/", "docs/images/readme/"];
 const EMOJI_RE = /\p{Extended_Pictographic}/u;
 const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
-const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const EVIDENCE_DATE_RE = /\d{4}-\d{2}-\d{2}/;
 const COMMERCIAL_VALUES = new Set(["true", "false", "unknown", "varies"]);
 const STATUS_VALUES = new Set(["active", "needs-review", "deprecated"]);
@@ -315,7 +315,7 @@ function main() {
 
     if (meta.verified) {
       const v = String(meta.verified);
-      if (!DATE_RE.test(v)) errors.push(`${rel} verified is not YYYY-MM-DD`);
+      if (!isRealDate(v)) errors.push(`${rel} verified is not a real YYYY-MM-DD date`);
       else if (v > today) errors.push(`${rel} verified ${v} is in the future`);
     }
 

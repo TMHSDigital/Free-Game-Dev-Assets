@@ -19,8 +19,18 @@ export const STATUS_NOTES = {
 const VERIFIED_FRESH_DAYS = 180;
 const VERIFIED_AGING_DAYS = 365;
 
+/** A real calendar date in strict YYYY-MM-DD form, independent of local time. */
+export function isRealDate(value) {
+  if (typeof value !== "string" || value.length !== 10 || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(0);
+  // Unlike Date.UTC, this preserves years 0000-0099.
+  date.setUTCFullYear(year, month - 1, day);
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
 export function verifiedAge(verified, now) {
-  if (!verified) return { days: null, bucket: "unknown" };
+  if (!isRealDate(verified)) return { days: null, bucket: "unknown" };
   const t = Date.parse(`${verified}T00:00:00Z`);
   if (Number.isNaN(t)) return { days: null, bucket: "unknown" };
   const days = Math.max(0, Math.floor((now - t) / 86400000));

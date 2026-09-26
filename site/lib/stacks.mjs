@@ -5,7 +5,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { unquoteScalar } from "./shared.mjs";
+import { isRealDate, unquoteScalar } from "./shared.mjs";
 
 export class StackError extends Error {}
 
@@ -13,7 +13,6 @@ export class StackError extends Error {}
 export const STACK_SECTIONS = ["Art", "Audio", "Fonts", "Tools", "Gaps"];
 
 const REQUIRED = ["id", "title", "task", "walked"];
-const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 // - **Need:** [Entry name](path/to/entry.md). Why this pick.
 const PICK_RE = /^- \*\*([^*]+?):\*\* \[([^\]]+)\]\(([^)\s]+)\)\.\s+(\S.*)$/;
 // Names and shorthands matched in any case, as whole words. The exact ids
@@ -99,7 +98,7 @@ export function parseStack(text, { file, terms = [] }) {
     metaLine[key] = i;
   }
   for (const key of REQUIRED) if (!meta[key]) fail(0, `frontmatter is missing ${key}`);
-  if (!DATE_RE.test(meta.walked)) fail(0, "walked is not YYYY-MM-DD");
+  if (!isRealDate(meta.walked)) fail(0, "walked is not YYYY-MM-DD (a real calendar date is required)");
   noLicence(metaLine.title, meta.title, "title");
   noLicence(metaLine.task, meta.task, "task");
 

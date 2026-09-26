@@ -8,8 +8,8 @@
 
 import path from "node:path";
 import { parseStack, pickPath, StackError } from "./lib/stacks.mjs";
+import { isRealDate } from "./lib/shared.mjs";
 
-const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const DATE_ANY_RE = /\d{4}-\d{2}-\d{2}/g;
 
 /** Generic hosts and distributors that are never a rights holder. */
@@ -144,7 +144,7 @@ export function checkAttributionConsistency(rel, meta, body, vocab) {
  * The check that defends the repo's central promise: a `verified` date may
  * never be newer than the evidence it claims to rest on. Bumping `verified`
  * without adding a dated Evidence line is exactly the failure this catches.
- * Also rejects Evidence dates in the future, and (V10) an Evidence section
+ * Also rejects impossible or future Evidence dates, and (V10) an Evidence section
  * that carries no date at all, whatever the entry's status.
  */
 export function checkEvidenceDates(rel, meta, body, today) {
@@ -156,12 +156,18 @@ export function checkEvidenceDates(rel, meta, body, today) {
     errors.push(`${rel} ## Evidence section carries no YYYY-MM-DD date`);
     return errors;
   }
-  const newest = dates[dates.length - 1];
+  const validDates = dates.filter((date) => {
+    if (isRealDate(date)) return true;
+    errors.push(`${rel} Evidence date ${date} is not a real YYYY-MM-DD date`);
+    return false;
+  });
+  if (!validDates.length) return errors;
+  const newest = validDates[validDates.length - 1];
   if (newest > today) {
     errors.push(`${rel} Evidence date ${newest} is in the future`);
   }
   const verified = empty(meta.verified) ? null : String(meta.verified);
-  if (verified && DATE_RE.test(verified) && verified > newest) {
+  if (isRealDate(verified) && verified > newest) {
     errors.push(
       `${rel} verified ${verified} is newer than its newest Evidence date ${newest}. ` +
         `A new verified date needs a dated Evidence line from the same check`
