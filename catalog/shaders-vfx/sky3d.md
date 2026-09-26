@@ -2,6 +2,7 @@
 id: sky3d
 name: Sky3D
 url: https://github.com/TokisanGames/Sky3D
+publisher: TokisanGames
 category: shaders-vfx
 subcategories: [sky, atmosphere, godot]
 license: MIT

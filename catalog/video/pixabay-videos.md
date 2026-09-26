@@ -2,6 +2,7 @@
 id: pixabay-videos
 name: Pixabay Videos
 url: https://pixabay.com/videos/
+publisher: Pixabay
 category: video
 subcategories: [stock-footage]
 license: custom

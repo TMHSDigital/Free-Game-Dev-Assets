@@ -2,6 +2,7 @@
 id: terrain3d
 name: Terrain3D
 url: https://github.com/TokisanGames/Terrain3D
+publisher: TokisanGames
 category: tools
 subcategories: [godot, terrain]
 license: MIT

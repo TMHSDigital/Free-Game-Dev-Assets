@@ -2,6 +2,7 @@
 id: ansimuz-sunnyland
 name: SunnyLand (ansimuz)
 url: https://ansimuz.itch.io/sunny-land-pixel-game-art
+publisher: ansimuz
 category: 2d
 subcategories: [sprites, tiles, pixel, platformer, audio]
 license: CC0

@@ -2,6 +2,7 @@
 id: ansimuz-industrial-parallax
 name: Industrial Parallax Background (ansimuz)
 url: https://opengameart.org/content/industrial-parallax-background
+publisher: ansimuz
 category: 2d
 subcategories: [backgrounds, pixel]
 license: CC0
