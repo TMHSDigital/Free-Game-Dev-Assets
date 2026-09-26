@@ -47,8 +47,14 @@ most of them on the `review-fixes` branch, one commit per issue or per interlock
   #37 (a canonical format list), #38 (category moves), #40 (re-verify needs-review
   entries), #41 (the rest of the 2D fields: the sources do not state them), #42, #43,
   #45, #47.
-- Next highest-value action: submit `sitemap.xml` in Search Console and Bing Webmaster
-  Tools, then the third full review on or after 2026-10-17.
+- **Search engines (2026-09-26):** the site is a verified URL-prefix property in Google
+  Search Console (HTML file `site/public/google55e16d8bc56aeb36.html`; keep it) and was
+  imported into Bing Webmaster Tools, where the sitemap read Success with 324 URLs.
+  Submit the sitemap by its full URL: `/sitemap.xml` resolves to the host root and 404s.
+- Also merged: #48 (a contributor's impossible-date fix, merged first) and closed #50
+  (the same publisher change as #49). The link-check workflow ran once on GitHub: clean.
+- Next highest-value action: the third full review on or after 2026-10-17. Check the
+  Search Console sitemap row reads Success, and look at the ten open issues.
 
 ## 2026-09-25 (outreach)
 
