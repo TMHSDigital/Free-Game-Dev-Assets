@@ -4,6 +4,54 @@ Newest section at the top. One section per review run. This is the record of wha
 run measured, what it changed, what it deliberately did not change, and what the next
 run should not spend time re-deciding.
 
+## 2026-09-26 (open issues sweep: #36 to #47)
+
+The ten issues left open after the review, on the `issues-sweep` branch.
+
+- **Tags (#36):** tags no longer restate the licence, the credit requirement or the
+  entry's own publisher. 124 entries lost such a tag (`cc0` 40 more after #49, `ofl` 20,
+  `open-source` 19, `kenney`/`quaternius`/`kaykit`/`blender-studio` and others). Licence
+  tags are retired in `site/value-aliases.json` (V19); V21 rejects a tag equal to the
+  entry's publisher. Search now weights `publisher` like a tag. Decided: a `varies`
+  entry lists its licence mix in the body, not in tags.
+- **Formats (#37):** `site/format-vocabulary.json` is the closed list (117 values in
+  use); V20 rejects anything else. Its `groups` drive the Format filter. Kept: `model`
+  (piper-plus, whose page names no container) and `various` (three aggregators).
+- **Filters (#45):** Licence (families in `license-vocabulary.json`, every value in
+  exactly one) and Format selects, in the URL as `?licence=` and `?format=`.
+- **Shortlist (#47):** a star on cards and entry pages (`localStorage`
+  `fgda:shortlist`), a panel with CREDITS.md / CREDITS.txt download. `owes()` moved to
+  `site/lib/owes.mjs` (no imports, copied to `dist/owes.js`) so the stack pages and the
+  shortlist share it; it gained a `notices` bucket for MIT/OFL-type licences.
+- **Maintenance (#42):** optional `maintenance: archived | inactive` (V22), a badge and
+  an entry-page row. Set from the GitHub API on 11 sources: archived glitch-archive,
+  meta-animated-drawings, microsoft-movebox; inactive (no push in 3 years)
+  dcss-tiles, sparklin-superpowers, instant-meshes, quadriflow, creature-2d-runtimes,
+  gdquest-3d-mannequin, microsoft-rocketbox, godot-psx-style-demo. `check-links.mjs`
+  reports a GitHub source whose state disagrees with the field (the first local run
+  found godot-psx-style-demo, 3.01 years).
+- **Categories (#38):** the rule is written in `catalog/README.md` (by main content;
+  single-purpose creation tools sit with their content; mixed libraries by main kind).
+  So the character creators and capture tools stay put, HDRI publishers stay in
+  environment and BlendKit in 3d. Moved: nasa-3d-resources to 3d,
+  nasa-image-video-library to video.
+- **Re-verified (#40):** all ten July needs-review entries re-read. Now active:
+  fab-megascans-standard, fmod-studio (credit line and splash logo required). Facts
+  changed: opengameart commercial true, freesound commercial varies. Still open, with
+  the question in Notes: lospec (per-palette terms), convology-xt (terms behind the
+  download form), godot-shaders and opengameart (credit per upload), freesound (credit
+  per sound), material-maker-gallery (per-item licence script-rendered), wwise (game
+  EULA not public), charmorph (AGPL reach into exported meshes).
+- **Added (#43):** 15 sources (Godot Engine, TrenchBroom, Ogmo Editor, func_godot,
+  BeepBox, Bosca Ceoil Blue, Furnace, OpenMPT, Synfig, OpenToonz, Pencil2D, Kenney
+  Animated Characters, Kenney Fonts, Monogram, Dareful); `GPL-2.0-only` added for
+  Pencil2D. Skipped, do not re-research without news: DragonBones (site unreachable),
+  Life of Vids (unreachable), Mazwai (redirects to Freepik). Music and animation editors
+  follow the tools/ precedent (LMMS, Krita), not animation/. A "Request an asset /
+  report a gap" issue form (label `gap`) now feeds the stack Gaps sections.
+- **Left:** #41 (the remaining 2D fields need someone to open the files) and #3 (branch
+  protection, deferred by the maintainer).
+
 ## 2026-09-26 (repo review and issue fixes)
 
 A full review of code, site, catalog data and docs filed issues #1 to #47; this run fixed
