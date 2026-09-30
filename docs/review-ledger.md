@@ -4,6 +4,50 @@ Newest section at the top. One section per review run. This is the record of wha
 run measured, what it changed, what it deliberately did not change, and what the next
 run should not spend time re-deciding.
 
+## 2026-09-30 (magictools import)
+
+Candidates were taken from the awesome list ellisonleao/magictools: every non-paid item in every section. Its emoji licence legend was not trusted. Each source was re-read at its own licence page, repo or bundled licence file on 2026-09-30. The catalog went from 334 to 376 entries.
+
+- **Added, 42 sources, 32 `active`:**
+  - **Tools, 32:**
+    - Pipeline & compression: cheetah-texture-packer, ezspritesheet, gdx-texture-packer-gui, imagealpha, pnggauntlet, pngyu, snowb-bmf, squoosh, svgcode, vtracer, tilesplit.
+    - Editors & creation: normalpainter, nebula-forge, sprite-fusion, sprite-fusion-pixel-snapper, graphicsgale, multipaint, paint-net, palette-extractor, piskel, rexpaint, tilemancer, rx-pixel-editor, spritemate, pixel-composer, fracplanet.
+    - Music tools, following the Furnace/LMMS precedent: famistudio, dn-famitracker, milkytracker, sunvox, jfxr.
+    - Godot 4 add-ons: folded-paper-engine.
+  - **2d:** iconmonstr, reiners-tilesets, spritelib, graphicburger-mobile-game-gui.
+  - **3d:** textureking.
+  - **shaders-vfx:** nixie-fx.
+  - **audio:** octave-ui-sounds, pacdv, soundbible, budgetpixel-sfx.
+- **Needs-review, with the reason:**
+  - cheetah-texture-packer: LGPL v3 text, but "only" or "or later" is not stated.
+  - ezspritesheet: GPL-3 plus an EULA credit clause.
+  - pngyu: "BSD" with no clause count.
+  - pnggauntlet: the full terms are only inside the installer.
+  - multipaint: no licence anywhere.
+  - fracplanet: the GPLv2 badge disagrees with the v3-or-later headers.
+  - textureking: bans redistribution "combined with another product".
+  - pacdv: games are never named.
+  - soundbible: licence is per file, including NC.
+  - budgetpixel-sfx: AI-generated, and the licence changed on 2026-09-23.
+- **Vocabulary:** licences `GPL-3.0-only`, `CPL-1.0`, `LGPL-3.0` and `BSD` were added. `LGPL-3.0` and `BSD` have no SPDX id: their `spdx_ambiguous` note says to record the precise value once the project states it. Formats `AIFF` and `BMP` were added.
+- **Placement:** Pixel Composer and Fracplanet go in tools, following material-maker and gaea. Octave links its GitHub repo, because raisedbeaches.com is http only and raisesound.com is parked.
+- **Rejected, do not re-research without news.** The full reasons are in the local `RESEARCH/reject-log.md`.
+  - Unclear provenance or no licence:
+    - Live Normal: app gone.
+    - GameAsset.net: scraped, no operator.
+    - 420 RPG icons: based on commercial game art.
+    - nidorx/matcaps, Charas, Canyon Terrain Editor, AudioSauna, Voxelle Desktop: no licence or terms.
+    - blender-models.com: per-model licences, including NC.
+  - Restricted or duplicate:
+    - DEM.Net: revenue-capped MIT.
+    - gamesounds.xyz: mirror of sonniss-gdc.
+    - Sprite Sheet Builder: output ownership not stated.
+    - Vexlio SVG to PNG: paid-app funnel.
+    - Ink: out of scope.
+  - Dead: Pixelicious, Littera, PixelChart, Clara.io, ZBrushCoreMini, ShoeBox, PNGoo, Overlap2D, Sculptris, Sproxel, MadTracker, musagi.
+  - Paid or freemium: TexturePacker, TinyPNG, Cascadeur, Aseprite and 13 others.
+- **Next run:** normalpainter's last push is 2023-10-15, so it becomes `maintenance: inactive` after 2026-10-15.
+
 ## 2026-09-26 (open issues sweep: #36 to #47)
 
 The ten issues left open after the review, on the `issues-sweep` branch.
