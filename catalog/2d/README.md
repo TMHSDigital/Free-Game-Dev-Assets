@@ -107,6 +107,10 @@ two carry obligations the rest do not.
 | [opengameart](opengameart.md) | OpenGameArt | varies | yes | needs-review |
 | [lospec](lospec.md) | Lospec | varies | unknown | needs-review |
 | [dcss-tiles](dcss-tiles.md) | Dungeon Crawl Stone Soup Tiles | varies | unknown | needs-review |
+| [graphicburger-mobile-game-gui](graphicburger-mobile-game-gui.md) | Mobile Game GUI | custom | yes | active |
+| [iconmonstr](iconmonstr.md) | iconmonstr | custom | yes | active |
+| [reiners-tilesets](reiners-tilesets.md) | Reiner's Tilesets | custom | yes | active |
+| [spritelib](spritelib.md) | SpriteLib | CPL-1.0 | yes | active |
 
 † Commercial OK with attribution + share-alike / GPL obligations on asset derivatives — see [`docs/high-risk.md`](../../docs/high-risk.md).  
 †† CC0 on SVG copyright; brand trademarks still apply — identify brands only.

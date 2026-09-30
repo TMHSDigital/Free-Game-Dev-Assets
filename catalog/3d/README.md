@@ -134,5 +134,6 @@ than pack-wide. Triangle counts are geometry and survive re-hosting; file sizes 
 | [poly-pizza](poly-pizza.md) | Poly Pizza | varies | unknown | needs-review |
 | [sketchfab](sketchfab.md) | Sketchfab | varies | unknown | needs-review |
 | [nasa-3d-resources](nasa-3d-resources.md) | NASA 3D Resources | public-domain* | yes* | active |
+| [textureking](textureking.md) | TextureKing | custom | unknown | needs-review |
 
 \* Fab Standard vs Epic Content License — verify per asset; Fab/Epic license pages unreachable this harden pass. Poly Haven models are under [`environment/poly-haven`](../environment/poly-haven.md) (CC0).

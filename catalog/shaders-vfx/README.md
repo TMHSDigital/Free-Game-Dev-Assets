@@ -19,6 +19,7 @@
 | [kenney-light-masks](kenney-light-masks.md) | Kenney Light Masks | CC0 | yes | active |
 | [godot-shaders](godot-shaders.md) | Godot Shaders | varies (CC0/MIT/GPL) | yes* | needs-review |
 | [material-maker-gallery](material-maker-gallery.md) | Material Maker Gallery | varies | unknown | needs-review |
+| [nixie-fx](nixie-fx.md) | NixieFX | MIT | yes | active |
 
 \* GDQuest: shader/code MIT; demo **art** is CC-BY-NC-SA — don’t ship the art.  
 \* Godot Shaders site: commercial code OK per policy, but **GPL posts** exist — check each shader; see [`docs/high-risk.md`](../../docs/high-risk.md).
