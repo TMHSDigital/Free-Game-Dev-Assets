@@ -46,6 +46,7 @@ Candidates were taken from the awesome list ellisonleao/magictools: every non-pa
     - Ink: out of scope.
   - Dead: Pixelicious, Littera, PixelChart, Clara.io, ZBrushCoreMini, ShoeBox, PNGoo, Overlap2D, Sculptris, Sproxel, MadTracker, musagi.
   - Paid or freemium: TexturePacker, TinyPNG, Cascadeur, Aseprite and 13 others.
+- **Contributor PR #52 (3dtexel):** merged; the submitter disclosed they are the publisher. Both Evidence quotes were re-read live on 2026-09-30. The entry covers only the free CC0 library. The site's AI and premium sections (3DTexel License: credit, no resale) are excluded, per `docs/ai-assets.md`. Counts conflicted with the import above and were regenerated with sync-counts (377).
 - **Next run:** normalpainter's last push is 2023-10-15, so it becomes `maintenance: inactive` after 2026-10-15.
 
 ## 2026-09-26 (open issues sweep: #36 to #47)

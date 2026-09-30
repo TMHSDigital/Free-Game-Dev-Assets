@@ -4,7 +4,7 @@ One markdown file per source under a category folder. Copy [`TEMPLATE.md`](TEMPL
 
 | Category | Entries | Path | Focus |
 | --- | ---: | --- | --- |
-| 3D | 71 | [`3d/`](3d/) | Models, scans, PBR textures |
+| 3D | 72 | [`3d/`](3d/) | Models, scans, PBR textures |
 | Tools | 109 | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
 | 2D | 58 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
 | Audio | 34 | [`audio/`](audio/) | SFX, music, foley, IRs |

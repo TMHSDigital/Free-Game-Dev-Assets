@@ -124,6 +124,7 @@ than pack-wide. Triangle counts are geometry and survive re-hosting; file sizes 
 | [cgbookcase](cgbookcase.md) | cgbookcase | CC0 | yes | active |
 | [sharetextures](sharetextures.md) | ShareTextures | custom | yes | active |
 | [threedtextures-me](threedtextures-me.md) | 3DTextures.me | CC0 | yes | active |
+| [3dtexel](3dtexel.md) | 3DTexel | CC0 | yes | active |
 | [freepbr](freepbr.md) | FreePBR | custom | no | active |
 | [scan-the-world](scan-the-world.md) | Scan the World | unknown | no (platform terms) | needs-review |
 | [blenderkit](blenderkit.md) | Blendkit | varies | varies | active |
