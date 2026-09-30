@@ -65,6 +65,26 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [synfig](synfig.md) | Synfig Studio | GPL-3.0 | active |
 | [opentoonz](opentoonz.md) | OpenToonz | BSD-3-Clause | active |
 | [pencil2d](pencil2d.md) | Pencil2D | GPL-2.0-only | active |
+| [dn-famitracker](dn-famitracker.md) | Dn-FamiTracker | GPL-3.0-or-later | active |
+| [famistudio](famistudio.md) | FamiStudio | MIT | active |
+| [fracplanet](fracplanet.md) | Fracplanet | GPL-3.0-or-later | needs-review |
+| [graphicsgale](graphicsgale.md) | GraphicsGale | custom | active |
+| [jfxr](jfxr.md) | jfxr | BSD-3-Clause | active |
+| [milkytracker](milkytracker.md) | MilkyTracker | GPL-3.0-or-later | active |
+| [multipaint](multipaint.md) | Multipaint | unknown | needs-review |
+| [nebula-forge](nebula-forge.md) | Nebula Forge | custom | active |
+| [normalpainter](normalpainter.md) | NormalPainter | MIT | active |
+| [paint-net](paint-net.md) | Paint.NET | custom | active |
+| [palette-extractor](palette-extractor.md) | Palette Extractor (SpriteWright) | MIT | active |
+| [piskel](piskel.md) | Piskel | Apache-2.0 | active |
+| [pixel-composer](pixel-composer.md) | Pixel Composer | MIT | active |
+| [rexpaint](rexpaint.md) | REXPaint | custom | active |
+| [rx-pixel-editor](rx-pixel-editor.md) | rx | GPL-3.0-only | active |
+| [sprite-fusion-pixel-snapper](sprite-fusion-pixel-snapper.md) | Sprite Fusion Pixel Snapper | MIT | active |
+| [sprite-fusion](sprite-fusion.md) | Sprite Fusion | custom | active |
+| [spritemate](spritemate.md) | Spritemate | MIT | active |
+| [sunvox](sunvox.md) | SunVox | custom | active |
+| [tilemancer](tilemancer.md) | Tilemancer | GPL-3.0-or-later | active |
 
 ## Pipeline & compression
 
@@ -85,6 +105,17 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [meshlab](meshlab.md) | MeshLab | GPL-3.0 | active |
 | [cloudcompare](cloudcompare.md) | CloudCompare | GPL-2.0-or-later | active |
 | [xnormal](xnormal.md) | xNormal | custom | needs-review |
+| [cheetah-texture-packer](cheetah-texture-packer.md) | Cheetah Texture Packer | LGPL-3.0 | needs-review |
+| [ezspritesheet](ezspritesheet.md) | EzSpriteSheet | GPL-3.0 | needs-review |
+| [gdx-texture-packer-gui](gdx-texture-packer-gui.md) | GDX Texture Packer GUI | Apache-2.0 | active |
+| [imagealpha](imagealpha.md) | ImageAlpha | GPL-2.0 | active |
+| [pnggauntlet](pnggauntlet.md) | PNGGauntlet | custom | needs-review |
+| [pngyu](pngyu.md) | Pngyu | BSD | needs-review |
+| [snowb-bmf](snowb-bmf.md) | SnowB Bitmap Font | MIT | active |
+| [squoosh](squoosh.md) | Squoosh | Apache-2.0 | active |
+| [svgcode](svgcode.md) | SVGcode | GPL-2.0-or-later | active |
+| [tilesplit](tilesplit.md) | tilesplit | MIT | active |
+| [vtracer](vtracer.md) | VTracer | MIT | active |
 
 ## Audio middleware
 
@@ -182,6 +213,7 @@ only release are Godot 3.
 | [godot-destruction-plugin](godot-destruction-plugin.md) | Godot Destruction Plugin | MIT | active |
 | [godot-voxel-destruction](godot-voxel-destruction.md) | Godot Voxel Destruction | MIT | active |
 | [func-godot](func-godot.md) | func_godot | MIT | active |
+| [folded-paper-engine](folded-paper-engine.md) | Folded Paper Engine | MIT | active |
 
 ## GTA-format tooling
 
