@@ -14,6 +14,11 @@
 | [meta-animated-drawings](meta-animated-drawings.md) | Meta Animated Drawings | MIT | yes | active |
 | [microsoft-movebox](microsoft-movebox.md) | MoveBox (Rocketbox) | MIT | yes | active |
 | [rokoko-vision](rokoko-vision.md) | Rokoko Vision (Create) | custom | yes* | active |
+| [quaternius-ultimate-animated-character-pack](quaternius-ultimate-animated-character-pack.md) | Quaternius Ultimate Animated Character Pack | CC0 | yes | active |
+| [quaternius-animated-men-pack](quaternius-animated-men-pack.md) | Quaternius Animated Men Pack | CC0 | yes | active |
+| [quaternius-animated-women-pack](quaternius-animated-women-pack.md) | Quaternius Animated Women Pack | CC0 | yes | active |
+| [quaternius-animated-guns-pack](quaternius-animated-guns-pack.md) | Quaternius Animated Guns Pack | CC0 | yes | active |
+| [quaternius-background-posed-humans](quaternius-background-posed-humans.md) | Quaternius Background Posed Humans Pack | CC0 | yes | active |
 
 \* Standard License caps (~1M users / $1M revenue); AI training needs AI Permit.  
 \* Rokoko Vision: free Starter quotas; generated motion commercial per Create FAQ.

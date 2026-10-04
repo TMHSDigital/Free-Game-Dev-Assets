@@ -10,10 +10,10 @@ One markdown file per source under a category folder. Copy [`TEMPLATE.md`](TEMPL
 | Audio | 34 | [`audio/`](audio/) | SFX, music, foley, IRs |
 | Characters | 28 | [`characters/`](characters/) | Generators & modular humanoids |
 | Fonts | 25 | [`fonts/`](fonts/) | OFL / commercial-ok type |
-| Environment | 13 | [`environment/`](environment/) | HDRI, terrain, geodata |
+| Environment | 18 | [`environment/`](environment/) | HDRI, terrain, geodata |
 | Shaders & VFX | 18 | [`shaders-vfx/`](shaders-vfx/) | Shaders, particle textures, FX |
-| Animation | 12 | [`animation/`](animation/) | MoCap, character clips |
-| Video | 8 | [`video/`](video/) | Stock footage, archival clips |
+| Animation | 17 | [`animation/`](animation/) | MoCap, character clips |
+| Video | 13 | [`video/`](video/) | Stock footage, archival clips |
 
 Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/fivem.md`](../docs/fivem.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/trust-score.md`](../docs/trust-score.md) · [`docs/fonts.md`](../docs/fonts.md) · [`docs/geodata.md`](../docs/geodata.md) · [`docs/game-vs-video-licensing.md`](../docs/game-vs-video-licensing.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md) · [`docs/research-index.md`](../docs/research-index.md)
 
