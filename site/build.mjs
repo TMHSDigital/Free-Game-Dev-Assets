@@ -604,7 +604,7 @@ function main() {
   }
   for (const [key, value] of Object.entries(substitutions)) {
     // A function replacement, so a "$" in the value is never read as a pattern.
-    html = html.replace(`<!--${key}-->`, () => value);
+    html = html.replaceAll(`<!--${key}-->`, () => value);
   }
   fs.writeFileSync(indexPath, html);
 
