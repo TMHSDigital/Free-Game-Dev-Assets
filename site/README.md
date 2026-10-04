@@ -15,6 +15,16 @@ Static GitHub Pages UI for this catalog.
 | An entry's body (Notes, Evidence) | Its page at `entry/<id>/` |
 | `stacks/<id>.md` | Its page at `stack/<id>/`, the homepage Starter stacks list, and "Used in" on each picked entry |
 
+## Other exports
+
+Each deploy also publishes
+[`catalog.csv`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/catalog.csv) (one row
+per entry: id, name, url, category, licence, SPDX, commercial, attribution, formats, tags,
+verified, status, page; list fields are joined with `; `) and an Atom feed,
+[`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml), of the 40 most
+recently verified entries. Entries carry no "added" date, so the feed is keyed on
+`verified`, the day the licence was last read from the source.
+
 ## Public JSON
 
 Every deploy publishes the whole catalog as

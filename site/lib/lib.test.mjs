@@ -11,6 +11,7 @@ import {
   STATUS_NOTES,
   verifiedAge,
 } from "./shared.mjs";
+import { atomFeed, catalogCsv } from "./exports.mjs";
 
 let passed = 0;
 const failures = [];
@@ -510,6 +511,22 @@ eq("no month 13", isRealDate("2025-13-01"), false);
 eq("no 30 February", isRealDate("2026-02-30"), false);
 eq("shape only is not enough", isRealDate("2026-9-1"), false);
 eq("latest allowed is tomorrow in UTC", latestAllowedDate(Date.parse("2026-09-25T23:30:00Z")), "2026-09-26");
+
+/* exports ------------------------------------------------------------------ */
+const sample = [
+  { id: "a", name: 'Say "hi", ok', url: "https://x.test/a", category: "2d", license: "CC0", commercial: true, formats: ["PNG", "SVG"], tags: [], verified: "2026-09-01", status: "active", page: "entry/a/", summary: "A & B" },
+  { id: "b", name: "Old", url: "https://x.test/b", category: "2d", license: "MIT", verified: "2026-01-01", status: "deprecated", page: "entry/b/" },
+  { id: "c", name: "New", url: "https://x.test/c", category: "3d", license: "CC0", verified: "2026-09-20", status: "active", page: "entry/c/", summary: "" },
+];
+const csv = catalogCsv(sample, "https://s.test/site/");
+has("csv header", csv, "id,name,url,category");
+has("csv quotes commas and quotes", csv, '"Say ""hi"", ok"');
+has("csv joins lists", csv, "PNG; SVG");
+has("csv absolute page url", csv, "https://s.test/site/entry/a/");
+const feed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z" });
+has("feed escapes summary", feed, "CC0. A &amp; B");
+lacks("feed skips deprecated", feed, "entry/b/");
+eq("feed newest first", feed.indexOf("entry/c/") < feed.indexOf("entry/a/"), true);
 
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
