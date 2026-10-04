@@ -1,5 +1,7 @@
 # License cheat sheet
 
+> This is the catalog's reading of each licence, not legal advice. Licences change: read the source's own terms before you ship.
+
 Quick reference for assets you might list or use. **Always re-check the source page** — licenses change, packs can be dual-licensed, and marketplace “free” tiers often have extra terms.
 
 ## Creative Commons & public domain

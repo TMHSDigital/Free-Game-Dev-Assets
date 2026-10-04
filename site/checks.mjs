@@ -549,6 +549,13 @@ export function checkCategoryReadmeRows(categoryName, readmeText, entries) {
  * address. A `javascript:` or `data:` value would render as a live link, and
  * escaping HTML does nothing about a scheme.
  */
+/** localhost, *.local / *.internal, and IP literals: never a catalog source. */
+function isPrivateHost(hostname) {
+  const h = hostname.toLowerCase().replace(/^\[|\]$/g, "");
+  if (h === "localhost" || /\.(localhost|local|internal|lan)$/.test(h)) return true;
+  return /^\d{1,3}(\.\d{1,3}){3}$/.test(h) || h.includes(":");
+}
+
 export function checkEntryUrl(rel, meta) {
   const errors = [];
   if (empty(meta.url)) return errors; // missing fields are reported elsewhere
@@ -563,6 +570,9 @@ export function checkEntryUrl(rel, meta) {
     errors.push(`${rel} url must be https:// (or http:// where the source has no https), not ${url.protocol}`);
   } else if (!url.hostname) {
     errors.push(`${rel} url "${meta.url}" has no host`);
+  } else if (isPrivateHost(url.hostname)) {
+    // The weekly link check fetches every url from CI.
+    errors.push(`${rel} url must be a public site, not ${url.hostname}`);
   }
   return errors;
 }

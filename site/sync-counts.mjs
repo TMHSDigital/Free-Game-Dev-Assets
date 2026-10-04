@@ -10,22 +10,16 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { listEntryFiles } from "./lib/entry-files.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const CATALOG = path.join(ROOT, "catalog");
-const SKIP = new Set(["README.md", "TEMPLATE.md"]);
-
 function countEntries() {
   const counts = {};
   for (const d of fs.readdirSync(CATALOG, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const walk = (dir) =>
-      fs.readdirSync(dir, { withFileTypes: true }).reduce((n, f) => {
-        if (f.isDirectory()) return n + walk(path.join(dir, f.name));
-        return n + (f.name.endsWith(".md") && !SKIP.has(f.name) ? 1 : 0);
-      }, 0);
-    counts[d.name] = walk(path.join(CATALOG, d.name));
+    if (!d.isDirectory() || d.name.startsWith(".")) continue;
+    counts[d.name] = listEntryFiles(path.join(CATALOG, d.name)).length;
   }
   return counts;
 }

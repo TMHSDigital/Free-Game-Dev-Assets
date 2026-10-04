@@ -1,5 +1,5 @@
 /** Plain-text indexes of the catalog for AI assistants (llmstxt.org format). */
-import { sectionMarkdown, splitEntryBody } from "./markdown.mjs";
+import { LINK_RE, sectionMarkdown, splitEntryBody } from "./markdown.mjs";
 import { commercialLabel, entryPageUrl, freshnessPageUrl, stackPageUrl } from "./shared.mjs";
 import { owes } from "./stacks.mjs";
 
@@ -19,8 +19,9 @@ function absoluteLinks(md, resolveLink, pageUrl) {
   // alone, while a link whose label is code is still rewritten.
   const spans = [];
   const out = md
+    .replaceAll("\u0000", "")
     .replace(/`[^`]*`/g, (span) => `\u0000${spans.push(span) - 1}\u0000`)
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, label, href) => {
+    .replace(LINK_RE, (_, label, href) => {
       const r = resolveLink(href);
       return `[${label}](${r.external ? r.href : new URL(r.href, pageUrl).href})`;
     });

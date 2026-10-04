@@ -15,7 +15,7 @@ One markdown file per source under a category folder. Copy [`TEMPLATE.md`](TEMPL
 | Animation | 17 | [`animation/`](animation/) | MoCap, character clips |
 | Video | 13 | [`video/`](video/) | Stock footage, archival clips |
 
-Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/fivem.md`](../docs/fivem.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/trust-score.md`](../docs/trust-score.md) · [`docs/fonts.md`](../docs/fonts.md) · [`docs/geodata.md`](../docs/geodata.md) · [`docs/game-vs-video-licensing.md`](../docs/game-vs-video-licensing.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md) · [`docs/research-index.md`](../docs/research-index.md)
+Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/fivem.md`](../docs/fivem.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/trust-score.md`](../docs/trust-score.md) · [`docs/fonts.md`](../docs/fonts.md) · [`docs/geodata.md`](../docs/geodata.md) · [`docs/game-vs-video-licensing.md`](../docs/game-vs-video-licensing.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md)
 
 **Which category.** File a source under the kind of content it mainly gives you.
 Software that exists to make one kind of content lives with that content, next to the

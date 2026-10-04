@@ -11,12 +11,18 @@ Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 - Free engine add-ons / plugins that materially help asset or production pipelines (e.g. Godot Asset Library tools)
 - Engines only when they ship substantial free asset libraries
 
+## Accepted with caveats
+
+- A source whose licence is unclear: add it as `status: needs-review` with the open question in
+  Notes, or open an issue instead.
+- A source that is free only for non-commercial or personal use: only if it is clearly marked
+  `commercial: false`.
+
 ## What does not
 
 - Paid-only marketplaces with no free content worth listing
-- Broken, abandoned, or license-unclear sources (use `status: needs-review` or open an issue)
+- Broken or abandoned sources
 - Redistributed ZIP/GLB/WAV files of third-party work
-- Assets that are free only for non-commercial / personal use (unless clearly tagged `commercial: false`)
 - GTA V / RDR2 extracts, FiveM MLO leaks, Tebex reuploads, and anonymous `fivem-props` dumps (see [`docs/fivem.md`](docs/fivem.md) and [`docs/high-risk.md`](docs/high-risk.md))
 
 ## Adding an entry
@@ -26,10 +32,10 @@ are no dependencies to install.
 
 1. Run `node site/new-entry.mjs <category> <id>` (or `npm run new-entry -- <category> <id>`). It copies [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md) to `catalog/<category>/<id>.md` with the id, category and today's date filled in, and refuses an id already used anywhere in the catalog. Use a short kebab-case `id`; a mixed kit already listed in another category is a duplicate, not a second entry.
 2. Verify the license on the live source page the day you submit, and fill every frontmatter field from it (rules below). Prefer primary URLs over mirror/aggregator pages.
-3. Write the body: a one-paragraph summary, `## Notes`, and `## Evidence` with a dated line quoting the source, such as `- Live page (2026-09-25): "Free for commercial use"`. Every Evidence section needs at least one date, and `verified` may not be newer than the newest one. The scaffold starts at `status: needs-review`; set `active` once the licence, the commercial stance and the credit requirement are all settled.
+3. Write the body: a one-paragraph summary, `## Notes`, `## Evidence` with a dated line quoting the source, such as `- Live page (2026-09-25): "Free for commercial use"`, and optionally `## Related` linking sibling entries. Every Evidence section needs at least one date, and `verified` may not be newer than the newest one. The template (and so the scaffold) starts at `status: needs-review`; set `active` once the licence, the commercial stance and the credit requirement are all settled.
 4. Add a row to the matching category `README.md`. This is required: the validator fails an entry that is not listed there, and the row's licence cell must match your frontmatter.
 5. Run `node site/sync-counts.mjs` (`npm run counts`). It updates every place the repo restates the entry count: both category count tables, the README badge and "Browse N sources" line, and `expectedEntryCount` in [`site/config.json`](site/config.json).
-6. Run `npm run check`: the check tests, `node site/validate.mjs` and `node site/build.mjs`, all of which must pass. The build renders your entry's page and fails if the body uses markdown the site does not support (tables, code fences, blockquotes, images, raw HTML, `###` headings, numbered lists) or links to a file that does not exist.
+6. Run `npm test && npm run validate` before you push; that is quick. CI then runs `npm run check` (the tests, `node site/validate.mjs` and `node site/build.mjs`), and all of it must pass. Run `npm run check` yourself if you changed the site or want to preview your entry's page. The build renders your entry's page and fails if the body uses markdown the site does not support (tables, code fences, blockquotes, images, raw HTML, `###` headings, numbered lists) or links to a file that does not exist.
 7. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
 
 To add a starter stack (one pick per need for a kind of game), follow [`stacks/README.md`](stacks/README.md).

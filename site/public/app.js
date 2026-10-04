@@ -34,7 +34,8 @@
 
   const categoryLabels = data.categories || {};
   const repo = data.site?.repo || "https://github.com/TMHSDigital/Free-Game-Dev-Assets";
-  const byId = Object.fromEntries(data.entries.map((e) => [e.id, e]));
+  // No prototype: "#entry-constructor" must not look like an entry.
+  const byId = Object.assign(Object.create(null), Object.fromEntries(data.entries.map((e) => [e.id, e])));
 
   // Old permalinks (#entry-<id>) now have real pages.
   const legacy = location.hash.match(/^#entry-(.+)$/);
@@ -340,7 +341,7 @@
     <div class="entry-links">
       <a href="${escapeHtml(entry.url)}" rel="noopener noreferrer">Open source</a>
       <a href="${escapeHtml(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">Entry and evidence</a>
-      <button type="button" class="link-button shortlist-toggle" data-shortlist="${escapeHtml(entry.id)}" aria-pressed="false" aria-label="Shortlist ${escapeHtml(entry.name)}" hidden>Add to shortlist</button>
+      <button type="button" class="link-button shortlist-toggle" data-shortlist="${escapeHtml(entry.id)}" aria-pressed="false" data-name="${escapeHtml(entry.name)}" aria-label="Add to shortlist: ${escapeHtml(entry.name)}" hidden>Add to shortlist</button>
     </div>
   </div>
 </article>`;

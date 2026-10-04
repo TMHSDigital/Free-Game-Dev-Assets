@@ -23,6 +23,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { maintenanceFromRepo } from "./checks.mjs";
 import { parseFrontmatter } from "./lib/frontmatter.mjs";
+import { listEntryFiles } from "./lib/entry-files.mjs";
+import { classify, repoOf, reportUrl } from "./lib/link-check.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -41,38 +43,21 @@ function arg(name, fallback) {
 
 function loadEntries() {
   const out = [];
-  const walk = (dir) => {
-    for (const d of fs.readdirSync(dir, { withFileTypes: true })) {
-      const full = path.join(dir, d.name);
-      if (d.isDirectory()) walk(full);
-      else if (d.name.endsWith(".md") && d.name !== "README.md" && d.name !== "TEMPLATE.md") {
-        const parsed = parseFrontmatter(fs.readFileSync(full, "utf8"));
-        if (!parsed?.meta.url) continue;
-        const { id, url, verified, status, maintenance } = parsed.meta;
-        out.push({ id: String(id), url: String(url), verified: verified ? String(verified) : null, status: String(status), maintenance: maintenance ? String(maintenance) : null, rel: path.relative(ROOT, full).split(path.sep).join("/") });
-      }
-    }
-  };
-  walk(CATALOG);
+  for (const full of listEntryFiles(CATALOG)) {
+    const parsed = parseFrontmatter(fs.readFileSync(full, "utf8"));
+    if (!parsed?.meta.url) continue;
+    const { id, url, verified, status, maintenance } = parsed.meta;
+    out.push({ id: String(id), url: String(url), verified: verified ? String(verified) : null, status: String(status), maintenance: maintenance ? String(maintenance) : null, rel: path.relative(ROOT, full).split(path.sep).join("/") });
+  }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }
-
-const rootDomain = (host) => host.replace(/^www\./, "").split(".").slice(-2).join(".");
-// A transferred GitHub repository redirects within github.com.
-const repoOf = (url) => new URL(url).pathname.split("/").slice(1, 3).join("/").toLowerCase();
 
 async function check(entry) {
   const opts = { redirect: "follow", headers: { "user-agent": UA, accept: "text/html,*/*;q=0.8" } };
   try {
     const res = await fetch(entry.url, { ...opts, signal: AbortSignal.timeout(TIMEOUT_MS) });
     res.body?.cancel().catch(() => {});
-    const from = rootDomain(new URL(entry.url).hostname);
-    const to = rootDomain(new URL(res.url).hostname);
-    if ([401, 403, 429].includes(res.status)) return { kind: "blocked", detail: `HTTP ${res.status}` };
-    if (res.status >= 400) return { kind: "dead", detail: `HTTP ${res.status}` };
-    if (from !== to) return { kind: "moved", detail: `now ${res.url}` };
-    if (from === "github.com" && repoOf(entry.url) !== repoOf(res.url)) return { kind: "moved", detail: `repository now ${res.url}` };
-    return { kind: "ok" };
+    return classify(entry.url, res.status, res.url);
   } catch (err) {
     const cause = err.cause?.code || err.name || "error";
     return { kind: "dead", detail: cause === "TimeoutError" ? `no answer in ${TIMEOUT_MS / 1000}s` : cause };
@@ -143,7 +128,7 @@ const cutoff = new Date(Date.now() - staleDays * 86400000).toISOString().slice(0
 const rows = entries.map((e, i) => ({ ...e, ...results[i] }));
 const pick = (kind) => rows.filter((r) => r.kind === kind);
 const stale = entries.filter((e) => e.verified && e.verified < cutoff);
-const line = (r) => `- [ ] [\`${r.id}\`](${REPO}/blob/main/${r.rel}): ${r.url}${r.detail ? ` (${r.detail})` : ""}`;
+const line = (r) => `- [ ] [\`${r.id}\`](${REPO}/blob/main/${r.rel}): ${reportUrl(r.url)}${r.detail ? ` (${r.detail})` : ""}`;
 
 const dead = pick("dead");
 const moved = pick("moved");

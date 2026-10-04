@@ -8,9 +8,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { commercialLabel, esc, latestAllowedDate, MAINTENANCE_NOTES, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
-import { entryPageHtml } from "./lib/entry-page.mjs";
+import { listEntryFiles } from "./lib/entry-files.mjs";
+import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver } from "./lib/links.mjs";
-import { atomFeed, catalogCsv } from "./lib/exports.mjs";
+import { atomFeed, catalogCsv, homeJsonLd } from "./lib/exports.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
 import { checkPage } from "./lib/page-checks.mjs";
@@ -37,22 +38,6 @@ const OG_CARD_SRC = path.join(ROOT, "docs", "images", "readme", OG_CARD_NAME);
 /** Sort rank for "license permissiveness": least owed first. */
 const ATTRIBUTION_RANK = { none: 0, notice: 1, required: 2, any: 3 };
 
-function walkMarkdown(dir, out = []) {
-  if (!fs.existsSync(dir)) return out;
-  for (const name of fs.readdirSync(dir)) {
-    const full = path.join(dir, name);
-    const stat = fs.statSync(full);
-    if (stat.isDirectory()) {
-      walkMarkdown(full, out);
-      continue;
-    }
-    if (!name.endsWith(".md")) continue;
-    if (name === "README.md" || name === "TEMPLATE.md") continue;
-    out.push(full);
-  }
-  return out;
-}
-
 /** The Licence-filter family a license value belongs to (license-vocabulary.json `families`). */
 function licenseFamily(vocab, license) {
   for (const [key, fam] of Object.entries(vocab.families || {})) {
@@ -62,7 +47,7 @@ function licenseFamily(vocab, license) {
 }
 
 function loadEntries(vocab) {
-  const files = walkMarkdown(CATALOG);
+  const files = listEntryFiles(CATALOG);
   const entries = [];
   const errors = [];
   const bodies = new Map();
@@ -190,7 +175,7 @@ function entryRowHtml(entry, repo, now) {
     <div class="entry-links">
       <a href="${esc(entry.url)}" rel="noopener noreferrer">Open source</a>
       <a href="${esc(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">Entry and evidence</a>
-      <button type="button" class="link-button shortlist-toggle" data-shortlist="${esc(entry.id)}" aria-pressed="false" aria-label="Shortlist ${esc(entry.name)}" hidden>Add to shortlist</button>
+      <button type="button" class="link-button shortlist-toggle" data-shortlist="${esc(entry.id)}" aria-pressed="false" data-name="${esc(entry.name)}" aria-label="Add to shortlist: ${esc(entry.name)}" hidden>Add to shortlist</button>
     </div>
   </div>
 </article>`;
@@ -300,6 +285,7 @@ function headMetaHtml(site, stats, generatedAt, hasCard) {
     `<meta name="twitter:description" content="${esc(desc)}" />`,
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
+    `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total }))}</script>`,
   ].join("\n    ");
 }
 
@@ -641,8 +627,9 @@ function main() {
     process.exit(1);
   }
 
-  // After the page gate: every body link has resolved by now, so the llms
-  // files cannot hit a link error of their own.
+  // After the page gate: every body link has resolved by now, and the llms
+  // files read links with the same LINK_RE, so they cannot hit a link error
+  // of their own.
   fs.writeFileSync(path.join(DIST, "llms.txt"), llmsTxt({ entries, site: config.site, categories: config.categories, stacks }));
   fs.writeFileSync(
     path.join(DIST, "llms-full.txt"),

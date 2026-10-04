@@ -57,7 +57,7 @@ export function creditsFile(owed, { format = "md", pageUrl = () => "", date = ""
   out.push(md ? "# Credits" : "CREDITS\n=======");
   out.push(
     "",
-    `Made from a shortlist on ${source}${date ? ` on ${date}` : ""}. Each licence was checked at its source on the date its catalog entry shows; re-read the source before you ship.`
+    `Made from a shortlist on ${source}${date ? ` on ${date}` : ""}. Each licence was checked at its source on the date its catalog entry shows. This is the catalog's reading, not legal advice: re-read the source before you ship.`
   );
 
   if (owed.credits.length) {
