@@ -528,6 +528,68 @@ has("feed escapes summary", feed, "CC0. A &amp; B");
 lacks("feed skips deprecated", feed, "entry/b/");
 eq("feed newest first", feed.indexOf("entry/c/") < feed.indexOf("entry/a/"), true);
 
+/* review fixes, 2026-10 (#59-#66) ------------------------------------------ */
+import { csvField } from "./exports.mjs";
+import { classify, reportUrl, siteOf } from "./link-check.mjs";
+import { listEntryFiles } from "./entry-files.mjs";
+import nodeFs from "node:fs";
+import nodeOs from "node:os";
+import nodePath from "node:path";
+
+// #59: Atom required elements.
+for (const tag of ["<id>", "<title>", "<updated>", "<author><name>T</name>"]) has(`feed has ${tag}`, feed, tag);
+eq("every feed entry has id, title, updated", (feed.match(/<entry>[\s\S]*?<\/entry>/g) || []).every((e) => /<id>/.test(e) && /<title>/.test(e) && /<updated>/.test(e)), true);
+eq("feed respects limit", (atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/" }, generatedAt: "x", limit: 1 }).match(/<entry>/g) || []).length, 1);
+eq("feed with no entries is still a feed", atomFeed({ entries: [], site: { title: "T", tagline: "t", siteUrl: "https://s.test/" }, generatedAt: "x" }).includes("</feed>"), true);
+
+// #74: homepage JSON-LD.
+import { homeJsonLd } from "./exports.mjs";
+const ld = homeJsonLd({ site: { title: "T", tagline: "t.", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-04T12:00:00Z", total: 3 });
+eq("home ld types", ld.map((x) => x["@type"]).join(","), "WebSite,Dataset");
+eq("home ld search target", ld[0].potentialAction.target.urlTemplate, "https://s.test/site/?q={search_term_string}");
+eq("home ld csv download", ld[1].distribution[0].contentUrl, "https://s.test/site/catalog.csv");
+eq("home ld date", ld[1].dateModified, "2026-10-04");
+
+// #62: formula-leading cells are neutralised, then quoted as usual.
+for (const lead of ["=", "+", "-", "@", "\t"]) eq(`csv neutralises ${JSON.stringify(lead)}`, csvField(`${lead}1+1`).replace(/^"/, "").startsWith("'"), true);
+eq("csv leaves plain text alone", csvField("Kenney"), "Kenney");
+eq("csv quotes a neutralised comma", csvField("=a,b"), `"'=a,b"`);
+
+// #61: NUL in the input cannot loop the restore.
+eq("NUL slot token in a code span", renderInline("`\u00000\u0000` x", passLink), "<code>0</code> x");
+eq("bare NUL is dropped", renderInline("a\u0000b", passLink), "ab");
+
+// #60: llms reads the same balanced-paren hrefs as the site.
+const lfParens = llmsFullTxt({
+  entries: [llmsEntries[0]],
+  site,
+  categories: cats,
+  bodies: new Map([["a1", "# A\n\nSee [w](https://en.wikipedia.org/wiki/Foo_(bar)) and [r](Foo_(bar).md)."]]),
+  resolverFor: () => (href) => (href.startsWith("http") ? { href, external: true } : href === "Foo_(bar).md" ? { href: "../foo/", external: false } : (() => { throw new Error(`bad href ${href}`); })()),
+});
+has("llms keeps an external balanced-paren href", lfParens, "[w](https://en.wikipedia.org/wiki/Foo_(bar))");
+has("llms resolves a relative balanced-paren href", lfParens, "[r](https://x.test/s/entry/foo/)");
+
+// #65: link-check classification and report escaping.
+eq("site of a .co.uk host", siteOf("www.example.co.uk"), "example.co.uk");
+eq("site of a plain host", siteOf("www.kenney.nl"), "kenney.nl");
+eq("site of a github.io host", siteOf("user.github.io"), "user.github.io");
+eq("moved between .co.uk sites", classify("https://a.co.uk/x", 200, "https://b.co.uk/x").kind, "moved");
+eq("same .co.uk site is ok", classify("https://a.co.uk/x", 200, "https://www.a.co.uk/y").kind, "ok");
+eq("github repo transfer is moved", classify("https://github.com/a/b", 200, "https://github.com/c/b").kind, "moved");
+eq("403 is blocked", classify("https://a.test/", 403, "https://a.test/").kind, "blocked");
+eq("404 is dead", classify("https://a.test/", 404, "https://a.test/").kind, "dead");
+eq("report url is an inert code span", reportUrl("https://a.test/@x](y)`z"), "`https://a.test/@x](y)%60z`");
+
+// #64: one entry walker; hidden and scratch folders are not entries.
+const tmp = nodeFs.mkdtempSync(nodePath.join(nodeOs.tmpdir(), "entries-"));
+for (const rel of ["2d/a.md", "2d/README.md", "2d/TEMPLATE.md", "2d/.hidden/b.md", "_scratch/c.md", "3d/sub/d.md", "3d/e.txt"]) {
+  nodeFs.mkdirSync(nodePath.dirname(nodePath.join(tmp, rel)), { recursive: true });
+  nodeFs.writeFileSync(nodePath.join(tmp, rel), "");
+}
+eq("entry walker skips index, template, hidden and scratch", listEntryFiles(tmp).map((f) => nodePath.relative(tmp, f).split(nodePath.sep).join("/")).join(","), "2d/a.md,3d/sub/d.md");
+nodeFs.rmSync(tmp, { recursive: true, force: true });
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

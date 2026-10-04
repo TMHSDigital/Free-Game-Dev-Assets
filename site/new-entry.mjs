@@ -44,6 +44,8 @@ const text = fs
   .replace(/^status: .*$/m, "status: needs-review");
 
 const rel = `catalog/${category}/${id}.md`;
+// A category can be in config.json before its folder exists.
+fs.mkdirSync(path.join(CATALOG, category), { recursive: true });
 fs.writeFileSync(path.join(ROOT, rel), text);
 
 console.log(`wrote ${rel}
@@ -54,4 +56,4 @@ Next:
      ## Evidence with today's date: (${today}).
   2. Add a row for [${id}.md](${id}.md) to catalog/${category}/README.md.
   3. node site/sync-counts.mjs   (README counts, badge, expectedEntryCount)
-  4. npm run check               (tests, validate, build)`);
+  4. npm test && npm run validate   (quick; CI also runs the full build)`);

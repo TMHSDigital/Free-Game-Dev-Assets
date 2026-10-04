@@ -14,6 +14,12 @@ const SLOT_RE = /\u0000(\d+)\u0000/g;
 const count = (str, sub) => str.split(sub).length - 1;
 
 /**
+ * A markdown link. The href may hold one level of balanced parens
+ * (Foo_(bar)). Shared with llms.mjs so both read the same href.
+ */
+export const LINK_RE = /\[([^\]]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)/g;
+
+/**
  * Bold and italic on already-escaped text. Italic that would cross a bold
  * boundary (`**a *b** c*`) stays literal: wrapping it would nest the tags
  * wrongly.
@@ -47,14 +53,16 @@ export function renderInline(text, resolveLink) {
     slots.push(html);
     return slot(slots.length - 1);
   };
-  let s = String(text);
+  // NUL marks a slot below; one in the input could make a slot hold its own
+  // token and the restore loop never settle.
+  let s = String(text).replaceAll("\u0000", "");
   // Code spans first: their contents are literal.
   s = s.replace(/`([^`]+)`/g, (_, code) => keep(`<code>${esc(code)}</code>`));
   // Backslash escapes: any ASCII punctuation, as in CommonMark.
   s = s.replace(/\\([!-/:-@[-`{-~])/g, (_, ch) => keep(esc(ch)));
   // Links. The label keeps bold, italic and code; the href goes through the
-  // resolver. The href may hold one level of balanced parens (Foo_(bar)).
-  s = s.replace(/\[([^\]]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)/g, (_, label, href) => {
+  // resolver.
+  s = s.replace(LINK_RE, (_, label, href) => {
     const { href: out, external } = resolveLink(href);
     const rel = external ? ' rel="noopener noreferrer"' : "";
     return keep(`<a href="${esc(out)}"${rel}>${marks(esc(label))}</a>`);

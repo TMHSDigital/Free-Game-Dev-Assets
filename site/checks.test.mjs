@@ -626,6 +626,11 @@ rejects("V16 rejects javascript:", checkEntryUrl("bad.md", { url: "javascript:al
 rejects("V16 rejects data:", checkEntryUrl("bad.md", { url: "data:text/html,<script>x</script>" }), "must be https://");
 rejects("V16 rejects a relative url", checkEntryUrl("bad.md", { url: "/downloads" }), "is not an absolute URL");
 accepts("V16 accepts https", checkEntryUrl("ok.md", { url: "https://kenney.nl/assets" }));
+rejects("V16 rejects localhost", checkEntryUrl("bad.md", { url: "http://localhost:8080/x" }), "must be a public site");
+rejects("V16 rejects an IPv4 literal", checkEntryUrl("bad.md", { url: "http://169.254.169.254/latest" }), "must be a public site");
+rejects("V16 rejects an IPv6 literal", checkEntryUrl("bad.md", { url: "http://[::1]/" }), "must be a public site");
+rejects("V16 rejects .local", checkEntryUrl("bad.md", { url: "https://nas.local/files" }), "must be a public site");
+accepts("V16 accepts a digit-led host", checkEntryUrl("ok.md", { url: "https://3dtexel.com/" }));
 accepts("V16 accepts http where a source has no https", checkEntryUrl("ok.md", { url: "http://www.makehumancommunity.org/" }));
 
 /* V17: category sets --------------------------------------------------- */

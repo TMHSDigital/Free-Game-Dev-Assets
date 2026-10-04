@@ -20,9 +20,14 @@ const CSV_COLUMNS = [
   "page",
 ];
 
-/** One CSV field, quoted when it holds a comma, quote or line break. */
-function csvField(value) {
-  const text = Array.isArray(value) ? value.join("; ") : value === undefined || value === null ? "" : String(value);
+/**
+ * One CSV field, quoted when it holds a comma, quote or line break. A field
+ * a spreadsheet would read as a formula (= + - @, tab, CR) gets a leading
+ * apostrophe first (OWASP CSV injection guidance).
+ */
+export function csvField(value) {
+  let text = Array.isArray(value) ? value.join("; ") : value === undefined || value === null ? "" : String(value);
+  if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
   return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
 
@@ -32,6 +37,42 @@ export function catalogCsv(entries, siteUrl) {
     CSV_COLUMNS.map((col) => csvField(col === "page" ? `${base}/${e.page}` : e[col])).join(",")
   );
   return `${CSV_COLUMNS.join(",")}\r\n${rows.join("\r\n")}\r\n`;
+}
+
+/**
+ * Homepage JSON-LD: the site (with its ?q= search) and the catalog as a
+ * Dataset, so the CSV and JSON exports can surface in dataset search.
+ */
+export function homeJsonLd({ site, generatedAt, total }) {
+  const base = site.siteUrl.replace(/\/+$/, "");
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: site.title,
+      url: `${base}/`,
+      description: site.tagline,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: { "@type": "EntryPoint", urlTemplate: `${base}/?q={search_term_string}` },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      name: site.title,
+      description: `${site.tagline} ${total} sources, each with its licence as the source states it and the date it was read there.`,
+      url: `${base}/`,
+      license: "https://creativecommons.org/publicdomain/zero/1.0/",
+      isAccessibleForFree: true,
+      dateModified: generatedAt.slice(0, 10),
+      distribution: [
+        { "@type": "DataDownload", encodingFormat: "text/csv", contentUrl: `${base}/catalog.csv` },
+        { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: `${base}/data.json` },
+      ],
+    },
+  ];
 }
 
 /**
@@ -63,6 +104,8 @@ export function atomFeed({ entries, site, generatedAt, limit = 40 }) {
     `  <id>${esc(base)}/</id>`,
     `  <title>${esc(site.title)}: recently verified</title>`,
     `  <subtitle>${esc(site.tagline)}</subtitle>`,
+    // RFC 4287 4.1.1: a feed-level author covers every entry.
+    `  <author><name>${esc(site.title)}</name><uri>${esc(base)}/</uri></author>`,
     `  <link href="${esc(base)}/" />`,
     `  <link rel="self" href="${esc(base)}/feed.xml" />`,
     `  <updated>${esc(generatedAt)}</updated>`,

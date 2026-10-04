@@ -29,7 +29,8 @@ function save(ids) {
 
 let ids = load();
 const data = window.__CATALOG__;
-const byId = data ? Object.fromEntries(data.entries.map((e) => [e.id, e])) : {};
+// No prototype: a stored id like "constructor" must not look like an entry.
+const byId = Object.assign(Object.create(null), data ? Object.fromEntries(data.entries.map((e) => [e.id, e])) : {});
 // Entries removed from the catalog since they were starred drop out.
 if (data) ids = ids.filter((id) => byId[id]);
 
@@ -39,6 +40,9 @@ function syncButtons() {
     btn.hidden = false;
     btn.setAttribute("aria-pressed", on ? "true" : "false");
     btn.textContent = on ? "On shortlist" : "Add to shortlist";
+    // The accessible name starts with the visible text (WCAG 2.5.3).
+    const name = btn.getAttribute("data-name");
+    if (name) btn.setAttribute("aria-label", `${btn.textContent}: ${name}`);
   }
 }
 
@@ -63,10 +67,10 @@ function download(name, text, type) {
 
 function exportFile(format) {
   const owed = owes(ids.map((id) => ({ need: "shortlist", entry: byId[id] })));
-  const siteUrl = data.site?.siteUrl || "";
+  const siteUrl = (data.site?.siteUrl || "").replace(/\/+$/, "");
   const text = creditsFile(owed, {
     format,
-    pageUrl: (e) => (siteUrl ? `${siteUrl}entry/${encodeURIComponent(e.id)}/` : ""),
+    pageUrl: (e) => (siteUrl ? `${siteUrl}/entry/${encodeURIComponent(e.id)}/` : ""),
     date: new Date().toISOString().slice(0, 10),
     source: data.site?.title || "Free Game Dev Assets",
   });

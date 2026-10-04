@@ -13,4 +13,4 @@
 - [ ] Row added to the category `README.md`, with the same licence as the frontmatter
 - [ ] Ran `node site/sync-counts.mjs` after adding or removing entries
 - [ ] Stacks: followed `stacks/README.md`; no licence named in a stack's own words
-- [ ] `npm run check` passes (tests, `node site/validate.mjs`, `node site/build.mjs`)
+- [ ] `npm test && npm run validate` passes locally (CI runs the full `npm run check`, including the build)

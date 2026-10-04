@@ -29,6 +29,7 @@ import {
 } from "./checks.mjs";
 import { evidenceSection, parseFrontmatter } from "./lib/frontmatter.mjs";
 import { isRealDate, latestAllowedDate } from "./lib/shared.mjs";
+import { listEntryFiles } from "./lib/entry-files.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -54,7 +55,10 @@ const REQUIRED = [
   "verified",
   "status",
 ];
-const SKIP_MD = new Set(["README.md", "TEMPLATE.md"]);
+const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+// C0 controls other than tab, LF and CR: invalid in XML, and NUL is the
+// markdown renderer's slot marker.
+const CONTROL_RE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
 const BINARY_EXT = new Set([
   ".png",
   ".jpg",
@@ -241,10 +245,7 @@ function main() {
   const aliases = JSON.parse(fs.readFileSync(ALIASES_PATH, "utf8"));
   const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
   const categories = catalogCategories();
-  const entryFiles = walkFiles(CATALOG, [], (f) => {
-    const base = path.basename(f);
-    return f.endsWith(".md") && !SKIP_MD.has(base);
-  });
+  const entryFiles = listEntryFiles(CATALOG);
 
   const entries = [];
   const records = [];
@@ -254,6 +255,8 @@ function main() {
     const rel = relFromRoot(file);
     const text = fs.readFileSync(file, "utf8");
     if (hasEmoji(text)) errors.push(`${rel} contains emoji`);
+    const ctl = text.split("\n").findIndex((line) => CONTROL_RE.test(line));
+    if (ctl !== -1) errors.push(`${rel}:${ctl + 1} contains a control character (delete it; only tab and newlines are allowed)`);
 
     const parsed = parseFrontmatter(text);
     if (!parsed) {
@@ -269,6 +272,9 @@ function main() {
     const dirName = path.basename(path.dirname(file));
     if (meta.id && String(meta.id) !== stem) {
       errors.push(`${rel} id "${meta.id}" does not match filename`);
+    }
+    if (meta.id && !ID_RE.test(String(meta.id))) {
+      errors.push(`${rel} id "${meta.id}" must be short kebab-case (a-z, 0-9, hyphens); npm run new-entry checks this`);
     }
     if (meta.category && String(meta.category) !== dirName) {
       errors.push(`${rel} category "${meta.category}" does not match directory`);

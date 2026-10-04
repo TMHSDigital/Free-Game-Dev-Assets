@@ -45,7 +45,7 @@
     { "id": "provenance", "title": "Provenance", "path": "docs/provenance.md" },
     { "id": "high-risk", "title": "High risk", "path": "docs/high-risk.md" },
     { "id": "ai-assets", "title": "AI assets", "path": "docs/ai-assets.md" },
-    { "id": "trust-score", "title": "Trust score", "path": "docs/trust-score.md" },
+    { "id": "trust-score", "title": "Review rubric (trust score)", "path": "docs/trust-score.md" },
     { "id": "game-vs-video", "title": "Games vs video licensing", "path": "docs/game-vs-video-licensing.md" },
     { "id": "fonts", "title": "Fonts and embedding", "path": "docs/fonts.md" },
     { "id": "geodata", "title": "Geodata attribution", "path": "docs/geodata.md" },

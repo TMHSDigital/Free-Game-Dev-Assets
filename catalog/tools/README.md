@@ -223,4 +223,4 @@ Software only. Not a GTA V asset grant. See [`docs/fivem.md`](../../docs/fivem.m
 | --- | --- | --- | --- |
 | [sollumz](sollumz.md) | Sollumz | GPL-3.0-or-later | active |
 
-See: [`docs/godot-budget-stack.md`](../../docs/godot-budget-stack.md) · [`docs/ai-assets.md`](../../docs/ai-assets.md) · [`docs/fivem.md`](../../docs/fivem.md) · [`docs/research-index.md`](../../docs/research-index.md).
+See: [`docs/godot-budget-stack.md`](../../docs/godot-budget-stack.md) · [`docs/ai-assets.md`](../../docs/ai-assets.md) · [`docs/fivem.md`](../../docs/fivem.md).

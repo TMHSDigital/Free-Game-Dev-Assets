@@ -4,6 +4,19 @@ Newest section at the top. One section per review run. This is the record of wha
 run measured, what it changed, what it deliberately did not change, and what the next
 run should not spend time re-deciding.
 
+## 2026-10-04 (repo review, #59-#75)
+
+A whole-repo review (code, docs, live site) filed #59-#75. This run fixed the code and doc items. No entry's licence data changed.
+
+- **Exports:** feed.xml gets a feed-level `<author>` (#59). catalog.csv puts an apostrophe before cells starting `= + - @`, tab or CR (#62).
+- **Build robustness:** `LINK_RE` is now shared by markdown.mjs and llms.mjs, so balanced-paren hrefs read the same in both (#60). renderInline strips NUL before using it as the slot marker. The validator rejects C0 control characters (#61).
+- **One entry walker:** `site/lib/entry-files.mjs` is used by build, validate, sync-counts and check-links; hidden and `_scratch` folders are skipped everywhere. The validator enforces kebab-case ids (#64).
+- **Link check:** the pure parts moved to `site/lib/link-check.mjs`, with tests. Multi-part suffixes (`co.uk`, `github.io`, ...) are handled, and report URLs are inert code spans. V16 rejects localhost, `.local` and IP-literal URLs (#65).
+- **Client:** lookup maps have no prototype. The shortlist export normalises the trailing slash (#66). The shortlist button's accessible name starts with its visible text (#63).
+- **Docs:** "not legal advice" in the README, licences guide, every page footer and the CREDITS export (#68). README positioning against magictools and awesome-gamedev, with credit (#71). ROADMAP made count-free (#69). Contributor steps aligned; TEMPLATE starts `needs-review` (#70). Specs moved to `docs/design/`. research-index taken out of the user guides, and trust-score relabelled as a rubric (#73).
+- **SEO:** homepage WebSite + Dataset JSON-LD (#74).
+- **Not changed, deliberately:** homepage weight (#75) needs a decision about pre-rendering every row versus slimming data.js. The Code of Conduct contact (#72) needs a private address from the maintainer. Client-side JS still has no tests (#67, partly done).
+
 ## 2026-09-30 (magictools import)
 
 Candidates were taken from the awesome list ellisonleao/magictools: every non-paid item in every section. Its emoji licence legend was not trusted. Each source was re-read at its own licence page, repo or bundled licence file on 2026-09-30. The catalog went from 334 to 376 entries.
@@ -195,7 +208,7 @@ in conversation (no spec).
 ## 2026-09-25 (licence freshness)
 
 Sub-project C from the site brainstorm, built from
-`docs/superpowers/specs/2026-09-25-licence-freshness-design.md` in five commits
+`docs/design/2026-09-25-licence-freshness-design.md` in five commits
 (`241af04`..`749860a`). No catalog entry changed and no `verified` moved.
 
 - **What shipped.** A line under the homepage hero, "Checked within 180 days: 317 of
@@ -253,7 +266,7 @@ from the entry pages and starter stacks reviews, each fix with a test that faile
 ## 2026-09-25 (starter stacks)
 
 Sub-project A from the site brainstorm, built from
-`docs/superpowers/specs/2026-09-24-starter-stacks-design.md` in seven commits
+`docs/design/2026-09-24-starter-stacks-design.md` in seven commits
 (`10151a9`..`3724fbb`). No catalog entry changed and no `verified` moved.
 
 - **What shipped.** Five stacks in `stacks/`, one per task test: 2D pixel platformer,
@@ -292,7 +305,7 @@ Sub-project A from the site brainstorm, built from
 ## 2026-09-24 (entry pages)
 
 Sub-project B from the site brainstorm, built from
-`docs/superpowers/specs/2026-09-24-entry-pages-design.md` in eleven commits
+`docs/design/2026-09-24-entry-pages-design.md` in eleven commits
 (`fee59c1`..`a5403a4`). No catalog entry changed and no `verified` moved.
 
 - **What shipped.** Every entry has a page at `/entry/<id>/` with its full body, a facts

@@ -23,6 +23,15 @@ Each entry records the licence as its source states it and the date someone read
 active entries quote the source's own words. The catalog indexes sources and never rehosts
 them: check the source before you ship.
 
+Big lists such as [magictools](https://github.com/ellisonleao/magictools) and
+[awesome-gamedev](https://github.com/Calinou/awesome-gamedev) tell you something is free. This one
+tells you what the licence says, where it says it, and when it was last read, so you don't have to
+re-check forty tabs before a release. (Thanks to magictools: many tool entries started from its list.)
+
+> [!NOTE]
+> This is the catalog's reading of each licence, not legal advice. Licences change: read the
+> source's own terms before you ship.
+
 <table>
   <tr>
     <td width="33%" valign="top">
@@ -40,7 +49,8 @@ them: check the source before you ship.
   </tr>
 </table>
 
-> **Recent:** 2026-09-30, 42 more sources, mostly pipeline, pixel-art and chiptune tools.
+> **Recent:** 2026-10-04, 15 more video, animation and environment sources.
+> 2026-09-30, 42 more sources, mostly pipeline, pixel-art and chiptune tools.
 > 2026-09-25, starter stacks and a licence freshness page.
 
 ## Contents
@@ -243,7 +253,7 @@ Read these before you mix packs into a commercial build.
 | [`docs/high-risk.md`](docs/high-risk.md) | Sources to avoid entirely |
 | [`docs/ai-assets.md`](docs/ai-assets.md) | AI-generated assets |
 | [`docs/fivem.md`](docs/fivem.md) | GTA-format and FiveM assets |
-| [`docs/trust-score.md`](docs/trust-score.md) | How sources are rated |
+| [`docs/trust-score.md`](docs/trust-score.md) | Review rubric used when vetting a source (not shown on entries) |
 
 <details>
 <summary>The short version</summary>
@@ -304,9 +314,11 @@ When a source does not say plainly, the entry says `unknown` and `needs-review` 
 
 New sources, licence corrections, dead links and clearer notes are all welcome.
 
-1. Start an entry with `npm run new-entry -- <category> <id>`, or copy [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md).
+1. Start an entry with `npm run new-entry -- <category> <id>`. It copies the template, sets the
+   id and date, and starts the entry as `needs-review`.
 2. Read the licence at the source and quote it, with the date, in the entry's Evidence section.
-3. Run `npm run check`, then open a pull request.
+3. Add a row for it to the category's `README.md`, then run `npm run counts` to update every count.
+4. Run `npm test && npm run validate` (quick), then open a pull request. CI also runs the full build.
 
 [`CONTRIBUTING.md`](CONTRIBUTING.md) has the full checklist and how to verify a licence.
 Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
@@ -343,7 +355,9 @@ npm run serve    # preview at http://localhost:3000
 ├── docs/
 │   ├── licenses.md fonts.md geodata.md game-vs-video-licensing.md
 │   ├── provenance.md high-risk.md ai-assets.md fivem.md trust-score.md
-│   ├── godot-budget-stack.md research-index.md
+│   ├── godot-budget-stack.md
+│   ├── research-index.md       maintainer notes on local research drafts
+│   ├── design/                 design specs behind the entry pages, stacks and freshness page
 │   ├── review-ledger.md        every review pass and what it changed
 │   └── images/readme/          publisher stills used in this README
 ├── stacks/                     starter stacks: one pick per need for a kind of game
