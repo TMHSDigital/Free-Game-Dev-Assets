@@ -1,30 +1,52 @@
+<div align="center">
+
 # Free Game Dev Assets
 
----
+**Free assets and tools for commercial games, with every licence read at its source.**
+
+[**Browse 377 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
-[![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 [![Sources](https://img.shields.io/badge/sources-377-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
+<br />
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
-[![Sponsor](https://img.shields.io/badge/Sponsor-TMHSDigital-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/TMHSDigital)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Sponsor](https://img.shields.io/badge/Sponsor-TMHSDigital-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/TMHSDigital)
 
-Free assets and tools for commercial games. Each entry records the licence as its source
-states it and the date someone read it there; active entries quote the source's own words.
-The catalog indexes sources and never rehosts them: check the source before you ship.
+</div>
 
-- **[Browse 377 sources](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)** on the site, filtered by licence, credit and review status.
-- **Starter stacks**, one pick per need and what the whole set owes:
-  [2D pixel platformer](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-pixel-platformer/) ·
-  [2D top-down pixel game](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-top-down-pixel/) ·
-  [3D low-poly arena in Godot](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/3d-low-poly-arena-godot/) ·
-  [First-person destruction](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/first-person-destruction/) ·
-  [Mobile puzzle](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/mobile-puzzle/)
-- **Licence freshness:** [when each licence was last read at its source](https://tmhsdigital.github.io/Free-Game-Dev-Assets/freshness/), oldest first.
-- **By category:** [master index](catalog/README.md) · **Before you ship:** [licences](#licences)
+Each entry records the licence as its source states it and the date someone read it there;
+active entries quote the source's own words. The catalog indexes sources and never rehosts
+them: check the source before you ship.
 
-**Recent:** 2026-09-30, 42 more sources, mostly pipeline, pixel-art and chiptune tools. 2026-09-25, starter stacks and a licence freshness page.
+<table>
+  <tr>
+    <td width="33%" valign="top">
+      <b>Pick by the job</b><br />
+      Guides that compare sources which look interchangeable and are not.<br /><br />
+      <a href="#start-here">Start here →</a>
+    </td>
+    <td width="33%" valign="top">
+      <b>Start from a stack</b><br />
+      One pick per need for a kind of game, and what the whole set owes.<br /><br />
+      <a href="#starter-stacks">Starter stacks →</a>
+    </td>
+    <td width="33%" valign="top">
+      <b>Check before you ship</b><br />
+      What each licence allows, and when each one was last read.<br /><br />
+      <a href="https://tmhsdigital.github.io/Free-Game-Dev-Assets/freshness/">Licence freshness →</a>
+    </td>
+  </tr>
+</table>
+
+> **Recent:** 2026-09-30, 42 more sources, mostly pipeline, pixel-art and chiptune tools.
+> 2026-09-25, starter stacks and a licence freshness page.
+
+## Contents
+
+[Start here](#start-here) · [Starter stacks](#starter-stacks) · [A few of the sources](#a-few-of-the-sources) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Scope](#scope) · [Contributing](#contributing) · [Support](#support)
 
 ## Start here
 
@@ -49,6 +71,19 @@ pages.
 Need something working today? Take the [safe starting points](#safe-starting-points): the
 catalog's highest-confidence sources, with the licence shown so you can see which ones owe
 a credit.
+
+## Starter stacks
+
+One pick per need for a kind of game, with a summary of what the whole set owes. Each stack
+is a page on the site.
+
+| Make a… | What you get |
+| --- | --- |
+| [**2D pixel platformer**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-pixel-platformer/) | A side-scrolling pixel-art platformer you intend to sell |
+| [**2D top-down pixel game**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-top-down-pixel/) | An adventure or RPG with menus, controller prompts and a terminal-style font |
+| [**3D low-poly arena in Godot**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/3d-low-poly-arena-godot/) | Rigged, animated characters and impact sounds, built in Godot 4 |
+| [**First-person destruction**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/first-person-destruction/) | Debris materials, industrial props and ambience for a game about breaking things |
+| [**Mobile puzzle**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/mobile-puzzle/) | A casual match-3 or board-style game for phones |
 
 ## A few of the sources
 
@@ -324,6 +359,8 @@ npm run serve    # preview at http://localhost:3000
 ## Support
 
 If the catalog saves you time, you can [sponsor TMHSDigital on GitHub](https://github.com/sponsors/TMHSDigital). Entirely optional.
+
+<p align="right"><a href="#free-game-dev-assets">Back to top ↑</a></p>
 
 ## License
 
