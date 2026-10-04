@@ -6,7 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { commercialLabel, esc, latestAllowedDate, MAINTENANCE_NOTES, PERSPECTIVE_LABELS, sponsorButtonHtml, sponsorCardHtml, verifiedAge } from "./lib/shared.mjs";
+import { commercialLabel, esc, latestAllowedDate, MAINTENANCE_NOTES, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { entryPageHtml } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver } from "./lib/links.mjs";
@@ -594,7 +594,6 @@ function main() {
     CATALOG_BLURB: `${stats.total} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file &middot; ${stats.deprecated} deprecated`,
     RESULT_COUNT: `${visible.length} of ${stats.total} entries shown`,
     SPONSOR_BUTTON: sponsorButtonHtml(),
-    SPONSOR_CARD: sponsorCardHtml(),
     FOOTER_STAMP: `Built ${esc(stamp)} from ${stats.total} catalog entries.`,
   };
   let html = fs.readFileSync(indexPath, "utf8");

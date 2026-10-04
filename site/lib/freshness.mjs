@@ -116,6 +116,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
         <a href="../#starters">Starters</a>
         <a href="../#guides">Guides</a>
         <a href="${esc(site.repo)}" rel="noopener noreferrer">GitHub</a>
+        <span class="nav-sponsor">${sponsorButtonHtml()}</span>
       </nav>
     </header>
     <main class="section entry-page freshness-page" id="content">
@@ -145,7 +146,6 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
     </main>
     <footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licenses: re-check the live source before shipping.</p>
-      <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
     </footer>
   </body>

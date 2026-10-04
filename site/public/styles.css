@@ -782,10 +782,13 @@ input:focus-visible,
   color: var(--muted);
 }
 
-.footer-sponsor iframe,
-.footer-sponsor-card iframe {
+.nav-sponsor {
+  display: inline-flex;
+  align-self: center;
+}
+
+.nav-sponsor iframe {
   display: block;
-  max-width: 100%;
   color-scheme: normal;
 }
 
