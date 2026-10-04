@@ -15,6 +15,8 @@
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Sponsor](https://img.shields.io/badge/Sponsor-TMHSDigital-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/TMHSDigital)
 
+<a href="https://tmhsdigital.github.io/Free-Game-Dev-Assets/"><img src="docs/images/readme/og-card.png" alt="The Free Game Dev Assets website: search, filter and starter picks" width="720" /></a>
+
 </div>
 
 Each entry records the licence as its source states it and the date someone read it there;
@@ -24,19 +26,16 @@ them: check the source before you ship.
 <table>
   <tr>
     <td width="33%" valign="top">
-      <b>Pick by the job</b><br />
-      Guides that compare sources which look interchangeable and are not.<br /><br />
-      <a href="#start-here">Start here →</a>
+      <b><a href="#start-here">Pick by the job →</a></b><br />
+      Guides that compare sources which look interchangeable and are not.
     </td>
     <td width="33%" valign="top">
-      <b>Start from a stack</b><br />
-      One pick per need for a kind of game, and what the whole set owes.<br /><br />
-      <a href="#starter-stacks">Starter stacks →</a>
+      <b><a href="#starter-stacks">Start from a stack →</a></b><br />
+      One pick per need for a kind of game, and what the whole set owes.
     </td>
     <td width="33%" valign="top">
-      <b>Check before you ship</b><br />
-      What each licence allows, and when each one was last read.<br /><br />
-      <a href="https://tmhsdigital.github.io/Free-Game-Dev-Assets/freshness/">Licence freshness →</a>
+      <b><a href="https://tmhsdigital.github.io/Free-Game-Dev-Assets/freshness/">Check before you ship →</a></b><br />
+      When each licence was last read at its source, oldest first.
     </td>
   </tr>
 </table>
@@ -44,50 +43,54 @@ them: check the source before you ship.
 > **Recent:** 2026-09-30, 42 more sources, mostly pipeline, pixel-art and chiptune tools.
 > 2026-09-25, starter stacks and a licence freshness page.
 
+## Contents
+
+[Start here](#start-here) · [Starter stacks](#starter-stacks) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Scope](#scope) · [Contributing](#contributing) · [Support](#support)
+
 ## A few of the sources
 
 The publishers most projects start from.
 
 <table>
   <tr>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <a href="catalog/3d/kenney.md"><img src="docs/images/readme/kenney-3d.png" alt="Kenney modular low-poly city" width="220" /></a><br />
       <b><a href="catalog/3d/kenney.md">Kenney</a></b><br />
       <sub>CC0 · modular 3D</sub>
     </td>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <a href="catalog/3d/quaternius.md"><img src="docs/images/readme/quaternius-downtown.jpg" alt="Quaternius Downtown City MegaKit" width="220" /></a><br />
       <b><a href="catalog/3d/quaternius.md">Quaternius</a></b><br />
       <sub>CC0 · rigged kits</sub>
     </td>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <a href="catalog/3d/kaykit.md"><img src="docs/images/readme/kaykit-characters.png" alt="KayKit adventurer and robot characters" width="220" /></a><br />
       <b><a href="catalog/3d/kaykit.md">KayKit</a></b><br />
       <sub>CC0 · atlas characters</sub>
     </td>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <a href="catalog/environment/poly-haven.md"><img src="docs/images/readme/polyhaven-hdri.png" alt="Poly Haven HDRI with lighting spheres" width="220" /></a><br />
       <b><a href="catalog/environment/poly-haven.md">Poly Haven</a></b><br />
       <sub>CC0 · HDRI and PBR</sub>
     </td>
   </tr>
   <tr>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <a href="catalog/2d/kenney-ui-pack.md"><img src="docs/images/readme/kenney-ui.png" alt="Kenney UI pack panels and buttons" width="220" /></a><br />
       <b><a href="catalog/2d/kenney-ui-pack.md">Kenney UI</a></b><br />
       <sub>CC0 · HUD and menus</sub>
     </td>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <a href="catalog/2d/kenney-input-prompts.md"><img src="docs/images/readme/kenney-prompts.png" alt="Kenney Xbox Series input prompt icons" width="220" /></a><br />
       <b><a href="catalog/2d/kenney-input-prompts.md">Input prompts</a></b><br />
       <sub>CC0 · 64×64 glyphs</sub>
     </td>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <a href="catalog/3d/ambientcg.md"><img src="docs/images/readme/ambientcg.jpg" alt="ambientCG photogrammetry ground material sphere" width="220" /></a><br />
       <b><a href="catalog/3d/ambientcg.md">ambientCG</a></b><br />
       <sub>CC0 · seamless PBR</sub>
     </td>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <a href="catalog/fonts/departure-mono.md"><img src="docs/images/readme/departure-mono.png" alt="Departure Mono pixel type specimen" width="220" /></a><br />
       <b><a href="catalog/fonts/departure-mono.md">Departure Mono</a></b><br />
       <sub>SIL OFL · pixel type</sub>
@@ -97,10 +100,6 @@ The publishers most projects start from.
 
 <sub>Publisher promotional stills (CC0 or SIL OFL), shown here as documentation only. The packs themselves stay on the source sites.</sub>
 
-## Contents
-
-[Start here](#start-here) · [Starter stacks](#starter-stacks) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Scope](#scope) · [Contributing](#contributing) · [Support](#support)
-
 ## Start here
 
 Choose by the job, not by the licence. Most sources in a category share a licence, so the
@@ -109,7 +108,7 @@ interchangeable and are not. Several are measured from the files themselves, not
 pages.
 
 | You are choosing | Guide |
-| --- | --- |
+| :--- | :--- |
 | A pixel tileset, by grid size and projection | [2D: Choosing a pixel tileset](catalog/2d/README.md#choosing-a-pixel-tileset) |
 | An icon set, and which two carry obligations | [2D: Choosing an icon set](catalog/2d/README.md#choosing-an-icon-set) |
 | Kenney, KayKit or Quaternius | [3D: measured comparison of scale, triangles and rigs](catalog/3d/README.md#choosing-between-kenney-kaykit-and-quaternius) |
@@ -131,7 +130,7 @@ One pick per need for a kind of game, with a summary of what the whole set owes.
 is a page on the site.
 
 | Make a… | What you get |
-| --- | --- |
+| :--- | :--- |
 | [**2D pixel platformer**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-pixel-platformer/) | A side-scrolling pixel-art platformer you intend to sell |
 | [**2D top-down pixel game**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-top-down-pixel/) | An adventure or RPG with menus, controller prompts and a terminal-style font |
 | [**3D low-poly arena in Godot**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/3d-low-poly-arena-godot/) | Rigged, animated characters and impact sounds, built in Godot 4 |
@@ -146,7 +145,7 @@ view. Press `/` to search. Filtered views and individual entries have their own 
 someone exactly what you are looking at.
 
 | Category | Entries | Focus | Index |
-| --- | ---: | --- | --- |
+| :--- | ---: | :--- | :--- |
 | **3D** | 72 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
 | **Tools** | 109 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 | **2D** | 58 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
@@ -164,7 +163,7 @@ Each source is one Markdown file: frontmatter for the facts, then notes on what 
 for, what the catch is, and a dated **Evidence** section quoting the live licence page.
 
 | Status | Meaning | What to do |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | 🟢 `active` | Licence read at the source and quoted with a date | Suitable to evaluate for production |
 | 🟡 `needs-review` | Useful, but a real question is still open, and the entry says which | Verify before shipping |
 | ⚪ `deprecated` | Kept for history, with the reason stated | Use an alternative |
@@ -181,7 +180,7 @@ file you take.
 <summary>Frontmatter fields</summary>
 
 | Field | Meaning |
-| --- | --- |
+| :--- | :--- |
 | `license` | Licence as the source states it, from a closed vocabulary in [`site/license-vocabulary.json`](site/license-vocabulary.json) (`CC0`, `CC-BY-4.0`, `SIL OFL`, `GPL-3.0-or-later`, `custom`, `varies`, and so on) |
 | `license_spdx` | The SPDX identifier, whenever the licence maps to exactly one. Absent when there is no single identifier: `custom`, `varies`, `unknown`, public domain, unversioned `CC-BY`, and GPL values that do not say `-only` or `-or-later` |
 | `commercial` | `true`, `false`, `unknown` or `varies`. `varies` means per-file review; the site's Commercial OK filter still lists these, labelled **per-file review** |
@@ -207,7 +206,7 @@ disagree, the config is the one the site uses.
 <summary>All 19 starters</summary>
 
 | Need | Source | Licence |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Modular low-poly 3D / UI | [Kenney](catalog/3d/kenney.md) | CC0 |
 | Rigged low-poly characters | [Quaternius](catalog/3d/quaternius.md) | CC0 |
 | Atlas-optimized kits | [KayKit (Kay Lousberg)](catalog/3d/kaykit.md) | CC0 |
@@ -235,7 +234,7 @@ disagree, the config is the one the site uses.
 Read these before you mix packs into a commercial build.
 
 | Guide | Covers |
-| --- | --- |
+| :--- | :--- |
 | [`docs/licenses.md`](docs/licenses.md) | The cheat sheet: what each licence allows and owes |
 | [`docs/fonts.md`](docs/fonts.md) | Embedding versus redistribution, and what an OFL font still owes |
 | [`docs/geodata.md`](docs/geodata.md) | Attribution across DEM, map and satellite sources, and why ODbL does not reach your game |
@@ -250,7 +249,7 @@ Read these before you mix packs into a commercial build.
 <summary>The short version</summary>
 
 | Licence | In a closed-source game |
-| --- | --- |
+| :--- | :--- |
 | **CC0** | The safest default. Nothing owed |
 | **CC-BY** | Commercial use is fine; credit the author. CC-BY-3.0 sources often want the author named; CC-BY-4.0 is usually met by a credits-screen line |
 | **CC-BY-SA** | Usable commercially, but share-alike applies to derivatives of the asset. Ship SA files in extractable bundles rather than encrypting them into the binary |
@@ -294,7 +293,7 @@ made, is recorded in [`docs/review-ledger.md`](docs/review-ledger.md).
 ## Scope
 
 | In scope | Out of scope |
-| --- | --- |
+| :--- | :--- |
 | Free asset libraries, packs and aggregators with a clear free tier | Rehosting or mirroring third-party archives, models or audio |
 | Tools for creating or processing game assets | Paid-only marketplaces with no meaningful free content |
 | Sources usable in commercial games when their terms allow | Guessing licences |
