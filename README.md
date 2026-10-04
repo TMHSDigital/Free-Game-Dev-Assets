@@ -4,11 +4,11 @@
 
 **Free assets and tools for commercial games, with every licence read at its source.**
 
-[**Browse 377 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
+[**Browse 392 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
-[![Sources](https://img.shields.io/badge/sources-377-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-392-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 <br />
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
@@ -139,7 +139,7 @@ is a page on the site.
 
 ## Browse the catalog
 
-The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 377 entries
+The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 392 entries
 and filters them by category, commercial use, attribution, review status and 2D camera
 view. Press `/` to search. Filtered views and individual entries have their own URLs, so you can send
 someone exactly what you are looking at.
@@ -152,10 +152,10 @@ someone exactly what you are looking at.
 | **Audio** | 34 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Characters** | 28 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
 | **Fonts** | 25 | OFL and commercial-ok typefaces, CJK | [`catalog/fonts/`](catalog/fonts/) |
-| **Environment** | 13 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
+| **Environment** | 18 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
 | **Shaders & VFX** | 18 | Shaders, particle and FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
-| **Animation** | 12 | Motion capture and character clips | [`catalog/animation/`](catalog/animation/) |
-| **Video** | 8 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
+| **Animation** | 17 | Motion capture and character clips | [`catalog/animation/`](catalog/animation/) |
+| **Video** | 13 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
 
 ## Reading an entry
 

@@ -15,5 +15,10 @@
 | [copernicus-dem-glo30](copernicus-dem-glo30.md) | Copernicus DEM GLO-30 | custom | yes* | active |
 | [usgs-earth-explorer](usgs-earth-explorer.md) | USGS EarthExplorer | public-domain* | yes* | active |
 | [opentopography](opentopography.md) | OpenTopography | varies | varies | active |
+| [nls-finland-elevation-model](nls-finland-elevation-model.md) | NLS Finland Elevation Model 2 m | CC-BY-4.0 | yes | active |
+| [swisstopo-swissalti3d](swisstopo-swissalti3d.md) | swisstopo swissALTI3D | custom | yes* | active |
+| [overture-maps](overture-maps.md) | Overture Maps | varies | unknown | needs-review |
+| [nasa-deep-star-maps](nasa-deep-star-maps.md) | NASA Deep Star Maps 2020 | custom | unknown | needs-review |
+| [ahn-netherlands](ahn-netherlands.md) | AHN (Netherlands) | unknown | unknown | needs-review |
 
 \* Attribution / endorsement / geo / notify-JAXA rules — see entry + [`docs/licenses.md`](../../docs/licenses.md). Avoid **FABDEM** (NC) and **HDRLabs sIBL** (CC-BY-NC-SA) — [`docs/high-risk.md`](../../docs/high-risk.md).
