@@ -44,48 +44,9 @@ them: check the source before you ship.
 > **Recent:** 2026-09-30, 42 more sources, mostly pipeline, pixel-art and chiptune tools.
 > 2026-09-25, starter stacks and a licence freshness page.
 
-## Contents
-
-[Start here](#start-here) · [Starter stacks](#starter-stacks) · [A few of the sources](#a-few-of-the-sources) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Scope](#scope) · [Contributing](#contributing) · [Support](#support)
-
-## Start here
-
-Choose by the job, not by the licence. Most sources in a category share a licence, so the
-licence column rarely tells you which one to pick. These guides compare sources that look
-interchangeable and are not. Several are measured from the files themselves, not the store
-pages.
-
-| You are choosing | Guide |
-| --- | --- |
-| A pixel tileset, by grid size and projection | [2D: Choosing a pixel tileset](catalog/2d/README.md#choosing-a-pixel-tileset) |
-| An icon set, and which two carry obligations | [2D: Choosing an icon set](catalog/2d/README.md#choosing-an-icon-set) |
-| Kenney, KayKit or Quaternius | [3D: measured comparison of scale, triangles and rigs](catalog/3d/README.md#choosing-between-kenney-kaykit-and-quaternius) |
-| A PBR texture library you can redistribute | [3D: Choosing a PBR texture source](catalog/3d/README.md#choosing-a-pbr-texture-source) |
-| A rigged character, and whether its animations will transfer | [Characters: Choosing a rigged character source](catalog/characters/README.md#choosing-a-rigged-character-source) |
-| A pixel font, including CJK | [Fonts: Choosing a pixel font](catalog/fonts/README.md#choosing-a-pixel-font) |
-| Game music, and whether videos of your game will get claimed | [Audio: Choosing game music](catalog/audio/README.md#choosing-game-music) |
-| Sound effects, and what "no credit" still leaves you owing | [Audio: Choosing sound effects](catalog/audio/README.md#choosing-sound-effects) |
-| A Godot 4 add-on that still builds against your engine | [Tools: Godot 4 add-ons](catalog/tools/README.md#godot-4-add-ons) |
-| Between two tools that do the same job | [Tools: near-duplicates](catalog/tools/README.md#choosing-between-near-duplicates) |
-
-Need something working today? Take the [safe starting points](#safe-starting-points): the
-catalog's highest-confidence sources, with the licence shown so you can see which ones owe
-a credit.
-
-## Starter stacks
-
-One pick per need for a kind of game, with a summary of what the whole set owes. Each stack
-is a page on the site.
-
-| Make a… | What you get |
-| --- | --- |
-| [**2D pixel platformer**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-pixel-platformer/) | A side-scrolling pixel-art platformer you intend to sell |
-| [**2D top-down pixel game**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-top-down-pixel/) | An adventure or RPG with menus, controller prompts and a terminal-style font |
-| [**3D low-poly arena in Godot**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/3d-low-poly-arena-godot/) | Rigged, animated characters and impact sounds, built in Godot 4 |
-| [**First-person destruction**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/first-person-destruction/) | Debris materials, industrial props and ambience for a game about breaking things |
-| [**Mobile puzzle**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/mobile-puzzle/) | A casual match-3 or board-style game for phones |
-
 ## A few of the sources
+
+The publishers most projects start from.
 
 <table>
   <tr>
@@ -136,6 +97,47 @@ is a page on the site.
 
 <sub>Publisher promotional stills (CC0 or SIL OFL), shown here as documentation only. The packs themselves stay on the source sites.</sub>
 
+## Contents
+
+[Start here](#start-here) · [Starter stacks](#starter-stacks) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Scope](#scope) · [Contributing](#contributing) · [Support](#support)
+
+## Start here
+
+Choose by the job, not by the licence. Most sources in a category share a licence, so the
+licence column rarely tells you which one to pick. These guides compare sources that look
+interchangeable and are not. Several are measured from the files themselves, not the store
+pages.
+
+| You are choosing | Guide |
+| --- | --- |
+| A pixel tileset, by grid size and projection | [2D: Choosing a pixel tileset](catalog/2d/README.md#choosing-a-pixel-tileset) |
+| An icon set, and which two carry obligations | [2D: Choosing an icon set](catalog/2d/README.md#choosing-an-icon-set) |
+| Kenney, KayKit or Quaternius | [3D: measured comparison of scale, triangles and rigs](catalog/3d/README.md#choosing-between-kenney-kaykit-and-quaternius) |
+| A PBR texture library you can redistribute | [3D: Choosing a PBR texture source](catalog/3d/README.md#choosing-a-pbr-texture-source) |
+| A rigged character, and whether its animations will transfer | [Characters: Choosing a rigged character source](catalog/characters/README.md#choosing-a-rigged-character-source) |
+| A pixel font, including CJK | [Fonts: Choosing a pixel font](catalog/fonts/README.md#choosing-a-pixel-font) |
+| Game music, and whether videos of your game will get claimed | [Audio: Choosing game music](catalog/audio/README.md#choosing-game-music) |
+| Sound effects, and what "no credit" still leaves you owing | [Audio: Choosing sound effects](catalog/audio/README.md#choosing-sound-effects) |
+| A Godot 4 add-on that still builds against your engine | [Tools: Godot 4 add-ons](catalog/tools/README.md#godot-4-add-ons) |
+| Between two tools that do the same job | [Tools: near-duplicates](catalog/tools/README.md#choosing-between-near-duplicates) |
+
+Need something working today? Take the [safe starting points](#safe-starting-points): the
+catalog's highest-confidence sources, with the licence shown so you can see which ones owe
+a credit.
+
+## Starter stacks
+
+One pick per need for a kind of game, with a summary of what the whole set owes. Each stack
+is a page on the site.
+
+| Make a… | What you get |
+| --- | --- |
+| [**2D pixel platformer**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-pixel-platformer/) | A side-scrolling pixel-art platformer you intend to sell |
+| [**2D top-down pixel game**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/2d-top-down-pixel/) | An adventure or RPG with menus, controller prompts and a terminal-style font |
+| [**3D low-poly arena in Godot**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/3d-low-poly-arena-godot/) | Rigged, animated characters and impact sounds, built in Godot 4 |
+| [**First-person destruction**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/first-person-destruction/) | Debris materials, industrial props and ambience for a game about breaking things |
+| [**Mobile puzzle**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/stack/mobile-puzzle/) | A casual match-3 or board-style game for phones |
+
 ## Browse the catalog
 
 The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 377 entries
@@ -161,11 +163,11 @@ someone exactly what you are looking at.
 Each source is one Markdown file: frontmatter for the facts, then notes on what it is good
 for, what the catch is, and a dated **Evidence** section quoting the live licence page.
 
-| Status | Meaning |
-| --- | --- |
-| `active` | Licence read at the source and quoted with a date. Suitable to evaluate for production |
-| `needs-review` | Useful, but a real question is still open, and the entry says which. Verify before shipping |
-| `deprecated` | Kept for history, with the reason stated. Use an alternative |
+| Status | Meaning | What to do |
+| --- | --- | --- |
+| 🟢 `active` | Licence read at the source and quoted with a date | Suitable to evaluate for production |
+| 🟡 `needs-review` | Useful, but a real question is still open, and the entry says which | Verify before shipping |
+| ⚪ `deprecated` | Kept for history, with the reason stated | Use an alternative |
 
 `verified` is the date someone last read the licence at the source. The website shows its
 age on every row and marks it once it passes a year; at that point, re-read the licence
@@ -247,15 +249,17 @@ Read these before you mix packs into a commercial build.
 <details>
 <summary>The short version</summary>
 
-- **CC0**: the safest default for a closed-source game. Nothing owed.
-- **CC-BY**: commercial use is fine; credit the author. CC-BY-3.0 sources often want the author named; CC-BY-4.0 is usually met by a credits-screen line.
-- **CC-BY-SA**: usable commercially, but share-alike applies to derivatives of the asset. Ship SA files in extractable bundles rather than encrypting them into the binary.
-- **Any ND licence**: generally unusable in games, because interactive sync and remix count as derivatives.
-- **SIL OFL**: the default for fonts in games. No credit line, but the licence file ships with the font.
-- **ODbL (OpenStreetMap)**: a game that renders map data is a produced work, so the share-alike does not reach it. Credit OSM. Redistributing the data itself is what triggers the obligations.
-- **Marketplace "free" (Unity, Fab, Unreal)**: often commercial in-engine only, with no redistribution, and sometimes locked to one engine.
-- **Aggregators**: the licence is per file, not per author. The same creator's uploads can differ.
-- **Trust the supplier**: skip anonymous mega-dumps and known traps (MB-Lab, default Shadertoy, map scrapes, GTA and FiveM rips).
+| Licence | In a closed-source game |
+| --- | --- |
+| **CC0** | The safest default. Nothing owed |
+| **CC-BY** | Commercial use is fine; credit the author. CC-BY-3.0 sources often want the author named; CC-BY-4.0 is usually met by a credits-screen line |
+| **CC-BY-SA** | Usable commercially, but share-alike applies to derivatives of the asset. Ship SA files in extractable bundles rather than encrypting them into the binary |
+| **Any ND licence** | Generally unusable in games, because interactive sync and remix count as derivatives |
+| **SIL OFL** | The default for fonts in games. No credit line, but the licence file ships with the font |
+| **ODbL (OpenStreetMap)** | A game that renders map data is a produced work, so the share-alike does not reach it. Credit OSM. Redistributing the data itself is what triggers the obligations |
+| **Marketplace "free" (Unity, Fab, Unreal)** | Often commercial in-engine only, with no redistribution, and sometimes locked to one engine |
+| **Aggregators** | The licence is per file, not per author. The same creator's uploads can differ |
+| **Trusting the supplier** | Skip anonymous mega-dumps and known traps (MB-Lab, default Shadertoy, map scrapes, GTA and FiveM rips) |
 
 </details>
 
@@ -289,19 +293,24 @@ made, is recorded in [`docs/review-ledger.md`](docs/review-ledger.md).
 
 ## Scope
 
-**In scope:** free asset libraries, packs and aggregators with a clear free tier; tools for
-creating or processing game assets; sources usable in commercial games when their terms
-allow.
+| In scope | Out of scope |
+| --- | --- |
+| Free asset libraries, packs and aggregators with a clear free tier | Rehosting or mirroring third-party archives, models or audio |
+| Tools for creating or processing game assets | Paid-only marketplaces with no meaningful free content |
+| Sources usable in commercial games when their terms allow | Guessing licences |
 
-**Out of scope:** rehosting or mirroring third-party archives, models or audio; paid-only
-marketplaces with no meaningful free content; guessing licences. When the source does not
-say plainly, the entry says `unknown` and `needs-review` instead.
+When a source does not say plainly, the entry says `unknown` and `needs-review` instead.
 
 ## Contributing
 
-New sources, licence corrections, dead links and clearer notes are all welcome. See
-[`CONTRIBUTING.md`](CONTRIBUTING.md) for the entry checklist and how to verify a licence,
-and follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+New sources, licence corrections, dead links and clearer notes are all welcome.
+
+1. Start an entry with `npm run new-entry -- <category> <id>`, or copy [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md).
+2. Read the licence at the source and quote it, with the date, in the entry's Evidence section.
+3. Run `npm run check`, then open a pull request.
+
+[`CONTRIBUTING.md`](CONTRIBUTING.md) has the full checklist and how to verify a licence.
+Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 <details>
 <summary>Run the checks and preview the site locally</summary>
