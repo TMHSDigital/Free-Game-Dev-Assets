@@ -93,3 +93,12 @@ export function stackPageUrl(site, id) {
 export function freshnessPageUrl(site) {
   return `${String(site.siteUrl).replace(/\/+$/, "")}/freshness/`;
 }
+
+/** GitHub Sponsors embeds. Iframes are fine on the site; GitHub strips them from the README. */
+export function sponsorButtonHtml() {
+  return '<iframe class="sponsor-button" src="https://github.com/sponsors/TMHSDigital/button" title="Sponsor TMHSDigital" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>';
+}
+
+export function sponsorCardHtml() {
+  return '<iframe class="sponsor-card" src="https://github.com/sponsors/TMHSDigital/card" title="Sponsor TMHSDigital" height="225" width="600" style="border: 0; max-width: 100%;"></iframe>';
+}

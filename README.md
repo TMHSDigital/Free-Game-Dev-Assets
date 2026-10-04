@@ -7,6 +7,7 @@
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 [![Sources](https://img.shields.io/badge/sources-377-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
+[![Sponsor](https://img.shields.io/badge/Sponsor-TMHSDigital-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/TMHSDigital)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 Free assets and tools for commercial games. Each entry records the licence as its source
@@ -319,6 +320,10 @@ npm run serve    # preview at http://localhost:3000
 ```
 
 </details>
+
+## Support
+
+If the catalog saves you time, you can [sponsor TMHSDigital on GitHub](https://github.com/sponsors/TMHSDigital). Entirely optional.
 
 ## License
 

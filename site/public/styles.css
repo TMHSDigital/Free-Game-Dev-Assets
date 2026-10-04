@@ -782,6 +782,13 @@ input:focus-visible,
   color: var(--muted);
 }
 
+.footer-sponsor iframe,
+.footer-sponsor-card iframe {
+  display: block;
+  max-width: 100%;
+  color-scheme: normal;
+}
+
 .footer-stamp {
   font-family: var(--mono);
   font-size: 0.75rem;

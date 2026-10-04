@@ -3,7 +3,7 @@
  * Buckets come from verifiedAge, the function the homepage cards use, so the
  * summary and the cards cannot disagree. Pure: `now` is passed in.
  */
-import { esc, freshnessPageUrl, verifiedAge } from "./shared.mjs";
+import { esc, freshnessPageUrl, sponsorButtonHtml, verifiedAge } from "./shared.mjs";
 
 const RECENT_DAYS = 30;
 const byName = (a, b) => a.entry.name.localeCompare(b.entry.name);
@@ -145,6 +145,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
     </main>
     <footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licenses: re-check the live source before shipping.</p>
+      <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
     </footer>
   </body>

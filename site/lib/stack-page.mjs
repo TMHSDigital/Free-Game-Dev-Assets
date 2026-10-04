@@ -7,6 +7,7 @@ import {
   STATUS_NOTES,
   stackPageUrl,
   verifiedAge,
+  sponsorButtonHtml,
 } from "./shared.mjs";
 import { copyAllText } from "./stacks.mjs";
 
@@ -165,6 +166,7 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
     <footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licenses: re-check the live source before shipping.</p>
       <p><a href="../../freshness/">Licence freshness</a></p>
+      <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
     </footer>
     ${script}
