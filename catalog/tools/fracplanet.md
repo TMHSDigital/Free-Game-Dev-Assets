@@ -11,7 +11,7 @@ attribution_required: false
 formats: [desktop-app]
 tags: [planet, heightfield, fractal, pov-ray]
 maintenance: inactive
-verified: 2026-09-30
+verified: 2026-10-04
 status: needs-review
 ---
 
@@ -25,12 +25,14 @@ Tim Day's Qt/OpenGL application that generates random fractal planets and terrai
 - Either version allows commercial use of the program. GPL covers the program, not the planets you generate and export; exported meshes are your output
 - Community forks exist on GitHub (Qt5/Qt6 ports, a Blender export fix). They carry the same headers; they are not the author's release
 - Maintenance: SourceForge shows last update 2017-11-16, read 2026-09-30
+- Still open on 2026-10-04: which GPL version the author intends. The SourceForge page still says GPLv2 while the source headers say GPLv3 or later; only the author can reconcile them. Commercial use and credit are not in doubt under either version
 
 ## Evidence
 
 - Live [SourceForge project page](https://sourceforge.net/projects/fracplanet/) (2026-09-30): License "GNU General Public License version 2.0 (GPLv2)"
 - fracplanet-0.4.0.tar.gz source headers, downloaded 2026-09-30: "either version 3 of the License, or (at your option) any later version"
 - Same tarball, LICENSE file (2026-09-30): "GNU GENERAL PUBLIC LICENSE Version 2, June 1991"
+- Live SourceForge project page re-read in a browser (2026-10-04): License "GNU General Public License version 2.0 (GPLv2)"; "Last Update: 2017-11-16". The conflict with the source headers is unchanged
 
 ## Related
 

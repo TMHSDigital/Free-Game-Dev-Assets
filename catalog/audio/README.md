@@ -56,7 +56,7 @@ you sell or redistribute the IR files as a standalone product.
 | [pixabay-audio](pixabay-audio.md) | Pixabay Audio | custom | yes | active |
 | [zapsplat](zapsplat.md) | Zapsplat | custom | yes† | active |
 | [freesound](freesound.md) | Freesound | varies | filter | needs-review |
-| [budgetpixel-sfx](budgetpixel-sfx.md) | BudgetPixel Sound Effects | CC-BY-4.0 | yes | needs-review |
+| [budgetpixel-sfx](budgetpixel-sfx.md) | BudgetPixel Sound Effects | CC-BY-4.0 | yes | active |
 | [octave-ui-sounds](octave-ui-sounds.md) | Octave | custom | yes | active |
 | [pacdv](pacdv.md) | PacDV Free Sound Effects | custom | unknown | needs-review |
 | [soundbible](soundbible.md) | SoundBible | varies | filter | needs-review |
@@ -69,7 +69,7 @@ you sell or redistribute the IR files as a standalone product.
 | --- | --- | --- | --- | --- |
 | [voxengo-impulses](voxengo-impulses.md) | Voxengo Free IRs | custom | yes | active |
 | [adventure-kid-irs](adventure-kid-irs.md) | Adventure Kid IRs (AKRT) | CC-BY-4.0 | yes | active |
-| [echothief](echothief.md) | EchoThief IRs | unknown | unknown | needs-review |
+| [echothief](echothief.md) | EchoThief IRs | custom | no (games need a separate licence) | needs-review |
 | [convology-xt](convology-xt.md) | Convology XT Free Factory | custom | unknown | needs-review |
 
 ## Music
@@ -118,8 +118,8 @@ sites are gone.
 | [subspaceaudio-5-chiptunes](subspaceaudio-5-chiptunes.md) | 5 Chiptunes (Action), SubspaceAudio | CC0 | yes | active |
 | [eric-skiff-resistor-anthems](eric-skiff-resistor-anthems.md) | Eric Skiff, Resistor Anthems | CC-BY-4.0 | yes | active |
 | [freepd](freepd.md) | FreePD | unknown | unknown | deprecated |
-| [free-music-archive](free-music-archive.md) | Free Music Archive | varies | unknown | needs-review |
-| [ccmixter](ccmixter.md) | ccMixter | varies | unknown | needs-review |
+| [free-music-archive](free-music-archive.md) | Free Music Archive | varies | filter | needs-review |
+| [ccmixter](ccmixter.md) | ccMixter | varies | filter | needs-review |
 | [musopen](musopen.md) | Musopen | varies (PD Mark / CC BY-NC-SA) | varies | needs-review |
 
 Avoid **ND**-licensed music in games — see [`docs/licenses.md`](../../docs/licenses.md) / [`docs/high-risk.md`](../../docs/high-risk.md).

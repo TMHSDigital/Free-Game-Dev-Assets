@@ -11,6 +11,7 @@ attribution_required: false
 formats: [GIF, PNG]
 tags: [match-3, gems, jewels, animated, puzzle, casual, mobile]
 grid_dimensions: 52x52
+camera_perspective: 2d_flat
 verified: 2026-09-23
 status: active
 ---

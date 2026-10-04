@@ -590,6 +590,96 @@ for (const rel of ["2d/a.md", "2d/README.md", "2d/TEMPLATE.md", "2d/.hidden/b.md
 eq("entry walker skips index, template, hidden and scratch", listEntryFiles(tmp).map((f) => nodePath.relative(tmp, f).split(nodePath.sep).join("/")).join(","), "2d/a.md,3d/sub/d.md");
 nodeFs.rmSync(tmp, { recursive: true, force: true });
 
+/* client search, URL state and 404 guesses (search.mjs, #67) --------------- */
+import {
+  closestEntries,
+  missSlug,
+  normalize,
+  passesFilters,
+  queryTests,
+  readState,
+  scoreFields,
+  searchFields,
+  similarity,
+  stateQuery,
+} from "./search.mjs";
+
+const kit = { id: "ui-kit", name: "UI Kit", publisher: "Kenney", tags: ["button", "first-person"], license: "CC0", category: "2d", camera_perspective: "isometric_3_4", formats: ["PNG"], subcategories: ["ui"], summary: "Panels for the earth biome." };
+const kFields = searchFields(kit);
+const kScore = (q) => scoreFields(kFields, queryTests(q));
+eq("normalize folds hyphens and case", normalize("First-Person  UI_kit"), "first person ui kit");
+eq("empty query matches everything", kScore(""), 1);
+eq("word-start match", kScore("ui") > 0, true);
+eq("no match inside a word (ui/build)", scoreFields(searchFields({ ...kit, name: "Build tools", tags: [], subcategories: [] }), queryTests("ui")), 0);
+eq("no match inside a word (art/earth)", kScore("art"), 0);
+eq("plural query finds singular tag", kScore("buttons") > 0, true);
+eq("hyphenated tag found by spaced words", kScore("first person") > 0, true);
+eq("3/4 view answers top down", kScore("top down") > 0, true);
+eq("every word must match", kScore("ui zzz"), 0);
+eq("name hit outranks summary hit", kScore("kit") > kScore("panels"), true);
+eq("regex characters are literal", kScore("c++"), 0);
+
+const URL_DEF = { category: "all", q: "", active: true, review: true, deprecated: false, commercialOnly: false, noAttr: false, perspective: "any", license: "any", format: "any", sort: "name" };
+const URL_ALLOWED = { category: ["all", "2d", "3d"], sort: ["name", "license", "verified"], perspective: ["any", "top_down"], license: ["any", "cc0"], format: ["any", "image"] };
+const urlSt = readState("?cat=2d&q=pixel&sort=bogus&view=top_down&deprecated=1&review=maybe&licence=cc0", URL_DEF, URL_ALLOWED);
+eq("url: known category kept", urlSt.category, "2d");
+eq("url: unknown sort falls back", urlSt.sort, "name");
+eq("url: q kept verbatim", urlSt.q, "pixel");
+eq("url: switch 1 is on", urlSt.deprecated, true);
+eq("url: switch junk keeps default", urlSt.review, true);
+eq("url: licence family", urlSt.license, "cc0");
+eq("url: defaults not mutated", URL_DEF.category, "all");
+eq("url: round trip", readState(`?${stateQuery(urlSt, URL_DEF)}`, URL_DEF, URL_ALLOWED).perspective, "top_down");
+eq("url: defaults write nothing", stateQuery(URL_DEF, URL_DEF), "");
+eq("url: switch off written as 0", stateQuery({ ...URL_DEF, active: false }, URL_DEF), "active=0");
+eq("url: blank q not written", stateQuery({ ...URL_DEF, q: "   " }, URL_DEF), "");
+
+const fmtGroups = { image: { formats: ["PNG", "SVG"] } };
+eq("filter: needs-review hidden when review off", passesFilters({ status: "needs-review" }, { ...URL_DEF, review: false }), false);
+eq("filter: deprecated hidden by default", passesFilters({ status: "deprecated" }, URL_DEF), false);
+eq("filter: commercial-only keeps varies", passesFilters({ status: "active", commercial: "varies" }, { ...URL_DEF, commercialOnly: true }), true);
+eq("filter: commercial-only drops unknown", passesFilters({ status: "active", commercial: "unknown" }, { ...URL_DEF, commercialOnly: true }), false);
+eq("filter: no-attribution needs false, not unknown", passesFilters({ status: "active", attribution_required: "unknown" }, { ...URL_DEF, noAttr: true }), false);
+eq("filter: format group", passesFilters({ status: "active", formats: ["SVG"] }, { ...URL_DEF, format: "image" }, fmtGroups), true);
+eq("filter: format group miss", passesFilters({ status: "active", formats: ["WAV"] }, { ...URL_DEF, format: "image" }, fmtGroups), false);
+
+eq("404 slug from a nested miss", missSlug("/Free-Game-Dev-Assets/entry/Kenny_UI/index.html", "/Free-Game-Dev-Assets/"), "kenny-ui");
+eq("404 slug survives a bad escape", missSlug("/s/entry/%E0%A4%A/", "/s/"), "e0-a4-a");
+eq("identical strings are 1", similarity("kenney", "kenney"), 1);
+eq("disjoint strings are 0", similarity("abc", "xyz"), 0);
+const guessPool = [
+  { id: "kenney-ui-pack", name: "Kenney UI Pack", status: "active" },
+  { id: "kenney-ui-old", name: "Kenney UI Old", status: "deprecated" },
+  { id: "freesound", name: "Freesound", status: "active" },
+];
+eq("404 guesses closest first", closestEntries("kenny-ui-pack", guessPool)[0].id, "kenney-ui-pack");
+eq("404 guesses drop weak matches", closestEntries("kenny-ui-pack", guessPool).some((e) => e.id === "freesound"), false);
+eq("404 guesses respect limit", closestEntries("kenney-ui", guessPool, { limit: 1 }).length, 1);
+
+/* sync-counts and new-entry text rewrites (scaffold.mjs, #67) -------------- */
+import { newEntryProblem, newEntryText, syncCatalogReadme, syncConfig, syncReadme } from "./scaffold.mjs";
+
+const rmText = "| **2D** | 5 | Sprites | [`catalog/2d/`](catalog/2d/) |\n| **3D** | 7 | Models | [`catalog/3d/`](catalog/3d/) |\n[Browse 12 sources](x) badge/sources-12-blue searches all 12 entries";
+const rmSynced = syncReadme(rmText, { "2d": 6, "3d": 7 }, 13);
+has("readme 2d row", rmSynced, "| **2D** | 6 |");
+has("readme 3d row untouched", rmSynced, "| **3D** | 7 |");
+has("readme browse line", rmSynced, "Browse 13 sources");
+has("readme badge", rmSynced, "badge/sources-13-blue");
+has("readme search line", rmSynced, "searches all 13 entries");
+eq("catalog rmText row", syncCatalogReadme("| 2D | 5 | [`2d/`](2d/) | x |", { "2d": 9 }), "| 2D | 9 | [`2d/`](2d/) | x |");
+eq("category row does not match a prefix category", syncCatalogReadme("| 3D | 5 | [`3d/`](3d/) |", { d: 1 }), "| 3D | 5 | [`3d/`](3d/) |");
+eq("config count", syncConfig('{ "expectedEntryCount": 391 }', 392), '{ "expectedEntryCount": 392 }');
+
+const neCats = ["2d", "3d"];
+eq("new-entry: ok", newEntryProblem({ category: "2d", id: "my-pack", categories: neCats }), null);
+has("new-entry: usage", newEntryProblem({ category: "2d", categories: neCats }), "usage");
+has("new-entry: bad category", newEntryProblem({ category: "4d", id: "x", categories: neCats }), "not a category");
+has("new-entry: bad id", newEntryProblem({ category: "2d", id: "My_Pack", categories: neCats }), "kebab-case");
+has("new-entry: taken id", newEntryProblem({ category: "2d", id: "x", categories: neCats, taken: "3d" }), "catalog/3d/x.md already exists");
+const neText = newEntryText("id: example\ncategory: 3d\nverified: 2026-07-19   # note\nstatus: active\n", { id: "my-pack", category: "2d", today: "2026-10-04" });
+eq("new-entry text", neText, "id: my-pack\ncategory: 2d\nverified: 2026-10-04\nstatus: needs-review\n");
+eq("template copy starts needs-review", newEntryText(nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8"), { id: "a", category: "2d", today: "2026-10-04" }).split(/\r?\n/).includes("status: needs-review"), true);
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

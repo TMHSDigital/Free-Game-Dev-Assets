@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, CSV]
 tags: [cards, playing-cards, solitaire, poker, pixel, board-game, mobile]
+camera_perspective: 2d_flat
 verified: 2026-09-23
 status: active
 ---

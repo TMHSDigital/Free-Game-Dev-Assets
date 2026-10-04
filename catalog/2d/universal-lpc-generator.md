@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "Credit all authors listed in the generator export (except CC0 layers)."
 formats: [PNG]
 tags: [lpc]
+camera_perspective: isometric_3_4
 verified: 2026-07-19
 status: active
 ---
@@ -23,6 +24,7 @@ Composable Liberated Pixel Cup paper-doll sheets. Per-layer licenses include **C
 - Download CSV/plain-text credits from the tool when exporting
 - Prefer layers that are CC0/CC-BY/OGA-BY when you must avoid SA viral terms
 - Site: liberatedpixelcup.github.io; source: LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator
+- View: the Liberated Pixel Cup site the generator links to describes the style (read 2026-10-04) as a "front-facing overhead orthographic view" with 32x32 tiles. No `grid_dimensions`: character frames follow the 64x64 LPC standard, but the README says ULPC added weapons with oversize animation frames
 
 ## Evidence
 

@@ -5,12 +5,12 @@ url: https://pnggauntlet.com
 category: tools
 subcategories: [compression, pipeline]
 license: custom
-commercial: unknown
+commercial: true
 attribution_required: false
 formats: [desktop-app, PNG]
 tags: [png, lossless, pngout, optipng, windows]
-verified: 2026-09-30
-status: needs-review
+verified: 2026-10-04
+status: active
 maintenance: inactive
 ---
 
@@ -21,10 +21,11 @@ Windows (.NET 4.0) freeware by Benjamin Hollis that runs PNGOUT, OptiPNG and Def
 ## Notes
 
 - Maintenance: the official page says PNGGauntlet "isn't being updated anymore" and still works, read on 2026-09-30. There is no public source repository.
-- What the terms grant, as far as the page shows: free redistribution of the installer as long as nobody charges for it, modifies it, or bundles it without permission, plus a liability disclaimer. The full licence is only inside the installer's About dialog and was not read this session
-- Ambiguity: the page summary says nothing about commercial *use*. Compressed PNGs are your own images and a lossless optimiser adds no content, but that is inferred, not quoted, hence `commercial: unknown` and `needs-review`
-- The bundled PNGOUT is Ken Silverman's own freeware with separate terms
-- The page itself points to Squoosh as an alternative. Prefer [squoosh](squoosh.md) or [pngyu](pngyu.md) if you need a licence you can quote
+- The licence: on 2026-10-04 the `License.txt` inside the official 3.1.2 installer (`PNGGauntletSetup.msi`) was read. It permits "Redistribution and use in binary forms" with conditions that all concern redistribution: no modified or bundled redistribution without permission, no charging for it, keep the copyright notice and disclaimer, no endorsement use of the name. Use of the program carries no commercial restriction, and the licence claims nothing over the images you compress, so `commercial: true`
+- Credit: the copyright notice must travel with redistributed copies of PNGGauntlet itself. Nothing asks you to credit PNGGauntlet in a game whose PNGs it optimised, so `attribution_required: false`
+- The licence is only published inside the installer, not on a web page. If the download disappears, this entry should be re-checked
+- The bundled PNGOUT and DeflOpt are "used with permission" from their authors; OptiPNG is zlib/libpng. Those terms govern redistributing those binaries, not your images
+- The page itself points to Squoosh as an alternative. Prefer [squoosh](squoosh.md) or [pngyu](pngyu.md) if you need a licence you can link to
 
 ## Evidence
 
@@ -32,6 +33,9 @@ Windows (.NET 4.0) freeware by Benjamin Hollis that runs PNGOUT, OptiPNG and Def
 - Same page (2026-09-30): "A copy of the actual license is included in the installation"
 - Same page (2026-09-30): "PNGGauntlet isn't being updated anymore. It still works fine"
 - Live download `PNGGauntlet-3.1.2.exe` (2026-09-30): HTTP 200
+- `License.txt` in the official `https://pnggauntlet.com/PNGGauntlet-3.1.2.exe` installer, extracted 2026-10-04: "PNGGauntlet is Copyright (c) 2005-2012, Benjamin Hollis"; "Redistribution and use in binary forms are permitted provided that the following conditions are met"
+- Same file (2026-10-04): "Redistributions with modification or as part of a larger software package are not permitted without specific prior written permission." and "Redistributions, with or without modification, must be distributed free of charge, unless specific prior written permission is given."
+- Same file (2026-10-04): "Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer"
 
 ## Related
 

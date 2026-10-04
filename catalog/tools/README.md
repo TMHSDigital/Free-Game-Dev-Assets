@@ -39,8 +39,8 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [tiled](tiled.md) | Tiled Map Editor | GPL-2.0-or-later | active |
 | [pixelorama](pixelorama.md) | Pixelorama | MIT | active |
 | [material-maker](material-maker.md) | Material Maker | MIT | active |
-| [gaea](gaea.md) | Gaea Community Edition | custom | needs-review |
-| [accurig](accurig.md) | AccuRig (Reallusion) | custom | needs-review |
+| [gaea](gaea.md) | Gaea Community Edition | custom | active |
+| [accurig](accurig.md) | AccuRig (Reallusion) | custom | active |
 | [krita](krita.md) | Krita | GPL-3.0 | active |
 | [inkscape](inkscape.md) | Inkscape | GPL-3.0-or-later | active |
 | [tenacity](tenacity.md) | Tenacity | GPL-2.0-or-later | active |
@@ -104,12 +104,12 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [colmap](colmap.md) | COLMAP | BSD-3-Clause | active |
 | [meshlab](meshlab.md) | MeshLab | GPL-3.0 | active |
 | [cloudcompare](cloudcompare.md) | CloudCompare | GPL-2.0-or-later | active |
-| [xnormal](xnormal.md) | xNormal | custom | needs-review |
+| [xnormal](xnormal.md) | xNormal | custom | active |
 | [cheetah-texture-packer](cheetah-texture-packer.md) | Cheetah Texture Packer | LGPL-3.0 | needs-review |
 | [ezspritesheet](ezspritesheet.md) | EzSpriteSheet | GPL-3.0 | needs-review |
 | [gdx-texture-packer-gui](gdx-texture-packer-gui.md) | GDX Texture Packer GUI | Apache-2.0 | active |
 | [imagealpha](imagealpha.md) | ImageAlpha | GPL-2.0 | active |
-| [pnggauntlet](pnggauntlet.md) | PNGGauntlet | custom | needs-review |
+| [pnggauntlet](pnggauntlet.md) | PNGGauntlet | custom | active |
 | [pngyu](pngyu.md) | Pngyu | BSD | needs-review |
 | [snowb-bmf](snowb-bmf.md) | SnowB Bitmap Font | MIT | active |
 | [squoosh](squoosh.md) | Squoosh | Apache-2.0 | active |

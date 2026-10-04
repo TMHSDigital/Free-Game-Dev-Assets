@@ -10,7 +10,7 @@ commercial: true
 attribution_required: false
 formats: [MP4]
 tags: [stock, b-roll, games-not-named]
-verified: 2026-09-23
+verified: 2026-10-04
 status: needs-review
 ---
 
@@ -26,6 +26,7 @@ Envato's free stock video, under the Mixkit Stock Video Free License. Commercial
 - **Envato Acceptable Use Policy (read 2026-09-24), which the User Terms bind:** no use of assets "to train, develop, or enhance artificial intelligence models"; no content that promotes "the supply of weapons or gambling" (a real-money gambling game is the case to check); and assets that "depict or reference sensitive topics" may be used only for "an educational, informational, journalistic, or advocacy purpose". Envato also reserves action against anything that "looks or feels like" a listed breach. None of it mentions games; the Fair Use Policy adds only a ban on bulk or automated downloading
 - For clips with a plainer general grant, prefer [pexels-videos](pexels-videos.md), [pixabay-videos](pixabay-videos.md) or [coverr](coverr.md)
 - The licence page opens behind a cookie consent dialog; the text is in the page and was read without accepting cookies
+- Still open (re-checked 2026-10-04): the video licence is unchanged and still has no games sentence. It also has no redistribution limit of its own, unlike the Sound Effects licence, which says "You can't redistribute the Item on its own, as stock, in a tool or template" and allows use in an End Product "larger in scope and different in nature than the Item". Shipping a clip inside a game is distribution, which the video licence grants in general terms; the only limits are the User Terms (no stock-basis or unaltered resale). The one open question is still whether Envato meant the video licence to cover games, given it names them only in the SFX licence. The Restricted licence is personal-use only and rules out "Commercial Projects"
 
 ## Evidence
 
@@ -34,6 +35,9 @@ Envato's free stock video, under the Mixkit Stock Video Free License. Commercial
 - Same page (2026-09-23): licence cards for "Stock Video Free License" and "Stock Video Restricted License"
 - Live [Mixkit User Terms](https://mixkit.co/terms/), section 9 (2026-09-23): "sell physical or digital copies of Items without first altering them by applying human skill and effort, and incorporating other elements" is listed as a restriction; section 7: "You must be 18 years of age or over to access and use Mixkit."
 - Live [Envato Acceptable Use Policy](https://help.elements.envato.com/hc/en-us/articles/31035788503321-Acceptable-Use-Policy), last revised September 2, 2026 (2026-09-24): "if there are Assets available on an Envato Site that depict or reference sensitive topics, these Assets may only be used in a context where it serves an educational, informational, journalistic, or advocacy purpose"
+- Live `mixkit.co/license/` Stock Video Free License, read in a browser (2026-10-04): use list "YouTube videos, Social Media video posts, Online marketing ads, Educational purposes, Music videos, Commercial projects, Filmmaking"; "You're permitted to download, copy, modify, distribute, publicly perform and broadcast the Items. Your rights are non-exclusive, worldwide, sub-licensable and ongoing. Attribution is not required, however, we would appreciate it if you credit Mixkit where reasonably possible."
+- Same page, Sound Effects Free License (2026-10-04): use list includes "Video games"; "You're permitted to download, copy, modify, distribute and publicly perform the Sound Effect Items on any web or social media platform, in podcasts and in video games"
+- Same page, Stock Video Restricted License (2026-10-04): "Items under the Mixkit Stock Video Restricted License can be used in personal projects only."
 
 ## Related
 

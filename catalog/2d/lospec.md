@@ -9,7 +9,7 @@ commercial: unknown
 attribution_required: unknown
 formats: [gpl-palette, PAL, ASE, PNG]
 tags: [palettes, pixel-art, retro]
-verified: 2026-09-26
+verified: 2026-10-04
 status: needs-review
 ---
 
@@ -30,6 +30,9 @@ Curated pixel palettes and tools. **No site-wide commercial grant** — most pal
 - Live [palette-list/tag/cc0](https://lospec.com/palette-list/tag/cc0) (2026-07-20): some uploads self-tag CC0 (e.g. Paleto) — not a site-wide grant → keep `needs-review`
 - Live [Terms and Conditions](https://lospec.com/terms-and-conditions) (2026-09-26): covers use of the site and store ("This website is operated by Lospec"); sections on user submissions and prohibited uses, no licence granted for palette content
 - Live [Sweetie 16](https://lospec.com/palette-list/sweetie-16) (2026-09-26): "Palette created by GrafxKid", tags and download count only; no licence field
+- Live [Terms and Conditions](https://lospec.com/terms-and-conditions) (2026-10-04): unchanged; the only content clauses are about comments and prohibited uses ("You agree that your comments will not violate any right of any third-party, including copyright"), and no licence is granted for palettes
+- Live [Sweetie 16](https://lospec.com/palette-list/sweetie-16) (2026-10-04): "Palette created by GrafxKid", "Number of colors: 16", tags "artist, grafxkid, skeddlespicks"; still no licence field. Open question unchanged: palettes carry no per-item licence, so `commercial` and `attribution_required` stay `unknown`
+
 ## Related
 
 - [paleto-vol01](paleto-vol01.md)

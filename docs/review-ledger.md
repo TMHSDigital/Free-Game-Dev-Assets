@@ -4,6 +4,27 @@ Newest section at the top. One section per review run. This is the record of wha
 run measured, what it changed, what it deliberately did not change, and what the next
 run should not spend time re-deciding.
 
+## 2026-10-04 (needs-review sweep #54-#57, 2D fields #41, client tests #67)
+
+Every entry listed in #54-#57 (37) was re-read at its source on 2026-10-04. Each one has `verified: 2026-10-04` and a dated Evidence line quoting what was read.
+
+- **Now `active` (9):**
+  - budgetpixel-sfx: CC BY 4.0, games named. Still tagged `ai-generated`.
+  - accurig.
+  - gaea: EULA.txt from the official archive. Community Edition is non-commercial, so `commercial: false`.
+  - pnggauntlet and xnormal: the licence is read from the files inside the official installer, since the web has none. Notes say so.
+  - charge-materials: CC BY 4.0, from the asset detail panel.
+  - penzilla: corrected to `commercial: false`. The Standard License needs a paid invoice for any use and credit is mandatory.
+  - fontshare: the ITF FFL allows games. Notes warn that its ban on file conversion may cover SDF/atlas baking.
+  - charmorph: `commercial: varies`, because the `mb_*` bases make the exported model AGPL.
+- **Corrected but still `needs-review`:**
+  - echothief: the SDSURF licence PDF bars "gaming" without a separate commercial licence, so `license: custom`, `commercial: false`.
+  - ccmixter, free-music-archive and sketchfab: `commercial: varies`.
+  - prelinger-archives: credit is not required. Only 1,871 of 10,468 items carry the public-domain dedication.
+- **Still `needs-review` (open questions are in each entry's Notes):** convology-xt, freesound, musopen, pacdv, soundbible, cheetah-texture-packer, ezspritesheet, fracplanet, multipaint, pngyu, wwise, dcss-tiles, godot-shaders, lospec, material-maker-gallery, opengameart, poly-pizza, scan-the-world, textureking, destockd, mixkit-stock-video, nasa-image-video-library, truebones-zoo. These are mostly per-file aggregators, or questions only the publisher can answer.
+- **#41:** added `camera_perspective` to 8 2D entries and `grid_dimensions: 16x16` to kenney-roguelike-characters. Each value comes from the source page or its preview. Entries left without a value are mixed-style aggregators, palettes, or packs of varying size. kenney-pixel-vehicle-pack's summary is corrected to side-on.
+- **#67:** the catalog search, URL state, filters and 404 guesses moved to `site/lib/search.mjs`, which the build copies to `dist/search.js`. `app.js` and `not-found.js` now load as modules and import it. The sync-counts and new-entry text rewrites moved to `site/lib/scaffold.mjs`. All are covered in lib.test.mjs (401 assertions).
+
 ## 2026-10-04 (repo review, #59-#75)
 
 A whole-repo review (code, docs, live site) filed #59-#75. This run fixed the code and doc items. No entry's licence data changed.

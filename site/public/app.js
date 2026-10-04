@@ -1,3 +1,5 @@
+import { passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, stateQuery } from "./search.js";
+
 (() => {
   const data = window.__CATALOG__;
   if (!data) {
@@ -59,14 +61,6 @@
     archived: "The source repository is archived: read-only, no fixes or updates.",
     inactive: "The source has had no new commits for over three years.",
   };
-  // Searchable words per perspective. A 3/4 pack is what most people mean by a top-down
-  // RPG, so it answers "top down" too.
-  const PERSPECTIVE_SEARCH = {
-    top_down: "top-down",
-    isometric_3_4: "3/4 view top-down",
-    side_scroller: "side-scroller",
-    "2d_flat": "flat ui",
-  };
   // Ages are measured at build time, like the prerendered cards and the
   // freshness line, so the page never disagrees with itself. A weekly
   // scheduled build keeps the build time recent.
@@ -118,47 +112,22 @@
    * URL without it.
    */
   function readUrl() {
-    const p = new URLSearchParams(location.search);
-    const pick = (key, field, allowed) => {
-      const v = p.get(key);
-      if (v !== null && allowed.includes(v)) state[field] = v;
-    };
-    pick("cat", "category", ["all", ...Object.keys(categoryLabels)]);
-    pick("sort", "sort", Object.keys(SORTS));
-    pick("view", "perspective", ["any", ...Object.keys(PERSPECTIVE_LABELS)]);
-    pick("licence", "license", ["any", ...Object.keys(LICENSE_FAMILIES)]);
-    pick("format", "format", ["any", ...Object.keys(FORMAT_GROUPS)]);
-    if (p.has("q")) state.q = p.get("q");
-    const bool = (key, field) => {
-      const v = p.get(key);
-      if (v === "1" || v === "0") state[field] = v === "1";
-    };
-    bool("active", "active");
-    bool("review", "review");
-    bool("deprecated", "deprecated");
-    bool("commercial", "commercialOnly");
-    bool("noattr", "noAttr");
+    Object.assign(
+      state,
+      readState(location.search, DEFAULTS, {
+        category: ["all", ...Object.keys(categoryLabels)],
+        sort: Object.keys(SORTS),
+        perspective: ["any", ...Object.keys(PERSPECTIVE_LABELS)],
+        license: ["any", ...Object.keys(LICENSE_FAMILIES)],
+        format: ["any", ...Object.keys(FORMAT_GROUPS)],
+      })
+    );
   }
 
   const RESULTS_KEY = "fgda:results";
 
   function writeUrl() {
-    const p = new URLSearchParams();
-    if (state.category !== DEFAULTS.category) p.set("cat", state.category);
-    if (state.q.trim()) p.set("q", state.q.trim());
-    if (state.sort !== DEFAULTS.sort) p.set("sort", state.sort);
-    if (state.perspective !== DEFAULTS.perspective) p.set("view", state.perspective);
-    if (state.license !== DEFAULTS.license) p.set("licence", state.license);
-    if (state.format !== DEFAULTS.format) p.set("format", state.format);
-    const bool = (key, field) => {
-      if (state[field] !== DEFAULTS[field]) p.set(key, state[field] ? "1" : "0");
-    };
-    bool("active", "active");
-    bool("review", "review");
-    bool("deprecated", "deprecated");
-    bool("commercial", "commercialOnly");
-    bool("noattr", "noAttr");
-    const qs = p.toString();
+    const qs = stateQuery(state, DEFAULTS);
     const next = `${location.pathname}${qs ? `?${qs}` : ""}${location.hash}`;
     history.replaceState(null, "", next);
     // Entry pages link back to these results (entry.js reads this).
@@ -172,23 +141,7 @@
 
   /* ---------------------------------------------------------- filtering */
 
-  /** Every filter except the category and the search words. */
-  function passesFilters(entry) {
-    if (entry.status === "active" && !state.active) return false;
-    if (entry.status === "needs-review" && !state.review) return false;
-    if (entry.status === "deprecated" && !state.deprecated) return false;
-    if (state.commercialOnly && entry.commercial !== true && entry.commercial !== "varies")
-      return false;
-    if (state.noAttr && entry.attribution_required !== false) return false;
-    if (state.perspective !== "any" && entry.camera_perspective !== state.perspective)
-      return false;
-    if (state.license !== "any" && entry.licenseFamily !== state.license) return false;
-    if (state.format !== "any") {
-      const wanted = FORMAT_GROUPS[state.format]?.formats || [];
-      if (!(entry.formats || []).some((f) => wanted.includes(f))) return false;
-    }
-    return true;
-  }
+  const passesFilters = (entry) => passes(entry, state, FORMAT_GROUPS);
 
   /**
    * One pass over the catalog per change. The pool is what passes every
@@ -220,77 +173,18 @@
     return { list, counts, total: pool.length, ranked };
   }
 
-  // Hyphens and underscores read as spaces: "first person" finds the "first-person" tag.
-  function normalize(text) {
-    return String(text).toLowerCase().replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
-  }
-
   /* ------------------------------------------------------------- search */
 
-  // Each entry's searchable text, normalised once at load, in three fields.
-  // Name, publisher and tags are what a reader means by a word, so a hit there
-  // ranks above one in the other metadata, which ranks above a summary-only
-  // hit. Tags no longer repeat the publisher or licence (V19, V21), so those
-  // fields are searched directly.
-  const FIELD_WEIGHTS = [3, 2, 1];
-  const searchIndex = new Map(
-    data.entries.map((e) => [
-      e.id,
-      [
-        normalize([e.name, e.publisher || "", ...(e.tags || [])].join(" ")),
-        normalize(
-          [
-            e.license,
-            e.category,
-            PERSPECTIVE_SEARCH[e.camera_perspective] || "",
-            ...(e.formats || []),
-            ...(e.subcategories || []),
-          ].join(" ")
-        ),
-        normalize(e.summary || ""),
-      ],
-    ])
-  );
-
-  /**
-   * One test per query word. A word matches at the start of a word in the
-   * text, never inside one: "ui" finds "UI kit" but not "build", "art" finds
-   * "artwork" but not "earth". A plural query word also matches its singular,
-   * since tags are stored one way: "buttons" finds the "button" tag.
-   */
-  function wordTest(word) {
-    const forms = [word];
-    if (word.length > 3 && word.endsWith("s")) forms.push(word.slice(0, -1));
-    const alt = forms.map((f) => f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
-    return new RegExp(`(?:^|[^\\p{L}\\p{N}])(?:${alt})`, "u");
-  }
+  // Each entry's searchable fields, normalised once at load (search.js).
+  const searchIndex = new Map(data.entries.map((e) => [e.id, searchFields(e)]));
 
   let compiled = { q: null, tests: [] };
   function queryTests() {
-    if (compiled.q !== state.q) {
-      const words = normalize(state.q).split(" ").filter(Boolean);
-      compiled = { q: state.q, tests: words.map(wordTest) };
-    }
+    if (compiled.q !== state.q) compiled = { q: state.q, tests: compileQuery(state.q) };
     return compiled.tests;
   }
 
-  /**
-   * 0 when the entry misses any query word. Every word must match somewhere,
-   * in any order, so "top down" and "arms fps" work. Each word scores by the
-   * best field it matched in, so name and tag hits rank first.
-   */
-  function searchScore(entry) {
-    const tests = queryTests();
-    if (!tests.length) return 1;
-    const fields = searchIndex.get(entry.id) || [];
-    let score = 0;
-    for (const re of tests) {
-      const i = fields.findIndex((f) => re.test(f));
-      if (i === -1) return 0;
-      score += FIELD_WEIGHTS[i];
-    }
-    return score;
-  }
+  const searchScore = (entry) => scoreFields(searchIndex.get(entry.id) || [], queryTests());
 
   const SORTS = {
     name: (a, b) => a.name.localeCompare(b.name),

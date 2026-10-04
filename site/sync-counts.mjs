@@ -11,6 +11,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { listEntryFiles } from "./lib/entry-files.mjs";
+import { syncCatalogReadme, syncConfig, syncReadme } from "./lib/scaffold.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -22,18 +23,6 @@ function countEntries() {
     counts[d.name] = listEntryFiles(path.join(CATALOG, d.name)).length;
   }
   return counts;
-}
-
-const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-/** Replaces the count cell of each category row whose line contains `fragment` (CAT = category). */
-function syncTable(text, counts, fragment) {
-  let out = text;
-  for (const [cat, n] of Object.entries(counts)) {
-    const re = new RegExp(`(\\|[^|\\n]*\\|\\s*)\\d+(\\s*\\|[^\\n]*${escRe(fragment.replace("CAT", cat))})`);
-    out = out.replace(re, `$1${n}$2`);
-  }
-  return out;
 }
 
 function update(file, fn) {
@@ -49,13 +38,8 @@ function update(file, fn) {
 const counts = countEntries();
 const total = Object.values(counts).reduce((a, b) => a + b, 0);
 
-update("README.md", (t) =>
-  syncTable(t, counts, "catalog/CAT/")
-    .replace(/badge\/sources-\d+-/, `badge/sources-${total}-`)
-    .replace(/Browse \d+ sources/g, `Browse ${total} sources`)
-    .replace(/searches all \d+ entries/g, `searches all ${total} entries`)
-);
-update("catalog/README.md", (t) => syncTable(t, counts, "`CAT/`"));
-update("site/config.json", (t) => t.replace(/("expectedEntryCount":\s*)\d+/, `$1${total}`));
+update("README.md", (t) => syncReadme(t, counts, total));
+update("catalog/README.md", (t) => syncCatalogReadme(t, counts));
+update("site/config.json", (t) => syncConfig(t, total));
 
 console.log(`${total} entries: ${Object.entries(counts).map(([c, n]) => `${c} ${n}`).join(", ")}`);

@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, SVG, XML]
 tags: [puzzle, casual, breakout, brick, pipes, coins, particles, mobile]
+camera_perspective: 2d_flat
 verified: 2026-09-23
 status: active
 ---

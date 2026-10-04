@@ -90,7 +90,7 @@ two carry obligations the rest do not.
 | [luizmelo-martial-hero](luizmelo-martial-hero.md) | LuizMelo Martial Hero | CC0 | yes | active |
 | [luizmelo-evil-wizard](luizmelo-evil-wizard.md) | LuizMelo Evil Wizard | CC0 | yes | active |
 | [luizmelo-monsters-creatures-fantasy](luizmelo-monsters-creatures-fantasy.md) | LuizMelo Monsters Fantasy | CC0 | yes | active |
-| [penzilla](penzilla.md) | Penzilla | custom | yes | needs-review |
+| [penzilla](penzilla.md) | Penzilla | custom | no | active |
 | [material-symbols](material-symbols.md) | Material Symbols | Apache-2.0 | yes | active |
 | [craftpix](craftpix.md) | CraftPix freebies | custom | yes | active |
 | [game-icons-net](game-icons-net.md) | Game-Icons.net | CC-BY-3.0 | yes | active |

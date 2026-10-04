@@ -331,7 +331,7 @@ function notFoundHtml(site) {
       </p>
     </main>
     <script src="${esc(base)}/data.js" defer></script>
-    <script src="${esc(base)}/not-found.js" defer></script>
+    <script type="module" src="${esc(base)}/not-found.js"></script>
   </body>
 </html>
 `;
@@ -557,6 +557,8 @@ function main() {
   copyDir(PUBLIC, DIST);
   // The shortlist builds its CREDITS file with the same code as the stack pages.
   fs.copyFileSync(path.join(__dirname, "lib", "owes.mjs"), path.join(DIST, "owes.js"));
+  // The catalog search and the 404 page's guesses, tested in lib.test.mjs.
+  fs.copyFileSync(path.join(__dirname, "lib", "search.mjs"), path.join(DIST, "search.js"));
   const hasCard = fs.existsSync(OG_CARD_SRC);
   if (hasCard) fs.copyFileSync(OG_CARD_SRC, path.join(DIST, OG_CARD_NAME));
   // data.json is the public machine-readable catalog (see site/README.md);

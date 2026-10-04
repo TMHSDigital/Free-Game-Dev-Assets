@@ -46,7 +46,7 @@ Match the font's design grid to your tile grid where you can: DotGothic16 is dra
 | [silkscreen](silkscreen.md) | Silkscreen | SIL OFL | yes | active |
 | [source-sans-3](source-sans-3.md) | Source Sans 3 | SIL OFL | yes | active |
 | [vt323](vt323.md) | VT323 | SIL OFL | yes | active |
-| [fontshare](fontshare.md) | Fontshare | varies | unknown | needs-review |
+| [fontshare](fontshare.md) | Fontshare | varies | yes | active |
 | [velvetyne](velvetyne.md) | Velvetyne | SIL OFL | yes | active |
 | [fontsource](fontsource.md) | Fontsource | varies | varies | active |
 | [open-foundry](open-foundry.md) | Open Foundry | varies | varies | active |

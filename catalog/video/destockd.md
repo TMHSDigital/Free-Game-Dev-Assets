@@ -9,7 +9,7 @@ commercial: varies
 attribution_required: false
 formats: [MP4]
 tags: [fedflix, government, clip-search, aggregator]
-verified: 2026-09-06
+verified: 2026-10-04
 status: needs-review
 ---
 
@@ -27,6 +27,7 @@ CLIP-indexed shot search over FedFlix films on the Internet Archive. About 41,00
 - Unedited historical material: war, disaster, WWII atrocity footage. Filter "disturbing" shots on Random if you do not want that in a browse pass.
 - Independent project by Elroddd. Not affiliated with the Internet Archive, FedFlix, NARA, or the U.S. government.
 - Stays `needs-review`: aggregator, per-clip verify required, games not named. Public-domain copyright is usually enough to ship inside a game, but that is not a blanket Destockd warranty.
+- Still open (re-checked 2026-10-04): the Legal, FAQ and About texts say the same as before and still never mention games. What stays open is per clip, not per site: Destockd makes no warranty for any individual clip, and its Legal page now says some FedFlix films are unrestricted on grounds other than U.S. government authorship ("rights transfers, donor agreements, expired copyrights"), so each clip's source record has to be read before it ships in a commercial game. Credit is settled (none required by Destockd)
 
 ## Evidence
 
@@ -37,6 +38,9 @@ CLIP-indexed shot search over FedFlix films on the Internet Archive. About 41,00
 - Live [Legal](https://www.destockd.com/#/legal) (2026-09-06): "You are responsible for verifying the rights status of any clip before commercial use."
 - Same Legal page (2026-09-06): "NARA states that it \"does not confirm copyright status for any items\""
 - Live shot page `LIBRARY STOCK SHOT #75` / `shot_026` (2026-09-06): "Rights Source Fedflix - designated unrestricted. See disclaimer." Download is MP4; source links to archive.org and catalog.archives.gov.
+- Live `www.destockd.com/content/legal.md`, the text behind the Legal page (2026-10-04): "Destockd believes all hosted footage to be in the public domain in the United States or otherwise unrestricted for reuse based on its FedFlix/government-production origin. Individual clips and embedded elements have not been independently verified by Destockd. You are responsible for verifying the rights status of any clip before commercial use."
+- Same page (2026-10-04): "Other films in FedFlix may be in the public domain or unrestricted for reuse on other grounds, including rights transfers, donor agreements, expired copyrights, or other source-specific circumstances."; "Destockd does not provide model, property, trademark, publicity, privacy, performance, or other releases."
+- Live `www.destockd.com/content/faq.md` (2026-10-04): "No. Destockd does not require attribution. If a particular film or archival source has its own requirements or restrictions, those are separate from Destockd."
 
 ## Related
 

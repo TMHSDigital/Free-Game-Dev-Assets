@@ -17,7 +17,7 @@ wording matters.
 | The same, a second pool | [pixabay-videos](pixabay-videos.md) | None | No standalone redistribution: fine inside a game, not as a clip pack |
 | Clips with an explicit irrevocable grant | [coverr](coverr.md) | None | No AI training; no releases passed on for people or brands in shot |
 | Envato's free clips | [mixkit-stock-video](mixkit-stock-video.md) | None | Games are left off the licence's use list, though Mixkit's SFX licence names them. `needs-review` |
-| Period footage, films from the archive | [prelinger-archives](prelinger-archives.md) | Unclear | Per film: only films carrying the Creative Commons public-domain dedication are free to use |
+| Period footage, films from the archive | [prelinger-archives](prelinger-archives.md) | None | Per film: only films carrying the Creative Commons public-domain dedication are free to use |
 | Government archival shots, searchable by shot | [destockd](destockd.md) | None | Aggregator; FedFlix is usually U.S. public domain but is not certified per clip |
 
 **What is in the shot is a separate question.** These licences cover the footage, not the

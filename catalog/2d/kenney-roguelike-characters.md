@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [PNG]
 tags: [rpg, characters, roguelike, overworld, front-facing]
+grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 verified: 2026-09-22
 status: active

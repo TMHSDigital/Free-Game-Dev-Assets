@@ -9,6 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { newEntryProblem, newEntryText } from "./lib/scaffold.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -20,28 +21,16 @@ function fail(msg) {
 }
 
 const [category, id] = process.argv.slice(2);
-if (!category || !id) fail("usage: node site/new-entry.mjs <category> <id>");
-
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json"), "utf8"));
-const categories = Object.keys(config.categories || {});
-if (!categories.includes(category)) fail(`"${category}" is not a category. Use one of: ${categories.join(", ")}`);
-if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(id)) fail(`"${id}" is not a short kebab-case id`);
-
 // Ids are unique across the whole catalog, not per category.
-for (const cat of fs.readdirSync(CATALOG, { withFileTypes: true })) {
-  if (cat.isDirectory() && fs.existsSync(path.join(CATALOG, cat.name, `${id}.md`))) {
-    fail(`catalog/${cat.name}/${id}.md already exists`);
-  }
-}
+const taken = id
+  ? fs.readdirSync(CATALOG, { withFileTypes: true }).find((d) => d.isDirectory() && fs.existsSync(path.join(CATALOG, d.name, `${id}.md`)))?.name
+  : undefined;
+const problem = newEntryProblem({ category, id, categories: Object.keys(config.categories || {}), taken });
+if (problem) fail(problem);
 
 const today = new Date().toISOString().slice(0, 10);
-const text = fs
-  .readFileSync(path.join(CATALOG, "TEMPLATE.md"), "utf8")
-  .replace(/^id: .*$/m, `id: ${id}`)
-  .replace(/^category: .*$/m, `category: ${category}`)
-  .replace(/^verified: .*$/m, `verified: ${today}`)
-  // A new entry starts unsettled; set active once the licence is read and quoted.
-  .replace(/^status: .*$/m, "status: needs-review");
+const text = newEntryText(fs.readFileSync(path.join(CATALOG, "TEMPLATE.md"), "utf8"), { id, category, today });
 
 const rel = `catalog/${category}/${id}.md`;
 // A category can be in config.json before its folder exists.

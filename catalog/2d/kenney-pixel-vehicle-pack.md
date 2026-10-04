@@ -11,18 +11,20 @@ commercial: true
 attribution_required: false
 formats: [PNG]
 tags: [vehicles, cars, pixel]
+camera_perspective: side_scroller
 verified: 2026-07-19
 status: active
 ---
 
 # Kenney Pixel Vehicle Pack
 
-50 CC0 pixel car/vehicle sprites — fills the catalog’s 2D vehicles gap for top-down / side racers and city fillers.
+50 CC0 pixel car/vehicle sprites, drawn side-on. Fills the catalog’s 2D vehicles gap for side-view racers and street fillers.
 
 ## Notes
 
 - Small pack; expect to tint/shade for variety
 - CC0 commercial embed OK; donation optional
+- View: the pack's preview sheet on the Kenney page (read 2026-10-04) shows every vehicle, pedestrian and road prop in side view, so it suits side-on racers and street scenes, not overhead ones
 
 ## Evidence
 

@@ -11,7 +11,7 @@ attribution_required: true
 attribution_string: "NASA"
 formats: [JPG, MP4, WAV, TIFF]
 tags: [government, space, audio, video, endorsement-trap]
-verified: 2026-08-24
+verified: 2026-10-04
 status: needs-review
 ---
 
@@ -25,6 +25,7 @@ Searchable NASA stills, video, and audio (launch audio, mission clips, press kit
 - NASA insignia, worm, and employee likenesses on cover art or ads need extra clearance. Merchandise has its own approvals page
 - "generally are not subject to copyright" includes "audio, video" and 3D texture/polygon files. That is a US copyright statement, not a worldwide trademark waiver
 - Do not put the meatball on a store page. Do not write "official NASA game"
+- Still open (re-checked 2026-10-04): the guidelines are unchanged on the points that matter. They still never mention games or software products; the commercial section still pairs "used editorially within published works that are not promotional in nature" with the no-endorsement rule; and third-party material is still mixed in item by item ("NASA occasionally uses copyright-protected material of third parties"), so each item's credit line has to be checked. `commercial` stays `unknown` until NASA says whether a commercial game counts, or counsel reads the clause
 - Checklist: guidelines page loaded, commercial not an explicit game grant, attribution requested, not a marketplace, NASA is the supplier, not blocklisted, catalog claims no rights
 
 ## Evidence
@@ -33,6 +34,10 @@ Searchable NASA stills, video, and audio (launch audio, mission clips, press kit
 - Live guidelines, COMMERCIAL USE (2026-08-24): "must not explicitly or implicitly convey NASA's endorsement"
 - Live guidelines (2026-08-24): "used editorially within published works that are not promotional in nature"
 - Live `images.nasa.gov` (2026-08-24): HTTP 200, no license quote in the fetched body (SPA)
+- Live [guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/) (2026-10-04): "NASA content – images, audio, video, and media files used in the rendition of 3-dimensional models, such as texture maps and polygon data in any format – generally are not subject to copyright in the United States."; "NASA should be acknowledged as the source of the material."
+- Same page (2026-10-04): "NASA occasionally uses copyright-protected material of third parties with permission on its website. Those images will be marked identified as copyright protected with the name of the copyright holder. NASA's use does not convey any rights to others to use the same material."
+- Same page, COMMERCIAL USE (2026-10-04): "NASA imagery can be generally used editorially within published works that are not promotional in nature."; "If the NASA material is to be used for commercial purposes, including advertisements, it must not explicitly or implicitly convey NASA's endorsement of commercial goods or services."
+- Same page, Media including Identifiable Persons (2026-10-04): "using the media for commercial purposes may infringe that person's right of privacy or publicity, and permission should be obtained from the person."
 
 ## Related
 

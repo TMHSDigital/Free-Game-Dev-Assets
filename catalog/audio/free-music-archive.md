@@ -5,12 +5,12 @@ url: https://freemusicarchive.org
 category: audio
 subcategories: [music]
 license: varies
-commercial: unknown
+commercial: varies
 attribution_required: true
 attribution_string: "Credit the track artist and the CC license named on that FMA track page."
 formats: [MP3]
 tags: [aggregator, tribe-of-noise]
-verified: 2026-08-24
+verified: 2026-10-04
 status: needs-review
 ---
 
@@ -26,6 +26,7 @@ Tribe of Noise's independent-music archive. Tracks are uploaded under per-file C
 - Royalty-free / all-rights-included is the paid PRO product, not the free archive
 - Prefer [incompetech](incompetech.md) or [kenney-music-jingles](kenney-music-jingles.md) when you want one license for the whole library
 - [freepd](freepd.md) is dead. FMA does not replace it as CC0 music
+- `commercial: varies` (set 2026-10-04): the License Guide documents CC BY as usable "even commercially" and BY-NC as non-commercial, and artists choose per track, so this is the per-file case. Still open: no FMA page names games, the FAQ mentions CC0 as a possibility (so `attribution_required: true` may not hold for every track), and ND tracks may still exist, so the entry stays `needs-review`
 
 ## Evidence
 
@@ -33,6 +34,8 @@ Tribe of Noise's independent-music archive. Tracks are uploaded under per-file C
 - Same page (2026-08-24): "Most of the music licences you will find on FMA are Creative Commons licences"
 - Live License Guide (2026-08-24): documents CC BY-NC as non-commercial only
 - Live marketing homepage (2026-08-24): FMA listed under "Discovery / personal use"
+- Live [License Guide](https://freemusicarchive.org/License_Guide) (2026-10-04): "FMA artists can upload their own music and select a specific CC licence themselves."; "FMA cannot license original work to you for commercial, private, or other use."; CC BY "enables users to distribute, remix, tweak, and build upon an original work, even commercially, as long as the creator is credited"
+- Live [FAQ](https://freemusicarchive.org/FAQ) (2026-10-04): "On the left side of the track page, you will see the specific Creative Commons license attached to the track."
 
 ## Related
 

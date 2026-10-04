@@ -10,7 +10,7 @@ attribution_required: true
 attribution_string: "Truebones"
 formats: [FBX, BVH]
 tags: [creature, animals, mocap, gumroad, vendor-risk]
-verified: 2026-08-29
+verified: 2026-10-04
 status: needs-review
 ---
 
@@ -24,6 +24,7 @@ status: needs-review
 - ToS: royalty-free commercial use including Games. Credit Truebones. No redistributing or reselling raw FBX, BVH, or i-Motion files.
 - Product blurb also markets "animated movie productions." Use the ToS Games clause, not the marketing sentence, for interactive work.
 - Vendor-reputation risk. Keep `needs-review` even with a game-naming quote.
+- Still open (re-checked 2026-10-04): the full ToS text is now readable in the Gumroad page data and matches the earlier meta quotes word for word (commercial use including Games, credit Truebones, no resale or redistribution of the raw .FBX, .BVH or i-Motion files; the ban names those file formats and does not mention compiled games). What stays open is which terms cover the ZOO download itself: the ToS is a separate Gumroad product, and the ZOO page says "use free code to download for FREE (if you have one) Other purchase liscense for 99+", which may mean the free-code copy and the $99+ purchase carry different licences. No licence text ships on the ZOO page beyond "A 100% ROYALTY FREE License!"
 - Do not catalog the Truebones Mixamo 2400 dump. That is a Mixamo repack; see [`docs/high-risk.md`](../../docs/high-risk.md).
 - Prefer [quaternius-ultimate-monsters](../characters/quaternius-ultimate-monsters.md) / [quaternius-farm-animal-pack](../characters/quaternius-farm-animal-pack.md) when you want CC0 creatures.
 
@@ -33,6 +34,8 @@ status: needs-review
 - Same meta (2026-08-29): "Re-Distribution or ReSale of Truebones in .FBX, .BVH or i-Motion formats is strictly prohibited"
 - Same meta (2026-08-29): "Please provide credit to Truebones when using Truebones."
 - Product page HTML body did not expose the ToS text on 2026-08-29 (meta only).
+- Live [ToS product vlvPq](https://truebones.gumroad.com/l/vlvPq), full description from the page data (2026-10-04): "TRUEBONES products are absolutely royalty free and can be used for any and all purposes even commercial, This includes but is not limited to: Movies, Animations, Games, VR, AR, Research, Education, etc..."; "However please note: Re-Distribution or ReSale of Truebones in .FBX, .BVH or i-Motion formats is strictly prohibited and protected by copyright law."; "Please provide credit to Truebones when using Truebones."
+- Live [ZOO product skZMC](https://truebones.gumroad.com/l/skZMC) (2026-10-04): "note : use free code to download for FREE (if you have one) Other purchase liscense for 99+"; "CAN BE USED AS REFERENCE OR IN YOUR ANIMATED MOVIE PRODUCTIONS, includes Animals, Animations and Textures Plus A 100% ROYALTY FREE License!"; price meta 99.0 USD
 
 ## Related
 

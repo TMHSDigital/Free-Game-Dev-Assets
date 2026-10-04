@@ -59,7 +59,7 @@ Rocketbox, whose MIT licence requires the copyright notice to ship with your bui
 | [mpfb](mpfb.md) | MPFB (MakeHuman for Blender) | CC0* | yes | active |
 | [makehuman](makehuman.md) | MakeHuman | CC0 | yes | active |
 | [oga-fps-arms-rigged](oga-fps-arms-rigged.md) | FPS Arms, rigged (OpenGameArt) | CC0 | yes | active |
-| [charmorph](charmorph.md) | CharMorph | varies (AGPL/`mb_*`) | unknown | needs-review |
+| [charmorph](charmorph.md) | CharMorph | varies (AGPL/`mb_*`) | varies | active |
 | [vroid-studio](vroid-studio.md) | VRoid Studio | custom | yes | active |
 | [kenney-animated-characters](kenney-animated-characters.md) | Kenney Animated Characters | CC0 | yes | active |
 

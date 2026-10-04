@@ -9,7 +9,7 @@ commercial: varies
 attribution_required: unknown
 formats: [WAV, FLAC, OGG]
 tags: [community, filter-required, cc0-filter]
-verified: 2026-09-26
+verified: 2026-10-04
 status: needs-review
 ---
 
@@ -23,6 +23,8 @@ Huge community audio library. Per-sound licenses are **CC0**, **CC BY**, or **CC
 
 - `commercial: varies` (set 2026-09-26): the FAQ names three per-sound licences, and one of them (BY-NC) forbids commercial use, so this is the per-file case the catalog marks `varies`. Still open: credit is also per sound (CC0 none, BY required), and the schema has no per-file value for `attribution_required`, so the entry stays `needs-review`
 
+- Re-checked 2026-10-04: FAQ and website ToS unchanged. Still open: credit is per sound (CC0 none, BY required), which `attribution_required` cannot express
+
 - Search filters are not a legal guarantee — open each sound’s license page before packaging
 - Attribution list tool: freesound.org/home/attribution/
 - Site ToS restricts commercial use of the *website portal*; sound reuse still follows the per-file Creative Commons choice
@@ -33,6 +35,8 @@ Huge community audio library. Per-sound licenses are **CC0**, **CC BY**, or **CC
 - Live [FAQ — Licenses](https://freesound.org/help/faq/) (2026-07-19): uploaders choose CC0 / BY / BY-NC; FAQ summary: NC means “you can't earn any money with the piece of work you create!”
 - Live [website ToS](https://freesound.org/help/tos_web/) (2026-07-19): sounds/metadata licensed under the CC license the uploader selects — not a site-wide commercial grant → keep `needs-review` / `commercial: unknown`
 - Live [FAQ — Licenses](https://freesound.org/help/faq/) (2026-09-26): "freesound lets the user select one of three licenses for their sounds. And, we used to have a 4th license"; zero: "you can do pretty much what you want with the sound"; attribution: "you should always mention the original creators"; noncommercial: "you can't earn any money with the piece of work you create!"
+- Live [FAQ](https://freesound.org/help/faq/) (2026-10-04): unchanged: "freesound lets the user select one of three licenses for their sounds"; "For "attribution" you should always mention the original creators of the sounds when you use them."
+- Live [website ToS](https://freesound.org/help/tos_web/) (2026-10-04): "Unless otherwise agreed in writing with us, you may not use the Freesound website portal for commercial purposes."
 
 ## Related
 
