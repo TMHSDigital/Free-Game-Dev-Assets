@@ -10,6 +10,7 @@ import { commercialLabel, esc, latestAllowedDate, MAINTENANCE_NOTES, PERSPECTIVE
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { entryPageHtml } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver } from "./lib/links.mjs";
+import { atomFeed, catalogCsv } from "./lib/exports.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
 import { checkPage } from "./lib/page-checks.mjs";
@@ -286,6 +287,7 @@ function headMetaHtml(site, stats, generatedAt, hasCard) {
     // robots.txt is only read at a host's root, so under a project Pages path
     // its Sitemap line is never seen; point at the sitemap from the page too.
     `<link rel="sitemap" type="application/xml" href="${esc(url.replace(/\/+$/, ""))}/sitemap.xml" />`,
+    `<link rel="alternate" type="application/atom+xml" title="${esc(title)}: recently verified" href="${esc(url.replace(/\/+$/, ""))}/feed.xml" />`,
     `<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />`,
     `<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />`,
     `<meta property="og:type" content="website" />`,
@@ -562,7 +564,10 @@ function main() {
     entries,
   };
 
-  if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true, force: true });
+  // Empty dist rather than remove it: on Windows a server or editor holding the
+  // folder open makes removing the folder itself fail with EPERM/EBUSY.
+  fs.mkdirSync(DIST, { recursive: true });
+  for (const name of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, name), { recursive: true, force: true });
   copyDir(PUBLIC, DIST);
   // The shortlist builds its CREDITS file with the same code as the stack pages.
   fs.copyFileSync(path.join(__dirname, "lib", "owes.mjs"), path.join(DIST, "owes.js"));
@@ -574,6 +579,11 @@ function main() {
   fs.writeFileSync(
     path.join(DIST, "data.js"),
     `window.__CATALOG__ = ${JSON.stringify(payload)};\n`
+  );
+  fs.writeFileSync(path.join(DIST, "catalog.csv"), catalogCsv(entries, config.site.siteUrl));
+  fs.writeFileSync(
+    path.join(DIST, "feed.xml"),
+    atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt })
   );
 
   // Prerender. The served HTML must be complete without JavaScript: this is a

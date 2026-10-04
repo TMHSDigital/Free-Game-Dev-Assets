@@ -33,3 +33,6 @@ site/dist/
 CLAUDE.md
 ITERATE.md
 DEEP-RESEARCH.md
+
+# Local superpowers workflow artifacts
+.superpowers/
