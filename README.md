@@ -4,11 +4,11 @@
 
 **Free assets and tools for commercial games, with every licence read at its source.**
 
-[**Browse 414 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
+[**Browse 415 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
-[![Sources](https://img.shields.io/badge/sources-414-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-415-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 <br />
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
@@ -150,7 +150,7 @@ is a page on the site.
 
 ## Browse the catalog
 
-The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 414 entries
+The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 415 entries
 and filters them by category, commercial use, attribution, review status and 2D camera
 view. Press `/` to search. Filtered views and individual entries have their own URLs, so you can send
 someone exactly what you are looking at.
@@ -160,7 +160,7 @@ someone exactly what you are looking at.
 | **3D** | 77 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
 | **Tools** | 121 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 | **2D** | 58 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
-| **Audio** | 34 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
+| **Audio** | 35 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Characters** | 30 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
 | **Fonts** | 25 | OFL and commercial-ok typefaces, CJK | [`catalog/fonts/`](catalog/fonts/) |
 | **Environment** | 20 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |

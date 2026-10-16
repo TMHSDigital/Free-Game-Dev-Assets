@@ -57,6 +57,7 @@ you sell or redistribute the IR files as a standalone product.
 | [zapsplat](zapsplat.md) | Zapsplat | custom | yes† | active |
 | [freesound](freesound.md) | Freesound | varies | filter | needs-review |
 | [budgetpixel-sfx](budgetpixel-sfx.md) | BudgetPixel Sound Effects | CC-BY-4.0 | yes | active |
+| [pulselite-ui-sfx](pulselite-ui-sfx.md) | PulseLite UI SFX (free sample) | CC-BY-4.0 | yes | needs-review |
 | [octave-ui-sounds](octave-ui-sounds.md) | Octave | custom | yes | active |
 | [pacdv](pacdv.md) | PacDV Free Sound Effects | custom | unknown | needs-review |
 | [soundbible](soundbible.md) | SoundBible | varies | filter | needs-review |
