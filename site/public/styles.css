@@ -560,8 +560,10 @@ input:focus-visible,
   /* "Open source" and "Entry and evidence" sit inside the card-wide title
      link, so a near miss opened the entry page. Padding cancelled by an
      equal negative margin grows each to about 44px without moving a thing. */
-  .entry-links a {
+  .entry-links a,
+  .entry-links button {
     display: inline-block;
+    min-height: 44px;
     padding: 13px 6px;
     margin: -13px -6px;
   }
