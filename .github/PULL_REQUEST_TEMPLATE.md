@@ -14,3 +14,4 @@
 - [ ] Ran `node site/sync-counts.mjs` after adding or removing entries
 - [ ] Stacks: followed `stacks/README.md`; no licence named in a stack's own words
 - [ ] `npm test && npm run validate` passes locally (CI runs the full `npm run check`, including the build)
+- [ ] If I publish the source, I say so above; if an agent or script drafted this, every licence fact was still read at the source by me

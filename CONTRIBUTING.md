@@ -73,6 +73,14 @@ To add a starter stack (one pick per need for a kind of game), follow [`stacks/R
 - [ ] Entry does not claim rights we don’t have
 - [ ] Tool entries distinguish **software license** from **exported asset** ownership
 
+## Submitting your own source
+
+Publishers are welcome to list their own work. Say so in the pull request, write the entry as a third party would (facts the source states, no comparisons with other entries, no ranking language), and start it at `needs-review` so a maintainer re-reads the licence before it goes `active`. A free tier of a paid product is listed as the free tier only, with the paid tier named in Notes and not linked as the entry's `url`. A one-time notice or upsell inside a tool is recorded in Notes as a fact.
+
+## Automated and AI-assisted pull requests
+
+Changes drafted with an agent or a script are judged on the diff like any other. Keep them small, keep tests in `site/checks.test.mjs` or `site/lib/lib.test.mjs` (a test file that `npm test` does not run is dropped), and name the issue the change fixes in the body (`Fixes #N`). A pull request that lists sources or licences the author did not read is closed: the catalog's one rule is that every licence fact was read at the source by the person who recorded it.
+
 ## Research notes
 
 Local Gemini / deep-research drafts live under `RESEARCH/` as `R0N-<topic>.md` (mostly gitignored; see [`docs/research-index.md`](docs/research-index.md)). Promote durable findings into catalog entries and `docs/` — don’t rely on drafts as the public source of truth.
