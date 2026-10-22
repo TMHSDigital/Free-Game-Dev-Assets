@@ -683,6 +683,68 @@ const neText = newEntryText("id: example\ncategory: 3d\nverified: 2026-07-19   #
 eq("new-entry text", neText, "id: my-pack\ncategory: 2d\nverified: 2026-10-04\nstatus: needs-review\n");
 eq("template copy starts needs-review", newEntryText(nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8"), { id: "a", category: "2d", today: "2026-10-04" }).split(/\r?\n/).includes("status: needs-review"), true);
 
+/* check-links helpers (#82) ------------------------------------------------ */
+import { checkMaintenance, parseStaleDays } from "./link-check.mjs";
+
+eq("stale-days: whole number", parseStaleDays("365"), 365);
+eq("stale-days: zero allowed", parseStaleDays("0"), 0);
+let staleThrew = "";
+try { parseStaleDays("abc"); } catch (e) { staleThrew = e.message; }
+has("stale-days: non-number rejected", staleThrew, "whole number");
+staleThrew = "";
+try { parseStaleDays(undefined); } catch (e) { staleThrew = e.message; }
+has("stale-days: missing value rejected", staleThrew, "undefined");
+staleThrew = "";
+try { parseStaleDays("-5"); } catch (e) { staleThrew = e.message; }
+has("stale-days: negative rejected", staleThrew, "whole number");
+staleThrew = "";
+try { parseStaleDays("3.5"); } catch (e) { staleThrew = e.message; }
+has("stale-days: fraction rejected", staleThrew, "whole number");
+
+const ghEntry = (id, maintenance) => ({ id, url: `https://github.com/example/${id}`, maintenance, rel: `catalog/2d/${id}.md` });
+const ghRes = (status, data) => ({ ok: status >= 200 && status < 300, status, json: async () => data });
+
+{
+  const { differs, skipped } = await checkMaintenance([ghEntry("a", null)], { fetchImpl: async () => ghRes(500, {}) });
+  eq("maintenance: 5xx not a problem", differs.length, 0);
+  eq("maintenance: 5xx skipped", skipped.length, 1);
+  has("maintenance: 5xx detail", skipped[0].detail, "HTTP 500");
+}
+{
+  const { differs, skipped } = await checkMaintenance([ghEntry("a", null)], {
+    fetchImpl: async () => ghRes(200, { archived: true, pushed_at: "2026-01-01T00:00:00Z" }),
+  });
+  eq("maintenance: mismatch found", differs.length, 1);
+  eq("maintenance: mismatch only", skipped.length, 0);
+  has("maintenance: mismatch detail", differs[0].detail, "archived");
+}
+{
+  let calls = 0;
+  const { differs, skipped } = await checkMaintenance([ghEntry("a", null), ghEntry("b", null), ghEntry("c", null)], {
+    fetchImpl: async () => { calls += 1; return ghRes(403, {}); },
+  });
+  eq("maintenance: rate limit stops the loop", calls, 1);
+  eq("maintenance: rest reported skipped", skipped.length, 3);
+  has("maintenance: skipped reason", skipped[2].detail, "not checked");
+  eq("maintenance: rate limit not a problem", differs.length, 0);
+}
+{
+  const { differs, skipped } = await checkMaintenance([ghEntry("a", null)], {
+    fetchImpl: async () => { throw new Error("timeout"); },
+  });
+  eq("maintenance: fetch error skipped", skipped.length, 1);
+  has("maintenance: fetch error detail", skipped[0].detail, "GitHub API");
+  eq("maintenance: fetch error not a problem", differs.length, 0);
+}
+{
+  let calls = 0;
+  const { differs, skipped } = await checkMaintenance([{ id: "x", url: "https://example.com/a", maintenance: null, rel: "x" }], {
+    fetchImpl: async () => { calls += 1; return ghRes(200, {}); },
+  });
+  eq("maintenance: non-github ignored", calls, 0);
+  eq("maintenance: non-github no rows", differs.length + skipped.length, 0);
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
