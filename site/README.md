@@ -95,6 +95,17 @@ listed for a manual look but never open the issue on their own. It edits nothing
 moved source needs its licence re-read before its entry changes. Run it locally with
 `npm run links`.
 
+## Re-verify batch
+
+`.github/workflows/reverify.yml` runs `site/reverify-batch.mjs` on the first of each month
+(and on demand). It picks the live entries whose licence was read longest ago, more than
+150 days, about a tenth of the catalog at a time so every entry comes round in about ten
+months, and opens or updates one issue labelled `help wanted` and `good first issue`
+titled "Re-verify batch YYYY-MM: N entries due a licence re-read", with a checklist that
+names each entry's file, source URL and recorded licence. The selection rule is in
+`site/lib/reverify.mjs` and tested. When nothing is due the month is skipped. Preview it
+with `node site/reverify-batch.mjs`.
+
 ## Social preview
 
 `docs/images/readme/og-card.png` is a 1200x630 screenshot of this site's first screen.

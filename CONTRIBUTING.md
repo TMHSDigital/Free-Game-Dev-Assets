@@ -73,6 +73,13 @@ To add a starter stack (one pick per need for a kind of game), follow [`stacks/R
 - [ ] Entry does not claim rights we don’t have
 - [ ] Tool entries distinguish **software license** from **exported asset** ownership
 
+Verification ages. On the first of each month a workflow opens a "Re-verify batch" issue
+listing the live entries whose licence was read longest ago (over 150 days, about a tenth
+of the catalog). Each item is a self-contained re-read: open the source, confirm the
+terms, bump `verified` and add a dated Evidence quote, or set `needs-review` and say what
+changed. Those issues carry `good first issue`; pick one if you want a first contribution
+with no code.
+
 ## Submitting your own source
 
 Publishers are welcome to list their own work. Say so in the pull request, write the entry as a third party would (facts the source states, no comparisons with other entries, no ranking language), and start it at `needs-review` so a maintainer re-reads the licence before it goes `active`. A free tier of a paid product is listed as the free tier only, with the paid tier named in Notes and not linked as the entry's `url`. A one-time notice or upsell inside a tool is recorded in Notes as a fact.

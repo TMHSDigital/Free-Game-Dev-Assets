@@ -1,0 +1,46 @@
+name: Monthly re-verify batch
+
+# On the first of each month: pick the live entries whose licence was read
+# longest ago (more than 150 days), about a tenth of the catalog, and open or
+# update one checklist issue asking for them to be re-read at the source.
+# It never edits an entry.
+on:
+  schedule:
+    - cron: "0 8 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  reverify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Pick the batch
+        id: pick
+        run: node site/reverify-batch.mjs --report reverify-batch.md
+
+      - name: Open or update the batch issue
+        if: steps.pick.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COUNT: ${{ steps.pick.outputs.count }}
+        run: |
+          month=$(date -u +%Y-%m)
+          title="Re-verify batch ${month}: ${COUNT} entries due a licence re-read"
+          existing=$(gh issue list --state open --label "help wanted" --json number,title \
+            --jq '[.[] | select(.title | startswith("Re-verify batch "))][0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --title "$title" --body-file reverify-batch.md
+          else
+            gh issue create --title "$title" --label "help wanted" --label "good first issue" --body-file reverify-batch.md
+          fi

@@ -18,7 +18,7 @@ missing entry, so freshness and accuracy come before volume.
 
 ## Planned
 
-- Re-verification in smaller, regular batches, so the July 2026 verifications do not all expire
+- Re-verification in smaller, regular batches, so the July 2026 verifications do not all expire. Since 2026-10 the `reverify.yml` workflow opens a monthly checklist issue of the entries checked longest ago (over 150 days, about a tenth of the catalog each month)
   together in mid-2027.
 - A changelog page generated from [docs/review-ledger.md](docs/review-ledger.md).
 - Full-text search over entry bodies (Notes and Evidence), not only names, tags and summaries.

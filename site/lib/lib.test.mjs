@@ -808,6 +808,39 @@ has("stale-days error carries usage", staleDaysFrom(["node", "x", "--stale-days"
   has("api: a thrown timeout is skipped with its name", r3.skipped[0].detail, "GitHub API TimeoutError for o/d");
 }
 
+/* monthly re-verify batch (#93) -------------------------------------------- */
+import { batchIssueMarkdown, pickBatch } from "./reverify.mjs";
+{
+  const rvNow = Date.parse("2026-11-01T08:00:00Z");
+  const rv = (id, verified, status = "active") => ({ id, url: `https://${id}.test/`, license: "CC0", verified, status, rel: `catalog/2d/${id}.md` });
+  const pool = [
+    rv("fresh", "2026-10-20"),
+    rv("july", "2026-07-19"),
+    rv("june", "2026-06-01", "needs-review"),
+    rv("gone", "2025-01-01", "deprecated"),
+    rv("undated", null),
+    rv("edge", "2026-06-04"), // exactly 150 days: not yet due
+    rv("due", "2026-06-03"), // 151 days: due
+  ];
+  const picked = pickBatch(pool, { now: rvNow, size: 10 });
+  eq("batch: oldest first, undated first of all", picked.map((e) => e.id).join(","), "undated,june,due");
+  eq("batch: 105 days is not yet due either", picked.some((e) => e.id === "july"), false);
+  eq("batch: a fresh entry is left alone", picked.some((e) => e.id === "fresh"), false);
+  eq("batch: deprecated entries are never picked", picked.some((e) => e.id === "gone"), false);
+  eq("batch: 150 days is not yet due", picked.some((e) => e.id === "edge"), false);
+  eq("batch: size defaults to a tenth of the live catalog, at least one", pickBatch(pool, { now: rvNow }).length, 1);
+  eq("batch: nothing due means an empty batch", pickBatch(pool, { now: Date.parse("2026-08-01T00:00:00Z"), size: 10 }).map((e) => e.id).join(","), "undated");
+  eq("batch: explicit size caps the list", pickBatch(pool, { now: rvNow, size: 2 }).map((e) => e.id).join(","), "undated,june");
+  const big = Array.from({ length: 100 }, (_, i) => rv(`e${String(i).padStart(3, "0")}`, "2026-01-01"));
+  eq("batch: a tenth of 100 live entries is 10", pickBatch(big, { now: rvNow }).length, 10);
+  const md = batchIssueMarkdown({ batch: pickBatch(pool, { now: rvNow, size: 2 }), repo: "https://github.com/o/r", date: "2026-11-01", total: 6 });
+  has("batch issue links the entry file", md, "[`june`](https://github.com/o/r/blob/main/catalog/2d/june.md)");
+  has("batch issue says what was recorded", md, "recorded as `CC0`, needs-review, verified 2026-06-01 (153 days ago)");
+  has("batch issue handles no date", md, "[`undated`](https://github.com/o/r/blob/main/catalog/2d/undated.md): `https://undated.test/`, recorded as `CC0`, active, no verified date");
+  has("batch issue explains the steps", md, "**How to do one**");
+  eq("batch issue has one checkbox per entry", (md.match(/^- \[ \] /gm) || []).length, 2);
+}
+
 /* sync-counts and new-entry text rewrites (scaffold.mjs, #67) -------------- */
 import { newEntryProblem, newEntryText, syncCatalogReadme, syncConfig, syncReadme } from "./scaffold.mjs";
 
