@@ -268,6 +268,20 @@ export function checkFieldTypes(rel, meta) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V26 */
+/**
+ * `added` is the day the entry joined the catalog. The feed and the "new
+ * this month" line key on it, so it must be a real date and never in the
+ * future; unlike `verified` it never moves once written.
+ */
+export function checkAddedDate(rel, meta, today) {
+  if (empty(meta.added)) return []; // required-field check reports the absence
+  const v = String(meta.added);
+  if (!isRealDate(v)) return [`${rel} added "${v}" is not a real YYYY-MM-DD date`];
+  if (v > today) return [`${rel} added ${v} is in the future`];
+  return [];
+}
+
 /* ----------------------------------------------------------------- V25 */
 /**
  * The body's `# Heading` is what a reader sees on GitHub; `name` is what the

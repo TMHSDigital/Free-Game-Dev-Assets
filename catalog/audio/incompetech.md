@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "Title Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
 formats: [MP3, WAV]
 tags: [music, loops]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

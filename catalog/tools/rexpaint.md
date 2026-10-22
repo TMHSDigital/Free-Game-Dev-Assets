@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app, PNG, TXT, CSV, XML]
 tags: [ascii, roguelike, mockups, ui, maps, windows]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

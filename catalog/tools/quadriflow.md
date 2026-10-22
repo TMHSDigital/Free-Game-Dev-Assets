@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [OBJ]
 tags: [retopo, remesh, quad]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 maintenance: inactive

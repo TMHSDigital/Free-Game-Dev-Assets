@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app, cli, PNG, ktx2]
 tags: [spritesheet, atlas, libgdx, java]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

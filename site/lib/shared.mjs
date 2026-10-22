@@ -211,7 +211,8 @@ export function baseHeadHtml({ site, title, description, url, type = "website", 
     // robots.txt is only read at a host's root, so under a project Pages path
     // its Sitemap line is never seen; point at the sitemap from the page too.
     `<link rel="sitemap" type="application/xml" href="${esc(base)}/sitemap.xml" />`,
-    `<link rel="alternate" type="application/atom+xml" title="${esc(site.title)}: recently verified" href="${esc(base)}/feed.xml" />`,
+    `<link rel="alternate" type="application/atom+xml" title="${esc(site.title)}: new sources" href="${esc(base)}/feed.xml" />`,
+    `<link rel="alternate" type="application/atom+xml" title="${esc(site.title)}: recently verified" href="${esc(base)}/reverified.xml" />`,
     `<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />`,
     `<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />`,
     `<meta property="og:type" content="${esc(type)}" />`,

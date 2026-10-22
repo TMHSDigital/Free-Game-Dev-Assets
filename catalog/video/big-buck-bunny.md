@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "(c) copyright 2008, Blender Foundation / www.bigbuckbunny.org"
 formats: [MP4]
 tags: [animated-short, cartoon, cutscene, test-footage]
+added: 2026-10-04
 verified: 2026-10-04
 status: active
 publisher: Blender Foundation

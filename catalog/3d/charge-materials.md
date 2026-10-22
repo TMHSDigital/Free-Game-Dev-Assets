@@ -12,6 +12,7 @@ attribution_required: true
 attribution_string: "Charge Material Asset Library by Blender Studio (Simon Thommes), CC BY 4.0"
 formats: [Blend]
 tags: [eevee, bake-out]
+added: 2026-07-19
 verified: 2026-10-04
 status: active
 ---

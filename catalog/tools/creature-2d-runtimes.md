@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [Godot]
 tags: [2d, soft-body, godot]
+added: 2026-08-25
 verified: 2026-07-19
 status: active
 maintenance: inactive

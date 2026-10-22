@@ -9,6 +9,7 @@ commercial: varies
 attribution_required: false
 formats: [Blend, glTF, HDR]
 tags: [blender, marketplace]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

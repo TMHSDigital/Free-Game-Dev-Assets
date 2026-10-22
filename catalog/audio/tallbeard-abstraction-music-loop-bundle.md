@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [MP3, OGG]
 tags: [loops, music, itch, games-ok]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

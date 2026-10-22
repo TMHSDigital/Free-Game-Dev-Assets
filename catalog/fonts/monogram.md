@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [TTF, PNG, JSON]
 tags: [pixel, monospace, bitmap, pico-8]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

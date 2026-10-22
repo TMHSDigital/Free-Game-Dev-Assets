@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend, glTF]
 tags: [zombie, vehicles]
+added: 2026-08-25
 verified: 2026-08-25
 status: active
 ---

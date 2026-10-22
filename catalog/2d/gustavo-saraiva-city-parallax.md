@@ -11,6 +11,7 @@ attribution_required: false
 formats: [PNG]
 tags: [parallax, background, layers, pixel, city, platformer, side-scroller]
 camera_perspective: side_scroller
+added: 2026-09-23
 verified: 2026-09-23
 status: active
 ---

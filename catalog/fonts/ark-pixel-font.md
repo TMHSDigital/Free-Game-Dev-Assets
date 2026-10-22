@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [OTF, TTF]
 tags: [pixel, cjk, pan-cjk]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

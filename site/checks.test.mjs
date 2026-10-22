@@ -11,6 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   checkActiveIsSettled,
+  checkAddedDate,
   checkAttributionConsistency,
   checkCategoryReadmeRows,
   checkCategorySets,
@@ -760,6 +761,12 @@ accepts("V24 accepts lists and booleans", checkFieldTypes("ok.md", { tags: ["a"]
 accepts("V24 accepts the literal words", checkFieldTypes("ok.md", { commercial: "varies", attribution_required: "unknown" }));
 accepts("V24 leaves missing fields to the required check", checkFieldTypes("ok.md", {}));
 
+/* V26: added date (#90) ------------------------------------------------- */
+rejects("V26 rejects a non-date", checkAddedDate("bad.md", { added: "July" }, TODAY), 'added "July" is not a real YYYY-MM-DD date');
+rejects("V26 rejects a future date", checkAddedDate("bad.md", { added: "2027-01-01" }, TODAY), "added 2027-01-01 is in the future");
+accepts("V26 accepts a past date", checkAddedDate("ok.md", { added: "2026-07-19" }, TODAY));
+accepts("V26 leaves a missing field to the required check", checkAddedDate("ok.md", {}, TODAY));
+
 /* V25: heading matches name (#95) --------------------------------------- */
 rejects("V25 rejects a heading that differs from name", checkTitleMatchesName("bad.md", { name: "KayKit (Kay Lousberg)" }, "\n# KayKit\n\nText"), 'heading "# KayKit" differs from name "KayKit (Kay Lousberg)"');
 rejects("V25 rejects a body with no heading", checkTitleMatchesName("bad.md", { name: "X" }, "Just text"), "has no \"# X\" heading");
@@ -772,4 +779,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 24 checks`);
+console.log(`checks.test ok: ${passed} assertions across 25 checks`);

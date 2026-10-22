@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [cli, PNG]
 tags: [pixel-art, cleanup, quantization, batch, rust]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 publisher: Sprite Fusion

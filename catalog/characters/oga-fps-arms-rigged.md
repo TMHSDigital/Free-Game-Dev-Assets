@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, Blend]
 tags: [first-person, fps, arms, ik, fingers, opengameart]
+added: 2026-09-23
 verified: 2026-09-23
 status: active
 ---

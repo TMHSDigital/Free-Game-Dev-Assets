@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app, PNG]
 tags: [png, lossy-png, pngquant, macos]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 maintenance: archived

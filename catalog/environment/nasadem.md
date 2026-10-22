@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [HGT, GeoTIFF]
 tags: [srtm, 30m, global-land]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

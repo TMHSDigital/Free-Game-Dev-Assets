@@ -10,6 +10,7 @@ commercial: unknown
 attribution_required: unknown
 formats: [mm, PNG]
 tags: [procedural, pbr, per-item-license]
+added: 2026-07-19
 verified: 2026-10-04
 status: needs-review
 ---

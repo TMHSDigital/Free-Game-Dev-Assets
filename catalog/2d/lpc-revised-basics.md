@@ -11,6 +11,7 @@ attribution_string: "LPC Revised Character Basics by Eliza Wyatt, Stephen Challe
 formats: [PNG]
 tags: [lpc, opengameart]
 camera_perspective: isometric_3_4
+added: 2026-07-19
 verified: 2026-09-24
 status: active
 ---

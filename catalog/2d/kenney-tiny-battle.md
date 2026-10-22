@@ -13,6 +13,7 @@ formats: [PNG]
 tags: [16x16, strategy, wargame, units, top-down]
 grid_dimensions: 16x16
 camera_perspective: top_down
+added: 2026-09-22
 verified: 2026-09-22
 status: active
 ---

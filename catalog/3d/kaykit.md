@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, Blend]
 tags: [low-poly, atlas, mobile-friendly, characters]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

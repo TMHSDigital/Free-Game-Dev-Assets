@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [glTF, GLB]
 tags: [weapons, melee]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

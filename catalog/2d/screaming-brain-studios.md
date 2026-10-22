@@ -12,6 +12,7 @@ attribution_required: false
 formats: [PNG]
 tags: [isometric, tiles, itch, 2-to-1]
 camera_perspective: isometric_3_4
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

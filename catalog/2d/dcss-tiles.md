@@ -9,6 +9,7 @@ commercial: unknown
 attribution_required: unknown
 formats: [PNG]
 tags: [roguelike, tileset, dungeon, monsters, items, mixed-license]
+added: 2026-08-24
 verified: 2026-10-04
 status: needs-review
 maintenance: inactive

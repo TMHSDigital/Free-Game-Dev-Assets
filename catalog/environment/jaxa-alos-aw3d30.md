@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "Credit: AW3D30 (JAXA)"
 formats: [GeoTIFF]
 tags: [terrain, government]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

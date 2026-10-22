@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [EXR, HDR, PNG, glTF, FBX]
 tags: [hdri, pbr, calibrated, low-provenance-risk, concrete, metal, brick]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

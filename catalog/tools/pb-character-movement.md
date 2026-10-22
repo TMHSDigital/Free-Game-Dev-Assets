@@ -11,6 +11,7 @@ attribution_required: false
 formats: [unreal-plugin, C++]
 tags: [unreal-engine, character-movement, fps, bunny-hopping, air-strafing, crouch-slide]
 ue_versions: "5.5"
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 ---

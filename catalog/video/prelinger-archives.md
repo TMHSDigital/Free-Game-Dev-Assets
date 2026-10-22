@@ -10,6 +10,7 @@ commercial: varies
 attribution_required: false
 formats: [MP4, MPEG2, OGV]
 tags: [archival, ephemeral-films, internet-archive, per-film-license]
+added: 2026-09-23
 verified: 2026-10-04
 status: needs-review
 ---

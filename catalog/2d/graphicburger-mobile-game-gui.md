@@ -10,6 +10,7 @@ attribution_required: false
 formats: [PSD]
 tags: [ui, cartoon, mobile, vector, button]
 camera_perspective: 2d_flat
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

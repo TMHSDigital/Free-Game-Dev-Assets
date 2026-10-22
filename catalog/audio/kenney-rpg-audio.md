@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [OGG, WAV]
 tags: [footsteps, rpg, weapons]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

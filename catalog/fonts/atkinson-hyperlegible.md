@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [OTF, TTF]
 tags: [a11y, low-vision, ui]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

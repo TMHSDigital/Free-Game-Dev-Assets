@@ -10,6 +10,7 @@ attribution_required: false
 formats: [PNG]
 tags: [pixel, platformer, itch, modular]
 camera_perspective: side_scroller
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

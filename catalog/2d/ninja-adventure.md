@@ -12,6 +12,7 @@ formats: [PNG, WAV]
 tags: [16x16, top-down, rpg, itch, godot, 4-directional]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
+added: 2026-08-15
 verified: 2026-08-15
 status: active
 ---

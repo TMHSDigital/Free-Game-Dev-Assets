@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [gdextension]
 tags: [godot, godot-4, steamworks, achievements, leaderboards]
+added: 2026-07-19
 verified: 2026-09-23
 status: active
 ---

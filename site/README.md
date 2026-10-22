@@ -20,10 +20,12 @@ Static GitHub Pages UI for this catalog.
 Each deploy also publishes
 [`catalog.csv`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/catalog.csv) (one row
 per entry: id, name, url, category, licence, SPDX, commercial, attribution, formats, tags,
-verified, status, page; list fields are joined with `; `) and an Atom feed,
-[`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml), of the 40 most
-recently verified entries. Entries carry no "added" date, so the feed is keyed on
-`verified`, the day the licence was last read from the source.
+added, verified, status, page; list fields are joined with `; `) and two Atom feeds:
+[`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml), the 40 newest
+entries by `added` (the day each joined the catalog), and
+[`reverified.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/reverified.xml), the
+40 most recently verified entries by `verified` (the day the licence was last read at the
+source). Two feeds, so a re-verification sweep of old entries cannot bury the new ones.
 
 ## Public JSON
 
@@ -36,8 +38,8 @@ and tools that want the metadata without scraping the page. The page itself load
   `entries`.
 - Each entry carries its frontmatter fields (`id`, `name`, `url`, `category`,
   `subcategories`, `license`, `license_spdx` where set, `commercial`,
-  `attribution_required`, `attribution_string` where set, `formats`, `tags`, `verified`,
-  `status`, `publisher` where set, and the optional 2D fields), plus `path` (the entry's
+  `attribution_required`, `attribution_string` where set, `formats`, `tags`, `added`,
+  `verified`, `status`, `publisher` where set, and the optional 2D fields), plus `path` (the entry's
   file in this repo), `page` (the entry's page, relative to the site root), `summary` (the first paragraph of its body), and two derived sort
   fields, `attributionClass` and `licenseRank`.
 - It is regenerated from `catalog/` on every push to `main`. Field names are stable;

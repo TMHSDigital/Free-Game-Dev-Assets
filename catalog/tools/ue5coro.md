@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
 tags: [unreal-engine, coroutines, async, latent-actions, multithreading, gameplay-programming]
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 maintenance: archived

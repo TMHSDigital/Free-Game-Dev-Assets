@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "Music by Eric Matyas www.soundimage.org"
 formats: [MP3, WAV]
 tags: [music, loops, game-oriented]
+added: 2026-07-19
 verified: 2026-08-29
 status: active
 ---

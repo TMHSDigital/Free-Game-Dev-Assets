@@ -7,6 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   checkActiveIsSettled,
+  checkAddedDate,
   checkAttributionConsistency,
   checkCategoryReadmeRows,
   checkCategorySets,
@@ -55,6 +56,7 @@ const REQUIRED = [
   "attribution_required",
   "formats",
   "tags",
+  "added",
   "verified",
   "status",
 ];
@@ -311,6 +313,7 @@ function main() {
     errors.push(...checkEngineFields(rel, meta));
     errors.push(...checkActiveIsSettled(rel, meta));
     errors.push(...checkTitleMatchesName(rel, meta, body));
+    errors.push(...checkAddedDate(rel, meta, today));
     if (meta.id) {
       const id = String(meta.id);
       if (ids.has(id)) errors.push(`duplicate id "${id}": ${ids.get(id)} and ${rel}`);

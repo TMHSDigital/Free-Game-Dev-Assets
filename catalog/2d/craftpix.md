@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, EPS]
 tags: [gui, hud, spritesheet, freebies]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

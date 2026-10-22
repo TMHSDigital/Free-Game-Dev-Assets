@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app]
 tags: [3d, levels, brush-based, quake]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

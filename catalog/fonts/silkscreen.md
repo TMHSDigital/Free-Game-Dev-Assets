@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [TTF]
 tags: [pixel, display]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

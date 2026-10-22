@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "Video courtesy of Dareful (dareful.com), CC BY 4.0"
 formats: [MP4]
 tags: [4k, aerial, nature, landscape, b-roll]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

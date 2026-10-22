@@ -47,6 +47,26 @@ export function freshnessLineHtml(stats, stamp, href) {
   return parts.join(" ");
 }
 
+/** Days an entry counts as new on the home page. */
+const NEW_DAYS = 30;
+
+/**
+ * "New this month" for the home page: the entries added in the last 30 days
+ * before `stamp`, newest first, the first few named and the rest counted,
+ * with a link to the whole list sorted by `added`. Empty string when none.
+ */
+export function newEntriesLineHtml(entries, stamp, { named = 5, sortHref = "?sort=added#catalog" } = {}) {
+  const since = new Date(Date.parse(`${stamp}T00:00:00Z`) - NEW_DAYS * 86400000).toISOString().slice(0, 10);
+  const fresh = entries
+    .filter((e) => e.status !== "deprecated" && e.added && e.added >= since)
+    .sort((a, b) => b.added.localeCompare(a.added) || a.name.localeCompare(b.name));
+  if (!fresh.length) return "";
+  const links = fresh.slice(0, named).map((e) => `<a href="entry/${esc(e.id)}/">${esc(e.name)}</a>`);
+  const more = fresh.length - links.length;
+  const tail = more > 0 ? ` and <a href="${esc(sortHref)}">${more} more</a>` : "";
+  return `<strong>New in the last ${NEW_DAYS} days: ${fresh.length}.</strong> ${links.join(", ")}${tail}.`;
+}
+
 const BUCKET_WORDS = { fresh: "fresh", aging: "aging", stale: "stale", unknown: "no check date" };
 
 function recentHtml(recent, stamp) {

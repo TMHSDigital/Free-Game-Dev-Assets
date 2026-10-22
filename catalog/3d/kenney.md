@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, PNG]
 tags: [low-poly, modular, beginner-friendly, huge-library]
+added: 2026-07-19
 verified: 2026-08-25
 status: active
 ---

@@ -10,6 +10,7 @@ attribution_required: false
 formats: [various]
 tags: [unreal-engine, photogrammetry, scanned, trees, rocks, surfaces, decals]
 publisher: Epic Games
+added: 2026-10-13
 verified: 2026-10-13
 status: needs-review
 ---

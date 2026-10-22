@@ -10,6 +10,7 @@ attribution_required: true
 formats: [TTF, WOFF, WOFF2, npm]
 tags: [npm, self-host, aggregator]
 attribution_string: "See the OFL.txt / LICENSE in the @fontsource/<family> package you installed"
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

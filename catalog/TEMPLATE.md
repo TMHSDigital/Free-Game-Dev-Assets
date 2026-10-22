@@ -13,6 +13,8 @@ formats: [glTF, FBX, PNG]
 # subcategories and formats spelling: see CONTRIBUTING.md (formats must be in site/format-vocabulary.json)
 # tags describe the content; never the licence or the publisher (V19, V21)
 tags: [low-poly, modular]
+# added: the day the entry joined the catalog (npm run new-entry fills it in; never changes)
+added: 2026-07-19
 # verified: the day you read the licence at the source
 verified: 2026-07-19
 # status: set active once the licence is read and quoted in ## Evidence

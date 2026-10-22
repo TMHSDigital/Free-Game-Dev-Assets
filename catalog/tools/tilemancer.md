@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app]
 tags: [pixel-art, tileset, node-based, lua, heightmap]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 maintenance: inactive

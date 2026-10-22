@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [glTF, BBMODEL]
 tags: [low-poly, editor]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

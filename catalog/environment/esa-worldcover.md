@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "Contains modified Copernicus Sentinel data / ESA WorldCover. Suggested format; CC-BY-4.0 requires a credits-screen source link."
 formats: [GeoTIFF]
 tags: [landcover, sentinel, 10m]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

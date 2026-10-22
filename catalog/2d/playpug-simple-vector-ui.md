@@ -11,6 +11,7 @@ attribution_required: false
 formats: [PNG]
 tags: [ui, 9-slice, vector]
 camera_perspective: 2d_flat
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

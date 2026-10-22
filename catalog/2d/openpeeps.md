@@ -11,6 +11,7 @@ attribution_required: false
 formats: [SVG, PNG, Sketch, Figma]
 tags: [illustration, characters, mix-match]
 camera_perspective: 2d_flat
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

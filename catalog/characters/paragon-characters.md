@@ -11,6 +11,7 @@ formats: [Unreal]
 tags: [unreal-engine, moba, animated, realistic, fantasy, sci-fi]
 publisher: Epic Games
 ue_versions: "4.19-5.8"
+added: 2026-10-13
 verified: 2026-10-13
 status: needs-review
 ---

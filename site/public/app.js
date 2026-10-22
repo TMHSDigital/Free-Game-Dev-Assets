@@ -212,6 +212,9 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
     verified: (a, b) =>
       String(b.verified || "").localeCompare(String(a.verified || "")) ||
       a.name.localeCompare(b.name),
+    added: (a, b) =>
+      String(b.added || "").localeCompare(String(a.added || "")) ||
+      a.name.localeCompare(b.name),
   };
 
   /* ---------------------------------------------------------- rendering */

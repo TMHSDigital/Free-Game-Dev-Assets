@@ -11,6 +11,7 @@ attribution_required: false
 formats: [PNG]
 tags: [gamepad, keyboard, hud]
 camera_perspective: 2d_flat
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

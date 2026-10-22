@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, DAE]
 tags: [cc0-exports, humanoid, generator]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, BIP, Unity, Unreal, Blend]
 tags: [professional, combat, freemium, revenue-cap]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

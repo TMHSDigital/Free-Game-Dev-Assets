@@ -11,6 +11,7 @@ attribution_string: "NASA/Goddard Space Flight Center Scientific Visualization S
 formats: [EXR, TIFF]
 tags: [stars, space, milky-way, skybox]
 publisher: NASA
+added: 2026-10-04
 verified: 2026-10-04
 status: needs-review
 ---

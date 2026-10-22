@@ -25,7 +25,7 @@ import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntr
 import { checkPage } from "./lib/page-checks.mjs";
 import { checkStacks } from "./checks.mjs";
 import { stackPageHtml } from "./lib/stack-page.mjs";
-import { freshnessLineHtml, freshnessPageHtml, freshnessStats } from "./lib/freshness.mjs";
+import { freshnessLineHtml, freshnessPageHtml, freshnessStats, newEntriesLineHtml } from "./lib/freshness.mjs";
 import { licenceTerms, listStackFiles, owes, parseStack, pickPath } from "./lib/stacks.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -112,6 +112,7 @@ function loadEntries(vocab) {
             : "unknown",
       formats: Array.isArray(meta.formats) ? meta.formats : [],
       tags: Array.isArray(meta.tags) ? meta.tags : [],
+      added: meta.added ? String(meta.added) : null,
       verified: meta.verified ? String(meta.verified) : null,
       status: String(meta.status),
       path: rel,
@@ -631,7 +632,8 @@ function main() {
   writeOut("data.json", JSON.stringify(payload, null, 2));
   writeOut("data.js", `window.__CATALOG__ = ${JSON.stringify(payload)};\n`);
   writeOut("catalog.csv", catalogCsv(entries, config.site.siteUrl));
-  writeOut("feed.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt }));
+  writeOut("feed.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "added" }));
+  writeOut("reverified.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "verified" }));
 
   // Prerender. The served HTML must be complete without JavaScript: this is a
   // catalog whose whole value is that its entries can be found.
@@ -641,6 +643,7 @@ function main() {
   const fresh = freshnessStats(entries, now);
   const substitutions = {
     FRESHNESS_LINE: freshnessLineHtml(fresh, stamp, "freshness/"),
+    NEW_LINE: newEntriesLineHtml(visible, stamp),
     HEAD_META: headMetaHtml(config.site, stats, payload.generatedAt, hasCard),
     STACK_ROWS: stackRowsHtml(stacks),
     STARTER_ROWS: starterRowsHtml(featured),

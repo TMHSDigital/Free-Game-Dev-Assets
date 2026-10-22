@@ -12,6 +12,7 @@ formats: [PNG]
 tags: [1-bit, 12x12, tileset, itch]
 grid_dimensions: 12x12
 camera_perspective: isometric_3_4
+added: 2026-08-15
 verified: 2026-08-15
 status: active
 ---

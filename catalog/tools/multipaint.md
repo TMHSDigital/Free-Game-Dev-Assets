@@ -9,6 +9,7 @@ commercial: unknown
 attribution_required: unknown
 formats: [desktop-app]
 tags: [pixel-art, retro, c64, zx-spectrum, color-clash, java]
+added: 2026-09-30
 verified: 2026-10-04
 status: needs-review
 ---

@@ -12,6 +12,7 @@ attribution_required: false
 formats: [PNG]
 tags: [vehicles, cars, pixel]
 camera_perspective: side_scroller
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

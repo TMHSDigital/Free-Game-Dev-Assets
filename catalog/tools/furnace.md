@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app]
 tags: [tracker, chiptune, sound-chips, retro]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

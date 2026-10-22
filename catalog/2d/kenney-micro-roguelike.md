@@ -13,6 +13,7 @@ formats: [PNG]
 tags: [1-bit, 8x8, roguelike, rpg, top-down]
 grid_dimensions: 8x8
 camera_perspective: top_down
+added: 2026-09-22
 verified: 2026-09-22
 status: active
 ---

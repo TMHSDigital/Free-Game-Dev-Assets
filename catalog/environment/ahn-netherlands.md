@@ -10,6 +10,7 @@ attribution_required: false
 formats: [GeoTIFF, LAZ]
 tags: [terrain, lidar, netherlands, point-cloud]
 publisher: AHN
+added: 2026-10-04
 verified: 2026-10-04
 status: needs-review
 ---

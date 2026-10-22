@@ -9,6 +9,7 @@ commercial: varies
 attribution_required: unknown
 formats: [glTF, FBX, OBJ, USD]
 tags: [aggregator, per-model-license, epic, marketplace]
+added: 2026-08-24
 verified: 2026-10-04
 status: needs-review
 ---

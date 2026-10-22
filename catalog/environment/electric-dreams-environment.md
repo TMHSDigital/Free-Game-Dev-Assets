@@ -12,6 +12,7 @@ tags: [unreal-engine, pcg, substrate, nanite, lumen, jungle, photogrammetry]
 publisher: Epic Games
 engine_lock: unreal
 ue_versions: "5.2-5.8"
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 ---

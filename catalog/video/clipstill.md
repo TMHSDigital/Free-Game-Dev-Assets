@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "Cinemagraph by Clipstill (https://www.clipstill.com)"
 formats: [MP4, GIF]
 tags: [cinemagraph, looping, menu-background]
+added: 2026-10-04
 verified: 2026-10-04
 status: needs-review
 ---

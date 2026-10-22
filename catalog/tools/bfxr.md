@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [WAV]
 tags: [sfx, procedural, retro, browser, chiptune]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

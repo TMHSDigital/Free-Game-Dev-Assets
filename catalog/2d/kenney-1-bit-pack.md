@@ -12,6 +12,7 @@ attribution_required: false
 formats: [PNG]
 tags: [1-bit, roguelike, rpg, pixel, multi-perspective]
 grid_dimensions: 16x16
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

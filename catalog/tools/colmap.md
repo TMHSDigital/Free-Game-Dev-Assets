@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [BIN, TXT, PLY, OBJ]
 tags: [photogrammetry, sfm, mvs]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

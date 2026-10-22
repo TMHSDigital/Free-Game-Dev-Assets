@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [efk]
 tags: [particles, vfx, effekseer]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "Video by Vidsplay.com"
 formats: [MP4]
 tags: [stock, b-roll]
+added: 2026-10-04
 verified: 2026-10-04
 status: needs-review
 ---

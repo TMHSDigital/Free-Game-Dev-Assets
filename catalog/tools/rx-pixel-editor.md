@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, desktop-app]
 tags: [pixel-art, editor, keyboard-driven, vi-like]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

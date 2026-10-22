@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [GLB]
 tags: [city, props]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "(c) copyright Blender Foundation | durian.blender.org"
 formats: [MP4]
 tags: [animated-short, fantasy, cutscene, test-footage]
+added: 2026-10-04
 verified: 2026-10-04
 status: active
 publisher: Blender Foundation

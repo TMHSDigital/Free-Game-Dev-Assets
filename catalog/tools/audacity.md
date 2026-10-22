@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [WAV, FLAC, OGG, MP3, AUP3]
 tags: [audio, editor, muse-group]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

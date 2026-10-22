@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [CSV]
 tags: [l10n, ui-strings]
+added: 2026-07-19
 verified: 2026-08-25
 status: active
 ---

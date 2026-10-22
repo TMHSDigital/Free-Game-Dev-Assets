@@ -12,6 +12,7 @@ formats: [PNG]
 tags: [1-bit, 10x10, rpg, icons, itch]
 grid_dimensions: 10x10
 camera_perspective: 2d_flat
+added: 2026-08-15
 verified: 2026-08-15
 status: active
 ---

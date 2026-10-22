@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app]
 tags: [2d-animation, frame-by-frame, hand-drawn]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

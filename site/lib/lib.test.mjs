@@ -483,7 +483,8 @@ import { baseHeadHtml } from "./shared.mjs";
   const homeHead = baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard: true });
   const baseline = [
     '<link rel="sitemap" type="application/xml" href="https://x.test/s/sitemap.xml" />',
-    '<link rel="alternate" type="application/atom+xml" title="Free Game Dev Assets: recently verified" href="https://x.test/s/feed.xml" />',
+    '<link rel="alternate" type="application/atom+xml" title="Free Game Dev Assets: new sources" href="https://x.test/s/feed.xml" />',
+    '<link rel="alternate" type="application/atom+xml" title="Free Game Dev Assets: recently verified" href="https://x.test/s/reverified.xml" />',
     '<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />',
     '<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />',
     '<meta property="og:image" content="https://x.test/s/og-card.png" />',
@@ -545,6 +546,19 @@ lacks("sponsor button is not an iframe", sponsorButtonHtml(), "<iframe");
 has("sponsor button links to GitHub Sponsors", sponsorButtonHtml(), 'href="https://github.com/sponsors/TMHSDigital"');
 lacks("entry page loads nothing from github.com", p.replace(/href="https:\/\/github\.com[^"]*"/g, ""), "github.com/sponsors/TMHSDigital/button");
 eq("entry page has no iframe", (p.match(/<iframe/g) || []).length, 0);
+
+/* new this month (#90) ----------------------------------------------------- */
+import { newEntriesLineHtml } from "./freshness.mjs";
+{
+  const ne = (id, added, status = "active") => ({ id, name: id.toUpperCase(), added, status });
+  const pool = [ne("old", "2026-08-01"), ne("n1", "2026-10-20"), ne("n2", "2026-10-01"), ne("n3", "2026-09-25"), ne("dead", "2026-10-21", "deprecated"), ne("undated", null)];
+  const line = newEntriesLineHtml(pool, "2026-10-22", { named: 2 });
+  has("new line counts the last 30 days", line, "New in the last 30 days: 3.");
+  has("new line names the newest first", line, '<a href="entry/n1/">N1</a>, <a href="entry/n2/">N2</a>');
+  has("new line links the rest to the added sort", line, '<a href="?sort=added#catalog">1 more</a>');
+  lacks("new line skips deprecated", line, "DEAD");
+  eq("new line is empty when nothing is new", newEntriesLineHtml([ne("old", "2026-01-01")], "2026-10-22"), "");
+}
 
 /* freshness: review fixes -------------------------------------------------- */
 has("recent window wording counts the build day", fp, "Checked on 2026-09-25 or in the 30 days before it, newest first.");
@@ -631,19 +645,26 @@ eq("latest allowed is tomorrow in UTC", latestAllowedDate(Date.parse("2026-09-25
 
 /* exports ------------------------------------------------------------------ */
 const sample = [
-  { id: "a", name: 'Say "hi", ok', url: "https://x.test/a", category: "2d", license: "CC0", commercial: true, formats: ["PNG", "SVG"], tags: [], verified: "2026-09-01", status: "active", page: "entry/a/", summary: "A & B" },
-  { id: "b", name: "Old", url: "https://x.test/b", category: "2d", license: "MIT", verified: "2026-01-01", status: "deprecated", page: "entry/b/" },
-  { id: "c", name: "New", url: "https://x.test/c", category: "3d", license: "CC0", verified: "2026-09-20", status: "active", page: "entry/c/", summary: "" },
+  { id: "a", name: 'Say "hi", ok', url: "https://x.test/a", category: "2d", license: "CC0", commercial: true, formats: ["PNG", "SVG"], tags: [], added: "2026-07-20", verified: "2026-09-01", status: "active", page: "entry/a/", summary: "A & B" },
+  { id: "b", name: "Old", url: "https://x.test/b", category: "2d", license: "MIT", added: "2026-07-19", verified: "2026-01-01", status: "deprecated", page: "entry/b/" },
+  { id: "c", name: "New", url: "https://x.test/c", category: "3d", license: "CC0", added: "2026-09-20", verified: "2026-08-10", status: "active", page: "entry/c/", summary: "" },
 ];
 const csv = catalogCsv(sample, "https://s.test/site/");
 has("csv header", csv, "id,name,url,category");
+has("csv has the added column before verified", csv, "tags,added,verified,status");
 has("csv quotes commas and quotes", csv, '"Say ""hi"", ok"');
 has("csv joins lists", csv, "PNG; SVG");
 has("csv absolute page url", csv, "https://s.test/site/entry/a/");
-const feed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z" });
+const feed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z", kind: "verified" });
 has("feed escapes summary", feed, "CC0. A &amp; B");
 lacks("feed skips deprecated", feed, "entry/b/");
-eq("feed newest first", feed.indexOf("entry/c/") < feed.indexOf("entry/a/"), true);
+eq("reverified feed is by verified, newest first", feed.indexOf("entry/a/") < feed.indexOf("entry/c/"), true);
+has("reverified feed names itself", feed, '<link rel="self" href="https://s.test/site/reverified.xml" />');
+const newFeed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z" });
+eq("new-sources feed is by added, newest first", newFeed.indexOf("entry/c/") < newFeed.indexOf("entry/a/"), true);
+has("new-sources feed is the default feed.xml", newFeed, '<link rel="self" href="https://s.test/site/feed.xml" />');
+has("new-sources feed uses the added date", newFeed, "<updated>2026-09-20T00:00:00Z</updated>");
+has("new-sources feed title", newFeed, "<title>T: new sources</title>");
 
 /* review fixes, 2026-10 (#59-#66) ------------------------------------------ */
 import { csvField } from "./exports.mjs";
@@ -864,6 +885,15 @@ has("new-entry: taken id", newEntryProblem({ category: "2d", id: "x", categories
 const neText = newEntryText("id: example\ncategory: 3d\nverified: 2026-07-19   # note\nstatus: active\n", { id: "my-pack", category: "2d", today: "2026-10-04" });
 eq("new-entry text", neText, "id: my-pack\ncategory: 2d\nverified: 2026-10-04\nstatus: needs-review\n");
 eq("template copy starts needs-review", newEntryText(nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8"), { id: "a", category: "2d", today: "2026-10-04" }).split(/\r?\n/).includes("status: needs-review"), true);
+eq("new-entry sets added to today", newEntryText("added: 2026-07-19\nverified: 2026-07-19\n", { id: "a", category: "2d", today: "2026-10-04" }), "added: 2026-10-04\nverified: 2026-10-04\n");
+{
+  // #79: the template round-trips through the scaffold to typed fields.
+  const fromTemplate = parseFrontmatter(newEntryText(nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8"), { id: "a", category: "2d", today: "2026-10-04" }));
+  eq("template tags parse as a list", Array.isArray(fromTemplate.meta.tags), true);
+  eq("template commercial parses as a boolean", fromTemplate.meta.commercial, true);
+  eq("template added parses as today", fromTemplate.meta.added, "2026-10-04");
+  eq("template has no frontmatter errors", fromTemplate.errors.join(), "");
+}
 
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
