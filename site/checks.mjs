@@ -236,6 +236,38 @@ export function checkPublisherConsistency(entries) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V24 */
+/** Fields that must parse as YAML lists. `hardware_tags` is checked in V12. */
+const LIST_FIELDS = ["subcategories", "formats", "tags"];
+/** Fields that must parse as booleans, plus the literal words each one also allows. */
+const BOOLEAN_FIELDS = { commercial: ["varies", "unknown"], attribution_required: ["unknown"] };
+
+/**
+ * The list fields were checked for emptiness but never for being lists, and
+ * the two boolean fields accepted the quoted strings "true"/"false". A
+ * trailing comment or a pair of quotes then produced an entry that passed
+ * validation with no tags, or with "commercial ?" on its card.
+ */
+export function checkFieldTypes(rel, meta) {
+  const errors = [];
+  for (const field of LIST_FIELDS) {
+    const v = meta[field];
+    if (empty(v) || Array.isArray(v)) continue;
+    errors.push(`${rel} ${field} must be a list like [a, b] or one "- item" per line; got the text "${String(v)}"`);
+  }
+  for (const [field, words] of Object.entries(BOOLEAN_FIELDS)) {
+    const v = meta[field];
+    if (empty(v) || typeof v === "boolean" || words.includes(v)) continue;
+    const s = String(v);
+    if (s === "true" || s === "false") {
+      errors.push(`${rel} ${field} "${s}" is quoted text, not a boolean; write ${field}: ${s} without quotes`);
+    } else {
+      errors.push(`${rel} ${field} "${s}" is not true|false|${words.join("|")}`);
+    }
+  }
+  return errors;
+}
+
 /* ----------------------------------------------------------------- V12 */
 /** Documented values for the optional 2D/UI taxonomy. See catalog/TEMPLATE.md. */
 export const CAMERA_PERSPECTIVES = new Set([

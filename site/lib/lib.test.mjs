@@ -118,6 +118,11 @@ eq("external untouched", resolve("https://a.test/x").href, "https://a.test/x");
 eq("external flagged", resolve("https://a.test/x").external, true);
 throws("missing target fails", () => resolve("nope.md"), 'link target "nope.md" does not exist');
 throws("escaping the repo fails", () => resolve("../../../outside.md"), "does not exist");
+// #83: one scheme rule everywhere, and the unsupported scheme is named.
+throws("ftp link names its scheme", () => resolve("ftp://a.test/x"), 'unsupported scheme "ftp:"');
+throws("data link names its scheme", () => resolve("data:text/plain,hi"), 'unsupported scheme "data:"');
+throws("javascript link names its scheme", () => resolve("javascript:alert(1)"), 'unsupported scheme "javascript:"');
+eq("mailto is external", resolve("mailto:a@b.test").external, true);
 
 /* entry page --------------------------------------------------------------- */
 import { entryPageHtml, jsonLd, scriptJson } from "./entry-page.mjs";
@@ -161,6 +166,9 @@ has("empty title", checkPage(okPage.replace("<title>T</title>", "<title></title>
 has("dangling link", checkPage(okPage.replace("../e2/", "../e3/"), opts).join(), "../e3/ does not resolve");
 has("link leaving the site", checkPage(okPage.replace("../e2/", "../../../x/"), opts).join(), "leaves the site");
 eq("query and hash are ignored", checkPage(okPage.replace("../e2/", "../../?cat=2d#catalog"), opts).length, 0);
+has("page check rejects a data: href", checkPage(okPage.replace("../e2/", "data:text/html,x"), opts).join(), 'unsupported scheme "data:"');
+has("page check rejects a javascript: href", checkPage(okPage.replace("../e2/", "javascript:void(0)"), opts).join(), 'unsupported scheme "javascript:"');
+eq("page check accepts mailto", checkPage(okPage.replace("../e2/", "mailto:a@b.test"), opts).length, 0);
 
 /* llms ------------------------------------------------------------------- */
 import { llmsFullTxt, llmsTxt } from "./llms.mjs";
@@ -492,6 +500,34 @@ eq("frontmatter with CRLF line endings", parseFrontmatter("---\r\nid: a\r\nname:
 has("frontmatter rejects a duplicate key", fm(["id: a", "id: b"]).errors.join(), 'line 3: key "id" is given twice');
 has("frontmatter rejects a line that is not key: value", fm(["id: a", "just words"]).errors.join(), 'line 3: "just words" is not a key: value line');
 eq("no frontmatter is null", parseFrontmatter("# Title\n"), null);
+// #79: trailing comments. #84: a comment between a key and its block list.
+const f2 = fm([
+  "id: a",
+  "tags: [low-poly, modular]   # describe the content",
+  "name: Kay's pack # note",
+  'attribution_string: "Art # by X"   # keep the hash inside the quotes',
+  "langs: [c#, f#]",
+  'colour: "#fff"',
+  "ref: a#b",
+  "verified: 2026-07-19   # the day you read the licence",
+  "formats:",
+  "  # content words only",
+  "",
+  "  - PNG   # a comment on an item",
+  "  - SVG",
+  "commercial: true # yes",
+]);
+eq("frontmatter strips a comment after a flow list", JSON.stringify(f2.meta.tags), JSON.stringify(["low-poly", "modular"]));
+eq("frontmatter strips a comment after a bare scalar with an apostrophe", f2.meta.name, "Kay's pack");
+eq("frontmatter keeps a # inside quotes", f2.meta.attribution_string, "Art # by X");
+eq("frontmatter keeps C# and F#", JSON.stringify(f2.meta.langs), JSON.stringify(["c#", "f#"]));
+eq("frontmatter keeps a quoted # value", f2.meta.colour, "#fff");
+eq("frontmatter keeps a # with no space before it", f2.meta.ref, "a#b");
+eq("frontmatter strips a comment after a date", f2.meta.verified, "2026-07-19");
+eq("frontmatter block list after a comment and a blank line", JSON.stringify(f2.meta.formats), JSON.stringify(["PNG", "SVG"]));
+eq("frontmatter boolean before a comment", f2.meta.commercial, true);
+eq("frontmatter has no errors with comments everywhere", f2.errors.join(), "");
+eq("frontmatter keeps a quoted boolean as text", fm(["id: a", 'commercial: "true"']).meta.commercial, "true");
 eq("evidence stops at the next heading, whatever its letter", evidenceSection("## Evidence\n\n- e (2026-01-01)\n\n## Extras\n\n- x"), "## Evidence\n\n- e (2026-01-01)\n");
 eq("summary keeps underscores", summaryFromBody("Split by Rig_Medium and **KHR_draco**.\n\n## Notes"), "Split by Rig_Medium and KHR_draco.");
 eq("summary keeps C# and link text", summaryFromBody("# T\n\nA [C#](x.md) library, `code`, *em*."), "A C# library, code, em.");
@@ -502,6 +538,8 @@ eq("summary is capped at 220", summaryFromBody("word ".repeat(80)).length, 218);
 eq("link href keeps balanced parens", renderInline("[Foo](https://en.wikipedia.org/wiki/Foo_(bar)) next", passLink), '<a href="https://en.wikipedia.org/wiki/Foo_(bar)" rel="noopener noreferrer">Foo</a> next');
 eq("misnested emphasis stays literal", renderInline("**a *b** c*", passLink), "<strong>a *b</strong> c*");
 eq("italic around bold still works", renderInline("*a **b** c*", passLink), "<em>a <strong>b</strong> c</em>");
+has("a line starting with an autolink is not raw HTML", rb("<https://a.test/x> is the page."), '<a href="https://a.test/x"');
+throws("a line starting with a tag is still raw HTML", () => rb("<b>bold</b>"), "raw HTML");
 const dupIds = rb("## Notes\n\nx\n\n## Notes\n\ny\n\n## Content\n\nz");
 has("first heading keeps its id", dupIds, '<h2 id="notes">');
 has("repeated heading gets a suffix", dupIds, '<h2 id="notes-2">');

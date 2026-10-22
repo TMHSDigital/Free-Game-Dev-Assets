@@ -78,6 +78,16 @@ export function latestAllowedDate(now = Date.now()) {
   return new Date(now + 86400000).toISOString().slice(0, 10);
 }
 
+/**
+ * The link schemes the catalog treats as external. validate, the build's link
+ * resolver and the page checks all use this one rule, so a URL is accepted or
+ * rejected the same way everywhere.
+ */
+export const EXTERNAL_SCHEME_RE = /^(https?:|mailto:)/i;
+
+/** Any URL scheme at all (`ftp:`, `data:`, `javascript:`), for naming the unsupported one. */
+export const ANY_SCHEME_RE = /^([a-z][a-z0-9+.-]*):/i;
+
 /** Absolute URL of an entry's page. */
 export function entryPageUrl(site, id) {
   return `${String(site.siteUrl).replace(/\/+$/, "")}/entry/${id}/`;

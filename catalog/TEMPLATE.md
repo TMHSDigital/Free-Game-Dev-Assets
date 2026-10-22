@@ -11,9 +11,12 @@ commercial: true
 attribution_required: false
 formats: [glTF, FBX, PNG]
 # subcategories and formats spelling: see CONTRIBUTING.md (formats must be in site/format-vocabulary.json)
-tags: [low-poly, modular]   # describe the content; never the licence or the publisher (V19, V21)
-verified: 2026-07-19   # the day you read the licence at the source
-status: needs-review   # set active once the licence is read and quoted in ## Evidence
+# tags describe the content; never the licence or the publisher (V19, V21)
+tags: [low-poly, modular]
+# verified: the day you read the licence at the source
+verified: 2026-07-19
+# status: set active once the licence is read and quoted in ## Evidence
+status: needs-review
 # Optional (omit if N/A):
 # publisher: Kenney   # rights holder when that publisher has more than one entry; not a generic host
 # attribution_string: "Credit line"   # required when attribution_required is true

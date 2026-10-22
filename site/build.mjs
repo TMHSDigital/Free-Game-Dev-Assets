@@ -51,6 +51,9 @@ function loadEntries(vocab) {
   const entries = [];
   const errors = [];
   const bodies = new Map();
+  // validate.mjs catches a duplicate id too, but a local `npm run build` must
+  // not quietly write one entry's page over another's.
+  const fileOfId = new Map();
 
   for (const file of files) {
     const text = fs.readFileSync(file, "utf8");
@@ -72,6 +75,11 @@ function loadEntries(vocab) {
       errors.push(`${rel} missing: ${missing.join(", ")}`);
       continue;
     }
+    if (fileOfId.has(String(meta.id))) {
+      errors.push(`duplicate id "${meta.id}": ${fileOfId.get(String(meta.id))} and ${rel}`);
+      continue;
+    }
+    fileOfId.set(String(meta.id), rel);
     bodies.set(String(meta.id), body);
 
     entries.push({

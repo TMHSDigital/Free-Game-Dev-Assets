@@ -19,6 +19,7 @@ import {
   checkEngineFields,
   checkEntryUrl,
   checkEvidenceDates,
+  checkFieldTypes,
   checkFormatVocabulary,
   evidenceDates,
   markdownAnchors,
@@ -747,6 +748,16 @@ accepts(
   "V20 vocabulary carries no retired spelling",
   formatVocab.formats.filter((f) => Object.prototype.hasOwnProperty.call(aliases.formats, f))
 );
+
+/* V24: field types (#79) ------------------------------------------------ */
+rejects("V24 rejects tags that parsed as text", checkFieldTypes("bad.md", { tags: "[a, b]   # note" }), "tags must be a list");
+rejects("V24 rejects a subcategories string", checkFieldTypes("bad.md", { subcategories: "models" }), "subcategories must be a list");
+rejects("V24 rejects a quoted boolean", checkFieldTypes("bad.md", { commercial: "true" }), "write commercial: true without quotes");
+rejects("V24 rejects a quoted attribution_required", checkFieldTypes("bad.md", { attribution_required: "false" }), "write attribution_required: false without quotes");
+rejects("V24 rejects an unknown commercial word", checkFieldTypes("bad.md", { commercial: "maybe" }), 'commercial "maybe" is not true|false|varies|unknown');
+accepts("V24 accepts lists and booleans", checkFieldTypes("ok.md", { tags: ["a"], subcategories: ["b"], formats: ["PNG"], commercial: true, attribution_required: false }));
+accepts("V24 accepts the literal words", checkFieldTypes("ok.md", { commercial: "varies", attribution_required: "unknown" }));
+accepts("V24 leaves missing fields to the required check", checkFieldTypes("ok.md", {}));
 
 /* ----------------------------------------------------------------------- */
 if (failures.length) {

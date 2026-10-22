@@ -15,6 +15,7 @@ import {
   checkEngineFields,
   checkEntryUrl,
   checkEvidenceDates,
+  checkFieldTypes,
   checkFormatVocabulary,
   checkLicenseVocabulary,
   checkMaintenance,
@@ -29,7 +30,7 @@ import {
   markdownAnchors,
 } from "./checks.mjs";
 import { evidenceSection, parseFrontmatter } from "./lib/frontmatter.mjs";
-import { isRealDate, latestAllowedDate } from "./lib/shared.mjs";
+import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, isRealDate, latestAllowedDate } from "./lib/shared.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
 
@@ -100,9 +101,7 @@ const SKIP_WALK = new Set(["node_modules", "dist", "RESEARCH", "_scratch"]);
 const ALLOWED_BINARY_PREFIXES = ["site/dist/", "docs/images/readme/"];
 const EMOJI_RE = /\p{Extended_Pictographic}/u;
 const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
-const COMMERCIAL_VALUES = new Set(["true", "false", "unknown", "varies"]);
 const STATUS_VALUES = new Set(["active", "needs-review", "deprecated"]);
-const ATTRIBUTION_REQUIRED_VALUES = new Set(["true", "false", "unknown"]);
 
 function hasEmoji(text) {
   const stripped = text.replace(/[©®™]/g, "");
@@ -169,7 +168,12 @@ function checkRelativeLinks(file, errors) {
     if (target.startsWith("<") && target.endsWith(">")) target = target.slice(1, -1);
     const href = target.split(/\s+/)[0];
     if (!href) continue;
-    if (/^(https?:|mailto:|ftp:)/i.test(href)) continue;
+    if (EXTERNAL_SCHEME_RE.test(href)) continue;
+    const scheme = href.match(ANY_SCHEME_RE);
+    if (scheme) {
+      errors.push(`${relFromRoot(file)} link "${href}" uses the unsupported scheme "${scheme[1].toLowerCase()}:" (only https, http and mailto links are allowed)`);
+      continue;
+    }
     const hash = href.indexOf("#");
     const filePart = hash === -1 ? href : href.slice(0, hash);
     const fragment = hash === -1 ? "" : href.slice(hash + 1);
@@ -283,24 +287,13 @@ function main() {
     if (meta.category && !categories.has(String(meta.category))) {
       errors.push(`${rel} category "${meta.category}" is not a catalog/ directory`);
     }
-    const commercialKey = enumKey(meta.commercial);
-    if (!isEmptyField(meta.commercial) && !COMMERCIAL_VALUES.has(commercialKey)) {
-      errors.push(`${rel} commercial "${commercialKey}" is not true|false|unknown|varies`);
-    }
+    // V24 types commercial and attribution_required (a quoted "true" is text).
+    errors.push(...checkFieldTypes(rel, meta));
     const statusKey = enumKey(meta.status);
     if (!isEmptyField(meta.status) && !STATUS_VALUES.has(statusKey)) {
       errors.push(`${rel} status "${statusKey}" is not active|needs-review|deprecated`);
     }
-    const attrKey = enumKey(meta.attribution_required);
-    if (
-      !isEmptyField(meta.attribution_required) &&
-      !ATTRIBUTION_REQUIRED_VALUES.has(attrKey)
-    ) {
-      errors.push(
-        `${rel} attribution_required "${attrKey}" is not true|false|unknown`
-      );
-    }
-    if (attrKey === "true" && isEmptyField(meta.attribution_string)) {
+    if (meta.attribution_required === true && isEmptyField(meta.attribution_string)) {
       errors.push(`${rel} attribution_required true needs attribution_string`);
     }
     errors.push(...checkEntryUrl(rel, meta));

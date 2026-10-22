@@ -1,5 +1,6 @@
 /** Checks run on every generated page; the build fails on any error. */
 import path from "node:path";
+import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE } from "./shared.mjs";
 
 const LEAKS = [
   [/\*\*/, "a double asterisk"],
@@ -22,7 +23,12 @@ export function checkPage(html, { file, kindOf }) {
   const dir = path.posix.dirname(file);
   for (const m of html.matchAll(/\s(?:href|src)="([^"]+)"/g)) {
     const href = m[1];
-    if (/^(https?:|mailto:|#|data:)/i.test(href)) continue;
+    if (EXTERNAL_SCHEME_RE.test(href) || href.startsWith("#")) continue;
+    const scheme = href.match(ANY_SCHEME_RE);
+    if (scheme) {
+      errors.push(`${file}: link ${href} uses the unsupported scheme "${scheme[1].toLowerCase()}:"`);
+      continue;
+    }
     const clean = href.split(/[?#]/)[0];
     let target = path.posix.normalize(path.posix.join(dir, clean || ".")).replace(/\/$/, "");
     if (target === ".") target = "";

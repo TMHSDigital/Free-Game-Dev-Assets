@@ -35,8 +35,30 @@ function splitFlowList(inner) {
   return parts.map((p) => unquoteScalar(p.trim()));
 }
 
+/**
+ * Drops a trailing ` # comment`. As in YAML, a `#` starts a comment only after
+ * whitespace (or at the start) and outside quotes, so `C#` and `#fff` are
+ * content. A quote opens only where a scalar can start (the start, or after
+ * `[`, `,` or whitespace), so an apostrophe in `Kay's` is content too.
+ */
+function stripComment(raw) {
+  let quote = null;
+  for (let i = 0; i < raw.length; i += 1) {
+    const ch = raw[i];
+    if (quote) {
+      if (quote === '"' && ch === "\\") i += 1;
+      else if (ch === quote) quote = null;
+    } else if ((ch === '"' || ch === "'") && (i === 0 || /[\s[,]/.test(raw[i - 1]))) {
+      quote = ch;
+    } else if (ch === "#" && (i === 0 || /\s/.test(raw[i - 1]))) {
+      return raw.slice(0, i);
+    }
+  }
+  return raw;
+}
+
 export function parseScalar(raw) {
-  const v = raw.trim();
+  const v = stripComment(raw).trim();
   if (v === "true") return true;
   if (v === "false") return false;
   if (v === "null" || v === "~" || v === "") return null;
@@ -85,7 +107,10 @@ export function parseFrontmatter(text) {
       return;
     }
     const value = parseScalar(line.slice(idx + 1));
-    const next = lines[i + 1];
+    // A block list may start after blank or comment lines under its key.
+    let j = i + 1;
+    while (j < lines.length && (!lines[j].trim() || lines[j].trim().startsWith("#"))) j += 1;
+    const next = lines[j];
     if (value === null && next !== undefined && /^\s+-\s/.test(next)) {
       meta[key] = [];
       listKey = key;
