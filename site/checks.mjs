@@ -30,6 +30,45 @@ export function evidenceDates(ev) {
 }
 
 /** Generic hosts and distributors that are never a rights holder. */
+export const LIST_FIELDS = ["subcategories", "formats", "tags", "hardware_tags"];
+
+/**
+ * The frontmatter fields that are lists must actually be lists. The parser
+ * used to turn `tags: [a, b]   # note` into the string "[a, b]   # note"
+ * and every downstream check silently fell back to `[]`, so the entry was
+ * built with no tags at all; a quoted `commercial: "true"` likewise passed
+ * the enum check as a string and rendered as "commercial ?" (#79).
+ */
+export function checkListTypes(rel, meta, fields = LIST_FIELDS) {
+  const errors = [];
+  for (const field of fields) {
+    const value = meta[field];
+    if (value === undefined || value === null || empty(value)) continue;
+    if (!Array.isArray(value)) {
+      const shown = typeof value === "string" ? `"${value}"` : String(value);
+      errors.push(`${rel} ${field} must be a list ([a, b]), got the ${typeof value} ${shown}`);
+    }
+  }
+  return errors;
+}
+
+/**
+ * `commercial` and `attribution_required` are booleans; the documented
+ * string answers are listed per key. A quoted "true" is a string and is
+ * rejected rather than accepted as an answer (#79).
+ */
+export function checkBooleanField(rel, meta, key, stringAnswers) {
+  const value = meta[key];
+  if (value === undefined || value === null || empty(value)) return [];
+  if (typeof value === "boolean") return [];
+  const answer = String(value).toLowerCase();
+  if (stringAnswers.has(answer)) return [];
+  const allowed = `true or false${stringAnswers.size ? ` or ${[...stringAnswers].join("|")}` : ""}`;
+  return [`${rel} ${key} must be ${allowed}, got the string "${value}"`];
+}
+
+/** Generic hosts that host many rights holders, so a name like "GitHub" is
+ * not a publisher. See checkPublisherConsistency for how it is used. */
 export const GENERIC_HOSTS = new Set([
   "github",
   "github.com",

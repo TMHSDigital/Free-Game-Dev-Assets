@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 import {
   checkActiveIsSettled,
   checkAttributionConsistency,
+  checkBooleanField,
   checkCategoryReadmeRows,
   checkCategorySets,
   checkCountTables,
@@ -23,6 +24,7 @@ import {
   evidenceDates,
   markdownAnchors,
   checkLicenseVocabulary,
+  checkListTypes,
   checkMaintenance,
   maintenanceFromRepo,
   checkPublisherConsistency,
@@ -746,6 +748,27 @@ accepts(
 accepts(
   "V20 vocabulary carries no retired spelling",
   formatVocab.formats.filter((f) => Object.prototype.hasOwnProperty.call(aliases.formats, f))
+);
+
+/* field types (#79) ------------------------------------------------------- */
+
+rejects("#79 string tags are a type error", checkListTypes("bad.md", { tags: "[a, b]   # note" }), "must be a list");
+rejects("#79 string formats are a type error", checkListTypes("bad.md", { formats: "PNG" }), "must be a list");
+accepts("#79 list tags pass", checkListTypes("good.md", { tags: ["low-poly"] }));
+accepts("#79 absent optional list passes", checkListTypes("good.md", {}));
+accepts("#79 empty list passes (emptiness is a separate rule)", checkListTypes("good.md", { tags: [] }));
+rejects(
+  "#79 quoted commercial string is rejected",
+  checkBooleanField("bad.md", { commercial: "true" }, "commercial", new Set(["unknown", "varies"])),
+  'must be true or false or unknown|varies, got the string "true"'
+);
+accepts("#79 boolean commercial passes", checkBooleanField("good.md", { commercial: true }, "commercial", new Set(["unknown", "varies"])));
+accepts("#79 string varies passes", checkBooleanField("good.md", { commercial: "varies" }, "commercial", new Set(["unknown", "varies"])));
+accepts("#79 string unknown passes for attribution", checkBooleanField("good.md", { attribution_required: "unknown" }, "attribution_required", new Set(["unknown"])));
+rejects(
+  "#79 quoted attribution string is rejected",
+  checkBooleanField("bad.md", { attribution_required: "false" }, "attribution_required", new Set(["unknown"])),
+  'must be true or false or unknown'
 );
 
 /* ----------------------------------------------------------------------- */

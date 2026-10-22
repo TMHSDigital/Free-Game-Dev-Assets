@@ -469,7 +469,7 @@ has("recent window wording counts the build day", fp, "Checked on 2026-09-25 or 
 has("empty recent window wording counts the build day", freshnessPageHtml({ stats: freshnessStats([fe("a", "Alpha", 90)], fNow), site, stamp: "2026-09-25", total: 1, hasCard: false }), "None checked on 2026-09-25 or in the 30 days before it.");
 
 /* frontmatter -------------------------------------------------------------- */
-import { evidenceSection, parseFrontmatter, plainText, summaryFromBody } from "./frontmatter.mjs";
+import { evidenceSection, parseFrontmatter, parseScalar, plainText, summaryFromBody } from "./frontmatter.mjs";
 import { latestAllowedDate } from "./shared.mjs";
 const fm = (lines, body = "Body.\n") => parseFrontmatter(`---\n${lines.join("\n")}\n---\n${body}`);
 const f1 = fm([
@@ -492,6 +492,24 @@ eq("frontmatter with CRLF line endings", parseFrontmatter("---\r\nid: a\r\nname:
 has("frontmatter rejects a duplicate key", fm(["id: a", "id: b"]).errors.join(), 'line 3: key "id" is given twice');
 has("frontmatter rejects a line that is not key: value", fm(["id: a", "just words"]).errors.join(), 'line 3: "just words" is not a key: value line');
 eq("no frontmatter is null", parseFrontmatter("# Title\n"), null);
+
+/* frontmatter: trailing comments (#79) ------------------------------------ */
+
+eq("scalar keeps a url fragment", parseScalar("https://example.com/#anchor"), "https://example.com/#anchor");
+eq("scalar strips a trailing comment", JSON.stringify(parseScalar("[low-poly, modular]   # describe the content")), JSON.stringify(["low-poly", "modular"]));
+eq("scalar strips a comment on a boolean", parseScalar("true   # set active once"), true);
+eq("scalar keeps a quoted hash", parseScalar('"a # not a comment"'), "a # not a comment");
+eq("scalar strips only outside quotes", parseScalar('"http://x"   # note'), "http://x");
+eq("scalar keeps a hash with no space before it", parseScalar("[a,b]#note"), "[a,b]#note");
+
+const fComment = fm([
+  "id: a",
+  "tags: [low-poly, modular]   # describe the content; never the licence or the publisher",
+  "commercial: true   # yes",
+]);
+eq("template tags line parses as a list", JSON.stringify(fComment.meta.tags), JSON.stringify(["low-poly", "modular"]));
+eq("commented boolean still parses", fComment.meta.commercial, true);
+eq("template tags line has no errors", fComment.errors.length, 0);
 eq("evidence stops at the next heading, whatever its letter", evidenceSection("## Evidence\n\n- e (2026-01-01)\n\n## Extras\n\n- x"), "## Evidence\n\n- e (2026-01-01)\n");
 eq("summary keeps underscores", summaryFromBody("Split by Rig_Medium and **KHR_draco**.\n\n## Notes"), "Split by Rig_Medium and KHR_draco.");
 eq("summary keeps C# and link text", summaryFromBody("# T\n\nA [C#](x.md) library, `code`, *em*."), "A C# library, code, em.");

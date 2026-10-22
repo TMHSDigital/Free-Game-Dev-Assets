@@ -35,8 +35,28 @@ function splitFlowList(inner) {
   return parts.map((p) => unquoteScalar(p.trim()));
 }
 
+/**
+ * Removes an unquoted trailing `# comment` — YAML needs a space before the
+ * `#` — so a template line like `tags: [a, b]   # note` parses as the list
+ * and not as the string "[a, b]   # note" (#79). A `#` inside quotes, or
+ * with no space before it (a URL fragment), is kept.
+ */
+function stripTrailingComment(raw) {
+  let inSingle = false;
+  let inDouble = false;
+  for (let i = 0; i < raw.length; i += 1) {
+    const ch = raw[i];
+    if (ch === "'" && !inDouble) inSingle = !inSingle;
+    else if (ch === '"' && !inSingle) inDouble = !inDouble;
+    else if (ch === "#" && !inSingle && !inDouble && i > 0 && (raw[i - 1] === " " || raw[i - 1] === "\t")) {
+      return raw.slice(0, i).trimEnd();
+    }
+  }
+  return raw;
+}
+
 export function parseScalar(raw) {
-  const v = raw.trim();
+  const v = stripTrailingComment(raw).trim();
   if (v === "true") return true;
   if (v === "false") return false;
   if (v === "null" || v === "~" || v === "") return null;

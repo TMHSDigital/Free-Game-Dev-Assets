@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import {
   checkActiveIsSettled,
   checkAttributionConsistency,
+  checkBooleanField,
   checkCategoryReadmeRows,
   checkCategorySets,
   checkCountTables,
@@ -17,6 +18,7 @@ import {
   checkEvidenceDates,
   checkFormatVocabulary,
   checkLicenseVocabulary,
+  checkListTypes,
   checkMaintenance,
   checkPublisherConsistency,
   checkSpdxConsistency,
@@ -303,6 +305,9 @@ function main() {
     if (attrKey === "true" && isEmptyField(meta.attribution_string)) {
       errors.push(`${rel} attribution_required true needs attribution_string`);
     }
+    errors.push(...checkListTypes(rel, meta));
+    errors.push(...checkBooleanField(rel, meta, "commercial", new Set(["unknown", "varies"])));
+    errors.push(...checkBooleanField(rel, meta, "attribution_required", new Set(["unknown"])));
     errors.push(...checkEntryUrl(rel, meta));
     errors.push(...checkLicenseVocabulary(rel, meta, vocab));
     errors.push(...checkSpdxConsistency(rel, meta, vocab, spdxAllowed));
