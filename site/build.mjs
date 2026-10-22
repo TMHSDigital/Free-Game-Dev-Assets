@@ -535,11 +535,13 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
 
 /** Runs the page checks over dist-relative files. */
 function checkPages(files) {
+  // Link targets resolve against what this build produced, not what is on
+  // disk: an incremental build still has last time's pages there until
+  // pruneDist runs, and a link to a removed entry must fail now.
   const kindOf = (rel) => {
-    const full = path.join(DIST, rel);
-    if (!fs.existsSync(full)) return null;
-    if (fs.statSync(full).isDirectory()) return fs.existsSync(path.join(full, "index.html")) ? "dir" : null;
-    return "file";
+    if (produced.has(rel)) return "file";
+    if (produced.has(rel ? `${rel}/index.html` : "index.html")) return "dir";
+    return null;
   };
   return files.flatMap((f) => checkPage(fs.readFileSync(path.join(DIST, f), "utf8"), { file: f, kindOf }));
 }

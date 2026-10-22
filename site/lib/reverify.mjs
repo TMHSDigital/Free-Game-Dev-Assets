@@ -44,7 +44,7 @@ export function batchIssueMarkdown({ batch, repo, date, total, dueDays = DUE_DAY
     "3. If it still supports the entry, update `verified` to today's date and add a dated quote under `## Evidence`, for example `- Terms page (YYYY-MM-DD): \"...\"`.",
     "4. If the terms are unclear, mixed per file, or have changed, set `status: needs-review` and note what you found under `## Notes`. If the source is gone, say so in a comment and we will deprecate it.",
     "",
-    "The rule is in [CONTRIBUTING.md](CONTRIBUTING.md): a wrong licence claim is worse than a missing entry, so never infer a licence from the site's reputation. One PR per entry or a few at a time is fine. `npm run validate` checks the file; CI runs it on your PR.",
+    `The rule is in [CONTRIBUTING.md](${repo}/blob/main/CONTRIBUTING.md): a wrong licence claim is worse than a missing entry, so never infer a licence from the site's reputation. One PR per entry or a few at a time is fine. \`npm run validate\` checks the file; CI runs it on your PR.`,
     "",
     "**Entries** (oldest check first)",
     "",

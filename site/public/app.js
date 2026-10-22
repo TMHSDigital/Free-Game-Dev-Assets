@@ -434,7 +434,12 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
     const host = $("#empty-suggest");
     if (!host) return;
     const q = String(query || "").trim();
-    const matches = q ? closestEntries(slugOf(q), data.entries) : [];
+    // Only entries the other filters would show: a suggestion that the
+    // Audio chip then hides would lead straight back to this empty state.
+    const pool = q
+      ? data.entries.filter((e) => (state.category === "all" || e.category === state.category) && passes(e, { ...state, q: "" }, FORMAT_GROUPS))
+      : [];
+    const matches = q ? closestEntries(slugOf(q), pool) : [];
     if (!matches.length) {
       host.hidden = true;
       host.textContent = "";

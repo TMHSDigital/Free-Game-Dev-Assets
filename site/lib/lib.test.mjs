@@ -618,6 +618,9 @@ eq("frontmatter has no errors with comments everywhere", f2.errors.join(), "");
 eq("frontmatter keeps a quoted boolean as text", fm(["id: a", 'commercial: "true"']).meta.commercial, "true");
 has("frontmatter flags a hashtag read as a comment", fm(["id: a", "name: Sonniss #GameAudioGDC Bundle"]).errors.join(), '"name" is cut at " #"');
 eq("frontmatter keeps a quoted hashtag", fm(["id: a", 'name: "Sonniss #GameAudioGDC Bundle"']).meta.name, "Sonniss #GameAudioGDC Bundle");
+has("frontmatter flags a list item cut at a hashtag", fm(["id: a", "tags:", "  - foo #bar"]).errors.join(), 'line 4: list item is cut at " #"');
+has("frontmatter flags a list item that is only a hashtag", fm(["id: a", "tags:", "  - #gamedev"]).errors.join(), "line 4: list item is empty");
+eq("frontmatter keeps a commented list item", JSON.stringify(fm(["id: a", "tags:", "  - foo # a note", '  - "bar #baz"']).meta.tags), JSON.stringify(["foo", "bar #baz"]));
 eq("evidence stops at the next heading, whatever its letter", evidenceSection("## Evidence\n\n- e (2026-01-01)\n\n## Extras\n\n- x"), "## Evidence\n\n- e (2026-01-01)\n");
 eq("summary keeps underscores", summaryFromBody("Split by Rig_Medium and **KHR_draco**.\n\n## Notes"), "Split by Rig_Medium and KHR_draco.");
 eq("summary keeps C# and link text", summaryFromBody("# T\n\nA [C#](x.md) library, `code`, *em*."), "A C# library, code, em.");
@@ -859,6 +862,7 @@ import { batchIssueMarkdown, pickBatch } from "./reverify.mjs";
   has("batch issue says what was recorded", md, "recorded as `CC0`, needs-review, verified 2026-06-01 (153 days ago)");
   has("batch issue handles no date", md, "[`undated`](https://github.com/o/r/blob/main/catalog/2d/undated.md): `https://undated.test/`, recorded as `CC0`, active, no verified date");
   has("batch issue explains the steps", md, "**How to do one**");
+  has("batch issue links CONTRIBUTING absolutely (relative links 404 from an issue)", md, "[CONTRIBUTING.md](https://github.com/o/r/blob/main/CONTRIBUTING.md)");
   eq("batch issue has one checkbox per entry", (md.match(/^- \[ \] /gm) || []).length, 2);
 }
 

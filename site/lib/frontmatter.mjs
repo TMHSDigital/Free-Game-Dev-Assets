@@ -57,6 +57,15 @@ function stripComment(raw) {
   return raw;
 }
 
+/**
+ * True when an unquoted bare scalar lost a ` #word` to the comment rule. A
+ * hash with no space after it is a hashtag or a colour, not a comment
+ * (`# text`); say so, since the silent truncation is what hurts.
+ */
+function cutAtHash(raw, value) {
+  return /\S\s+#\S/.test(raw) && typeof value === "string" && value !== "" && !/^["'[]/.test(raw.trim());
+}
+
 export function parseScalar(raw) {
   const v = stripComment(raw).trim();
   if (v === "true") return true;
@@ -92,7 +101,12 @@ export function parseFrontmatter(text) {
     const item = line.match(/^\s+-\s+(.*)$/);
     if (item) {
       if (listKey === null) errors.push(`line ${lineNo}: list item without a key above it`);
-      else meta[listKey].push(parseScalar(item[1]));
+      else {
+        const value = parseScalar(item[1]);
+        if (value === null) errors.push(`line ${lineNo}: list item is empty (a value starting with # is a comment; quote it)`);
+        else if (cutAtHash(item[1], value)) errors.push(`line ${lineNo}: list item is cut at " #" (read as a comment); quote the value if the # is part of it`);
+        else meta[listKey].push(value);
+      }
       return;
     }
     listKey = null;
@@ -108,9 +122,7 @@ export function parseFrontmatter(text) {
     }
     const rawValue = line.slice(idx + 1);
     const value = parseScalar(rawValue);
-    // ` #word` with no space after the hash is a hashtag or a colour, not a
-    // comment (`# text`); say so, since the silent truncation is what hurts.
-    if (/\S\s+#\S/.test(rawValue) && typeof value === "string" && value && !/^["'[]/.test(rawValue.trim())) {
+    if (cutAtHash(rawValue, value)) {
       errors.push(`line ${lineNo}: "${key}" is cut at " #" (read as a comment); quote the value if the # is part of it`);
     }
     // A block list may start after blank or comment lines under its key.
