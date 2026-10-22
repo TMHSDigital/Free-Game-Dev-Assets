@@ -127,6 +127,63 @@ export function sponsorButtonHtml() {
   );
 }
 
+/**
+ * `text` cut to at most `max` characters: whole if it fits, else at the last
+ * sentence end that fits, else at the last word break with an ellipsis.
+ */
+export function clipText(text, max) {
+  const s = String(text).trim();
+  if (s.length <= max) return s;
+  const head = s.slice(0, max);
+  let sentence = -1;
+  for (const m of s.matchAll(/[.!?](?=\s)/g)) if (m.index < max) sentence = m.index;
+  if (sentence >= Math.floor(max / 3)) return head.slice(0, sentence + 1);
+  const cut = head.slice(0, max - 1);
+  const space = cut.lastIndexOf(" ");
+  return `${(space > Math.floor(max / 2) ? cut.slice(0, space) : cut).replace(/[\s,;:]+$/, "")}…`;
+}
+
+/** Search-result limits (Google truncates around these). */
+export const SEO_TITLE_MAX = 60;
+export const SEO_DESCRIPTION_MAX = 160;
+
+/**
+ * An entry page's `<title>`: "name · licence", the name alone when that is
+ * too long, and the site name nowhere (og:site_name carries it). The licence
+ * is the part a searcher came for, so it is never the part that gets cut.
+ */
+export function seoTitle(name, license, max = SEO_TITLE_MAX) {
+  const full = `${name} · ${license}`;
+  if (full.length <= max) return full;
+  return clipText(String(name), max);
+}
+
+/**
+ * An entry page's meta description: the licence, the commercial stance and
+ * the credit requirement first, then as much of the summary as fits.
+ */
+export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5) {
+  const stance =
+    entry.commercial === true
+      ? "commercial use OK"
+      : entry.commercial === false
+        ? "non-commercial only"
+        : entry.commercial === "varies"
+          ? "commercial use varies per file"
+          : "commercial use unclear";
+  const credit =
+    entry.attribution_required === true
+      ? "credit required"
+      : entry.attribution_required === false
+        ? "no credit needed"
+        : "credit unclear";
+  const lead = `${entry.license}, ${stance}, ${credit}.`;
+  const summary = String(entry.summary || "").trim();
+  if (!summary) return clipText(lead, max);
+  const first = summary.split(/(?<=[.!?])\s+/)[0];
+  return clipText(`${lead} ${first}`, max);
+}
+
 /** Social preview image, a first-party screenshot copied into dist by the build. */
 export const OG_CARD_NAME = "og-card.png";
 

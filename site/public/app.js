@@ -1,4 +1,4 @@
-import { passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, stateQuery } from "./search.js";
+import { closestEntries, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, slugOf, stateQuery } from "./search.js";
 
 (() => {
   const data = window.__CATALOG__;
@@ -422,6 +422,35 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
     flatHeading.textContent = "Matching entries";
   }
 
+  /**
+   * "Did you mean" for a search that matched nothing: the closest entry names,
+   * by the same similarity the 404 page uses. A typo ("quaternious", "kenny")
+   * is the moment a visitor leaves, and the fix is one click.
+   */
+  function renderSuggestions(query) {
+    const host = $("#empty-suggest");
+    if (!host) return;
+    const q = String(query || "").trim();
+    const matches = q ? closestEntries(slugOf(q), data.entries) : [];
+    if (!matches.length) {
+      host.hidden = true;
+      host.textContent = "";
+      return;
+    }
+    host.hidden = false;
+    host.textContent = "Did you mean: ";
+    matches.forEach((entry, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "link-button";
+      btn.textContent = entry.name;
+      btn.setAttribute("data-suggest", entry.name);
+      host.append(btn);
+      if (i < matches.length - 1) host.append(", ");
+    });
+    host.append("?");
+  }
+
   /** Puts every node in `order` (visible ones first), moving nothing already in place. */
   function placeNodes(order) {
     const grid = $("#entry-grid");
@@ -436,6 +465,7 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
     const group = shouldGroup();
     $("#result-count").textContent = `${list.length} of ${data.entries.length} entries shown`;
     empty.hidden = list.length > 0;
+    renderSuggestions(list.length ? "" : state.q);
 
     // Under a plain sort the order of all nodes is fixed, so filtering only
     // toggles visibility. A ranked search reorders on every change.
@@ -709,6 +739,16 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
       Object.assign(state, DEFAULTS);
       syncControls();
       apply();
+      $("#result-count").focus();
+    });
+
+    // A suggestion runs that search in the box, keeping the other filters.
+    $("#empty-suggest").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-suggest]");
+      if (!btn) return;
+      state.q = btn.getAttribute("data-suggest");
+      search.value = state.q;
+      apply({ push: true });
       $("#result-count").focus();
     });
 

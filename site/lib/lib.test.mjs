@@ -130,7 +130,9 @@ const site = { siteUrl: "https://x.test/s/", title: "Free Game Dev Assets", tagl
 const base = { id: "e1", name: 'A "quoted" <Name>', url: "https://src.test/", category: "2d", license: "CC-BY-4.0", license_spdx: "CC-BY-4.0", commercial: true, attribution_required: true, attribution_string: 'Art by "X" </script>', formats: ["PNG"], verified: "2026-09-01", status: "active", path: "catalog/2d/e1.md", summary: "Sum </script> <b>" };
 const page = (over = {}) => entryPageHtml({ entry: { ...base, ...over }, leadHtml: "<p>Lead</p>", restHtml: '<h2 id="notes">Notes</h2>', deprecatedReasonHtml: null, prev: null, next: { id: "e2", name: "Next one" }, site, categoryLabel: "2D", stamp: "2026-09-24", total: 319, hasCard: true, now: Date.parse("2026-09-24T00:00:00Z") });
 const p = page();
-has("title is escaped", p, "<title>A &quot;quoted&quot; &lt;Name&gt; (CC-BY-4.0) | Free Game Dev Assets</title>");
+has("title is escaped", p, "<title>A &quot;quoted&quot; &lt;Name&gt; · CC-BY-4.0</title>");
+has("og:title keeps the licence and site name", p, '<meta property="og:title" content="A &quot;quoted&quot; &lt;Name&gt; (CC-BY-4.0) | Free Game Dev Assets" />');
+has("description leads with licence, stance and credit", p, '<meta name="description" content="CC-BY-4.0, commercial use OK, credit required. Sum &lt;/script&gt; &lt;b&gt;" />');
 has("canonical", p, '<link rel="canonical" href="https://x.test/s/entry/e1/" />');
 eq("one h1", (p.match(/<h1[\s>]/g) || []).length, 1);
 has("credit line escaped", p, "Art by &quot;X&quot; &lt;/script&gt;");
@@ -167,6 +169,9 @@ has("dangling link", checkPage(okPage.replace("../e2/", "../e3/"), opts).join(),
 has("link leaving the site", checkPage(okPage.replace("../e2/", "../../../x/"), opts).join(), "leaves the site");
 eq("query and hash are ignored", checkPage(okPage.replace("../e2/", "../../?cat=2d#catalog"), opts).length, 0);
 has("page check rejects a data: href", checkPage(okPage.replace("../e2/", "data:text/html,x"), opts).join(), 'unsupported scheme "data:"');
+has("page check rejects a long title", checkPage(okPage.replace("<title>T</title>", `<title>${"t".repeat(61)}</title>`), opts).join(), "title is 61 characters, over 60");
+has("page check rejects a long description", checkPage(okPage.replace("<head>", `<head><meta name="description" content="${"d".repeat(161)}" />`), opts).join(), "description is 161 characters, over 160");
+eq("page check measures unescaped text", checkPage(okPage.replace("<title>T</title>", `<title>${"&amp;".repeat(20)}</title>`), opts).length, 0);
 has("page check rejects a javascript: href", checkPage(okPage.replace("../e2/", "javascript:void(0)"), opts).join(), 'unsupported scheme "javascript:"');
 eq("page check accepts mailto", checkPage(okPage.replace("../e2/", "mailto:a@b.test"), opts).length, 0);
 
@@ -344,7 +349,7 @@ const sp = (over = {}) =>
     ...over,
   });
 const spage = sp();
-has("stack title escaped", spage, "<title>Make a &quot;thing&quot; &lt;/script&gt; | Free Game Dev Assets</title>");
+has("stack title escaped", spage, "<title>Make a &quot;thing&quot; &lt;/script&gt;</title>");
 has("stack canonical", spage, '<link rel="canonical" href="https://x.test/s/stack/s1/" />');
 eq("stack one h1", (spage.match(/<h1[\s>]/g) || []).length, 1);
 has("stack pick links its entry page", spage, 'href="../../entry/a/"');
@@ -497,6 +502,19 @@ import { baseHeadHtml } from "./shared.mjs";
   has("no card falls back to a summary card", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), '<meta name="twitter:card" content="summary" />');
   lacks("no card has no image", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), "og:image");
 }
+
+/* seo title and description (#103) ----------------------------------------- */
+import { clipText, seoDescription, seoTitle } from "./shared.mjs";
+eq("clip keeps short text", clipText("Short.", 60), "Short.");
+eq("clip cuts at a sentence end", clipText("First sentence here. Second sentence is long and goes on.", 40), "First sentence here.");
+eq("clip cuts at a word with an ellipsis when no sentence fits", clipText("one two three four five six seven eight nine", 20), "one two three four…");
+eq("clip never exceeds max", clipText("x".repeat(100), 30).length <= 30, true);
+eq("seo title joins name and licence", seoTitle("Kenney", "CC0"), "Kenney · CC0");
+eq("seo title drops the licence when too long", seoTitle("A".repeat(50), "CC-BY-SA-4.0"), "A".repeat(50));
+eq("seo title clips a very long name", seoTitle("word ".repeat(20).trim(), "CC0").length <= 60, true);
+eq("seo description states licence, stance and credit", seoDescription({ license: "CC0", commercial: true, attribution_required: false, summary: "Lots of packs. More text." }), "CC0, commercial use OK, no credit needed. Lots of packs.");
+eq("seo description with varies and unknown", seoDescription({ license: "varies", commercial: "varies", attribution_required: "unknown", summary: "" }), "varies, commercial use varies per file, credit unclear.");
+eq("seo description fits the limit", seoDescription({ license: "CC-BY-4.0", commercial: true, attribution_required: true, summary: "word ".repeat(60) }).length <= 160, true);
 
 /* sitemap lastmod (#108) --------------------------------------------------- */
 import { sitemapXml } from "./exports.mjs";
@@ -692,6 +710,7 @@ nodeFs.rmSync(tmp, { recursive: true, force: true });
 /* client search, URL state and 404 guesses (search.mjs, #67) --------------- */
 import {
   closestEntries,
+  slugOf,
   missSlug,
   normalize,
   passesFilters,
@@ -754,6 +773,9 @@ const guessPool = [
 eq("404 guesses closest first", closestEntries("kenny-ui-pack", guessPool)[0].id, "kenney-ui-pack");
 eq("404 guesses drop weak matches", closestEntries("kenny-ui-pack", guessPool).some((e) => e.id === "freesound"), false);
 eq("404 guesses respect limit", closestEntries("kenney-ui", guessPool, { limit: 1 }).length, 1);
+// #109: the empty search state reuses the same guesses for a misspelt publisher.
+eq("did you mean: misspelt publisher", closestEntries(slugOf("quaternious"), [...guessPool, { id: "quaternius", name: "Quaternius" }]).map((e) => e.name).includes("Quaternius"), true);
+eq("did you mean: misspelt kenney", closestEntries(slugOf("kenny"), guessPool).some((e) => /kenney/i.test(e.name)), true);
 
 /* check-links: flags and API failures (#82) -------------------------------- */
 eq("stale-days default", staleDaysFrom(["node", "x"]).days, 365);

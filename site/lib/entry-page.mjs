@@ -7,6 +7,8 @@ import {
   ENGINE_LOCK_NOTES,
   MAINTENANCE_NOTES,
   PERSPECTIVE_LABELS,
+  seoDescription,
+  seoTitle,
   STATUS_NOTES,
   verifiedAge,
   sponsorButtonHtml,
@@ -106,8 +108,8 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${esc(title)}</title>
-    <meta name="description" content="${esc(desc)}" />
+    <title>${esc(seoTitle(entry.name, entry.license))}</title>
+    <meta name="description" content="${esc(seoDescription(entry))}" />
     ${deprecated ? '<meta name="robots" content="noindex" />' : ""}
     ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard })}
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />

@@ -2,6 +2,13 @@
 /**
  * Build GitHub Pages site from catalog markdown frontmatter.
  * Add/edit one catalog/<category>/<id>.md → rebuild regenerates everything.
+ *
+ *   node site/build.mjs [--clean]
+ *
+ * The build is incremental on disk: it writes only the files whose bytes
+ * changed and prunes what an earlier build left, so a no-change rebuild is
+ * fast on a slow drive. --clean empties site/dist first; the output is the
+ * same either way.
  */
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -342,14 +349,65 @@ function notFoundHtml(site) {
 `;
 }
 
-function copyDir(src, dest) {
-  fs.mkdirSync(dest, { recursive: true });
+/*
+ * Output goes through one writer that creates a directory once, writes a
+ * file only when its bytes changed and remembers every path it produced, so
+ * the build can prune what an earlier build left behind instead of wiping
+ * dist/ and recreating 420 directories (94% of the build time on a slow
+ * disk). `--clean` still wipes first; the result is byte-identical either way.
+ */
+const produced = new Set();
+const madeDirs = new Set();
+let writes = 0;
+
+function ensureDir(dir) {
+  if (madeDirs.has(dir)) return;
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  madeDirs.add(dir);
+}
+
+/** Writes `content` (string or Buffer) to dist-relative `rel` if it differs. */
+function writeOut(rel, content) {
+  const full = path.join(DIST, rel);
+  produced.add(rel.split(path.sep).join("/"));
+  ensureDir(path.dirname(full));
+  const next = Buffer.isBuffer(content) ? content : Buffer.from(content, "utf8");
+  if (fs.existsSync(full)) {
+    const stat = fs.statSync(full);
+    if (stat.isFile() && stat.size === next.length && fs.readFileSync(full).equals(next)) return;
+  }
+  fs.writeFileSync(full, next);
+  writes += 1;
+}
+
+/** Copies a file into dist (through writeOut, so unchanged files are left alone). */
+function copyOut(src, rel) {
+  writeOut(rel, fs.readFileSync(src));
+}
+
+/** Everything under site/public except the names in `skip`, dist-relative paths kept. */
+function copyPublic(src, skip, prefix = "") {
   for (const name of fs.readdirSync(src)) {
     const from = path.join(src, name);
-    const to = path.join(dest, name);
-    if (fs.statSync(from).isDirectory()) copyDir(from, to);
-    else fs.copyFileSync(from, to);
+    const rel = prefix ? `${prefix}/${name}` : name;
+    if (fs.statSync(from).isDirectory()) copyPublic(from, skip, rel);
+    else if (!skip.has(rel)) copyOut(from, rel);
   }
+}
+
+/** Removes every file and directory in dist that this build did not produce. */
+function pruneDist(dir = DIST, prefix = "") {
+  let kept = 0;
+  for (const name of fs.readdirSync(dir)) {
+    const full = path.join(dir, name);
+    const rel = prefix ? `${prefix}/${name}` : name;
+    if (fs.statSync(full).isDirectory()) {
+      if (pruneDist(full, rel) === 0) fs.rmSync(full, { recursive: true, force: true });
+      else kept += 1;
+    } else if (produced.has(rel)) kept += 1;
+    else fs.rmSync(full, { force: true });
+  }
+  return kept;
 }
 
 /** Returns file => link resolver for links in that file's body (`file.path` is repo-relative). */
@@ -411,9 +469,7 @@ function writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now }
         hasCard,
         now,
       });
-      const dir = path.join(DIST, "stack", stack.meta.id);
-      fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(path.join(dir, "index.html"), html);
+      writeOut(path.join("stack", stack.meta.id, "index.html"), html);
       written.push(`stack/${stack.meta.id}/index.html`);
     } catch (err) {
       if (err instanceof MarkdownError || err instanceof LinkError) errors.push(err.message);
@@ -466,9 +522,7 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
         now,
         stacks: usedIn.get(entry.id) || [],
       });
-      const dir = path.join(DIST, "entry", entry.id);
-      fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(path.join(dir, "index.html"), html);
+      writeOut(path.join("entry", entry.id, "index.html"), html);
       written.push(`entry/${entry.id}/index.html`);
     } catch (err) {
       if (err instanceof MarkdownError || err instanceof LinkError) errors.push(err.message);
@@ -490,10 +544,23 @@ function checkPages(files) {
 }
 
 function main() {
+  const started = Date.now();
+  const clean = process.argv.includes("--clean");
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
   const vocab = JSON.parse(fs.readFileSync(VOCAB_PATH, "utf8"));
   const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
   const { entries, errors, bodies } = loadEntries(vocab);
+
+  // An entry that cannot be read must stop the build: carrying on would
+  // publish a site with that entry, and any featured slot for it, missing.
+  // Checked before the stacks load, so a broken entry does not hide a stack
+  // error until the next run.
+  if (errors.length) {
+    console.error(`Build failed (${errors.length}):`);
+    for (const e of errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+
   const spdxAllowed = JSON.parse(fs.readFileSync(SPDX_ALLOWED_PATH, "utf8"));
   const { stacks, errors: stackErrors } = loadStacks(entries, vocab, spdxAllowed);
   // Entry id => the stacks that pick it, for "Used in" on entry pages.
@@ -504,14 +571,6 @@ function main() {
       if (!list.some((x) => x.id === s.meta.id)) list.push({ id: s.meta.id, title: s.meta.title });
       usedIn.set(p.entry.id, list);
     }
-  }
-
-  // An entry that cannot be read must stop the build: carrying on would
-  // publish a site with that entry, and any featured slot for it, missing.
-  if (errors.length) {
-    console.error(`Build failed (${errors.length}):`);
-    for (const e of errors) console.error(`  - ${e}`);
-    process.exit(1);
   }
 
   const repoUrl = config.site.repo;
@@ -557,32 +616,26 @@ function main() {
 
   // Empty dist rather than remove it: on Windows a server or editor holding the
   // folder open makes removing the folder itself fail with EPERM/EBUSY.
-  fs.mkdirSync(DIST, { recursive: true });
-  for (const name of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, name), { recursive: true, force: true });
-  copyDir(PUBLIC, DIST);
+  ensureDir(DIST);
+  if (clean) for (const name of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, name), { recursive: true, force: true });
+  // index.html is a template; its filled-in version is written below.
+  copyPublic(PUBLIC, new Set(["index.html"]));
   // The shortlist builds its CREDITS file with the same code as the stack pages.
-  fs.copyFileSync(path.join(__dirname, "lib", "owes.mjs"), path.join(DIST, "owes.js"));
+  copyOut(path.join(__dirname, "lib", "owes.mjs"), "owes.js");
   // The catalog search and the 404 page's guesses, tested in lib.test.mjs.
-  fs.copyFileSync(path.join(__dirname, "lib", "search.mjs"), path.join(DIST, "search.js"));
+  copyOut(path.join(__dirname, "lib", "search.mjs"), "search.js");
   const hasCard = fs.existsSync(OG_CARD_SRC);
-  if (hasCard) fs.copyFileSync(OG_CARD_SRC, path.join(DIST, OG_CARD_NAME));
+  if (hasCard) copyOut(OG_CARD_SRC, OG_CARD_NAME);
   // data.json is the public machine-readable catalog (see site/README.md);
   // the page itself loads data.js.
-  fs.writeFileSync(path.join(DIST, "data.json"), JSON.stringify(payload, null, 2));
-  fs.writeFileSync(
-    path.join(DIST, "data.js"),
-    `window.__CATALOG__ = ${JSON.stringify(payload)};\n`
-  );
-  fs.writeFileSync(path.join(DIST, "catalog.csv"), catalogCsv(entries, config.site.siteUrl));
-  fs.writeFileSync(
-    path.join(DIST, "feed.xml"),
-    atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt })
-  );
+  writeOut("data.json", JSON.stringify(payload, null, 2));
+  writeOut("data.js", `window.__CATALOG__ = ${JSON.stringify(payload)};\n`);
+  writeOut("catalog.csv", catalogCsv(entries, config.site.siteUrl));
+  writeOut("feed.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt }));
 
   // Prerender. The served HTML must be complete without JavaScript: this is a
   // catalog whose whole value is that its entries can be found.
   const now = Date.now();
-  const indexPath = path.join(DIST, "index.html");
   const stamp = payload.generatedAt.slice(0, 10);
   const visible = entries.filter((e) => e.status !== "deprecated");
   const fresh = freshnessStats(entries, now);
@@ -599,7 +652,7 @@ function main() {
     SPONSOR_BUTTON: sponsorButtonHtml(),
     FOOTER_STAMP: `Built ${esc(stamp)} from ${stats.total} catalog entries.`,
   };
-  let html = fs.readFileSync(indexPath, "utf8");
+  let html = fs.readFileSync(path.join(PUBLIC, "index.html"), "utf8");
   const missingMarkers = Object.keys(substitutions).filter((key) => !html.includes(`<!--${key}-->`));
   if (missingMarkers.length) {
     console.error(`Build failed: site/public/index.html is missing ${missingMarkers.map((k) => `<!--${k}-->`).join(", ")}`);
@@ -609,16 +662,12 @@ function main() {
     // A function replacement, so a "$" in the value is never read as a pattern.
     html = html.replaceAll(`<!--${key}-->`, () => value);
   }
-  fs.writeFileSync(indexPath, html);
+  writeOut("index.html", html);
 
-  fs.writeFileSync(path.join(DIST, "sitemap.xml"), sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates() }));
-  fs.writeFileSync(path.join(DIST, "robots.txt"), robotsTxt(config.site));
-  fs.writeFileSync(path.join(DIST, "404.html"), notFoundHtml(config.site));
-  fs.mkdirSync(path.join(DIST, "freshness"), { recursive: true });
-  fs.writeFileSync(
-    path.join(DIST, "freshness", "index.html"),
-    freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard })
-  );
+  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates() }));
+  writeOut("robots.txt", robotsTxt(config.site));
+  writeOut("404.html", notFoundHtml(config.site));
+  writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard }));
 
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });
@@ -637,9 +686,9 @@ function main() {
   // After the page gate: every body link has resolved by now, and the llms
   // files read links with the same LINK_RE, so they cannot hit a link error
   // of their own.
-  fs.writeFileSync(path.join(DIST, "llms.txt"), llmsTxt({ entries, site: config.site, categories: config.categories, stacks }));
-  fs.writeFileSync(
-    path.join(DIST, "llms-full.txt"),
+  writeOut("llms.txt", llmsTxt({ entries, site: config.site, categories: config.categories, stacks }));
+  writeOut(
+    "llms-full.txt",
     llmsFullTxt({
       entries,
       site: config.site,
@@ -650,12 +699,17 @@ function main() {
     })
   );
 
+  // Pages of entries that left the catalog, and anything else an earlier
+  // build wrote, go now; what remains is exactly a clean build's output.
+  pruneDist();
+
   console.log(
     `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok, ${stats.commercialVaries} per-file)`
   );
   console.log(
     `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
   );
+  console.log(`${writes} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }
 
 main();

@@ -2,9 +2,12 @@
 import { scriptJson } from "./entry-page.mjs";
 import {
   baseHeadHtml,
+  clipText,
   commercialLabel,
   entryPageUrl,
   esc,
+  SEO_DESCRIPTION_MAX,
+  SEO_TITLE_MAX,
   STATUS_NOTES,
   stackPageUrl,
   verifiedAge,
@@ -112,8 +115,8 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${esc(title)}</title>
-    <meta name="description" content="${esc(meta.task)}" />
+    <title>${esc(clipText(meta.title, SEO_TITLE_MAX))}</title>
+    <meta name="description" content="${esc(clipText(meta.task, SEO_DESCRIPTION_MAX))}" />
     ${baseHeadHtml({ site, title, description: meta.task, url, type: "article", hasCard })}
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

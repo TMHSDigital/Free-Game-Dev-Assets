@@ -1571,3 +1571,79 @@ input:focus-visible,
 .page-actions .shortlist-toggle {
   cursor: pointer;
 }
+
+/* Print: an entry page is a licence record (licence, stance, credit line,
+   dated evidence). Black on white, source URLs spelled out, chrome gone. */
+@media print {
+  :root {
+    --bg: #fff;
+    --ink: #000;
+    --muted: #333;
+    --line: #999;
+    --control-line: #999;
+    --surface: #fff;
+    --accent: #000;
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .topbar nav,
+  .nav-sponsor,
+  .footer-sponsor,
+  .controls,
+  .filters-toggle,
+  .to-top,
+  .skip-link,
+  .page-actions button,
+  .page-actions .btn-ghost,
+  .page-pager,
+  .shortlist-toggle,
+  .breadcrumb,
+  .copy-status,
+  button {
+    display: none !important;
+  }
+
+  .topbar {
+    position: static;
+    border-bottom: 1px solid #999;
+  }
+
+  .entry-page,
+  .section {
+    max-width: none;
+    padding: 0;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  /* The source and the file on GitHub are the record's provenance. */
+  .page-actions a[href^="http"]::after,
+  .entry-content a[href^="http"]::after,
+  .entry-lead a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-family: var(--mono);
+    font-size: 0.8em;
+    word-break: break-all;
+  }
+
+  .facts-panel,
+  .attribution,
+  .entry-content h2 + ul,
+  .pick {
+    break-inside: avoid;
+  }
+
+  .verified,
+  .entry-edge {
+    color: inherit;
+    background: none;
+  }
+}

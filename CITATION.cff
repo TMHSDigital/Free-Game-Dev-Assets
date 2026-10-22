@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this catalog in research or teaching, please cite it as a dataset."
+type: dataset
+title: "Free Game Dev Assets: a dated, sourced catalog of free game assets and tools with licence metadata"
+authors:
+  - name: "TMHSDigital"
+    website: "https://github.com/TMHSDigital"
+repository-code: "https://github.com/TMHSDigital/Free-Game-Dev-Assets"
+url: "https://tmhsdigital.github.io/Free-Game-Dev-Assets/"
+license: CC0-1.0
+date-released: "2026-10-22"
+keywords:
+  - game-development
+  - game-assets
+  - licensing
+  - open-data
+  - catalog
+abstract: >-
+  A curated catalog of free, commercially usable game assets and tools. Every
+  entry records the licence as read at the source on a stated date, the
+  commercial stance, the credit requirement and dated evidence quotes. The
+  catalog metadata is CC0; the linked assets keep their own licences.

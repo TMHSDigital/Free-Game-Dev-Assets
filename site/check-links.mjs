@@ -61,7 +61,8 @@ async function check(entry) {
     return classify(entry.url, res.status, res.url);
   } catch (err) {
     const cause = err.cause?.code || err.name || "error";
-    return { kind: "dead", detail: cause === "TimeoutError" ? `no answer in ${TIMEOUT_MS / 1000}s` : cause };
+    if (cause === "TimeoutError") return { kind: "dead", detail: `no answer in ${TIMEOUT_MS / 1000}s`, timedOut: true };
+    return { kind: "dead", detail: cause };
   }
 }
 
@@ -73,8 +74,9 @@ async function run(entries) {
       while (next < entries.length) {
         const i = next++;
         let r = await check(entries[i]);
-        // One retry for anything that did not answer cleanly.
-        if (r.kind === "dead") r = await check(entries[i]);
+        // One retry for anything that did not answer cleanly, except a full
+        // 20 s timeout: a second one would cost a worker 40 s per dead host.
+        if (r.kind === "dead" && !r.timedOut) r = await check(entries[i]);
         results[i] = r;
       }
     })

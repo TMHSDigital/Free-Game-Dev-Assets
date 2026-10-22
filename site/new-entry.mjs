@@ -45,4 +45,5 @@ Next:
      ## Evidence with today's date: (${today}).
   2. Add a row for [${id}.md](${id}.md) to catalog/${category}/README.md.
   3. node site/sync-counts.mjs   (README counts, badge, expectedEntryCount)
-  4. npm test && npm run validate   (quick; CI also runs the full build)`);
+  4. npm test && npm run validate   (quick; every message names ${rel} by
+     path; CI also runs the full build)`);
