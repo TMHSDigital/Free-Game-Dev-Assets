@@ -91,4 +91,4 @@ Changes drafted with an agent or a script are judged on the diff like any other.
 
 ## Research notes
 
-Local Gemini / deep-research drafts live under `RESEARCH/` as `R0N-<topic>.md` (mostly gitignored; see [`docs/research-index.md`](docs/research-index.md)). Promote durable findings into catalog entries and `docs/` — don’t rely on drafts as the public source of truth.
+Local Gemini / deep-research drafts live under `RESEARCH/` as `R0N-<topic>.md` (gitignored; see [`docs/research-index.md`](docs/research-index.md)). Promote durable findings into catalog entries and `docs/` — don’t rely on drafts as the public source of truth.

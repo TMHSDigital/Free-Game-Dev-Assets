@@ -1,6 +1,6 @@
 # Research index
 
-Local Gemini / deep-research drafts are stored under `RESEARCH/` (mostly gitignored). Naming scheme:
+Local Gemini / deep-research drafts are stored under `RESEARCH/` (gitignored). Naming scheme:
 
 | ID | Local filename | Synthesized into |
 | --- | --- | --- |

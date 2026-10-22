@@ -383,8 +383,7 @@ npm run serve    # preview at http://localhost:3000
 │   ├── build.mjs config.json   static site generator and its settings
 │   ├── lib/                    page renderers and shared helpers, with lib.test.mjs
 │   └── public/                 page, styles and script
-├── package.json                npm scripts only; no dependencies
-└── RESEARCH/README.md          research archive index (drafts are gitignored)
+└── package.json                npm scripts only; no dependencies
 ```
 
 </details>

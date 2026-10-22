@@ -1,6 +1,5 @@
 # Local research drafts (may contain bulky embeds)
-RESEARCH/*
-!RESEARCH/README.md
+RESEARCH/
 
 # Session scratch (follow-up logs, not catalog source of truth)
 _scratch/
