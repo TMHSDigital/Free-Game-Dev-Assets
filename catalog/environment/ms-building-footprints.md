@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [GeoJSON, CSV]
 tags: [buildings, footprints, height-estimates]
+added: 2026-07-19
 verified: 2026-09-26
 status: active
 ---

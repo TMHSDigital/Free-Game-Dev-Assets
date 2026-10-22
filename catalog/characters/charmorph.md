@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "Per base. Antonia: Olaf Delgado-Friedrichs, with phantom3D, MikeJ, DieTrying, Fenrissa and others (CC BY 3.0). Reom: ComplexAce (mesh), Hope (morphs, textures) (CC-BY). mb_female / mb_male: ManuelbastioniLAB, Copyright (C) 2015-2018 Manuel Bastioni (AGPL-3.0; the exported model must also be released under AGPL-3.0)."
 formats: [Blend, glTF, FBX]
 tags: [blender, humanoid, mb-lab-derived]
+added: 2026-07-19
 verified: 2026-10-04
 status: active
 ---

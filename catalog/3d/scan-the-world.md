@@ -9,6 +9,7 @@ commercial: false
 attribution_required: unknown
 formats: [STL, OBJ]
 tags: [photogrammetry, museum, print, aggregator]
+added: 2026-08-24
 verified: 2026-10-04
 status: needs-review
 ---

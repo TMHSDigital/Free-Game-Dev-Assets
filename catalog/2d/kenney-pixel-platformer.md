@@ -13,6 +13,7 @@ formats: [PNG]
 tags: [pixel, platformer, tiles]
 grid_dimensions: 18x18
 camera_perspective: side_scroller
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

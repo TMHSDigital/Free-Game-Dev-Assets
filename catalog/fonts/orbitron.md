@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [OTF, TTF]
 tags: [sci-fi, geometric, display]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

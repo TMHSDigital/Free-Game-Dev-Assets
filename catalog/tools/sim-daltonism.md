@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app, mobile-app]
 tags: [a11y, colorblind, simulator, macos, ios]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "GEBCO Compilation Group. Users must acknowledge the source of The GEBCO Grid."
 formats: [netCDF, GeoTIFF, ASCII]
 tags: [ocean, terrain, 15-arc-second]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

@@ -3,6 +3,8 @@
   --ink: #12151a;
   --muted: #5a6472;
   --line: #c5ccd6;
+  /* Form-control borders: 3:1 against --bg (WCAG 1.4.11), where --line is 1.4:1. */
+  --control-line: #767f8e;
   --surface: #f7f8fa;
   --accent: #1a4d3e;
   --ok: #1a4d3e;
@@ -25,6 +27,7 @@
     --ink: #e8ecf1;
     --muted: #9aa5b3;
     --line: #2b323c;
+    --control-line: #616b7b;
     --surface: #161b22;
     --accent: #7fd4b4;
     --ok: #7fd4b4;
@@ -266,7 +269,7 @@ code {
 .search-field input {
   width: 100%;
   padding: 0.6rem 0.7rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   background: var(--surface);
   color: var(--ink);
   font: inherit;
@@ -286,7 +289,7 @@ code {
 
 .chip {
   padding: 0.28rem 0.55rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   background: transparent;
   color: var(--muted);
   font: inherit;
@@ -679,7 +682,7 @@ input:focus-visible,
 
 .sort-field select {
   max-width: 14rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   background: var(--surface);
   color: var(--ink);
   font: inherit;
@@ -792,17 +795,33 @@ input:focus-visible,
   line-height: 0;
 }
 
-.nav-sponsor iframe,
-.footer-sponsor iframe {
-  display: block;
-  color-scheme: normal;
-  opacity: 0.8;
-  transition: opacity 0.15s;
+/* A plain link styled like GitHub's Sponsors button, so no page loads an
+   iframe from github.com before it has painted. */
+.sponsor-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 32px;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--control-line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
 }
 
-.nav-sponsor iframe:hover,
-.footer-sponsor iframe:hover {
-  opacity: 1;
+.sponsor-button svg {
+  color: #bf3989;
+}
+
+.sponsor-button:hover,
+.sponsor-button:focus-visible {
+  border-color: var(--ink);
+  text-decoration: none;
 }
 
 .footer-sponsor {
@@ -917,11 +936,17 @@ input:focus-visible,
   color: var(--muted);
 }
 
-/* "You are here" is deliberately quieter than "this filter is on". */
-.chip.is-current:not(.is-active) {
-  border-color: var(--accent);
-  color: var(--ink);
-  box-shadow: inset 0 -2px 0 var(--accent);
+/* "You are in: Audio" while scrolling the full list. It used to underline a
+   second chip, which read as a second selected filter. */
+.current-group {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.current-group:empty {
+  display: none;
 }
 
 .search-field {
@@ -1545,4 +1570,80 @@ input:focus-visible,
 
 .page-actions .shortlist-toggle {
   cursor: pointer;
+}
+
+/* Print: an entry page is a licence record (licence, stance, credit line,
+   dated evidence). Black on white, source URLs spelled out, chrome gone. */
+@media print {
+  :root {
+    --bg: #fff;
+    --ink: #000;
+    --muted: #333;
+    --line: #999;
+    --control-line: #999;
+    --surface: #fff;
+    --accent: #000;
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .topbar nav,
+  .nav-sponsor,
+  .footer-sponsor,
+  .controls,
+  .filters-toggle,
+  .to-top,
+  .skip-link,
+  .page-actions button,
+  .page-actions .btn-ghost,
+  .page-pager,
+  .shortlist-toggle,
+  .breadcrumb,
+  .copy-status,
+  button {
+    display: none !important;
+  }
+
+  .topbar {
+    position: static;
+    border-bottom: 1px solid #999;
+  }
+
+  .entry-page,
+  .section {
+    max-width: none;
+    padding: 0;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  /* The source and the file on GitHub are the record's provenance. */
+  .page-actions a[href^="http"]::after,
+  .entry-content a[href^="http"]::after,
+  .entry-lead a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-family: var(--mono);
+    font-size: 0.8em;
+    word-break: break-all;
+  }
+
+  .facts-panel,
+  .attribution,
+  .entry-content h2 + ul,
+  .pick {
+    break-inside: avoid;
+  }
+
+  .verified,
+  .entry-edge {
+    color: inherit;
+    background: none;
+  }
 }

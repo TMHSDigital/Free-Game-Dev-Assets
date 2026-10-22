@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [godot-addon, blender-extension]
 tags: [godot, godot-4, blender, gameplay, levels, third-person]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

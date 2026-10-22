@@ -9,6 +9,7 @@ commercial: varies
 attribution_required: unknown
 formats: [various]
 tags: [marketplace, per-listing-license, unreal-engine, giveaways]
+added: 2026-10-13
 verified: 2026-10-13
 status: needs-review
 ---
@@ -25,6 +26,7 @@ Fab, Epic's asset marketplace, has two kinds of free content. Permanently free l
 - Limited-Time Free items must be claimed inside the two-week window; the free price ends on the stated date (for example "Until October 20 at 9:59 AM ET" on 2026-10-13)
 - Many free listings are Unreal-only by format even when the licence is not, because they ship as Unreal projects or asset packs
 - Epic's own free packs are catalogued separately: [megascans-starter-content](megascans-starter-content.md), [electric-dreams-environment](../environment/electric-dreams-environment.md), [paragon-characters](../characters/paragon-characters.md)
+- The entry `url` is a Fab search with the free filter on, because Fab has no stable "free listings" page. If Fab changes its search parameters the link breaks; open fab.com and filter by price "Free" instead
 
 ## Evidence
 

@@ -44,3 +44,70 @@ export function classify(entryUrl, status, finalUrl) {
 export function reportUrl(url) {
   return `\`${String(url).replaceAll("`", "%60")}\``;
 }
+
+export const USAGE = "usage: node site/check-links.mjs [--report <file.md>] [--stale-days <whole number of days, 365 by default>]";
+
+/**
+ * The `--stale-days` value from argv: `{ days }` or `{ error }`. Checked
+ * before any fetch, so a typo cannot throw after twenty minutes of requests.
+ */
+export function staleDaysFrom(argv, fallback = 365) {
+  const i = argv.indexOf("--stale-days");
+  if (i === -1) return { days: fallback };
+  const raw = argv[i + 1];
+  const days = Number(raw);
+  if (raw === undefined || raw.startsWith("--") || !/^\d+$/.test(raw.trim()) || !Number.isSafeInteger(days)) {
+    return { error: `--stale-days needs a whole number of days, got ${raw === undefined ? "nothing" : JSON.stringify(raw)}\n${USAGE}` };
+  }
+  return { days };
+}
+
+/**
+ * GitHub sources whose repository state and `maintenance` field disagree.
+ * `fetchRepo(owner/repo)` resolves to `{ ok, status, data }` or throws; one
+ * call per repository, one at a time. An API failure is never a catalog
+ * problem: it goes to `skipped`, and after a rate limit (403/429) so does
+ * every repository left unchecked, each saying why.
+ */
+export async function checkMaintenanceRepos(entries, fetchRepo, expected) {
+  const mismatches = [];
+  const skipped = [];
+  const repos = [];
+  for (const e of entries) {
+    let host;
+    try {
+      host = new URL(e.url).hostname;
+    } catch {
+      continue;
+    }
+    if (host !== "github.com") continue;
+    const repo = repoOf(e.url);
+    if (repo.includes("/")) repos.push({ entry: e, repo });
+  }
+  for (let i = 0; i < repos.length; i += 1) {
+    const { entry, repo } = repos[i];
+    let res;
+    try {
+      res = await fetchRepo(repo);
+    } catch (err) {
+      skipped.push({ ...entry, detail: `GitHub API ${err?.name || "error"} for ${repo}` });
+      continue;
+    }
+    if (!res.ok) {
+      skipped.push({ ...entry, detail: `GitHub API HTTP ${res.status} for ${repo}` });
+      if (res.status === 403 || res.status === 429) {
+        for (const rest of repos.slice(i + 1)) {
+          skipped.push({ ...rest.entry, detail: `not checked: GitHub API rate limit (HTTP ${res.status}) hit on ${repo}` });
+        }
+        break;
+      }
+      continue;
+    }
+    const want = expected(res.data);
+    if (want !== entry.maintenance) {
+      const state = res.data.archived ? "archived" : `last push ${String(res.data.pushed_at).slice(0, 10)}`;
+      mismatches.push({ ...entry, detail: `${repo} is ${state}; maintenance is ${entry.maintenance || "unset"}, expected ${want || "unset"}` });
+    }
+  }
+  return { mismatches, skipped };
+}

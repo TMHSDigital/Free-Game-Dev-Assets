@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, glTF]
 tags: [pbr, cc0-custom, redistribution-ban, metal]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

@@ -11,6 +11,7 @@ attribution_required: false
 formats: [SVG, PNG]
 tags: [svg, clipart, provenance-risk]
 camera_perspective: 2d_flat
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

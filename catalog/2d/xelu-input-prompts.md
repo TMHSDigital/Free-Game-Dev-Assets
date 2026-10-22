@@ -11,11 +11,12 @@ attribution_required: false
 formats: [PNG]
 tags: [gamepad, keyboard, hud]
 camera_perspective: 2d_flat
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---
 
-# Xelu input prompts
+# Xelu's Free Controller & Keyboard Prompts
 
 Keyboard and gamepad prompt icon sets from Those Awesome Guys (Nicolae Berbece / Xelu), updated by Paul Paun (2021). CC0 for personal and commercial projects. Prefer Kenney Input Prompts when you need Switch 2, Meta Quest, Playdate, or Steam Frame glyphs.
 

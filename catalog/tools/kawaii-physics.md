@@ -11,6 +11,7 @@ attribution_required: false
 formats: [unreal-plugin, C++]
 tags: [unreal-engine, physics, bone-physics, secondary-motion, anim-graph, hair, cloth]
 ue_versions: "5.3-5.8"
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 ---

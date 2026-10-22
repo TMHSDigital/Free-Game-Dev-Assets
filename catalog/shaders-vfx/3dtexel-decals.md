@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [PNG]
 tags: [decals, pbr, handmade]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

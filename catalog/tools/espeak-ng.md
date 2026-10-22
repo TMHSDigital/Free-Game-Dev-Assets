@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [WAV, espeak-ng-data]
 tags: [tts, formant, offline]
+added: 2026-08-24
 verified: 2026-09-22
 status: active
 ---

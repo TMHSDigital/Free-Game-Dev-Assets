@@ -10,11 +10,12 @@ attribution_required: true
 attribution_string: "Music by Eric Matyas www.soundimage.org"
 formats: [MP3, WAV]
 tags: [music, loops, game-oriented]
+added: 2026-07-19
 verified: 2026-08-29
 status: active
 ---
 
-# Soundimage.org
+# Soundimage.org (Eric Matyas)
 
 Loop-oriented music and atmospheres by Eric Matyas under a custom Soundimage International Public License (CC-BY-shaped: royalty-free share plus attribution; no NonCommercial clause). Credit must appear in the actual game, not only on a store listing. Ogg is the looping game format; MP3 is the non-looping film/podcast format.
 

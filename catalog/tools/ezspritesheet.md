@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "EzSpriteSheet <z64.me>"
 formats: [desktop-app, PNG]
 tags: [spritesheet, atlas, animated-gif, webp, windows]
+added: 2026-09-30
 verified: 2026-10-04
 status: needs-review
 ---

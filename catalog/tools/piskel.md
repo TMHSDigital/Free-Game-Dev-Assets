@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, GIF]
 tags: [pixel-art, sprite-editor, animation, spritesheet, browser]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

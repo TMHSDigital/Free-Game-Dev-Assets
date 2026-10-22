@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [EXR]
 tags: [hdri, unclipped, 32-bit]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [OTF, TTF, WOFF]
 tags: [foundry, itf, mixed-license, variable-font]
+added: 2026-08-24
 verified: 2026-10-04
 status: active
 ---

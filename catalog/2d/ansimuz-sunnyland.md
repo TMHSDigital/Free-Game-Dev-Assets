@@ -12,6 +12,7 @@ attribution_required: false
 formats: [PNG, WAV]
 tags: [pixel, platformer, itch, 16-bit]
 camera_perspective: side_scroller
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

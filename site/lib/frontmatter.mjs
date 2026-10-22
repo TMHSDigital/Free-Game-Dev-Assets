@@ -35,8 +35,39 @@ function splitFlowList(inner) {
   return parts.map((p) => unquoteScalar(p.trim()));
 }
 
+/**
+ * Drops a trailing ` # comment`. As in YAML, a `#` starts a comment only after
+ * whitespace (or at the start) and outside quotes, so `C#` and `#fff` are
+ * content. A quote opens only where a scalar can start (the start, or after
+ * `[`, `,` or whitespace), so an apostrophe in `Kay's` is content too.
+ */
+function stripComment(raw) {
+  let quote = null;
+  for (let i = 0; i < raw.length; i += 1) {
+    const ch = raw[i];
+    if (quote) {
+      if (quote === '"' && ch === "\\") i += 1;
+      else if (ch === quote) quote = null;
+    } else if ((ch === '"' || ch === "'") && (i === 0 || /[\s[,]/.test(raw[i - 1]))) {
+      quote = ch;
+    } else if (ch === "#" && (i === 0 || /\s/.test(raw[i - 1]))) {
+      return raw.slice(0, i);
+    }
+  }
+  return raw;
+}
+
+/**
+ * True when an unquoted bare scalar lost a ` #word` to the comment rule. A
+ * hash with no space after it is a hashtag or a colour, not a comment
+ * (`# text`); say so, since the silent truncation is what hurts.
+ */
+function cutAtHash(raw, value) {
+  return /\S\s+#\S/.test(raw) && typeof value === "string" && value !== "" && !/^["'[]/.test(raw.trim());
+}
+
 export function parseScalar(raw) {
-  const v = raw.trim();
+  const v = stripComment(raw).trim();
   if (v === "true") return true;
   if (v === "false") return false;
   if (v === "null" || v === "~" || v === "") return null;
@@ -70,7 +101,12 @@ export function parseFrontmatter(text) {
     const item = line.match(/^\s+-\s+(.*)$/);
     if (item) {
       if (listKey === null) errors.push(`line ${lineNo}: list item without a key above it`);
-      else meta[listKey].push(parseScalar(item[1]));
+      else {
+        const value = parseScalar(item[1]);
+        if (value === null) errors.push(`line ${lineNo}: list item is empty (a value starting with # is a comment; quote it)`);
+        else if (cutAtHash(item[1], value)) errors.push(`line ${lineNo}: list item is cut at " #" (read as a comment); quote the value if the # is part of it`);
+        else meta[listKey].push(value);
+      }
       return;
     }
     listKey = null;
@@ -84,8 +120,15 @@ export function parseFrontmatter(text) {
       errors.push(`line ${lineNo}: key "${key}" is given twice`);
       return;
     }
-    const value = parseScalar(line.slice(idx + 1));
-    const next = lines[i + 1];
+    const rawValue = line.slice(idx + 1);
+    const value = parseScalar(rawValue);
+    if (cutAtHash(rawValue, value)) {
+      errors.push(`line ${lineNo}: "${key}" is cut at " #" (read as a comment); quote the value if the # is part of it`);
+    }
+    // A block list may start after blank or comment lines under its key.
+    let j = i + 1;
+    while (j < lines.length && (!lines[j].trim() || lines[j].trim().startsWith("#"))) j += 1;
+    const next = lines[j];
     if (value === null && next !== undefined && /^\s+-\s/.test(next)) {
       meta[key] = [];
       listKey = key;

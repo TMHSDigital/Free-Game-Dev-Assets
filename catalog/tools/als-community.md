@@ -11,6 +11,7 @@ attribution_required: false
 formats: [unreal-plugin, C++]
 tags: [unreal-engine, locomotion, character-movement, anim-blueprint, replication, mantling, ragdoll]
 ue_versions: "5.4"
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 ---

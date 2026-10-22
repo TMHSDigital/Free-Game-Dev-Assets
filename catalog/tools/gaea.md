@@ -9,11 +9,12 @@ commercial: false
 attribution_required: false
 formats: [desktop-app]
 tags: [terrain, freemium, eula-pdf, heightfield]
+added: 2026-07-19
 verified: 2026-10-04
 status: active
 ---
 
-# Gaea Community Edition
+# Gaea (Community Edition)
 
 QuadSpinner terrain tool with a free download on the product site. The free Community Edition is **non-commercial only**. That covers the program and the terrain you export from it: the EULA bundled with the current release says you may use it "for non-commercial purposes, including but not limited to Assets", and "Assets" means everything Gaea produces. Commercial terrain needs a paid edition, which is out of scope here. For a free Godot heightmap path use [terrain3d](terrain3d.md).
 

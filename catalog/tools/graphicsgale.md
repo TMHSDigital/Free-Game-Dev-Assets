@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app, PNG, GIF]
 tags: [pixel-art, sprite-editor, animation, onion-skin, windows]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

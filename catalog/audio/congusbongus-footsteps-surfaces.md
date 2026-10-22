@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "Footsteps by congusbongus (CC BY 3.0), derived from sounds by swuing, EminYILDIRIM, sabotovat, Eelke, ceberation and Lee Barkovich (CC BY 3.0), and Ali_6868 and blukotek (CC0)"
 formats: [OGG]
 tags: [footsteps, multi-surface, foley]
+added: 2026-07-19
 verified: 2026-09-24
 status: active
 ---

@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app]
 tags: [tracker, modular-synth, sequencer, generative, sound-design]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

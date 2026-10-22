@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [various]
 tags: [fab, quixel, engine-check-required]
+added: 2026-07-19
 verified: 2026-09-26
 status: active
 ---

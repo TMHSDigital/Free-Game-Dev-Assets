@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [gpl-palette, JSON, PNG]
 tags: [pixel-art, palettes, aseprite, browser, quantization]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

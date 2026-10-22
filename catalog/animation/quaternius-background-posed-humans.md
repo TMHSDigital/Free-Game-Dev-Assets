@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend]
 tags: [poses, crowd, background, low-poly]
+added: 2026-10-04
 verified: 2026-10-04
 status: active
 ---

@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, PNG, SVG]
 tags: [low-poly, survivors, zombie, skins]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

@@ -10,13 +10,14 @@ commercial: true
 attribution_required: false
 formats: [gdextension]
 tags: [godot, godot-4, steamworks, achievements, leaderboards]
+added: 2026-07-19
 verified: 2026-09-23
 status: active
 ---
 
-# GodotSteam
+# GodotSteam (GDExtension)
 
-GDExtension bindings to Steamworks for Godot 4 (achievements, stats, leaderboards, etc.). Docs/home: [godotsteam.com](http://godotsteam.com/). The add-on itself is MIT. Steamworks is a separate matter: using it at all needs a Steam partner account and Valve's Steamworks SDK agreement, which this catalog cannot read or summarise. Do not treat Asset Library "free" as a shipping clearance for the Steam side.
+GDExtension bindings to Steamworks for Godot 4 (achievements, stats, leaderboards, etc.). Docs/home: [godotsteam.com](https://godotsteam.com/). The add-on itself is MIT. Steamworks is a separate matter: using it at all needs a Steam partner account and Valve's Steamworks SDK agreement, which this catalog cannot read or summarise. Do not treat Asset Library "free" as a shipping clearance for the Steam side.
 
 ## Notes
 

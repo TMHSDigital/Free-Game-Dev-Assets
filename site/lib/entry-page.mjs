@@ -1,11 +1,14 @@
 /** One entry's page. Pure: everything it needs is passed in. */
 import {
+  baseHeadHtml,
   commercialLabel,
   entryPageUrl,
   esc,
   ENGINE_LOCK_NOTES,
   MAINTENANCE_NOTES,
   PERSPECTIVE_LABELS,
+  seoDescription,
+  seoTitle,
   STATUS_NOTES,
   verifiedAge,
   sponsorButtonHtml,
@@ -90,12 +93,6 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     ? `<p class="deprecated-banner" role="note"><strong>Deprecated.</strong> ${deprecatedReasonHtml || "This entry is kept for history only."}</p>`
     : "";
   const issue = `${repo}/issues/new?template=correction.yml&title=${encodeURIComponent(`[correction] ${entry.id}`)}&entry=${encodeURIComponent(entry.id)}`;
-  const card = `${String(site.siteUrl).replace(/\/+$/, "")}/og-card.png`;
-  const cardMeta = hasCard
-    ? `<meta property="og:image" content="${esc(card)}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="${esc(card)}" />`
-    : `<meta name="twitter:card" content="summary" />`;
   const pager =
     prev || next
       ? `<nav class="page-pager" aria-label="More in ${esc(categoryLabel)}">
@@ -111,18 +108,10 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${esc(title)}</title>
-    <meta name="description" content="${esc(desc)}" />
-    <link rel="canonical" href="${esc(url)}" />
+    <title>${esc(seoTitle(entry.name, entry.license))}</title>
+    <meta name="description" content="${esc(seoDescription(entry))}" />
     ${deprecated ? '<meta name="robots" content="noindex" />' : ""}
-    <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="${esc(site.title)}" />
-    <meta property="og:title" content="${esc(title)}" />
-    <meta property="og:description" content="${esc(desc)}" />
-    <meta property="og:url" content="${esc(url)}" />
-    ${cardMeta}
-    <meta name="twitter:title" content="${esc(title)}" />
-    <meta name="twitter:description" content="${esc(desc)}" />
+    ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard })}
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -170,7 +159,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
       ${pager}
     </main>
     <footer class="footer">
-      <p>Catalog metadata is CC0. Linked assets keep their own licenses. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
+      <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
       <p><a href="../../freshness/">Licence freshness</a></p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>

@@ -14,6 +14,7 @@ tags: [gamepad, keyboard, hud, steam-deck, switch-2, quest]
 grid_dimensions: 64x64
 camera_perspective: 2d_flat
 hardware_tags: [steam_deck, steam_controller, steam_frame, valve_index, switch, switch_2, xbox, playstation, meta_quest, playdate, wii, gamecube]
+added: 2026-08-15
 verified: 2026-08-15
 status: active
 ---

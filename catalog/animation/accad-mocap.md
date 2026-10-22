@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "Open Motion Project by ACCAD/The Ohio State University is licensed under a Creative Commons Attribution 3.0 Unported License."
 formats: [BVH, C3D, FBX, AMC]
 tags: [academic, locomotion, walking, running]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

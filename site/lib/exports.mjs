@@ -1,8 +1,29 @@
 /**
- * Flat exports of the catalog: catalog.csv for spreadsheets and feed.xml (Atom)
- * for readers. data.json stays the full machine-readable catalog.
+ * Flat exports of the catalog: catalog.csv for spreadsheets, feed.xml (Atom)
+ * for readers and sitemap.xml for crawlers. data.json stays the full
+ * machine-readable catalog.
  */
 import { esc } from "./shared.mjs";
+
+/**
+ * sitemap.xml. Every URL carries a lastmod that is never earlier than the
+ * last content change: the build date for the home and freshness pages, which
+ * change every build by design; for entries and stacks the later of the
+ * catalog date (`verified`, `walked`) and the file's last commit date from
+ * `modified` (repo path => YYYY-MM-DD), falling back to the build date.
+ */
+export function sitemapXml({ site, entries, stacks = [], stamp, modified = new Map() }) {
+  const base = String(site.siteUrl).replace(/\/+$/, "");
+  const latest = (...dates) => dates.filter(Boolean).sort().pop() || stamp;
+  const url = (loc, lastmod) => `  <url><loc>${esc(loc)}</loc><lastmod>${esc(lastmod)}</lastmod></url>`;
+  const urls = [
+    url(`${base}/`, stamp),
+    url(`${base}/freshness/`, stamp),
+    ...stacks.map((s) => url(`${base}/stack/${s.meta.id}/`, latest(s.meta.walked, modified.get(s.rel)))),
+    ...entries.map((e) => url(`${base}/entry/${e.id}/`, latest(e.verified, modified.get(e.path)))),
+  ];
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
+}
 
 const CSV_COLUMNS = [
   "id",
@@ -15,6 +36,7 @@ const CSV_COLUMNS = [
   "attribution_required",
   "formats",
   "tags",
+  "added",
   "verified",
   "status",
   "page",
@@ -75,16 +97,24 @@ export function homeJsonLd({ site, generatedAt, total }) {
   ];
 }
 
+/** The two Atom feeds: new sources (by `added`) and licence re-reads (by `verified`). */
+export const FEEDS = {
+  added: { file: "feed.xml", title: "new sources", what: "entries by the day they joined the catalog" },
+  verified: { file: "reverified.xml", title: "recently verified", what: "entries by the day their licence was last read at the source" },
+};
+
 /**
- * Atom feed of the most recently verified entries. Entries carry no "added"
- * date, so `verified` (the day the licence was last read from the source) is
- * the only honest timestamp.
+ * Atom feed of the most recent entries by `kind`: "added" (new sources,
+ * feed.xml) or "verified" (licence re-reads, reverified.xml). Two feeds, so
+ * a re-verification sweep of old entries cannot bury the new ones.
  */
-export function atomFeed({ entries, site, generatedAt, limit = 40 }) {
+export function atomFeed({ entries, site, generatedAt, limit = 40, kind = "added" }) {
+  const spec = FEEDS[kind];
+  if (!spec) throw new Error(`atomFeed: unknown kind "${kind}"`);
   const base = site.siteUrl.replace(/\/+$/, "");
   const recent = entries
-    .filter((e) => e.status !== "deprecated" && e.verified)
-    .sort((a, b) => b.verified.localeCompare(a.verified) || a.name.localeCompare(b.name))
+    .filter((e) => e.status !== "deprecated" && e[kind])
+    .sort((a, b) => String(b[kind]).localeCompare(String(a[kind])) || a.name.localeCompare(b.name))
     .slice(0, limit);
   const items = recent.map((e) => {
     const link = `${base}/${e.page}`;
@@ -93,7 +123,7 @@ export function atomFeed({ entries, site, generatedAt, limit = 40 }) {
       `    <id>${esc(link)}</id>`,
       `    <title>${esc(e.name)}</title>`,
       `    <link href="${esc(link)}" />`,
-      `    <updated>${esc(e.verified)}T00:00:00Z</updated>`,
+      `    <updated>${esc(e[kind])}T00:00:00Z</updated>`,
       `    <summary>${esc(`${e.license}. ${e.summary || ""}`.trim())}</summary>`,
       "  </entry>",
     ].join("\n");
@@ -101,13 +131,13 @@ export function atomFeed({ entries, site, generatedAt, limit = 40 }) {
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<feed xmlns="http://www.w3.org/2005/Atom">',
-    `  <id>${esc(base)}/</id>`,
-    `  <title>${esc(site.title)}: recently verified</title>`,
-    `  <subtitle>${esc(site.tagline)}</subtitle>`,
+    `  <id>${esc(base)}/${kind === "added" ? "" : spec.file}</id>`,
+    `  <title>${esc(site.title)}: ${spec.title}</title>`,
+    `  <subtitle>${esc(`${site.tagline} ${spec.what[0].toUpperCase()}${spec.what.slice(1)}.`)}</subtitle>`,
     // RFC 4287 4.1.1: a feed-level author covers every entry.
     `  <author><name>${esc(site.title)}</name><uri>${esc(base)}/</uri></author>`,
     `  <link href="${esc(base)}/" />`,
-    `  <link rel="self" href="${esc(base)}/feed.xml" />`,
+    `  <link rel="self" href="${esc(base)}/${spec.file}" />`,
     `  <updated>${esc(generatedAt)}</updated>`,
     ...items,
     "</feed>",

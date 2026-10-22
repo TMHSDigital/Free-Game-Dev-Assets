@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "Reverb IRs (c) Adventure Kid (CC BY 4.0)"
 formats: [WAV]
 tags: [impulse-response, reverb, springs]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

@@ -11,6 +11,7 @@ formats: [SVG, PNG]
 tags: [icons, glyphs, filled, outline]
 grid_dimensions: 24x24
 camera_perspective: 2d_flat
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

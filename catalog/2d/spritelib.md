@@ -11,6 +11,7 @@ attribution_required: false
 formats: [PNG]
 tags: [retro, shooter, breakout, platformer, maze]
 camera_perspective: 2d_flat
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

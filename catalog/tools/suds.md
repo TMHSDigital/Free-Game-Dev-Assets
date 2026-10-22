@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
 tags: [unreal-engine, dialogue, branching-dialogue, scripting, localization, blueprint]
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 publisher: Steve Streeting

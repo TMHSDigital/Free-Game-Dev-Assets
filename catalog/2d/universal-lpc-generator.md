@@ -11,6 +11,7 @@ attribution_string: "Credit all authors listed in the generator export (except C
 formats: [PNG]
 tags: [lpc]
 camera_perspective: isometric_3_4
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

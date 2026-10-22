@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, mm]
 tags: [pbr, procedural]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [VOX, glTF, OBJ, PLY]
 tags: [voxel, dcc]
+added: 2026-08-24
 verified: 2026-09-22
 status: active
 ---

@@ -12,6 +12,7 @@ tags: [unreal-engine, shooter, third-person, multiplayer]
 publisher: Epic Games
 engine_lock: unreal
 ue_versions: "5.0-5.8"
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 ---

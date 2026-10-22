@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [ldtk, JSON]
 tags: [2d, levels]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

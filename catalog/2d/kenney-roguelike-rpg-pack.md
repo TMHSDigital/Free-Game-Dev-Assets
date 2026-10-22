@@ -13,6 +13,7 @@ formats: [PNG]
 tags: [16x16, rpg, roguelike, ui, overworld]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
+added: 2026-09-22
 verified: 2026-09-22
 status: active
 ---

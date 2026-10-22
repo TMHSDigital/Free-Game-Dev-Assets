@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, Blend]
 tags: [city, modular]
+added: 2026-08-25
 verified: 2026-08-25
 status: active
 ---

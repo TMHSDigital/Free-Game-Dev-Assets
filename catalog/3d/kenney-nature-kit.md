@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [glTF, FBX, Blend]
 tags: [trees, rocks, foliage]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

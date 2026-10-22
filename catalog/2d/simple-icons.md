@@ -11,6 +11,7 @@ attribution_required: false
 formats: [SVG]
 tags: [icons, brands, logos, svg]
 camera_perspective: 2d_flat
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

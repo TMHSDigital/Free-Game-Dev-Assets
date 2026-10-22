@@ -118,6 +118,11 @@ eq("external untouched", resolve("https://a.test/x").href, "https://a.test/x");
 eq("external flagged", resolve("https://a.test/x").external, true);
 throws("missing target fails", () => resolve("nope.md"), 'link target "nope.md" does not exist');
 throws("escaping the repo fails", () => resolve("../../../outside.md"), "does not exist");
+// #83: one scheme rule everywhere, and the unsupported scheme is named.
+throws("ftp link names its scheme", () => resolve("ftp://a.test/x"), 'unsupported scheme "ftp:"');
+throws("data link names its scheme", () => resolve("data:text/plain,hi"), 'unsupported scheme "data:"');
+throws("javascript link names its scheme", () => resolve("javascript:alert(1)"), 'unsupported scheme "javascript:"');
+eq("mailto is external", resolve("mailto:a@b.test").external, true);
 
 /* entry page --------------------------------------------------------------- */
 import { entryPageHtml, jsonLd, scriptJson } from "./entry-page.mjs";
@@ -125,7 +130,9 @@ const site = { siteUrl: "https://x.test/s/", title: "Free Game Dev Assets", tagl
 const base = { id: "e1", name: 'A "quoted" <Name>', url: "https://src.test/", category: "2d", license: "CC-BY-4.0", license_spdx: "CC-BY-4.0", commercial: true, attribution_required: true, attribution_string: 'Art by "X" </script>', formats: ["PNG"], verified: "2026-09-01", status: "active", path: "catalog/2d/e1.md", summary: "Sum </script> <b>" };
 const page = (over = {}) => entryPageHtml({ entry: { ...base, ...over }, leadHtml: "<p>Lead</p>", restHtml: '<h2 id="notes">Notes</h2>', deprecatedReasonHtml: null, prev: null, next: { id: "e2", name: "Next one" }, site, categoryLabel: "2D", stamp: "2026-09-24", total: 319, hasCard: true, now: Date.parse("2026-09-24T00:00:00Z") });
 const p = page();
-has("title is escaped", p, "<title>A &quot;quoted&quot; &lt;Name&gt; (CC-BY-4.0) | Free Game Dev Assets</title>");
+has("title is escaped", p, "<title>A &quot;quoted&quot; &lt;Name&gt; · CC-BY-4.0</title>");
+has("og:title keeps the licence and site name", p, '<meta property="og:title" content="A &quot;quoted&quot; &lt;Name&gt; (CC-BY-4.0) | Free Game Dev Assets" />');
+has("description leads with licence, stance and credit", p, '<meta name="description" content="CC-BY-4.0, commercial use OK, credit required. Sum &lt;/script&gt; &lt;b&gt;" />');
 has("canonical", p, '<link rel="canonical" href="https://x.test/s/entry/e1/" />');
 eq("one h1", (p.match(/<h1[\s>]/g) || []).length, 1);
 has("credit line escaped", p, "Art by &quot;X&quot; &lt;/script&gt;");
@@ -161,6 +168,12 @@ has("empty title", checkPage(okPage.replace("<title>T</title>", "<title></title>
 has("dangling link", checkPage(okPage.replace("../e2/", "../e3/"), opts).join(), "../e3/ does not resolve");
 has("link leaving the site", checkPage(okPage.replace("../e2/", "../../../x/"), opts).join(), "leaves the site");
 eq("query and hash are ignored", checkPage(okPage.replace("../e2/", "../../?cat=2d#catalog"), opts).length, 0);
+has("page check rejects a data: href", checkPage(okPage.replace("../e2/", "data:text/html,x"), opts).join(), 'unsupported scheme "data:"');
+has("page check rejects a long title", checkPage(okPage.replace("<title>T</title>", `<title>${"t".repeat(61)}</title>`), opts).join(), "title is 61 characters, over 60");
+has("page check rejects a long description", checkPage(okPage.replace("<head>", `<head><meta name="description" content="${"d".repeat(161)}" />`), opts).join(), "description is 161 characters, over 160");
+eq("page check measures unescaped text", checkPage(okPage.replace("<title>T</title>", `<title>${"&amp;".repeat(20)}</title>`), opts).length, 0);
+has("page check rejects a javascript: href", checkPage(okPage.replace("../e2/", "javascript:void(0)"), opts).join(), 'unsupported scheme "javascript:"');
+eq("page check accepts mailto", checkPage(okPage.replace("../e2/", "mailto:a@b.test"), opts).length, 0);
 
 /* llms ------------------------------------------------------------------- */
 import { llmsFullTxt, llmsTxt } from "./llms.mjs";
@@ -336,7 +349,7 @@ const sp = (over = {}) =>
     ...over,
   });
 const spage = sp();
-has("stack title escaped", spage, "<title>Make a &quot;thing&quot; &lt;/script&gt; | Free Game Dev Assets</title>");
+has("stack title escaped", spage, "<title>Make a &quot;thing&quot; &lt;/script&gt;</title>");
 has("stack canonical", spage, '<link rel="canonical" href="https://x.test/s/stack/s1/" />');
 eq("stack one h1", (spage.match(/<h1[\s>]/g) || []).length, 1);
 has("stack pick links its entry page", spage, 'href="../../entry/a/"');
@@ -464,6 +477,89 @@ has("entry page footer links freshness", p, '<a href="../../freshness/">Licence 
 has("stack page footer links freshness", spage, '<a href="../../freshness/">Licence freshness</a>');
 has("llms points at freshness", lt, "Licence freshness, every entry by check date: https://x.test/s/freshness/");
 
+/* head: every page type carries the same baseline (#104) ------------------- */
+import { baseHeadHtml } from "./shared.mjs";
+{
+  const homeHead = baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard: true });
+  const baseline = [
+    '<link rel="sitemap" type="application/xml" href="https://x.test/s/sitemap.xml" />',
+    '<link rel="alternate" type="application/atom+xml" title="Free Game Dev Assets: new sources" href="https://x.test/s/feed.xml" />',
+    '<link rel="alternate" type="application/atom+xml" title="Free Game Dev Assets: recently verified" href="https://x.test/s/reverified.xml" />',
+    '<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />',
+    '<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />',
+    '<meta property="og:image" content="https://x.test/s/og-card.png" />',
+    '<meta property="og:image:width" content="1200" />',
+    '<meta property="og:image:height" content="630" />',
+    '<meta property="og:image:alt" content="Free Game Dev Assets: T" />',
+    '<meta name="twitter:card" content="summary_large_image" />',
+    '<meta property="og:site_name" content="Free Game Dev Assets" />',
+  ];
+  for (const [name, html] of [["home head", homeHead], ["entry page", p], ["stack page", spage], ["freshness page", fp]]) {
+    for (const tag of baseline) has(`${name} has ${tag.slice(0, 40)}`, html, tag);
+    eq(`${name} has one canonical`, (html.match(/<link rel="canonical"/g) || []).length, 1);
+  }
+  has("entry page og:type is article", p, '<meta property="og:type" content="article" />');
+  has("freshness og:type is website", fp, '<meta property="og:type" content="website" />');
+  has("no card falls back to a summary card", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), '<meta name="twitter:card" content="summary" />');
+  lacks("no card has no image", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), "og:image");
+}
+
+/* seo title and description (#103) ----------------------------------------- */
+import { clipText, seoDescription, seoTitle } from "./shared.mjs";
+eq("clip keeps short text", clipText("Short.", 60), "Short.");
+eq("clip cuts at a sentence end", clipText("First sentence here. Second sentence is long and goes on.", 40), "First sentence here.");
+eq("clip cuts at a word with an ellipsis when no sentence fits", clipText("one two three four five six seven eight nine", 20), "one two three four…");
+eq("clip never exceeds max", clipText("x".repeat(100), 30).length <= 30, true);
+eq("seo title joins name and licence", seoTitle("Kenney", "CC0"), "Kenney · CC0");
+eq("seo title drops the licence when too long", seoTitle("A".repeat(50), "CC-BY-SA-4.0"), "A".repeat(50));
+eq("seo title clips a very long name", seoTitle("word ".repeat(20).trim(), "CC0").length <= 60, true);
+eq("seo description states licence, stance and credit", seoDescription({ license: "CC0", commercial: true, attribution_required: false, summary: "Lots of packs. More text." }), "CC0, commercial use OK, no credit needed. Lots of packs.");
+eq("seo description with varies and unknown", seoDescription({ license: "varies", commercial: "varies", attribution_required: "unknown", summary: "" }), "varies, commercial use varies per file, credit unclear.");
+eq("seo description fits the limit", seoDescription({ license: "CC-BY-4.0", commercial: true, attribution_required: true, summary: "word ".repeat(60) }).length <= 160, true);
+
+/* sitemap lastmod (#108) --------------------------------------------------- */
+import { sitemapXml } from "./exports.mjs";
+{
+  const sm = sitemapXml({
+    site,
+    stamp: "2026-10-22",
+    entries: [
+      { id: "old", path: "catalog/2d/old.md", verified: "2026-07-01" },
+      { id: "edited", path: "catalog/2d/edited.md", verified: "2026-07-01" },
+      { id: "undated", path: "catalog/2d/undated.md", verified: null },
+    ],
+    stacks: [{ rel: "stacks/s1.md", meta: { id: "s1", walked: "2026-09-01" } }],
+    modified: new Map([["catalog/2d/edited.md", "2026-10-15"], ["catalog/2d/old.md", "2026-06-01"], ["stacks/s1.md", "2026-10-02"]]),
+  });
+  has("sitemap home has the build date", sm, "<loc>https://x.test/s/</loc><lastmod>2026-10-22</lastmod>");
+  has("sitemap freshness has the build date", sm, "<loc>https://x.test/s/freshness/</loc><lastmod>2026-10-22</lastmod>");
+  has("sitemap entry keeps verified when it is later than the commit", sm, "<loc>https://x.test/s/entry/old/</loc><lastmod>2026-07-01</lastmod>");
+  has("sitemap entry takes the later commit date", sm, "<loc>https://x.test/s/entry/edited/</loc><lastmod>2026-10-15</lastmod>");
+  has("sitemap entry with no dates falls back to the build date", sm, "<loc>https://x.test/s/entry/undated/</loc><lastmod>2026-10-22</lastmod>");
+  has("sitemap stack takes the later commit date", sm, "<loc>https://x.test/s/stack/s1/</loc><lastmod>2026-10-02</lastmod>");
+  eq("every sitemap url has a lastmod", (sm.match(/<url>/g) || []).length, (sm.match(/<lastmod>/g) || []).length);
+}
+
+/* sponsor link, not an iframe (#101) --------------------------------------- */
+import { sponsorButtonHtml } from "./shared.mjs";
+lacks("sponsor button is not an iframe", sponsorButtonHtml(), "<iframe");
+has("sponsor button links to GitHub Sponsors", sponsorButtonHtml(), 'href="https://github.com/sponsors/TMHSDigital"');
+lacks("entry page loads nothing from github.com", p.replace(/href="https:\/\/github\.com[^"]*"/g, ""), "github.com/sponsors/TMHSDigital/button");
+eq("entry page has no iframe", (p.match(/<iframe/g) || []).length, 0);
+
+/* new this month (#90) ----------------------------------------------------- */
+import { newEntriesLineHtml } from "./freshness.mjs";
+{
+  const ne = (id, added, status = "active") => ({ id, name: id.toUpperCase(), added, status });
+  const pool = [ne("old", "2026-08-01"), ne("n1", "2026-10-20"), ne("n2", "2026-10-01"), ne("n3", "2026-09-25"), ne("dead", "2026-10-21", "deprecated"), ne("undated", null)];
+  const line = newEntriesLineHtml(pool, "2026-10-22", { named: 2 });
+  has("new line counts the last 30 days", line, "New in the last 30 days: 3.");
+  has("new line names the newest first", line, '<a href="entry/n1/">N1</a>, <a href="entry/n2/">N2</a>');
+  has("new line links the rest to the added sort", line, '<a href="?sort=added#catalog">1 more</a>');
+  lacks("new line skips deprecated", line, "DEAD");
+  eq("new line is empty when nothing is new", newEntriesLineHtml([ne("old", "2026-01-01")], "2026-10-22"), "");
+}
+
 /* freshness: review fixes -------------------------------------------------- */
 has("recent window wording counts the build day", fp, "Checked on 2026-09-25 or in the 30 days before it, newest first.");
 has("empty recent window wording counts the build day", freshnessPageHtml({ stats: freshnessStats([fe("a", "Alpha", 90)], fNow), site, stamp: "2026-09-25", total: 1, hasCard: false }), "None checked on 2026-09-25 or in the 30 days before it.");
@@ -492,6 +588,39 @@ eq("frontmatter with CRLF line endings", parseFrontmatter("---\r\nid: a\r\nname:
 has("frontmatter rejects a duplicate key", fm(["id: a", "id: b"]).errors.join(), 'line 3: key "id" is given twice');
 has("frontmatter rejects a line that is not key: value", fm(["id: a", "just words"]).errors.join(), 'line 3: "just words" is not a key: value line');
 eq("no frontmatter is null", parseFrontmatter("# Title\n"), null);
+// #79: trailing comments. #84: a comment between a key and its block list.
+const f2 = fm([
+  "id: a",
+  "tags: [low-poly, modular]   # describe the content",
+  "name: Kay's pack # note",
+  'attribution_string: "Art # by X"   # keep the hash inside the quotes',
+  "langs: [c#, f#]",
+  'colour: "#fff"',
+  "ref: a#b",
+  "verified: 2026-07-19   # the day you read the licence",
+  "formats:",
+  "  # content words only",
+  "",
+  "  - PNG   # a comment on an item",
+  "  - SVG",
+  "commercial: true # yes",
+]);
+eq("frontmatter strips a comment after a flow list", JSON.stringify(f2.meta.tags), JSON.stringify(["low-poly", "modular"]));
+eq("frontmatter strips a comment after a bare scalar with an apostrophe", f2.meta.name, "Kay's pack");
+eq("frontmatter keeps a # inside quotes", f2.meta.attribution_string, "Art # by X");
+eq("frontmatter keeps C# and F#", JSON.stringify(f2.meta.langs), JSON.stringify(["c#", "f#"]));
+eq("frontmatter keeps a quoted # value", f2.meta.colour, "#fff");
+eq("frontmatter keeps a # with no space before it", f2.meta.ref, "a#b");
+eq("frontmatter strips a comment after a date", f2.meta.verified, "2026-07-19");
+eq("frontmatter block list after a comment and a blank line", JSON.stringify(f2.meta.formats), JSON.stringify(["PNG", "SVG"]));
+eq("frontmatter boolean before a comment", f2.meta.commercial, true);
+eq("frontmatter has no errors with comments everywhere", f2.errors.join(), "");
+eq("frontmatter keeps a quoted boolean as text", fm(["id: a", 'commercial: "true"']).meta.commercial, "true");
+has("frontmatter flags a hashtag read as a comment", fm(["id: a", "name: Sonniss #GameAudioGDC Bundle"]).errors.join(), '"name" is cut at " #"');
+eq("frontmatter keeps a quoted hashtag", fm(["id: a", 'name: "Sonniss #GameAudioGDC Bundle"']).meta.name, "Sonniss #GameAudioGDC Bundle");
+has("frontmatter flags a list item cut at a hashtag", fm(["id: a", "tags:", "  - foo #bar"]).errors.join(), 'line 4: list item is cut at " #"');
+has("frontmatter flags a list item that is only a hashtag", fm(["id: a", "tags:", "  - #gamedev"]).errors.join(), "line 4: list item is empty");
+eq("frontmatter keeps a commented list item", JSON.stringify(fm(["id: a", "tags:", "  - foo # a note", '  - "bar #baz"']).meta.tags), JSON.stringify(["foo", "bar #baz"]));
 eq("evidence stops at the next heading, whatever its letter", evidenceSection("## Evidence\n\n- e (2026-01-01)\n\n## Extras\n\n- x"), "## Evidence\n\n- e (2026-01-01)\n");
 eq("summary keeps underscores", summaryFromBody("Split by Rig_Medium and **KHR_draco**.\n\n## Notes"), "Split by Rig_Medium and KHR_draco.");
 eq("summary keeps C# and link text", summaryFromBody("# T\n\nA [C#](x.md) library, `code`, *em*."), "A C# library, code, em.");
@@ -502,6 +631,8 @@ eq("summary is capped at 220", summaryFromBody("word ".repeat(80)).length, 218);
 eq("link href keeps balanced parens", renderInline("[Foo](https://en.wikipedia.org/wiki/Foo_(bar)) next", passLink), '<a href="https://en.wikipedia.org/wiki/Foo_(bar)" rel="noopener noreferrer">Foo</a> next');
 eq("misnested emphasis stays literal", renderInline("**a *b** c*", passLink), "<strong>a *b</strong> c*");
 eq("italic around bold still works", renderInline("*a **b** c*", passLink), "<em>a <strong>b</strong> c</em>");
+has("a line starting with an autolink is not raw HTML", rb("<https://a.test/x> is the page."), '<a href="https://a.test/x"');
+throws("a line starting with a tag is still raw HTML", () => rb("<b>bold</b>"), "raw HTML");
 const dupIds = rb("## Notes\n\nx\n\n## Notes\n\ny\n\n## Content\n\nz");
 has("first heading keeps its id", dupIds, '<h2 id="notes">');
 has("repeated heading gets a suffix", dupIds, '<h2 id="notes-2">');
@@ -517,23 +648,30 @@ eq("latest allowed is tomorrow in UTC", latestAllowedDate(Date.parse("2026-09-25
 
 /* exports ------------------------------------------------------------------ */
 const sample = [
-  { id: "a", name: 'Say "hi", ok', url: "https://x.test/a", category: "2d", license: "CC0", commercial: true, formats: ["PNG", "SVG"], tags: [], verified: "2026-09-01", status: "active", page: "entry/a/", summary: "A & B" },
-  { id: "b", name: "Old", url: "https://x.test/b", category: "2d", license: "MIT", verified: "2026-01-01", status: "deprecated", page: "entry/b/" },
-  { id: "c", name: "New", url: "https://x.test/c", category: "3d", license: "CC0", verified: "2026-09-20", status: "active", page: "entry/c/", summary: "" },
+  { id: "a", name: 'Say "hi", ok', url: "https://x.test/a", category: "2d", license: "CC0", commercial: true, formats: ["PNG", "SVG"], tags: [], added: "2026-07-20", verified: "2026-09-01", status: "active", page: "entry/a/", summary: "A & B" },
+  { id: "b", name: "Old", url: "https://x.test/b", category: "2d", license: "MIT", added: "2026-07-19", verified: "2026-01-01", status: "deprecated", page: "entry/b/" },
+  { id: "c", name: "New", url: "https://x.test/c", category: "3d", license: "CC0", added: "2026-09-20", verified: "2026-08-10", status: "active", page: "entry/c/", summary: "" },
 ];
 const csv = catalogCsv(sample, "https://s.test/site/");
 has("csv header", csv, "id,name,url,category");
+has("csv has the added column before verified", csv, "tags,added,verified,status");
 has("csv quotes commas and quotes", csv, '"Say ""hi"", ok"');
 has("csv joins lists", csv, "PNG; SVG");
 has("csv absolute page url", csv, "https://s.test/site/entry/a/");
-const feed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z" });
+const feed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z", kind: "verified" });
 has("feed escapes summary", feed, "CC0. A &amp; B");
 lacks("feed skips deprecated", feed, "entry/b/");
-eq("feed newest first", feed.indexOf("entry/c/") < feed.indexOf("entry/a/"), true);
+eq("reverified feed is by verified, newest first", feed.indexOf("entry/a/") < feed.indexOf("entry/c/"), true);
+has("reverified feed names itself", feed, '<link rel="self" href="https://s.test/site/reverified.xml" />');
+const newFeed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z" });
+eq("new-sources feed is by added, newest first", newFeed.indexOf("entry/c/") < newFeed.indexOf("entry/a/"), true);
+has("new-sources feed is the default feed.xml", newFeed, '<link rel="self" href="https://s.test/site/feed.xml" />');
+has("new-sources feed uses the added date", newFeed, "<updated>2026-09-20T00:00:00Z</updated>");
+has("new-sources feed title", newFeed, "<title>T: new sources</title>");
 
 /* review fixes, 2026-10 (#59-#66) ------------------------------------------ */
 import { csvField } from "./exports.mjs";
-import { classify, reportUrl, siteOf } from "./link-check.mjs";
+import { checkMaintenanceRepos, classify, reportUrl, siteOf, staleDaysFrom } from "./link-check.mjs";
 import { listEntryFiles } from "./entry-files.mjs";
 import nodeFs from "node:fs";
 import nodeOs from "node:os";
@@ -596,6 +734,7 @@ nodeFs.rmSync(tmp, { recursive: true, force: true });
 /* client search, URL state and 404 guesses (search.mjs, #67) --------------- */
 import {
   closestEntries,
+  slugOf,
   missSlug,
   normalize,
   passesFilters,
@@ -658,6 +797,74 @@ const guessPool = [
 eq("404 guesses closest first", closestEntries("kenny-ui-pack", guessPool)[0].id, "kenney-ui-pack");
 eq("404 guesses drop weak matches", closestEntries("kenny-ui-pack", guessPool).some((e) => e.id === "freesound"), false);
 eq("404 guesses respect limit", closestEntries("kenney-ui", guessPool, { limit: 1 }).length, 1);
+// #109: the empty search state reuses the same guesses for a misspelt publisher.
+eq("did you mean: misspelt publisher", closestEntries(slugOf("quaternious"), [...guessPool, { id: "quaternius", name: "Quaternius" }]).map((e) => e.name).includes("Quaternius"), true);
+eq("did you mean: misspelt kenney", closestEntries(slugOf("kenny"), guessPool).some((e) => /kenney/i.test(e.name)), true);
+
+/* check-links: flags and API failures (#82) -------------------------------- */
+eq("stale-days default", staleDaysFrom(["node", "x"]).days, 365);
+eq("stale-days value", staleDaysFrom(["node", "x", "--stale-days", "30"]).days, 30);
+has("stale-days as the last argument is an error", staleDaysFrom(["node", "x", "--stale-days"]).error, "got nothing");
+has("stale-days followed by another flag is an error", staleDaysFrom(["node", "x", "--stale-days", "--report"]).error, "--stale-days needs a whole number");
+has("stale-days non-number is an error", staleDaysFrom(["node", "x", "--stale-days", "soon"]).error, '"soon"');
+has("stale-days error carries usage", staleDaysFrom(["node", "x", "--stale-days", "1.5"]).error, "usage:");
+{
+  const gh = (id, maintenance = null) => ({ id, url: `https://github.com/o/${id}`, maintenance });
+  const ents = [gh("a"), { id: "n", url: "https://kenney.nl/" }, gh("b", "archived"), gh("c"), gh("d")];
+  const expected = (data) => (data.archived ? "archived" : null);
+  const calls = [];
+  const fetchRepo = async (repo) => {
+    calls.push(repo);
+    if (repo === "o/a") return { ok: false, status: 502, data: null };
+    if (repo === "o/b") return { ok: true, status: 200, data: { archived: true } };
+    if (repo === "o/c") return { ok: false, status: 403, data: null };
+    throw Object.assign(new Error("boom"), { name: "TimeoutError" });
+  };
+  const r = await checkMaintenanceRepos(ents, fetchRepo, expected);
+  eq("api: only github repos are fetched, until the rate limit", calls.join(","), "o/a,o/b,o/c");
+  eq("api: a matching repo is not a mismatch", r.mismatches.length, 0);
+  eq("api: failures are skipped, not problems", r.skipped.map((s) => s.id).join(","), "a,c,d");
+  has("api: a 5xx names the status", r.skipped[0].detail, "HTTP 502");
+  has("api: the unchecked rest says why", r.skipped[2].detail, "not checked: GitHub API rate limit (HTTP 403) hit on o/c");
+  const r2 = await checkMaintenanceRepos([gh("b", "archived")], async () => ({ ok: true, status: 200, data: { archived: false, pushed_at: "2020-01-02T00:00:00Z" } }), expected);
+  has("api: a real mismatch is reported", r2.mismatches[0].detail, "o/b is last push 2020-01-02; maintenance is archived, expected unset");
+  const r3 = await checkMaintenanceRepos([gh("d")], fetchRepo, expected);
+  has("api: a thrown timeout is skipped with its name", r3.skipped[0].detail, "GitHub API TimeoutError for o/d");
+}
+
+/* monthly re-verify batch (#93) -------------------------------------------- */
+import { batchIssueMarkdown, pickBatch } from "./reverify.mjs";
+{
+  const rvNow = Date.parse("2026-11-01T08:00:00Z");
+  const rv = (id, verified, status = "active") => ({ id, url: `https://${id}.test/`, license: "CC0", verified, status, rel: `catalog/2d/${id}.md` });
+  const pool = [
+    rv("fresh", "2026-10-20"),
+    rv("july", "2026-07-19"),
+    rv("june", "2026-06-01", "needs-review"),
+    rv("gone", "2025-01-01", "deprecated"),
+    rv("undated", null),
+    rv("edge", "2026-06-04"), // exactly 150 days: not yet due
+    rv("due", "2026-06-03"), // 151 days: due
+  ];
+  const picked = pickBatch(pool, { now: rvNow, size: 10 });
+  eq("batch: oldest first, undated first of all", picked.map((e) => e.id).join(","), "undated,june,due");
+  eq("batch: 105 days is not yet due either", picked.some((e) => e.id === "july"), false);
+  eq("batch: a fresh entry is left alone", picked.some((e) => e.id === "fresh"), false);
+  eq("batch: deprecated entries are never picked", picked.some((e) => e.id === "gone"), false);
+  eq("batch: 150 days is not yet due", picked.some((e) => e.id === "edge"), false);
+  eq("batch: size defaults to a tenth of the live catalog, at least one", pickBatch(pool, { now: rvNow }).length, 1);
+  eq("batch: nothing due means an empty batch", pickBatch(pool, { now: Date.parse("2026-08-01T00:00:00Z"), size: 10 }).map((e) => e.id).join(","), "undated");
+  eq("batch: explicit size caps the list", pickBatch(pool, { now: rvNow, size: 2 }).map((e) => e.id).join(","), "undated,june");
+  const big = Array.from({ length: 100 }, (_, i) => rv(`e${String(i).padStart(3, "0")}`, "2026-01-01"));
+  eq("batch: a tenth of 100 live entries is 10", pickBatch(big, { now: rvNow }).length, 10);
+  const md = batchIssueMarkdown({ batch: pickBatch(pool, { now: rvNow, size: 2 }), repo: "https://github.com/o/r", date: "2026-11-01", total: 6 });
+  has("batch issue links the entry file", md, "[`june`](https://github.com/o/r/blob/main/catalog/2d/june.md)");
+  has("batch issue says what was recorded", md, "recorded as `CC0`, needs-review, verified 2026-06-01 (153 days ago)");
+  has("batch issue handles no date", md, "[`undated`](https://github.com/o/r/blob/main/catalog/2d/undated.md): `https://undated.test/`, recorded as `CC0`, active, no verified date");
+  has("batch issue explains the steps", md, "**How to do one**");
+  has("batch issue links CONTRIBUTING absolutely (relative links 404 from an issue)", md, "[CONTRIBUTING.md](https://github.com/o/r/blob/main/CONTRIBUTING.md)");
+  eq("batch issue has one checkbox per entry", (md.match(/^- \[ \] /gm) || []).length, 2);
+}
 
 /* sync-counts and new-entry text rewrites (scaffold.mjs, #67) -------------- */
 import { newEntryProblem, newEntryText, syncCatalogReadme, syncConfig, syncReadme } from "./scaffold.mjs";
@@ -682,6 +889,15 @@ has("new-entry: taken id", newEntryProblem({ category: "2d", id: "x", categories
 const neText = newEntryText("id: example\ncategory: 3d\nverified: 2026-07-19   # note\nstatus: active\n", { id: "my-pack", category: "2d", today: "2026-10-04" });
 eq("new-entry text", neText, "id: my-pack\ncategory: 2d\nverified: 2026-10-04\nstatus: needs-review\n");
 eq("template copy starts needs-review", newEntryText(nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8"), { id: "a", category: "2d", today: "2026-10-04" }).split(/\r?\n/).includes("status: needs-review"), true);
+eq("new-entry sets added to today", newEntryText("added: 2026-07-19\nverified: 2026-07-19\n", { id: "a", category: "2d", today: "2026-10-04" }), "added: 2026-10-04\nverified: 2026-10-04\n");
+{
+  // #79: the template round-trips through the scaffold to typed fields.
+  const fromTemplate = parseFrontmatter(newEntryText(nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8"), { id: "a", category: "2d", today: "2026-10-04" }));
+  eq("template tags parse as a list", Array.isArray(fromTemplate.meta.tags), true);
+  eq("template commercial parses as a boolean", fromTemplate.meta.commercial, true);
+  eq("template added parses as today", fromTemplate.meta.added, "2026-10-04");
+  eq("template has no frontmatter errors", fromTemplate.errors.join(), "");
+}
 
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {

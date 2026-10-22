@@ -10,11 +10,12 @@ commercial: true
 attribution_required: false
 formats: [OGG]
 tags: [footsteps, subway, field-recording]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---
 
-# GboxMikeFozzy Footsteps
+# GboxMikeFozzy Footsteps (OGA)
 
 Small CC0 footstep set recorded in a subway and cleaned in Audacity. Handy starter loops when you need real footsteps without a huge library.
 

@@ -10,11 +10,12 @@ commercial: true
 attribution_required: false
 formats: [GeoTIFF, netCDF]
 tags: [noaa, relief, 15-arc-second]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---
 
-# ETOPO 2022
+# ETOPO 2022 (NOAA)
 
 NOAA global relief model integrating topo + bathy (15″ / 30″ / 60″; ice-surface and bedrock). Handy single grid for planet views and tsunami-style water sims. **Not for navigation.**
 

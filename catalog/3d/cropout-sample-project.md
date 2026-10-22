@@ -12,6 +12,7 @@ tags: [unreal-engine, top-down, rts, stylized, blueprint]
 publisher: Epic Games
 engine_lock: unreal
 ue_versions: "5.2-5.8"
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 ---

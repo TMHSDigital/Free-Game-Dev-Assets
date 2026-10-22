@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [SVG, desktop-app, cli, library]
 tags: [vectorize, tracing, rust, python]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

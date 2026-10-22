@@ -11,11 +11,12 @@ commercial: true
 attribution_required: false
 formats: [HGT, GeoTIFF]
 tags: [srtm, 30m, global-land]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---
 
-# NASADEM
+# NASADEM (LP DAAC)
 
 ~30 m global land DEM reprocessed from SRTM (+ ASTER/AW3D30 void fills). Strong default heightmap for continents when you want clearer voids than raw SRTM. Free Earthdata login for download.
 

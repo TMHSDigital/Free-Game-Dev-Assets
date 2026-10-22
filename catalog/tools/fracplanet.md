@@ -11,6 +11,7 @@ attribution_required: false
 formats: [desktop-app]
 tags: [planet, heightfield, fractal, pov-ray]
 maintenance: inactive
+added: 2026-09-30
 verified: 2026-10-04
 status: needs-review
 ---

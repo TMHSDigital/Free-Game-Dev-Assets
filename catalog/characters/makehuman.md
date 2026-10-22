@@ -11,17 +11,18 @@ commercial: true
 attribution_required: false
 formats: [FBX, OBJ, DAE]
 tags: [cc0-exports, humanoid, generator]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---
 
-# MakeHuman
+# MakeHuman Community
 
 Humanoid generator. **Core assets and exported models are CC0** — commercial closed-source games OK, no attribution. App source is **AGPL** (don’t ship the app as a networked service without compliance). Prefer [mpfb](mpfb.md) for Blender-native workflow. Avoid MB-Lab / CharMorph `mb_*` AGPL bases — [`docs/high-risk.md`](../../docs/high-risk.md).
 
 ## Notes
 
-- Docs/license live on `static.makehumancommunity.org` (homepage HTTP OK on 2026-07-19; HTTPS www refused)
+- Docs/license live on `static.makehumancommunity.org` (homepage HTTP OK on 2026-07-19; HTTPS www refused, re-checked 2026-10-22, so the entry `url` stays `http://`)
 - Third-party community assets may be CC-BY — check each download
 - FAQ: closed-source games Yes; sell exports Yes; attribution No (for core CC0)
 

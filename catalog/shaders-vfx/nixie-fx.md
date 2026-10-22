@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [npm, JavaScript, JSON]
 tags: [particles, web, threejs, pixijs]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

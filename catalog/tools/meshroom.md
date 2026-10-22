@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [OBJ, ABC, EXR, SFMdata]
 tags: [photogrammetry, alicevision, gpu]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

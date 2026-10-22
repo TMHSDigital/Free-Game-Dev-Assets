@@ -12,6 +12,7 @@ attribution_required: false
 formats: [PNG]
 tags: [ui, button, panels]
 camera_perspective: 2d_flat
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

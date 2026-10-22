@@ -10,11 +10,12 @@ commercial: true
 attribution_required: false
 formats: [tmx, JSON]
 tags: [tilemap, isometric, hex]
+added: 2026-07-19
 verified: 2026-09-22
 status: active
 ---
 
-# Tiled
+# Tiled Map Editor
 
 Mature tilemap editor (isometric/hex/ortho). The editor (`src/tiled`) is GPL-2.0. Official `libtiled` is BSD-2-Clause, not MIT. You can ship commercial games that load Tiled maps through a BSD/MIT loader. Do not statically link the GPL editor into a closed-source shipping binary.
 

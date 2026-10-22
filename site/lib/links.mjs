@@ -1,13 +1,16 @@
 /** Rewrites links in an entry body for the entry's own page. */
 import path from "node:path";
+import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE } from "./shared.mjs";
 
 export class LinkError extends Error {}
 
 export function makeLinkResolver({ entryPath, idByPath, repo, kindOf, entryBase = "../" }) {
   const dir = path.posix.dirname(entryPath);
   return (raw) => {
-    if (/^(https?:|mailto:)/i.test(raw)) return { href: raw, external: true };
+    if (EXTERNAL_SCHEME_RE.test(raw)) return { href: raw, external: true };
     if (raw.startsWith("#")) return { href: raw, external: false };
+    const scheme = raw.match(ANY_SCHEME_RE);
+    if (scheme) throw new LinkError(`${entryPath}: link "${raw}" uses the unsupported scheme "${scheme[1].toLowerCase()}:" (only https, http and mailto links are allowed)`);
     // Split off ?query and #hash; both are kept on the rewritten link.
     const m = raw.match(/^([^?#]*)(\?[^#]*)?(#.*)?$/);
     const target = m[1];

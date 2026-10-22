@@ -12,11 +12,12 @@ attribution_required: false
 formats: [PNG]
 tags: [isometric, tiles, itch, 2-to-1]
 camera_perspective: isometric_3_4
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---
 
-# Screaming Brain Studios isometric tiles
+# Screaming Brain Studios (isometric tiles)
 
 True 2:1 isometric PNG tiles (not cartoon cubes). Hub this wave: one publisher profile plus the packs whose itch Asset license field loaded as CC0. Split to per-pack files later if cards are worth it.
 

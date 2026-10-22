@@ -95,7 +95,8 @@ const UNSUPPORTED = [
   [/^\s*```/, "a code fence"],
   [/^\s*>/, "a blockquote"],
   [/^\s*!\[/, "an image"],
-  [/^\s*<[A-Za-z!/]/, "raw HTML"],
+  // An autolink `<https://...>` at the start of a line is inline markdown, not HTML.
+  [/^\s*<(?!https?:\/\/)[A-Za-z!/]/, "raw HTML"],
   [/^#{3,}\s/, "a heading below level 2"],
   [/^\s*\d+[.)]\s/, "an ordered list"],
 ];

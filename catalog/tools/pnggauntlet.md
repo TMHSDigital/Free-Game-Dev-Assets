@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app, PNG]
 tags: [png, lossless, pngout, optipng, windows]
+added: 2026-09-30
 verified: 2026-10-04
 status: active
 maintenance: inactive

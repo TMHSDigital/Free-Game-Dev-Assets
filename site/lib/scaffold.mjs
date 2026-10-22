@@ -43,6 +43,7 @@ export function newEntryText(template, { id, category, today }) {
   return template
     .replace(/^id: .*$/m, `id: ${id}`)
     .replace(/^category: .*$/m, `category: ${category}`)
+    .replace(/^added: .*$/m, `added: ${today}`)
     .replace(/^verified: .*$/m, `verified: ${today}`)
     // Set active once the licence is read and quoted.
     .replace(/^status: .*$/m, "status: needs-review");

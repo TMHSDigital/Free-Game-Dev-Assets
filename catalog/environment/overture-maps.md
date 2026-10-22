@@ -11,6 +11,7 @@ attribution_string: "© OpenStreetMap contributors, Overture Maps Foundation"
 formats: [GeoJSON]
 tags: [buildings, roads, places, world-data]
 publisher: Overture Maps Foundation
+added: 2026-10-04
 verified: 2026-10-04
 status: needs-review
 ---

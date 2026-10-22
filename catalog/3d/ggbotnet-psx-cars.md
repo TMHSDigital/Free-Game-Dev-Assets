@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [Blend, OBJ, PNG, OGG]
 tags: [psx, cars, low-poly]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

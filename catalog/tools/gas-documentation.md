@@ -11,6 +11,7 @@ attribution_required: false
 formats: [Unreal]
 tags: [unreal-engine, gameplay-ability-system, multiplayer, replication, tutorial, sample-project]
 ue_versions: "5.3"
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 ---

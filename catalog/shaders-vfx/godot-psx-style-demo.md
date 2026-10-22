@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [gdshader, Godot]
 tags: [godot, godot-4, psx, affine, dither, vertex-snap]
+added: 2026-07-27
 verified: 2026-07-27
 status: active
 maintenance: inactive

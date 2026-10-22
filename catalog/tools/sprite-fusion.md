@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [Unity, Godot, JSON, tmx, PNG]
 tags: [tilemap, levels, 2d, browser, auto-tiling]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 publisher: Sprite Fusion

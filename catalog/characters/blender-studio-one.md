@@ -12,6 +12,7 @@ attribution_required: true
 attribution_string: "One (c) Blender Studio (CC BY 4.0)"
 formats: [Blend]
 tags: [humanoid, rig]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

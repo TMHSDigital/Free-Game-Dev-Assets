@@ -337,7 +337,7 @@ Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 <details>
 <summary>Run the checks and preview the site locally</summary>
 
-Node 22 or newer; there is nothing to install.
+Node 22 or newer (CI and `.nvmrc` use 24); there is nothing to install.
 
 ```bash
 npm run check    # all of the below, in the order CI runs them

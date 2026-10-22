@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [glTF, OBJ]
 tags: [photogrammetry, museum, realistic]
+added: 2026-07-19
 verified: 2026-09-25
 status: active
 ---

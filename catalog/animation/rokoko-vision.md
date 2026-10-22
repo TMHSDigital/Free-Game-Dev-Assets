@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, BVH]
 tags: [freemium, video-to-fbx, ai, text-to-motion]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---

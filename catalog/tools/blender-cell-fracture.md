@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [blender-extension]
 tags: [blender, destruction, fracture, debris, cell-fracture]
+added: 2026-09-23
 verified: 2026-09-23
 status: active
 ---

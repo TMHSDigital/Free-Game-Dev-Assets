@@ -11,11 +11,12 @@ attribution_required: true
 attribution_string: "Title Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
 formats: [MP3, WAV]
 tags: [music, loops]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---
 
-# Incompetech
+# Incompetech (Kevin MacLeod)
 
 Large library of tracks by Kevin MacLeod under CC BY 4.0. Commercial use including games is expected if you credit. Paid no-attribution "Standard License" exists for ads and other credit-impossible formats. The site homepage is now mostly graph-paper tools; the music grant lives on the music FAQ.
 

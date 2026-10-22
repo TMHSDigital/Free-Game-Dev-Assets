@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [Unity]
 tags: [kinect, azure-kinect, rocketbox]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 maintenance: archived

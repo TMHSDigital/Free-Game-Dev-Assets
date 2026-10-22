@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, TGA, EXR]
 tags: [baker, normals, windows]
+added: 2026-08-24
 verified: 2026-10-04
 status: active
 ---

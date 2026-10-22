@@ -9,6 +9,7 @@ commercial: varies
 attribution_required: unknown
 formats: [WAV, MP3]
 tags: [animals, guns, nature, comedy]
+added: 2026-09-30
 verified: 2026-10-04
 status: needs-review
 ---

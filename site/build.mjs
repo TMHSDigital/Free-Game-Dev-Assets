@@ -2,22 +2,30 @@
 /**
  * Build GitHub Pages site from catalog markdown frontmatter.
  * Add/edit one catalog/<category>/<id>.md → rebuild regenerates everything.
+ *
+ *   node site/build.mjs [--clean]
+ *
+ * The build is incremental on disk: it writes only the files whose bytes
+ * changed and prunes what an earlier build left, so a no-change rebuild is
+ * fast on a slow drive. --clean empties site/dist first; the output is the
+ * same either way.
  */
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { commercialLabel, ENGINE_LOCK_LABELS, ENGINE_LOCK_NOTES, esc, latestAllowedDate, MAINTENANCE_NOTES, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
+import { baseHeadHtml, commercialLabel, ENGINE_LOCK_LABELS, ENGINE_LOCK_NOTES, esc, latestAllowedDate, MAINTENANCE_NOTES, OG_CARD_NAME, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver } from "./lib/links.mjs";
-import { atomFeed, catalogCsv, homeJsonLd } from "./lib/exports.mjs";
+import { atomFeed, catalogCsv, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
 import { checkPage } from "./lib/page-checks.mjs";
 import { checkStacks } from "./checks.mjs";
 import { stackPageHtml } from "./lib/stack-page.mjs";
-import { freshnessLineHtml, freshnessPageHtml, freshnessStats } from "./lib/freshness.mjs";
+import { freshnessLineHtml, freshnessPageHtml, freshnessStats, newEntriesLineHtml } from "./lib/freshness.mjs";
 import { licenceTerms, listStackFiles, owes, parseStack, pickPath } from "./lib/stacks.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -32,7 +40,6 @@ const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
 // Social preview image: a first-party screenshot of this site, kept with the
 // other first-party stills (the validator allows binaries there) and copied
 // into dist at build time.
-const OG_CARD_NAME = "og-card.png";
 const OG_CARD_SRC = path.join(ROOT, "docs", "images", "readme", OG_CARD_NAME);
 
 /** Sort rank for "license permissiveness": least owed first. */
@@ -51,6 +58,9 @@ function loadEntries(vocab) {
   const entries = [];
   const errors = [];
   const bodies = new Map();
+  // validate.mjs catches a duplicate id too, but a local `npm run build` must
+  // not quietly write one entry's page over another's.
+  const fileOfId = new Map();
 
   for (const file of files) {
     const text = fs.readFileSync(file, "utf8");
@@ -72,6 +82,11 @@ function loadEntries(vocab) {
       errors.push(`${rel} missing: ${missing.join(", ")}`);
       continue;
     }
+    if (fileOfId.has(String(meta.id))) {
+      errors.push(`duplicate id "${meta.id}": ${fileOfId.get(String(meta.id))} and ${rel}`);
+      continue;
+    }
+    fileOfId.set(String(meta.id), rel);
     bodies.set(String(meta.id), body);
 
     entries.push({
@@ -97,6 +112,7 @@ function loadEntries(vocab) {
             : "unknown",
       formats: Array.isArray(meta.formats) ? meta.formats : [],
       tags: Array.isArray(meta.tags) ? meta.tags : [],
+      added: meta.added ? String(meta.added) : null,
       verified: meta.verified ? String(meta.verified) : null,
       status: String(meta.status),
       path: rel,
@@ -178,7 +194,7 @@ function entryRowHtml(entry, repo, now) {
     <p>${esc(entry.summary || "")}</p>
     <div class="meta-line">
       <span>${esc(entry.category)}</span>${formats}${taxonomy}
-      <span class="verified is-${age.bucket}" data-verified="${esc(entry.verified || "")}" title="License last checked at the source">${esc(ageText)}</span>
+      <span class="verified is-${age.bucket}" data-verified="${esc(entry.verified || "")}" title="Licence last checked at the source">${esc(ageText)}</span>
     </div>
     <div class="entry-links">
       <a href="${esc(entry.url)}" rel="noopener noreferrer">Open source</a>
@@ -261,54 +277,43 @@ function guideRowsHtml(guides, repo) {
 }
 
 function headMetaHtml(site, stats, generatedAt, hasCard) {
-  const url = site.siteUrl;
-  const title = site.title;
-  const desc = site.tagline;
-  const card = `${url.replace(/\/+$/, "")}/${OG_CARD_NAME}`;
-  const cardMeta = hasCard
-    ? [
-        `<meta property="og:image" content="${esc(card)}" />`,
-        `<meta property="og:image:width" content="1200" />`,
-        `<meta property="og:image:height" content="630" />`,
-        `<meta property="og:image:alt" content="${esc(`${title}: ${desc}`)}" />`,
-        `<meta name="twitter:card" content="summary_large_image" />`,
-        `<meta name="twitter:image" content="${esc(card)}" />`,
-      ]
-    : [`<meta name="twitter:card" content="summary" />`];
   return [
-    `<link rel="canonical" href="${esc(url)}" />`,
-    // robots.txt is only read at a host's root, so under a project Pages path
-    // its Sitemap line is never seen; point at the sitemap from the page too.
-    `<link rel="sitemap" type="application/xml" href="${esc(url.replace(/\/+$/, ""))}/sitemap.xml" />`,
-    `<link rel="alternate" type="application/atom+xml" title="${esc(title)}: recently verified" href="${esc(url.replace(/\/+$/, ""))}/feed.xml" />`,
-    `<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />`,
-    `<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />`,
-    `<meta property="og:type" content="website" />`,
-    `<meta property="og:site_name" content="${esc(title)}" />`,
-    `<meta property="og:title" content="${esc(title)}" />`,
-    `<meta property="og:description" content="${esc(desc)}" />`,
-    `<meta property="og:url" content="${esc(url)}" />`,
-    ...cardMeta,
-    `<meta name="twitter:title" content="${esc(title)}" />`,
-    `<meta name="twitter:description" content="${esc(desc)}" />`,
+    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard }),
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
     `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total }))}</script>`,
   ].join("\n    ");
 }
 
-function sitemapXml(site, entries, stacks = []) {
-  const base = site.siteUrl.replace(/\/+$/, "");
-  const urls = [
-    `  <url><loc>${esc(base)}/</loc></url>`,
-    `  <url><loc>${esc(base)}/freshness/</loc></url>`,
-    ...stacks.map((s) => `  <url><loc>${esc(base)}/stack/${esc(s.meta.id)}/</loc><lastmod>${esc(s.meta.walked)}</lastmod></url>`),
-    ...entries.map(
-      (e) =>
-        `  <url><loc>${esc(base)}/entry/${esc(e.id)}/</loc>${e.verified ? `<lastmod>${esc(e.verified)}</lastmod>` : ""}</url>`
-    ),
-  ];
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
+/**
+ * Repo-relative file => date of its last commit, from one `git log` over the
+ * catalog and stacks. The sitemap's lastmod must never be earlier than the
+ * last content change, and an entry's `verified` date is not that. Empty when
+ * git is unavailable (a tarball, a shallow CI checkout with no history).
+ */
+function lastCommitDates() {
+  const dates = new Map();
+  try {
+    const out = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", "catalog", "stacks"], {
+      cwd: ROOT,
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "ignore"],
+    });
+    let date = null;
+    for (const line of out.split("\n")) {
+      if (line.startsWith("\0")) {
+        date = line.slice(1).trim();
+        continue;
+      }
+      const file = line.trim();
+      // Newest commit first, so the first date seen for a file is its latest.
+      if (file && date && !dates.has(file)) dates.set(file, date);
+    }
+  } catch {
+    // No git: the sitemap falls back to the build date.
+  }
+  return dates;
 }
 
 function robotsTxt(site) {
@@ -345,14 +350,65 @@ function notFoundHtml(site) {
 `;
 }
 
-function copyDir(src, dest) {
-  fs.mkdirSync(dest, { recursive: true });
+/*
+ * Output goes through one writer that creates a directory once, writes a
+ * file only when its bytes changed and remembers every path it produced, so
+ * the build can prune what an earlier build left behind instead of wiping
+ * dist/ and recreating 420 directories (94% of the build time on a slow
+ * disk). `--clean` still wipes first; the result is byte-identical either way.
+ */
+const produced = new Set();
+const madeDirs = new Set();
+let writes = 0;
+
+function ensureDir(dir) {
+  if (madeDirs.has(dir)) return;
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  madeDirs.add(dir);
+}
+
+/** Writes `content` (string or Buffer) to dist-relative `rel` if it differs. */
+function writeOut(rel, content) {
+  const full = path.join(DIST, rel);
+  produced.add(rel.split(path.sep).join("/"));
+  ensureDir(path.dirname(full));
+  const next = Buffer.isBuffer(content) ? content : Buffer.from(content, "utf8");
+  if (fs.existsSync(full)) {
+    const stat = fs.statSync(full);
+    if (stat.isFile() && stat.size === next.length && fs.readFileSync(full).equals(next)) return;
+  }
+  fs.writeFileSync(full, next);
+  writes += 1;
+}
+
+/** Copies a file into dist (through writeOut, so unchanged files are left alone). */
+function copyOut(src, rel) {
+  writeOut(rel, fs.readFileSync(src));
+}
+
+/** Everything under site/public except the names in `skip`, dist-relative paths kept. */
+function copyPublic(src, skip, prefix = "") {
   for (const name of fs.readdirSync(src)) {
     const from = path.join(src, name);
-    const to = path.join(dest, name);
-    if (fs.statSync(from).isDirectory()) copyDir(from, to);
-    else fs.copyFileSync(from, to);
+    const rel = prefix ? `${prefix}/${name}` : name;
+    if (fs.statSync(from).isDirectory()) copyPublic(from, skip, rel);
+    else if (!skip.has(rel)) copyOut(from, rel);
   }
+}
+
+/** Removes every file and directory in dist that this build did not produce. */
+function pruneDist(dir = DIST, prefix = "") {
+  let kept = 0;
+  for (const name of fs.readdirSync(dir)) {
+    const full = path.join(dir, name);
+    const rel = prefix ? `${prefix}/${name}` : name;
+    if (fs.statSync(full).isDirectory()) {
+      if (pruneDist(full, rel) === 0) fs.rmSync(full, { recursive: true, force: true });
+      else kept += 1;
+    } else if (produced.has(rel)) kept += 1;
+    else fs.rmSync(full, { force: true });
+  }
+  return kept;
 }
 
 /** Returns file => link resolver for links in that file's body (`file.path` is repo-relative). */
@@ -414,9 +470,7 @@ function writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now }
         hasCard,
         now,
       });
-      const dir = path.join(DIST, "stack", stack.meta.id);
-      fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(path.join(dir, "index.html"), html);
+      writeOut(path.join("stack", stack.meta.id, "index.html"), html);
       written.push(`stack/${stack.meta.id}/index.html`);
     } catch (err) {
       if (err instanceof MarkdownError || err instanceof LinkError) errors.push(err.message);
@@ -469,9 +523,7 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
         now,
         stacks: usedIn.get(entry.id) || [],
       });
-      const dir = path.join(DIST, "entry", entry.id);
-      fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(path.join(dir, "index.html"), html);
+      writeOut(path.join("entry", entry.id, "index.html"), html);
       written.push(`entry/${entry.id}/index.html`);
     } catch (err) {
       if (err instanceof MarkdownError || err instanceof LinkError) errors.push(err.message);
@@ -483,20 +535,35 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
 
 /** Runs the page checks over dist-relative files. */
 function checkPages(files) {
+  // Link targets resolve against what this build produced, not what is on
+  // disk: an incremental build still has last time's pages there until
+  // pruneDist runs, and a link to a removed entry must fail now.
   const kindOf = (rel) => {
-    const full = path.join(DIST, rel);
-    if (!fs.existsSync(full)) return null;
-    if (fs.statSync(full).isDirectory()) return fs.existsSync(path.join(full, "index.html")) ? "dir" : null;
-    return "file";
+    if (produced.has(rel)) return "file";
+    if (produced.has(rel ? `${rel}/index.html` : "index.html")) return "dir";
+    return null;
   };
   return files.flatMap((f) => checkPage(fs.readFileSync(path.join(DIST, f), "utf8"), { file: f, kindOf }));
 }
 
 function main() {
+  const started = Date.now();
+  const clean = process.argv.includes("--clean");
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
   const vocab = JSON.parse(fs.readFileSync(VOCAB_PATH, "utf8"));
   const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
   const { entries, errors, bodies } = loadEntries(vocab);
+
+  // An entry that cannot be read must stop the build: carrying on would
+  // publish a site with that entry, and any featured slot for it, missing.
+  // Checked before the stacks load, so a broken entry does not hide a stack
+  // error until the next run.
+  if (errors.length) {
+    console.error(`Build failed (${errors.length}):`);
+    for (const e of errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+
   const spdxAllowed = JSON.parse(fs.readFileSync(SPDX_ALLOWED_PATH, "utf8"));
   const { stacks, errors: stackErrors } = loadStacks(entries, vocab, spdxAllowed);
   // Entry id => the stacks that pick it, for "Used in" on entry pages.
@@ -507,14 +574,6 @@ function main() {
       if (!list.some((x) => x.id === s.meta.id)) list.push({ id: s.meta.id, title: s.meta.title });
       usedIn.set(p.entry.id, list);
     }
-  }
-
-  // An entry that cannot be read must stop the build: carrying on would
-  // publish a site with that entry, and any featured slot for it, missing.
-  if (errors.length) {
-    console.error(`Build failed (${errors.length}):`);
-    for (const e of errors) console.error(`  - ${e}`);
-    process.exit(1);
   }
 
   const repoUrl = config.site.repo;
@@ -539,8 +598,11 @@ function main() {
     categories: Object.keys(config.categories).length,
   };
 
+  const generatedAt = new Date().toISOString();
   const payload = {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
+    // Calendar version, the tag a dataset release carries (release.yml).
+    version: process.env.CATALOG_VERSION || `v${generatedAt.slice(0, 10).replaceAll("-", ".")}`,
     site: config.site,
     categories: config.categories,
     guides: config.guides,
@@ -560,37 +622,33 @@ function main() {
 
   // Empty dist rather than remove it: on Windows a server or editor holding the
   // folder open makes removing the folder itself fail with EPERM/EBUSY.
-  fs.mkdirSync(DIST, { recursive: true });
-  for (const name of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, name), { recursive: true, force: true });
-  copyDir(PUBLIC, DIST);
+  ensureDir(DIST);
+  if (clean) for (const name of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, name), { recursive: true, force: true });
+  // index.html is a template; its filled-in version is written below.
+  copyPublic(PUBLIC, new Set(["index.html"]));
   // The shortlist builds its CREDITS file with the same code as the stack pages.
-  fs.copyFileSync(path.join(__dirname, "lib", "owes.mjs"), path.join(DIST, "owes.js"));
+  copyOut(path.join(__dirname, "lib", "owes.mjs"), "owes.js");
   // The catalog search and the 404 page's guesses, tested in lib.test.mjs.
-  fs.copyFileSync(path.join(__dirname, "lib", "search.mjs"), path.join(DIST, "search.js"));
+  copyOut(path.join(__dirname, "lib", "search.mjs"), "search.js");
   const hasCard = fs.existsSync(OG_CARD_SRC);
-  if (hasCard) fs.copyFileSync(OG_CARD_SRC, path.join(DIST, OG_CARD_NAME));
+  if (hasCard) copyOut(OG_CARD_SRC, OG_CARD_NAME);
   // data.json is the public machine-readable catalog (see site/README.md);
   // the page itself loads data.js.
-  fs.writeFileSync(path.join(DIST, "data.json"), JSON.stringify(payload, null, 2));
-  fs.writeFileSync(
-    path.join(DIST, "data.js"),
-    `window.__CATALOG__ = ${JSON.stringify(payload)};\n`
-  );
-  fs.writeFileSync(path.join(DIST, "catalog.csv"), catalogCsv(entries, config.site.siteUrl));
-  fs.writeFileSync(
-    path.join(DIST, "feed.xml"),
-    atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt })
-  );
+  writeOut("data.json", JSON.stringify(payload, null, 2));
+  writeOut("data.js", `window.__CATALOG__ = ${JSON.stringify(payload)};\n`);
+  writeOut("catalog.csv", catalogCsv(entries, config.site.siteUrl));
+  writeOut("feed.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "added" }));
+  writeOut("reverified.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "verified" }));
 
   // Prerender. The served HTML must be complete without JavaScript: this is a
   // catalog whose whole value is that its entries can be found.
   const now = Date.now();
-  const indexPath = path.join(DIST, "index.html");
   const stamp = payload.generatedAt.slice(0, 10);
   const visible = entries.filter((e) => e.status !== "deprecated");
   const fresh = freshnessStats(entries, now);
   const substitutions = {
     FRESHNESS_LINE: freshnessLineHtml(fresh, stamp, "freshness/"),
+    NEW_LINE: newEntriesLineHtml(visible, stamp),
     HEAD_META: headMetaHtml(config.site, stats, payload.generatedAt, hasCard),
     STACK_ROWS: stackRowsHtml(stacks),
     STARTER_ROWS: starterRowsHtml(featured),
@@ -602,7 +660,7 @@ function main() {
     SPONSOR_BUTTON: sponsorButtonHtml(),
     FOOTER_STAMP: `Built ${esc(stamp)} from ${stats.total} catalog entries.`,
   };
-  let html = fs.readFileSync(indexPath, "utf8");
+  let html = fs.readFileSync(path.join(PUBLIC, "index.html"), "utf8");
   const missingMarkers = Object.keys(substitutions).filter((key) => !html.includes(`<!--${key}-->`));
   if (missingMarkers.length) {
     console.error(`Build failed: site/public/index.html is missing ${missingMarkers.map((k) => `<!--${k}-->`).join(", ")}`);
@@ -612,16 +670,12 @@ function main() {
     // A function replacement, so a "$" in the value is never read as a pattern.
     html = html.replaceAll(`<!--${key}-->`, () => value);
   }
-  fs.writeFileSync(indexPath, html);
+  writeOut("index.html", html);
 
-  fs.writeFileSync(path.join(DIST, "sitemap.xml"), sitemapXml(config.site, visible, stacks));
-  fs.writeFileSync(path.join(DIST, "robots.txt"), robotsTxt(config.site));
-  fs.writeFileSync(path.join(DIST, "404.html"), notFoundHtml(config.site));
-  fs.mkdirSync(path.join(DIST, "freshness"), { recursive: true });
-  fs.writeFileSync(
-    path.join(DIST, "freshness", "index.html"),
-    freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard })
-  );
+  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates() }));
+  writeOut("robots.txt", robotsTxt(config.site));
+  writeOut("404.html", notFoundHtml(config.site));
+  writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard }));
 
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });
@@ -640,9 +694,9 @@ function main() {
   // After the page gate: every body link has resolved by now, and the llms
   // files read links with the same LINK_RE, so they cannot hit a link error
   // of their own.
-  fs.writeFileSync(path.join(DIST, "llms.txt"), llmsTxt({ entries, site: config.site, categories: config.categories, stacks }));
-  fs.writeFileSync(
-    path.join(DIST, "llms-full.txt"),
+  writeOut("llms.txt", llmsTxt({ entries, site: config.site, categories: config.categories, stacks }));
+  writeOut(
+    "llms-full.txt",
     llmsFullTxt({
       entries,
       site: config.site,
@@ -653,12 +707,17 @@ function main() {
     })
   );
 
+  // Pages of entries that left the catalog, and anything else an earlier
+  // build wrote, go now; what remains is exactly a clean build's output.
+  pruneDist();
+
   console.log(
     `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok, ${stats.commercialVaries} per-file)`
   );
   console.log(
     `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
   );
+  console.log(`${writes} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }
 
 main();

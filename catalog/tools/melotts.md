@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [Python, WAV]
 tags: [local, multilingual, tts]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

@@ -12,6 +12,7 @@ attribution_required: true
 attribution_string: "Critter Evolved (c) Blender Studio (CC BY 4.0)"
 formats: [Blend]
 tags: [creature, rig]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

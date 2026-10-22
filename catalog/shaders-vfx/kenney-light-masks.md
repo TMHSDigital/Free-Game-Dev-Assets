@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [PNG]
 tags: [light, cookie, shader, vfx]
+added: 2026-07-27
 verified: 2026-07-27
 status: active
 ---

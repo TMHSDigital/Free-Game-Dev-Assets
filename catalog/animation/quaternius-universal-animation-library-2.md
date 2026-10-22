@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [FBX, glTF, GLB, Blend]
 tags: [retarget, combat, parkour, zombie]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

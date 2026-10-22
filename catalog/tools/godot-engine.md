@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app, Godot]
 tags: [game-engine, 2d, 3d, editor, godot-4]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

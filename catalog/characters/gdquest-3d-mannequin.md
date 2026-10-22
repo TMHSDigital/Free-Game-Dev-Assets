@@ -12,6 +12,7 @@ attribution_required: true
 attribution_string: "GDQuest and contributors (https://www.gdquest.com/)"
 formats: [glTF, Godot]
 tags: [godot, mannequin, controller]
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 maintenance: inactive

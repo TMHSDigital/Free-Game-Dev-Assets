@@ -11,6 +11,7 @@ attribution_string: "Graphics by Reiner \"Tiles\" Prokein (reinerstilesets.de)"
 formats: [BMP]
 tags: [pre-rendered, medieval, 8-directional, buildings, monsters]
 camera_perspective: isometric_3_4
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

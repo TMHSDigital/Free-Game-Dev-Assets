@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [XCF, PNG, TIFF, PSD, EXR]
 tags: [painting, texture-work, dcc]
+added: 2026-08-24
 verified: 2026-09-22
 status: active
 ---

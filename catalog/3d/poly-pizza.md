@@ -9,6 +9,7 @@ commercial: unknown
 attribution_required: unknown
 formats: [glTF, FBX]
 tags: [low-poly, aggregator, per-model-license]
+added: 2026-07-19
 verified: 2026-10-04
 status: needs-review
 ---

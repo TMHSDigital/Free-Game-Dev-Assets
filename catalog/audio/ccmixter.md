@@ -10,6 +10,7 @@ attribution_required: true
 attribution_string: "Music \"{title}\" by {artist} Available at ccMixter.org {url} Under {CC license} {license-url}"
 formats: [MP3, WAV]
 tags: [aggregator, remix, youtube-first]
+added: 2026-08-24
 verified: 2026-10-04
 status: needs-review
 ---

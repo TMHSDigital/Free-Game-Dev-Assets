@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [PNG]
 tags: [space, nebula, skybox, generator, browser, sci-fi]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

@@ -12,11 +12,12 @@ attribution_required: true
 attribution_string: "Charge Material Asset Library by Blender Studio (Simon Thommes), CC BY 4.0"
 formats: [Blend]
 tags: [eevee, bake-out]
+added: 2026-07-19
 verified: 2026-10-04
 status: active
 ---
 
-# Charge materials (Blender Studio)
+# Charge Material Asset Library
 
 Procedural materials freebie from Blender Studio's *Charge* gallery, by Simon Thommes, shipped as a Blender asset library (`charge_asset_library-materials.zip`, 176.7 MB). The asset's own detail panel lists the licence as **CC-BY**, linked to CC BY 4.0, with credit to Blender Studio. The materials are built for Eevee; bake to PBR textures for other engines.
 

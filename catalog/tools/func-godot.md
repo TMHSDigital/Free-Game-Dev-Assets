@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [godot-addon]
 tags: [godot, godot-4, quake, levels, brush-based]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

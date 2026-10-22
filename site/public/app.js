@@ -1,4 +1,4 @@
-import { passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, stateQuery } from "./search.js";
+import { closestEntries, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, slugOf, stateQuery } from "./search.js";
 
 (() => {
   const data = window.__CATALOG__;
@@ -131,10 +131,22 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
 
   const RESULTS_KEY = "fgda:results";
 
-  function writeUrl() {
+  /**
+   * Mirrors the state into the URL. A deliberate choice (a category chip, the
+   * sort) pushes a history entry so Back returns to the previous view;
+   * keystrokes and checkbox toggles replace, so Back is not a hundred steps
+   * of typing. Both in try/catch: Safari throws past 100 calls in 30 s.
+   */
+  function writeUrl({ push = false } = {}) {
     const qs = stateQuery(state, DEFAULTS);
     const next = `${location.pathname}${qs ? `?${qs}` : ""}${location.hash}`;
-    history.replaceState(null, "", next);
+    try {
+      const same = next === `${location.pathname}${location.search}${location.hash}`;
+      if (push && !same) history.pushState(null, "", next);
+      else history.replaceState(null, "", next);
+    } catch {
+      // The view is already right; only the address bar is stale.
+    }
     // Entry pages link back to these results (entry.js reads this).
     try {
       if (qs) sessionStorage.setItem(RESULTS_KEY, qs);
@@ -200,6 +212,9 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
     verified: (a, b) =>
       String(b.verified || "").localeCompare(String(a.verified || "")) ||
       a.name.localeCompare(b.name),
+    added: (a, b) =>
+      String(b.added || "").localeCompare(String(a.added || "")) ||
+      a.name.localeCompare(b.name),
   };
 
   /* ---------------------------------------------------------- rendering */
@@ -239,7 +254,7 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
     <p>${escapeHtml(entry.summary || "")}</p>
     <div class="meta-line">
       <span>${escapeHtml(entry.category)}</span>${formats}${taxonomy}
-      <span class="verified is-${age.bucket}" title="License last checked at the source">${escapeHtml(age.text)}</span>
+      <span class="verified is-${age.bucket}" title="Licence last checked at the source">${escapeHtml(age.text)}</span>
     </div>
     <div class="entry-links">
       <a href="${escapeHtml(entry.url)}" rel="noopener noreferrer">Open source</a>
@@ -269,17 +284,33 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
         label: categoryLabels[id]?.label || id,
       })),
     ];
+    // One choice at a time, so the row is a radio group, not a set of
+    // independent toggles (aria-pressed announced each chip as its own switch).
+    host.setAttribute("role", "radiogroup");
     host.innerHTML = buttons
       .map(
         (b) =>
-          `<button type="button" class="chip" data-cat="${escapeHtml(b.id)}" aria-pressed="false">${escapeHtml(b.label)} <span class="chip-count" data-count-for="${escapeHtml(b.id)}"></span></button>`
+          `<button type="button" class="chip" role="radio" data-cat="${escapeHtml(b.id)}" aria-checked="false">${escapeHtml(b.label)} <span class="chip-count" data-count-for="${escapeHtml(b.id)}"></span></button>`
       )
       .join("");
     host.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-cat]");
       if (!btn) return;
       state.category = btn.getAttribute("data-cat");
-      apply();
+      apply({ push: true });
+    });
+    // Arrow keys move through the group as they do in a native radio set.
+    host.addEventListener("keydown", (e) => {
+      const chips = $$("#category-filters .chip");
+      const at = chips.indexOf(document.activeElement);
+      if (at === -1) return;
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      const to = e.key === "Home" ? 0 : e.key === "End" ? chips.length - 1 : step === undefined ? -1 : (at + step + chips.length) % chips.length;
+      if (to === -1) return;
+      e.preventDefault();
+      chips[to].focus();
+      state.category = chips[to].getAttribute("data-cat");
+      apply({ push: true });
     });
   }
 
@@ -288,7 +319,7 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
       const cat = chip.getAttribute("data-cat");
       const on = cat === state.category;
       chip.classList.toggle("is-active", on);
-      chip.setAttribute("aria-pressed", on ? "true" : "false");
+      chip.setAttribute("aria-checked", on ? "true" : "false");
       const slot = chip.querySelector(".chip-count");
       if (slot) slot.textContent = cat === "all" ? String(total) : String(counts.get(cat) || 0);
       chip.classList.toggle("is-empty", cat !== "all" && !(counts.get(cat) || 0));
@@ -394,6 +425,40 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
     flatHeading.textContent = "Matching entries";
   }
 
+  /**
+   * "Did you mean" for a search that matched nothing: the closest entry names,
+   * by the same similarity the 404 page uses. A typo ("quaternious", "kenny")
+   * is the moment a visitor leaves, and the fix is one click.
+   */
+  function renderSuggestions(query) {
+    const host = $("#empty-suggest");
+    if (!host) return;
+    const q = String(query || "").trim();
+    // Only entries the other filters would show: a suggestion that the
+    // Audio chip then hides would lead straight back to this empty state.
+    const pool = q
+      ? data.entries.filter((e) => (state.category === "all" || e.category === state.category) && passes(e, { ...state, q: "" }, FORMAT_GROUPS))
+      : [];
+    const matches = q ? closestEntries(slugOf(q), pool) : [];
+    if (!matches.length) {
+      host.hidden = true;
+      host.textContent = "";
+      return;
+    }
+    host.hidden = false;
+    host.textContent = "Did you mean: ";
+    matches.forEach((entry, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "link-button";
+      btn.textContent = entry.name;
+      btn.setAttribute("data-suggest", entry.name);
+      host.append(btn);
+      if (i < matches.length - 1) host.append(", ");
+    });
+    host.append("?");
+  }
+
   /** Puts every node in `order` (visible ones first), moving nothing already in place. */
   function placeNodes(order) {
     const grid = $("#entry-grid");
@@ -408,6 +473,7 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
     const group = shouldGroup();
     $("#result-count").textContent = `${list.length} of ${data.entries.length} entries shown`;
     empty.hidden = list.length > 0;
+    renderSuggestions(list.length ? "" : state.q);
 
     // Under a plain sort the order of all nodes is fixed, so filtering only
     // toggles visibility. A ranked search reorders on every change.
@@ -483,12 +549,12 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
     }
     if (found === currentGroup) return;
     currentGroup = found;
-    $$("#category-filters .chip").forEach((chip) => {
-      const on = found !== null && chip.getAttribute("data-cat") === found;
-      chip.classList.toggle("is-current", on);
-      if (on) chip.setAttribute("aria-current", "true");
-      else chip.removeAttribute("aria-current");
-    });
+    // "You are in" is a line of its own. It used to underline a second chip,
+    // which read (and was announced) as a second selected filter.
+    const line = $("#current-group");
+    if (!line) return;
+    const label = found !== null && groupHeadings.length > 1 ? categoryLabels[found]?.label || found : null;
+    line.textContent = label ? `You are in: ${label}` : "";
   }
 
   function onScroll() {
@@ -506,13 +572,13 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
   const SEARCH_DELAY = 120;
   let searchTimer = 0;
 
-  function apply() {
+  function apply({ push = false } = {}) {
     clearTimeout(searchTimer);
     const results = computeResults();
     syncCategoryChips(results);
     renderActiveFilters();
     renderGrid(results);
-    writeUrl();
+    writeUrl({ push });
   }
 
   function renderStarters() {
@@ -637,6 +703,13 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
     sort.value = state.sort;
     sort.addEventListener("change", (e) => {
       state.sort = e.target.value;
+      apply({ push: true });
+    });
+
+    // Back and Forward step through the pushed views.
+    window.addEventListener("popstate", () => {
+      readUrl();
+      syncControls();
       apply();
     });
 
@@ -677,6 +750,16 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
       $("#result-count").focus();
     });
 
+    // A suggestion runs that search in the box, keeping the other filters.
+    $("#empty-suggest").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-suggest]");
+      if (!btn) return;
+      state.q = btn.getAttribute("data-suggest");
+      search.value = state.q;
+      apply({ push: true });
+      $("#result-count").focus();
+    });
+
     // On a phone the filter panel is about 530px of chips and checkboxes
     // between the search box and the first entry. It folds behind a button
     // there (styles.css); on wider screens the button is not shown. Only
@@ -713,7 +796,8 @@ import { passesFilters as passes, queryTests as compileQuery, readState, scoreFi
           el.tagName === "TEXTAREA" ||
           el.tagName === "SELECT" ||
           el.isContentEditable);
-      if (e.key === "/" && !typing) {
+      // Ctrl+/ and Cmd+/ belong to the browser and its extensions.
+      if (e.key === "/" && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) {
         e.preventDefault();
         search.focus();
         search.select();

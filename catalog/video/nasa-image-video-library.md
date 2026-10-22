@@ -11,6 +11,7 @@ attribution_required: true
 attribution_string: "NASA"
 formats: [JPG, MP4, WAV, TIFF]
 tags: [government, space, audio, video, endorsement-trap]
+added: 2026-09-26
 verified: 2026-10-04
 status: needs-review
 ---

@@ -11,6 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   checkActiveIsSettled,
+  checkAddedDate,
   checkAttributionConsistency,
   checkCategoryReadmeRows,
   checkCategorySets,
@@ -19,6 +20,7 @@ import {
   checkEngineFields,
   checkEntryUrl,
   checkEvidenceDates,
+  checkFieldTypes,
   checkFormatVocabulary,
   evidenceDates,
   markdownAnchors,
@@ -30,6 +32,7 @@ import {
   checkStacks,
   checkTagsRestatePublisher,
   checkTaxonomyValues,
+  checkTitleMatchesName,
   checkValueAliases,
   checkValueSpellings,
 } from "./checks.mjs";
@@ -748,10 +751,32 @@ accepts(
   formatVocab.formats.filter((f) => Object.prototype.hasOwnProperty.call(aliases.formats, f))
 );
 
+/* V24: field types (#79) ------------------------------------------------ */
+rejects("V24 rejects tags that parsed as text", checkFieldTypes("bad.md", { tags: "[a, b]   # note" }), "tags must be a list");
+rejects("V24 rejects a subcategories string", checkFieldTypes("bad.md", { subcategories: "models" }), "subcategories must be a list");
+rejects("V24 rejects a quoted boolean", checkFieldTypes("bad.md", { commercial: "true" }), "write commercial: true without quotes");
+rejects("V24 rejects a quoted attribution_required", checkFieldTypes("bad.md", { attribution_required: "false" }), "write attribution_required: false without quotes");
+rejects("V24 rejects an unknown commercial word", checkFieldTypes("bad.md", { commercial: "maybe" }), 'commercial "maybe" is not true|false|varies|unknown');
+accepts("V24 accepts lists and booleans", checkFieldTypes("ok.md", { tags: ["a"], subcategories: ["b"], formats: ["PNG"], commercial: true, attribution_required: false }));
+accepts("V24 accepts the literal words", checkFieldTypes("ok.md", { commercial: "varies", attribution_required: "unknown" }));
+accepts("V24 leaves missing fields to the required check", checkFieldTypes("ok.md", {}));
+
+/* V26: added date (#90) ------------------------------------------------- */
+rejects("V26 rejects a non-date", checkAddedDate("bad.md", { added: "July" }, TODAY), 'added "July" is not a real YYYY-MM-DD date');
+rejects("V26 rejects a future date", checkAddedDate("bad.md", { added: "2027-01-01" }, TODAY), "added 2027-01-01 is in the future");
+accepts("V26 accepts a past date", checkAddedDate("ok.md", { added: "2026-07-19" }, TODAY));
+accepts("V26 leaves a missing field to the required check", checkAddedDate("ok.md", {}, TODAY));
+
+/* V25: heading matches name (#95) --------------------------------------- */
+rejects("V25 rejects a heading that differs from name", checkTitleMatchesName("bad.md", { name: "KayKit (Kay Lousberg)" }, "\n# KayKit\n\nText"), 'heading "# KayKit" differs from name "KayKit (Kay Lousberg)"');
+rejects("V25 rejects a body with no heading", checkTitleMatchesName("bad.md", { name: "X" }, "Just text"), "has no \"# X\" heading");
+accepts("V25 accepts a matching heading", checkTitleMatchesName("ok.md", { name: "KayKit (Kay Lousberg)" }, "\n# KayKit (Kay Lousberg)\n\n## Notes"));
+accepts("V25 ignores a missing name", checkTitleMatchesName("ok.md", {}, "# Anything"));
+
 /* ----------------------------------------------------------------------- */
 if (failures.length) {
   console.error(`checks.test failed (${failures.length}):`);
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 22 checks`);
+console.log(`checks.test ok: ${passed} assertions across 25 checks`);

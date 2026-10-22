@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app, cli, PNG]
 tags: [spritesheet, atlas, bin-packing, maxrects]
+added: 2026-09-30
 verified: 2026-10-04
 status: needs-review
 maintenance: inactive

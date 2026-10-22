@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [OBJ, FBX, glTF]
 tags: [low-poly, atlas, crafting]
+added: 2026-08-15
 verified: 2026-08-15
 status: active
 ---

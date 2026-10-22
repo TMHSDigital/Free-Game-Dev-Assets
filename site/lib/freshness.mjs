@@ -3,7 +3,7 @@
  * Buckets come from verifiedAge, the function the homepage cards use, so the
  * summary and the cards cannot disagree. Pure: `now` is passed in.
  */
-import { esc, freshnessPageUrl, sponsorButtonHtml, verifiedAge } from "./shared.mjs";
+import { baseHeadHtml, esc, freshnessPageUrl, sponsorButtonHtml, verifiedAge } from "./shared.mjs";
 
 const RECENT_DAYS = 30;
 const byName = (a, b) => a.entry.name.localeCompare(b.entry.name);
@@ -47,6 +47,26 @@ export function freshnessLineHtml(stats, stamp, href) {
   return parts.join(" ");
 }
 
+/** Days an entry counts as new on the home page. */
+const NEW_DAYS = 30;
+
+/**
+ * "New this month" for the home page: the entries added in the last 30 days
+ * before `stamp`, newest first, the first few named and the rest counted,
+ * with a link to the whole list sorted by `added`. Empty string when none.
+ */
+export function newEntriesLineHtml(entries, stamp, { named = 5, sortHref = "?sort=added#catalog" } = {}) {
+  const since = new Date(Date.parse(`${stamp}T00:00:00Z`) - NEW_DAYS * 86400000).toISOString().slice(0, 10);
+  const fresh = entries
+    .filter((e) => e.status !== "deprecated" && e.added && e.added >= since)
+    .sort((a, b) => b.added.localeCompare(a.added) || a.name.localeCompare(b.name));
+  if (!fresh.length) return "";
+  const links = fresh.slice(0, named).map((e) => `<a href="entry/${esc(e.id)}/">${esc(e.name)}</a>`);
+  const more = fresh.length - links.length;
+  const tail = more > 0 ? ` and <a href="${esc(sortHref)}">${more} more</a>` : "";
+  return `<strong>New in the last ${NEW_DAYS} days: ${fresh.length}.</strong> ${links.join(", ")}${tail}.`;
+}
+
 const BUCKET_WORDS = { fresh: "fresh", aging: "aging", stale: "stale", unknown: "no check date" };
 
 function recentHtml(recent, stamp) {
@@ -78,12 +98,6 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
   const url = freshnessPageUrl(site);
   const title = `Licence freshness | ${site.title}`;
   const desc = `When each licence in the catalog was last read at its source, oldest first. As of ${stamp}.`;
-  const card = `${String(site.siteUrl).replace(/\/+$/, "")}/og-card.png`;
-  const cardMeta = hasCard
-    ? `<meta property="og:image" content="${esc(card)}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="${esc(card)}" />`
-    : `<meta name="twitter:card" content="summary" />`;
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -91,15 +105,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(desc)}" />
-    <link rel="canonical" href="${esc(url)}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="${esc(site.title)}" />
-    <meta property="og:title" content="${esc(title)}" />
-    <meta property="og:description" content="${esc(desc)}" />
-    <meta property="og:url" content="${esc(url)}" />
-    ${cardMeta}
-    <meta name="twitter:title" content="${esc(title)}" />
-    <meta name="twitter:description" content="${esc(desc)}" />
+    ${baseHeadHtml({ site, title, description: desc, url, hasCard })}
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -145,7 +151,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
       </section>
     </main>
     <footer class="footer">
-      <p>Catalog metadata is CC0. Linked assets keep their own licenses. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
+      <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
     </footer>

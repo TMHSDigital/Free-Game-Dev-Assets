@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, cli]
 tags: [tileset, spritesheet, splitter, python]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 maintenance: inactive

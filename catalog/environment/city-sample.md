@@ -11,6 +11,7 @@ formats: [Unreal]
 tags: [unreal-engine, city, realistic, open-world, nanite]
 publisher: Epic Games
 ue_versions: "5.0-5.8"
+added: 2026-10-13
 verified: 2026-10-13
 status: needs-review
 ---

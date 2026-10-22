@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [godot-addon, gdextension]
 tags: [godot, godot-4, behavior-tree, state-machine, ai, gdextension]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

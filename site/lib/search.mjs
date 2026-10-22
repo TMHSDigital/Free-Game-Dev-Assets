@@ -177,13 +177,24 @@ export function similarity(a, b) {
   return total ? (2 * shared) / total : 0;
 }
 
-/** Up to `limit` entries closest to a slug. Deprecated entries still have pages, but a live one is the better guess. */
+/**
+ * Up to `limit` entries closest to a slug. Deprecated entries still have
+ * pages, but a live one is the better guess. A one-word slug ("kenny") is
+ * also matched against each word of a name, so a misspelt publisher finds
+ * "Kenney UI Pack" instead of drowning in the pack's other letters.
+ */
 export function closestEntries(slug, entries, { minScore = 0.4, limit = 5 } = {}) {
+  const oneWord = !slug.includes("-");
   return entries
-    .map((e) => ({
-      entry: e,
-      score: Math.max(similarity(slug, e.id), similarity(slug, slugOf(e.name))) - (e.status === "deprecated" ? 0.1 : 0),
-    }))
+    .map((e) => {
+      const nameSlug = slugOf(e.name);
+      const candidates = [e.id, nameSlug];
+      if (oneWord) for (const word of nameSlug.split("-")) if (word.length >= 3) candidates.push(word);
+      return {
+        entry: e,
+        score: Math.max(...candidates.map((c) => similarity(slug, c))) - (e.status === "deprecated" ? 0.1 : 0),
+      };
+    })
     .filter((m) => m.score >= minScore)
     .sort((a, b) => b.score - a.score || a.entry.name.localeCompare(b.entry.name))
     .slice(0, limit)

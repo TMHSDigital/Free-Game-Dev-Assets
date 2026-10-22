@@ -20,10 +20,12 @@ Static GitHub Pages UI for this catalog.
 Each deploy also publishes
 [`catalog.csv`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/catalog.csv) (one row
 per entry: id, name, url, category, licence, SPDX, commercial, attribution, formats, tags,
-verified, status, page; list fields are joined with `; `) and an Atom feed,
-[`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml), of the 40 most
-recently verified entries. Entries carry no "added" date, so the feed is keyed on
-`verified`, the day the licence was last read from the source.
+added, verified, status, page; list fields are joined with `; `) and two Atom feeds:
+[`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml), the 40 newest
+entries by `added` (the day each joined the catalog), and
+[`reverified.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/reverified.xml), the
+40 most recently verified entries by `verified` (the day the licence was last read at the
+source). Two feeds, so a re-verification sweep of old entries cannot bury the new ones.
 
 ## Public JSON
 
@@ -32,12 +34,12 @@ Every deploy publishes the whole catalog as
 and tools that want the metadata without scraping the page. The page itself loads
 `data.js`, the same payload assigned to `window.__CATALOG__`.
 
-- Top-level keys: `generatedAt`, `site`, `categories`, `guides`, `featured`, `stats`,
-  `entries`.
+- Top-level keys: `generatedAt`, `version` (the calendar tag of the day, `vYYYY.MM.DD`),
+  `site`, `categories`, `guides`, `featured`, `stats`, `entries`.
 - Each entry carries its frontmatter fields (`id`, `name`, `url`, `category`,
   `subcategories`, `license`, `license_spdx` where set, `commercial`,
-  `attribution_required`, `attribution_string` where set, `formats`, `tags`, `verified`,
-  `status`, `publisher` where set, and the optional 2D fields), plus `path` (the entry's
+  `attribution_required`, `attribution_string` where set, `formats`, `tags`, `added`,
+  `verified`, `status`, `publisher` where set, and the optional 2D fields), plus `path` (the entry's
   file in this repo), `page` (the entry's page, relative to the site root), `summary` (the first paragraph of its body), and two derived sort
   fields, `attributionClass` and `licenseRank`.
 - It is regenerated from `catalog/` on every push to `main`. Field names are stable;
@@ -94,6 +96,26 @@ entries verified more than a year ago. Sites that refuse the checker (401, 403, 
 listed for a manual look but never open the issue on their own. It edits nothing: a
 moved source needs its licence re-read before its entry changes. Run it locally with
 `npm run links`.
+
+## Releases
+
+The live Pages URL changes on every push, so a tool that bundles the catalog (a plugin,
+a notebook, a paper) could not pin a version. `.github/workflows/release.yml` runs on the
+first of each month and on demand: it builds, tags `vYYYY.MM.DD` and creates a GitHub
+release with `data.json`, `catalog.csv`, `feed.xml`, `reverified.xml` and `llms.txt`
+attached, with the newest section of `docs/review-ledger.md` as the notes. Fetch a fixed
+version by tag from the Releases page; `data.json` carries the same tag as `version`.
+
+## Re-verify batch
+
+`.github/workflows/reverify.yml` runs `site/reverify-batch.mjs` on the first of each month
+(and on demand). It picks the live entries whose licence was read longest ago, more than
+150 days, about a tenth of the catalog at a time so every entry comes round in about ten
+months, and opens or updates one issue labelled `help wanted` and `good first issue`
+titled "Re-verify batch YYYY-MM: N entries due a licence re-read", with a checklist that
+names each entry's file, source URL and recorded licence. The selection rule is in
+`site/lib/reverify.mjs` and tested. When nothing is due the month is skipped. Preview it
+with `node site/reverify-batch.mjs`.
 
 ## Social preview
 

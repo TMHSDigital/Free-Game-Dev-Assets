@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [TTF, WOFF2]
 tags: [mono, code, ui, variable-font]
+added: 2026-07-19
 verified: 2026-07-19
 status: active
 ---

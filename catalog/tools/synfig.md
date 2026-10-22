@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 formats: [desktop-app]
 tags: [2d-animation, vector, tweening, bones]
+added: 2026-09-26
 verified: 2026-09-26
 status: active
 ---

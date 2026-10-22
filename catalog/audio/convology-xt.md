@@ -9,11 +9,12 @@ commercial: unknown
 attribution_required: unknown
 formats: [VST, AU, AAX, WAV]
 tags: [reverb, ir, plugin, free-factory]
+added: 2026-07-19
 verified: 2026-10-04
 status: needs-review
 ---
 
-# Convology XT Free Factory
+# Convology XT (Free Factory)
 
 Free convolution reverb plugin + **74** factory vintage IR samples (Impulse Record). No time limit / iLok. Product page sells the full 2,965-file library separately — clear plugin free tier, **no public EULA** stating whether factory IR WAVs may be extracted/embedded in a shipped game.
 

@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [PNG, JPG]
 tags: [image-compression, webp, avif, jpeg-xl, browser]
+added: 2026-09-30
 verified: 2026-09-30
 status: active
 ---

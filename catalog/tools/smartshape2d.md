@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [godot-addon]
 tags: [godot, godot-4, 2d, terrain, polygons]
+added: 2026-08-24
 verified: 2026-08-24
 status: active
 ---

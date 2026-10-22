@@ -1,9 +1,13 @@
 /** A starter stack's page. Pure: everything it needs is passed in. */
 import { scriptJson } from "./entry-page.mjs";
 import {
+  baseHeadHtml,
+  clipText,
   commercialLabel,
   entryPageUrl,
   esc,
+  SEO_DESCRIPTION_MAX,
+  SEO_TITLE_MAX,
   STATUS_NOTES,
   stackPageUrl,
   verifiedAge,
@@ -89,12 +93,6 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
   const repo = site.repo;
   const url = stackPageUrl(site, meta.id);
   const title = `${meta.title} | ${site.title}`;
-  const card = `${String(site.siteUrl).replace(/\/+$/, "")}/og-card.png`;
-  const cardMeta = hasCard
-    ? `<meta property="og:image" content="${esc(card)}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="${esc(card)}" />`
-    : `<meta name="twitter:card" content="summary" />`;
   const sectionHtml = sections
     .map(
       (s) => `<section class="stack-section" aria-labelledby="sec-${esc(s.name.toLowerCase())}">
@@ -117,17 +115,9 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${esc(title)}</title>
-    <meta name="description" content="${esc(meta.task)}" />
-    <link rel="canonical" href="${esc(url)}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="${esc(site.title)}" />
-    <meta property="og:title" content="${esc(title)}" />
-    <meta property="og:description" content="${esc(meta.task)}" />
-    <meta property="og:url" content="${esc(url)}" />
-    ${cardMeta}
-    <meta name="twitter:title" content="${esc(title)}" />
-    <meta name="twitter:description" content="${esc(meta.task)}" />
+    <title>${esc(clipText(meta.title, SEO_TITLE_MAX))}</title>
+    <meta name="description" content="${esc(clipText(meta.task, SEO_DESCRIPTION_MAX))}" />
+    ${baseHeadHtml({ site, title, description: meta.task, url, type: "article", hasCard })}
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -165,7 +155,7 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
       <p class="stack-note">Stack walked ${esc(meta.walked)}. Each licence is only as current as its entry's verified date.</p>
     </main>
     <footer class="footer">
-      <p>Catalog metadata is CC0. Linked assets keep their own licenses. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
+      <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
       <p><a href="../../freshness/">Licence freshness</a></p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>

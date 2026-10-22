@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [VDB]
 tags: [vdb, volumes, explosion, smoke]
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---

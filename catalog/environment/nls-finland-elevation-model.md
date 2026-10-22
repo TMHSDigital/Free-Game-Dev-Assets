@@ -12,6 +12,7 @@ attribution_string: "Contains data from the National Land Survey of Finland Elev
 formats: [GeoTIFF, ASCII]
 tags: [terrain, government, finland, lidar-derived]
 publisher: National Land Survey of Finland
+added: 2026-10-04
 verified: 2026-10-04
 status: active
 ---

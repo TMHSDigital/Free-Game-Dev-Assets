@@ -11,6 +11,7 @@ attribution_required: false
 formats: [unreal-plugin, C++]
 tags: [unreal-engine, node-graph, event-scripting, narrative, quest, blueprint]
 ue_versions: "5.6-5.8"
+added: 2026-10-13
 verified: 2026-10-13
 status: active
 ---

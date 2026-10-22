@@ -10,6 +10,7 @@ commercial: true
 attribution_required: false
 formats: [TIFF, TGA, EXR, HDR]
 tags: [pbr, seamless, stylized, hand-painted, decals]
+added: 2026-09-29
 verified: 2026-09-29
 status: active
 ---

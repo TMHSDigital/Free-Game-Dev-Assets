@@ -11,6 +11,7 @@ formats: [Unreal]
 tags: [unreal-engine, digital-humans, realistic, facial-animation, character-creator]
 publisher: Epic Games
 ue_versions: "5.6+"
+added: 2026-10-13
 verified: 2026-10-13
 status: needs-review
 ---

@@ -11,6 +11,7 @@ attribution_required: false
 formats: [PNG]
 tags: [platformer, gui, side-scroller]
 camera_perspective: side_scroller
+added: 2026-08-29
 verified: 2026-08-29
 status: active
 ---
