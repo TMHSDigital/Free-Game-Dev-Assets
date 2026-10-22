@@ -85,7 +85,11 @@ export function parseFrontmatter(text) {
       return;
     }
     const value = parseScalar(line.slice(idx + 1));
-    const next = lines[i + 1];
+    let nextIndex = i + 1;
+    while (nextIndex < lines.length && (!lines[nextIndex].trim() || lines[nextIndex].trim().startsWith("#"))) {
+      nextIndex += 1;
+    }
+    const next = lines[nextIndex];
     if (value === null && next !== undefined && /^\s+-\s/.test(next)) {
       meta[key] = [];
       listKey = key;

@@ -485,6 +485,9 @@ const f1 = fm([
 eq("frontmatter undoes quote escapes", f1.meta.attribution_string, 'Music "{title}" by {artist}');
 eq("frontmatter keeps a quoted comma inside one list item", JSON.stringify(f1.meta.tags), JSON.stringify(["sci-fi, space", "ui", "it's"]));
 eq("frontmatter reads a block list", JSON.stringify(f1.meta.formats), JSON.stringify(["PNG", "SVG"]));
+const fComment = fm(["tags:", "  # content words only", "  - low-poly"]);
+eq("frontmatter reads a block list after a comment", JSON.stringify(fComment.meta.tags), JSON.stringify(["low-poly"]));
+eq("frontmatter has no errors for a list after a comment", fComment.errors.length, 0);
 eq("frontmatter reads booleans", f1.meta.commercial, true);
 eq("frontmatter has no errors on good input", f1.errors.length, 0);
 eq("frontmatter ignores a byte-order mark", parseFrontmatter("﻿---\nid: a\n---\nB")?.meta.id, "a");
