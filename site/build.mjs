@@ -596,8 +596,11 @@ function main() {
     categories: Object.keys(config.categories).length,
   };
 
+  const generatedAt = new Date().toISOString();
   const payload = {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
+    // Calendar version, the tag a dataset release carries (release.yml).
+    version: process.env.CATALOG_VERSION || `v${generatedAt.slice(0, 10).replaceAll("-", ".")}`,
     site: config.site,
     categories: config.categories,
     guides: config.guides,

@@ -1,0 +1,52 @@
+name: Dataset release
+
+# A versioned snapshot of the catalog a tool can pin: tag vYYYY.MM.DD and
+# attach data.json, catalog.csv, the two feeds and llms.txt. Monthly, and on
+# demand from the Actions tab. The release notes are the newest section of
+# docs/review-ledger.md. A tag that already exists is left alone.
+on:
+  schedule:
+    - cron: "0 9 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The sitemap's lastmod dates come from git history.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Check and build
+        run: npm test && node site/validate.mjs && node site/build.mjs
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="v$(date -u +%Y.%m.%d)"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "release $tag already exists; nothing to do"
+            exit 0
+          fi
+          # Newest ledger section: from the first "## " heading to the next.
+          awk '/^## /{n++} n==1' docs/review-ledger.md > release-notes.md
+          {
+            echo
+            echo "Attached: \`data.json\` (full catalog), \`catalog.csv\`, \`feed.xml\` (new sources), \`reverified.xml\` (recent licence re-reads), \`llms.txt\`."
+            echo "Field reference: https://github.com/${GITHUB_REPOSITORY}/blob/main/site/README.md"
+          } >> release-notes.md
+          gh release create "$tag" \
+            --title "Catalog $tag" \
+            --notes-file release-notes.md \
+            site/dist/data.json site/dist/catalog.csv site/dist/feed.xml site/dist/reverified.xml site/dist/llms.txt

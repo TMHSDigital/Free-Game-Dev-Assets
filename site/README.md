@@ -34,8 +34,8 @@ Every deploy publishes the whole catalog as
 and tools that want the metadata without scraping the page. The page itself loads
 `data.js`, the same payload assigned to `window.__CATALOG__`.
 
-- Top-level keys: `generatedAt`, `site`, `categories`, `guides`, `featured`, `stats`,
-  `entries`.
+- Top-level keys: `generatedAt`, `version` (the calendar tag of the day, `vYYYY.MM.DD`),
+  `site`, `categories`, `guides`, `featured`, `stats`, `entries`.
 - Each entry carries its frontmatter fields (`id`, `name`, `url`, `category`,
   `subcategories`, `license`, `license_spdx` where set, `commercial`,
   `attribution_required`, `attribution_string` where set, `formats`, `tags`, `added`,
@@ -96,6 +96,15 @@ entries verified more than a year ago. Sites that refuse the checker (401, 403, 
 listed for a manual look but never open the issue on their own. It edits nothing: a
 moved source needs its licence re-read before its entry changes. Run it locally with
 `npm run links`.
+
+## Releases
+
+The live Pages URL changes on every push, so a tool that bundles the catalog (a plugin,
+a notebook, a paper) could not pin a version. `.github/workflows/release.yml` runs on the
+first of each month and on demand: it builds, tags `vYYYY.MM.DD` and creates a GitHub
+release with `data.json`, `catalog.csv`, `feed.xml`, `reverified.xml` and `llms.txt`
+attached, with the newest section of `docs/review-ledger.md` as the notes. Fetch a fixed
+version by tag from the Releases page; `data.json` carries the same tag as `version`.
 
 ## Re-verify batch
 
