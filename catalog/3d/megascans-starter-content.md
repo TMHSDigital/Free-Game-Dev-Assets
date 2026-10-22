@@ -25,6 +25,7 @@ The permanently free slice of Quixel Megascans on Fab. Free claiming of the whol
 - The Epic Content License's Megascans Addendum still has a "Free Assets" clause limiting Megascans acquired from Epic outside a Megascans plan to "internal evaluation purposes". That clause governs Megascans under the Epic Content License (the older Bridge and Quixel route); Epic's announcement and the Fab listings put the starter content under the Fab Standard License instead. Re-check if Epic changes either page
 - No redistribution: the Fab EULA summary says you may not "Resell or redistribute the asset for free on a standalone basis or allow others to do the same". Do not commit Megascans source files to a public repository
 - Prefer [poly-haven](../environment/poly-haven.md) or [ambientcg](ambientcg.md) when you need CC0 scans you can redistribute
+- The entry `url` is the Quixel Megascans seller page with Fab's free-price filter in the query string. If Fab changes its filter parameters the link falls back to the full seller page (`fab.com/sellers/Quixel Megascans`, checked 2026-10-22); filter by price "Free" there
 
 ## Evidence
 

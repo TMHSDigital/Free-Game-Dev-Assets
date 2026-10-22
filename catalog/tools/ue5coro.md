@@ -12,6 +12,7 @@ formats: [unreal-plugin, C++]
 tags: [unreal-engine, coroutines, async, latent-actions, multithreading, gameplay-programming]
 verified: 2026-10-13
 status: active
+maintenance: archived
 ---
 
 # UE5Coro
@@ -28,6 +29,7 @@ C++20 coroutine support for Unreal Engine, built around gameplay code. Changing 
 - BSD-3-Clause-Clear is BSD 3-Clause plus an explicit statement that no patent licence is granted; binary redistribution must reproduce the copyright notice and disclaimer in documentation, so add it to your third-party credits
 - Permissive, so compatible with the Unreal Engine EULA, which forbids combining engine code with copyleft licences such as GPL and LGPL
 - Maintenance: GitHub API (2026-10-13) reports the repository not archived, last push 2026-07-19; latest release v2.3.2 (2026-07-19)
+- Maintenance: the repository was archived after a final push on 2026-10-16, per the GitHub API on 2026-10-22. The README now says "UE5Coro is complete, with no known bugs at the time of archival. Unreal Engine 5 has reached the end of its lifecycle, and this plugin with it." The licence file is unchanged (API still reports BSD-3-Clause-Clear); releases stay downloadable, but expect no fixes for newer engine versions
 
 ## Evidence
 

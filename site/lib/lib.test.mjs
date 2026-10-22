@@ -584,6 +584,8 @@ eq("frontmatter block list after a comment and a blank line", JSON.stringify(f2.
 eq("frontmatter boolean before a comment", f2.meta.commercial, true);
 eq("frontmatter has no errors with comments everywhere", f2.errors.join(), "");
 eq("frontmatter keeps a quoted boolean as text", fm(["id: a", 'commercial: "true"']).meta.commercial, "true");
+has("frontmatter flags a hashtag read as a comment", fm(["id: a", "name: Sonniss #GameAudioGDC Bundle"]).errors.join(), '"name" is cut at " #"');
+eq("frontmatter keeps a quoted hashtag", fm(["id: a", 'name: "Sonniss #GameAudioGDC Bundle"']).meta.name, "Sonniss #GameAudioGDC Bundle");
 eq("evidence stops at the next heading, whatever its letter", evidenceSection("## Evidence\n\n- e (2026-01-01)\n\n## Extras\n\n- x"), "## Evidence\n\n- e (2026-01-01)\n");
 eq("summary keeps underscores", summaryFromBody("Split by Rig_Medium and **KHR_draco**.\n\n## Notes"), "Split by Rig_Medium and KHR_draco.");
 eq("summary keeps C# and link text", summaryFromBody("# T\n\nA [C#](x.md) library, `code`, *em*."), "A C# library, code, em.");

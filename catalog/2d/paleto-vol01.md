@@ -14,7 +14,7 @@ verified: 2026-07-20
 status: active
 ---
 
-# Paleto Vol.01 — The Classics
+# Paleto Vol.01 (The Classics)
 
 Four CC0 16-color pixel palettes (Fantasy RPG, Horror Dark, Deep Sea, Retro 8-bit) with ASE/PNG/HTML exports — fills the catalog’s **active** palette gap when [lospec](lospec.md) stays `needs-review`.
 

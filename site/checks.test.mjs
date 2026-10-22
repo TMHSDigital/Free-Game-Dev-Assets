@@ -31,6 +31,7 @@ import {
   checkStacks,
   checkTagsRestatePublisher,
   checkTaxonomyValues,
+  checkTitleMatchesName,
   checkValueAliases,
   checkValueSpellings,
 } from "./checks.mjs";
@@ -759,10 +760,16 @@ accepts("V24 accepts lists and booleans", checkFieldTypes("ok.md", { tags: ["a"]
 accepts("V24 accepts the literal words", checkFieldTypes("ok.md", { commercial: "varies", attribution_required: "unknown" }));
 accepts("V24 leaves missing fields to the required check", checkFieldTypes("ok.md", {}));
 
+/* V25: heading matches name (#95) --------------------------------------- */
+rejects("V25 rejects a heading that differs from name", checkTitleMatchesName("bad.md", { name: "KayKit (Kay Lousberg)" }, "\n# KayKit\n\nText"), 'heading "# KayKit" differs from name "KayKit (Kay Lousberg)"');
+rejects("V25 rejects a body with no heading", checkTitleMatchesName("bad.md", { name: "X" }, "Just text"), "has no \"# X\" heading");
+accepts("V25 accepts a matching heading", checkTitleMatchesName("ok.md", { name: "KayKit (Kay Lousberg)" }, "\n# KayKit (Kay Lousberg)\n\n## Notes"));
+accepts("V25 ignores a missing name", checkTitleMatchesName("ok.md", {}, "# Anything"));
+
 /* ----------------------------------------------------------------------- */
 if (failures.length) {
   console.error(`checks.test failed (${failures.length}):`);
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 23 checks`);
+console.log(`checks.test ok: ${passed} assertions across 24 checks`);

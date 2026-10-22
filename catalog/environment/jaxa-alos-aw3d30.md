@@ -14,7 +14,7 @@ verified: 2026-07-19
 status: active
 ---
 
-# JAXA ALOS AW3D30
+# JAXA ALOS World 3D (AW3D30)
 
 Global ~30 m DSM from ALOS/PRISM. Free for commercial and non-commercial use under JAXA research-data terms — **© JAXA credit required**; **notify JAXA in advance for commercial use**. Optical DEM — cloud/snow voids possible. Complements USGS / Copernicus.
 

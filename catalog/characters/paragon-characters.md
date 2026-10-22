@@ -26,6 +26,7 @@ One entry for the free character packs Epic released from its cancelled MOBA Par
 - Greystone and Sparrow were "created based on face scans from https://home.otoy.com"; the listings attach no extra condition to that
 - No redistribution: the Fab EULA summary says you may not "Resell or redistribute the asset for free on a standalone basis or allow others to do the same". Do not commit the packs in source form to a public repository
 - `ue_versions` comes from the Greystone and Sparrow listings ("4.19 – 4.27 and 5.0 – 5.8"); the Wraith page did not show a version range when read. Check each pack's own listing before downloading
+- The entry `url` is a Fab search ("paragon", seller Epic Games) because the packs have no shared listing page. If Fab changes its search parameters, open the Epic Games seller page (`fab.com/sellers/Epic Games`, checked 2026-10-22) and search for Paragon there
 
 ## Evidence
 

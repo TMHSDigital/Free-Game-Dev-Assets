@@ -13,7 +13,7 @@ verified: 2026-08-24
 status: active
 ---
 
-# CMU MoCap Database
+# CMU Graphics Lab Motion Capture Database
 
 Free human motion clips from Carnegie Mellon Graphics Lab. Site grant is "free for all uses" with no separate commercial carve-out and no attribution requirement on the pages loaded on 2026-08-24. Raw academic capture. Expect cleanup and retargeting before engine import.
 
@@ -24,6 +24,7 @@ Free human motion clips from Carnegie Mellon Graphics Lab. Site grant is "free f
 - FAQs cover format and markers, not a second license document
 - Pair with [accad-mocap](accad-mocap.md) / [rokoko-vision](rokoko-vision.md) when you need cleaner modern clips
 - DAHOX `cmu-mocap-gltf` is a format conversion of this grant, not a second license. Prefer this primary if you need the original terms.
+- The site serves plain http only (https refused on 2026-10-22), so the entry `url` stays `http://`
 
 ## Evidence
 

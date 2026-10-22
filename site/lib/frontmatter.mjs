@@ -106,7 +106,13 @@ export function parseFrontmatter(text) {
       errors.push(`line ${lineNo}: key "${key}" is given twice`);
       return;
     }
-    const value = parseScalar(line.slice(idx + 1));
+    const rawValue = line.slice(idx + 1);
+    const value = parseScalar(rawValue);
+    // ` #word` with no space after the hash is a hashtag or a colour, not a
+    // comment (`# text`); say so, since the silent truncation is what hurts.
+    if (/\S\s+#\S/.test(rawValue) && typeof value === "string" && value && !/^["'[]/.test(rawValue.trim())) {
+      errors.push(`line ${lineNo}: "${key}" is cut at " #" (read as a comment); quote the value if the # is part of it`);
+    }
     // A block list may start after blank or comment lines under its key.
     let j = i + 1;
     while (j < lines.length && (!lines[j].trim() || lines[j].trim().startsWith("#"))) j += 1;

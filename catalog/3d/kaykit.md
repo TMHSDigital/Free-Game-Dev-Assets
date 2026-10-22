@@ -15,7 +15,7 @@ verified: 2026-08-24
 status: active
 ---
 
-# KayKit
+# KayKit (Kay Lousberg)
 
 CC0 character and modular environment packs. Models share a single 1024x1024 gradient atlas; downsample to 128x128 for mobile/web without losing the look. Not a multi-material PBR workflow. The itch profile mixes free CC0 packs with paid bundles; license is on the pack page.
 

@@ -13,7 +13,7 @@ verified: 2026-10-04
 status: active
 ---
 
-# AccuRig
+# AccuRig (Reallusion)
 
 Free stand-alone auto-rigger for bipeds (and some creature proportions). Export FBX/USD for Unity, Unreal, Blender, etc. Best when the **mesh is 100% your own**.
 

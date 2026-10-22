@@ -13,7 +13,7 @@ verified: 2026-10-04
 status: needs-review
 ---
 
-# Wwise Indie
+# Wwise (Indie tier)
 
 Audiokinetic middleware — the Indie plan is free for game projects with a production budget under $250K, royalty free, with unlimited sounds. A licence is per title and per platform (Indie platforms are free). DLC with new audio needs a DLC licence, which is also free at Indie level. Compare [FMOD](fmod-studio.md).
 

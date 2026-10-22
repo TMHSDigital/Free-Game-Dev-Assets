@@ -14,7 +14,7 @@ verified: 2026-08-25
 status: active
 ---
 
-# Polyglot Gamedev
+# Polyglot Gamedev Master Sheet
 
 Crowdsourced UI/menu string translations for indie games. The live Google Sheet states CC0, commercial use, and no required credit.
 

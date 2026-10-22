@@ -16,7 +16,7 @@ status: active
 maintenance: archived
 ---
 
-# Glitch archive
+# Glitch (CC0 asset release)
 
 10k+ drawings, sprites, and backgrounds from the shuttered MMO Glitch. Tiny Speck dedicated the art to the public domain under CC0. This entry is the items repo; sibling Tiny Speck repos (locations, avatars, etc.) are the same grant, not extra catalog ids.
 

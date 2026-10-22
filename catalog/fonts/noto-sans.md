@@ -14,7 +14,7 @@ verified: 2026-07-19
 status: active
 ---
 
-# Noto Sans
+# Noto Sans (incl. CJK)
 
 Google’s SIL OFL family with broad script coverage including CJK — default pick for localization-friendly UI text. Bundle the faces you need; do not treat “download free” as a separate license.
 

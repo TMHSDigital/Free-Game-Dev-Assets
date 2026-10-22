@@ -1,6 +1,6 @@
 ---
 id: sonniss-gdc
-name: Sonniss #GameAudioGDC Bundle
+name: "Sonniss #GameAudioGDC Bundle"
 url: https://sonniss.com/gameaudiogdc/
 category: audio
 subcategories: [sfx, foley, ambience]
@@ -13,7 +13,7 @@ verified: 2026-08-24
 status: active
 ---
 
-# Sonniss #GameAudioGDC
+# Sonniss #GameAudioGDC Bundle
 
 Annual professional SFX dumps (multi-GB WAV). Custom EULA grants commercial game use with no attribution. Standalone resale and AI/ML training are prohibited. This is one of the few custom audio licenses that names games and interactive projects in the grant.
 

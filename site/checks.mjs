@@ -268,6 +268,21 @@ export function checkFieldTypes(rel, meta) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V25 */
+/**
+ * The body's `# Heading` is what a reader sees on GitHub; `name` is what the
+ * site, the feed and the CSV show. 24 entries had drifted apart, so the same
+ * source was called two things depending on where you met it.
+ */
+export function checkTitleMatchesName(rel, meta, body) {
+  if (empty(meta.name)) return [];
+  const m = String(body).match(/^# (.*)$/m);
+  if (!m) return [`${rel} body has no "# ${String(meta.name)}" heading`];
+  const h1 = m[1].trim();
+  const name = String(meta.name).trim();
+  return h1 === name ? [] : [`${rel} heading "# ${h1}" differs from name "${name}"; make them the same`];
+}
+
 /* ----------------------------------------------------------------- V12 */
 /** Documented values for the optional 2D/UI taxonomy. See catalog/TEMPLATE.md. */
 export const CAMERA_PERSPECTIVES = new Set([

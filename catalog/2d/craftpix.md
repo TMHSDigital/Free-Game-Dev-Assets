@@ -13,7 +13,7 @@ verified: 2026-07-19
 status: active
 ---
 
-# CraftPix freebies
+# CraftPix (freebies)
 
 Polished free UI kits, HUDs, sprites, and tilesets. **Freebie Products** license: unlimited personal/commercial game projects; modify OK; **no attribution required** (appreciated). Do not resell/redistribute source art files or expose editable artwork to end users.
 

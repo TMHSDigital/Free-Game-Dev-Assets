@@ -24,6 +24,7 @@ import {
   checkStacks,
   checkTagsRestatePublisher,
   checkTaxonomyValues,
+  checkTitleMatchesName,
   checkValueAliases,
   checkValueSpellings,
   evidenceDates,
@@ -309,6 +310,7 @@ function main() {
     errors.push(...checkMaintenance(rel, meta));
     errors.push(...checkEngineFields(rel, meta));
     errors.push(...checkActiveIsSettled(rel, meta));
+    errors.push(...checkTitleMatchesName(rel, meta, body));
     if (meta.id) {
       const id = String(meta.id);
       if (ids.has(id)) errors.push(`duplicate id "${id}": ${ids.get(id)} and ${rel}`);

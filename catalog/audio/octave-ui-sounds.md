@@ -11,6 +11,7 @@ formats: [AIFF]
 tags: [interface, click, beeps, taps]
 verified: 2026-09-30
 status: active
+maintenance: inactive
 ---
 
 # Octave
@@ -21,6 +22,7 @@ status: active
 
 - The publisher page is raisedbeaches.com/octave, served over http only, so the entry links the GitHub repo that holds the files and the licence. raisesound.com, cited by some lists, is a parked domain for sale
 - The download is the GitHub repo scopegate/octave; its LICENSE.md is the grant. Repo last pushed 2014-11-06
+- Maintenance: no push to the GitHub repository scopegate/octave since 2014-11-06, per the GitHub API on 2026-10-22. The files are finished sounds, so that is age, not breakage
 - App/interactive use is the stated purpose: the page pitches the pack for "your app"
 - Convert AIFF to WAV/OGG for engines
 
