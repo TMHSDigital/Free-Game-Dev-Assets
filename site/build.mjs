@@ -3,15 +3,16 @@
  * Build GitHub Pages site from catalog markdown frontmatter.
  * Add/edit one catalog/<category>/<id>.md → rebuild regenerates everything.
  */
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { commercialLabel, ENGINE_LOCK_LABELS, ENGINE_LOCK_NOTES, esc, latestAllowedDate, MAINTENANCE_NOTES, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
+import { baseHeadHtml, commercialLabel, ENGINE_LOCK_LABELS, ENGINE_LOCK_NOTES, esc, latestAllowedDate, MAINTENANCE_NOTES, OG_CARD_NAME, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver } from "./lib/links.mjs";
-import { atomFeed, catalogCsv, homeJsonLd } from "./lib/exports.mjs";
+import { atomFeed, catalogCsv, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
 import { checkPage } from "./lib/page-checks.mjs";
@@ -32,7 +33,6 @@ const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
 // Social preview image: a first-party screenshot of this site, kept with the
 // other first-party stills (the validator allows binaries there) and copied
 // into dist at build time.
-const OG_CARD_NAME = "og-card.png";
 const OG_CARD_SRC = path.join(ROOT, "docs", "images", "readme", OG_CARD_NAME);
 
 /** Sort rank for "license permissiveness": least owed first. */
@@ -186,7 +186,7 @@ function entryRowHtml(entry, repo, now) {
     <p>${esc(entry.summary || "")}</p>
     <div class="meta-line">
       <span>${esc(entry.category)}</span>${formats}${taxonomy}
-      <span class="verified is-${age.bucket}" data-verified="${esc(entry.verified || "")}" title="License last checked at the source">${esc(ageText)}</span>
+      <span class="verified is-${age.bucket}" data-verified="${esc(entry.verified || "")}" title="Licence last checked at the source">${esc(ageText)}</span>
     </div>
     <div class="entry-links">
       <a href="${esc(entry.url)}" rel="noopener noreferrer">Open source</a>
@@ -269,54 +269,43 @@ function guideRowsHtml(guides, repo) {
 }
 
 function headMetaHtml(site, stats, generatedAt, hasCard) {
-  const url = site.siteUrl;
-  const title = site.title;
-  const desc = site.tagline;
-  const card = `${url.replace(/\/+$/, "")}/${OG_CARD_NAME}`;
-  const cardMeta = hasCard
-    ? [
-        `<meta property="og:image" content="${esc(card)}" />`,
-        `<meta property="og:image:width" content="1200" />`,
-        `<meta property="og:image:height" content="630" />`,
-        `<meta property="og:image:alt" content="${esc(`${title}: ${desc}`)}" />`,
-        `<meta name="twitter:card" content="summary_large_image" />`,
-        `<meta name="twitter:image" content="${esc(card)}" />`,
-      ]
-    : [`<meta name="twitter:card" content="summary" />`];
   return [
-    `<link rel="canonical" href="${esc(url)}" />`,
-    // robots.txt is only read at a host's root, so under a project Pages path
-    // its Sitemap line is never seen; point at the sitemap from the page too.
-    `<link rel="sitemap" type="application/xml" href="${esc(url.replace(/\/+$/, ""))}/sitemap.xml" />`,
-    `<link rel="alternate" type="application/atom+xml" title="${esc(title)}: recently verified" href="${esc(url.replace(/\/+$/, ""))}/feed.xml" />`,
-    `<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />`,
-    `<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />`,
-    `<meta property="og:type" content="website" />`,
-    `<meta property="og:site_name" content="${esc(title)}" />`,
-    `<meta property="og:title" content="${esc(title)}" />`,
-    `<meta property="og:description" content="${esc(desc)}" />`,
-    `<meta property="og:url" content="${esc(url)}" />`,
-    ...cardMeta,
-    `<meta name="twitter:title" content="${esc(title)}" />`,
-    `<meta name="twitter:description" content="${esc(desc)}" />`,
+    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard }),
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
     `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total }))}</script>`,
   ].join("\n    ");
 }
 
-function sitemapXml(site, entries, stacks = []) {
-  const base = site.siteUrl.replace(/\/+$/, "");
-  const urls = [
-    `  <url><loc>${esc(base)}/</loc></url>`,
-    `  <url><loc>${esc(base)}/freshness/</loc></url>`,
-    ...stacks.map((s) => `  <url><loc>${esc(base)}/stack/${esc(s.meta.id)}/</loc><lastmod>${esc(s.meta.walked)}</lastmod></url>`),
-    ...entries.map(
-      (e) =>
-        `  <url><loc>${esc(base)}/entry/${esc(e.id)}/</loc>${e.verified ? `<lastmod>${esc(e.verified)}</lastmod>` : ""}</url>`
-    ),
-  ];
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
+/**
+ * Repo-relative file => date of its last commit, from one `git log` over the
+ * catalog and stacks. The sitemap's lastmod must never be earlier than the
+ * last content change, and an entry's `verified` date is not that. Empty when
+ * git is unavailable (a tarball, a shallow CI checkout with no history).
+ */
+function lastCommitDates() {
+  const dates = new Map();
+  try {
+    const out = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", "catalog", "stacks"], {
+      cwd: ROOT,
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "ignore"],
+    });
+    let date = null;
+    for (const line of out.split("\n")) {
+      if (line.startsWith("\0")) {
+        date = line.slice(1).trim();
+        continue;
+      }
+      const file = line.trim();
+      // Newest commit first, so the first date seen for a file is its latest.
+      if (file && date && !dates.has(file)) dates.set(file, date);
+    }
+  } catch {
+    // No git: the sitemap falls back to the build date.
+  }
+  return dates;
 }
 
 function robotsTxt(site) {
@@ -622,7 +611,7 @@ function main() {
   }
   fs.writeFileSync(indexPath, html);
 
-  fs.writeFileSync(path.join(DIST, "sitemap.xml"), sitemapXml(config.site, visible, stacks));
+  fs.writeFileSync(path.join(DIST, "sitemap.xml"), sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates() }));
   fs.writeFileSync(path.join(DIST, "robots.txt"), robotsTxt(config.site));
   fs.writeFileSync(path.join(DIST, "404.html"), notFoundHtml(config.site));
   fs.mkdirSync(path.join(DIST, "freshness"), { recursive: true });

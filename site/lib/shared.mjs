@@ -24,7 +24,7 @@ export const ENGINE_LOCK_LABELS = { unreal: "UE only" };
 
 /** One-line meaning of each status, matching the homepage legend. */
 export const STATUS_NOTES = {
-  active: "License spot-checked at the source; the entry carries dated evidence.",
+  active: "Licence spot-checked at the source; the entry carries dated evidence.",
   "needs-review": "Useful, but a real question is open. Verify before you ship.",
   deprecated: "Kept for history only.",
 };
@@ -112,7 +112,58 @@ export function freshnessPageUrl(site) {
   return `${String(site.siteUrl).replace(/\/+$/, "")}/freshness/`;
 }
 
-/** GitHub Sponsors button for the nav. Iframes are fine on the site; GitHub strips them from the README. */
+/**
+ * GitHub Sponsors link for the nav and footer. A plain link, not GitHub's
+ * iframe button: the iframe fetched a whole GitHub document (with its cookies)
+ * twice per page before the catalog had painted, and told GitHub about every
+ * page view on a site that promises no analytics. The heart is the Octicons
+ * "heart" glyph (MIT).
+ */
 export function sponsorButtonHtml() {
-  return '<iframe class="sponsor-button" src="https://github.com/sponsors/TMHSDigital/button" title="Sponsor TMHSDigital" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>';
+  return (
+    '<a class="sponsor-button" href="https://github.com/sponsors/TMHSDigital" rel="noopener noreferrer">' +
+    '<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" focusable="false"><path fill="currentColor" d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"/></svg>' +
+    "Sponsor</a>"
+  );
+}
+
+/** Social preview image, a first-party screenshot copied into dist by the build. */
+export const OG_CARD_NAME = "og-card.png";
+
+/**
+ * The <head> lines every page type shares: canonical, sitemap and feed
+ * discovery, theme colours for both schemes, Open Graph and Twitter cards.
+ * One helper so an entry page cannot ship a thinner head than the home page.
+ * `<title>` and `<meta name="description">` stay with each page.
+ */
+export function baseHeadHtml({ site, title, description, url, type = "website", hasCard, indent = "    " }) {
+  const base = String(site.siteUrl).replace(/\/+$/, "");
+  const card = `${base}/${OG_CARD_NAME}`;
+  const cardMeta = hasCard
+    ? [
+        `<meta property="og:image" content="${esc(card)}" />`,
+        `<meta property="og:image:width" content="1200" />`,
+        `<meta property="og:image:height" content="630" />`,
+        `<meta property="og:image:alt" content="${esc(`${site.title}: ${site.tagline}`)}" />`,
+        `<meta name="twitter:card" content="summary_large_image" />`,
+        `<meta name="twitter:image" content="${esc(card)}" />`,
+      ]
+    : [`<meta name="twitter:card" content="summary" />`];
+  return [
+    `<link rel="canonical" href="${esc(url)}" />`,
+    // robots.txt is only read at a host's root, so under a project Pages path
+    // its Sitemap line is never seen; point at the sitemap from the page too.
+    `<link rel="sitemap" type="application/xml" href="${esc(base)}/sitemap.xml" />`,
+    `<link rel="alternate" type="application/atom+xml" title="${esc(site.title)}: recently verified" href="${esc(base)}/feed.xml" />`,
+    `<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />`,
+    `<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />`,
+    `<meta property="og:type" content="${esc(type)}" />`,
+    `<meta property="og:site_name" content="${esc(site.title)}" />`,
+    `<meta property="og:title" content="${esc(title)}" />`,
+    `<meta property="og:description" content="${esc(description)}" />`,
+    `<meta property="og:url" content="${esc(url)}" />`,
+    ...cardMeta,
+    `<meta name="twitter:title" content="${esc(title)}" />`,
+    `<meta name="twitter:description" content="${esc(description)}" />`,
+  ].join(`\n${indent}`);
 }

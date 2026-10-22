@@ -472,6 +472,62 @@ has("entry page footer links freshness", p, '<a href="../../freshness/">Licence 
 has("stack page footer links freshness", spage, '<a href="../../freshness/">Licence freshness</a>');
 has("llms points at freshness", lt, "Licence freshness, every entry by check date: https://x.test/s/freshness/");
 
+/* head: every page type carries the same baseline (#104) ------------------- */
+import { baseHeadHtml } from "./shared.mjs";
+{
+  const homeHead = baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard: true });
+  const baseline = [
+    '<link rel="sitemap" type="application/xml" href="https://x.test/s/sitemap.xml" />',
+    '<link rel="alternate" type="application/atom+xml" title="Free Game Dev Assets: recently verified" href="https://x.test/s/feed.xml" />',
+    '<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />',
+    '<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />',
+    '<meta property="og:image" content="https://x.test/s/og-card.png" />',
+    '<meta property="og:image:width" content="1200" />',
+    '<meta property="og:image:height" content="630" />',
+    '<meta property="og:image:alt" content="Free Game Dev Assets: T" />',
+    '<meta name="twitter:card" content="summary_large_image" />',
+    '<meta property="og:site_name" content="Free Game Dev Assets" />',
+  ];
+  for (const [name, html] of [["home head", homeHead], ["entry page", p], ["stack page", spage], ["freshness page", fp]]) {
+    for (const tag of baseline) has(`${name} has ${tag.slice(0, 40)}`, html, tag);
+    eq(`${name} has one canonical`, (html.match(/<link rel="canonical"/g) || []).length, 1);
+  }
+  has("entry page og:type is article", p, '<meta property="og:type" content="article" />');
+  has("freshness og:type is website", fp, '<meta property="og:type" content="website" />');
+  has("no card falls back to a summary card", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), '<meta name="twitter:card" content="summary" />');
+  lacks("no card has no image", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), "og:image");
+}
+
+/* sitemap lastmod (#108) --------------------------------------------------- */
+import { sitemapXml } from "./exports.mjs";
+{
+  const sm = sitemapXml({
+    site,
+    stamp: "2026-10-22",
+    entries: [
+      { id: "old", path: "catalog/2d/old.md", verified: "2026-07-01" },
+      { id: "edited", path: "catalog/2d/edited.md", verified: "2026-07-01" },
+      { id: "undated", path: "catalog/2d/undated.md", verified: null },
+    ],
+    stacks: [{ rel: "stacks/s1.md", meta: { id: "s1", walked: "2026-09-01" } }],
+    modified: new Map([["catalog/2d/edited.md", "2026-10-15"], ["catalog/2d/old.md", "2026-06-01"], ["stacks/s1.md", "2026-10-02"]]),
+  });
+  has("sitemap home has the build date", sm, "<loc>https://x.test/s/</loc><lastmod>2026-10-22</lastmod>");
+  has("sitemap freshness has the build date", sm, "<loc>https://x.test/s/freshness/</loc><lastmod>2026-10-22</lastmod>");
+  has("sitemap entry keeps verified when it is later than the commit", sm, "<loc>https://x.test/s/entry/old/</loc><lastmod>2026-07-01</lastmod>");
+  has("sitemap entry takes the later commit date", sm, "<loc>https://x.test/s/entry/edited/</loc><lastmod>2026-10-15</lastmod>");
+  has("sitemap entry with no dates falls back to the build date", sm, "<loc>https://x.test/s/entry/undated/</loc><lastmod>2026-10-22</lastmod>");
+  has("sitemap stack takes the later commit date", sm, "<loc>https://x.test/s/stack/s1/</loc><lastmod>2026-10-02</lastmod>");
+  eq("every sitemap url has a lastmod", (sm.match(/<url>/g) || []).length, (sm.match(/<lastmod>/g) || []).length);
+}
+
+/* sponsor link, not an iframe (#101) --------------------------------------- */
+import { sponsorButtonHtml } from "./shared.mjs";
+lacks("sponsor button is not an iframe", sponsorButtonHtml(), "<iframe");
+has("sponsor button links to GitHub Sponsors", sponsorButtonHtml(), 'href="https://github.com/sponsors/TMHSDigital"');
+lacks("entry page loads nothing from github.com", p.replace(/href="https:\/\/github\.com[^"]*"/g, ""), "github.com/sponsors/TMHSDigital/button");
+eq("entry page has no iframe", (p.match(/<iframe/g) || []).length, 0);
+
 /* freshness: review fixes -------------------------------------------------- */
 has("recent window wording counts the build day", fp, "Checked on 2026-09-25 or in the 30 days before it, newest first.");
 has("empty recent window wording counts the build day", freshnessPageHtml({ stats: freshnessStats([fe("a", "Alpha", 90)], fNow), site, stamp: "2026-09-25", total: 1, hasCard: false }), "None checked on 2026-09-25 or in the 30 days before it.");
@@ -571,7 +627,7 @@ eq("feed newest first", feed.indexOf("entry/c/") < feed.indexOf("entry/a/"), tru
 
 /* review fixes, 2026-10 (#59-#66) ------------------------------------------ */
 import { csvField } from "./exports.mjs";
-import { classify, reportUrl, siteOf } from "./link-check.mjs";
+import { checkMaintenanceRepos, classify, reportUrl, siteOf, staleDaysFrom } from "./link-check.mjs";
 import { listEntryFiles } from "./entry-files.mjs";
 import nodeFs from "node:fs";
 import nodeOs from "node:os";
@@ -696,6 +752,37 @@ const guessPool = [
 eq("404 guesses closest first", closestEntries("kenny-ui-pack", guessPool)[0].id, "kenney-ui-pack");
 eq("404 guesses drop weak matches", closestEntries("kenny-ui-pack", guessPool).some((e) => e.id === "freesound"), false);
 eq("404 guesses respect limit", closestEntries("kenney-ui", guessPool, { limit: 1 }).length, 1);
+
+/* check-links: flags and API failures (#82) -------------------------------- */
+eq("stale-days default", staleDaysFrom(["node", "x"]).days, 365);
+eq("stale-days value", staleDaysFrom(["node", "x", "--stale-days", "30"]).days, 30);
+has("stale-days as the last argument is an error", staleDaysFrom(["node", "x", "--stale-days"]).error, "got nothing");
+has("stale-days followed by another flag is an error", staleDaysFrom(["node", "x", "--stale-days", "--report"]).error, "--stale-days needs a whole number");
+has("stale-days non-number is an error", staleDaysFrom(["node", "x", "--stale-days", "soon"]).error, '"soon"');
+has("stale-days error carries usage", staleDaysFrom(["node", "x", "--stale-days", "1.5"]).error, "usage:");
+{
+  const gh = (id, maintenance = null) => ({ id, url: `https://github.com/o/${id}`, maintenance });
+  const ents = [gh("a"), { id: "n", url: "https://kenney.nl/" }, gh("b", "archived"), gh("c"), gh("d")];
+  const expected = (data) => (data.archived ? "archived" : null);
+  const calls = [];
+  const fetchRepo = async (repo) => {
+    calls.push(repo);
+    if (repo === "o/a") return { ok: false, status: 502, data: null };
+    if (repo === "o/b") return { ok: true, status: 200, data: { archived: true } };
+    if (repo === "o/c") return { ok: false, status: 403, data: null };
+    throw Object.assign(new Error("boom"), { name: "TimeoutError" });
+  };
+  const r = await checkMaintenanceRepos(ents, fetchRepo, expected);
+  eq("api: only github repos are fetched, until the rate limit", calls.join(","), "o/a,o/b,o/c");
+  eq("api: a matching repo is not a mismatch", r.mismatches.length, 0);
+  eq("api: failures are skipped, not problems", r.skipped.map((s) => s.id).join(","), "a,c,d");
+  has("api: a 5xx names the status", r.skipped[0].detail, "HTTP 502");
+  has("api: the unchecked rest says why", r.skipped[2].detail, "not checked: GitHub API rate limit (HTTP 403) hit on o/c");
+  const r2 = await checkMaintenanceRepos([gh("b", "archived")], async () => ({ ok: true, status: 200, data: { archived: false, pushed_at: "2020-01-02T00:00:00Z" } }), expected);
+  has("api: a real mismatch is reported", r2.mismatches[0].detail, "o/b is last push 2020-01-02; maintenance is archived, expected unset");
+  const r3 = await checkMaintenanceRepos([gh("d")], fetchRepo, expected);
+  has("api: a thrown timeout is skipped with its name", r3.skipped[0].detail, "GitHub API TimeoutError for o/d");
+}
 
 /* sync-counts and new-entry text rewrites (scaffold.mjs, #67) -------------- */
 import { newEntryProblem, newEntryText, syncCatalogReadme, syncConfig, syncReadme } from "./scaffold.mjs";

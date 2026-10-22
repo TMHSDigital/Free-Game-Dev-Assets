@@ -11,7 +11,8 @@
  * - maintenance: a github.com source whose repository is archived or has had
  *   no push in three years while its `maintenance` field does not say so, or
  *   the other way round. Uses the GitHub API; set GITHUB_TOKEN to lift the
- *   60-requests-an-hour anonymous limit.
+ *   60-requests-an-hour anonymous limit. An API failure or rate limit is
+ *   reported under "Could not check" and never counted as a problem.
  *
  * Writes a Markdown report (stdout, or --report) and, under GitHub Actions,
  * `problems=<n>` to $GITHUB_OUTPUT so the workflow can open or update one
@@ -24,7 +25,7 @@ import { fileURLToPath } from "node:url";
 import { maintenanceFromRepo } from "./checks.mjs";
 import { parseFrontmatter } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
-import { classify, repoOf, reportUrl } from "./lib/link-check.mjs";
+import { checkMaintenanceRepos, classify, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -82,48 +83,29 @@ async function run(entries) {
 }
 
 /**
- * GitHub sources whose repository state and `maintenance` field disagree.
- * One API call per github.com repository, one at a time: a few dozen calls,
- * well inside the limit with a token. An API failure is listed, not guessed.
+ * One GitHub API call per github.com repository: a few dozen calls, well
+ * inside the limit with a token. The classification lives in lib/link-check.mjs.
  */
-async function checkMaintenance(entries) {
+function checkMaintenance(entries) {
   const headers = { "user-agent": UA, accept: "application/vnd.github+json" };
   if (process.env.GITHUB_TOKEN) headers.authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-  const out = [];
-  for (const e of entries) {
-    let host;
-    try {
-      host = new URL(e.url).hostname;
-    } catch {
-      continue;
-    }
-    if (host !== "github.com") continue;
-    const repo = repoOf(e.url);
-    if (!repo.includes("/")) continue;
-    try {
-      const res = await fetch(`https://api.github.com/repos/${repo}`, { headers, signal: AbortSignal.timeout(TIMEOUT_MS) });
-      if (!res.ok) {
-        out.push({ ...e, detail: `GitHub API HTTP ${res.status} for ${repo}` });
-        if (res.status === 403 || res.status === 429) break; // rate limited: the rest would fail too
-        continue;
-      }
-      const data = await res.json();
-      const want = maintenanceFromRepo(data);
-      if (want !== e.maintenance) {
-        const state = data.archived ? "archived" : `last push ${String(data.pushed_at).slice(0, 10)}`;
-        out.push({ ...e, detail: `${repo} is ${state}; maintenance is ${e.maintenance || "unset"}, expected ${want || "unset"}` });
-      }
-    } catch (err) {
-      out.push({ ...e, detail: `GitHub API ${err.name || "error"} for ${repo}` });
-    }
-  }
-  return out;
+  const fetchRepo = async (repo) => {
+    const res = await fetch(`https://api.github.com/repos/${repo}`, { headers, signal: AbortSignal.timeout(TIMEOUT_MS) });
+    return { ok: res.ok, status: res.status, data: res.ok ? await res.json() : null };
+  };
+  return checkMaintenanceRepos(entries, fetchRepo, maintenanceFromRepo);
 }
 
-const staleDays = Number(arg("--stale-days", "365"));
+// Flags are checked before the first request, so a typo fails in a second.
+const staleArg = staleDaysFrom(process.argv);
+if (staleArg.error) {
+  console.error(staleArg.error);
+  process.exit(2);
+}
+const staleDays = staleArg.days;
 const entries = loadEntries().filter((e) => e.status !== "deprecated");
 const results = await run(entries);
-const maintenance = await checkMaintenance(entries);
+const { mismatches: maintenance, skipped } = await checkMaintenance(entries);
 const cutoff = new Date(Date.now() - staleDays * 86400000).toISOString().slice(0, 10);
 const rows = entries.map((e, i) => ({ ...e, ...results[i] }));
 const pick = (kind) => rows.filter((r) => r.kind === kind);
@@ -156,6 +138,11 @@ const report = [
   "",
   ...(maintenance.length ? maintenance.map(line) : ["None."]),
   "",
+  // API trouble is the checker's problem, not the catalog's: listed, not counted.
+  `### Could not check (${skipped.length} skipped)`,
+  "",
+  ...(skipped.length ? skipped.map(line) : ["None."]),
+  "",
   `<details><summary>Refused the checker (${blocked.length}): usually bot blocking, check by hand</summary>`,
   "",
   ...(blocked.length ? blocked.map(line) : ["None."]),
@@ -168,4 +155,4 @@ const reportPath = arg("--report", null);
 if (reportPath) fs.writeFileSync(reportPath, report);
 else process.stdout.write(report);
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `problems=${problems}\n`);
-console.error(`${entries.length} checked: ${dead.length} dead, ${moved.length} moved, ${stale.length} stale, ${maintenance.length} maintenance, ${blocked.length} blocked`);
+console.error(`${entries.length} checked: ${dead.length} dead, ${moved.length} moved, ${stale.length} stale, ${maintenance.length} maintenance, ${blocked.length} blocked, ${skipped.length} API checks skipped`);

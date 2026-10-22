@@ -1,8 +1,29 @@
 /**
- * Flat exports of the catalog: catalog.csv for spreadsheets and feed.xml (Atom)
- * for readers. data.json stays the full machine-readable catalog.
+ * Flat exports of the catalog: catalog.csv for spreadsheets, feed.xml (Atom)
+ * for readers and sitemap.xml for crawlers. data.json stays the full
+ * machine-readable catalog.
  */
 import { esc } from "./shared.mjs";
+
+/**
+ * sitemap.xml. Every URL carries a lastmod that is never earlier than the
+ * last content change: the build date for the home and freshness pages, which
+ * change every build by design; for entries and stacks the later of the
+ * catalog date (`verified`, `walked`) and the file's last commit date from
+ * `modified` (repo path => YYYY-MM-DD), falling back to the build date.
+ */
+export function sitemapXml({ site, entries, stacks = [], stamp, modified = new Map() }) {
+  const base = String(site.siteUrl).replace(/\/+$/, "");
+  const latest = (...dates) => dates.filter(Boolean).sort().pop() || stamp;
+  const url = (loc, lastmod) => `  <url><loc>${esc(loc)}</loc><lastmod>${esc(lastmod)}</lastmod></url>`;
+  const urls = [
+    url(`${base}/`, stamp),
+    url(`${base}/freshness/`, stamp),
+    ...stacks.map((s) => url(`${base}/stack/${s.meta.id}/`, latest(s.meta.walked, modified.get(s.rel)))),
+    ...entries.map((e) => url(`${base}/entry/${e.id}/`, latest(e.verified, modified.get(e.path)))),
+  ];
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
+}
 
 const CSV_COLUMNS = [
   "id",

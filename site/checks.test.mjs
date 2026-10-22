@@ -765,4 +765,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 22 checks`);
+console.log(`checks.test ok: ${passed} assertions across 23 checks`);

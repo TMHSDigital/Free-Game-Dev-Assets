@@ -65,7 +65,7 @@
             <tr>
               <th scope="col">Need</th>
               <th scope="col">Source</th>
-              <th scope="col">License</th>
+              <th scope="col">Licence</th>
             </tr>
           </thead>
           <tbody><!--STARTER_ROWS--></tbody>
@@ -81,13 +81,14 @@
         <details class="legend">
           <summary>What the labels mean</summary>
           <dl>
-            <div><dt>active</dt><dd>License spot-checked at the source; the entry carries dated evidence.</dd></div>
+            <div><dt>active</dt><dd>Licence spot-checked at the source; the entry carries dated evidence.</dd></div>
             <div><dt>needs-review</dt><dd>Useful, but a real question is open. Verify before you ship.</dd></div>
             <div><dt>deprecated</dt><dd>Kept for history only. Hidden unless you turn it on.</dd></div>
             <div><dt>commercial OK</dt><dd>The source grants commercial use.</dd></div>
             <div><dt>per-file review</dt><dd>An aggregator. Some files qualify, some do not. Check each one.</dd></div>
             <div><dt>commercial ?</dt><dd>The source does not say plainly. Treat as unresolved.</dd></div>
-            <div><dt>verified date</dt><dd>When someone last read the license at the source. Older than a year is worth re-checking yourself.</dd></div>
+            <div><dt>verified date</dt><dd>When someone last read the licence at the source. Older than a year is worth re-checking yourself.</dd></div>
+            <div><dt>camera view</dt><dd>Only 2D and UI entries record one; 3D sources are left out when a view is chosen.</dd></div>
           </dl>
           <p>Fuller guidance is in the <a href="#guides">guides</a>.</p>
         </details>
@@ -129,10 +130,10 @@
               <input type="checkbox" id="filter-no-attr" />
               No attribution
             </label>
-            <label class="check sort-field" title="Only entries that record a 2D camera perspective">
-              <span>View</span>
-              <select id="perspective">
-                <option value="any">Any</option>
+            <label class="check sort-field">
+              <span>Camera view</span>
+              <select id="perspective" aria-describedby="perspective-note">
+                <option value="any">Any (2D only when set)</option>
                 <option value="top_down">Top-down, straight down</option>
                 <option value="isometric_3_4">3/4 top-down, walls visible</option>
                 <option value="side_scroller">Side-scroller</option>
@@ -155,13 +156,19 @@
               <span>Sort</span>
               <select id="sort">
                 <option value="name">Name, best match first</option>
-                <option value="license">License, least owed first</option>
+                <option value="license">Licence, least owed first</option>
                 <option value="verified">Recently verified</option>
               </select>
             </label>
             <p class="result-count" id="result-count" aria-live="polite" tabindex="-1"><!--RESULT_COUNT--></p>
+            <p class="current-group" id="current-group"></p>
           </div>
 
+          <p class="filter-note" id="perspective-note" hidden>
+            Camera view keeps only the 2D and UI entries that record one
+            (top-down, 3/4, side-scroller or flat UI). 3D and character sources
+            carry no view and are left out while one is chosen.
+          </p>
           <p class="filter-note" id="commercial-note" hidden>
             Commercial OK also keeps per-file review sources: aggregators where
             some files allow commercial use and some do not. Check the licence
@@ -202,7 +209,7 @@
 
     <footer class="footer">
       <p>
-        Catalog metadata is CC0. Linked assets keep their own licenses. This is
+        Catalog metadata is CC0. Linked assets keep their own licences. This is
         the catalog's reading of each licence, not legal advice: re-check the
         live source before shipping.
       </p>
