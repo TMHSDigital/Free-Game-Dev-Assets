@@ -4,11 +4,11 @@
 
 **Free assets and tools for commercial games, with every licence read at its source.**
 
-[**Browse 415 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
+[**Browse 416 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
-[![Sources](https://img.shields.io/badge/sources-415-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-416-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 <br />
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
@@ -150,7 +150,7 @@ is a page on the site.
 
 ## Browse the catalog
 
-The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 415 entries
+The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 416 entries
 and filters them by category, commercial use, attribution, review status and 2D camera
 view. Press `/` to search. Filtered views and individual entries have their own URLs, so you can send
 someone exactly what you are looking at.
@@ -159,7 +159,7 @@ someone exactly what you are looking at.
 | :--- | ---: | :--- | :--- |
 | **3D** | 77 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
 | **Tools** | 121 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
-| **2D** | 58 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
+| **2D** | 59 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
 | **Audio** | 35 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Characters** | 30 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
 | **Fonts** | 25 | OFL and commercial-ok typefaces, CJK | [`catalog/fonts/`](catalog/fonts/) |
@@ -245,13 +245,12 @@ disagree, the config is the one the site uses.
 Read these before you mix packs into a commercial build.
 
 | Guide | Covers |
-| :--- | :--- |
+| :--- | :--- | :--- |
 | [`docs/licenses.md`](docs/licenses.md) | The cheat sheet: what each licence allows and owes |
 | [`docs/fonts.md`](docs/fonts.md) | Embedding versus redistribution, and what an OFL font still owes |
 | [`docs/geodata.md`](docs/geodata.md) | Attribution across DEM, map and satellite sources, and why ODbL does not reach your game |
-| [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) | Why "commercial use" on a video licence may not cover a game |
-| [`docs/provenance.md`](docs/provenance.md) | Judging a supplier, and keeping a paper trail |
 | [`docs/high-risk.md`](docs/high-risk.md) | Sources to avoid entirely |
+| [`docs/provenance.md`](docs/provenance.md) | Judging a supplier, and keeping a paper trail |
 | [`docs/ai-assets.md`](docs/ai-assets.md) | AI-generated assets |
 | [`docs/fivem.md`](docs/fivem.md) | GTA-format and FiveM assets |
 | [`docs/trust-score.md`](docs/trust-score.md) | Review rubric used when vetting a source (not shown on entries) |
@@ -260,7 +259,7 @@ Read these before you mix packs into a commercial build.
 <summary>The short version</summary>
 
 | Licence | In a closed-source game |
-| :--- | :--- |
+| :--- | :--- | :--- |
 | **CC0** | The safest default. Nothing owed |
 | **CC-BY** | Commercial use is fine; credit the author. CC-BY-3.0 sources often want the author named; CC-BY-4.0 is usually met by a credits-screen line |
 | **CC-BY-SA** | Usable commercially, but share-alike applies to derivatives of the asset. Ship SA files in extractable bundles rather than encrypting them into the binary |
