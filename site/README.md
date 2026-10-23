@@ -12,6 +12,8 @@ Static GitHub Pages UI for this catalog.
 | `site/config.json` → `featured` | Safe starting points table (`id` + `need`) |
 | `site/config.json` → `categories` / `guides` | Labels and guide links |
 | `site/public/*` | Page chrome / design |
+| `site/config.json` → `categories.<id>.view` | Whether a category previews as cards or as a list |
+| `site/thumbs.json` + `site/public/thumbs/` | The preview image on each entry's card, strip and filmstrip (see Thumbnails) |
 | An entry's body (Notes, Evidence) | Its page at `entry/<id>/` |
 | `stacks/<id>.md` | Its page at `stack/<id>/`, the homepage Starter stacks list, and "Used in" on each picked entry |
 
@@ -40,7 +42,8 @@ and tools that want the metadata without scraping the page. The page itself load
   `subcategories`, `license`, `license_spdx` where set, `commercial`,
   `attribution_required`, `attribution_string` where set, `formats`, `tags`, `added`,
   `verified`, `status`, `publisher` where set, and the optional 2D fields), plus `path` (the entry's
-  file in this repo), `page` (the entry's page, relative to the site root), `summary` (the first paragraph of its body), and two derived sort
+  file in this repo), `page` (the entry's page, relative to the site root), `summary` (the first paragraph of its body), `thumb`
+  (`{ path, width, height }` of the entry's preview image relative to the site root, or `null`), and two derived sort
   fields, `attributionClass` and `licenseRank`.
 - It is regenerated from `catalog/` on every push to `main`. Field names are stable;
   new optional fields may appear. The licence facts are only as current as each entry's
@@ -58,6 +61,52 @@ with the file and line, as does a relative link to a file that does not exist.
 The build also writes `llms.txt` (one line per entry) and `llms-full.txt` (with each
 entry's Notes) for AI assistants, and checks every generated page before it succeeds.
 Tests: `node site/lib/lib.test.mjs`.
+
+## Entry template, cards and list views
+
+Every entry on the homepage, the category pages, the stack pages and in `app.js` renders
+through one template, `site/lib/cards.mjs` (`entryCardHtml`), so the prerender and the
+hydrated page cannot drift apart. Cards and List are the same markup under a `data-view`
+attribute; `styles.css` lays each out. `site/config.json` sets a category's default view;
+`site/public/views.js` adds the Cards / List toggle to each heading and remembers the
+choice per kind of category in `localStorage`. The homepage shows the first 6 (cards) or
+8 (list) entries per category and links "Show all N" to the category page; with `app.js`
+the same link opens the category in place. `cards.mjs` and `shared.mjs` are copied into
+`dist` as modules the browser imports, so neither may import from `node:`.
+
+## Category pages
+
+`build.mjs` writes `category/<id>/index.html` for every configured category with a
+visible entry: the whole category, both views, no JavaScript needed to see everything
+(`site/lib/category-page.mjs`, toggle from `category.js`). They are in the sitemap, and
+each entry page's breadcrumb links to its category page.
+
+## Thumbnails
+
+`npm run thumbs` (`site/thumbs.mjs`) fetches each eligible entry's `og:image` from its
+`url`, resizes it to 640 px WebP with ffmpeg (or ImageMagick) and writes
+`site/public/thumbs/<id>.webp` plus a record in `site/thumbs.json` (source, image URL,
+fetch date, content hash, size, licence at fetch). Eligible means `status: active` and a
+licence in the allowlist in `site/lib/thumbs.mjs`; `custom`, `varies`, `unknown`,
+GitHub and Google Fonts pages never qualify, and an image whose bytes three or more
+entries share is treated as a logo and dropped. `preview: none` opts an entry out;
+`preview: <https url>` pins an image a maintainer has checked. The run is incremental
+(a record under 180 days old with the same licence is kept), removes records the gate no
+longer allows, and lists failures without failing. `validate.mjs` fails when the files,
+the manifest and the gate disagree (`checkThumbManifest`). `build.mjs` attaches `thumb`
+to each entry; entries without one get a typographic tile.
+
+`.github/workflows/thumbs.yml` runs the script on the first of each month (and on
+demand), pushes changes to a `thumbs/<month>` branch and opens or updates one issue
+labelled `enhancement` with the compare link and the report; the maintainer opens the pull
+request from the link so CI runs on it.
+
+## Fonts
+
+Public Sans and IBM Plex Mono are served from `site/public/fonts/` (latin WOFF2, OFL,
+see the README there). `baseHeadHtml` in `site/lib/shared.mjs` emits every page's icon,
+font preloads and stylesheet from a `root` path, and the page checks fail any page that
+still references Google Fonts.
 
 ## Starter stacks
 
@@ -79,7 +128,7 @@ when nothing is pushed; GitHub pauses scheduled workflows in a public repository
 
 ## Sitemap
 
-`build.mjs` writes `sitemap.xml` (home, freshness, stacks and every non-deprecated entry)
+`build.mjs` writes `sitemap.xml` (home, freshness, category pages, stacks and every non-deprecated entry)
 and links it from the homepage with `<link rel="sitemap">`. The `Sitemap:` line in
 `robots.txt` is written too, but crawlers only read robots.txt at a host's root, so
 under `/Free-Game-Dev-Assets/` it is never seen. Submit
@@ -129,6 +178,7 @@ Retake it when the hero changes.
 npm run check   # tests, validate, build: what CI runs
 npm run serve   # preview site/dist
 npm run links   # the link check, printed to the terminal
+npm run thumbs  # fetch and resize the previews that are due (needs ffmpeg or magick)
 ```
 
 Deploy: `.github/workflows/pages.yml` (source = GitHub Actions), which first runs
