@@ -260,7 +260,7 @@ Read these before you mix packs into a commercial build.
 <summary>The short version</summary>
 
 | Licence | In a closed-source game |
-| :--- | :--- | :--- |
+| :--- | :--- |
 | **CC0** | The safest default. Nothing owed |
 | **CC-BY** | Commercial use is fine; credit the author. CC-BY-3.0 sources often want the author named; CC-BY-4.0 is usually met by a credits-screen line |
 | **CC-BY-SA** | Usable commercially, but share-alike applies to derivatives of the asset. Ship SA files in extractable bundles rather than encrypting them into the binary |
