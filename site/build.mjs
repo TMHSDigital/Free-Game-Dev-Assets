@@ -16,6 +16,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, sponsorButtonHtml } from "./lib/shared.mjs";
 import { groupedEntriesHtml } from "./lib/cards.mjs";
+import { categoryPageHtml } from "./lib/category-page.mjs";
 import { thumbRelPath } from "./lib/thumbs.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
@@ -452,6 +453,21 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
   return { errors, written };
 }
 
+/** Writes dist/category/<id>/index.html for every configured category with a visible entry. */
+function writeCategoryPages({ entries, config, stats, stamp, hasCard, now }) {
+  const written = [];
+  for (const [cat, meta] of Object.entries(config.categories)) {
+    const group = entries.filter((e) => e.category === cat);
+    if (!group.length) continue;
+    writeOut(
+      path.join("category", cat, "index.html"),
+      categoryPageHtml({ cat, meta, entries: group, site: config.site, stamp, total: stats.total, hasCard, now })
+    );
+    written.push(`category/${cat}/index.html`);
+  }
+  return { written };
+}
+
 /** Runs the page checks over dist-relative files. */
 function checkPages(files) {
   // Link targets resolve against what this build produced, not what is on
@@ -596,18 +612,22 @@ function main() {
   }
   writeOut("index.html", html);
 
-  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates() }));
+  const categoriesInSitemap = Object.keys(config.categories)
+    .filter((cat) => visible.some((e) => e.category === cat))
+    .map((id) => ({ id, lastmod: stamp }));
+  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates(), categories: categoriesInSitemap }));
   writeOut("robots.txt", robotsTxt(config.site));
   writeOut("404.html", notFoundHtml(config.site));
   writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard }));
 
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });
+  const categoryPages = writeCategoryPages({ entries: visible, config, stats, stamp, hasCard, now });
   const pageErrors = [
     ...stackErrors,
     ...pages.errors,
     ...stackPages.errors,
-    ...checkPages(["index.html", "freshness/index.html", ...pages.written, ...stackPages.written]),
+    ...checkPages(["index.html", "freshness/index.html", ...pages.written, ...stackPages.written, ...categoryPages.written]),
   ];
   if (pageErrors.length) {
     console.error(`Page build failed (${pageErrors.length}):`);
@@ -639,7 +659,7 @@ function main() {
     `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok, ${stats.commercialVaries} per-file)`
   );
   console.log(
-    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
+    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
   );
   console.log(`${writes} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }

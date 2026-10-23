@@ -1879,3 +1879,51 @@ input:focus-visible,
     transition: none;
   }
 }
+
+/* Category pages (site/lib/category-page.mjs) and the view toggle (views.js). */
+.category-page .section-blurb {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+.category-page .category-search {
+  margin: 0.5rem 0 1.25rem;
+  font-size: 0.92rem;
+}
+
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  overflow: hidden;
+  font-family: var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.view-toggle button {
+  min-height: 32px;
+  padding: 0 0.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: 600 0.78rem var(--font);
+  cursor: pointer;
+}
+
+.view-toggle button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.view-toggle button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+@media (pointer: coarse) {
+  .view-toggle button {
+    min-height: 44px;
+  }
+}

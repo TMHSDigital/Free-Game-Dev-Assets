@@ -141,7 +141,7 @@ has("entry script without one, for the back link", page({ attribution_string: un
 lacks("no copy button without a credit line", page({ attribution_string: undefined }), "copy-attribution");
 has("breadcrumb catalog link can return to the results", p, '<a href="../../#catalog" data-back-to-results>Catalog</a>');
 has("note when credit is required but not canned", page({ attribution_string: undefined }), "no canned credit line");
-has("breadcrumb category link", p, "../../?cat=2d#catalog");
+has("breadcrumb category link", p, "../../category/2d/");
 has("next link", p, 'href="../e2/" rel="next"');
 has("report link prefills the entry", p, "template=correction.yml");
 lacks("active is indexable", p, 'content="noindex"');
@@ -978,6 +978,23 @@ has("cards: show-all link", groupMoreHtml({ cat: "3d", label: "3D", count: 77, r
   eq("cards: no more link under the limit", groupedEntriesHtml(many.slice(0, 3), { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0 }).includes("group-more"), false);
   eq("cards: empty category skipped", groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" }, audio: { label: "Audio", view: "list" } }, { root: "", repo: "https://r", now: 0 }).includes("group-audio"), false);
 }
+
+// Site refresh: static category pages.
+import { categoryPageHtml } from "./category-page.mjs";
+{
+  const html = categoryPageHtml({ cat: "3d", meta: { label: "3D", blurb: "Models, scans, PBR textures", view: "cards" }, entries: [cardBase], site: { title: "Free Game Dev Assets", tagline: "t", siteUrl: "https://s/x/", repo: "https://r" }, stamp: "2026-10-23", total: 1, hasCard: false, now: 0 });
+  has("category page: title", html, "<title>3D assets | Free Game Dev Assets</title>");
+  has("category page: root-relative entry link", html, 'href="../../entry/x/"');
+  has("category page: canonical", html, '<link rel="canonical" href="https://s/x/category/3d/" />');
+  has("category page: one h1", html, "<h1>3D</h1>");
+  has("category page: count and blurb", html, "1 source · Models, scans, PBR textures");
+  has("category page: search link back", html, 'href="../../?cat=3d#catalog"');
+  eq("category page: no more link", html.includes("group-more"), false);
+  has("category page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
+  has("category page: loads the view toggle module", html, '<script type="module" src="../../category.js"></script>');
+  eq("category page: page checks pass", checkPage(html, { file: "category/3d/index.html", kindOf: () => "file" }).join(), "");
+}
+has("sitemap: category pages", sitemapXml({ site: { siteUrl: "https://s/" }, entries: [], stacks: [], stamp: "2026-10-23", categories: [{ id: "3d", lastmod: "2026-10-23" }] }), "<loc>https://s/category/3d/</loc>");
 
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {

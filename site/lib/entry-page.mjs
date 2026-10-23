@@ -130,7 +130,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     <main class="section entry-page" id="content">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../../#catalog" data-back-to-results>Catalog</a> <span aria-hidden="true">/</span>
-        <a href="../../?cat=${encodeURIComponent(entry.category)}#catalog">${esc(categoryLabel)}</a> <span aria-hidden="true">/</span>
+        <a href="../../category/${encodeURIComponent(entry.category)}/">${esc(categoryLabel)}</a> <span aria-hidden="true">/</span>
         <span aria-current="page">${esc(entry.name)}</span>
       </nav>
       ${banner}
