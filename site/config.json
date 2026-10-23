@@ -6,7 +6,7 @@
     "baseUrl": "/Free-Game-Dev-Assets",
     "siteUrl": "https://tmhsdigital.github.io/Free-Game-Dev-Assets/"
   },
-  "expectedEntryCount": 416,
+  "expectedEntryCount": 417,
   "categories": {
     "3d": { "label": "3D", "blurb": "Models, scans, PBR textures", "view": "cards" },
     "environment": { "label": "Environment", "blurb": "HDRI, terrain, geodata", "view": "cards" },
