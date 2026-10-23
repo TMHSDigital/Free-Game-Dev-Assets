@@ -899,6 +899,54 @@ eq("new-entry sets added to today", newEntryText("added: 2026-07-19\nverified: 2
   eq("template has no frontmatter errors", fromTemplate.errors.join(), "");
 }
 
+// Site refresh: thumbnail rules.
+import { filmstripPick, imageUrlFromHtml, needsFetch, previewCredit, previewEligibility, publisherKey, sharedImageIds, webpSize } from "./thumbs.mjs";
+eq("thumbs: CC0 active itch page is eligible", previewEligibility({ license: "CC0", status: "active", url: "https://kaylousberg.itch.io/block-bits" }).ok, true);
+eq("thumbs: custom licence refused", previewEligibility({ license: "custom", status: "active", url: "https://x.itch.io/a" }).reason, "licence custom is not in the preview allowlist");
+eq("thumbs: needs-review refused before licence", previewEligibility({ license: "custom", status: "needs-review", url: "https://x.itch.io/a" }).reason, "status is needs-review");
+eq("thumbs: github host skipped", previewEligibility({ license: "MIT", status: "active", url: "https://github.com/a/b" }).reason, "host github.com is skipped");
+eq("thumbs: preview url overrides host only", previewEligibility({ license: "MIT", status: "active", url: "https://github.com/a/b", preview: "https://a.b/c.png" }).ok, true);
+eq("thumbs: preview url cannot override licence", previewEligibility({ license: "custom", status: "active", url: "https://a.b/", preview: "https://a.b/c.png" }).ok, false);
+eq("thumbs: preview none", previewEligibility({ license: "CC0", status: "active", url: "https://a.b/", preview: "none" }).reason, "preview: none");
+eq("thumbs: og:image property-first", imageUrlFromHtml('<meta property="og:image" content="https://i.x/a.png?w=1&amp;h=2">', "https://x/"), "https://i.x/a.png?w=1&h=2");
+eq("thumbs: og:image content-first", imageUrlFromHtml('<meta content="/img/a.jpg" property="og:image">', "https://x.y/p/"), "https://x.y/img/a.jpg");
+eq("thumbs: twitter fallback", imageUrlFromHtml('<meta name="twitter:image" content="https://i/t.png">', "https://x/"), "https://i/t.png");
+eq("thumbs: no image", imageUrlFromHtml("<html></html>", "https://x/"), null);
+eq("thumbs: shared hash dropped at three", [...sharedImageIds({ a: { hash: "h1" }, b: { hash: "h1" }, c: { hash: "h1" }, d: { hash: "h2" }, e: { hash: "h2" } })].sort().join(), "a,b,c");
+eq("thumbs: pinned never dropped", [...sharedImageIds({ a: { hash: "h1", pinned: true }, b: { hash: "h1" }, c: { hash: "h1" }, d: { hash: "h1" } })].sort().join(), "b,c,d");
+eq("thumbs: needsFetch no record", needsFetch(undefined, { license: "CC0", today: "2026-10-23" }), true);
+eq("thumbs: needsFetch fresh same licence", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC0", today: "2026-10-23" }), false);
+eq("thumbs: needsFetch licence changed", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC-BY-4.0", today: "2026-10-23" }), true);
+eq("thumbs: needsFetch stale", needsFetch({ fetched: "2026-01-01", license: "CC0" }, { license: "CC0", today: "2026-10-23" }), true);
+eq("thumbs: needsFetch force", needsFetch({ fetched: "2026-10-20", license: "CC0" }, { license: "CC0", today: "2026-10-23", force: true }), true);
+{
+  const hex = (s) => Buffer.from(s.replaceAll(" ", ""), "hex");
+  const vp8x = hex("52494646 24000000 57454250 56503858 0a000000 10000000 7f0200 8f0100");
+  eq("thumbs: webp VP8X size", JSON.stringify(webpSize(vp8x)), '{"width":640,"height":400}');
+  const vp8l = hex("52494646 24000000 57454250 5650384c 10000000 2f 7fc26300");
+  eq("thumbs: webp VP8L size", JSON.stringify(webpSize(vp8l)), '{"width":640,"height":400}');
+  const vp8 = hex("52494646 24000000 57454250 56503820 10000000 000000 9d012a 8002 9001");
+  eq("thumbs: webp VP8 size", JSON.stringify(webpSize(vp8)), '{"width":640,"height":400}');
+  eq("thumbs: not webp", webpSize(Buffer.from("89504e47", "hex")), null);
+}
+eq("thumbs: publisherKey falls back to host", publisherKey({ url: "https://www.kenney.nl/assets/x" }), "kenney.nl");
+eq("thumbs: publisherKey prefers publisher", publisherKey({ publisher: "Kenney", url: "https://x/" }), "Kenney");
+eq("thumbs: credit with publisher", previewCredit({ publisher: "Kenney", license: "CC0" }), "Preview image from Kenney, shown under CC0");
+eq("thumbs: credit without publisher", previewCredit({ license: "CC-BY-4.0" }), "Preview image from the source page, shown under CC-BY-4.0");
+{
+  const t = { path: "thumbs/x.webp", width: 640, height: 400 };
+  const pool = [
+    { id: "a", name: "A", status: "active", category: "3d", verified: "2026-10-01", publisher: "P1", url: "https://p1/", thumb: t },
+    { id: "b", name: "B", status: "active", category: "3d", verified: "2026-10-02", publisher: "P1", url: "https://p1/", thumb: t },
+    { id: "c", name: "C", status: "active", category: "tools", verified: "2026-10-03", url: "https://p2/", thumb: t },
+    { id: "d", name: "D", status: "needs-review", category: "2d", verified: "2026-10-04", url: "https://p3/", thumb: t },
+    { id: "e", name: "E", status: "active", category: "2d", verified: "2026-10-05", url: "https://p4/", thumb: null },
+    { id: "f", name: "F", status: "active", category: "2d", verified: "2026-09-01", url: "https://p5/", thumb: t },
+  ];
+  eq("thumbs: filmstrip picks newest, one per publisher, card categories, active, with thumb", filmstripPick(pool, { count: 9, cardCategories: ["3d", "2d"] }).map((e) => e.id).join(), "b,f");
+  eq("thumbs: filmstrip count cap", filmstripPick(pool, { count: 1, cardCategories: ["3d", "2d"] }).map((e) => e.id).join(), "b");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
