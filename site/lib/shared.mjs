@@ -192,6 +192,9 @@ export function edgeVar(entry) {
   return "var(--unknown)";
 }
 
+/** The one-line credit every page footer carries for the publisher previews. */
+export const PREVIEW_CREDIT_LINE = "Preview images belong to their publishers and are shown under each entry's licence.";
+
 /** Self-hosted fonts (site/public/fonts/, OFL). The body face and the mono face are preloaded; the italic is not. */
 export const FONT_FILES = ["fonts/public-sans.woff2", "fonts/ibm-plex-mono-400.woff2"];
 

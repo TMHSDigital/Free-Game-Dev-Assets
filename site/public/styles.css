@@ -1803,8 +1803,7 @@ input:focus-visible,
   gap: 0.25rem;
 }
 
-.entry-card[data-view="cards"] .entry-card p,
-.entry-card[data-view="cards"] > .entry-body > p {
+.entry-card[data-view="cards"] > .entry-body > p:not([class]) {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -2057,4 +2056,104 @@ input:focus-visible,
 body:has(.entry-links :focus-visible) .to-top {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Entry page (site refresh): the preview as a header strip with its credit,
+   one primary action, and facts set in the body face. */
+.entry-strip {
+  margin: 1rem 0 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.entry-strip .entry-thumb-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+.entry-credit {
+  padding: 0.4rem 0.75rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.page-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.25rem;
+  margin: 0.35rem 0 0;
+  font-size: 0.92rem;
+}
+
+.page-links a,
+.page-links .link-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+}
+
+.facts dt,
+.facts dd {
+  font-family: var(--font);
+}
+
+.facts dt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.facts dd {
+  font-size: 0.95rem;
+}
+
+.btn-ghost {
+  min-height: 36px;
+}
+
+/* Stack pages: picks are cards; the need and the reason travel with each. */
+.owes,
+.owes-group p,
+.owes-group li,
+.owes-group h3 {
+  font-family: var(--font);
+}
+
+.owes .attribution-string {
+  font-family: var(--mono);
+}
+
+.pick-list.entry-list {
+  border-top: 0;
+}
+
+.pick {
+  padding: 0;
+  border-bottom: 0;
+}
+
+.pick .pick-why {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+@media (pointer: coarse) {
+  .btn-ghost,
+  .link-button,
+  .page-links a,
+  .page-links .link-button {
+    min-height: 44px;
+  }
 }

@@ -1,13 +1,10 @@
 /** One category's page: every entry in it, both views, no JavaScript needed to see everything. Pure. */
 import { groupedEntriesHtml } from "./cards.mjs";
-import { baseHeadHtml, clipText, esc, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, sponsorButtonHtml } from "./shared.mjs";
+import { baseHeadHtml, clipText, esc, PREVIEW_CREDIT_LINE, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, sponsorButtonHtml } from "./shared.mjs";
 
 export function categoryPageUrl(site, cat) {
   return `${String(site.siteUrl).replace(/\/+$/, "")}/category/${cat}/`;
 }
-
-/** The credit line every page footer carries once thumbnails exist. */
-export const PREVIEW_CREDIT_LINE = "Preview images belong to their publishers and are shown under each entry's licence.";
 
 export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCard, now }) {
   const label = meta.label || cat;

@@ -996,6 +996,30 @@ eq("filmstrip: empty when nothing to show", filmstripHtml([], { root: "" }), "")
   has("filmstrip: labelled list", strip, '<ul class="filmstrip" aria-label="A few of the assets inside">');
 }
 
+// Site refresh: entry page strip and actions; stack picks as cards.
+{
+  const siteR = { title: "T", tagline: "t", siteUrl: "https://s/", repo: "https://r" };
+  const common = { leadHtml: "<p>l</p>", restHtml: "<p>r</p>", deprecatedReasonHtml: null, prev: null, next: null, site: siteR, categoryLabel: "3D", stamp: "2026-10-23", total: 1, hasCard: false, now: 0 };
+  const html = entryPageHtml({ ...common, entry: { ...cardBase, thumb: { path: "thumbs/x.webp", width: 640, height: 400 }, publisher: "Kenney" } });
+  has("entry page: strip image", html, '<figure class="entry-strip"><img class="entry-thumb-img" src="../../thumbs/x.webp"');
+  has("entry page: credit line", html, '<figcaption class="entry-credit">Preview image from Kenney, shown under CC0</figcaption>');
+  has("entry page: one primary action", html, '<p class="page-actions"><a class="btn" href="https://x.itch.io/p"');
+  has("entry page: secondary links row", html, '<p class="page-links">');
+  eq("entry page: ghost buttons gone from actions", (html.match(/class="btn-ghost"/g) || []).length, 0);
+  has("entry page: shortlist toggle kept", html, 'class="link-button shortlist-toggle" data-shortlist="x"');
+  has("entry page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
+  eq("entry page: no strip without thumb", entryPageHtml({ ...common, entry: cardBase }).includes("entry-strip"), false);
+  eq("entry page: page checks pass with strip", checkPage(html, { file: "entry/x/index.html", kindOf: () => "file" }).join(), "");
+}
+{
+  const html = sp();
+  has("stack page: pick renders as card", html, 'class="entry-card" data-view="cards"');
+  has("stack page: pick need leads the card", html, '<p class="pick-need">Tiles</p>');
+  has("stack page: pick reason trails the card", html, '<p class="pick-why">Why <em>a</em>.</p>');
+  has("stack page: pick list is the card grid", html, '<ul class="pick-list entry-list">');
+  has("stack page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
