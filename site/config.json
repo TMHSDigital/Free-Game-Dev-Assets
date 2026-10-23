@@ -8,16 +8,16 @@
   },
   "expectedEntryCount": 416,
   "categories": {
-    "3d": { "label": "3D", "blurb": "Models, scans, PBR textures" },
-    "environment": { "label": "Environment", "blurb": "HDRI, terrain, geodata" },
-    "2d": { "label": "2D", "blurb": "Sprites, UI, icons, palettes" },
-    "characters": { "label": "Characters", "blurb": "Generators & modular humanoids" },
-    "audio": { "label": "Audio", "blurb": "SFX, music, foley, IRs" },
-    "animation": { "label": "Animation", "blurb": "MoCap & character clips" },
-    "video": { "label": "Video", "blurb": "Stock footage, archival clips" },
-    "shaders-vfx": { "label": "Shaders & VFX", "blurb": "Shaders, particles, FX" },
-    "fonts": { "label": "Fonts", "blurb": "OFL / commercial-ok type" },
-    "tools": { "label": "Tools", "blurb": "Editors, pipeline, TTS, add-ons" }
+    "3d": { "label": "3D", "blurb": "Models, scans, PBR textures", "view": "cards" },
+    "environment": { "label": "Environment", "blurb": "HDRI, terrain, geodata", "view": "cards" },
+    "2d": { "label": "2D", "blurb": "Sprites, UI, icons, palettes", "view": "cards" },
+    "characters": { "label": "Characters", "blurb": "Generators & modular humanoids", "view": "cards" },
+    "audio": { "label": "Audio", "blurb": "SFX, music, foley, IRs", "view": "list" },
+    "animation": { "label": "Animation", "blurb": "MoCap & character clips", "view": "cards" },
+    "video": { "label": "Video", "blurb": "Stock footage, archival clips", "view": "list" },
+    "shaders-vfx": { "label": "Shaders & VFX", "blurb": "Shaders, particles, FX", "view": "cards" },
+    "fonts": { "label": "Fonts", "blurb": "OFL / commercial-ok type", "view": "list" },
+    "tools": { "label": "Tools", "blurb": "Editors, pipeline, TTS, add-ons", "view": "list" }
   },
   "featured": [
     { "id": "kenney", "need": "Modular low-poly 3D / UI" },

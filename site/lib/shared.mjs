@@ -184,6 +184,14 @@ export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5) {
   return clipText(`${lead} ${first}`, max);
 }
 
+/** The commercial-use colour an entry row carries (`--edge`). */
+export function edgeVar(entry) {
+  if (entry.commercial === true) return "var(--ok)";
+  if (entry.commercial === false) return "var(--danger)";
+  if (entry.commercial === "varies") return "var(--warn)";
+  return "var(--unknown)";
+}
+
 /** Self-hosted fonts (site/public/fonts/, OFL). The body face and the mono face are preloaded; the italic is not. */
 export const FONT_FILES = ["fonts/public-sans.woff2", "fonts/ibm-plex-mono-400.woff2"];
 

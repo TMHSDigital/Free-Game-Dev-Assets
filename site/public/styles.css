@@ -1684,3 +1684,198 @@ input:focus-visible,
     background: none;
   }
 }
+
+/* ------------------------------------------------------------------ *
+ * Site refresh (2026-10-23): thumbnails, cards and list views.
+ * One markup for both views (site/lib/cards.mjs); `data-view` on the card
+ * and on its category heading picks the layout. The list keeps the dense
+ * row the catalog always had; the card puts the publisher's preview first.
+ * ------------------------------------------------------------------ */
+
+.entry-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+  border-top: 0;
+}
+
+.entry-list > .group-heading,
+.entry-list > .group-more,
+.entry-list > .entry-card[data-view="list"],
+.entry-list > h3.sr-only {
+  grid-column: 1 / -1;
+}
+
+.entry-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color 120ms ease-out;
+}
+
+.entry-card:hover,
+.entry-card:focus-within {
+  background: var(--surface);
+  border-color: var(--control-line);
+}
+
+.entry-card:target {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* The commercial-use colour used to be a 4px bar down the card's edge. It is
+   a dot before the status flags now: the same signal, no coloured border. */
+.entry-edge {
+  display: none;
+}
+
+.entry-flags::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  background: var(--edge, var(--unknown));
+  vertical-align: 0;
+}
+
+.entry-thumb {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.entry-thumb-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* No permitted image: the entry's name on the checker an editor shows behind
+   a sprite, so the tile still reads as "asset", not "missing". */
+.entry-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.75rem 0.85rem;
+  color: var(--ink);
+  background-color: var(--surface);
+  background-image: conic-gradient(var(--bg) 25%, transparent 0 50%, var(--bg) 0 75%, transparent 0);
+  background-size: 16px 16px;
+}
+
+.entry-tile-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.entry-tile-note {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* Cards: image on top at 16:10, two-line summary. */
+.entry-card[data-view="cards"] .entry-thumb {
+  aspect-ratio: 16 / 10;
+}
+
+.entry-card[data-view="cards"] .entry-body {
+  padding: 0.75rem 0.85rem 0.85rem;
+}
+
+.entry-card[data-view="cards"] .entry-top {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.entry-card[data-view="cards"] .entry-card p,
+.entry-card[data-view="cards"] > .entry-body > p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* List: the dense row with a square thumbnail at the left. */
+.entry-card[data-view="list"] {
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.5rem 0.65rem 0.5rem 0.5rem;
+  border-radius: 8px;
+}
+
+.entry-card[data-view="list"] .entry-thumb {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  align-self: start;
+}
+
+.entry-card[data-view="list"] .entry-body {
+  padding: 0;
+  gap: 0.25rem;
+}
+
+.entry-card[data-view="list"] .entry-tile {
+  padding: 0;
+}
+
+.entry-card[data-view="list"] .entry-tile-name,
+.entry-card[data-view="list"] .entry-tile-note {
+  display: none;
+}
+
+.group-more {
+  display: inline-block;
+  justify-self: start;
+  margin: -4px 0 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.group-more:hover {
+  border-color: var(--control-line);
+  color: var(--accent);
+}
+
+.group-tools {
+  margin-left: auto;
+}
+
+@media (max-width: 720px) {
+  .entry-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .entry-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-card {
+    transition: none;
+  }
+}

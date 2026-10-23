@@ -954,6 +954,31 @@ has("head: stylesheet from root", baseHeadHtml({ site: { siteUrl: "https://s/", 
 has("head: icon from root", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../" }), '<link rel="icon" href="../favicon.svg" type="image/svg+xml"');
 has("page check: google fonts refused", checkPage('<html><head><title>x</title><link rel="canonical" href="https://s/"><link href="https://fonts.googleapis.com/css2"></head><body><h1>x</h1></body></html>', { file: "p.html", kindOf: () => "file" }).join(), "p.html: references Google Fonts");
 
+// Site refresh: one entry template for the build and app.js.
+import { CARD_LIMIT, LIST_LIMIT, entryCardHtml, groupHeadingHtml, groupMoreHtml, groupedEntriesHtml, thumbHtml, tileHtml } from "./cards.mjs";
+const cardBase = { id: "x", name: "X Pack", url: "https://x.itch.io/p", category: "3d", license: "CC0", commercial: true, status: "active", formats: ["GLB"], verified: "2026-10-01", path: "catalog/3d/x.md", summary: "S." };
+eq("cards: limits", `${CARD_LIMIT}/${LIST_LIMIT}`, "6/8");
+has("cards: img with dimensions and lazy", thumbHtml({ ...cardBase, thumb: { path: "thumbs/x.webp", width: 640, height: 400 } }, "../../"), '<img class="entry-thumb-img" src="../../thumbs/x.webp" width="640" height="400" alt="" loading="lazy" decoding="async">');
+has("cards: tile when no thumb", thumbHtml(cardBase, ""), 'class="entry-tile" data-cat="3d"');
+has("cards: tile carries name", tileHtml({ ...cardBase, name: "A <b>" }), "A &lt;b&gt;");
+has("cards: tile note names licence", tileHtml(cardBase, "3D"), '<span class="entry-tile-note">3D · CC0</span>');
+has("cards: card view attribute", entryCardHtml(cardBase, { root: "", repo: "https://r", now: Date.parse("2026-10-23"), view: "cards" }), '<article class="entry-card" data-view="cards"');
+has("cards: root-relative entry link", entryCardHtml(cardBase, { root: "../../", repo: "https://r", now: 0, view: "list" }), 'href="../../entry/x/"');
+has("cards: lead and trail slots", entryCardHtml(cardBase, { root: "", repo: "https://r", now: 0, view: "list", lead: '<p class="pick-need">Need</p>', trail: "<p>Why</p>" }), '<p class="pick-need">Need</p>');
+has("cards: heading count readable", groupHeadingHtml({ cat: "3d", label: "3D", count: 77, view: "cards", root: "" }), '<span class="group-count"><span class="sr-only">, </span><span class="group-n">77</span><span class="sr-only"> entries</span></span>');
+has("cards: heading carries view", groupHeadingHtml({ cat: "3d", label: "3D", count: 77, view: "list", root: "" }), '<h3 class="group-heading" id="group-3d" data-cat="3d" data-view="list">');
+has("cards: show-all link", groupMoreHtml({ cat: "3d", label: "3D", count: 77, root: "" }), '<a class="group-more" data-cat="3d" href="category/3d/">Show all 77 in 3D</a>');
+{
+  const many = Array.from({ length: 9 }, (_, i) => ({ ...cardBase, id: `e${i}`, name: `E${i}` }));
+  const html = groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0 });
+  eq("cards: limit six cards", (html.match(/<article /g) || []).length, 6);
+  has("cards: more link after limit", html, "Show all 9 in 3D");
+  eq("cards: no limit when asked", (groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0, limit: false }).match(/<article /g) || []).length, 9);
+  eq("cards: list limit eight", (groupedEntriesHtml(many, { "3d": { label: "3D", view: "list" } }, { root: "", repo: "https://r", now: 0 }).match(/<article /g) || []).length, 8);
+  eq("cards: no more link under the limit", groupedEntriesHtml(many.slice(0, 3), { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0 }).includes("group-more"), false);
+  eq("cards: empty category skipped", groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" }, audio: { label: "Audio", view: "list" } }, { root: "", repo: "https://r", now: 0 }).includes("group-audio"), false);
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

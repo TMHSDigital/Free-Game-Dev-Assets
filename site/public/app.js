@@ -1,4 +1,5 @@
 import { closestEntries, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, slugOf, stateQuery } from "./search.js";
+import { commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 
 (() => {
   const data = window.__CATALOG__;
@@ -51,21 +52,6 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
     location.replace(`entry/${encodeURIComponent(legacyId)}/`);
     return;
   }
-  const PERSPECTIVE_LABELS = {
-    top_down: "top-down",
-    isometric_3_4: "3/4 view",
-    side_scroller: "side-scroller",
-    "2d_flat": "flat UI",
-  };
-  const MAINTENANCE_NOTES = {
-    archived: "The source repository is archived: read-only, no fixes or updates.",
-    inactive: "The source has had no new commits for over three years.",
-  };
-  // Mirrors shared.mjs ENGINE_LOCK_NOTES / ENGINE_LOCK_LABELS.
-  const ENGINE_LOCK_NOTES = {
-    unreal: "Licensed for use only in products built with Unreal Engine (Epic's UE-Only Content).",
-  };
-  const ENGINE_LOCK_LABELS = { unreal: "UE only" };
   // Ages are measured at build time, like the prerendered cards and the
   // freshness line, so the page never disagrees with itself. A weekly
   // scheduled build keeps the build time recent.
@@ -75,39 +61,6 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
   const AGING_DAYS = 365;
 
   /* ------------------------------------------------------------ helpers */
-
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
-  }
-
-  function edgeColor(entry) {
-    if (entry.commercial === true) return "var(--ok)";
-    if (entry.commercial === false) return "var(--danger)";
-    if (entry.commercial === "varies") return "var(--warn)";
-    return "var(--unknown)";
-  }
-
-  function commercialLabel(v) {
-    if (v === true) return "commercial OK";
-    if (v === false) return "non-commercial";
-    if (v === "varies") return "per-file review";
-    return "commercial ?";
-  }
-
-  /** Age of the license check, which is this catalog's main credibility signal. */
-  function verifiedAge(verified) {
-    if (!verified) return { days: null, bucket: "unknown", text: "verified date unknown" };
-    const t = Date.parse(`${verified}T00:00:00Z`);
-    if (Number.isNaN(t)) return { days: null, bucket: "unknown", text: "verified date unknown" };
-    const days = Math.max(0, Math.floor((NOW - t) / 86400000));
-    const bucket = days <= FRESH_DAYS ? "fresh" : days <= AGING_DAYS ? "aging" : "stale";
-    return { days, bucket, text: `verified ${verified} (${days}d ago)` };
-  }
 
   /* -------------------------------------------------------- url <-> state */
 
@@ -219,50 +172,13 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
 
   /* ---------------------------------------------------------- rendering */
 
+  /** A category's view on this page: the config default (cards or list). */
+  function viewFor(cat) {
+    return categoryLabels[cat]?.view === "cards" ? "cards" : "list";
+  }
+
   function cardHtml(entry) {
-    const age = verifiedAge(entry.verified);
-    const flags = [entry.status, commercialLabel(entry.commercial), entry.license]
-      .map(escapeHtml)
-      .join(" &middot; ");
-    const formats = (entry.formats || [])
-      .slice(0, 3)
-      .map((f) => `<span>${escapeHtml(f)}</span>`)
-      .join("");
-    const taxonomy = [
-      entry.grid_dimensions
-        ? `<span class="tax">${escapeHtml(entry.grid_dimensions)}</span>`
-        : "",
-      entry.camera_perspective
-        ? `<span class="tax">${escapeHtml(PERSPECTIVE_LABELS[entry.camera_perspective] || entry.camera_perspective)}</span>`
-        : "",
-    ].join("");
-    // The same badge as build.mjs maintenanceFlagHtml (titles from shared.mjs MAINTENANCE_NOTES).
-    const maintenance = entry.maintenance
-      ? ` <span class="maintenance-flag" title="${escapeHtml(MAINTENANCE_NOTES[entry.maintenance] || "")}">${escapeHtml(entry.maintenance)}</span>`
-      : "";
-    // The same badge as build.mjs engineLockFlagHtml.
-    const engineLock = entry.engine_lock
-      ? ` <span class="engine-flag" title="${escapeHtml(ENGINE_LOCK_NOTES[entry.engine_lock] || "")}">${escapeHtml(ENGINE_LOCK_LABELS[entry.engine_lock] || entry.engine_lock)}</span>`
-      : "";
-    return `<article class="entry-card" id="entry-${escapeHtml(entry.id)}" data-id="${escapeHtml(entry.id)}" data-status="${escapeHtml(entry.status)}" style="--edge:${edgeColor(entry)}">
-  <span class="entry-edge" aria-hidden="true"></span>
-  <div class="entry-body">
-    <div class="entry-top">
-      <h4><a class="entry-link" href="entry/${escapeHtml(entry.id)}/" data-id="${escapeHtml(entry.id)}">${escapeHtml(entry.name)}</a></h4>
-      <span class="entry-flags">${flags}${maintenance}${engineLock}</span>
-    </div>
-    <p>${escapeHtml(entry.summary || "")}</p>
-    <div class="meta-line">
-      <span>${escapeHtml(entry.category)}</span>${formats}${taxonomy}
-      <span class="verified is-${age.bucket}" title="Licence last checked at the source">${escapeHtml(age.text)}</span>
-    </div>
-    <div class="entry-links">
-      <a href="${escapeHtml(entry.url)}" rel="noopener noreferrer">Open source</a>
-      <a href="${escapeHtml(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">Entry and evidence</a>
-      <button type="button" class="link-button shortlist-toggle" data-shortlist="${escapeHtml(entry.id)}" aria-pressed="false" data-name="${escapeHtml(entry.name)}" aria-label="Add to shortlist: ${escapeHtml(entry.name)}" hidden>Add to shortlist</button>
-    </div>
-  </div>
-</article>`;
+    return entryCardHtml(entry, { root: "", repo, now: NOW, view: viewFor(entry.category), label: categoryLabels[entry.category]?.label });
   }
 
   /**
@@ -379,13 +295,7 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
   }
 
   function headingHtml(cat, count) {
-    const label = categoryLabels[cat]?.label || cat;
-    return (
-      `<h3 class="group-heading" id="group-${escapeHtml(cat)}" data-cat="${escapeHtml(cat)}">` +
-      `<span class="group-name">${escapeHtml(label)}</span>` +
-      `<span class="group-count">${count}</span>` +
-      `</h3>`
-    );
+    return groupHeadingHtml({ cat, label: categoryLabels[cat]?.label || cat, count, view: viewFor(cat), root: "" });
   }
 
   /*
@@ -396,6 +306,8 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
    */
   const cardNodes = new Map();
   const headingNodes = new Map();
+  // "Show all N in <category>" links under the homepage previews.
+  const moreNodes = new Map();
   let flatHeading = null;
   let placedKey = null;
 
@@ -403,20 +315,25 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
     const grid = $("#entry-grid");
     for (const el of $$(".entry-card", grid)) cardNodes.set(el.getAttribute("data-id"), el);
     for (const el of $$(".group-heading", grid)) headingNodes.set(el.getAttribute("data-cat"), el);
+    for (const el of $$(".group-more", grid)) moreNodes.set(el.getAttribute("data-cat"), el);
     const tpl = document.createElement("template");
     tpl.innerHTML = [
       ...data.entries.filter((e) => !cardNodes.has(e.id)).map(cardHtml),
       ...Object.keys(categoryLabels)
         .filter((cat) => !headingNodes.has(cat))
         .map((cat) => headingHtml(cat, 0)),
+      ...Object.keys(categoryLabels)
+        .filter((cat) => !moreNodes.has(cat))
+        .map((cat) => groupMoreHtml({ cat, label: categoryLabels[cat]?.label || cat, count: 0, root: "" })),
     ].join("");
     for (const el of [...tpl.content.children]) {
       if (el.matches(".entry-card")) cardNodes.set(el.getAttribute("data-id"), el);
+      else if (el.matches(".group-more")) moreNodes.set(el.getAttribute("data-cat"), el);
       else headingNodes.set(el.getAttribute("data-cat"), el);
     }
     // Anything else the grid held (a stale prerender) goes.
     for (const el of [...grid.children]) {
-      if (!el.matches(".entry-card, .group-heading")) el.remove();
+      if (!el.matches(".entry-card, .group-heading, .group-more")) el.remove();
     }
     // Card titles are h4 under the h3 category headings. A flat list has no
     // category headings, so this one keeps the outline from skipping a level.
@@ -490,11 +407,12 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
         for (const cat of Object.keys(categoryLabels)) {
           order.push(headingNodes.get(cat));
           for (const e of all) if (e.category === cat) order.push(cardNodes.get(e.id));
+          order.push(moreNodes.get(cat));
         }
         // Entries outside the configured categories never show grouped.
         for (const e of all) if (!categoryLabels[e.category]) order.push(cardNodes.get(e.id));
       } else {
-        order.push(...headingNodes.values(), ...all.map((e) => cardNodes.get(e.id)));
+        order.push(...headingNodes.values(), ...moreNodes.values(), ...all.map((e) => cardNodes.get(e.id)));
       }
       placeNodes(order);
     }
@@ -507,11 +425,12 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
       perCat.set(e.category, (perCat.get(e.category) || 0) + 1);
     }
     for (const [id, el] of cardNodes) el.hidden = !shown.has(id);
+    for (const el of moreNodes.values()) el.hidden = true;
     flatHeading.hidden = group || !list.length;
     for (const [cat, el] of headingNodes) {
       const n = group ? perCat.get(cat) || 0 : 0;
       el.hidden = !n;
-      if (n) el.querySelector(".group-count").textContent = String(n);
+      if (n) el.querySelector(".group-n").textContent = String(n);
     }
     groupHeadings = [...grid.children].filter((el) => el.matches(".group-heading") && !el.hidden);
     // The first visible heading sits flush with the top of the list.
