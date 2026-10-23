@@ -1,12 +1,15 @@
 /* Self-hosted type (site/public/fonts/, SIL OFL 1.1). Public Sans is one
    variable file for every weight; the italic is a second. Latin subset only:
    the catalog is written in English. URLs resolve against this stylesheet,
-   so every page depth finds them. */
+   so every page depth finds them. font-display: optional with a preload:
+   the face is used when it is ready at first paint (it is, from the same
+   origin and the cache), and never swapped in later, so the page does not
+   shift as the fonts arrive. */
 @font-face {
   font-family: "Public Sans";
   font-style: normal;
   font-weight: 100 900;
-  font-display: swap;
+  font-display: optional;
   src: url("fonts/public-sans.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
@@ -14,7 +17,7 @@
   font-family: "Public Sans";
   font-style: italic;
   font-weight: 100 900;
-  font-display: swap;
+  font-display: optional;
   src: url("fonts/public-sans-italic.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
@@ -22,7 +25,7 @@
   font-family: "IBM Plex Mono";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  font-display: optional;
   src: url("fonts/ibm-plex-mono-400.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
@@ -30,7 +33,7 @@
   font-family: "IBM Plex Mono";
   font-style: normal;
   font-weight: 500;
-  font-display: swap;
+  font-display: optional;
   src: url("fonts/ibm-plex-mono-500.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
@@ -734,7 +737,6 @@ input:focus-visible,
 .filter-note {
   margin: 0;
   padding: 0.45rem 0.6rem;
-  border-left: 3px solid var(--warn);
   background: var(--surface);
   color: var(--ink);
   font-size: 0.85rem;
@@ -1861,6 +1863,12 @@ input:focus-visible,
   margin-left: auto;
 }
 
+/* The toggle is injected after load; the heading is already its height. */
+.group-heading {
+  min-height: 2.75rem;
+  align-items: center;
+}
+
 @media (max-width: 720px) {
   .entry-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2053,7 +2061,7 @@ input:focus-visible,
   transition: opacity 120ms ease-out;
 }
 
-body:has(.entry-links :focus-visible) .to-top {
+body.card-focus .to-top {
   opacity: 0;
   pointer-events: none;
 }

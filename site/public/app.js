@@ -146,8 +146,12 @@ import { installViewToggles } from "./views.js";
 
   /* ------------------------------------------------------------- search */
 
-  // Each entry's searchable fields, normalised once at load (search.js).
-  const searchIndex = new Map(data.entries.map((e) => [e.id, searchFields(e)]));
+  // Each entry's searchable fields, normalised once, on the first search (search.js).
+  let searchIndex = null;
+  function fieldsOf(entry) {
+    if (!searchIndex) searchIndex = new Map(data.entries.map((e) => [e.id, searchFields(e)]));
+    return searchIndex.get(entry.id) || [];
+  }
 
   let compiled = { q: null, tests: [] };
   function queryTests() {
@@ -155,7 +159,7 @@ import { installViewToggles } from "./views.js";
     return compiled.tests;
   }
 
-  const searchScore = (entry) => scoreFields(searchIndex.get(entry.id) || [], queryTests());
+  const searchScore = (entry) => (queryTests().length ? scoreFields(fieldsOf(entry), queryTests()) : 1);
 
   const SORTS = {
     name: (a, b) => a.name.localeCompare(b.name),
@@ -326,7 +330,6 @@ import { installViewToggles } from "./views.js";
     for (const el of $$(".group-more", grid)) moreNodes.set(el.getAttribute("data-cat"), el);
     const tpl = document.createElement("template");
     tpl.innerHTML = [
-      ...data.entries.filter((e) => !cardNodes.has(e.id)).map(cardHtml),
       ...Object.keys(categoryLabels)
         .filter((cat) => !headingNodes.has(cat))
         .map((cat) => headingHtml(cat, 0)),
@@ -348,6 +351,22 @@ import { installViewToggles } from "./views.js";
     flatHeading = document.createElement("h3");
     flatHeading.className = "sr-only";
     flatHeading.textContent = "Matching entries";
+  }
+
+  // The build prerenders each category's preview only. The rest of the
+  // catalog is rendered here once, the first time a search, a filter or a
+  // "Show all" needs it, so the page loads without that work.
+  let allRendered = false;
+  function ensureAllNodes() {
+    if (allRendered) return;
+    allRendered = true;
+    const missing = data.entries.filter((e) => !cardNodes.has(e.id));
+    if (!missing.length) return;
+    const tpl = document.createElement("template");
+    tpl.innerHTML = missing.map(cardHtml).join("");
+    for (const el of [...tpl.content.children]) cardNodes.set(el.getAttribute("data-id"), el);
+    // Force the next render to place every node.
+    placedKey = null;
   }
 
   /**
@@ -400,6 +419,12 @@ import { installViewToggles } from "./views.js";
     empty.hidden = list.length > 0;
     renderSuggestions(list.length ? "" : state.q);
 
+    // The default page (no search, no filter) previews each category and
+    // links to its page, as the prerender does. Any filter or search shows
+    // the whole matching set, so every card must exist by then.
+    const preview = group && !stateQuery(state, DEFAULTS);
+    if (!preview) ensureAllNodes();
+
     // Under a plain sort the order of all nodes is fixed, so filtering only
     // toggles visibility. A ranked search reorders on every change.
     const key = ranked
@@ -410,17 +435,19 @@ import { installViewToggles } from "./views.js";
       const shown = new Set(list.map((e) => e.id));
       const rest = data.entries.filter((e) => !shown.has(e.id));
       const all = ranked ? [...list, ...rest] : data.entries.slice().sort(SORTS[state.sort] || SORTS.name);
+      // Entries not rendered yet (the preview page) are simply not placed.
+      const node = (e) => cardNodes.get(e.id);
       const order = [flatHeading];
       if (group) {
         for (const cat of Object.keys(categoryLabels)) {
           order.push(headingNodes.get(cat));
-          for (const e of all) if (e.category === cat) order.push(cardNodes.get(e.id));
+          for (const e of all) if (e.category === cat && node(e)) order.push(node(e));
           order.push(moreNodes.get(cat));
         }
         // Entries outside the configured categories never show grouped.
-        for (const e of all) if (!categoryLabels[e.category]) order.push(cardNodes.get(e.id));
+        for (const e of all) if (!categoryLabels[e.category] && node(e)) order.push(node(e));
       } else {
-        order.push(...headingNodes.values(), ...moreNodes.values(), ...all.map((e) => cardNodes.get(e.id)));
+        order.push(...headingNodes.values(), ...moreNodes.values(), ...all.map(node).filter(Boolean));
       }
       placeNodes(order);
     }
@@ -432,10 +459,7 @@ import { installViewToggles } from "./views.js";
       shown.add(e.id);
       perCat.set(e.category, (perCat.get(e.category) || 0) + 1);
     }
-    // The default page (no search, no filter) previews each category and
-    // links to its page, as the prerender does. Any filter or search shows
-    // the whole matching set. A search always uses the list form.
-    const preview = group && !stateQuery(state, DEFAULTS);
+    // A search always uses the list form.
     const searching = !!state.q.trim();
     const seenPerCat = new Map();
     for (const el of grid.children) {
@@ -671,6 +695,12 @@ import { installViewToggles } from "./views.js";
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       if (e.target.closest("a.entry-link")) rememberScroll();
     });
+    // The floating Search button steps aside while a card's own links have
+    // keyboard focus (styles.css body.card-focus).
+    $("#entry-grid").addEventListener("focusin", (e) => {
+      document.body.classList.toggle("card-focus", !!e.target.closest(".entry-links"));
+    });
+    $("#entry-grid").addEventListener("focusout", () => document.body.classList.remove("card-focus"));
     // "Show all N in <category>" opens that category in place; without this
     // script the same link leads to the static category page.
     $("#entry-grid").addEventListener("click", (e) => {
