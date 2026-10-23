@@ -245,12 +245,13 @@ disagree, the config is the one the site uses.
 Read these before you mix packs into a commercial build.
 
 | Guide | Covers |
-| :--- | :--- | :--- |
+| :--- | :--- |
 | [`docs/licenses.md`](docs/licenses.md) | The cheat sheet: what each licence allows and owes |
 | [`docs/fonts.md`](docs/fonts.md) | Embedding versus redistribution, and what an OFL font still owes |
 | [`docs/geodata.md`](docs/geodata.md) | Attribution across DEM, map and satellite sources, and why ODbL does not reach your game |
-| [`docs/high-risk.md`](docs/high-risk.md) | Sources to avoid entirely |
+| [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) | Why "commercial use" on a video licence may not cover a game |
 | [`docs/provenance.md`](docs/provenance.md) | Judging a supplier, and keeping a paper trail |
+| [`docs/high-risk.md`](docs/high-risk.md) | Sources to avoid entirely |
 | [`docs/ai-assets.md`](docs/ai-assets.md) | AI-generated assets |
 | [`docs/fivem.md`](docs/fivem.md) | GTA-format and FiveM assets |
 | [`docs/trust-score.md`](docs/trust-score.md) | Review rubric used when vetting a source (not shown on entries) |
@@ -259,7 +260,7 @@ Read these before you mix packs into a commercial build.
 <summary>The short version</summary>
 
 | Licence | In a closed-source game |
-| :--- | :--- | :--- |
+| :--- | :--- |
 | **CC0** | The safest default. Nothing owed |
 | **CC-BY** | Commercial use is fine; credit the author. CC-BY-3.0 sources often want the author named; CC-BY-4.0 is usually met by a credits-screen line |
 | **CC-BY-SA** | Usable commercially, but share-alike applies to derivatives of the asset. Ship SA files in extractable bundles rather than encrypting them into the binary |

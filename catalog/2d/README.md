@@ -114,4 +114,4 @@ two carry obligations the rest do not.
 | [spritelib](spritelib.md) | SpriteLib | CPL-1.0 | yes | active |
 
 † Commercial OK with attribution + share-alike / GPL obligations on asset derivatives — see [`docs/high-risk.md`](../../docs/high-risk.md).  
-†† CC0 on SVG copyright; brand trademarks still apply — identify brands only.  
+†† CC0 on SVG copyright; brand trademarks still apply — identify brands only.
