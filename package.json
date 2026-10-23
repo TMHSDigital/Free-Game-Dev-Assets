@@ -14,6 +14,7 @@
     "counts": "node site/sync-counts.mjs",
     "new-entry": "node site/new-entry.mjs",
     "links": "node site/check-links.mjs",
+    "thumbs": "node site/thumbs.mjs",
     "serve": "npx --yes serve site/dist"
   }
 }

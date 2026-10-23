@@ -21,6 +21,7 @@ verified: 2026-07-19
 status: needs-review
 # Optional (omit if N/A):
 # publisher: Kenney   # rights holder when that publisher has more than one entry; not a generic host
+# preview: none   # or an https:// image URL a maintainer has checked; see CONTRIBUTING.md "Preview images"
 # attribution_string: "Credit line"   # required when attribution_required is true
 # commercial: varies   # aggregators only; not a blanket commercial grant
 # grid_dimensions: 16x16          # 2D and UI entries only

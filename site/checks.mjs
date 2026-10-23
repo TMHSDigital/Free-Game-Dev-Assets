@@ -9,6 +9,7 @@
 import path from "node:path";
 import { evidenceSection } from "./lib/frontmatter.mjs";
 import { isRealDate } from "./lib/shared.mjs";
+import { previewEligibility } from "./lib/thumbs.mjs";
 import { parseStack, pickPath, StackError } from "./lib/stacks.mjs";
 
 export { evidenceSection };
@@ -774,6 +775,55 @@ export function checkCountTables(measured, docs) {
       if (Number(m[1]) !== total) {
         errors.push(`README.md "searches all ${m[1]} entries" but the catalog has ${total}`);
       }
+    }
+  }
+  return errors;
+}
+
+/**
+ * `preview` is optional: "none" opts an entry out of a thumbnail, an https
+ * URL names the image to use instead of the page's og:image.
+ */
+export function checkPreviewField(rel, meta) {
+  if (meta.preview === undefined || meta.preview === null || meta.preview === "") return [];
+  const v = String(meta.preview);
+  if (v === "none" || /^https:\/\/\S+$/.test(v)) return [];
+  return [`${rel} preview must be "none" or an https:// image URL`];
+}
+
+/**
+ * The committed thumbnails, their manifest and the licence gate must agree:
+ * a file needs a record, a record needs a file and a catalog entry, and the
+ * entry must still be allowed to show a preview. A licence that changed to
+ * custom after the image was fetched fails here until the script removes it.
+ */
+export function checkThumbManifest(manifest, entriesById, files) {
+  const errors = [];
+  const thumbs = (manifest && manifest.thumbs) || {};
+  const fileIds = new Set();
+  for (const name of files) {
+    const m = name.match(/^([a-z0-9]+(?:-[a-z0-9]+)*)\.webp$/);
+    if (!m) {
+      errors.push(`site/public/thumbs/${name} is not a <id>.webp thumbnail`);
+      continue;
+    }
+    fileIds.add(m[1]);
+    if (!thumbs[m[1]]) errors.push(`site/public/thumbs/${name} has no record in site/thumbs.json`);
+  }
+  for (const [id, rec] of Object.entries(thumbs)) {
+    if (!fileIds.has(id)) errors.push(`site/thumbs.json has "${id}" but site/public/thumbs/${id}.webp is missing`);
+    const entry = entriesById.get(id);
+    if (!entry) {
+      errors.push(`site/thumbs.json has "${id}" but no catalog entry has that id`);
+      continue;
+    }
+    const gate = previewEligibility(entry);
+    if (!gate.ok) {
+      errors.push(`thumbnail for "${id}" must be removed: ${gate.reason} (run node site/thumbs.mjs)`);
+      continue;
+    }
+    if (rec.license !== entry.license) {
+      errors.push(`thumbnail for "${id}" was fetched under ${rec.license} but the entry now says ${entry.license} (run node site/thumbs.mjs)`);
     }
   }
   return errors;
