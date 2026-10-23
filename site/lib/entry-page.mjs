@@ -12,7 +12,10 @@ import {
   STATUS_NOTES,
   verifiedAge,
   sponsorButtonHtml,
+  PREVIEW_CREDIT_LINE,
 } from "./shared.mjs";
+import { thumbHtml } from "./cards.mjs";
+import { previewCredit } from "./thumbs.mjs";
 
 export function jsonLd(entry, site) {
   const work = { "@type": "CreativeWork", name: entry.name, url: entry.url };
@@ -100,6 +103,10 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
         ${next ? `<a class="btn-ghost" href="../${esc(next.id)}/" rel="next">${esc(next.name)} <span aria-hidden="true">&rarr;</span></a>` : "<span></span>"}
       </nav>`
       : "";
+  // The publisher's preview, when the licence gate allowed one, with its credit.
+  const strip = entry.thumb
+    ? `<figure class="entry-strip">${thumbHtml(entry, "../../")}<figcaption class="entry-credit">${esc(previewCredit(entry))}</figcaption></figure>`
+    : "";
   const usedIn = stacks.length
     ? `<p class="used-in">Used in: ${stacks.map((s) => `<a href="../../stack/${esc(s.id)}/">${esc(s.title)}</a>`).join(", ")}</p>`
     : "";
@@ -111,12 +118,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     <title>${esc(seoTitle(entry.name, entry.license))}</title>
     <meta name="description" content="${esc(seoDescription(entry))}" />
     ${deprecated ? '<meta name="robots" content="noindex" />' : ""}
-    ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard })}
-    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../styles.css" />
+    ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard, root: "../../" })}
     <script type="application/ld+json">${scriptJson(jsonLd(entry, site))}</script>
   </head>
   <body>
@@ -135,11 +137,12 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     <main class="section entry-page" id="content">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../../#catalog" data-back-to-results>Catalog</a> <span aria-hidden="true">/</span>
-        <a href="../../?cat=${encodeURIComponent(entry.category)}#catalog">${esc(categoryLabel)}</a> <span aria-hidden="true">/</span>
+        <a href="../../category/${encodeURIComponent(entry.category)}/">${esc(categoryLabel)}</a> <span aria-hidden="true">/</span>
         <span aria-current="page">${esc(entry.name)}</span>
       </nav>
       ${banner}
       <h1>${esc(entry.name)}</h1>
+      ${strip}
       <div class="entry-lead">${leadHtml}</div>
       <section class="facts-panel" aria-labelledby="facts-title">
         <h2 id="facts-title">At a glance</h2>
@@ -148,11 +151,11 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
         </dl>
         ${c.block}
       </section>
-      <p class="page-actions">
-        <a class="btn" href="${esc(entry.url)}" rel="noopener noreferrer">Go to source</a>
-        <a class="btn-ghost" href="${esc(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">View the file on GitHub</a>
-        <a class="btn-ghost" href="${esc(issue)}" rel="noopener noreferrer">Report a problem with this entry</a>
-        <button type="button" class="btn-ghost shortlist-toggle" data-shortlist="${esc(entry.id)}" aria-pressed="false" hidden>Add to shortlist</button>
+      <p class="page-actions"><a class="btn" href="${esc(entry.url)}" rel="noopener noreferrer">Go to source</a></p>
+      <p class="page-links">
+        <a href="${esc(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">View the file on GitHub</a>
+        <a href="${esc(issue)}" rel="noopener noreferrer">Report a problem with this entry</a>
+        <button type="button" class="link-button shortlist-toggle" data-shortlist="${esc(entry.id)}" aria-pressed="false" hidden>Add to shortlist</button>
       </p>
       ${usedIn}
       <div class="entry-content">${restHtml}</div>
@@ -160,6 +163,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     </main>
     <footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
+      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>
       <p><a href="../../freshness/">Licence freshness</a></p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>

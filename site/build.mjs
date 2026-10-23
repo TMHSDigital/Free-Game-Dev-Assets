@@ -14,7 +14,10 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, commercialLabel, ENGINE_LOCK_LABELS, ENGINE_LOCK_NOTES, esc, latestAllowedDate, MAINTENANCE_NOTES, OG_CARD_NAME, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
+import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, sponsorButtonHtml } from "./lib/shared.mjs";
+import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
+import { categoryPageHtml } from "./lib/category-page.mjs";
+import { filmstripPick, thumbRelPath } from "./lib/thumbs.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
@@ -37,6 +40,7 @@ const CONFIG_PATH = path.join(__dirname, "config.json");
 const VOCAB_PATH = path.join(__dirname, "license-vocabulary.json");
 const SPDX_ALLOWED_PATH = path.join(__dirname, "spdx-allowed.json");
 const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
+const THUMBS_MANIFEST = path.join(__dirname, "thumbs.json");
 // Social preview image: a first-party screenshot of this site, kept with the
 // other first-party stills (the validator allows binaries there) and copied
 // into dist at build time.
@@ -53,8 +57,15 @@ function licenseFamily(vocab, license) {
   return "mixed";
 }
 
+/** site/thumbs.json: id => { width, height, ... } for every committed thumbnail (site/thumbs.mjs). */
+function loadThumbs() {
+  if (!fs.existsSync(THUMBS_MANIFEST)) return {};
+  return JSON.parse(fs.readFileSync(THUMBS_MANIFEST, "utf8")).thumbs || {};
+}
+
 function loadEntries(vocab) {
   const files = listEntryFiles(CATALOG);
+  const thumbs = loadThumbs();
   const entries = [];
   const errors = [];
   const bodies = new Map();
@@ -118,6 +129,10 @@ function loadEntries(vocab) {
       path: rel,
       page: `entry/${String(meta.id)}/`,
       summary: summaryFromBody(body),
+      // The publisher's preview, when the licence gate let the script keep one.
+      thumb: thumbs[String(meta.id)]
+        ? { path: thumbRelPath(String(meta.id)), width: thumbs[String(meta.id)].width, height: thumbs[String(meta.id)].height }
+        : null,
       ...(meta.grid_dimensions ? { grid_dimensions: String(meta.grid_dimensions) } : {}),
       ...(meta.camera_perspective ? { camera_perspective: String(meta.camera_perspective) } : {}),
       ...(Array.isArray(meta.hardware_tags) ? { hardware_tags: meta.hardware_tags } : {}),
@@ -138,100 +153,6 @@ function loadEntries(vocab) {
 
   entries.sort((a, b) => a.name.localeCompare(b.name));
   return { entries, errors, bodies };
-}
-
-function edgeVar(entry) {
-  if (entry.commercial === true) return "var(--ok)";
-  if (entry.commercial === false) return "var(--danger)";
-  if (entry.commercial === "varies") return "var(--warn)";
-  return "var(--unknown)";
-}
-
-/**
- * Prerendered entry row. The same markup app.js produces on hydrate, so the
- * page is complete and indexable before any script runs. The card is an
- * <article> with a real heading link, not a <button> wrapping a heading:
- * that gives every entry a permalink and keeps heading navigation working.
- */
-function maintenanceFlagHtml(entry) {
-  if (!entry.maintenance) return "";
-  const title = MAINTENANCE_NOTES[entry.maintenance] || "";
-  return ` <span class="maintenance-flag" title="${esc(title)}">${esc(entry.maintenance)}</span>`;
-}
-
-function engineLockFlagHtml(entry) {
-  if (!entry.engine_lock) return "";
-  const title = ENGINE_LOCK_NOTES[entry.engine_lock] || "";
-  return ` <span class="engine-flag" title="${esc(title)}">${esc(ENGINE_LOCK_LABELS[entry.engine_lock] || entry.engine_lock)}</span>`;
-}
-
-function entryRowHtml(entry, repo, now) {
-  const age = verifiedAge(entry.verified, now);
-  const ageText =
-    age.days === null
-      ? "verified date unknown"
-      : `verified ${entry.verified} (${age.days}d ago)`;
-  const flags = [entry.status, commercialLabel(entry.commercial), entry.license]
-    .map(esc)
-    .join(" &middot; ");
-  const formats = (entry.formats || [])
-    .slice(0, 3)
-    .map((f) => `<span>${esc(f)}</span>`)
-    .join("");
-  const taxonomy = [
-    entry.grid_dimensions ? `<span class="tax">${esc(entry.grid_dimensions)}</span>` : "",
-    entry.camera_perspective
-      ? `<span class="tax">${esc(PERSPECTIVE_LABELS[entry.camera_perspective] || entry.camera_perspective)}</span>`
-      : "",
-  ].join("");
-  return `<article class="entry-card" id="entry-${esc(entry.id)}" data-id="${esc(entry.id)}" data-status="${esc(entry.status)}" style="--edge:${edgeVar(entry)}">
-  <span class="entry-edge" aria-hidden="true"></span>
-  <div class="entry-body">
-    <div class="entry-top">
-      <h4><a class="entry-link" href="entry/${esc(entry.id)}/" data-id="${esc(entry.id)}">${esc(entry.name)}</a></h4>
-      <span class="entry-flags">${flags}${maintenanceFlagHtml(entry)}${engineLockFlagHtml(entry)}</span>
-    </div>
-    <p>${esc(entry.summary || "")}</p>
-    <div class="meta-line">
-      <span>${esc(entry.category)}</span>${formats}${taxonomy}
-      <span class="verified is-${age.bucket}" data-verified="${esc(entry.verified || "")}" title="Licence last checked at the source">${esc(ageText)}</span>
-    </div>
-    <div class="entry-links">
-      <a href="${esc(entry.url)}" rel="noopener noreferrer">Open source</a>
-      <a href="${esc(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">Entry and evidence</a>
-      <button type="button" class="link-button shortlist-toggle" data-shortlist="${esc(entry.id)}" aria-pressed="false" data-name="${esc(entry.name)}" aria-label="Add to shortlist: ${esc(entry.name)}" hidden>Add to shortlist</button>
-    </div>
-  </div>
-</article>`;
-}
-
-/**
- * The catalog grouped under category headings. 300 rows in one flat list is
- * not navigable; headings give the page structure a reader can scan and an
- * anchor they can link to. app.js reproduces this exact shape on hydrate.
- *
- * Grouping is only correct under the default sort. Sorting by verified date
- * or license across category buckets would be meaningless, so app.js falls
- * back to a flat list in those cases; the prerender is always the default.
- */
-function groupedRowsHtml(entries, categories, repo, now) {
-  const order = Object.keys(categories);
-  const seen = new Set(entries.map((e) => e.category));
-  const out = [];
-  for (const cat of order) {
-    if (!seen.has(cat)) continue;
-    const group = entries.filter((e) => e.category === cat);
-    if (!group.length) continue;
-    const label = categories[cat]?.label || cat;
-    out.push(
-      `<h3 class="group-heading" id="group-${esc(cat)}" data-cat="${esc(cat)}">` +
-        `<span class="group-name">${esc(label)}</span>` +
-        `<span class="group-count">${group.length}</span>` +
-        `</h3>`
-    );
-    out.push(...group.map((e) => entryRowHtml(e, repo, now)));
-  }
-  return out.join("\n");
 }
 
 /**
@@ -278,7 +199,7 @@ function guideRowsHtml(guides, repo) {
 
 function headMetaHtml(site, stats, generatedAt, hasCard) {
   return [
-    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard }),
+    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard, root: "./" }),
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
     `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total }))}</script>`,
@@ -330,8 +251,7 @@ function notFoundHtml(site) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Not found - ${esc(site.title)}</title>
     <meta name="robots" content="noindex" />
-    <link rel="icon" href="${esc(base)}/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="${esc(base)}/styles.css" />
+    ${headAssetsHtml(`${base}/`).join("\n    ")}
   </head>
   <body>
     <main class="section">
@@ -533,6 +453,21 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
   return { errors, written };
 }
 
+/** Writes dist/category/<id>/index.html for every configured category with a visible entry. */
+function writeCategoryPages({ entries, config, stats, stamp, hasCard, now }) {
+  const written = [];
+  for (const [cat, meta] of Object.entries(config.categories)) {
+    const group = entries.filter((e) => e.category === cat);
+    if (!group.length) continue;
+    writeOut(
+      path.join("category", cat, "index.html"),
+      categoryPageHtml({ cat, meta, entries: group, site: config.site, stamp, total: stats.total, hasCard, now })
+    );
+    written.push(`category/${cat}/index.html`);
+  }
+  return { written };
+}
+
 /** Runs the page checks over dist-relative files. */
 function checkPages(files) {
   // Link targets resolve against what this build produced, not what is on
@@ -630,6 +565,10 @@ function main() {
   copyOut(path.join(__dirname, "lib", "owes.mjs"), "owes.js");
   // The catalog search and the 404 page's guesses, tested in lib.test.mjs.
   copyOut(path.join(__dirname, "lib", "search.mjs"), "search.js");
+  // The entry template and its helpers, served as modules to app.js and the
+  // category pages. Neither may import from node:.
+  copyOut(path.join(__dirname, "lib", "cards.mjs"), "cards.mjs");
+  copyOut(path.join(__dirname, "lib", "shared.mjs"), "shared.mjs");
   const hasCard = fs.existsSync(OG_CARD_SRC);
   if (hasCard) copyOut(OG_CARD_SRC, OG_CARD_NAME);
   // data.json is the public machine-readable catalog (see site/README.md);
@@ -646,13 +585,20 @@ function main() {
   const stamp = payload.generatedAt.slice(0, 10);
   const visible = entries.filter((e) => e.status !== "deprecated");
   const fresh = freshnessStats(entries, now);
+  // The hero filmstrip draws from the categories that default to cards.
+  const cardCategories = Object.entries(config.categories)
+    .filter(([, meta]) => meta.view === "cards")
+    .map(([cat]) => cat);
   const substitutions = {
     FRESHNESS_LINE: freshnessLineHtml(fresh, stamp, "freshness/"),
     NEW_LINE: newEntriesLineHtml(visible, stamp),
     HEAD_META: headMetaHtml(config.site, stats, payload.generatedAt, hasCard),
     STACK_ROWS: stackRowsHtml(stacks),
     STARTER_ROWS: starterRowsHtml(featured),
-    ENTRY_ROWS: groupedRowsHtml(visible, config.categories, repoUrl, now),
+    // Each category shows its first few entries; the category pages hold the rest.
+    ENTRY_ROWS: groupedEntriesHtml(visible, config.categories, { root: "", repo: repoUrl, now }),
+    HERO_COUNT: String(stats.total),
+    FILMSTRIP: filmstripHtml(filmstripPick(visible, { count: 9, cardCategories }), { root: "" }),
     CATEGORY_CHIPS: categoryChipsHtml(visible, config.categories),
     GUIDE_ROWS: guideRowsHtml(config.guides, repoUrl),
     CATALOG_BLURB: `${stats.total} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file &middot; ${stats.deprecated} deprecated`,
@@ -672,18 +618,22 @@ function main() {
   }
   writeOut("index.html", html);
 
-  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates() }));
+  const categoriesInSitemap = Object.keys(config.categories)
+    .filter((cat) => visible.some((e) => e.category === cat))
+    .map((id) => ({ id, lastmod: stamp }));
+  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates(), categories: categoriesInSitemap }));
   writeOut("robots.txt", robotsTxt(config.site));
   writeOut("404.html", notFoundHtml(config.site));
   writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard }));
 
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });
+  const categoryPages = writeCategoryPages({ entries: visible, config, stats, stamp, hasCard, now });
   const pageErrors = [
     ...stackErrors,
     ...pages.errors,
     ...stackPages.errors,
-    ...checkPages(["index.html", "freshness/index.html", ...pages.written, ...stackPages.written]),
+    ...checkPages(["index.html", "freshness/index.html", ...pages.written, ...stackPages.written, ...categoryPages.written]),
   ];
   if (pageErrors.length) {
     console.error(`Page build failed (${pageErrors.length}):`);
@@ -715,7 +665,7 @@ function main() {
     `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok, ${stats.commercialVaries} per-file)`
   );
   console.log(
-    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
+    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
   );
   console.log(`${writes} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }

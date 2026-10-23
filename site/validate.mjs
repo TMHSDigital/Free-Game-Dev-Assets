@@ -7,6 +7,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   checkActiveIsSettled,
+  checkPreviewField,
+  checkThumbManifest,
   checkAddedDate,
   checkAttributionConsistency,
   checkCategoryReadmeRows,
@@ -101,7 +103,7 @@ const BINARY_EXT = new Set([
 // space are not part of the repo's content.
 const SKIP_WALK = new Set(["node_modules", "dist", "RESEARCH", "_scratch"]);
 /** Generated output and first-party stills (README screenshots, the social card): not third-party packs. */
-const ALLOWED_BINARY_PREFIXES = ["site/dist/", "docs/images/readme/"];
+const ALLOWED_BINARY_PREFIXES = ["site/dist/", "docs/images/readme/", "site/public/thumbs/", "site/public/fonts/"];
 const EMOJI_RE = /\p{Extended_Pictographic}/u;
 const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
 const STATUS_VALUES = new Set(["active", "needs-review", "deprecated"]);
@@ -258,6 +260,7 @@ function main() {
   const entries = [];
   const records = [];
   const ids = new Map();
+  const metaById = new Map();
 
   for (const file of entryFiles) {
     const rel = relFromRoot(file);
@@ -312,12 +315,16 @@ function main() {
     errors.push(...checkMaintenance(rel, meta));
     errors.push(...checkEngineFields(rel, meta));
     errors.push(...checkActiveIsSettled(rel, meta));
+    errors.push(...checkPreviewField(rel, meta));
     errors.push(...checkTitleMatchesName(rel, meta, body));
     errors.push(...checkAddedDate(rel, meta, today));
     if (meta.id) {
       const id = String(meta.id);
       if (ids.has(id)) errors.push(`duplicate id "${id}": ${ids.get(id)} and ${rel}`);
-      else ids.set(id, rel);
+      else {
+        ids.set(id, rel);
+        metaById.set(id, meta);
+      }
     }
 
     if (meta.verified) {
@@ -428,6 +435,13 @@ function main() {
       : [root];
     for (const file of files) checkRelativeLinks(file, errors);
   }
+
+  // Thumbnails: the manifest, the files and the licence gate must agree.
+  const thumbsDir = path.join(__dirname, "public", "thumbs");
+  const manifestPath = path.join(__dirname, "thumbs.json");
+  const manifest = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, "utf8")) : null;
+  const thumbFiles = fs.existsSync(thumbsDir) ? fs.readdirSync(thumbsDir).filter((n) => n !== ".gitkeep") : [];
+  errors.push(...checkThumbManifest(manifest, metaById, thumbFiles));
 
   for (const file of walkFiles(ROOT, [], () => true)) {
     const ext = path.extname(file).toLowerCase();

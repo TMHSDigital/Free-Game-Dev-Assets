@@ -34,17 +34,7 @@ export function freshnessStats(entries, now) {
 
 /** The one-line summary, for the homepage and the top of /freshness/. */
 export function freshnessLineHtml(stats, stamp, href) {
-  const parts = [
-    "Every licence here was read at its source.",
-    `<strong>Checked within 180 days: ${stats.fresh} of ${stats.total}.</strong>`,
-  ];
-  if (stats.aging) parts.push(`Aging (181 to 365 days): ${stats.aging}.`);
-  parts.push(`Older than a year: ${stats.stale}.`);
-  if (stats.unknown) parts.push(`No check date: ${stats.unknown}.`);
-  if (stats.oldest) parts.push(`Oldest check: ${esc(stats.oldest.entry.verified)} (${dayWord(stats.oldest.days)}).`);
-  parts.push(`As of ${esc(stamp)}.`);
-  parts.push(`<a href="${esc(href)}">See every check, oldest first</a>.`);
-  return parts.join(" ");
+  return `<strong>${stats.fresh} of ${stats.total}</strong> licences re-read in the last 180 days. <a href="${esc(href)}">Every check, oldest first</a>.`;
 }
 
 /** Days an entry counts as new on the home page. */
@@ -105,12 +95,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(desc)}" />
-    ${baseHeadHtml({ site, title, description: desc, url, hasCard })}
-    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../styles.css" />
+    ${baseHeadHtml({ site, title, description: desc, url, hasCard, root: "../" })}
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to the list</a>

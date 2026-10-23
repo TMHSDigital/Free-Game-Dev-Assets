@@ -184,6 +184,29 @@ export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5) {
   return clipText(`${lead} ${first}`, max);
 }
 
+/** The commercial-use colour an entry row carries (`--edge`). */
+export function edgeVar(entry) {
+  if (entry.commercial === true) return "var(--ok)";
+  if (entry.commercial === false) return "var(--danger)";
+  if (entry.commercial === "varies") return "var(--warn)";
+  return "var(--unknown)";
+}
+
+/** The one-line credit every page footer carries for the publisher previews. */
+export const PREVIEW_CREDIT_LINE = "Preview images belong to their publishers and are shown under each entry's licence.";
+
+/** Self-hosted fonts (site/public/fonts/, OFL). The body face and the mono face are preloaded; the italic is not. */
+export const FONT_FILES = ["fonts/public-sans.woff2", "fonts/ibm-plex-mono-400.woff2"];
+
+/** Icon, font preloads and stylesheet, resolved against `root`. Every page type shares them. */
+export function headAssetsHtml(root = "./") {
+  return [
+    `<link rel="icon" href="${esc(root)}favicon.svg" type="image/svg+xml" />`,
+    ...FONT_FILES.map((f) => `<link rel="preload" href="${esc(root)}${f}" as="font" type="font/woff2" crossorigin />`),
+    `<link rel="stylesheet" href="${esc(root)}styles.css" />`,
+  ];
+}
+
 /** Social preview image, a first-party screenshot copied into dist by the build. */
 export const OG_CARD_NAME = "og-card.png";
 
@@ -191,9 +214,11 @@ export const OG_CARD_NAME = "og-card.png";
  * The <head> lines every page type shares: canonical, sitemap and feed
  * discovery, theme colours for both schemes, Open Graph and Twitter cards.
  * One helper so an entry page cannot ship a thinner head than the home page.
- * `<title>` and `<meta name="description">` stay with each page.
+ * `<title>` and `<meta name="description">` stay with each page. `root` is the
+ * page's path back to the site root ("./", "../", "../../"): the icon, the
+ * self-hosted font preloads and the stylesheet are resolved against it.
  */
-export function baseHeadHtml({ site, title, description, url, type = "website", hasCard, indent = "    " }) {
+export function baseHeadHtml({ site, title, description, url, type = "website", hasCard, indent = "    ", root = "./" }) {
   const base = String(site.siteUrl).replace(/\/+$/, "");
   const card = `${base}/${OG_CARD_NAME}`;
   const cardMeta = hasCard
@@ -223,5 +248,6 @@ export function baseHeadHtml({ site, title, description, url, type = "website", 
     ...cardMeta,
     `<meta name="twitter:title" content="${esc(title)}" />`,
     `<meta name="twitter:description" content="${esc(description)}" />`,
+    ...headAssetsHtml(root),
   ].join(`\n${indent}`);
 }

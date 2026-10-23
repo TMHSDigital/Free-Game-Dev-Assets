@@ -85,6 +85,12 @@ with no code.
 
 Publishers are welcome to list their own work. Say so in the pull request, write the entry as a third party would (facts the source states, no comparisons with other entries, no ranking language), and start it at `needs-review` so a maintainer re-reads the licence before it goes `active`. A free tier of a paid product is listed as the free tier only, with the paid tier named in Notes and not linked as the entry's `url`. A one-time notice or upsell inside a tool is recorded in Notes as a fact.
 
+## Preview images
+
+The site shows each entry's preview image where it can. The picture is the publisher's own `og:image` from the entry's `url`, fetched by `npm run thumbs`, resized to 640 pixels wide and committed under `site/public/thumbs/` with a record in `site/thumbs.json`. Only `active` entries whose licence is on the allowlist in `site/lib/thumbs.mjs` (CC0, CC-BY, MIT, OFL, GPL and the other open licences that allow a resized copy) get one; `custom`, `varies` and `unknown` never do, and neither do GitHub repositories, whose social card is not a preview. The validator fails when a committed image no longer passes that gate, and the script removes it on its next run.
+
+A publisher who would rather not have their preview shown can open an issue; the maintainer sets `preview: none` on the entry and the image is removed. A maintainer who has checked that a specific image is covered by the entry's licence can set `preview: https://...` to use that image instead of the page's `og:image`.
+
 ## Automated and AI-assisted pull requests
 
 Changes drafted with an agent or a script are judged on the diff like any other. Keep them small, keep tests in `site/checks.test.mjs` or `site/lib/lib.test.mjs` (a test file that `npm test` does not run is dropped), and name the issue the change fixes in the body (`Fixes #N`). A pull request that lists sources or licences the author did not read is closed: the catalog's one rule is that every licence fact was read at the source by the person who recorded it.

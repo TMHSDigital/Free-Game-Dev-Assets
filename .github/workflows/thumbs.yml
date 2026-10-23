@@ -1,0 +1,67 @@
+name: Monthly thumbnail refresh
+
+# On the first of each month: re-fetch the publisher previews that are due
+# (older than 180 days, licence changed, or new eligible entries), push the
+# changed files to a thumbs/<month> branch and open or update one issue with
+# the compare link. The repository does not let Actions open pull requests,
+# and a token-made pull request would not run CI, so the maintainer opens it
+# from the link. It never edits an entry. Rules: site/lib/thumbs.mjs.
+on:
+  schedule:
+    - cron: "0 9 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  thumbs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Ensure ffmpeg
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          fi
+          ffmpeg -version | head -1
+
+      - name: Fetch and resize previews
+        id: run
+        run: node site/thumbs.mjs --report thumbs-report.md
+
+      - name: Validate the result
+        run: node site/validate.mjs
+
+      - name: Push the branch and open or update the issue
+        if: steps.run.outputs.changed != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CHANGED: ${{ steps.run.outputs.changed }}
+        run: |
+          month=$(date -u +%Y-%m)
+          branch="thumbs/${month}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add site/thumbs.json site/public/thumbs
+          git commit -m "thumbs: monthly refresh ${month} (${CHANGED} changes)"
+          git push --force origin "$branch"
+          compare="https://github.com/${GITHUB_REPOSITORY}/compare/main...$(printf '%s' "$branch" | sed 's|/|%2F|g')?expand=1"
+          { printf 'Open the pull request: %s\n\n' "$compare"; cat thumbs-report.md; } > issue-body.md
+          title="Thumbnail refresh ${month}: ${CHANGED} changes"
+          existing=$(gh issue list --state open --label "enhancement" --json number,title \
+            --jq '[.[] | select(.title | startswith("Thumbnail refresh "))][0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --title "$title" --body-file issue-body.md
+          else
+            gh issue create --title "$title" --label "enhancement" --body-file issue-body.md
+          fi

@@ -141,7 +141,7 @@ has("entry script without one, for the back link", page({ attribution_string: un
 lacks("no copy button without a credit line", page({ attribution_string: undefined }), "copy-attribution");
 has("breadcrumb catalog link can return to the results", p, '<a href="../../#catalog" data-back-to-results>Catalog</a>');
 has("note when credit is required but not canned", page({ attribution_string: undefined }), "no canned credit line");
-has("breadcrumb category link", p, "../../?cat=2d#catalog");
+has("breadcrumb category link", p, "../../category/2d/");
 has("next link", p, 'href="../e2/" rel="next"');
 has("report link prefills the entry", p, "template=correction.yml");
 lacks("active is indexable", p, 'content="noindex"');
@@ -441,21 +441,10 @@ eq("recent window includes day 30, excludes 31", fs1.recent.map((r) => r.entry.i
 eq("rows oldest first, unknown last", fs1.rows.map((r) => r.entry.id).join(","), "i,d,c,b,a,f,e,j,g");
 eq("buckets match the cards", fs1.rows.every((r) => r.bucket === verifiedAge(r.entry.verified, fNow).bucket), true);
 const fl = freshnessLineHtml(fs1, "2026-09-25", "freshness/");
-has("line counts fresh of total", fl, "<strong>Checked within 180 days: 4 of 9.</strong>");
-has("line shows aging when present", fl, "Aging (181 to 365 days): 2.");
-has("line shows stale", fl, "Older than a year: 2.");
-has("line shows unknown when present", fl, "No check date: 1.");
-has("line shows the oldest check", fl, `Oldest check: ${daysAgo(366)} (366 days).`);
-has("line shows as-of", fl, "As of 2026-09-25.");
-has("line links the page", fl, '<a href="freshness/">See every check, oldest first</a>.');
-const flClean = freshnessLineHtml(freshnessStats([fe("a", "Alpha", 10)], fNow), "2026-09-25", "freshness/");
-lacks("no aging clause at zero", flClean, "Aging");
-lacks("no unknown clause at zero", flClean, "No check date");
-has("stale clause even at zero", flClean, "Older than a year: 0.");
-has("one day is singular", freshnessLineHtml(freshnessStats([fe("a", "Alpha", 1)], fNow), "2026-09-25", "f/"), "(1 day)");
+eq("freshness line is one sentence", fl, '<strong>4 of 9</strong> licences re-read in the last 180 days. <a href="freshness/">Every check, oldest first</a>.');
 const fEmpty = freshnessStats([], fNow);
 eq("empty catalog has no oldest", fEmpty.oldest, null);
-lacks("empty catalog line has no oldest clause", freshnessLineHtml(fEmpty, "2026-09-25", "f/"), "Oldest check");
+eq("empty catalog line still reads", freshnessLineHtml(fEmpty, "2026-09-25", "f/"), '<strong>0 of 0</strong> licences re-read in the last 180 days. <a href="f/">Every check, oldest first</a>.');
 
 /* freshness: page ---------------------------------------------------------- */
 import { freshnessPageHtml } from "./freshness.mjs";
@@ -465,7 +454,7 @@ has("freshness canonical", fp, '<link rel="canonical" href="https://x.test/s/fre
 eq("freshness one h1", (fp.match(/<h1[\s>]/g) || []).length, 1);
 has("freshness links entries one level up", fp, 'href="../entry/i/"');
 has("freshness names escaped", fp, "Q &quot;&lt;b&gt;&quot;");
-has("freshness line links the table", fp, '<a href="#every-check">See every check, oldest first</a>');
+has("freshness line links the table", fp, '<a href="#every-check">Every check, oldest first</a>');
 has("freshness table cells carry labels", fp, '<td data-label="Checked">');
 eq("freshness table rows oldest first", [...fp.matchAll(/<tr class="fresh-row" data-id="([^"]+)"/g)].map((m) => m[1]).slice(0, 3).join(","), "i,d,c");
 has("an undated row says so", fp, "no check date");
@@ -897,6 +886,153 @@ eq("new-entry sets added to today", newEntryText("added: 2026-07-19\nverified: 2
   eq("template commercial parses as a boolean", fromTemplate.meta.commercial, true);
   eq("template added parses as today", fromTemplate.meta.added, "2026-10-04");
   eq("template has no frontmatter errors", fromTemplate.errors.join(), "");
+}
+
+// Site refresh: thumbnail rules.
+import { filmstripPick, imageUrlFromHtml, needsFetch, previewCredit, previewEligibility, publisherKey, sharedImageIds, webpSize } from "./thumbs.mjs";
+eq("thumbs: CC0 active itch page is eligible", previewEligibility({ license: "CC0", status: "active", url: "https://kaylousberg.itch.io/block-bits" }).ok, true);
+eq("thumbs: custom licence refused", previewEligibility({ license: "custom", status: "active", url: "https://x.itch.io/a" }).reason, "licence custom is not in the preview allowlist");
+eq("thumbs: needs-review refused before licence", previewEligibility({ license: "custom", status: "needs-review", url: "https://x.itch.io/a" }).reason, "status is needs-review");
+eq("thumbs: github host skipped", previewEligibility({ license: "MIT", status: "active", url: "https://github.com/a/b" }).reason, "host github.com is skipped");
+eq("thumbs: preview url overrides host only", previewEligibility({ license: "MIT", status: "active", url: "https://github.com/a/b", preview: "https://a.b/c.png" }).ok, true);
+eq("thumbs: preview url cannot override licence", previewEligibility({ license: "custom", status: "active", url: "https://a.b/", preview: "https://a.b/c.png" }).ok, false);
+eq("thumbs: preview none", previewEligibility({ license: "CC0", status: "active", url: "https://a.b/", preview: "none" }).reason, "preview: none");
+eq("thumbs: og:image property-first", imageUrlFromHtml('<meta property="og:image" content="https://i.x/a.png?w=1&amp;h=2">', "https://x/"), "https://i.x/a.png?w=1&h=2");
+eq("thumbs: og:image content-first", imageUrlFromHtml('<meta content="/img/a.jpg" property="og:image">', "https://x.y/p/"), "https://x.y/img/a.jpg");
+eq("thumbs: twitter fallback", imageUrlFromHtml('<meta name="twitter:image" content="https://i/t.png">', "https://x/"), "https://i/t.png");
+eq("thumbs: no image", imageUrlFromHtml("<html></html>", "https://x/"), null);
+eq("thumbs: shared hash dropped at three", [...sharedImageIds({ a: { hash: "h1" }, b: { hash: "h1" }, c: { hash: "h1" }, d: { hash: "h2" }, e: { hash: "h2" } })].sort().join(), "a,b,c");
+eq("thumbs: pinned never dropped", [...sharedImageIds({ a: { hash: "h1", pinned: true }, b: { hash: "h1" }, c: { hash: "h1" }, d: { hash: "h1" } })].sort().join(), "b,c,d");
+eq("thumbs: needsFetch no record", needsFetch(undefined, { license: "CC0", today: "2026-10-23" }), true);
+eq("thumbs: needsFetch fresh same licence", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC0", today: "2026-10-23" }), false);
+eq("thumbs: needsFetch licence changed", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC-BY-4.0", today: "2026-10-23" }), true);
+eq("thumbs: needsFetch stale", needsFetch({ fetched: "2026-01-01", license: "CC0" }, { license: "CC0", today: "2026-10-23" }), true);
+eq("thumbs: needsFetch force", needsFetch({ fetched: "2026-10-20", license: "CC0" }, { license: "CC0", today: "2026-10-23", force: true }), true);
+{
+  const hex = (s) => Buffer.from(s.replaceAll(" ", ""), "hex");
+  const vp8x = hex("52494646 24000000 57454250 56503858 0a000000 10000000 7f0200 8f0100");
+  eq("thumbs: webp VP8X size", JSON.stringify(webpSize(vp8x)), '{"width":640,"height":400}');
+  const vp8l = hex("52494646 24000000 57454250 5650384c 10000000 2f 7fc26300");
+  eq("thumbs: webp VP8L size", JSON.stringify(webpSize(vp8l)), '{"width":640,"height":400}');
+  const vp8 = hex("52494646 24000000 57454250 56503820 10000000 000000 9d012a 8002 9001");
+  eq("thumbs: webp VP8 size", JSON.stringify(webpSize(vp8)), '{"width":640,"height":400}');
+  eq("thumbs: not webp", webpSize(Buffer.from("89504e47", "hex")), null);
+}
+eq("thumbs: publisherKey falls back to host", publisherKey({ url: "https://www.kenney.nl/assets/x" }), "kenney.nl");
+eq("thumbs: publisherKey prefers publisher", publisherKey({ publisher: "Kenney", url: "https://x/" }), "Kenney");
+eq("thumbs: credit with publisher", previewCredit({ publisher: "Kenney", license: "CC0" }), "Preview image from Kenney, shown under CC0");
+eq("thumbs: credit without publisher", previewCredit({ license: "CC-BY-4.0" }), "Preview image from the source page, shown under CC-BY-4.0");
+{
+  const t = { path: "thumbs/x.webp", width: 640, height: 400 };
+  const pool = [
+    { id: "a", name: "A", status: "active", category: "3d", verified: "2026-10-01", publisher: "P1", url: "https://p1/", thumb: t },
+    { id: "b", name: "B", status: "active", category: "3d", verified: "2026-10-02", publisher: "P1", url: "https://p1/", thumb: t },
+    { id: "c", name: "C", status: "active", category: "tools", verified: "2026-10-03", url: "https://p2/", thumb: t },
+    { id: "d", name: "D", status: "needs-review", category: "2d", verified: "2026-10-04", url: "https://p3/", thumb: t },
+    { id: "e", name: "E", status: "active", category: "2d", verified: "2026-10-05", url: "https://p4/", thumb: null },
+    { id: "f", name: "F", status: "active", category: "2d", verified: "2026-09-01", url: "https://p5/", thumb: t },
+  ];
+  eq("thumbs: filmstrip picks newest, one per publisher, card categories, active, with thumb", filmstripPick(pool, { count: 9, cardCategories: ["3d", "2d"] }).map((e) => e.id).join(), "b,f");
+  eq("thumbs: filmstrip count cap", filmstripPick(pool, { count: 1, cardCategories: ["3d", "2d"] }).map((e) => e.id).join(), "b");
+}
+
+// Site refresh: self-hosted fonts and one shared head.
+has("head: preloads body font", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../../" }), '<link rel="preload" href="../../fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin');
+has("head: preloads mono font", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../../" }), '<link rel="preload" href="../../fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin');
+has("head: stylesheet from root", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "./" }), '<link rel="stylesheet" href="./styles.css"');
+has("head: icon from root", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../" }), '<link rel="icon" href="../favicon.svg" type="image/svg+xml"');
+has("page check: google fonts refused", checkPage('<html><head><title>x</title><link rel="canonical" href="https://s/"><link href="https://fonts.googleapis.com/css2"></head><body><h1>x</h1></body></html>', { file: "p.html", kindOf: () => "file" }).join(), "p.html: references Google Fonts");
+
+// Site refresh: one entry template for the build and app.js.
+import { CARD_LIMIT, LIST_LIMIT, entryCardHtml, groupHeadingHtml, groupMoreHtml, groupedEntriesHtml, thumbHtml, tileHtml } from "./cards.mjs";
+const cardBase = { id: "x", name: "X Pack", url: "https://x.itch.io/p", category: "3d", license: "CC0", commercial: true, status: "active", formats: ["GLB"], verified: "2026-10-01", path: "catalog/3d/x.md", summary: "S." };
+eq("cards: limits", `${CARD_LIMIT}/${LIST_LIMIT}`, "6/8");
+has("cards: img with dimensions and lazy", thumbHtml({ ...cardBase, thumb: { path: "thumbs/x.webp", width: 640, height: 400 } }, "../../"), '<img class="entry-thumb-img" src="../../thumbs/x.webp" width="640" height="400" alt="" loading="lazy" decoding="async">');
+has("cards: tile when no thumb", thumbHtml(cardBase, ""), 'class="entry-tile" data-cat="3d"');
+has("cards: tile carries name", tileHtml({ ...cardBase, name: "A <b>" }), "A &lt;b&gt;");
+has("cards: tile note names licence", tileHtml(cardBase, "3D"), '<span class="entry-tile-note">3D · CC0</span>');
+has("cards: card view attribute", entryCardHtml(cardBase, { root: "", repo: "https://r", now: Date.parse("2026-10-23"), view: "cards" }), '<article class="entry-card" data-view="cards"');
+has("cards: root-relative entry link", entryCardHtml(cardBase, { root: "../../", repo: "https://r", now: 0, view: "list" }), 'href="../../entry/x/"');
+has("cards: lead and trail slots", entryCardHtml(cardBase, { root: "", repo: "https://r", now: 0, view: "list", lead: '<p class="pick-need">Need</p>', trail: "<p>Why</p>" }), '<p class="pick-need">Need</p>');
+has("cards: heading count readable", groupHeadingHtml({ cat: "3d", label: "3D", count: 77, view: "cards", root: "" }), '<span class="group-count"><span class="sr-only">, </span><span class="group-n">77</span><span class="sr-only"> entries</span></span>');
+has("cards: heading carries view", groupHeadingHtml({ cat: "3d", label: "3D", count: 77, view: "list", root: "" }), '<h3 class="group-heading" id="group-3d" data-cat="3d" data-view="list">');
+has("cards: show-all link", groupMoreHtml({ cat: "3d", label: "3D", count: 77, root: "" }), '<a class="group-more" data-cat="3d" href="category/3d/">Show all 77 in 3D</a>');
+{
+  const many = Array.from({ length: 9 }, (_, i) => ({ ...cardBase, id: `e${i}`, name: `E${i}` }));
+  const html = groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0 });
+  eq("cards: limit six cards", (html.match(/<article /g) || []).length, 6);
+  has("cards: more link after limit", html, "Show all 9 in 3D");
+  eq("cards: no limit when asked", (groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0, limit: false }).match(/<article /g) || []).length, 9);
+  eq("cards: list limit eight", (groupedEntriesHtml(many, { "3d": { label: "3D", view: "list" } }, { root: "", repo: "https://r", now: 0 }).match(/<article /g) || []).length, 8);
+  eq("cards: no more link under the limit", groupedEntriesHtml(many.slice(0, 3), { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0 }).includes("group-more"), false);
+  eq("cards: empty category skipped", groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" }, audio: { label: "Audio", view: "list" } }, { root: "", repo: "https://r", now: 0 }).includes("group-audio"), false);
+}
+
+// Site refresh: static category pages.
+import { categoryPageHtml } from "./category-page.mjs";
+{
+  const html = categoryPageHtml({ cat: "3d", meta: { label: "3D", blurb: "Models, scans, PBR textures", view: "cards" }, entries: [cardBase], site: { title: "Free Game Dev Assets", tagline: "t", siteUrl: "https://s/x/", repo: "https://r" }, stamp: "2026-10-23", total: 1, hasCard: false, now: 0 });
+  has("category page: title", html, "<title>3D assets | Free Game Dev Assets</title>");
+  has("category page: root-relative entry link", html, 'href="../../entry/x/"');
+  has("category page: canonical", html, '<link rel="canonical" href="https://s/x/category/3d/" />');
+  has("category page: one h1", html, "<h1>3D</h1>");
+  has("category page: count and blurb", html, "1 source · Models, scans, PBR textures");
+  has("category page: search link back", html, 'href="../../?cat=3d#catalog"');
+  eq("category page: no more link", html.includes("group-more"), false);
+  has("category page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
+  has("category page: loads the view toggle module", html, '<script type="module" src="../../category.js"></script>');
+  eq("category page: page checks pass", checkPage(html, { file: "category/3d/index.html", kindOf: () => "file" }).join(), "");
+}
+has("sitemap: category pages", sitemapXml({ site: { siteUrl: "https://s/" }, entries: [], stacks: [], stamp: "2026-10-23", categories: [{ id: "3d", lastmod: "2026-10-23" }] }), "<loc>https://s/category/3d/</loc>");
+
+// Site refresh: hero filmstrip.
+import { filmstripHtml } from "./cards.mjs";
+has("filmstrip: links and alt", filmstripHtml([{ id: "x", name: "X Pack", thumb: { path: "thumbs/x.webp", width: 640, height: 400 } }], { root: "./" }), '<a href="./entry/x/"><img src="./thumbs/x.webp" width="640" height="400" alt="X Pack" loading="eager"');
+eq("filmstrip: empty when nothing to show", filmstripHtml([], { root: "" }), "");
+{
+  const nine = Array.from({ length: 9 }, (_, i) => ({ id: `e${i}`, name: `E${i}`, thumb: { path: `thumbs/e${i}.webp`, width: 640, height: 400 } }));
+  const strip = filmstripHtml(nine, { root: "" });
+  eq("filmstrip: first three eager, rest lazy", `${(strip.match(/loading="eager"/g) || []).length}/${(strip.match(/loading="lazy"/g) || []).length}`, "3/6");
+  has("filmstrip: labelled list", strip, '<ul class="filmstrip" aria-label="A few of the assets inside">');
+}
+
+// Site refresh: entry page strip and actions; stack picks as cards.
+{
+  const siteR = { title: "T", tagline: "t", siteUrl: "https://s/", repo: "https://r" };
+  const common = { leadHtml: "<p>l</p>", restHtml: "<p>r</p>", deprecatedReasonHtml: null, prev: null, next: null, site: siteR, categoryLabel: "3D", stamp: "2026-10-23", total: 1, hasCard: false, now: 0 };
+  const html = entryPageHtml({ ...common, entry: { ...cardBase, thumb: { path: "thumbs/x.webp", width: 640, height: 400 }, publisher: "Kenney" } });
+  has("entry page: strip image", html, '<figure class="entry-strip"><img class="entry-thumb-img" src="../../thumbs/x.webp"');
+  has("entry page: credit line", html, '<figcaption class="entry-credit">Preview image from Kenney, shown under CC0</figcaption>');
+  has("entry page: one primary action", html, '<p class="page-actions"><a class="btn" href="https://x.itch.io/p"');
+  has("entry page: secondary links row", html, '<p class="page-links">');
+  eq("entry page: ghost buttons gone from actions", (html.match(/class="btn-ghost"/g) || []).length, 0);
+  has("entry page: shortlist toggle kept", html, 'class="link-button shortlist-toggle" data-shortlist="x"');
+  has("entry page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
+  eq("entry page: no strip without thumb", entryPageHtml({ ...common, entry: cardBase }).includes("entry-strip"), false);
+  eq("entry page: page checks pass with strip", checkPage(html, { file: "entry/x/index.html", kindOf: () => "file" }).join(), "");
+}
+{
+  const html = sp();
+  has("stack page: pick renders as card", html, 'class="entry-card" data-view="cards"');
+  has("stack page: pick need leads the card", html, '<p class="pick-need">Tiles</p>');
+  has("stack page: pick reason trails the card", html, '<p class="pick-why">Why <em>a</em>.</p>');
+  has("stack page: pick list is the card grid", html, '<ul class="pick-list entry-list">');
+  has("stack page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
+}
+
+// Final review: heading levels never skip on category and stack pages.
+has("cards: heading level option", groupHeadingHtml({ cat: "3d", label: "3D", count: 1, view: "cards", level: 2 }), '<h2 class="group-heading" id="group-3d"');
+has("cards: title level option", entryCardHtml(cardBase, { root: "", repo: "https://r", now: 0, view: "cards", titleLevel: 3 }), '<h3><a class="entry-link" href="entry/x/"');
+{
+  const html = categoryPageHtml({ cat: "3d", meta: { label: "3D", blurb: "b", view: "cards" }, entries: [cardBase], site: { title: "T", tagline: "t", siteUrl: "https://s/", repo: "https://r" }, stamp: "2026-10-23", total: 1, hasCard: false, now: 0 });
+  has("category page: group heading is h2 under the h1", html, '<h2 class="group-heading"');
+  has("category page: card titles are h3", html, '<h3><a class="entry-link"');
+  eq("category page: no h4", html.includes("<h4"), false);
+}
+{
+  const html = sp();
+  has("stack page: card titles are h3 under the section h2", html, '<h3><a class="entry-link"');
+  eq("stack page: no h4", html.includes("<h4"), false);
 }
 
 /* report (keep last) ------------------------------------------------------ */

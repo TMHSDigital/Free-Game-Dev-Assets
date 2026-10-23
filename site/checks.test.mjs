@@ -773,10 +773,30 @@ rejects("V25 rejects a body with no heading", checkTitleMatchesName("bad.md", { 
 accepts("V25 accepts a matching heading", checkTitleMatchesName("ok.md", { name: "KayKit (Kay Lousberg)" }, "\n# KayKit (Kay Lousberg)\n\n## Notes"));
 accepts("V25 ignores a missing name", checkTitleMatchesName("ok.md", {}, "# Anything"));
 
+/* Thumbnails: the manifest, the files and the gate must agree ------------- */
+import { checkPreviewField, checkThumbManifest } from "./checks.mjs";
+{
+  const okEntry = { id: "a", license: "CC0", status: "active", url: "https://a.itch.io/x" };
+  const manifest = { thumbs: { a: { fetched: "2026-10-01", license: "CC0", hash: "h", width: 640, height: 400, source: "https://a.itch.io/x", image: "https://i/a.png" } } };
+  accepts("thumbs manifest: file and record agree", checkThumbManifest(manifest, new Map([["a", okEntry]]), ["a.webp"]));
+  accepts("thumbs manifest: nothing at all", checkThumbManifest(null, new Map([["a", okEntry]]), []));
+  rejects("thumbs manifest: file without record", checkThumbManifest({ thumbs: {} }, new Map([["a", okEntry]]), ["a.webp"]), "site/public/thumbs/a.webp has no record in site/thumbs.json");
+  rejects("thumbs manifest: record without file", checkThumbManifest(manifest, new Map([["a", okEntry]]), []), 'site/thumbs.json has "a" but site/public/thumbs/a.webp is missing');
+  rejects("thumbs manifest: record for unknown entry", checkThumbManifest(manifest, new Map(), ["a.webp"]), 'site/thumbs.json has "a" but no catalog entry has that id');
+  rejects("thumbs manifest: rejects a thumbnail whose entry is no longer eligible", checkThumbManifest(manifest, new Map([["a", { ...okEntry, license: "custom" }]]), ["a.webp"]), 'thumbnail for "a" must be removed: licence custom is not in the preview allowlist (run node site/thumbs.mjs)');
+  accepts("thumbs manifest: licence drift between two allowed licences is not an error", checkThumbManifest(manifest, new Map([["a", { ...okEntry, license: "MIT" }]]), ["a.webp"]));
+  rejects("thumbs manifest: stray file", checkThumbManifest(manifest, new Map([["a", okEntry]]), ["a.webp", "notes.txt"]), "site/public/thumbs/notes.txt is not a <id>.webp thumbnail");
+}
+accepts("preview field: absent", checkPreviewField("ok.md", {}));
+accepts("preview field: none", checkPreviewField("ok.md", { preview: "none" }));
+accepts("preview field: https url", checkPreviewField("ok.md", { preview: "https://a/b.png" }));
+rejects("preview field: http refused", checkPreviewField("bad.md", { preview: "http://a/b.png" }), 'bad.md preview must be "none" or an https:// image URL');
+rejects("preview field: word refused", checkPreviewField("bad.md", { preview: "yes" }), 'bad.md preview must be "none" or an https:// image URL');
+
 /* ----------------------------------------------------------------------- */
 if (failures.length) {
   console.error(`checks.test failed (${failures.length}):`);
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 25 checks`);
+console.log(`checks.test ok: ${passed} assertions across 27 checks`);

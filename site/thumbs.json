@@ -1,0 +1,1733 @@
+{
+  "generated": "2026-10-23",
+  "thumbs": {
+    "3dmodelscc0-city": {
+      "source": "https://3dmodelscc0.itch.io/city-environment-pack",
+      "image": "https://img.itch.zone/aW1nLzEzOTU0ODY5LmpwZw==/original/VP5%2Fu1.jpg",
+      "fetched": "2026-10-23",
+      "hash": "4b288a9fd0a5ea51",
+      "width": 640,
+      "height": 640,
+      "license": "CC0"
+    },
+    "3dmodelscc0-guns": {
+      "source": "https://3dmodelscc0.itch.io/free-cc0-guns-explosives-pack",
+      "image": "https://img.itch.zone/aW1nLzEzODc0MzAyLnBuZw==/original/JUPtgu.png",
+      "fetched": "2026-10-23",
+      "hash": "bc6575b197f27759",
+      "width": 640,
+      "height": 406,
+      "license": "CC0"
+    },
+    "3dmodelscc0-melee-weapons": {
+      "source": "https://3dmodelscc0.itch.io/free-cc0-melee-weapons-pack",
+      "image": "https://img.itch.zone/aW1nLzEzODc0NDg4LnBuZw==/original/EDe2KN.png",
+      "fetched": "2026-10-23",
+      "hash": "3e15138d1153206c",
+      "width": 640,
+      "height": 406,
+      "license": "CC0"
+    },
+    "3dtexel": {
+      "source": "https://3dtexel.com/free-library/",
+      "image": "https://3dtexel.com/wp-content/uploads/2026/09/og-3dtexel-default.jpg",
+      "fetched": "2026-10-23",
+      "hash": "66a4f2b82166464f",
+      "width": 640,
+      "height": 336,
+      "license": "CC0"
+    },
+    "3dtexel-decals": {
+      "source": "https://3dtexel.com/decals/",
+      "image": "https://3dtexel.com/wp-content/uploads/2025/10/Untitled_Face-78-1024x1024.webp",
+      "fetched": "2026-10-23",
+      "hash": "603ae8f76d495dcc",
+      "width": 640,
+      "height": 640,
+      "license": "CC0"
+    },
+    "adventure-kid-irs": {
+      "source": "https://www.adventurekid.se/akrt/free-reverb-impulse-responses/",
+      "image": "http://www.adventurekid.se/adventurekid.png",
+      "fetched": "2026-10-23",
+      "hash": "891e1b5ef4db2d82",
+      "width": 200,
+      "height": 200,
+      "license": "CC-BY-4.0"
+    },
+    "ambientcg": {
+      "source": "https://ambientcg.com",
+      "image": "https://ambientcg.com/api/metaimage-list",
+      "fetched": "2026-10-23",
+      "hash": "032378760392ce7a",
+      "width": 640,
+      "height": 320,
+      "license": "CC0"
+    },
+    "ansimuz-industrial-parallax": {
+      "source": "https://opengameart.org/content/industrial-parallax-background",
+      "image": "https://opengameart.org/sites/default/files/parallax-industrial-anim_x2_0.gif",
+      "fetched": "2026-10-23",
+      "hash": "7bc5a8c5b4e21cee",
+      "width": 544,
+      "height": 320,
+      "license": "CC0"
+    },
+    "ansimuz-sunnyland": {
+      "source": "https://ansimuz.itch.io/sunny-land-pixel-game-art",
+      "image": "https://img.itch.zone/aW1nLzI2NTY5MjM2LnBuZw==/original/4eZFq0.png",
+      "fetched": "2026-10-23",
+      "hash": "7b916bf7c2641c64",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "armm1998-zelda-like": {
+      "source": "https://opengameart.org/content/zelda-like-tilesets-and-sprites",
+      "image": "https://opengameart.org/sites/default/files/951a7f47f87b1dbe262b27fba196f3bf.png",
+      "fetched": "2026-10-23",
+      "hash": "c7e12320d828b3a3",
+      "width": 392,
+      "height": 236,
+      "license": "CC0"
+    },
+    "atkinson-hyperlegible": {
+      "source": "https://brailleinstitute.org/freefont",
+      "image": "https://www.brailleinstitute.org/wp-content/uploads/2024/09/social_logo.jpg",
+      "fetched": "2026-10-23",
+      "hash": "603d860a40500656",
+      "width": 640,
+      "height": 336,
+      "license": "SIL OFL"
+    },
+    "audacity": {
+      "source": "https://www.audacityteam.org",
+      "image": "https://www.audacityteam.org/og-image.png",
+      "fetched": "2026-10-23",
+      "hash": "95b4fc8f75c4e8d3",
+      "width": 640,
+      "height": 336,
+      "license": "GPL-3.0"
+    },
+    "barnabe-wild-lowpoly-rigged": {
+      "source": "https://barnabe-wild.itch.io/low-poly-rigged-character",
+      "image": "https://img.itch.zone/aW1nLzI0Nzk2MzkwLnBuZw==/original/kmBK0X.png",
+      "fetched": "2026-10-23",
+      "hash": "a1ca4628998dacf7",
+      "width": 640,
+      "height": 506,
+      "license": "CC0"
+    },
+    "bigsoundbank": {
+      "source": "https://bigsoundbank.com/",
+      "image": "https://bigsoundbank.com/images/logo-bsb-carre-250.png",
+      "fetched": "2026-10-23",
+      "hash": "07f3e31ed12a06fc",
+      "width": 250,
+      "height": 250,
+      "license": "CC0"
+    },
+    "bit-bonanza": {
+      "source": "https://v3x3d.itch.io/bit-bonanza",
+      "image": "https://img.itch.zone/aW1nLzE0MDc4MTk5LnBuZw==/original/m5IIMK.png",
+      "fetched": "2026-10-23",
+      "hash": "602dae6354f114fa",
+      "width": 550,
+      "height": 400,
+      "license": "CC0"
+    },
+    "blender": {
+      "source": "https://www.blender.org",
+      "image": "https://www.blender.org/wp-content/uploads/2026/07/splash-overgrown-480x270.webp",
+      "fetched": "2026-10-23",
+      "hash": "a95f92b49425c30e",
+      "width": 480,
+      "height": 270,
+      "license": "GPL-2.0-or-later"
+    },
+    "blender-studio-critter": {
+      "source": "https://studio.blender.org/characters/critter/",
+      "image": "https://studio.blender.org/files/public/thumbnail/74/ea/74ead8db4c04dbfa2f64efd401b43841_m.webp",
+      "fetched": "2026-10-23",
+      "hash": "1271b7d8c429c418",
+      "width": 640,
+      "height": 360,
+      "license": "CC-BY-4.0"
+    },
+    "blender-studio-critter-evolved": {
+      "source": "https://studio.blender.org/characters/critter-evolved/",
+      "image": "https://studio.blender.org/files/public/thumbnail/cf/bd/cfbdf4f8b75e85b6eb18430201660e86_m.webp",
+      "fetched": "2026-10-23",
+      "hash": "2409e008fd0768c7",
+      "width": 640,
+      "height": 360,
+      "license": "CC-BY-4.0"
+    },
+    "blender-studio-one": {
+      "source": "https://studio.blender.org/characters/one/",
+      "image": "https://studio.blender.org/files/public/thumbnail/b8/a0/b8a07d5ffaafb75655f637caaa020caf_m.webp",
+      "fetched": "2026-10-23",
+      "hash": "b8086e54e0ebafa4",
+      "width": 640,
+      "height": 360,
+      "license": "CC-BY-4.0"
+    },
+    "blender-studio-rain": {
+      "source": "https://studio.blender.org/characters/rain/",
+      "image": "https://studio.blender.org/files/public/thumbnail/ee/a7/eea73e55dba1cea31c09848df6a794b2-4_m.webp",
+      "fetched": "2026-10-23",
+      "hash": "7cbd3fd50d4d886b",
+      "width": 640,
+      "height": 360,
+      "license": "CC-BY-4.0"
+    },
+    "blender-studio-space-creatures": {
+      "source": "https://studio.blender.org/characters/space-creatures/",
+      "image": "https://studio.blender.org/files/public/thumbnail/e3/8b/e38bb611933ce41bd2aadc485253a996_m.webp",
+      "fetched": "2026-10-23",
+      "hash": "07766b8eef466a72",
+      "width": 640,
+      "height": 360,
+      "license": "CC-BY-4.0"
+    },
+    "blockbench": {
+      "source": "https://www.blockbench.net",
+      "image": "https://blockbench.net/logo_banner.png",
+      "fetched": "2026-10-23",
+      "hash": "764a137e99317e7e",
+      "width": 640,
+      "height": 334,
+      "license": "GPL-3.0"
+    },
+    "bondoki-rotating-gems": {
+      "source": "https://opengameart.org/content/rotating-gems-for-match3",
+      "image": "https://opengameart.org/sites/default/files/gem_bomb_rainbow_preview.png",
+      "fetched": "2026-10-23",
+      "hash": "5e7c35e1f36d502d",
+      "width": 640,
+      "height": 384,
+      "license": "CC0"
+    },
+    "bootstrap-icons": {
+      "source": "https://icons.getbootstrap.com/",
+      "image": "https://icons.getbootstrap.com/assets/img/bootstrap-icons-social.png",
+      "fetched": "2026-10-23",
+      "hash": "60f2a61e9b928e84",
+      "width": 640,
+      "height": 320,
+      "license": "MIT"
+    },
+    "bosca-ceoil-blue": {
+      "source": "https://yurisizov.itch.io/boscaceoil-blue",
+      "image": "https://img.itch.zone/aW1nLzIwMTU4Mjg2LnBuZw==/original/u5MO49.png",
+      "fetched": "2026-10-23",
+      "hash": "2051dde32c980877",
+      "width": 640,
+      "height": 336,
+      "license": "MIT"
+    },
+    "budgetpixel-sfx": {
+      "source": "https://budgetpixel.com/sfx",
+      "image": "https://cdn.budgetpixel.com/audio-library/og/sfx.jpg",
+      "fetched": "2026-10-23",
+      "hash": "484768333735675d",
+      "width": 640,
+      "height": 336,
+      "license": "CC-BY-4.0"
+    },
+    "charge-materials": {
+      "source": "https://studio.blender.org/projects/charge/gallery/?asset=7249",
+      "image": "https://studio.blender.org/files/public/thumbnail/a3/9b/a39bdf534265bd25a97a61c805e53fcc_m.webp",
+      "fetched": "2026-10-23",
+      "hash": "6c30369b137fbd48",
+      "width": 640,
+      "height": 360,
+      "license": "CC-BY-4.0"
+    },
+    "chiptone": {
+      "source": "https://sfbgames.itch.io/chiptone",
+      "image": "https://img.itch.zone/aW1nLzM3NzY1NDIucG5n/original/yFTn8t.png",
+      "fetched": "2026-10-23",
+      "hash": "1c34852edbcae3cd",
+      "width": 603,
+      "height": 500,
+      "license": "CC0"
+    },
+    "colmap": {
+      "source": "https://colmap.github.io",
+      "image": "https://colmap.github.io/_static/og-image.png",
+      "fetched": "2026-10-23",
+      "hash": "8ee32197e8816846",
+      "width": 640,
+      "height": 336,
+      "license": "BSD-3-Clause"
+    },
+    "congusbongus-footsteps-surfaces": {
+      "source": "https://opengameart.org/content/footsteps-on-different-surfaces",
+      "image": "https://opengameart.org/sites/default/files/styles/audio_with_background/public/audio_preview/preview_43.ogg.png",
+      "fetched": "2026-10-23",
+      "hash": "1f583093416bf22a",
+      "width": 160,
+      "height": 120,
+      "license": "CC-BY-3.0"
+    },
+    "dareful": {
+      "source": "https://dareful.com/",
+      "image": "https://dareful.com/wp-content/uploads/2020/11/tokyosunrise1000.jpg",
+      "fetched": "2026-10-23",
+      "hash": "922164bce2b7fa1e",
+      "width": 640,
+      "height": 356,
+      "license": "CC-BY-4.0"
+    },
+    "departure-mono": {
+      "source": "https://departuremono.com",
+      "image": "https://departuremono.com/assets/departure-og.png",
+      "fetched": "2026-10-23",
+      "hash": "c584b9e54b9a2660",
+      "width": 640,
+      "height": 336,
+      "license": "SIL OFL"
+    },
+    "eric-skiff-resistor-anthems": {
+      "source": "https://ericskiff.com/music/",
+      "image": "http://ericskiff.com/assets/resistor-anthems-cover_fb.png",
+      "fetched": "2026-10-23",
+      "hash": "ea864b9a57b46a08",
+      "width": 640,
+      "height": 336,
+      "license": "CC-BY-4.0"
+    },
+    "famistudio": {
+      "source": "https://famistudio.org/",
+      "image": "https://famistudio.org/twitter_card.png",
+      "fetched": "2026-10-23",
+      "hash": "df269b39ce1d0fc8",
+      "width": 640,
+      "height": 336,
+      "license": "MIT"
+    },
+    "filmmusic-ende": {
+      "source": "https://ende.app/en/standard-license",
+      "image": "https://ende.app/images/logo_light.png",
+      "fetched": "2026-10-23",
+      "hash": "c40915a986f3e682",
+      "width": 221,
+      "height": 100,
+      "license": "CC-BY-4.0"
+    },
+    "gameart2d-freebies": {
+      "source": "https://www.gameart2d.com/freebies.html",
+      "image": "https://www.gameart2d.com/uploads/3/0/9/1/30917885/nature-tileset-bundle-2_orig.png",
+      "fetched": "2026-10-23",
+      "hash": "708e6fa7c7d4f936",
+      "width": 640,
+      "height": 234,
+      "license": "CC0"
+    },
+    "gboxmikefozzy-footsteps": {
+      "source": "https://opengameart.org/content/footsteps-0",
+      "image": "https://opengameart.org/sites/default/files/styles/audio_with_background/public/audio_preview/01-footstep.ogg.png",
+      "fetched": "2026-10-23",
+      "hash": "1f583093416bf22a",
+      "width": 160,
+      "height": 120,
+      "license": "CC0"
+    },
+    "gebco": {
+      "source": "https://www.gebco.net/data-products/gridded-bathymetry-data",
+      "image": "https://www.gebco.net/profiles/custom/seabed/themes/seaboot/images/home-page-grid.jpg",
+      "fetched": "2026-10-23",
+      "hash": "a54ee349430df2d9",
+      "width": 640,
+      "height": 426,
+      "license": "public-domain"
+    },
+    "ggbotnet-fonts-cc0": {
+      "source": "https://ggbot.itch.io/ggbotnet-fonts-cc0",
+      "image": "https://img.itch.zone/aW1nLzIxMzQxMTcxLmpwZw==/original/pYJAle.jpg",
+      "fetched": "2026-10-23",
+      "hash": "aecc0291024b5fb9",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "ggbotnet-psx-cars": {
+      "source": "https://ggbot.itch.io/psx-style-cars",
+      "image": "https://img.itch.zone/aW1nLzEwMDE0MjA3LmpwZw==/original/E2vCgZ.jpg",
+      "fetched": "2026-10-23",
+      "hash": "66e17f6fec4bd433",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "gimp": {
+      "source": "https://www.gimp.org",
+      "image": "https://www.gimp.org/images/frontpage/wilber-big.png",
+      "fetched": "2026-10-23",
+      "hash": "3c3d1e89d0385fae",
+      "width": 200,
+      "height": 200,
+      "license": "GPL-3.0-or-later"
+    },
+    "gltf-transform": {
+      "source": "https://gltf-transform.dev",
+      "image": "https://gltf-transform.dev/media/hero.jpg",
+      "fetched": "2026-10-23",
+      "hash": "541ac4ca5ab48e5c",
+      "width": 640,
+      "height": 320,
+      "license": "MIT"
+    },
+    "godot-engine": {
+      "source": "https://godotengine.org",
+      "image": "https://godotengine.org/assets/share-image.jpg",
+      "fetched": "2026-10-23",
+      "hash": "bddf5c22d60408b5",
+      "width": 640,
+      "height": 336,
+      "license": "MIT"
+    },
+    "gustavo-saraiva-city-parallax": {
+      "source": "https://opengameart.org/content/city-parallax-pixel-art",
+      "image": "https://opengameart.org/sites/default/files/complete1.png",
+      "fetched": "2026-10-23",
+      "hash": "a90332a357cae452",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "heroicons": {
+      "source": "https://heroicons.com/",
+      "image": "https://heroicons.com/_next/static/media/social-card.fefc68e0.jpg",
+      "fetched": "2026-10-23",
+      "hash": "96ff14bb22756cb1",
+      "width": 640,
+      "height": 320,
+      "license": "MIT"
+    },
+    "inter": {
+      "source": "https://rsms.me/inter/",
+      "image": "https://rsms.me/inter/res/share.png",
+      "fetched": "2026-10-23",
+      "hash": "ebf0477fd8e744e4",
+      "width": 640,
+      "height": 336,
+      "license": "SIL OFL"
+    },
+    "jangafx-free-vdb": {
+      "source": "https://jangafx.com/software/embergen/download/free-vdb-animations/",
+      "image": "https://jangafx.com/opengraph-image.png?opengraph-image.2xwmfd9hv7l5u.png",
+      "fetched": "2026-10-23",
+      "hash": "1befe9da03f91265",
+      "width": 640,
+      "height": 640,
+      "license": "CC0"
+    },
+    "jetbrains-mono": {
+      "source": "https://www.jetbrains.com/lp/mono/",
+      "image": "https://www.jetbrains.com/lp/mono/static/preview-0d5da2c7dc8a75121b80e025c50e3bd4.png",
+      "fetched": "2026-10-23",
+      "hash": "d7db3e085cbb13de",
+      "width": 640,
+      "height": 400,
+      "license": "SIL OFL"
+    },
+    "jsfxr": {
+      "source": "https://sfxr.me",
+      "image": "https://sfxr.me/header.png",
+      "fetched": "2026-10-23",
+      "hash": "c27db4a334d368a9",
+      "width": 640,
+      "height": 320,
+      "license": "Unlicense"
+    },
+    "kaykit": {
+      "source": "https://kaylousberg.itch.io",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3Mzg0LnBuZw==/508x254%23mb/1N%2F0%2Fw.png",
+      "fetched": "2026-10-23",
+      "hash": "6b1218e33852f249",
+      "width": 508,
+      "height": 254,
+      "license": "CC0"
+    },
+    "kaykit-adventurers": {
+      "source": "https://kaylousberg.itch.io/kaykit-adventurers",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzQzLnBuZw==/original/tHjzpn.png",
+      "fetched": "2026-10-23",
+      "hash": "3e497e2adc42e106",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-block-bits": {
+      "source": "https://kaylousberg.itch.io/block-bits",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzQ1LmpwZw==/original/juGjYr.jpg",
+      "fetched": "2026-10-23",
+      "hash": "99e3b5a540f37c3a",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-character-animations": {
+      "source": "https://kaylousberg.itch.io/kaykit-character-animations",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzQ3LnBuZw==/original/bxL41o.png",
+      "fetched": "2026-10-23",
+      "hash": "5aec661f789b9ea7",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-dungeon-pack": {
+      "source": "https://kaylousberg.itch.io/kaykit-dungeon-pack",
+      "image": "https://img.itch.zone/aW1nLzI4NTI5NzE4LnBuZw==/original/I%2BXroR.png",
+      "fetched": "2026-10-23",
+      "hash": "68f04d3c543a5fc2",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-furniture-bits": {
+      "source": "https://kaylousberg.itch.io/furniture-bits",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzU1LmpwZw==/original/2SQzrY.jpg",
+      "fetched": "2026-10-23",
+      "hash": "a1c10e87d3bd6c2a",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-halloween-bits": {
+      "source": "https://kaylousberg.itch.io/halloween-bits",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzU3LmpwZw==/original/%2BzR4v%2B.jpg",
+      "fetched": "2026-10-23",
+      "hash": "903337db4f19aa17",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-holiday-bits": {
+      "source": "https://kaylousberg.itch.io/holiday-bits",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzU5LnBuZw==/original/Y2l7xd.png",
+      "fetched": "2026-10-23",
+      "hash": "fb4fc7aca4b7a91b",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-platformer": {
+      "source": "https://kaylousberg.itch.io/kaykit-platformer",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzY3LmpwZw==/original/zhYNuM.jpg",
+      "fetched": "2026-10-23",
+      "hash": "1805c0fba1ce93fe",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-prototype-bits": {
+      "source": "https://kaylousberg.itch.io/prototype-bits",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzcwLmpwZw==/original/T%2BCqzF.jpg",
+      "fetched": "2026-10-23",
+      "hash": "804144e5e02fd0c7",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-resource-bits": {
+      "source": "https://kaylousberg.itch.io/resource-bits",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3Mzc0LmpwZw==/original/xaehI7.jpg",
+      "fetched": "2026-10-23",
+      "hash": "3051f0f01e481e14",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-restaurant-bits": {
+      "source": "https://kaylousberg.itch.io/restaurant-bits",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3Mzc1LmpwZw==/original/sLo%2BR9.jpg",
+      "fetched": "2026-10-23",
+      "hash": "42748d8fd03be3f3",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kaykit-skeletons": {
+      "source": "https://kaylousberg.itch.io/kaykit-skeletons",
+      "image": "https://img.itch.zone/aW1nLzI4MzY3MzgxLmpwZw==/original/7tCK3g.jpg",
+      "fetched": "2026-10-23",
+      "hash": "89139f15e1cd46ea",
+      "width": 640,
+      "height": 508,
+      "license": "CC0"
+    },
+    "kenney": {
+      "source": "https://kenney.nl",
+      "image": "https://kenney.nl/data/img/kenney-promo.png",
+      "fetched": "2026-10-23",
+      "hash": "f719591c31137707",
+      "width": 600,
+      "height": 300,
+      "license": "CC0"
+    },
+    "kenney-1-bit-pack": {
+      "source": "https://kenney.nl/assets/1-bit-pack",
+      "image": "https://kenney.nl/media/pages/assets/1-bit-pack/263abe0f15-1677578508/sample_fantasy.png",
+      "fetched": "2026-10-23",
+      "hash": "974528ba1ff2b939",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-boardgame-pack": {
+      "source": "https://kenney.nl/assets/boardgame-pack",
+      "image": "https://kenney.nl/media/pages/assets/boardgame-pack/993d44b363-1677667639/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "a4553e434fee9090",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-car-kit": {
+      "source": "https://kenney.nl/assets/car-kit",
+      "image": "https://kenney.nl/media/pages/assets/car-kit/81f9d77bc7-1775131953/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "a6241f3f50ce9f93",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-castle-kit": {
+      "source": "https://kenney.nl/assets/castle-kit",
+      "image": "https://kenney.nl/media/pages/assets/castle-kit/b047abca12-1711543631/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "e827745f432d65e5",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-city-kit-commercial": {
+      "source": "https://kenney.nl/assets/city-kit-commercial",
+      "image": "https://kenney.nl/media/pages/assets/city-kit-commercial/ca60ea54ef-1747481474/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "85b192aa4ab3177d",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-city-kit-industrial": {
+      "source": "https://kenney.nl/assets/city-kit-industrial",
+      "image": "https://kenney.nl/media/pages/assets/city-kit-industrial/18dcc5d6ce-1788171818/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "da7d3eaffba43b00",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-city-kit-roads": {
+      "source": "https://kenney.nl/assets/city-kit-roads",
+      "image": "https://kenney.nl/media/pages/assets/city-kit-roads/8021370415-1787042780/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "fd2a6725305726b7",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-city-kit-suburban": {
+      "source": "https://kenney.nl/assets/city-kit-suburban",
+      "image": "https://kenney.nl/media/pages/assets/city-kit-suburban/8c3d4e93a3-1745479402/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "5aa4aa641d466b1a",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-cursor-pack": {
+      "source": "https://kenney.nl/assets/cursor-pack",
+      "image": "https://kenney.nl/media/pages/assets/cursor-pack/20a4fec3b6-1717599288/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "1e044464d692a941",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-factory-kit": {
+      "source": "https://kenney.nl/assets/factory-kit",
+      "image": "https://kenney.nl/media/pages/assets/factory-kit/7e1e831724-1777639590/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "81e6ddc15ee60af6",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-fantasy-town-kit": {
+      "source": "https://kenney.nl/assets/fantasy-town-kit",
+      "image": "https://kenney.nl/media/pages/assets/fantasy-town-kit/c13eafebab-1754222363/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "ff91a6ef330b802f",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-fonts": {
+      "source": "https://kenney.nl/assets/kenney-fonts",
+      "image": "https://kenney.nl/media/pages/assets/kenney-fonts/703183582c-1677661704/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "c6b08203a086d445",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-food-kit": {
+      "source": "https://kenney.nl/assets/food-kit",
+      "image": "https://kenney.nl/media/pages/assets/food-kit/7a37477a9c-1719418523/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "5824d6462448e59a",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-furniture-kit": {
+      "source": "https://kenney.nl/assets/furniture-kit",
+      "image": "https://kenney.nl/media/pages/assets/furniture-kit/4573c6a40b-1677580842/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "db093becbb7f5682",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-graveyard-kit": {
+      "source": "https://kenney.nl/assets/graveyard-kit",
+      "image": "https://kenney.nl/media/pages/assets/graveyard-kit/9f3be82eb6-1760691801/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "152abc150ca63859",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-impact-sounds": {
+      "source": "https://kenney.nl/assets/impact-sounds",
+      "image": "https://kenney.nl/media/pages/assets/impact-sounds/37d145475f-1677589720/audio_impact.png",
+      "fetched": "2026-10-23",
+      "hash": "e2356ea48cdf8f90",
+      "width": 640,
+      "height": 384,
+      "license": "CC0"
+    },
+    "kenney-input-prompts": {
+      "source": "https://kenney.nl/assets/input-prompts",
+      "image": "https://kenney.nl/media/pages/assets/input-prompts/521ca9b941-1744026983/preview-xbox-series.png",
+      "fetched": "2026-10-23",
+      "hash": "9b4b2efb7a57bdd7",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-interface-sounds": {
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "image": "https://kenney.nl/media/pages/assets/interface-sounds/428fc5f14c-1677589445/preview_interface.png",
+      "fetched": "2026-10-23",
+      "hash": "3cafa9df24ff5bc1",
+      "width": 640,
+      "height": 384,
+      "license": "CC0"
+    },
+    "kenney-light-masks": {
+      "source": "https://kenney.nl/assets/light-masks",
+      "image": "https://kenney.nl/media/pages/assets/light-masks/718ab296a1-1775631590/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "39f575515c791f1d",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-micro-roguelike": {
+      "source": "https://kenney.nl/assets/micro-roguelike",
+      "image": "https://kenney.nl/media/pages/assets/micro-roguelike/f2c3725ce4-1677578235/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "94117e63df4ad55a",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-mini-arena": {
+      "source": "https://kenney.nl/assets/mini-arena",
+      "image": "https://kenney.nl/media/pages/assets/mini-arena/acc1e8d98e-1709220747/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "d62d922b6cab8cb9",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-mini-dungeon": {
+      "source": "https://kenney.nl/assets/mini-dungeon",
+      "image": "https://kenney.nl/media/pages/assets/mini-dungeon/5b23e91c6e-1785314288/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "7a65382e432f2730",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-mini-forest": {
+      "source": "https://kenney.nl/assets/mini-forest",
+      "image": "https://kenney.nl/media/pages/assets/mini-forest/cb98284e11-1784024076/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "eecf4eb023bfaabb",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-mini-skate": {
+      "source": "https://kenney.nl/assets/mini-skate",
+      "image": "https://kenney.nl/media/pages/assets/mini-skate/f6068b9ce8-1791798662/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "5f9076991a3a2ed3",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-modular-cave-kit": {
+      "source": "https://kenney.nl/assets/modular-cave-kit",
+      "image": "https://kenney.nl/media/pages/assets/modular-cave-kit/ced1b74dc1-1783667089/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "01350e2604223b17",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-modular-dungeon-kit": {
+      "source": "https://kenney.nl/assets/modular-dungeon-kit",
+      "image": "https://kenney.nl/media/pages/assets/modular-dungeon-kit/fe4b7d1cba-1771926047/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "09d8cbc0c727cda9",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-modular-space-kit": {
+      "source": "https://kenney.nl/assets/modular-space-kit",
+      "image": "https://kenney.nl/media/pages/assets/modular-space-kit/0d6aef3da9-1771146082/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "79440c5bbf7f2bd4",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-music-jingles": {
+      "source": "https://kenney.nl/assets/music-jingles",
+      "image": "https://kenney.nl/media/pages/assets/music-jingles/ef8668e122-1677590390/preview-5.png",
+      "fetched": "2026-10-23",
+      "hash": "ac445cab12cd6fa7",
+      "width": 640,
+      "height": 384,
+      "license": "CC0"
+    },
+    "kenney-nature-kit": {
+      "source": "https://kenney.nl/assets/nature-kit",
+      "image": "https://kenney.nl/media/pages/assets/nature-kit/656a90532f-1677698896/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "ec44c42bdbfbdfbe",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-particle-pack": {
+      "source": "https://kenney.nl/assets/particle-pack",
+      "image": "https://kenney.nl/media/pages/assets/particle-pack/d50c7fc9b6-1677578655/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "37b1b04371116a4e",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-pirate-kit": {
+      "source": "https://kenney.nl/assets/pirate-kit",
+      "image": "https://kenney.nl/media/pages/assets/pirate-kit/32cfbe372c-1771333087/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "20d32149b250f919",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-pixel-platformer": {
+      "source": "https://kenney.nl/assets/pixel-platformer",
+      "image": "https://kenney.nl/media/pages/assets/pixel-platformer/bf585643f0-1696667860/samplea.png",
+      "fetched": "2026-10-23",
+      "hash": "a27a7effeac003a3",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-pixel-vehicle-pack": {
+      "source": "https://kenney.nl/assets/pixel-vehicle-pack",
+      "image": "https://kenney.nl/media/pages/assets/pixel-vehicle-pack/f3918c8717-1677578606/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "57e6dd741e8c6b9d",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-platformer-kit": {
+      "source": "https://kenney.nl/assets/platformer-kit",
+      "image": "https://kenney.nl/media/pages/assets/platformer-kit/12fa6cafde-1775122247/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "a7eefbc9fdf56546",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-playing-cards-pack": {
+      "source": "https://kenney.nl/assets/playing-cards-pack",
+      "image": "https://kenney.nl/media/pages/assets/playing-cards-pack/449d7612dc-1677495902/preview-a.png",
+      "fetched": "2026-10-23",
+      "hash": "1bc9898948c3c2fe",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-puzzle-pack-2": {
+      "source": "https://kenney.nl/assets/puzzle-pack-2",
+      "image": "https://kenney.nl/media/pages/assets/puzzle-pack-2/8b9c51463a-1677667469/sample1.png",
+      "fetched": "2026-10-23",
+      "hash": "6cc4c7a00f0703c4",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-racing-kit": {
+      "source": "https://kenney.nl/assets/racing-kit",
+      "image": "https://kenney.nl/media/pages/assets/racing-kit/fbc58ae3cd-1677580945/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "2314cda05884e6a8",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-retro-fantasy-kit": {
+      "source": "https://kenney.nl/assets/retro-fantasy-kit",
+      "image": "https://kenney.nl/media/pages/assets/retro-fantasy-kit/624944f6df-1739977943/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "bb72b872bb8be1b4",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-retro-urban-kit": {
+      "source": "https://kenney.nl/assets/retro-urban-kit",
+      "image": "https://kenney.nl/media/pages/assets/retro-urban-kit/b9c649752d-1738147501/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "070a5b455f2d49a5",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-roguelike-characters": {
+      "source": "https://kenney.nl/assets/roguelike-characters",
+      "image": "https://kenney.nl/media/pages/assets/roguelike-characters/da661e4fb3-1677694932/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "93926049af9d0b8f",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-roguelike-rpg-pack": {
+      "source": "https://kenney.nl/assets/roguelike-rpg-pack",
+      "image": "https://kenney.nl/media/pages/assets/roguelike-rpg-pack/6b88b8d663-1677697411/sample1.png",
+      "fetched": "2026-10-23",
+      "hash": "4c8e2830be91a3bb",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-rpg-audio": {
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "image": "https://kenney.nl/media/pages/assets/rpg-audio/ce8569f2f8-1677590326/preview-4.png",
+      "fetched": "2026-10-23",
+      "hash": "08441479122ab41d",
+      "width": 640,
+      "height": 384,
+      "license": "CC0"
+    },
+    "kenney-sci-fi-sounds": {
+      "source": "https://kenney.nl/assets/sci-fi-sounds",
+      "image": "https://kenney.nl/media/pages/assets/sci-fi-sounds/112ea5fed7-1677589328/audiopreview_scifi.png",
+      "fetched": "2026-10-23",
+      "hash": "f8ece417fb91f15a",
+      "width": 640,
+      "height": 384,
+      "license": "CC0"
+    },
+    "kenney-smoke-particles": {
+      "source": "https://kenney.nl/assets/smoke-particles",
+      "image": "https://kenney.nl/media/pages/assets/smoke-particles/1b6cb144a9-1677695166/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "861a60214db4a740",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-tiny-battle": {
+      "source": "https://kenney.nl/assets/tiny-battle",
+      "image": "https://kenney.nl/media/pages/assets/tiny-battle/a33076fa44-1691487572/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "03d4fbcc8a1f08be",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-tiny-dungeon": {
+      "source": "https://kenney.nl/assets/tiny-dungeon",
+      "image": "https://kenney.nl/media/pages/assets/tiny-dungeon/8c4f705db0-1674742412/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "2b922fefcaa57289",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-tiny-town": {
+      "source": "https://kenney.nl/assets/tiny-town",
+      "image": "https://kenney.nl/media/pages/assets/tiny-town/e241a9f6c0-1674742338/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "cb909e46bf51deb2",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-tower-defense-kit": {
+      "source": "https://kenney.nl/assets/tower-defense-kit",
+      "image": "https://kenney.nl/media/pages/assets/tower-defense-kit/1f419ba88f-1726042030/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "cb75e72f6e469cdc",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-train-kit": {
+      "source": "https://kenney.nl/assets/train-kit",
+      "image": "https://kenney.nl/media/pages/assets/train-kit/625675b011-1722429699/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "2943293853c6ba25",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-ui-audio": {
+      "source": "https://kenney.nl/assets/ui-audio",
+      "image": "https://kenney.nl/media/pages/assets/ui-audio/2dbeff8f75-1677590482/preview-6.png",
+      "fetched": "2026-10-23",
+      "hash": "6f8563fd9088ec99",
+      "width": 640,
+      "height": 384,
+      "license": "CC0"
+    },
+    "kenney-ui-pack": {
+      "source": "https://kenney.nl/assets/ui-pack",
+      "image": "https://kenney.nl/media/pages/assets/ui-pack/249266460a-1718203984/sample.png",
+      "fetched": "2026-10-23",
+      "hash": "653c84028dd03c36",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kenney-watercraft-kit": {
+      "source": "https://kenney.nl/assets/watercraft-kit",
+      "image": "https://kenney.nl/media/pages/assets/watercraft-kit/0a7953e9b7-1713354133/preview.png",
+      "fetched": "2026-10-23",
+      "hash": "da2a224fff43d479",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "kokoro-82m": {
+      "source": "https://huggingface.co/hexgrad/Kokoro-82M",
+      "image": "https://cdn-thumbnails.huggingface.co/social-thumbnails/models/hexgrad/Kokoro-82M.png",
+      "fetched": "2026-10-23",
+      "hash": "225c2e92e21c10c7",
+      "width": 640,
+      "height": 346,
+      "license": "Apache-2.0"
+    },
+    "ldtk": {
+      "source": "https://ldtk.io",
+      "image": "https://ldtk.io/wp-content/uploads/2021/05/open-graph.png",
+      "fetched": "2026-10-23",
+      "hash": "2dfe074f2d40acab",
+      "width": 640,
+      "height": 194,
+      "license": "MIT"
+    },
+    "lucide-icons": {
+      "source": "https://lucide.dev/",
+      "image": "https://lucide.dev/og.png",
+      "fetched": "2026-10-23",
+      "hash": "8a1dac66c7908880",
+      "width": 640,
+      "height": 336,
+      "license": "ISC"
+    },
+    "luizmelo-evil-wizard": {
+      "source": "https://luizmelo.itch.io/evil-wizard",
+      "image": "https://img.itch.zone/aW1nLzQxMjk4MDcuZ2lm/original/%2BiUaGa.gif",
+      "fetched": "2026-10-23",
+      "hash": "f316adc176f4f5b4",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "luizmelo-martial-hero": {
+      "source": "https://luizmelo.itch.io/martial-hero",
+      "image": "https://img.itch.zone/aW1nLzM1NDY4MjMuZ2lm/original/rHDxl7.gif",
+      "fetched": "2026-10-23",
+      "hash": "f3e464b7eb96d84c",
+      "width": 630,
+      "height": 498,
+      "license": "CC0"
+    },
+    "luizmelo-monsters-creatures-fantasy": {
+      "source": "https://luizmelo.itch.io/monsters-creatures-fantasy",
+      "image": "https://img.itch.zone/aW1nLzI5Njc3MzAuZ2lm/original/aYv6md.gif",
+      "fetched": "2026-10-23",
+      "hash": "9df1d872a92ded60",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "material-maker": {
+      "source": "https://www.materialmaker.org",
+      "image": "https://www.materialmaker.org/data/materials/material_61.webp",
+      "fetched": "2026-10-23",
+      "hash": "b92c1570511125ee",
+      "width": 256,
+      "height": 256,
+      "license": "MIT"
+    },
+    "meshroom": {
+      "source": "https://alicevision.org",
+      "image": "https://alicevision.org/img/home_lion.jpg",
+      "fetched": "2026-10-23",
+      "hash": "e6d3b69aaddee89b",
+      "width": 640,
+      "height": 256,
+      "license": "MPL-2.0"
+    },
+    "monogram": {
+      "source": "https://datagoblin.itch.io/monogram",
+      "image": "https://img.itch.zone/aW1nLzE3MjQyNDY3LnBuZw==/original/j47gjt.png",
+      "fetched": "2026-10-23",
+      "hash": "e14fbacf0cbf4656",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "nasa-3d-resources": {
+      "source": "https://science.nasa.gov/3d-resources/",
+      "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/web/images/3d-portal-top-background.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+      "fetched": "2026-10-23",
+      "hash": "66dd15496f6f2045",
+      "width": 640,
+      "height": 360,
+      "license": "public-domain"
+    },
+    "nasadem": {
+      "source": "https://www.earthdata.nasa.gov/data/catalog/lpcloud-nasadem-hgt-001",
+      "image": "https://earthdata.nasa.gov/s3fs-public/2024-09/earthdata-default-4-th.jpg?VersionId=sTLhNnXuuAKMpL_J3.N4HsBXKSQJQhVN",
+      "fetched": "2026-10-23",
+      "hash": "20a24c2dea07e36e",
+      "width": 640,
+      "height": 480,
+      "license": "CC0"
+    },
+    "ninja-adventure": {
+      "source": "https://pixel-boy.itch.io/ninja-adventure-asset-pack",
+      "image": "https://img.itch.zone/aW1nLzI1MDI5NTg3LmdpZg==/original/ISTIYS.gif",
+      "fetched": "2026-10-23",
+      "hash": "510b32ee28cb6d9c",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "normalpainter": {
+      "source": "https://winteralexander.itch.io/normalpainter",
+      "image": "https://img.itch.zone/aW1nLzU2ODU4ODgucG5n/original/MoWXdi.png",
+      "fetched": "2026-10-23",
+      "hash": "a4ff0aa423fdd984",
+      "width": 630,
+      "height": 500,
+      "license": "MIT"
+    },
+    "oga-fps-arms-rigged": {
+      "source": "https://opengameart.org/content/fps-arms-rigged-only",
+      "image": "https://opengameart.org/sites/default/files/fps-arms-1.jpg",
+      "fetched": "2026-10-23",
+      "hash": "6b68da03ede2040e",
+      "width": 620,
+      "height": 620,
+      "license": "CC0"
+    },
+    "ogmo-editor": {
+      "source": "https://ogmo-editor-3.github.io/",
+      "image": "https://raw.githubusercontent.com/Ogmo-Editor-3/Ogmo-Editor-3.github.io/master/img/cover.png",
+      "fetched": "2026-10-23",
+      "hash": "a6b4248a9737e050",
+      "width": 630,
+      "height": 500,
+      "license": "MIT"
+    },
+    "open-hdri": {
+      "source": "https://openhdri.org",
+      "image": "https://openhdri.org/og-image.jpg",
+      "fetched": "2026-10-23",
+      "hash": "aa3e1ecc76819efe",
+      "width": 640,
+      "height": 342,
+      "license": "CC0"
+    },
+    "openmpt": {
+      "source": "https://openmpt.org/",
+      "image": "https://openmpt.org/img/logo256.png",
+      "fetched": "2026-10-23",
+      "hash": "0e895640f2aae918",
+      "width": 256,
+      "height": 256,
+      "license": "BSD-3-Clause"
+    },
+    "openpeeps": {
+      "source": "https://www.openpeeps.com/",
+      "image": "https://cdn.prod.website-files.com/5e51b3b0337309d672efd94c/5e51ce05258ffe802886ef21_cover-1.png",
+      "fetched": "2026-10-23",
+      "hash": "955dd04bb55a84d3",
+      "width": 640,
+      "height": 434,
+      "license": "CC0"
+    },
+    "opentoonz": {
+      "source": "https://opentoonz.github.io/e/",
+      "image": "https://opentoonz.github.io/e/img/ogp_e.jpg",
+      "fetched": "2026-10-23",
+      "hash": "8add09c46a13c173",
+      "width": 640,
+      "height": 336,
+      "license": "BSD-3-Clause"
+    },
+    "orbitron": {
+      "source": "https://www.theleagueofmoveabletype.com/orbitron",
+      "image": "https://www.theleagueofmoveabletype.com/screenshots/orbitron.webp",
+      "fetched": "2026-10-23",
+      "hash": "52944413edc83b71",
+      "width": 640,
+      "height": 336,
+      "license": "SIL OFL"
+    },
+    "osm2world": {
+      "source": "https://osm2world.org",
+      "image": "https://osm2world.org/img/sharing-default.jpg",
+      "fetched": "2026-10-23",
+      "hash": "93420cf7a3133d07",
+      "width": 640,
+      "height": 336,
+      "license": "MIT"
+    },
+    "ox72-dungeon-tileset": {
+      "source": "https://0x72.itch.io/16x16-dungeon-tileset",
+      "image": "https://img.itch.zone/aW1hZ2UvMTQ3MzcxLzc0ODk0OS5wbmc=/original/u%2Bu3vo.png",
+      "fetched": "2026-10-23",
+      "hash": "2c01dc34a6a4bdce",
+      "width": 315,
+      "height": 250,
+      "license": "CC0"
+    },
+    "ox72-dungeontileset-ii": {
+      "source": "https://0x72.itch.io/dungeontileset-ii",
+      "image": "https://img.itch.zone/aW1hZ2UvMzA5MDI4LzE1MTk3MjcucG5n/original/VCoz5j.png",
+      "fetched": "2026-10-23",
+      "hash": "a31710056c7e2a8c",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "paleto-vol01": {
+      "source": "https://paleto.itch.io/paleto-vol01",
+      "image": "https://img.itch.zone/aW1nLzI2MDI3MzIwLnBuZw==/original/HXrGPo.png",
+      "fetched": "2026-10-23",
+      "hash": "7bbd64d8bdf099d4",
+      "width": 640,
+      "height": 640,
+      "license": "CC0"
+    },
+    "pencil2d": {
+      "source": "https://www.pencil2d.org/",
+      "image": "https://www.pencil2d.org/images/pencil_icon.png",
+      "fetched": "2026-10-23",
+      "hash": "8cfdcfd2dce74e28",
+      "width": 256,
+      "height": 256,
+      "license": "GPL-2.0-only"
+    },
+    "phosphor-icons": {
+      "source": "https://phosphoricons.com/",
+      "image": "https://phosphoricons.com/phosphor-opengraph.png?v=2.0.2",
+      "fetched": "2026-10-23",
+      "hash": "48528128150ae01f",
+      "width": 640,
+      "height": 336,
+      "license": "MIT"
+    },
+    "pixelorama": {
+      "source": "https://orama-interactive.itch.io/pixelorama",
+      "image": "https://img.itch.zone/aW1nLzE3MTIwMjIxLnBuZw==/original/NTuV%2FB.png",
+      "fetched": "2026-10-23",
+      "hash": "32ee3207622b222d",
+      "width": 640,
+      "height": 360,
+      "license": "MIT"
+    },
+    "playpug-simple-vector-ui": {
+      "source": "https://playpug.itch.io/simple-vector-ui-pack",
+      "image": "https://img.itch.zone/aW1nLzIzNzAxNjI2LnBuZw==/original/2QqkQi.png",
+      "fetched": "2026-10-23",
+      "hash": "9bfde9c9812e0ef9",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "poly-haven": {
+      "source": "https://polyhaven.com",
+      "image": "https://cdn.polyhaven.com/site_images/home/window_rend.jpg?width=630&quality=95&v=61684774",
+      "fetched": "2026-10-23",
+      "hash": "b479a1cfacea5393",
+      "width": 629,
+      "height": 354,
+      "license": "CC0"
+    },
+    "polyglot-gamedev": {
+      "source": "https://docs.google.com/spreadsheets/d/17f0dQawb-s_Fd7DHgmVvJoEGDMH_yoSd8EYigrb0zmM/",
+      "image": "https://lh7-us.googleusercontent.com/docs/AHkbwyKcVH30Q0wNeHDlaMT3t4DFQ12XERvV3DrUkiexi0rtDRU7sIoATnYJNJH_x90xxPaRrNLuE5AJoTouFdOAGMpVa4TCPmybOZqdvKbcVYCufplNoK4v=w1200-h630-p",
+      "fetched": "2026-10-23",
+      "hash": "34b635fd7ec38cdb",
+      "width": 640,
+      "height": 336,
+      "license": "CC0"
+    },
+    "pulselite-ui-sfx": {
+      "source": "https://bigshadex.itch.io/pulselite-ui-sfx-free",
+      "image": "https://img.itch.zone/aW1nLzMwNTk5MDQ2LnBuZw==/original/LmX7Bp.png",
+      "fetched": "2026-10-23",
+      "hash": "783299803f78b6a4",
+      "width": 630,
+      "height": 500,
+      "license": "CC-BY-4.0"
+    },
+    "quanpixel": {
+      "source": "https://diaowinner.itch.io/galmuri-extended",
+      "image": "https://img.itch.zone/aW1nLzExMDQ3NzIwLnBuZw==/original/VgRQ12.png",
+      "fetched": "2026-10-23",
+      "hash": "379e7dce3c8b1bf8",
+      "width": 640,
+      "height": 508,
+      "license": "SIL OFL"
+    },
+    "quaternius": {
+      "source": "https://quaternius.com",
+      "image": "https://quaternius.com/assets/images/fullres/metadata.jpg",
+      "fetched": "2026-10-23",
+      "hash": "7d3d7d3074b82a7d",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-animated-fish-pack": {
+      "source": "https://quaternius.com/packs/animatedfish.html",
+      "image": "https://quaternius.com/assets/images/fullres/animatedfish.jpg",
+      "fetched": "2026-10-23",
+      "hash": "b52206ff918ef918",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-animated-guns-pack": {
+      "source": "https://quaternius.com/packs/animatedguns.html",
+      "image": "https://quaternius.com/assets/images/fullres/animatedguns.jpg",
+      "fetched": "2026-10-23",
+      "hash": "2c4f43a1a42e77ac",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-animated-mech-pack": {
+      "source": "https://quaternius.com/packs/animatedmech.html",
+      "image": "https://quaternius.com/assets/images/fullres/animatedmech.jpg",
+      "fetched": "2026-10-23",
+      "hash": "1ed90e0558e88bec",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-animated-men-pack": {
+      "source": "https://quaternius.com/packs/animatedmen.html",
+      "image": "https://quaternius.com/assets/images/fullres/animatedmen.jpg",
+      "fetched": "2026-10-23",
+      "hash": "6aa064a86e6332ed",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-animated-women-pack": {
+      "source": "https://quaternius.com/packs/animatedwomen.html",
+      "image": "https://quaternius.com/assets/images/fullres/animatedwomen.jpg",
+      "fetched": "2026-10-23",
+      "hash": "6de20dd348e6f178",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-background-posed-humans": {
+      "source": "https://quaternius.com/packs/backgroundposedhumans.html",
+      "image": "https://quaternius.com/assets/images/fullres/backgroundposedhumans.jpg",
+      "fetched": "2026-10-23",
+      "hash": "8ca6b7b7538b0c38",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-cube-world-kit": {
+      "source": "https://quaternius.com/packs/cubeworldkit.html",
+      "image": "https://quaternius.com/assets/images/fullres/cubeworld.jpg",
+      "fetched": "2026-10-23",
+      "hash": "22b1ae8033cc8c68",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-cyberpunk-game-kit": {
+      "source": "https://quaternius.com/packs/cyberpunkgamekit.html",
+      "image": "https://quaternius.com/assets/images/fullres/cyberpunkgamekit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "061b7a32d7e8e7d9",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-downtown-city-megakit": {
+      "source": "https://quaternius.com/packs/downtowncitymegakit.html",
+      "image": "https://quaternius.com/assets/images/fullres/downtowncitymegakit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "343f5317de5fcf7a",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-fantasy-props-megakit": {
+      "source": "https://quaternius.com/packs/fantasypropsmegakit.html",
+      "image": "https://quaternius.com/assets/images/fullres/fantasypropsmegakit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "eb2be2dfc97d5643",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-farm-animal-pack": {
+      "source": "https://quaternius.com/packs/farmanimal.html",
+      "image": "https://quaternius.com/assets/images/fullres/farmanimal.jpg",
+      "fetched": "2026-10-23",
+      "hash": "efe2fc7b998a4985",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-medieval-village-megakit": {
+      "source": "https://quaternius.com/packs/medievalvillagemegakit.html",
+      "image": "https://quaternius.com/assets/images/fullres/medievalvillagemegakit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "e744540ce23214a8",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-modular-character-outfits-fantasy": {
+      "source": "https://quaternius.com/packs/modularcharacteroutfitsfantasy.html",
+      "image": "https://quaternius.com/assets/images/fullres/modularcharacteroutfitsfantasy.jpg",
+      "fetched": "2026-10-23",
+      "hash": "99bba19a1d89c65d",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-modular-sci-fi-megakit": {
+      "source": "https://quaternius.com/packs/modularscifimegakit.html",
+      "image": "https://quaternius.com/assets/images/fullres/modularscifimegakit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "7ddff7444d261dec",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-pirate-kit": {
+      "source": "https://quaternius.com/packs/piratekit.html",
+      "image": "https://quaternius.com/assets/images/fullres/piratekit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "2cd72af0e1505ced",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-rpg-character-pack": {
+      "source": "https://quaternius.com/packs/rpgcharacters.html",
+      "image": "https://quaternius.com/assets/images/fullres/rpgcharacter.jpg",
+      "fetched": "2026-10-23",
+      "hash": "de785dec44b3b29e",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-sci-fi-essentials-kit": {
+      "source": "https://quaternius.com/packs/scifiessentialskit.html",
+      "image": "https://quaternius.com/assets/images/fullres/scifiessentialskit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "b9d14d8084f8e7a7",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-stylized-nature-megakit": {
+      "source": "https://quaternius.com/packs/stylizednaturemegakit.html",
+      "image": "https://quaternius.com/assets/images/fullres/stylizednaturemegakit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "c5aa736558b19d9c",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-sushi-restaurant-kit": {
+      "source": "https://quaternius.com/packs/sushirestaurantkit.html",
+      "image": "https://quaternius.com/assets/images/fullres/sushirestaurantkit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "c070ce96adb6206b",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-toon-shooter-game-kit": {
+      "source": "https://quaternius.com/packs/toonshootergamekit.html",
+      "image": "https://quaternius.com/assets/images/fullres/toonshootergamekit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "deec5c64274fed7a",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-ultimate-animated-character-pack": {
+      "source": "https://quaternius.com/packs/ultimatedanimatedcharacter.html",
+      "image": "https://quaternius.com/assets/images/fullres/ultimateanimatedcharacter.jpg",
+      "fetched": "2026-10-23",
+      "hash": "3066f9c82c188ca7",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-ultimate-monsters": {
+      "source": "https://quaternius.com/packs/ultimatemonsters.html",
+      "image": "https://quaternius.com/assets/images/fullres/ultimatemonsters.jpg",
+      "fetched": "2026-10-23",
+      "hash": "d4ce6d79769909b5",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-ultimate-space-kit": {
+      "source": "https://quaternius.com/packs/ultimatespacekit.html",
+      "image": "https://quaternius.com/assets/images/fullres/ultimatespacekit.jpg",
+      "fetched": "2026-10-23",
+      "hash": "4bad6ee76dca4333",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-universal-animation-library": {
+      "source": "https://quaternius.com/packs/universalanimationlibrary.html",
+      "image": "https://quaternius.com/assets/images/fullres/universalanimationlibrary.jpg",
+      "fetched": "2026-10-23",
+      "hash": "2730ae422bc46f7b",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-universal-animation-library-2": {
+      "source": "https://quaternius.com/packs/universalanimationlibrary2.html",
+      "image": "https://quaternius.com/assets/images/fullres/universalanimationlibrary2.jpg",
+      "fetched": "2026-10-23",
+      "hash": "980586146f4db950",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-universal-base-characters": {
+      "source": "https://quaternius.com/packs/universalbasecharacters.html",
+      "image": "https://quaternius.com/assets/images/fullres/universalbasecharacters.jpg",
+      "fetched": "2026-10-23",
+      "hash": "cb171f30b928d966",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "quaternius-zombie-apocalypse-kit": {
+      "source": "https://quaternius.com/packs/zombieapocalypsekit.html",
+      "image": "https://quaternius.com/assets/images/fullres/zombieapocalypse.jpg",
+      "fetched": "2026-10-23",
+      "hash": "53ade2924bb9d9da",
+      "width": 640,
+      "height": 360,
+      "license": "CC0"
+    },
+    "screaming-brain-studios": {
+      "source": "https://screamingbrainstudios.itch.io",
+      "image": "https://img.itch.zone/aW1nLzE2NjUzMjc3LnBuZw==/508x254%23mb/BCtGEi.png",
+      "fetched": "2026-10-23",
+      "hash": "a6fbbf791392b56f",
+      "width": 508,
+      "height": 254,
+      "license": "CC0"
+    },
+    "sim-daltonism": {
+      "source": "https://michelf.ca/projects/sim-daltonism/",
+      "image": "https://michelf.ca/img/icon/sim-daltonism-generic.png",
+      "fetched": "2026-10-23",
+      "hash": "99354c289d51e74e",
+      "width": 296,
+      "height": 150,
+      "license": "Apache-2.0"
+    },
+    "snowb-bmf": {
+      "source": "https://snowb.org",
+      "image": "https://snowb.org/summary_large_image.png",
+      "fetched": "2026-10-23",
+      "hash": "4afae44bfe931746",
+      "width": 640,
+      "height": 320,
+      "license": "MIT"
+    },
+    "squoosh": {
+      "source": "https://squoosh.app",
+      "image": "https://squoosh.app/c/icon-large-maskable-c2078ced.png",
+      "fetched": "2026-10-23",
+      "hash": "333f8909fbc77e83",
+      "width": 640,
+      "height": 640,
+      "license": "Apache-2.0"
+    },
+    "subspaceaudio-5-chiptunes": {
+      "source": "https://opengameart.org/content/5-chiptunes-action",
+      "image": "https://opengameart.org/sites/default/files/styles/audio_with_background/public/audio_preview/level3.mp3.png",
+      "fetched": "2026-10-23",
+      "hash": "2ddd32e899bead1b",
+      "width": 160,
+      "height": 120,
+      "license": "CC0"
+    },
+    "svgcode": {
+      "source": "https://svgco.de",
+      "image": "https://svgco.de/screenshots/desktop-dark.png",
+      "fetched": "2026-10-23",
+      "hash": "57ee85f206fc8720",
+      "width": 640,
+      "height": 456,
+      "license": "GPL-2.0-or-later"
+    },
+    "sylly-gem-match-3": {
+      "source": "https://opengameart.org/content/gem-match-3-set",
+      "image": "https://opengameart.org/sites/default/files/Preview_194.png",
+      "fetched": "2026-10-23",
+      "hash": "576e0e870891d20d",
+      "width": 430,
+      "height": 288,
+      "license": "CC0"
+    },
+    "synfig": {
+      "source": "https://www.synfig.org/",
+      "image": "http://www.synfig.org/wp-content/uploads/2018/02/logo.png",
+      "fetched": "2026-10-23",
+      "hash": "19b42336a7e92009",
+      "width": 354,
+      "height": 486,
+      "license": "GPL-3.0"
+    },
+    "tabler-icons": {
+      "source": "https://tabler.io/icons",
+      "image": "https://tabler.io/icons/opengraph-image-1v9qf3.png?opengraph-image.20zbtqc-elllk.png",
+      "fetched": "2026-10-23",
+      "hash": "307281a88d8616a7",
+      "width": 640,
+      "height": 336,
+      "license": "MIT"
+    },
+    "tallbeard-abstraction-music-loop-bundle": {
+      "source": "https://tallbeard.itch.io/music-loop-bundle",
+      "image": "https://img.itch.zone/aW1nLzI2MzcyMzAzLnBuZw==/original/cgZetS.png",
+      "fetched": "2026-10-23",
+      "hash": "741fb8220d3ac649",
+      "width": 630,
+      "height": 500,
+      "license": "CC0"
+    },
+    "tenacity": {
+      "source": "https://codeberg.org/tenacityteam/tenacity",
+      "image": "https://codeberg.org/tenacityteam/tenacity/-/summary-card",
+      "fetched": "2026-10-23",
+      "hash": "f4493dd38a300890",
+      "width": 640,
+      "height": 320,
+      "license": "GPL-2.0-or-later"
+    },
+    "texturecan": {
+      "source": "https://www.texturecan.com/",
+      "image": "https://www.texturecan.com/img/textures_1200.jpg",
+      "fetched": "2026-10-23",
+      "hash": "a5b3528b2c25d71a",
+      "width": 640,
+      "height": 336,
+      "license": "CC0"
+    },
+    "the-base-mesh": {
+      "source": "https://www.thebasemesh.com",
+      "image": "https://static.wixstatic.com/media/b36d2d_080f2dd3e7cc497cba4f0152b7fefcf5%7Emv2.png/v1/fit/w_2500,h_1330,al_c/b36d2d_080f2dd3e7cc497cba4f0152b7fefcf5%7Emv2.png",
+      "fetched": "2026-10-23",
+      "hash": "116aaecc1e8088da",
+      "width": 640,
+      "height": 640,
+      "license": "CC0"
+    },
+    "tiled": {
+      "source": "https://www.mapeditor.org/",
+      "image": "https://www.mapeditor.org/img/tiled-logo-filled.png",
+      "fetched": "2026-10-23",
+      "hash": "f2b7bbe49c0a6d3f",
+      "width": 600,
+      "height": 600,
+      "license": "GPL-2.0-or-later"
+    },
+    "tilemancer": {
+      "source": "https://led.itch.io/tilemancer",
+      "image": "https://img.itch.zone/aW1hZ2UvNTgyNDcvMjYyNDUwLnBuZw==/original/6Rmf7A.png",
+      "fetched": "2026-10-23",
+      "hash": "af9fa9c819f2dc8e",
+      "width": 315,
+      "height": 250,
+      "license": "GPL-3.0-or-later"
+    },
+    "unity-labs-vfx-flipbooks": {
+      "source": "https://unity.com/blog/engine-platform/free-vfx-image-sequences-flipbooks",
+      "image": "https://cdn.sanity.io/images/fuvbjjlp/production/d6d9f2ad8379bcd3d09c397341593d6c9d990e57-1920x800.png",
+      "fetched": "2026-10-23",
+      "hash": "3f5d9b42b6ac10e6",
+      "width": 640,
+      "height": 266,
+      "license": "CC0"
+    },
+    "urizen-onebit": {
+      "source": "https://vurmux.itch.io/urizen-onebit-tileset",
+      "image": "https://img.itch.zone/aW1nLzMzMTcyNjUucG5n/original/Uw45oX.png",
+      "fetched": "2026-10-23",
+      "hash": "a61943eaf982130c",
+      "width": 315,
+      "height": 250,
+      "license": "CC0"
+    }
+  }
+}

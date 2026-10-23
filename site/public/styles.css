@@ -1,3 +1,43 @@
+/* Self-hosted type (site/public/fonts/, SIL OFL 1.1). Public Sans is one
+   variable file for every weight; the italic is a second. Latin subset only:
+   the catalog is written in English. URLs resolve against this stylesheet,
+   so every page depth finds them. font-display: optional with a preload:
+   the face is used when it is ready at first paint (it is, from the same
+   origin and the cache), and never swapped in later, so the page does not
+   shift as the fonts arrive. */
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: optional;
+  src: url("fonts/public-sans.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Public Sans";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: optional;
+  src: url("fonts/public-sans-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url("fonts/ibm-plex-mono-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: optional;
+  src: url("fonts/ibm-plex-mono-500.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   --bg: #eef1f4;
   --ink: #12151a;
@@ -375,7 +415,8 @@ code {
   align-items: baseline;
 }
 
-.entry-top h4 {
+.entry-top h4,
+.entry-top h3 {
   margin: 0;
   font-size: 1.02rem;
   letter-spacing: -0.015em;
@@ -542,12 +583,14 @@ input:focus-visible,
   box-shadow: inset 3px 0 0 var(--accent);
 }
 
-.entry-top h4 a {
+.entry-top h4 a,
+.entry-top h3 a {
   color: var(--ink);
   text-decoration: none;
 }
 
-.entry-top h4 a:hover {
+.entry-top h4 a:hover,
+.entry-top h3 a:hover {
   color: var(--accent);
   text-decoration: underline;
 }
@@ -697,7 +740,6 @@ input:focus-visible,
 .filter-note {
   margin: 0;
   padding: 0.45rem 0.6rem;
-  border-left: 3px solid var(--warn);
   background: var(--surface);
   color: var(--ink);
   font-size: 0.85rem;
@@ -1645,5 +1687,484 @@ input:focus-visible,
   .entry-edge {
     color: inherit;
     background: none;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Site refresh (2026-10-23): thumbnails, cards and list views.
+ * One markup for both views (site/lib/cards.mjs); `data-view` on the card
+ * and on its category heading picks the layout. The list keeps the dense
+ * row the catalog always had; the card puts the publisher's preview first.
+ * ------------------------------------------------------------------ */
+
+.entry-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+  border-top: 0;
+}
+
+.entry-list > .group-heading,
+.entry-list > .group-more,
+.entry-list > .entry-card[data-view="list"],
+.entry-list > h3.sr-only {
+  grid-column: 1 / -1;
+}
+
+.entry-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color 120ms ease-out;
+}
+
+.entry-card:hover,
+.entry-card:focus-within {
+  background: var(--surface);
+  border-color: var(--control-line);
+}
+
+.entry-card:target {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* The commercial-use colour used to be a 4px bar down the card's edge. It is
+   a dot before the status flags now: the same signal, no coloured border. */
+.entry-edge {
+  display: none;
+}
+
+.entry-flags::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  background: var(--edge, var(--unknown));
+  vertical-align: 0;
+}
+
+.entry-thumb {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.entry-thumb-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* No permitted image: the entry's name on the checker an editor shows behind
+   a sprite, so the tile still reads as "asset", not "missing". */
+.entry-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.75rem 0.85rem;
+  color: var(--ink);
+  background-color: var(--surface);
+  background-image: conic-gradient(var(--bg) 25%, transparent 0 50%, var(--bg) 0 75%, transparent 0);
+  background-size: 16px 16px;
+}
+
+.entry-tile-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.entry-tile-note {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* Cards: image on top at 16:10, two-line summary. */
+.entry-card[data-view="cards"] .entry-thumb {
+  aspect-ratio: 16 / 10;
+}
+
+.entry-card[data-view="cards"] .entry-body {
+  padding: 0.75rem 0.85rem 0.85rem;
+}
+
+.entry-card[data-view="cards"] .entry-top {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.entry-card[data-view="cards"] > .entry-body > p:not([class]) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* List: the dense row with a square thumbnail at the left. */
+.entry-card[data-view="list"] {
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.5rem 0.65rem 0.5rem 0.5rem;
+  border-radius: 8px;
+}
+
+.entry-card[data-view="list"] .entry-thumb {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  align-self: start;
+}
+
+.entry-card[data-view="list"] .entry-body {
+  padding: 0;
+  gap: 0.25rem;
+}
+
+.entry-card[data-view="list"] .entry-tile {
+  padding: 0;
+}
+
+.entry-card[data-view="list"] .entry-tile-name,
+.entry-card[data-view="list"] .entry-tile-note {
+  display: none;
+}
+
+.group-more {
+  display: inline-block;
+  justify-self: start;
+  margin: -4px 0 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.group-more:hover {
+  border-color: var(--control-line);
+  color: var(--accent);
+}
+
+.group-tools {
+  margin-left: auto;
+}
+
+/* The toggle is injected after load; the heading is already its height. */
+.group-heading {
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .entry-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .entry-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-card {
+    transition: none;
+  }
+}
+
+/* Category pages (site/lib/category-page.mjs) and the view toggle (views.js). */
+.category-page .section-blurb {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+.category-page .category-search {
+  margin: 0.5rem 0 1.25rem;
+  font-size: 0.92rem;
+}
+
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  overflow: hidden;
+  font-family: var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.view-toggle button {
+  min-height: 32px;
+  padding: 0 0.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: 600 0.78rem var(--font);
+  cursor: pointer;
+}
+
+.view-toggle button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.view-toggle button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+@media (pointer: coarse) {
+  .view-toggle button {
+    min-height: 44px;
+  }
+}
+
+/* Hero (site refresh): the count and the promise in two lines, then a
+   filmstrip of real previews so the first screen shows assets. */
+.hero h1 {
+  max-width: 26ch;
+  font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.hero .freshness-line {
+  margin-top: 1rem;
+}
+
+.filmstrip {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 4px;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.filmstrip li {
+  margin: 0;
+}
+
+.filmstrip a {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.filmstrip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.filmstrip a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .filmstrip {
+    display: flex;
+    gap: 6px;
+    margin-inline: calc(-1 * clamp(1rem, 3vw, 1.5rem));
+    padding-inline: clamp(1rem, 3vw, 1.5rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .filmstrip li {
+    flex: 0 0 72px;
+    scroll-snap-align: start;
+  }
+}
+
+/* A note is a note: no coloured side tab. */
+.filter-note {
+  border: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* The header on a phone: brand on its own row, then one scrolling row of
+   links tall enough to tap. */
+@media (max-width: 640px) {
+  .topbar {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1rem;
+    padding-block: 0.5rem;
+  }
+
+  .brand {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .topnav {
+    flex: 1 0 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    margin-inline: calc(-1 * clamp(1rem, 3vw, 1.5rem));
+    padding-inline: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .topnav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 12px;
+  }
+
+  .topnav a:first-child {
+    padding-left: 0;
+  }
+
+  .nav-sponsor {
+    display: inline-flex;
+    align-items: center;
+    padding-left: 12px;
+  }
+}
+
+/* The floating "Search" button sits bottom-left, away from the card links,
+   and steps aside while a card's own links have keyboard focus. */
+.to-top {
+  left: clamp(0.75rem, 3vw, 1.5rem);
+  right: auto;
+  border-radius: 999px;
+  transition: opacity 120ms ease-out;
+}
+
+body.card-focus .to-top {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Entry page (site refresh): the preview as a header strip with its credit,
+   one primary action, and facts set in the body face. */
+.entry-strip {
+  margin: 1rem 0 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.entry-strip .entry-thumb-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+.entry-credit {
+  padding: 0.4rem 0.75rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.page-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.25rem;
+  margin: 0.35rem 0 0;
+  font-size: 0.92rem;
+}
+
+.page-links a,
+.page-links .link-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+}
+
+.facts dt,
+.facts dd {
+  font-family: var(--font);
+}
+
+.facts dt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.facts dd {
+  font-size: 0.95rem;
+}
+
+.btn-ghost {
+  min-height: 36px;
+}
+
+/* Stack pages: picks are cards; the need and the reason travel with each. */
+.owes,
+.owes-group p,
+.owes-group li,
+.owes-group h3 {
+  font-family: var(--font);
+}
+
+.owes .attribution-string {
+  font-family: var(--mono);
+}
+
+.pick-list.entry-list {
+  border-top: 0;
+}
+
+.pick {
+  padding: 0;
+  border-bottom: 0;
+}
+
+.pick .pick-why {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+@media (pointer: coarse) {
+  .btn-ghost,
+  .link-button,
+  .page-links a,
+  .page-links .link-button {
+    min-height: 44px;
   }
 }

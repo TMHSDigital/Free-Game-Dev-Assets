@@ -11,6 +11,7 @@ commercial: true
 attribution_required: false
 formats: [Blend, glTF, FBX]
 tags: [topology]
+preview: none   # the page's og:image is the publisher's general promo, not this pack
 added: 2026-07-19
 verified: 2026-08-24
 status: active

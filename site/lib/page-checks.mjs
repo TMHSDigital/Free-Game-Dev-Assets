@@ -18,6 +18,8 @@ export function checkPage(html, { file, kindOf }) {
     .replace(/<code>[\s\S]*?<\/code>/g, " ")
     .replace(/<[^>]+>/g, " ");
   for (const [re, what] of LEAKS) if (re.test(text)) errors.push(`${file}: leaked markdown (${what})`);
+  // Fonts are self-hosted (site/public/fonts/); a third-party font request is a privacy and speed regression.
+  if (/fonts\.googleapis\.com|fonts\.gstatic\.com/.test(html)) errors.push(`${file}: references Google Fonts`);
   const h1 = (html.match(/<h1[\s>]/g) || []).length;
   if (h1 !== 1) errors.push(`${file}: expected one h1, found ${h1}`);
   if (!/<link rel="canonical" href="[^"]+"/.test(html)) errors.push(`${file}: missing canonical link`);

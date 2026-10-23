@@ -1,4 +1,6 @@
 import { closestEntries, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, slugOf, stateQuery } from "./search.js";
+import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
+import { installViewToggles } from "./views.js";
 
 (() => {
   const data = window.__CATALOG__;
@@ -51,21 +53,6 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
     location.replace(`entry/${encodeURIComponent(legacyId)}/`);
     return;
   }
-  const PERSPECTIVE_LABELS = {
-    top_down: "top-down",
-    isometric_3_4: "3/4 view",
-    side_scroller: "side-scroller",
-    "2d_flat": "flat UI",
-  };
-  const MAINTENANCE_NOTES = {
-    archived: "The source repository is archived: read-only, no fixes or updates.",
-    inactive: "The source has had no new commits for over three years.",
-  };
-  // Mirrors shared.mjs ENGINE_LOCK_NOTES / ENGINE_LOCK_LABELS.
-  const ENGINE_LOCK_NOTES = {
-    unreal: "Licensed for use only in products built with Unreal Engine (Epic's UE-Only Content).",
-  };
-  const ENGINE_LOCK_LABELS = { unreal: "UE only" };
   // Ages are measured at build time, like the prerendered cards and the
   // freshness line, so the page never disagrees with itself. A weekly
   // scheduled build keeps the build time recent.
@@ -75,39 +62,6 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
   const AGING_DAYS = 365;
 
   /* ------------------------------------------------------------ helpers */
-
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
-  }
-
-  function edgeColor(entry) {
-    if (entry.commercial === true) return "var(--ok)";
-    if (entry.commercial === false) return "var(--danger)";
-    if (entry.commercial === "varies") return "var(--warn)";
-    return "var(--unknown)";
-  }
-
-  function commercialLabel(v) {
-    if (v === true) return "commercial OK";
-    if (v === false) return "non-commercial";
-    if (v === "varies") return "per-file review";
-    return "commercial ?";
-  }
-
-  /** Age of the license check, which is this catalog's main credibility signal. */
-  function verifiedAge(verified) {
-    if (!verified) return { days: null, bucket: "unknown", text: "verified date unknown" };
-    const t = Date.parse(`${verified}T00:00:00Z`);
-    if (Number.isNaN(t)) return { days: null, bucket: "unknown", text: "verified date unknown" };
-    const days = Math.max(0, Math.floor((NOW - t) / 86400000));
-    const bucket = days <= FRESH_DAYS ? "fresh" : days <= AGING_DAYS ? "aging" : "stale";
-    return { days, bucket, text: `verified ${verified} (${days}d ago)` };
-  }
 
   /* -------------------------------------------------------- url <-> state */
 
@@ -192,8 +146,12 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
 
   /* ------------------------------------------------------------- search */
 
-  // Each entry's searchable fields, normalised once at load (search.js).
-  const searchIndex = new Map(data.entries.map((e) => [e.id, searchFields(e)]));
+  // Each entry's searchable fields, normalised once, on the first search (search.js).
+  let searchIndex = null;
+  function fieldsOf(entry) {
+    if (!searchIndex) searchIndex = new Map(data.entries.map((e) => [e.id, searchFields(e)]));
+    return searchIndex.get(entry.id) || [];
+  }
 
   let compiled = { q: null, tests: [] };
   function queryTests() {
@@ -201,7 +159,7 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
     return compiled.tests;
   }
 
-  const searchScore = (entry) => scoreFields(searchIndex.get(entry.id) || [], queryTests());
+  const searchScore = (entry) => (queryTests().length ? scoreFields(fieldsOf(entry), queryTests()) : 1);
 
   const SORTS = {
     name: (a, b) => a.name.localeCompare(b.name),
@@ -219,50 +177,20 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
 
   /* ---------------------------------------------------------- rendering */
 
+  /** A category's view on this page: the config default (cards or list). */
+  function viewFor(cat) {
+    return categoryLabels[cat]?.view === "cards" ? "cards" : "list";
+  }
+
+  /** The view a category is showing right now: the toggle's choice, else the default. */
+  function viewNow(cat) {
+    return headingNodes.get(cat)?.getAttribute("data-view") || viewFor(cat);
+  }
+
+  const limitFor = (cat) => (viewNow(cat) === "cards" ? CARD_LIMIT : LIST_LIMIT);
+
   function cardHtml(entry) {
-    const age = verifiedAge(entry.verified);
-    const flags = [entry.status, commercialLabel(entry.commercial), entry.license]
-      .map(escapeHtml)
-      .join(" &middot; ");
-    const formats = (entry.formats || [])
-      .slice(0, 3)
-      .map((f) => `<span>${escapeHtml(f)}</span>`)
-      .join("");
-    const taxonomy = [
-      entry.grid_dimensions
-        ? `<span class="tax">${escapeHtml(entry.grid_dimensions)}</span>`
-        : "",
-      entry.camera_perspective
-        ? `<span class="tax">${escapeHtml(PERSPECTIVE_LABELS[entry.camera_perspective] || entry.camera_perspective)}</span>`
-        : "",
-    ].join("");
-    // The same badge as build.mjs maintenanceFlagHtml (titles from shared.mjs MAINTENANCE_NOTES).
-    const maintenance = entry.maintenance
-      ? ` <span class="maintenance-flag" title="${escapeHtml(MAINTENANCE_NOTES[entry.maintenance] || "")}">${escapeHtml(entry.maintenance)}</span>`
-      : "";
-    // The same badge as build.mjs engineLockFlagHtml.
-    const engineLock = entry.engine_lock
-      ? ` <span class="engine-flag" title="${escapeHtml(ENGINE_LOCK_NOTES[entry.engine_lock] || "")}">${escapeHtml(ENGINE_LOCK_LABELS[entry.engine_lock] || entry.engine_lock)}</span>`
-      : "";
-    return `<article class="entry-card" id="entry-${escapeHtml(entry.id)}" data-id="${escapeHtml(entry.id)}" data-status="${escapeHtml(entry.status)}" style="--edge:${edgeColor(entry)}">
-  <span class="entry-edge" aria-hidden="true"></span>
-  <div class="entry-body">
-    <div class="entry-top">
-      <h4><a class="entry-link" href="entry/${escapeHtml(entry.id)}/" data-id="${escapeHtml(entry.id)}">${escapeHtml(entry.name)}</a></h4>
-      <span class="entry-flags">${flags}${maintenance}${engineLock}</span>
-    </div>
-    <p>${escapeHtml(entry.summary || "")}</p>
-    <div class="meta-line">
-      <span>${escapeHtml(entry.category)}</span>${formats}${taxonomy}
-      <span class="verified is-${age.bucket}" title="Licence last checked at the source">${escapeHtml(age.text)}</span>
-    </div>
-    <div class="entry-links">
-      <a href="${escapeHtml(entry.url)}" rel="noopener noreferrer">Open source</a>
-      <a href="${escapeHtml(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">Entry and evidence</a>
-      <button type="button" class="link-button shortlist-toggle" data-shortlist="${escapeHtml(entry.id)}" aria-pressed="false" data-name="${escapeHtml(entry.name)}" aria-label="Add to shortlist: ${escapeHtml(entry.name)}" hidden>Add to shortlist</button>
-    </div>
-  </div>
-</article>`;
+    return entryCardHtml(entry, { root: "", repo, now: NOW, view: viewFor(entry.category), label: categoryLabels[entry.category]?.label });
   }
 
   /**
@@ -379,13 +307,7 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
   }
 
   function headingHtml(cat, count) {
-    const label = categoryLabels[cat]?.label || cat;
-    return (
-      `<h3 class="group-heading" id="group-${escapeHtml(cat)}" data-cat="${escapeHtml(cat)}">` +
-      `<span class="group-name">${escapeHtml(label)}</span>` +
-      `<span class="group-count">${count}</span>` +
-      `</h3>`
-    );
+    return groupHeadingHtml({ cat, label: categoryLabels[cat]?.label || cat, count, view: viewFor(cat), root: "" });
   }
 
   /*
@@ -396,6 +318,8 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
    */
   const cardNodes = new Map();
   const headingNodes = new Map();
+  // "Show all N in <category>" links under the homepage previews.
+  const moreNodes = new Map();
   let flatHeading = null;
   let placedKey = null;
 
@@ -403,26 +327,50 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
     const grid = $("#entry-grid");
     for (const el of $$(".entry-card", grid)) cardNodes.set(el.getAttribute("data-id"), el);
     for (const el of $$(".group-heading", grid)) headingNodes.set(el.getAttribute("data-cat"), el);
+    for (const el of $$(".group-more", grid)) moreNodes.set(el.getAttribute("data-cat"), el);
     const tpl = document.createElement("template");
     tpl.innerHTML = [
-      ...data.entries.filter((e) => !cardNodes.has(e.id)).map(cardHtml),
       ...Object.keys(categoryLabels)
         .filter((cat) => !headingNodes.has(cat))
         .map((cat) => headingHtml(cat, 0)),
+      ...Object.keys(categoryLabels)
+        .filter((cat) => !moreNodes.has(cat))
+        .map((cat) => groupMoreHtml({ cat, label: categoryLabels[cat]?.label || cat, count: 0, root: "" })),
     ].join("");
     for (const el of [...tpl.content.children]) {
       if (el.matches(".entry-card")) cardNodes.set(el.getAttribute("data-id"), el);
+      else if (el.matches(".group-more")) moreNodes.set(el.getAttribute("data-cat"), el);
       else headingNodes.set(el.getAttribute("data-cat"), el);
     }
     // Anything else the grid held (a stale prerender) goes.
     for (const el of [...grid.children]) {
-      if (!el.matches(".entry-card, .group-heading")) el.remove();
+      if (!el.matches(".entry-card, .group-heading, .group-more")) el.remove();
     }
     // Card titles are h4 under the h3 category headings. A flat list has no
     // category headings, so this one keeps the outline from skipping a level.
     flatHeading = document.createElement("h3");
     flatHeading.className = "sr-only";
     flatHeading.textContent = "Matching entries";
+  }
+
+  // The build prerenders each category's preview only. The rest of the
+  // catalog is rendered here once, the first time a search, a filter or a
+  // "Show all" needs it, so the page loads without that work.
+  let allRendered = false;
+  // Set when ensureAllNodes added nodes; renderGrid announces them once
+  // they are in the DOM (shortlist.js wires its buttons on the event).
+  let announceRendered = false;
+  function ensureAllNodes() {
+    if (allRendered) return;
+    allRendered = true;
+    announceRendered = true;
+    const missing = data.entries.filter((e) => !cardNodes.has(e.id));
+    if (!missing.length) return;
+    const tpl = document.createElement("template");
+    tpl.innerHTML = missing.map(cardHtml).join("");
+    for (const el of [...tpl.content.children]) cardNodes.set(el.getAttribute("data-id"), el);
+    // Force the next render to place every node.
+    placedKey = null;
   }
 
   /**
@@ -475,6 +423,12 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
     empty.hidden = list.length > 0;
     renderSuggestions(list.length ? "" : state.q);
 
+    // The default page (no search, no filter) previews each category and
+    // links to its page, as the prerender does. Any filter or search shows
+    // the whole matching set, so every card must exist by then.
+    const preview = group && !stateQuery(state, DEFAULTS);
+    if (!preview) ensureAllNodes();
+
     // Under a plain sort the order of all nodes is fixed, so filtering only
     // toggles visibility. A ranked search reorders on every change.
     const key = ranked
@@ -485,16 +439,19 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
       const shown = new Set(list.map((e) => e.id));
       const rest = data.entries.filter((e) => !shown.has(e.id));
       const all = ranked ? [...list, ...rest] : data.entries.slice().sort(SORTS[state.sort] || SORTS.name);
+      // Entries not rendered yet (the preview page) are simply not placed.
+      const node = (e) => cardNodes.get(e.id);
       const order = [flatHeading];
       if (group) {
         for (const cat of Object.keys(categoryLabels)) {
           order.push(headingNodes.get(cat));
-          for (const e of all) if (e.category === cat) order.push(cardNodes.get(e.id));
+          for (const e of all) if (e.category === cat && node(e)) order.push(node(e));
+          order.push(moreNodes.get(cat));
         }
         // Entries outside the configured categories never show grouped.
-        for (const e of all) if (!categoryLabels[e.category]) order.push(cardNodes.get(e.id));
+        for (const e of all) if (!categoryLabels[e.category] && node(e)) order.push(node(e));
       } else {
-        order.push(...headingNodes.values(), ...all.map((e) => cardNodes.get(e.id)));
+        order.push(...headingNodes.values(), ...moreNodes.values(), ...all.map(node).filter(Boolean));
       }
       placeNodes(order);
     }
@@ -506,12 +463,38 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
       shown.add(e.id);
       perCat.set(e.category, (perCat.get(e.category) || 0) + 1);
     }
-    for (const [id, el] of cardNodes) el.hidden = !shown.has(id);
+    // A search always uses the list form.
+    const searching = !!state.q.trim();
+    const seenPerCat = new Map();
+    for (const el of grid.children) {
+      if (!el.matches(".entry-card")) continue;
+      const id = el.getAttribute("data-id");
+      const cat = el.getAttribute("data-cat");
+      let visible = shown.has(id);
+      if (visible && preview) {
+        const n = seenPerCat.get(cat) || 0;
+        seenPerCat.set(cat, n + 1);
+        if (n >= limitFor(cat)) visible = false;
+      }
+      el.hidden = !visible;
+      const view = searching ? "list" : viewNow(cat);
+      if (el.getAttribute("data-view") !== view) el.setAttribute("data-view", view);
+    }
+    for (const [cat, el] of moreNodes) {
+      const total = perCat.get(cat) || 0;
+      const show = preview && total > limitFor(cat);
+      el.hidden = !show;
+      if (show) el.textContent = `Show all ${total} in ${categoryLabels[cat]?.label || cat}`;
+    }
     flatHeading.hidden = group || !list.length;
     for (const [cat, el] of headingNodes) {
       const n = group ? perCat.get(cat) || 0 : 0;
       el.hidden = !n;
-      if (n) el.querySelector(".group-count").textContent = String(n);
+      if (n) el.querySelector(".group-n").textContent = String(n);
+    }
+    if (announceRendered) {
+      announceRendered = false;
+      document.dispatchEvent(new CustomEvent("fgda:cards-rendered"));
     }
     groupHeadings = [...grid.children].filter((el) => el.matches(".group-heading") && !el.hidden);
     // The first visible heading sits flush with the top of the list.
@@ -720,6 +703,29 @@ import { closestEntries, passesFilters as passes, queryTests as compileQuery, re
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       if (e.target.closest("a.entry-link")) rememberScroll();
     });
+    // The floating Search button steps aside while a card's own links have
+    // keyboard focus (styles.css body.card-focus).
+    $("#entry-grid").addEventListener("focusin", (e) => {
+      document.body.classList.toggle("card-focus", !!e.target.closest(".entry-links"));
+    });
+    $("#entry-grid").addEventListener("focusout", () => document.body.classList.remove("card-focus"));
+    // "Show all N in <category>" opens that category in place; without this
+    // script the same link leads to the static category page.
+    $("#entry-grid").addEventListener("click", (e) => {
+      const more = e.target.closest("a.group-more");
+      if (!more || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      state.category = more.getAttribute("data-cat");
+      apply({ push: true });
+      // The category headings are hidden under a category filter, so land on
+      // the first card of the list instead (it clears the sticky bar).
+      $("#entry-grid .entry-card:not([hidden])")?.scrollIntoView({ block: "start" });
+      $("#result-count").focus({ preventScroll: true });
+    });
+    // Cards / List on each category heading (views.js); re-render so the
+    // preview limit follows the view.
+    const defaults = Object.fromEntries(Object.keys(categoryLabels).map((cat) => [cat, viewFor(cat)]));
+    installViewToggles($("#entry-grid"), defaults, { onChange: () => apply() });
     // Starter rows link to entry pages too.
     $("#starter-table").addEventListener("click", (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;

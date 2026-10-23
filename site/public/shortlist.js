@@ -134,3 +134,6 @@ window.addEventListener("storage", (e) => {
 
 syncButtons();
 renderPanel();
+
+// app.js renders the non-previewed cards lazily; their buttons get wired here.
+document.addEventListener("fgda:cards-rendered", syncButtons);

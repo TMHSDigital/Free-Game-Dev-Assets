@@ -12,8 +12,10 @@ import {
   stackPageUrl,
   verifiedAge,
   sponsorButtonHtml,
+  PREVIEW_CREDIT_LINE,
 } from "./shared.mjs";
 import { copyAllText } from "./stacks.mjs";
+import { entryCardHtml } from "./cards.mjs";
 
 export function stackJsonLd(meta, sections, site) {
   const rows = sections.flatMap((s) => s.rows);
@@ -76,16 +78,13 @@ function owesHtml(owed) {
   return groups.join("\n        ");
 }
 
-function rowHtml(r, now) {
-  const age = verifiedAge(r.entry.verified, now);
-  const ageText = age.days === null ? "verified date unknown" : `verified ${r.entry.verified} (${age.days}d ago)`;
+/** One pick: the entry's card with the need above its title and the reason below its meta line. */
+function rowHtml(r, now, repo) {
   const flag = r.entry.status === "needs-review" ? ' <span class="pick-flag">needs review</span>' : "";
-  return `<li class="pick">
-            <p class="pick-need">${esc(r.need)}</p>
-            <p class="pick-name">${entryLink(r.entry)}${flag}</p>
-            <p class="pick-licence">${esc(r.entry.license)} &middot; ${esc(commercialLabel(r.entry.commercial))} &middot; <span class="verified is-${age.bucket}">${esc(ageText)}</span></p>
-            <p class="pick-why">${r.whyHtml}</p>
-          </li>`;
+  const lead = `<p class="pick-need">${esc(r.need)}${flag}</p>`;
+  const trail = `<p class="pick-why">${r.whyHtml}</p>`;
+  // Picks sit under a section h2, so the card titles are h3.
+  return `<li class="pick">${entryCardHtml(r.entry, { root: "../../", repo, now, view: "cards", lead, trail, titleLevel: 3 })}</li>`;
 }
 
 export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site, stamp, total, hasCard, now }) {
@@ -97,8 +96,8 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
     .map(
       (s) => `<section class="stack-section" aria-labelledby="sec-${esc(s.name.toLowerCase())}">
         <h2 id="sec-${esc(s.name.toLowerCase())}">${esc(s.name)}</h2>
-        <ul class="pick-list">
-          ${s.rows.map((r) => rowHtml(r, now)).join("\n          ")}
+        <ul class="pick-list entry-list">
+          ${s.rows.map((r) => rowHtml(r, now, repo)).join("\n          ")}
         </ul>
       </section>`
     )
@@ -117,12 +116,7 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${esc(clipText(meta.title, SEO_TITLE_MAX))}</title>
     <meta name="description" content="${esc(clipText(meta.task, SEO_DESCRIPTION_MAX))}" />
-    ${baseHeadHtml({ site, title, description: meta.task, url, type: "article", hasCard })}
-    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../styles.css" />
+    ${baseHeadHtml({ site, title, description: meta.task, url, type: "article", hasCard, root: "../../" })}
     <script type="application/ld+json">${scriptJson(stackJsonLd(meta, sections, site))}</script>
   </head>
   <body>
@@ -156,6 +150,7 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
     </main>
     <footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
+      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>
       <p><a href="../../freshness/">Licence freshness</a></p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
