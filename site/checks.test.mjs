@@ -784,7 +784,7 @@ import { checkPreviewField, checkThumbManifest } from "./checks.mjs";
   rejects("thumbs manifest: record without file", checkThumbManifest(manifest, new Map([["a", okEntry]]), []), 'site/thumbs.json has "a" but site/public/thumbs/a.webp is missing');
   rejects("thumbs manifest: record for unknown entry", checkThumbManifest(manifest, new Map(), ["a.webp"]), 'site/thumbs.json has "a" but no catalog entry has that id');
   rejects("thumbs manifest: rejects a thumbnail whose entry is no longer eligible", checkThumbManifest(manifest, new Map([["a", { ...okEntry, license: "custom" }]]), ["a.webp"]), 'thumbnail for "a" must be removed: licence custom is not in the preview allowlist (run node site/thumbs.mjs)');
-  rejects("thumbs manifest: licence drift", checkThumbManifest(manifest, new Map([["a", { ...okEntry, license: "MIT" }]]), ["a.webp"]), 'thumbnail for "a" was fetched under CC0 but the entry now says MIT (run node site/thumbs.mjs)');
+  accepts("thumbs manifest: licence drift between two allowed licences is not an error", checkThumbManifest(manifest, new Map([["a", { ...okEntry, license: "MIT" }]]), ["a.webp"]));
   rejects("thumbs manifest: stray file", checkThumbManifest(manifest, new Map([["a", okEntry]]), ["a.webp", "notes.txt"]), "site/public/thumbs/notes.txt is not a <id>.webp thumbnail");
 }
 accepts("preview field: absent", checkPreviewField("ok.md", {}));

@@ -15,7 +15,8 @@ export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCa
   const sources = `${n} ${n === 1 ? "source" : "sources"}`;
   const description = clipText(`${sources} of free ${label} assets: ${blurb}. Every licence read at the source.`, SEO_DESCRIPTION_MAX);
   const repo = site.repo;
-  const grid = groupedEntriesHtml(entries, { [cat]: meta }, { root: "../../", repo, now, limit: false });
+  // The category is the h1, so its group heading is an h2 and the card titles h3.
+  const grid = groupedEntriesHtml(entries, { [cat]: meta }, { root: "../../", repo, now, limit: false, headingLevel: 2, titleLevel: 3 });
   return `<!DOCTYPE html>
 <html lang="en">
   <head>

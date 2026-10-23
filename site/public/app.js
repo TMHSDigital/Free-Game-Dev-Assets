@@ -357,9 +357,13 @@ import { installViewToggles } from "./views.js";
   // catalog is rendered here once, the first time a search, a filter or a
   // "Show all" needs it, so the page loads without that work.
   let allRendered = false;
+  // Set when ensureAllNodes added nodes; renderGrid announces them once
+  // they are in the DOM (shortlist.js wires its buttons on the event).
+  let announceRendered = false;
   function ensureAllNodes() {
     if (allRendered) return;
     allRendered = true;
+    announceRendered = true;
     const missing = data.entries.filter((e) => !cardNodes.has(e.id));
     if (!missing.length) return;
     const tpl = document.createElement("template");
@@ -487,6 +491,10 @@ import { installViewToggles } from "./views.js";
       const n = group ? perCat.get(cat) || 0 : 0;
       el.hidden = !n;
       if (n) el.querySelector(".group-n").textContent = String(n);
+    }
+    if (announceRendered) {
+      announceRendered = false;
+      document.dispatchEvent(new CustomEvent("fgda:cards-rendered"));
     }
     groupHeadings = [...grid.children].filter((el) => el.matches(".group-heading") && !el.hidden);
     // The first visible heading sits flush with the top of the list.
@@ -709,7 +717,9 @@ import { installViewToggles } from "./views.js";
       e.preventDefault();
       state.category = more.getAttribute("data-cat");
       apply({ push: true });
-      headingNodes.get(state.category)?.scrollIntoView({ block: "start" });
+      // The category headings are hidden under a category filter, so land on
+      // the first card of the list instead (it clears the sticky bar).
+      $("#entry-grid .entry-card:not([hidden])")?.scrollIntoView({ block: "start" });
       $("#result-count").focus({ preventScroll: true });
     });
     // Cards / List on each category heading (views.js); re-render so the

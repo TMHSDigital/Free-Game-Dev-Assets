@@ -1020,6 +1020,21 @@ eq("filmstrip: empty when nothing to show", filmstripHtml([], { root: "" }), "")
   has("stack page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
 }
 
+// Final review: heading levels never skip on category and stack pages.
+has("cards: heading level option", groupHeadingHtml({ cat: "3d", label: "3D", count: 1, view: "cards", level: 2 }), '<h2 class="group-heading" id="group-3d"');
+has("cards: title level option", entryCardHtml(cardBase, { root: "", repo: "https://r", now: 0, view: "cards", titleLevel: 3 }), '<h3><a class="entry-link" href="entry/x/"');
+{
+  const html = categoryPageHtml({ cat: "3d", meta: { label: "3D", blurb: "b", view: "cards" }, entries: [cardBase], site: { title: "T", tagline: "t", siteUrl: "https://s/", repo: "https://r" }, stamp: "2026-10-23", total: 1, hasCard: false, now: 0 });
+  has("category page: group heading is h2 under the h1", html, '<h2 class="group-heading"');
+  has("category page: card titles are h3", html, '<h3><a class="entry-link"');
+  eq("category page: no h4", html.includes("<h4"), false);
+}
+{
+  const html = sp();
+  has("stack page: card titles are h3 under the section h2", html, '<h3><a class="entry-link"');
+  eq("stack page: no h4", html.includes("<h4"), false);
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

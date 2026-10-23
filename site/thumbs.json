@@ -145,24 +145,6 @@
       "height": 270,
       "license": "GPL-2.0-or-later"
     },
-    "blender-ellie-poses": {
-      "source": "https://www.blender.org/download/demo-files/#assets",
-      "image": "https://www.blender.org/wp-content/uploads/2025/11/blender_lab_2025-480x270.jpg",
-      "fetched": "2026-10-23",
-      "hash": "e3d81a8c2db1a187",
-      "width": 480,
-      "height": 270,
-      "license": "CC-BY"
-    },
-    "blender-human-base-meshes": {
-      "source": "https://www.blender.org/download/demo-files/#assets",
-      "image": "https://www.blender.org/wp-content/uploads/2025/11/blender_lab_2025-480x270.jpg",
-      "fetched": "2026-10-23",
-      "hash": "e3d81a8c2db1a187",
-      "width": 480,
-      "height": 270,
-      "license": "CC0"
-    },
     "blender-studio-critter": {
       "source": "https://studio.blender.org/characters/critter/",
       "image": "https://studio.blender.org/files/public/thumbnail/74/ea/74ead8db4c04dbfa2f64efd401b43841_m.webp",
@@ -593,15 +575,6 @@
       "hash": "974528ba1ff2b939",
       "width": 640,
       "height": 360,
-      "license": "CC0"
-    },
-    "kenney-animated-characters": {
-      "source": "https://kenney.nl/assets?series=Animated+Characters",
-      "image": "https://kenney.nl/data/img/kenney-promo.png",
-      "fetched": "2026-10-23",
-      "hash": "f719591c31137707",
-      "width": 600,
-      "height": 300,
       "license": "CC0"
     },
     "kenney-boardgame-pack": {

@@ -83,7 +83,8 @@ function rowHtml(r, now, repo) {
   const flag = r.entry.status === "needs-review" ? ' <span class="pick-flag">needs review</span>' : "";
   const lead = `<p class="pick-need">${esc(r.need)}${flag}</p>`;
   const trail = `<p class="pick-why">${r.whyHtml}</p>`;
-  return `<li class="pick">${entryCardHtml(r.entry, { root: "../../", repo, now, view: "cards", lead, trail })}</li>`;
+  // Picks sit under a section h2, so the card titles are h3.
+  return `<li class="pick">${entryCardHtml(r.entry, { root: "../../", repo, now, view: "cards", lead, trail, titleLevel: 3 })}</li>`;
 }
 
 export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site, stamp, total, hasCard, now }) {

@@ -51,7 +51,7 @@ function engineLockFlagHtml(entry) {
  * the heading and `trail` after the meta line: the stack pages use them for
  * the need and the reason behind a pick.
  */
-export function entryCardHtml(entry, { root = "", repo, now, view = "list", lead = "", trail = "", label } = {}) {
+export function entryCardHtml(entry, { root = "", repo, now, view = "list", lead = "", trail = "", label, titleLevel = 4 } = {}) {
   const age = verifiedAge(entry.verified, now);
   const ageText = age.days === null ? "verified date unknown" : `verified ${entry.verified} (${age.days}d ago)`;
   const flags = [entry.status, commercialLabel(entry.commercial), entry.license].map(esc).join(" &middot; ");
@@ -67,7 +67,7 @@ export function entryCardHtml(entry, { root = "", repo, now, view = "list", lead
   <div class="entry-thumb">${thumbHtml(entry, root, label)}</div>
   <div class="entry-body">
     ${lead}<div class="entry-top">
-      <h4><a class="entry-link" href="${esc(root)}entry/${esc(entry.id)}/" data-id="${esc(entry.id)}">${esc(entry.name)}</a></h4>
+      <h${titleLevel}><a class="entry-link" href="${esc(root)}entry/${esc(entry.id)}/" data-id="${esc(entry.id)}">${esc(entry.name)}</a></h${titleLevel}>
       <span class="entry-flags">${flags}${maintenanceFlagHtml(entry)}${engineLockFlagHtml(entry)}</span>
     </div>
     <p>${esc(entry.summary || "")}</p>
@@ -84,14 +84,18 @@ export function entryCardHtml(entry, { root = "", repo, now, view = "list", lead
 </article>`;
 }
 
-/** A category heading. The count reads as ", 77 entries" to assistive tech instead of running into the label. */
-export function groupHeadingHtml({ cat, label, count, view = "list", root = "" }) {
+/**
+ * A category heading. The count reads as ", 77 entries" to assistive tech
+ * instead of running into the label. `level` keeps the outline honest: h3
+ * under the homepage's h2, h2 on a category page whose h1 is the category.
+ */
+export function groupHeadingHtml({ cat, label, count, view = "list", level = 3 }) {
   return (
-    `<h3 class="group-heading" id="group-${esc(cat)}" data-cat="${esc(cat)}" data-view="${esc(view)}">` +
+    `<h${level} class="group-heading" id="group-${esc(cat)}" data-cat="${esc(cat)}" data-view="${esc(view)}">` +
     `<span class="group-name">${esc(label)}</span>` +
     `<span class="group-count"><span class="sr-only">, </span><span class="group-n">${Number(count) || 0}</span><span class="sr-only"> entries</span></span>` +
     `<span class="group-tools"></span>` +
-    `</h3>`
+    `</h${level}>`
   );
 }
 
@@ -105,7 +109,7 @@ export function groupMoreHtml({ cat, label, count, root = "" }) {
  * (the homepage) each category shows its first CARD_LIMIT or LIST_LIMIT
  * entries and a "Show all" link; without it (category pages) everything.
  */
-export function groupedEntriesHtml(entries, categories, { root = "", repo, now, limit = true } = {}) {
+export function groupedEntriesHtml(entries, categories, { root = "", repo, now, limit = true, headingLevel = 3, titleLevel = 4 } = {}) {
   const out = [];
   for (const [cat, meta] of Object.entries(categories)) {
     const group = entries.filter((e) => e.category === cat);
@@ -114,8 +118,8 @@ export function groupedEntriesHtml(entries, categories, { root = "", repo, now, 
     const label = meta.label || cat;
     const max = view === "cards" ? CARD_LIMIT : LIST_LIMIT;
     const shown = limit ? group.slice(0, max) : group;
-    out.push(groupHeadingHtml({ cat, label, count: group.length, view, root }));
-    out.push(...shown.map((e) => entryCardHtml(e, { root, repo, now, view, label })));
+    out.push(groupHeadingHtml({ cat, label, count: group.length, view, level: headingLevel }));
+    out.push(...shown.map((e) => entryCardHtml(e, { root, repo, now, view, label, titleLevel })));
     if (limit && group.length > max) out.push(groupMoreHtml({ cat, label, count: group.length, root }));
   }
   return out.join("\n");

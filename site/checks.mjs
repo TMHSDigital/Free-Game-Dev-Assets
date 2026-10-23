@@ -795,7 +795,8 @@ export function checkPreviewField(rel, meta) {
  * The committed thumbnails, their manifest and the licence gate must agree:
  * a file needs a record, a record needs a file and a catalog entry, and the
  * entry must still be allowed to show a preview. A licence that changed to
- * custom after the image was fetched fails here until the script removes it.
+ * custom after the image was fetched fails here until the script removes it;
+ * `rec` is otherwise not compared with the entry.
  */
 export function checkThumbManifest(manifest, entriesById, files) {
   const errors = [];
@@ -817,14 +818,11 @@ export function checkThumbManifest(manifest, entriesById, files) {
       errors.push(`site/thumbs.json has "${id}" but no catalog entry has that id`);
       continue;
     }
+    // The gate is what matters. A licence that moved between two allowed
+    // values (CC-BY to CC-BY-4.0) is not an error: the credit line reads the
+    // entry's live licence, and the next script run refreshes the record.
     const gate = previewEligibility(entry);
-    if (!gate.ok) {
-      errors.push(`thumbnail for "${id}" must be removed: ${gate.reason} (run node site/thumbs.mjs)`);
-      continue;
-    }
-    if (rec.license !== entry.license) {
-      errors.push(`thumbnail for "${id}" was fetched under ${rec.license} but the entry now says ${entry.license} (run node site/thumbs.mjs)`);
-    }
+    if (!gate.ok) errors.push(`thumbnail for "${id}" must be removed: ${gate.reason} (run node site/thumbs.mjs)`);
   }
   return errors;
 }

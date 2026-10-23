@@ -415,7 +415,8 @@ code {
   align-items: baseline;
 }
 
-.entry-top h4 {
+.entry-top h4,
+.entry-top h3 {
   margin: 0;
   font-size: 1.02rem;
   letter-spacing: -0.015em;
@@ -582,12 +583,14 @@ input:focus-visible,
   box-shadow: inset 3px 0 0 var(--accent);
 }
 
-.entry-top h4 a {
+.entry-top h4 a,
+.entry-top h3 a {
   color: var(--ink);
   text-decoration: none;
 }
 
-.entry-top h4 a:hover {
+.entry-top h4 a:hover,
+.entry-top h3 a:hover {
   color: var(--accent);
   text-decoration: underline;
 }
