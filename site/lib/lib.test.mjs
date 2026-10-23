@@ -441,21 +441,10 @@ eq("recent window includes day 30, excludes 31", fs1.recent.map((r) => r.entry.i
 eq("rows oldest first, unknown last", fs1.rows.map((r) => r.entry.id).join(","), "i,d,c,b,a,f,e,j,g");
 eq("buckets match the cards", fs1.rows.every((r) => r.bucket === verifiedAge(r.entry.verified, fNow).bucket), true);
 const fl = freshnessLineHtml(fs1, "2026-09-25", "freshness/");
-has("line counts fresh of total", fl, "<strong>Checked within 180 days: 4 of 9.</strong>");
-has("line shows aging when present", fl, "Aging (181 to 365 days): 2.");
-has("line shows stale", fl, "Older than a year: 2.");
-has("line shows unknown when present", fl, "No check date: 1.");
-has("line shows the oldest check", fl, `Oldest check: ${daysAgo(366)} (366 days).`);
-has("line shows as-of", fl, "As of 2026-09-25.");
-has("line links the page", fl, '<a href="freshness/">See every check, oldest first</a>.');
-const flClean = freshnessLineHtml(freshnessStats([fe("a", "Alpha", 10)], fNow), "2026-09-25", "freshness/");
-lacks("no aging clause at zero", flClean, "Aging");
-lacks("no unknown clause at zero", flClean, "No check date");
-has("stale clause even at zero", flClean, "Older than a year: 0.");
-has("one day is singular", freshnessLineHtml(freshnessStats([fe("a", "Alpha", 1)], fNow), "2026-09-25", "f/"), "(1 day)");
+eq("freshness line is one sentence", fl, '<strong>4 of 9</strong> licences re-read in the last 180 days. <a href="freshness/">Every check, oldest first</a>.');
 const fEmpty = freshnessStats([], fNow);
 eq("empty catalog has no oldest", fEmpty.oldest, null);
-lacks("empty catalog line has no oldest clause", freshnessLineHtml(fEmpty, "2026-09-25", "f/"), "Oldest check");
+eq("empty catalog line still reads", freshnessLineHtml(fEmpty, "2026-09-25", "f/"), '<strong>0 of 0</strong> licences re-read in the last 180 days. <a href="f/">Every check, oldest first</a>.');
 
 /* freshness: page ---------------------------------------------------------- */
 import { freshnessPageHtml } from "./freshness.mjs";
@@ -465,7 +454,7 @@ has("freshness canonical", fp, '<link rel="canonical" href="https://x.test/s/fre
 eq("freshness one h1", (fp.match(/<h1[\s>]/g) || []).length, 1);
 has("freshness links entries one level up", fp, 'href="../entry/i/"');
 has("freshness names escaped", fp, "Q &quot;&lt;b&gt;&quot;");
-has("freshness line links the table", fp, '<a href="#every-check">See every check, oldest first</a>');
+has("freshness line links the table", fp, '<a href="#every-check">Every check, oldest first</a>');
 has("freshness table cells carry labels", fp, '<td data-label="Checked">');
 eq("freshness table rows oldest first", [...fp.matchAll(/<tr class="fresh-row" data-id="([^"]+)"/g)].map((m) => m[1]).slice(0, 3).join(","), "i,d,c");
 has("an undated row says so", fp, "no check date");
@@ -995,6 +984,17 @@ import { categoryPageHtml } from "./category-page.mjs";
   eq("category page: page checks pass", checkPage(html, { file: "category/3d/index.html", kindOf: () => "file" }).join(), "");
 }
 has("sitemap: category pages", sitemapXml({ site: { siteUrl: "https://s/" }, entries: [], stacks: [], stamp: "2026-10-23", categories: [{ id: "3d", lastmod: "2026-10-23" }] }), "<loc>https://s/category/3d/</loc>");
+
+// Site refresh: hero filmstrip.
+import { filmstripHtml } from "./cards.mjs";
+has("filmstrip: links and alt", filmstripHtml([{ id: "x", name: "X Pack", thumb: { path: "thumbs/x.webp", width: 640, height: 400 } }], { root: "./" }), '<a href="./entry/x/"><img src="./thumbs/x.webp" width="640" height="400" alt="X Pack" loading="eager"');
+eq("filmstrip: empty when nothing to show", filmstripHtml([], { root: "" }), "");
+{
+  const nine = Array.from({ length: 9 }, (_, i) => ({ id: `e${i}`, name: `E${i}`, thumb: { path: `thumbs/e${i}.webp`, width: 640, height: 400 } }));
+  const strip = filmstripHtml(nine, { root: "" });
+  eq("filmstrip: first three eager, rest lazy", `${(strip.match(/loading="eager"/g) || []).length}/${(strip.match(/loading="lazy"/g) || []).length}`, "3/6");
+  has("filmstrip: labelled list", strip, '<ul class="filmstrip" aria-label="A few of the assets inside">');
+}
 
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {

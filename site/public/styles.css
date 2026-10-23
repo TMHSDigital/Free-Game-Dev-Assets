@@ -1927,3 +1927,134 @@ input:focus-visible,
     min-height: 44px;
   }
 }
+
+/* Hero (site refresh): the count and the promise in two lines, then a
+   filmstrip of real previews so the first screen shows assets. */
+.hero h1 {
+  max-width: 26ch;
+  font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.hero .freshness-line {
+  margin-top: 1rem;
+}
+
+.filmstrip {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 4px;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.filmstrip li {
+  margin: 0;
+}
+
+.filmstrip a {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.filmstrip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.filmstrip a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .filmstrip {
+    display: flex;
+    gap: 6px;
+    margin-inline: calc(-1 * clamp(1rem, 3vw, 1.5rem));
+    padding-inline: clamp(1rem, 3vw, 1.5rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .filmstrip li {
+    flex: 0 0 72px;
+    scroll-snap-align: start;
+  }
+}
+
+/* A note is a note: no coloured side tab. */
+.filter-note {
+  border: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* The header on a phone: brand on its own row, then one scrolling row of
+   links tall enough to tap. */
+@media (max-width: 640px) {
+  .topbar {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1rem;
+    padding-block: 0.5rem;
+  }
+
+  .brand {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .topnav {
+    flex: 1 0 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    margin-inline: calc(-1 * clamp(1rem, 3vw, 1.5rem));
+    padding-inline: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .topnav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 12px;
+  }
+
+  .topnav a:first-child {
+    padding-left: 0;
+  }
+
+  .nav-sponsor {
+    display: inline-flex;
+    align-items: center;
+    padding-left: 12px;
+  }
+}
+
+/* The floating "Search" button sits bottom-left, away from the card links,
+   and steps aside while a card's own links have keyboard focus. */
+.to-top {
+  left: clamp(0.75rem, 3vw, 1.5rem);
+  right: auto;
+  border-radius: 999px;
+  transition: opacity 120ms ease-out;
+}
+
+body:has(.entry-links :focus-visible) .to-top {
+  opacity: 0;
+  pointer-events: none;
+}

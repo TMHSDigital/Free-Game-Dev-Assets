@@ -1,5 +1,6 @@
 import { closestEntries, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, slugOf, stateQuery } from "./search.js";
-import { commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
+import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
+import { installViewToggles } from "./views.js";
 
 (() => {
   const data = window.__CATALOG__;
@@ -176,6 +177,13 @@ import { commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMore
   function viewFor(cat) {
     return categoryLabels[cat]?.view === "cards" ? "cards" : "list";
   }
+
+  /** The view a category is showing right now: the toggle's choice, else the default. */
+  function viewNow(cat) {
+    return headingNodes.get(cat)?.getAttribute("data-view") || viewFor(cat);
+  }
+
+  const limitFor = (cat) => (viewNow(cat) === "cards" ? CARD_LIMIT : LIST_LIMIT);
 
   function cardHtml(entry) {
     return entryCardHtml(entry, { root: "", repo, now: NOW, view: viewFor(entry.category), label: categoryLabels[entry.category]?.label });
@@ -424,8 +432,32 @@ import { commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMore
       shown.add(e.id);
       perCat.set(e.category, (perCat.get(e.category) || 0) + 1);
     }
-    for (const [id, el] of cardNodes) el.hidden = !shown.has(id);
-    for (const el of moreNodes.values()) el.hidden = true;
+    // The default page (no search, no filter) previews each category and
+    // links to its page, as the prerender does. Any filter or search shows
+    // the whole matching set. A search always uses the list form.
+    const preview = group && !stateQuery(state, DEFAULTS);
+    const searching = !!state.q.trim();
+    const seenPerCat = new Map();
+    for (const el of grid.children) {
+      if (!el.matches(".entry-card")) continue;
+      const id = el.getAttribute("data-id");
+      const cat = el.getAttribute("data-cat");
+      let visible = shown.has(id);
+      if (visible && preview) {
+        const n = seenPerCat.get(cat) || 0;
+        seenPerCat.set(cat, n + 1);
+        if (n >= limitFor(cat)) visible = false;
+      }
+      el.hidden = !visible;
+      const view = searching ? "list" : viewNow(cat);
+      if (el.getAttribute("data-view") !== view) el.setAttribute("data-view", view);
+    }
+    for (const [cat, el] of moreNodes) {
+      const total = perCat.get(cat) || 0;
+      const show = preview && total > limitFor(cat);
+      el.hidden = !show;
+      if (show) el.textContent = `Show all ${total} in ${categoryLabels[cat]?.label || cat}`;
+    }
     flatHeading.hidden = group || !list.length;
     for (const [cat, el] of headingNodes) {
       const n = group ? perCat.get(cat) || 0 : 0;
@@ -639,6 +671,21 @@ import { commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMore
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       if (e.target.closest("a.entry-link")) rememberScroll();
     });
+    // "Show all N in <category>" opens that category in place; without this
+    // script the same link leads to the static category page.
+    $("#entry-grid").addEventListener("click", (e) => {
+      const more = e.target.closest("a.group-more");
+      if (!more || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      state.category = more.getAttribute("data-cat");
+      apply({ push: true });
+      headingNodes.get(state.category)?.scrollIntoView({ block: "start" });
+      $("#result-count").focus({ preventScroll: true });
+    });
+    // Cards / List on each category heading (views.js); re-render so the
+    // preview limit follows the view.
+    const defaults = Object.fromEntries(Object.keys(categoryLabels).map((cat) => [cat, viewFor(cat)]));
+    installViewToggles($("#entry-grid"), defaults, { onChange: () => apply() });
     // Starter rows link to entry pages too.
     $("#starter-table").addEventListener("click", (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;

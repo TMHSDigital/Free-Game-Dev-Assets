@@ -15,9 +15,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, sponsorButtonHtml } from "./lib/shared.mjs";
-import { groupedEntriesHtml } from "./lib/cards.mjs";
+import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { categoryPageHtml } from "./lib/category-page.mjs";
-import { thumbRelPath } from "./lib/thumbs.mjs";
+import { filmstripPick, thumbRelPath } from "./lib/thumbs.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
@@ -585,14 +585,20 @@ function main() {
   const stamp = payload.generatedAt.slice(0, 10);
   const visible = entries.filter((e) => e.status !== "deprecated");
   const fresh = freshnessStats(entries, now);
+  // The hero filmstrip draws from the categories that default to cards.
+  const cardCategories = Object.entries(config.categories)
+    .filter(([, meta]) => meta.view === "cards")
+    .map(([cat]) => cat);
   const substitutions = {
     FRESHNESS_LINE: freshnessLineHtml(fresh, stamp, "freshness/"),
     NEW_LINE: newEntriesLineHtml(visible, stamp),
     HEAD_META: headMetaHtml(config.site, stats, payload.generatedAt, hasCard),
     STACK_ROWS: stackRowsHtml(stacks),
     STARTER_ROWS: starterRowsHtml(featured),
-    // Full prerender until the category pages exist (Task 6); the per-category cut-off comes with them.
-    ENTRY_ROWS: groupedEntriesHtml(visible, config.categories, { root: "", repo: repoUrl, now, limit: false }),
+    // Each category shows its first few entries; the category pages hold the rest.
+    ENTRY_ROWS: groupedEntriesHtml(visible, config.categories, { root: "", repo: repoUrl, now }),
+    HERO_COUNT: String(stats.total),
+    FILMSTRIP: filmstripHtml(filmstripPick(visible, { count: 9, cardCategories }), { root: "" }),
     CATEGORY_CHIPS: categoryChipsHtml(visible, config.categories),
     GUIDE_ROWS: guideRowsHtml(config.guides, repoUrl),
     CATALOG_BLURB: `${stats.total} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file &middot; ${stats.deprecated} deprecated`,

@@ -120,3 +120,23 @@ export function groupedEntriesHtml(entries, categories, { root = "", repo, now, 
   }
   return out.join("\n");
 }
+
+/**
+ * The hero filmstrip: a row of square thumbnails linking to their entries,
+ * so the first screen already shows what the catalog holds. The first three
+ * load eagerly (they are above the fold); the rest lazily.
+ */
+export function filmstripHtml(entries, { root = "" } = {}) {
+  if (!entries.length) return "";
+  const items = entries
+    .map((e, i) => {
+      const t = e.thumb;
+      return (
+        `<li><a href="${esc(root)}entry/${esc(e.id)}/">` +
+        `<img src="${esc(root)}${esc(t.path)}" width="${Number(t.width) || 640}" height="${Number(t.height) || 400}" alt="${esc(e.name)}" loading="${i < 3 ? "eager" : "lazy"}" decoding="async">` +
+        `</a></li>`
+      );
+    })
+    .join("");
+  return `<ul class="filmstrip" aria-label="A few of the assets inside">${items}</ul>`;
+}

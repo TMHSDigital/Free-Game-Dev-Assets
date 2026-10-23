@@ -34,17 +34,7 @@ export function freshnessStats(entries, now) {
 
 /** The one-line summary, for the homepage and the top of /freshness/. */
 export function freshnessLineHtml(stats, stamp, href) {
-  const parts = [
-    "Every licence here was read at its source.",
-    `<strong>Checked within 180 days: ${stats.fresh} of ${stats.total}.</strong>`,
-  ];
-  if (stats.aging) parts.push(`Aging (181 to 365 days): ${stats.aging}.`);
-  parts.push(`Older than a year: ${stats.stale}.`);
-  if (stats.unknown) parts.push(`No check date: ${stats.unknown}.`);
-  if (stats.oldest) parts.push(`Oldest check: ${esc(stats.oldest.entry.verified)} (${dayWord(stats.oldest.days)}).`);
-  parts.push(`As of ${esc(stamp)}.`);
-  parts.push(`<a href="${esc(href)}">See every check, oldest first</a>.`);
-  return parts.join(" ");
+  return `<strong>${stats.fresh} of ${stats.total}</strong> licences re-read in the last 180 days. <a href="${esc(href)}">Every check, oldest first</a>.`;
 }
 
 /** Days an entry counts as new on the home page. */
