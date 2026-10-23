@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, commercialLabel, ENGINE_LOCK_LABELS, ENGINE_LOCK_NOTES, esc, latestAllowedDate, MAINTENANCE_NOTES, OG_CARD_NAME, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
+import { baseHeadHtml, commercialLabel, headAssetsHtml, ENGINE_LOCK_LABELS, ENGINE_LOCK_NOTES, esc, latestAllowedDate, MAINTENANCE_NOTES, OG_CARD_NAME, PERSPECTIVE_LABELS, sponsorButtonHtml, verifiedAge } from "./lib/shared.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
@@ -278,7 +278,7 @@ function guideRowsHtml(guides, repo) {
 
 function headMetaHtml(site, stats, generatedAt, hasCard) {
   return [
-    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard }),
+    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard, root: "./" }),
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
     `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total }))}</script>`,
@@ -330,8 +330,7 @@ function notFoundHtml(site) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Not found - ${esc(site.title)}</title>
     <meta name="robots" content="noindex" />
-    <link rel="icon" href="${esc(base)}/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="${esc(base)}/styles.css" />
+    ${headAssetsHtml(`${base}/`).join("\n    ")}
   </head>
   <body>
     <main class="section">

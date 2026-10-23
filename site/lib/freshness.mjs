@@ -105,12 +105,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(desc)}" />
-    ${baseHeadHtml({ site, title, description: desc, url, hasCard })}
-    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../styles.css" />
+    ${baseHeadHtml({ site, title, description: desc, url, hasCard, root: "../" })}
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to the list</a>

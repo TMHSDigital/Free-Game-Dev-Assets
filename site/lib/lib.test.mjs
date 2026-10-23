@@ -947,6 +947,13 @@ eq("thumbs: credit without publisher", previewCredit({ license: "CC-BY-4.0" }), 
   eq("thumbs: filmstrip count cap", filmstripPick(pool, { count: 1, cardCategories: ["3d", "2d"] }).map((e) => e.id).join(), "b");
 }
 
+// Site refresh: self-hosted fonts and one shared head.
+has("head: preloads body font", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../../" }), '<link rel="preload" href="../../fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin');
+has("head: preloads mono font", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../../" }), '<link rel="preload" href="../../fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin');
+has("head: stylesheet from root", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "./" }), '<link rel="stylesheet" href="./styles.css"');
+has("head: icon from root", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../" }), '<link rel="icon" href="../favicon.svg" type="image/svg+xml"');
+has("page check: google fonts refused", checkPage('<html><head><title>x</title><link rel="canonical" href="https://s/"><link href="https://fonts.googleapis.com/css2"></head><body><h1>x</h1></body></html>', { file: "p.html", kindOf: () => "file" }).join(), "p.html: references Google Fonts");
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
