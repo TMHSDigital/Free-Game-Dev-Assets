@@ -64,6 +64,7 @@ than pack-wide. Triangle counts are geometry and survive re-hosting; file sizes 
 
 | ID | Name | License | Commercial | Status |
 | --- | --- | --- | --- | --- |
+| [jaderealms-moon-gate](jaderealms-moon-gate.md) | JadeRealms Moon Gate | custom | yes | needs-review |
 | [kenney](kenney.md) | Kenney | CC0 | yes | active |
 | [kenney-car-kit](kenney-car-kit.md) | Kenney Car Kit | CC0 | yes | active |
 | [ggbotnet-psx-cars](ggbotnet-psx-cars.md) | GGBotNet PSX Style Cars | CC0 | yes | active |

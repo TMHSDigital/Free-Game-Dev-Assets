@@ -157,7 +157,7 @@ someone exactly what you are looking at.
 
 | Category | Entries | Focus | Index |
 | :--- | ---: | :--- | :--- |
-| **3D** | 77 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
+| **3D** | 78 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
 | **Tools** | 121 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 | **2D** | 59 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
 | **Audio** | 35 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
