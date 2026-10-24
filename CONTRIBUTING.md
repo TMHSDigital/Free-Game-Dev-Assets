@@ -105,6 +105,10 @@ A publisher who would rather not have their preview shown can open an issue; the
 
 Changes drafted with an agent or a script are judged on the diff like any other. Keep them small, keep tests in `site/checks.test.mjs` or `site/lib/lib.test.mjs` (a test file that `npm test` does not run is dropped), and name the issue the change fixes in the body (`Fixes #N`). A pull request that lists sources or licences the author did not read is closed: the catalog's one rule is that every licence fact was read at the source by the person who recorded it.
 
+## Licence of contributions
+
+By opening a pull request you dedicate your contribution to the public domain under [CC0 1.0](LICENSE), like the rest of the repository's metadata and documentation. Quotes from licence pages stay the publisher's words; they are used as short factual quotations, and the assets they describe keep their own licences.
+
 ## Research notes
 
 Local Gemini / deep-research drafts live under `RESEARCH/` as `R0N-<topic>.md` (gitignored; see [`docs/research-index.md`](docs/research-index.md)). Promote durable findings into catalog entries and `docs/` — don’t rely on drafts as the public source of truth.

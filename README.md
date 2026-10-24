@@ -398,4 +398,5 @@ If the catalog saves you time, you can [sponsor TMHSDigital on GitHub](https://g
 
 Catalog metadata and documentation in this repository are dedicated to the public domain
 under [CC0 1.0 Universal](LICENSE). Third-party assets linked from the catalog remain under
-their original licences. Verify terms on the source site before use.
+their original licences. Verify terms on the source site before use. Contributions are dedicated the same way; see
+[Licence of contributions](CONTRIBUTING.md#licence-of-contributions).
