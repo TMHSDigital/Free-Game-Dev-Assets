@@ -198,6 +198,19 @@ export const PREVIEW_CREDIT_LINE = "Preview images belong to their publishers an
 /** Self-hosted fonts (site/public/fonts/, OFL). The body face and the mono face are preloaded; the italic is not. */
 export const FONT_FILES = ["fonts/public-sans.woff2", "fonts/ibm-plex-mono-400.woff2"];
 
+/**
+ * Every ES module each page type loads, entry scripts and their imports, as
+ * served from dist. The head preloads the whole set so the browser fetches
+ * them in parallel instead of discovering each import one round trip later.
+ * lib.test.mjs walks the real import graph and fails if a list drifts.
+ */
+export const PAGE_MODULES = {
+  home: ["app.js", "search.js", "cards.mjs", "shared.mjs", "views.js", "shortlist.js", "owes.js"],
+  entry: ["shortlist.js", "owes.js"],
+  category: ["category.js", "views.js", "shortlist.js", "owes.js"],
+  notFound: ["not-found.js", "search.js"],
+};
+
 /** Icon, font preloads and stylesheet, resolved against `root`. Every page type shares them. */
 export function headAssetsHtml(root = "./") {
   return [
@@ -218,7 +231,7 @@ export const OG_CARD_NAME = "og-card.png";
  * page's path back to the site root ("./", "../", "../../"): the icon, the
  * self-hosted font preloads and the stylesheet are resolved against it.
  */
-export function baseHeadHtml({ site, title, description, url, type = "website", hasCard, indent = "    ", root = "./" }) {
+export function baseHeadHtml({ site, title, description, url, type = "website", hasCard, indent = "    ", root = "./", modules = [] }) {
   const base = String(site.siteUrl).replace(/\/+$/, "");
   const card = `${base}/${OG_CARD_NAME}`;
   const cardMeta = hasCard
@@ -246,6 +259,7 @@ export function baseHeadHtml({ site, title, description, url, type = "website", 
     `<meta property="og:description" content="${esc(description)}" />`,
     `<meta property="og:url" content="${esc(url)}" />`,
     ...cardMeta,
+    ...modules.map((m) => `<link rel="modulepreload" href="${esc(root)}${esc(m)}" />`),
     `<meta name="twitter:title" content="${esc(title)}" />`,
     `<meta name="twitter:description" content="${esc(description)}" />`,
     ...headAssetsHtml(root),

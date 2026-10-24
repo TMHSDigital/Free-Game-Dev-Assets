@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, sponsorButtonHtml } from "./lib/shared.mjs";
+import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, PAGE_MODULES, sponsorButtonHtml } from "./lib/shared.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { categoryPageHtml } from "./lib/category-page.mjs";
 import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
@@ -210,7 +210,7 @@ function guideRowsHtml(guides, repo) {
 
 function headMetaHtml(site, stats, generatedAt, hasCard) {
   return [
-    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard, root: "./" }),
+    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard, root: "./", modules: PAGE_MODULES.home }),
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
     `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total }))}</script>`,
@@ -275,6 +275,7 @@ function notFoundHtml(site) {
       </p>
     </main>
     <script src="${esc(base)}/data.js" defer></script>
+    ${PAGE_MODULES.notFound.filter((m) => m !== "not-found.js").map((m) => `<link rel="modulepreload" href="${esc(base)}/${m}" />`).join("\n    ")}
     <script type="module" src="${esc(base)}/not-found.js"></script>
   </body>
 </html>

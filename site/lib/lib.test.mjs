@@ -1074,6 +1074,28 @@ has("cards: title level option", entryCardHtml(cardBase, { root: "", repo: "http
 
 eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: "" }, {}).q.length, MAX_QUERY);
 
+/* modulepreload lists match the import graph ---------------------------- */
+{
+  const { PAGE_MODULES } = await import("./shared.mjs");
+  const libDir = new URL("./", import.meta.url);
+  const publicDir = new URL("../public/", import.meta.url);
+  // dist name -> source file (build.mjs copies these four from site/lib).
+  const fromLib = { "search.js": "search.mjs", "owes.js": "owes.mjs", "cards.mjs": "cards.mjs", "shared.mjs": "shared.mjs" };
+  const src = (name) => nodeFs.readFileSync(fromLib[name] ? new URL(fromLib[name], libDir) : new URL(name, publicDir), "utf8");
+  const importsOf = (name) => [...src(name).matchAll(/^import[^;]*?from "\.\/([^"]+)";/gm)].map((m) => m[1]);
+  const closure = (roots) => {
+    const seen = new Set();
+    const walk = (n) => { if (seen.has(n)) return; seen.add(n); importsOf(n).forEach(walk); };
+    roots.forEach(walk);
+    return [...seen].sort();
+  };
+  const roots = { home: ["app.js", "shortlist.js"], entry: ["shortlist.js"], category: ["category.js", "shortlist.js"], notFound: ["not-found.js"] };
+  for (const [page, list] of Object.entries(roots)) {
+    eq(`modulepreload: ${page} list matches its imports`, [...PAGE_MODULES[page]].sort().join(","), closure(list).join(","));
+  }
+  has("modulepreload: head emits the links", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../../", modules: ["a.js"] }), '<link rel="modulepreload" href="../../a.js" />');
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

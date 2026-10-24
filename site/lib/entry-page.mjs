@@ -12,8 +12,7 @@ import {
   STATUS_NOTES,
   verifiedAge,
   sponsorButtonHtml,
-  PREVIEW_CREDIT_LINE,
-} from "./shared.mjs";
+  PREVIEW_CREDIT_LINE, PAGE_MODULES } from "./shared.mjs";
 import { thumbHtml } from "./cards.mjs";
 import { previewCredit } from "./thumbs.mjs";
 
@@ -121,7 +120,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     <title>${esc(seoTitle(entry.name, entry.license))}</title>
     <meta name="description" content="${esc(seoDescription(entry))}" />
     ${deprecated ? '<meta name="robots" content="noindex" />' : ""}
-    ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard, root: "../../" })}
+    ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard, root: "../../", modules: PAGE_MODULES.entry })}
     <script type="application/ld+json">${scriptJson(jsonLd(entry, site))}</script>
   </head>
   <body>

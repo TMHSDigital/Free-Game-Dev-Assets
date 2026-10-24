@@ -1,6 +1,6 @@
 /** One category's page: every entry in it, both views, no JavaScript needed to see everything. Pure. */
 import { groupedEntriesHtml } from "./cards.mjs";
-import { baseHeadHtml, clipText, esc, PREVIEW_CREDIT_LINE, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, sponsorButtonHtml } from "./shared.mjs";
+import { baseHeadHtml, clipText, esc, PREVIEW_CREDIT_LINE, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, sponsorButtonHtml, PAGE_MODULES } from "./shared.mjs";
 
 export function categoryPageUrl(site, cat) {
   return `${String(site.siteUrl).replace(/\/+$/, "")}/category/${cat}/`;
@@ -24,7 +24,7 @@ export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCa
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${esc(clipText(title, SEO_TITLE_MAX))}</title>
     <meta name="description" content="${esc(description)}" />
-    ${baseHeadHtml({ site, title, description, url, hasCard, root: "../../" })}
+    ${baseHeadHtml({ site, title, description, url, hasCard, root: "../../", modules: PAGE_MODULES.category })}
   </head>
   <body>
     <a class="skip-link" href="#entry-grid">Skip to the list</a>
