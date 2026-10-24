@@ -46,6 +46,37 @@ function syncButtons() {
   }
 }
 
+/** Polite announcements for shortlist changes, which happen away from the panel. */
+let liveRegion = null;
+function announce(message) {
+  if (!liveRegion) {
+    liveRegion = document.createElement("p");
+    liveRegion.className = "sr-only";
+    liveRegion.setAttribute("aria-live", "polite");
+    document.body.append(liveRegion);
+  }
+  // Clear first so the same message twice is read twice.
+  liveRegion.textContent = "";
+  setTimeout(() => {
+    liveRegion.textContent = message;
+  }, 50);
+}
+
+/**
+ * Where focus goes when the control that had it disappears (the panel hides
+ * when the list empties): the search box, the result count, or the page heading.
+ */
+function focusFallback() {
+  const target = document.getElementById("search") || document.getElementById("result-count") || document.querySelector("main h1");
+  if (!target) return;
+  if (!target.matches("input, button, a, [tabindex]")) target.setAttribute("tabindex", "-1");
+  target.focus({ preventScroll: false });
+}
+
+function nameOf(id) {
+  return byId[id]?.name || document.querySelector(`[data-shortlist="${CSS.escape(id)}"]`)?.getAttribute("data-name") || document.querySelector("main h1")?.textContent.trim() || id;
+}
+
 function escapeHtml(str) {
   return String(str)
     .replaceAll("&", "&amp;")
@@ -107,21 +138,30 @@ document.addEventListener("click", (e) => {
     // A toggle sits inside a card whose title link covers the card.
     e.preventDefault();
     const id = toggle.getAttribute("data-shortlist");
-    update(ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]);
+    const adding = !ids.includes(id);
+    update(adding ? [...ids, id] : ids.filter((x) => x !== id));
+    announce(`${adding ? "Added" : "Removed"} ${nameOf(id)} ${adding ? "to" : "from"} the shortlist (${ids.length})`);
     return;
   }
   const remove = e.target.closest("[data-shortlist-remove]");
   if (remove) {
     const id = remove.getAttribute("data-shortlist-remove");
     update(ids.filter((x) => x !== id));
-    document.getElementById("shortlist-count")?.closest("section")?.focus();
+    announce(`Removed ${nameOf(id)} from the shortlist (${ids.length})`);
+    const panel = document.getElementById("shortlist");
+    if (panel && !panel.hidden) document.getElementById("shortlist-count")?.closest("section")?.focus();
+    else focusFallback();
     return;
   }
   const action = e.target.closest("[data-shortlist-action]");
   if (!action) return;
   const what = action.getAttribute("data-shortlist-action");
   if (what === "md" || what === "txt") exportFile(what);
-  if (what === "clear") update([]);
+  if (what === "clear") {
+    update([]);
+    announce("Shortlist cleared");
+    focusFallback();
+  }
 });
 
 // Another tab changed the list.
