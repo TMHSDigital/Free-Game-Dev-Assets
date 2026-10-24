@@ -21,6 +21,7 @@ import {
   checkFieldTypes,
   checkFormatVocabulary,
   checkLicenseVocabulary,
+  checkLineEndings,
   checkMaintenance,
   checkPublisherConsistency,
   checkSpdxConsistency,
@@ -266,6 +267,7 @@ function main() {
     const rel = relFromRoot(file);
     const text = fs.readFileSync(file, "utf8");
     if (hasEmoji(text)) errors.push(`${rel} contains emoji`);
+    errors.push(...checkLineEndings(rel, text));
     const ctl = text.split("\n").findIndex((line) => CONTROL_RE.test(line));
     if (ctl !== -1) errors.push(`${rel}:${ctl + 1} contains a control character (delete it; only tab and newlines are allowed)`);
 
@@ -433,7 +435,10 @@ function main() {
     const files = fs.statSync(root).isDirectory()
       ? walkFiles(root, [], (f) => f.endsWith(".md"))
       : [root];
-    for (const file of files) checkRelativeLinks(file, errors);
+    for (const file of files) {
+      errors.push(...checkLineEndings(relFromRoot(file), fs.readFileSync(file, "utf8")));
+      checkRelativeLinks(file, errors);
+    }
   }
 
   // Thumbnails: the manifest, the files and the licence gate must agree.

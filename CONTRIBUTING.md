@@ -36,7 +36,8 @@ The website rebuilds from frontmatter on deploy. Node 22 or newer is all you nee
 4. Add a row to the matching category `README.md`. This is required: the validator fails an entry that is not listed there, and the row's licence cell must match your frontmatter.
 5. Run `node site/sync-counts.mjs` (`npm run counts`). It updates every place the repo restates the entry count: both category count tables, the README badge and "Browse N sources" line, and `expectedEntryCount` in [`site/config.json`](site/config.json).
 6. Run `npm test && npm run validate` before you push; that is quick. CI then runs `npm run check` (the tests, `node site/validate.mjs` and `node site/build.mjs`), and all of it must pass. Run `npm run check` yourself if you changed the site or want to preview your entry's page. The build renders your entry's page and fails if the body uses markdown the site does not support (tables, code fences, blockquotes, images, raw HTML, `###` headings, numbered lists) or links to a file that does not exist.
-7. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
+7. Save files with LF line endings. `.editorconfig` and `.gitattributes` take care of it in most editors; the validator rejects a file that still contains a CR.
+8. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
 
 To add a starter stack (one pick per need for a kind of game), follow [`stacks/README.md`](stacks/README.md).
 

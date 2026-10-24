@@ -826,3 +826,15 @@ export function checkThumbManifest(manifest, entriesById, files) {
   }
   return errors;
 }
+
+/**
+ * V30: text files are LF-only. `.gitattributes` normalises what git stores,
+ * but a file saved with CRLF on a machine without the attribute would reach
+ * CI through a fork, so the policy is checked rather than assumed.
+ */
+export function checkLineEndings(rel, text) {
+  const at = text.indexOf("\r");
+  if (at === -1) return [];
+  const line = text.slice(0, at).split("\n").length;
+  return [`${rel}:${line} has a CR line ending (save the file with LF; .editorconfig and .gitattributes set this)`];
+}

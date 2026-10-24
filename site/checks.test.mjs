@@ -25,6 +25,7 @@ import {
   evidenceDates,
   markdownAnchors,
   checkLicenseVocabulary,
+  checkLineEndings,
   checkMaintenance,
   maintenanceFromRepo,
   checkPublisherConsistency,
@@ -793,10 +794,15 @@ accepts("preview field: https url", checkPreviewField("ok.md", { preview: "https
 rejects("preview field: http refused", checkPreviewField("bad.md", { preview: "http://a/b.png" }), 'bad.md preview must be "none" or an https:// image URL');
 rejects("preview field: word refused", checkPreviewField("bad.md", { preview: "yes" }), 'bad.md preview must be "none" or an https:// image URL');
 
+/* V30: line endings ------------------------------------------------------ */
+accepts("V30 accepts LF-only text", checkLineEndings("ok.md", "---\nid: a\n---\n\nBody\n"));
+rejects("V30 rejects CRLF and names the first line", checkLineEndings("bad.md", "---\nid: a\r\n---\n"), "bad.md:2 has a CR line ending");
+rejects("V30 rejects a lone CR", checkLineEndings("bad.md", "one\rtwo\n"), "bad.md:1 has a CR line ending");
+
 /* ----------------------------------------------------------------------- */
 if (failures.length) {
   console.error(`checks.test failed (${failures.length}):`);
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 27 checks`);
+console.log(`checks.test ok: ${passed} assertions across 28 checks`);
