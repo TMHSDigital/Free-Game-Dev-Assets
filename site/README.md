@@ -37,14 +37,18 @@ and tools that want the metadata without scraping the page. The page itself load
 `data.js`, the same payload assigned to `window.__CATALOG__`.
 
 - Top-level keys: `generatedAt`, `version` (the calendar tag of the day, `vYYYY.MM.DD`),
-  `site`, `categories`, `guides`, `featured`, `stats`, `entries`.
+  `site`, `categories`, `guides`, `featured`, `stats` (counts: `total`, `active`,
+  `needsReview`, `deprecated`, `commercialOk`, `commercialVaries`, `categories`), `filters`
+  (labels for the site's filter values, such as `licenseFamilies`) and `entries`.
+  The reader-facing guide to the exports is [`docs/data.md`](../docs/data.md).
 - Each entry carries its frontmatter fields (`id`, `name`, `url`, `category`,
   `subcategories`, `license`, `license_spdx` where set, `commercial`,
   `attribution_required`, `attribution_string` where set, `formats`, `tags`, `added`,
   `verified`, `status`, `publisher` where set, and the optional 2D fields), plus `path` (the entry's
   file in this repo), `page` (the entry's page, relative to the site root), `summary` (the first paragraph of its body), `thumb`
-  (`{ path, width, height, credit? }` of the entry's preview image relative to the site root, with `credit` on CC-BY images, or `null`), and two derived sort
-  fields, `attributionClass` and `licenseRank`.
+  (`{ path, width, height, credit? }` of the entry's preview image relative to the site root, with `credit` on CC-BY images, or `null`), `licenseFamily` (the
+  coarse licence group the site filters on), and two derived sort fields, `attributionClass`
+  and `licenseRank`.
 - It is regenerated from `catalog/` on every push to `main`. Field names are stable;
   new optional fields may appear. The licence facts are only as current as each entry's
   `verified` date: re-check the source before you ship on one.

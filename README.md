@@ -55,7 +55,7 @@ re-check forty tabs before a release. (Thanks to magictools: many tool entries s
 
 ## Contents
 
-[Start here](#start-here) · [Starter stacks](#starter-stacks) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [Unreal Engine](#unreal-engine) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Scope](#scope) · [Contributing](#contributing) · [Support](#support)
+[Start here](#start-here) · [Starter stacks](#starter-stacks) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [Unreal Engine](#unreal-engine) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Use the data](#use-the-data) · [Scope](#scope) · [Contributing](#contributing) · [Support](#support)
 
 ## A few of the sources
 
@@ -250,10 +250,12 @@ Read these before you mix packs into a commercial build.
 | [`docs/fonts.md`](docs/fonts.md) | Embedding versus redistribution, and what an OFL font still owes |
 | [`docs/geodata.md`](docs/geodata.md) | Attribution across DEM, map and satellite sources, and why ODbL does not reach your game |
 | [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) | Why "commercial use" on a video licence may not cover a game |
+| [`docs/unreal.md`](docs/unreal.md) | Fab and Epic content, UE-only licences, and what the Unreal EULA forbids combining |
 | [`docs/provenance.md`](docs/provenance.md) | Judging a supplier, and keeping a paper trail |
 | [`docs/high-risk.md`](docs/high-risk.md) | Sources to avoid entirely |
 | [`docs/ai-assets.md`](docs/ai-assets.md) | AI-generated assets |
 | [`docs/fivem.md`](docs/fivem.md) | GTA-format and FiveM assets |
+| [`docs/data.md`](docs/data.md) | The JSON, CSV and feed exports, their fields, and how to cite the catalog |
 | [`docs/trust-score.md`](docs/trust-score.md) | Review rubric used when vetting a source (not shown on entries) |
 
 <details>
@@ -310,6 +312,17 @@ publishing a broken catalog. Among other things, it checks that:
 The checks themselves are tested against known-bad fixtures in
 [`site/checks.test.mjs`](site/checks.test.mjs). Every review pass, and every correction it
 made, is recorded in [`docs/review-ledger.md`](docs/review-ledger.md).
+
+## Use the data
+
+The whole catalog is published as open data (CC0) on every deploy:
+[`data.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.json),
+[`catalog.csv`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/catalog.csv) with the credit
+line for each entry, an Atom [feed of new sources](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml),
+a [feed of re-verified licences](https://tmhsdigital.github.io/Free-Game-Dev-Assets/reverified.xml) and
+[`llms.txt`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/llms.txt). Pin a version from
+[Releases](https://github.com/TMHSDigital/Free-Game-Dev-Assets/releases). [`docs/data.md`](docs/data.md)
+has the field reference, `jq` and pandas examples, and how to cite it (`CITATION.cff`).
 
 ## Scope
 

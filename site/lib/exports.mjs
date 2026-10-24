@@ -41,6 +41,10 @@ const CSV_COLUMNS = [
   "verified",
   "status",
   "page",
+  // Appended, not inserted, so a reader that indexes columns keeps working.
+  "subcategories",
+  "publisher",
+  "attribution_string",
 ];
 
 /**

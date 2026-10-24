@@ -42,6 +42,7 @@
   ],
   "guides": [
     { "id": "licenses", "title": "Licenses", "path": "docs/licenses.md" },
+    { "id": "data", "title": "Use the data (JSON, CSV, feeds)", "path": "docs/data.md" },
     { "id": "provenance", "title": "Provenance", "path": "docs/provenance.md" },
     { "id": "high-risk", "title": "High risk", "path": "docs/high-risk.md" },
     { "id": "ai-assets", "title": "AI assets", "path": "docs/ai-assets.md" },

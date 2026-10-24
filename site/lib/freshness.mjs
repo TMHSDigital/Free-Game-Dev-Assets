@@ -137,6 +137,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
     </main>
     <footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
+      <p><a href="../data.json">data.json</a> · <a href="../catalog.csv">CSV</a> · <a href="../feed.xml">feed</a> · <a href="https://github.com/TMHSDigital/Free-Game-Dev-Assets/blob/main/docs/data.md">Use the data</a></p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
     </footer>

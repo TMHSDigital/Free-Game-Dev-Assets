@@ -655,6 +655,7 @@ has("csv header", csv, "id,name,url,category");
 has("csv has the added column before verified", csv, "tags,added,verified,status");
 has("csv quotes commas and quotes", csv, '"Say ""hi"", ok"');
 has("csv joins lists", csv, "PNG; SVG");
+has("csv ends with the credit columns", csv, "status,page,subcategories,publisher,attribution_string\r\n");
 has("csv absolute page url", csv, "https://s.test/site/entry/a/");
 const feed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z", kind: "verified" });
 has("feed escapes summary", feed, "CC0. A &amp; B");
