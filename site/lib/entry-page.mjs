@@ -107,7 +107,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
       : "";
   // The publisher's preview, when the licence gate allowed one, with its credit.
   const strip = entry.thumb
-    ? `<figure class="entry-strip">${thumbHtml(entry, "../../")}<figcaption class="entry-credit">${esc(previewCredit(entry))}</figcaption></figure>`
+    ? `<figure class="entry-strip" style="--thumb-max:${2 * (Number(entry.thumb.width) || 640)}px">${thumbHtml(entry, "../../", undefined, { eager: true })}<figcaption class="entry-credit">${esc(previewCredit(entry))}</figcaption></figure>`
     : "";
   const usedIn = stacks.length
     ? `<p class="used-in">Used in: ${stacks.map((s) => `<a href="../../stack/${esc(s.id)}/">${esc(s.title)}</a>`).join(", ")}</p>`
@@ -144,6 +144,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
       </nav>
       ${banner}
       <h1>${esc(entry.name)}</h1>
+      <p class="entry-verdict"><span>${esc(licence)}</span> <span>${esc(commercialLabel(entry.commercial))}</span> <span>Credit: ${esc(c.value)}</span> <span class="verified is-${age.bucket}">${esc(age.days === null ? "verified date unknown" : `verified ${age.days}d ago`)}</span> <a class="btn" href="${esc(entry.url)}" rel="noopener noreferrer">Go to source</a></p>
       ${strip}
       <div class="entry-lead">${leadHtml}</div>
       <section class="facts-panel" aria-labelledby="facts-title">

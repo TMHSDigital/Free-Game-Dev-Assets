@@ -1038,7 +1038,9 @@ eq("filmstrip: empty when nothing to show", filmstripHtml([], { root: "" }), "")
   const siteR = { title: "T", tagline: "t", siteUrl: "https://s/", repo: "https://r" };
   const common = { leadHtml: "<p>l</p>", restHtml: "<p>r</p>", deprecatedReasonHtml: null, prev: null, next: null, site: siteR, categoryLabel: "3D", stamp: "2026-10-23", total: 1, hasCard: false, now: 0 };
   const html = entryPageHtml({ ...common, entry: { ...cardBase, thumb: { path: "thumbs/x.webp", width: 640, height: 400 }, publisher: "Kenney" } });
-  has("entry page: strip image", html, '<figure class="entry-strip"><img class="entry-thumb-img" src="../../thumbs/x.webp"');
+  has("entry page: strip image", html, '<img class="entry-thumb-img" src="../../thumbs/x.webp"');
+  has("entry page: strip capped at twice its width", html, '<figure class="entry-strip" style="--thumb-max:');
+  has("entry page: strip image loads first", html, 'loading="eager" fetchpriority="high"');
   has("entry page: credit line", html, '<figcaption class="entry-credit">Preview image from Kenney, shown under CC0</figcaption>');
   has("entry page: one primary action", html, '<p class="page-actions"><a class="btn" href="https://x.itch.io/p"');
   has("entry page: secondary links row", html, '<p class="page-links">');
@@ -1094,6 +1096,17 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     eq(`modulepreload: ${page} list matches its imports`, [...PAGE_MODULES[page]].sort().join(","), closure(list).join(","));
   }
   has("modulepreload: head emits the links", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../../", modules: ["a.js"] }), '<link rel="modulepreload" href="../../a.js" />');
+}
+
+/* entry links read as names; thumbnails size honestly ------------------- */
+{
+  const r = makeLinkResolver({ entryPath: "catalog/2d/a.md", idByPath: new Map([["catalog/2d/b.md", "b"]]), repo: "https://g/r", kindOf: () => null, nameById: new Map([["b", "Bee Pack"]]) });
+  has("links: an id label becomes the entry name", renderInline("[b](b.md)", r), ">Bee Pack</a>");
+  has("links: a written label is kept", renderInline("[the bee one](b.md)", r), ">the bee one</a>");
+  const { thumbHtml: th } = await import("./cards.mjs");
+  has("thumbs: small preview contained", th({ thumb: { path: "t/a.webp", width: 160, height: 120 } }), 'class="entry-thumb-img is-small"');
+  lacks("thumbs: normal preview not marked small", th({ thumb: { path: "t/a.webp", width: 640, height: 400 } }), "is-small");
+  has("thumbs: eager strip image", th({ thumb: { path: "t/a.webp", width: 640, height: 400 } }, "", undefined, { eager: true }), 'loading="eager" fetchpriority="high"');
 }
 
 /* report (keep last) ------------------------------------------------------ */

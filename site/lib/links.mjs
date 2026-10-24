@@ -25,7 +25,7 @@ export function caseMismatch(linked, onDisk) {
   return null;
 }
 
-export function makeLinkResolver({ entryPath, idByPath, repo, kindOf, entryBase = "../" }) {
+export function makeLinkResolver({ entryPath, idByPath, repo, kindOf, entryBase = "../", nameById }) {
   const dir = path.posix.dirname(entryPath);
   return (raw) => {
     if (EXTERNAL_SCHEME_RE.test(raw)) return { href: raw, external: true };
@@ -44,7 +44,7 @@ export function makeLinkResolver({ entryPath, idByPath, repo, kindOf, entryBase 
     }
     const repoPath = path.posix.normalize(path.posix.join(dir, decoded)).replace(/\/$/, "");
     const id = idByPath.get(repoPath);
-    if (id) return { href: `${entryBase}${id}/${hash}`, external: false };
+    if (id) return { href: `${entryBase}${id}/${hash}`, external: false, entryId: id, entryName: nameById ? nameById.get(id) : undefined };
     const kind = repoPath.startsWith("..") ? null : kindOf(repoPath);
     if (!kind) throw new LinkError(`${entryPath}: link target "${raw}" does not exist`);
     const mode = kind === "dir" ? "tree" : "blob";

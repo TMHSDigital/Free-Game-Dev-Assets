@@ -27,11 +27,17 @@ export function tileHtml(entry, label = entry.category) {
 }
 
 /** The entry's thumbnail image, or its tile. `root` is the page's path to the site root. */
-export function thumbHtml(entry, root = "", label) {
+/** Stored previews narrower than this are shown whole on the surface colour, not cropped and scaled up. */
+export const SMALL_THUMB_WIDTH = 400;
+
+export function thumbHtml(entry, root = "", label, { eager = false } = {}) {
   const t = entry.thumb;
   if (t && t.path) {
     const credit = t.credit ? ` title="${esc(t.credit)}"` : "";
-    return `<img class="entry-thumb-img" src="${esc(root)}${esc(t.path)}" width="${Number(t.width) || 640}" height="${Number(t.height) || 400}" alt=""${credit} loading="lazy" decoding="async">`;
+    const small = Number(t.width) > 0 && Number(t.width) < SMALL_THUMB_WIDTH ? " is-small" : "";
+    // The entry strip is the page's largest image: fetch it first, not lazily.
+    const load = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+    return `<img class="entry-thumb-img${small}" src="${esc(root)}${esc(t.path)}" width="${Number(t.width) || 640}" height="${Number(t.height) || 400}" alt=""${credit} ${load} decoding="async">`;
   }
   return tileHtml(entry, label);
 }

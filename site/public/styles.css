@@ -1785,6 +1785,12 @@ input:focus-visible,
   object-fit: cover;
 }
 
+/* A small stored preview is shown whole rather than cropped and scaled up. */
+.entry-thumb-img.is-small {
+  object-fit: contain;
+  background: var(--surface);
+}
+
 /* No permitted image: the entry's name on the checker an editor shows behind
    a sprite, so the tile still reads as "asset", not "missing". */
 .entry-tile {
@@ -2104,9 +2110,37 @@ body.card-focus .to-top {
 .entry-strip .entry-thumb-img {
   display: block;
   width: 100%;
+  max-width: var(--thumb-max, 100%);
   height: auto;
   max-height: 360px;
+  margin: 0 auto;
   object-fit: contain;
+}
+
+/* The licence verdict and the source link, repeated under the title on a
+   phone, where the facts panel starts below the fold. */
+.entry-verdict {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .entry-verdict {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+    margin: 0.25rem 0 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .entry-verdict .btn {
+    flex-basis: 100%;
+    text-align: center;
+  }
+
+  .entry-strip .entry-thumb-img {
+    max-height: 160px;
+  }
 }
 
 .entry-credit {

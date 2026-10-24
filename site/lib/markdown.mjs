@@ -63,9 +63,12 @@ export function renderInline(text, resolveLink) {
   // Links. The label keeps bold, italic and code; the href goes through the
   // resolver.
   s = s.replace(LINK_RE, (_, label, href) => {
-    const { href: out, external } = resolveLink(href);
+    const { href: out, external, entryId, entryName } = resolveLink(href);
     const rel = external ? ' rel="noopener noreferrer"' : "";
-    return keep(`<a href="${esc(out)}"${rel}>${marks(esc(label))}</a>`);
+    // Related lists are written as [kenney-ui-pack](kenney-ui-pack.md); a
+    // reader should see the entry's name, not its file name.
+    const text = entryName && label.trim() === entryId ? esc(entryName) : marks(esc(label));
+    return keep(`<a href="${esc(out)}"${rel}>${text}</a>`);
   });
   // Autolinks in angle brackets.
   s = s.replace(/<(https?:\/\/[^\s<>]+)>/g, (_, url) => keep(`<a href="${esc(url)}" rel="noopener noreferrer">${esc(url)}</a>`));

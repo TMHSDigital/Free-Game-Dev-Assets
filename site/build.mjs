@@ -354,7 +354,8 @@ function linkResolvers(entries, config, entryBase = "../") {
     if (caseMismatch(repoPath, path.relative(realRoot, fs.realpathSync.native(full)))) return null;
     return fs.statSync(full).isDirectory() ? "dir" : "file";
   };
-  return (file) => makeLinkResolver({ entryPath: file.path, idByPath, repo: config.site.repo, kindOf, entryBase });
+  const nameById = new Map(entries.map((e) => [e.id, e.name]));
+  return (file) => makeLinkResolver({ entryPath: file.path, idByPath, repo: config.site.repo, kindOf, entryBase, nameById });
 }
 
 /** Reads stacks/*.md, checks them (V15) and resolves each pick to its entry. */
