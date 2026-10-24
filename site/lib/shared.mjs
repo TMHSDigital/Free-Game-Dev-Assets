@@ -162,6 +162,20 @@ export function seoTitle(name, license, max = SEO_TITLE_MAX) {
  * An entry page's meta description: the licence, the commercial stance and
  * the credit requirement first, then as much of the summary as fits.
  */
+/** The licence value as the start of a sentence: catalog vocabulary words become prose. */
+export function licencePhrase(license) {
+  const v = String(license);
+  return { custom: "Custom licence", varies: "Mixed licences, per file", unknown: "Licence unknown", "public-domain": "Public domain" }[v] || v;
+}
+
+/** schema.org BreadcrumbList from [{ name, url }], in order from the site root. */
+export function breadcrumbLd(items) {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({ "@type": "ListItem", position: i + 1, name: it.name, item: it.url })),
+  };
+}
+
 export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5) {
   const stance =
     entry.commercial === true
@@ -171,13 +185,16 @@ export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5) {
         : entry.commercial === "varies"
           ? "commercial use varies per file"
           : "commercial use unclear";
+  // A per-file source promises nothing about credit for the file you pick.
   const credit =
-    entry.attribution_required === true
-      ? "credit required"
-      : entry.attribution_required === false
-        ? "no credit needed"
-        : "credit unclear";
-  const lead = `${entry.license}, ${stance}, ${credit}.`;
+    entry.commercial === "varies"
+      ? "credit varies per file"
+      : entry.attribution_required === true
+        ? "credit required"
+        : entry.attribution_required === false
+          ? "no credit needed"
+          : "credit unclear";
+  const lead = `${licencePhrase(entry.license)}, ${stance}, ${credit}.`;
   const summary = String(entry.summary || "").trim();
   if (!summary) return clipText(lead, max);
   const first = summary.split(/(?<=[.!?])\s+/)[0];

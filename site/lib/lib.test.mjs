@@ -508,7 +508,9 @@ eq("seo title joins name and licence", seoTitle("Kenney", "CC0"), "Kenney · CC0
 eq("seo title drops the licence when too long", seoTitle("A".repeat(50), "CC-BY-SA-4.0"), "A".repeat(50));
 eq("seo title clips a very long name", seoTitle("word ".repeat(20).trim(), "CC0").length <= 60, true);
 eq("seo description states licence, stance and credit", seoDescription({ license: "CC0", commercial: true, attribution_required: false, summary: "Lots of packs. More text." }), "CC0, commercial use OK, no credit needed. Lots of packs.");
-eq("seo description with varies and unknown", seoDescription({ license: "varies", commercial: "varies", attribution_required: "unknown", summary: "" }), "varies, commercial use varies per file, credit unclear.");
+eq("seo description with varies and unknown", seoDescription({ license: "varies", commercial: "varies", attribution_required: "unknown", summary: "" }), "Mixed licences, per file, commercial use varies per file, credit varies per file.");
+eq("seo description: custom reads as prose", seoDescription({ license: "custom", commercial: true, attribution_required: false, summary: "" }), "Custom licence, commercial use OK, no credit needed.");
+eq("seo description: varies never promises no credit", seoDescription({ license: "varies", commercial: "varies", attribution_required: false, summary: "" }).includes("no credit needed"), false);
 eq("seo description fits the limit", seoDescription({ license: "CC-BY-4.0", commercial: true, attribution_required: true, summary: "word ".repeat(60) }).length <= 160, true);
 
 /* sitemap lastmod (#108) --------------------------------------------------- */
@@ -1107,6 +1109,20 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("thumbs: small preview contained", th({ thumb: { path: "t/a.webp", width: 160, height: 120 } }), 'class="entry-thumb-img is-small"');
   lacks("thumbs: normal preview not marked small", th({ thumb: { path: "t/a.webp", width: 640, height: 400 } }), "is-small");
   has("thumbs: eager strip image", th({ thumb: { path: "t/a.webp", width: 640, height: 400 } }, "", undefined, { eager: true }), 'loading="eager" fetchpriority="high"');
+}
+
+/* structured data ---------------------------------------------------------- */
+{
+  const { jsonLd: ld } = await import("./entry-page.mjs");
+  const { categoryJsonLd } = await import("./category-page.mjs");
+  const s = { siteUrl: "https://s.test/site/", title: "T" };
+  const e = { id: "a", name: "A", url: "https://a/", category: "3d", license: "CC0", thumb: { path: "thumbs/a.webp", width: 640, height: 400 } };
+  const page = ld(e, s, { categoryLabel: "3D" });
+  eq("json-ld: image is absolute", page.mainEntity.image.url, "https://s.test/site/thumbs/a.webp");
+  eq("json-ld: breadcrumb has three steps", page.breadcrumb.itemListElement.map((x) => x.name).join(">"), "T>3D>A");
+  const cat = categoryJsonLd({ cat: "3d", label: "3D", description: "d", entries: [e], site: s });
+  eq("json-ld: category is a CollectionPage", cat["@type"], "CollectionPage");
+  eq("json-ld: category lists its entries", cat.mainEntity.itemListElement[0].url, "https://s.test/site/entry/a/");
 }
 
 /* report (keep last) ------------------------------------------------------ */

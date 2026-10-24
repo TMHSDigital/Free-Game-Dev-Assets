@@ -12,8 +12,7 @@ import {
   stackPageUrl,
   verifiedAge,
   sponsorButtonHtml,
-  PREVIEW_CREDIT_LINE,
-} from "./shared.mjs";
+  PREVIEW_CREDIT_LINE, breadcrumbLd } from "./shared.mjs";
 import { copyAllText } from "./stacks.mjs";
 import { entryCardHtml } from "./cards.mjs";
 
@@ -118,6 +117,7 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
     <meta name="description" content="${esc(clipText(meta.task, SEO_DESCRIPTION_MAX))}" />
     ${baseHeadHtml({ site, title, description: meta.task, url, type: "article", hasCard, root: "../../" })}
     <script type="application/ld+json">${scriptJson(stackJsonLd(meta, sections, site))}</script>
+    <script type="application/ld+json">${scriptJson({ "@context": "https://schema.org", ...breadcrumbLd([{ name: site.title, url: site.siteUrl }, { name: "Starter stacks", url: `${String(site.siteUrl).replace(/\/+$/, "")}/#stacks` }, { name: meta.title, url: stackPageUrl(site, meta.id) }]) })}</script>
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to stack</a>

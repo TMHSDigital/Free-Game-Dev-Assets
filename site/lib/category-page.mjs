@@ -1,9 +1,32 @@
 /** One category's page: every entry in it, both views, no JavaScript needed to see everything. Pure. */
 import { groupedEntriesHtml } from "./cards.mjs";
-import { baseHeadHtml, clipText, esc, PREVIEW_CREDIT_LINE, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, sponsorButtonHtml, PAGE_MODULES } from "./shared.mjs";
+import { baseHeadHtml, breadcrumbLd, clipText, entryPageUrl, esc, PREVIEW_CREDIT_LINE, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, sponsorButtonHtml, PAGE_MODULES } from "./shared.mjs";
+import { scriptJson } from "./entry-page.mjs";
 
 export function categoryPageUrl(site, cat) {
   return `${String(site.siteUrl).replace(/\/+$/, "")}/category/${cat}/`;
+}
+
+/** schema.org CollectionPage for a category, its entries as an ItemList. */
+export function categoryJsonLd({ cat, label, description, entries, site }) {
+  const url = categoryPageUrl(site, cat);
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `${label} assets`,
+    description,
+    url,
+    isPartOf: { "@type": "WebSite", name: site.title, url: site.siteUrl },
+    breadcrumb: breadcrumbLd([
+      { name: site.title, url: site.siteUrl },
+      { name: label, url },
+    ]),
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: entries.length,
+      itemListElement: entries.map((e, i) => ({ "@type": "ListItem", position: i + 1, name: e.name, url: entryPageUrl(site, e.id) })),
+    },
+  };
 }
 
 export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCard, now }) {
@@ -25,6 +48,7 @@ export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCa
     <title>${esc(clipText(title, SEO_TITLE_MAX))}</title>
     <meta name="description" content="${esc(description)}" />
     ${baseHeadHtml({ site, title, description, url, hasCard, root: "../../", modules: PAGE_MODULES.category })}
+    <script type="application/ld+json">${scriptJson(categoryJsonLd({ cat, label, description, entries, site }))}</script>
   </head>
   <body>
     <a class="skip-link" href="#entry-grid">Skip to the list</a>

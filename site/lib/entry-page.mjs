@@ -12,15 +12,19 @@ import {
   STATUS_NOTES,
   verifiedAge,
   sponsorButtonHtml,
-  PREVIEW_CREDIT_LINE, PAGE_MODULES } from "./shared.mjs";
+  PREVIEW_CREDIT_LINE, PAGE_MODULES, breadcrumbLd } from "./shared.mjs";
 import { thumbHtml } from "./cards.mjs";
 import { previewCredit } from "./thumbs.mjs";
 
-export function jsonLd(entry, site) {
+export function jsonLd(entry, site, { categoryLabel } = {}) {
   const work = { "@type": "CreativeWork", name: entry.name, url: entry.url };
   if (entry.summary) work.description = entry.summary;
   if (entry.publisher) work.publisher = { "@type": "Organization", name: entry.publisher };
   if (entry.license_spdx) work.license = `https://spdx.org/licenses/${entry.license_spdx}.html`;
+  const base = String(site.siteUrl).replace(/\/+$/, "");
+  if (entry.thumb && entry.thumb.path) {
+    work.image = { "@type": "ImageObject", url: `${base}/${entry.thumb.path}`, width: entry.thumb.width, height: entry.thumb.height };
+  }
   const page = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -31,6 +35,11 @@ export function jsonLd(entry, site) {
   };
   if (entry.summary) page.description = entry.summary;
   if (entry.verified) page.dateModified = entry.verified;
+  page.breadcrumb = breadcrumbLd([
+    { name: site.title, url: site.siteUrl },
+    { name: categoryLabel || entry.category, url: `${base}/category/${entry.category}/` },
+    { name: entry.name, url: entryPageUrl(site, entry.id) },
+  ]);
   return page;
 }
 
@@ -121,7 +130,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     <meta name="description" content="${esc(seoDescription(entry))}" />
     ${deprecated ? '<meta name="robots" content="noindex" />' : ""}
     ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard, root: "../../", modules: PAGE_MODULES.entry })}
-    <script type="application/ld+json">${scriptJson(jsonLd(entry, site))}</script>
+    <script type="application/ld+json">${scriptJson(jsonLd(entry, site, { categoryLabel }))}</script>
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to entry</a>
