@@ -12,7 +12,7 @@ attribution_required: false
 formats: [glTF, GLB]
 tags: [weapons, melee]
 added: 2026-08-29
-verified: 2026-08-29
+verified: 2026-10-23
 status: active
 ---
 
@@ -30,6 +30,8 @@ One CC0 melee-weapons zip from the 3dmodelscc0 itch account. Original 3DModelsCC
 ## Evidence
 
 - Live itch page (2026-08-29): "offered under a CC0 public domain license"
+- Live itch page (2026-10-23): "Collection of 21 unique 3D melee weapons, all offered under a CC0 public domain license."
+- Same page (2026-10-23): "Previously hosted on 3DModelsCC0, which is no longer operational due to high upkeep costs and low revenue, these models will be consolidated into bundles and made available for free on itch.io."
 
 ## Related
 

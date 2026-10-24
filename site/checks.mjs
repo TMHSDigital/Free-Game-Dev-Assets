@@ -838,3 +838,15 @@ export function checkLineEndings(rel, text) {
   const line = text.slice(0, at).split("\n").length;
   return [`${rel}:${line} has a CR line ending (save the file with LF; .editorconfig and .gitattributes set this)`];
 }
+
+/**
+ * V31: an active entry recorded as `commercial: false` must quote the
+ * restriction. CONTRIBUTING accepts non-commercial free tiers only when they
+ * are clearly marked, and the mark has to come from the source, not memory.
+ */
+export function checkNonCommercialEvidence(rel, meta, body) {
+  if (String(meta.status) !== "active" || meta.commercial !== false) return [];
+  const ev = evidenceSection(body) || "";
+  if (/commercial/i.test(ev)) return [];
+  return [`${rel} is active with commercial: false but no Evidence line mentions the commercial restriction; quote the source or use needs-review`];
+}

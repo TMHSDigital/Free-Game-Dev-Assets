@@ -23,6 +23,7 @@ import {
   checkLicenseVocabulary,
   checkLineEndings,
   checkMaintenance,
+  checkNonCommercialEvidence,
   checkPublisherConsistency,
   checkSpdxConsistency,
   checkStacks,
@@ -317,6 +318,7 @@ function main() {
     errors.push(...checkMaintenance(rel, meta));
     errors.push(...checkEngineFields(rel, meta));
     errors.push(...checkActiveIsSettled(rel, meta));
+    errors.push(...checkNonCommercialEvidence(rel, meta, body));
     errors.push(...checkPreviewField(rel, meta));
     errors.push(...checkTitleMatchesName(rel, meta, body));
     errors.push(...checkAddedDate(rel, meta, today));

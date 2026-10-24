@@ -10,7 +10,7 @@ attribution_required: false
 formats: [BVH]
 tags: [academic, mocap, research]
 added: 2026-07-19
-verified: 2026-08-24
+verified: 2026-10-23
 status: active
 ---
 
@@ -30,6 +30,9 @@ Free human motion clips from Carnegie Mellon Graphics Lab. Site grant is "free f
 ## Evidence
 
 - Live homepage (2026-08-24): "This dataset of motions is free for all uses."
+- Live homepage (2026-10-23): "This dataset of motions is free for all uses." is still the headline statement
+- Live homepage, footer terms (2026-10-23): "This data is free for use in research projects. You may include this data in commercially-sold products, but you may not resell this data directly, even in converted form."
+- Same footer (2026-10-23): asks that published papers send their citation to the project email; no credit requirement is stated for products
 
 ## Related
 

@@ -12,7 +12,7 @@ attribution_required: false
 formats: [OGG, WAV]
 tags: [ui, interface, click]
 added: 2026-07-19
-verified: 2026-08-24
+verified: 2026-10-23
 status: active
 ---
 
@@ -28,6 +28,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-08-24): License **Creative Commons CC0**.
+- Live pack page (2026-10-23): licence line reads "Creative Commons CC0"; the download note adds "The game assets you're about to download are available for free"
 
 ## Related
 

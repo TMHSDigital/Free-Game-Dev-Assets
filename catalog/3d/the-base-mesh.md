@@ -11,7 +11,7 @@ attribution_required: false
 formats: [OBJ, glTF]
 tags: [topology, sculpting, reference]
 added: 2026-07-19
-verified: 2026-08-24
+verified: 2026-10-23
 status: active
 ---
 
@@ -28,6 +28,7 @@ status: active
 ## Evidence
 
 - Live homepage (2026-08-24): "100% Free. CC0 License."
+- Live homepage (2026-10-23): page title "The Base Mesh | 100% Free CC0 Assets" and the banner "100% Free. CC0 License." are unchanged
 
 ## Related
 

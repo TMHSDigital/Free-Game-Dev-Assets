@@ -92,9 +92,12 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     .map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`)
     .join("\n          ");
   const deprecated = entry.status === "deprecated";
+  const nonCommercial = entry.status !== "deprecated" && entry.commercial === false;
   const banner = deprecated
     ? `<p class="deprecated-banner" role="note"><strong>Deprecated.</strong> ${deprecatedReasonHtml || "This entry is kept for history only."}</p>`
-    : "";
+    : nonCommercial
+      ? `<p class="deprecated-banner noncommercial-banner" role="note"><strong>Not for commercial use.</strong> The free tier of this source is limited to non-commercial projects; the Evidence below quotes the restriction and the Notes say what a commercial licence costs.</p>`
+      : "";
   const issue = `${repo}/issues/new?template=correction.yml&title=${encodeURIComponent(`[correction] ${entry.id}`)}&entry=${encodeURIComponent(entry.id)}`;
   const pager =
     prev || next

@@ -16,7 +16,9 @@ Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 - A source whose licence is unclear: add it as `status: needs-review` with the open question in
   Notes, or open an issue instead.
 - A source that is free only for non-commercial or personal use: only if it is clearly marked
-  `commercial: false`.
+  `commercial: false` and the Evidence section quotes the restriction (the validator checks this).
+  The site shows a "Not for commercial use" banner on such entries, and the Commercial OK filter
+  hides them.
 
 ## What does not
 

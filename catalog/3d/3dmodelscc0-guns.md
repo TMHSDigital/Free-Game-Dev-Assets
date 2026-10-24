@@ -12,7 +12,7 @@ attribution_required: false
 formats: [GLB]
 tags: [weapons, firearms]
 added: 2026-08-29
-verified: 2026-08-29
+verified: 2026-10-23
 status: active
 ---
 
@@ -30,6 +30,8 @@ Nineteen firearms and explosives (AK-47, M4A1, grenades, mines, and similar). Li
 ## Evidence
 
 - Live itch page (2026-08-29): "all offered under a CC0 public domain license"
+- Live itch page (2026-10-23): "Collection of 19 unique 3D firearms and explosives, all offered under a CC0 public domain license."
+- Same page (2026-10-23): "Previously hosted on 3DModelsCC0, which is no longer operational due to high upkeep costs and low revenue, these models will be consolidated into bundles and made available for free on itch.io."
 
 ## Related
 
