@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Free Game Dev Assets",
-    "tagline": "Free assets and tools for commercial games, with license metadata.",
+    "tagline": "Free assets and tools for commercial games, with every licence read at its source.",
     "repo": "https://github.com/TMHSDigital/Free-Game-Dev-Assets",
     "baseUrl": "/Free-Game-Dev-Assets",
     "siteUrl": "https://tmhsdigital.github.io/Free-Game-Dev-Assets/"
@@ -47,6 +47,7 @@
     { "id": "ai-assets", "title": "AI assets", "path": "docs/ai-assets.md" },
     { "id": "trust-score", "title": "Review rubric (trust score)", "path": "docs/trust-score.md" },
     { "id": "game-vs-video", "title": "Games vs video licensing", "path": "docs/game-vs-video-licensing.md" },
+    { "id": "unreal", "title": "Unreal Engine licensing", "path": "docs/unreal.md" },
     { "id": "fonts", "title": "Fonts and embedding", "path": "docs/fonts.md" },
     { "id": "geodata", "title": "Geodata attribution", "path": "docs/geodata.md" },
     { "id": "godot-budget-stack", "title": "Godot budget stack", "path": "docs/godot-budget-stack.md" },
