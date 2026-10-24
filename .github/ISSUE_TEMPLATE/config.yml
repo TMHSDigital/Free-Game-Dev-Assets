@@ -6,3 +6,9 @@ contact_links:
   - name: Contributing guide
     url: https://github.com/TMHSDigital/Free-Game-Dev-Assets/blob/main/CONTRIBUTING.md
     about: How to add or correct a catalog entry
+  - name: Help re-verify licences
+    url: https://github.com/TMHSDigital/Free-Game-Dev-Assets/issues?q=is%3Aissue+is%3Aopen+%22Re-verify+batch%22+in%3Atitle
+    about: The monthly re-verify batch lists the entries whose licence was read longest ago
+  - name: Report a security issue privately
+    url: https://github.com/TMHSDigital/Free-Game-Dev-Assets/security/advisories/new
+    about: For vulnerabilities in the site or scripts; see SECURITY.md

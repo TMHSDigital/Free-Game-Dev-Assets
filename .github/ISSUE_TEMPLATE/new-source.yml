@@ -45,6 +45,15 @@ body:
       description: Quote the short name (CC0, CC-BY-4.0, SIL OFL, custom, …). Do not guess.
     validations:
       required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Licence quote and date
+      description: Copy the sentence from the live licence page that grants the use, and the date you read it. This becomes the entry's Evidence line.
+      placeholder: |
+        Live licence page (2026-10-23): "All assets are released under CC0 1.0 and may be used in commercial projects."
+    validations:
+      required: true
   - type: dropdown
     id: commercial
     attributes:
@@ -56,6 +65,28 @@ body:
         - Video/YouTube only (not games)
     validations:
       required: true
+  - type: dropdown
+    id: attribution
+    attributes:
+      label: Credit required?
+      options:
+        - "Yes"
+        - "No"
+        - Credit appreciated but not required
+        - Unclear
+    validations:
+      required: true
+  - type: input
+    id: attribution_string
+    attributes:
+      label: Credit line as the source words it
+      description: Only if the source gives one. Leave it empty rather than writing your own.
+  - type: checkboxes
+    id: publisher
+    attributes:
+      label: Relationship to the source
+      options:
+        - label: I publish or maintain this source (see CONTRIBUTING, "Submitting your own source")
   - type: textarea
     id: notes
     attributes:
