@@ -15,6 +15,7 @@
     "new-entry": "node site/new-entry.mjs",
     "links": "node site/check-links.mjs",
     "thumbs": "node site/thumbs.mjs",
+    "reverify": "node site/reverify-batch.mjs",
     "serve": "npx --yes serve site/dist"
   }
 }

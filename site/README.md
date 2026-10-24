@@ -154,6 +154,9 @@ first of each month and on demand: it builds, tags `vYYYY.MM.DD` and creates a G
 release with `data.json`, `catalog.csv`, `feed.xml`, `reverified.xml` and `llms.txt`
 attached, with the newest section of `docs/review-ledger.md` as the notes. Fetch a fixed
 version by tag from the Releases page; `data.json` carries the same tag as `version`.
+The workflow passes the tag into the build as `CATALOG_VERSION`, fails if the built
+`data.json` disagrees, and commits the tag into `CITATION.cff` (`version`, `date-released`)
+on `main` before cutting the release, so the tagged commit cites itself.
 
 ## Re-verify batch
 
@@ -164,7 +167,7 @@ months, and opens or updates one issue labelled `help wanted` and `good first is
 titled "Re-verify batch YYYY-MM: N entries due a licence re-read", with a checklist that
 names each entry's file, source URL and recorded licence. The selection rule is in
 `site/lib/reverify.mjs` and tested. When nothing is due the month is skipped. Preview it
-with `node site/reverify-batch.mjs`.
+with `node site/reverify-batch.mjs` (`npm run reverify`).
 
 ## Social preview
 

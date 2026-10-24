@@ -4,6 +4,11 @@ name: Dataset release
 # attach data.json, catalog.csv, the two feeds and llms.txt. Monthly, and on
 # demand from the Actions tab. The release notes are the newest section of
 # docs/review-ledger.md. A tag that already exists is left alone.
+#
+# The tag is chosen once, exported as CATALOG_VERSION so the build writes the
+# same string into data.json (site/build.mjs), asserted after the build, and
+# written into CITATION.cff on main before the release is cut, so the tagged
+# commit already cites itself.
 on:
   schedule:
     - cron: "0 9 1 * *"
@@ -15,6 +20,7 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -27,26 +33,76 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Check and build
-        run: npm test && node site/validate.mjs && node site/build.mjs
-
-      - name: Create the release
+      - name: Pick the tag
+        id: tag
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           tag="v$(date -u +%Y.%m.%d)"
           if gh release view "$tag" >/dev/null 2>&1; then
             echo "release $tag already exists; nothing to do"
-            exit 0
+            echo "skip=true" >> "$GITHUB_OUTPUT"
           fi
+          echo "CATALOG_VERSION=$tag" >> "$GITHUB_ENV"
+          echo "RELEASE_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
+
+      - name: Check and build
+        if: steps.tag.outputs.skip != 'true'
+        run: npm test && node site/validate.mjs && node site/build.mjs
+
+      - name: Assert the dataset carries the tag
+        if: steps.tag.outputs.skip != 'true'
+        run: |
+          got="$(jq -r .version site/dist/data.json)"
+          if [ "$got" != "$CATALOG_VERSION" ]; then
+            echo "data.json version is '$got' but the release tag is '$CATALOG_VERSION'"
+            exit 1
+          fi
+
+      - name: Write the version into CITATION.cff
+        if: steps.tag.outputs.skip != 'true'
+        run: |
+          node - <<'JS'
+          const fs = require("node:fs");
+          const file = "CITATION.cff";
+          let text = fs.readFileSync(file, "utf8");
+          const version = `version: "${process.env.CATALOG_VERSION}"`;
+          const released = `date-released: "${process.env.RELEASE_DATE}"`;
+          text = /^version: .*$/m.test(text)
+            ? text.replace(/^version: .*$/m, version)
+            : text.replace(/^date-released: .*$/m, (line) => `${version}\n${line}`);
+          text = text.replace(/^date-released: .*$/m, released);
+          fs.writeFileSync(file, text);
+          JS
+          if git diff --quiet -- CITATION.cff; then
+            echo "CITATION.cff already current"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add CITATION.cff
+            git commit -m "Release $CATALOG_VERSION: record the version in CITATION.cff"
+            git push origin HEAD:main
+          fi
+
+      - name: Create the release
+        if: steps.tag.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
           # Newest ledger section: from the first "## " heading to the next.
           awk '/^## /{n++} n==1' docs/review-ledger.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "docs/review-ledger.md has no '## ' section to use as release notes"
+            exit 1
+          fi
           {
             echo
             echo "Attached: \`data.json\` (full catalog), \`catalog.csv\`, \`feed.xml\` (new sources), \`reverified.xml\` (recent licence re-reads), \`llms.txt\`."
+            echo "\`data.json\` carries \`\"version\": \"$CATALOG_VERSION\"\`; CITATION.cff on this tag cites the same version."
             echo "Field reference: https://github.com/${GITHUB_REPOSITORY}/blob/main/site/README.md"
           } >> release-notes.md
-          gh release create "$tag" \
-            --title "Catalog $tag" \
+          gh release create "$CATALOG_VERSION" \
+            --target "$(git rev-parse HEAD)" \
+            --title "Catalog $CATALOG_VERSION" \
             --notes-file release-notes.md \
             site/dist/data.json site/dist/catalog.csv site/dist/feed.xml site/dist/reverified.xml site/dist/llms.txt
