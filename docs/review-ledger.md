@@ -254,7 +254,7 @@ in conversation (no spec).
 ## 2026-09-25 (licence freshness)
 
 Sub-project C from the site brainstorm, built from
-`docs/design/2026-09-25-licence-freshness-design.md` in five commits
+`docs/internal/design/2026-09-25-licence-freshness-design.md` in five commits
 (`241af04`..`749860a`). No catalog entry changed and no `verified` moved.
 
 - **What shipped.** A line under the homepage hero, "Checked within 180 days: 317 of
@@ -312,7 +312,7 @@ from the entry pages and starter stacks reviews, each fix with a test that faile
 ## 2026-09-25 (starter stacks)
 
 Sub-project A from the site brainstorm, built from
-`docs/design/2026-09-24-starter-stacks-design.md` in seven commits
+`docs/internal/design/2026-09-24-starter-stacks-design.md` in seven commits
 (`10151a9`..`3724fbb`). No catalog entry changed and no `verified` moved.
 
 - **What shipped.** Five stacks in `stacks/`, one per task test: 2D pixel platformer,
@@ -351,7 +351,7 @@ Sub-project A from the site brainstorm, built from
 ## 2026-09-24 (entry pages)
 
 Sub-project B from the site brainstorm, built from
-`docs/design/2026-09-24-entry-pages-design.md` in eleven commits
+`docs/internal/design/2026-09-24-entry-pages-design.md` in eleven commits
 (`fee59c1`..`a5403a4`). No catalog entry changed and no `verified` moved.
 
 - **What shipped.** Every entry has a page at `/entry/<id>/` with its full body, a facts

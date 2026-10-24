@@ -1,6 +1,6 @@
 # Trust score rubric (0–5)
 
-Optional field / mental model when reviewing entries (`trust` tag or notes). From Round 3 catalog-ops research.
+A mental model for judging a source while reviewing it. The score is not recorded on entries; use it to decide how hard to look before an entry goes `active`.
 
 | Score | Meaning |
 | --- | --- |

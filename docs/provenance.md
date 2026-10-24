@@ -39,9 +39,9 @@ This catalog’s frontmatter (`url`, `license`, `verified`, `status`) is the pub
 
 ## One entry equals one pack
 
-This catalog indexes **downloadable packs**, not publishers. Kenney is twenty entries, Quaternius eight, KayKit six, because a solo dev browsing for “nature kit” or “UI audio” should land on the file they will actually ship. A publisher-level page would hide that.
+This catalog indexes **downloadable packs**, not publishers. Kenney, Quaternius and KayKit each have many entries, one per pack, because a solo dev browsing for “nature kit” or “UI audio” should land on the file they will actually ship. A publisher-level page would hide that.
 
-The cost is concentration: a license change at kenney.nl would require editing every Kenney file. The optional `publisher` frontmatter field exists so those files can be found together. Do not collapse them into one card, and do not add publisher grouping to the site UI unless a later session explicitly decides to. Do not set `publisher` to a generic host (GitHub, Hugging Face).
+The cost is concentration: a license change at kenney.nl would require editing every Kenney file. The optional `publisher` frontmatter field exists so those files can be found together. Do not collapse them into one card. The site names the publisher on each entry page, and the validator checks that a publisher's entries agree, but the site does not group entries by publisher. Do not set `publisher` to a generic host (GitHub, Hugging Face).
 
 ## Category boundaries (characters, animation, 2d, tools, video)
 

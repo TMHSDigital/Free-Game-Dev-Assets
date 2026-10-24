@@ -1,11 +1,11 @@
 # AI-generated assets — catalog policy
 
-Synthesized from gap research (as of early 2026 claims in that brief — **re-verify** before relying on dates/rulings).
+Last reviewed 2026-10-23. Court rulings and platform rules on AI content change quickly: **re-verify** dates and rulings before relying on them.
 
 ## Practical catalog rules
 
 1. **Prefer human-authored CC0 / clear commercial licenses** for default recommendations.
-2. **Label AI tooling** clearly (`tags: [ai-generated]` or `compliance:ai-disclosure`) when an entry is primarily generative.
+2. **Label AI tooling** clearly (`tags: [ai-generated]`) when an entry is primarily generative.
 3. **Do not treat “public domain because AI” as a shipping strategy** — platform rules (Steam disclosure), training-data risk, and publicity/voice rights still apply.
 4. **Exclude free-tier cloud TTS/voice** that is non-commercial (ElevenLabs-class) from “commercial OK” lists.
 5. **Prefer local permissive models** (Apache 2.0 / MIT) when synthetic VO is needed.

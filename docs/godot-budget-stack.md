@@ -1,6 +1,6 @@
-# Godot-oriented free stack (from research)
+# Godot-oriented free stack
 
-Synthesized from local research on Godot 4 physics / destruction pipelines. Focus: **free or CC0 assets + free Godot tooling**. Not a full game production plan.
+A starting point for Godot 4 physics and destruction pipelines. Focus: **free or CC0 assets + free Godot tooling**. Not a full game production plan.
 
 ## Assets (free / CC0 first)
 
@@ -31,7 +31,7 @@ Paid Sonniss impact packs can fill metal/glass destruction gaps on a small budge
 | Steamworks bindings | [GodotSteam](../catalog/tools/godotsteam.md) (add-on MIT; Steamworks itself needs Valve's partner agreement) |
 | Mod loading | [Godot Mod Loader](../catalog/tools/godot-mod-loader.md) (MIT) |
 | 2D textured polygons / terrain | [SmartShape2D](../catalog/tools/smartshape2d.md) (MIT) |
-| Heightmap terrain | [Terrain3D](../catalog/tools/terrain3d.md) (MIT). [Gaea Community Edition](../catalog/tools/gaea.md) is `needs-review`; EULA is a PDF this session, not a free commercial grant |
+| Heightmap terrain | [Terrain3D](../catalog/tools/terrain3d.md) (MIT). [Gaea Community Edition](../catalog/tools/gaea.md) is free for non-commercial use only (EULA section 1.4.1); a commercial game needs a paid edition |
 | Behavior trees | [Beehave](../catalog/tools/beehave.md) (MIT) |
 | Utility AI | [LimboAI](../catalog/tools/limboai.md) (MIT) |
 

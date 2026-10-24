@@ -380,8 +380,8 @@ npm run serve    # preview at http://localhost:3000
 │   ├── licenses.md fonts.md geodata.md game-vs-video-licensing.md
 │   ├── provenance.md high-risk.md ai-assets.md fivem.md trust-score.md
 │   ├── godot-budget-stack.md unreal.md
-│   ├── research-index.md       maintainer notes on local research drafts
-│   ├── design/                 design specs behind the entry pages, stacks and freshness page
+│   ├── data.md                 the JSON, CSV and feed exports
+│   ├── internal/               design specs and plans behind the site (history, not guides)
 │   ├── review-ledger.md        every review pass and what it changed
 │   └── images/readme/          publisher stills used in this README
 ├── stacks/                     starter stacks: one pick per need for a kind of game
