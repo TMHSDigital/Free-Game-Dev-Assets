@@ -5,6 +5,18 @@
 import fs from "node:fs";
 import path from "node:path";
 
+/** A short kebab-case id: the only thing an entry's file name, page path and thumbnail name are built from. */
+export const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+/**
+ * True when `id` may be used as a path segment for `file`: it matches ID_RE
+ * and equals the file's base name. validate reports the mismatch; the other
+ * scripts refuse to build a path from anything else.
+ */
+export function idMatchesFile(id, file) {
+  return ID_RE.test(String(id)) && String(id) === path.basename(String(file), ".md");
+}
+
 /** Not entries: the category index and the copy-me template. */
 export const NON_ENTRY_MD = new Set(["README.md", "TEMPLATE.md"]);
 /** Never walked: hidden folders (any name starting ".") and local scratch. */

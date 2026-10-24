@@ -4,6 +4,27 @@ import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE } from "./shared.mjs";
 
 export class LinkError extends Error {}
 
+/**
+ * The path component whose case differs between a link target and the file
+ * on disk, as "linked vs on disk", or null. Windows and macOS resolve
+ * `Docs/Foo.md` to `docs/foo.md`; Linux, where CI runs, does not. Compared
+ * from the file name backwards; a component that differs in more than case
+ * (a symlink, a drive letter) ends the comparison.
+ */
+export function caseMismatch(linked, onDisk) {
+  const a = String(linked).split(/[\\/]+/).filter(Boolean);
+  const b = String(onDisk).split(/[\\/]+/).filter(Boolean);
+  const n = Math.min(a.length, b.length);
+  for (let i = 1; i <= n; i += 1) {
+    const x = a[a.length - i];
+    const y = b[b.length - i];
+    if (x === y) continue;
+    if (x.endsWith(":") || y.endsWith(":")) return null;
+    return x.toLowerCase() === y.toLowerCase() ? `${x} vs ${y}` : null;
+  }
+  return null;
+}
+
 export function makeLinkResolver({ entryPath, idByPath, repo, kindOf, entryBase = "../" }) {
   const dir = path.posix.dirname(entryPath);
   return (raw) => {

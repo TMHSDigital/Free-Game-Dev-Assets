@@ -27,7 +27,8 @@ export const syncCatalogReadme = (text, counts) => syncTable(text, counts, "`CAT
 
 export const syncConfig = (text, total) => text.replace(/("expectedEntryCount":\s*)\d+/, `$1${total}`);
 
-export const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+import { ID_RE } from "./entry-files.mjs";
+export { ID_RE };
 
 /** Why new-entry must refuse these arguments, or null. `taken` is the category already holding the id, if any. */
 export function newEntryProblem({ category, id, categories, taken }) {

@@ -103,10 +103,15 @@ eq("sectionMarkdown missing", sectionMarkdown(body, "Nope"), null);
 eq("deprecationReason starts a sentence", deprecationReason(body), "Gone");
 
 /* links -------------------------------------------------------------------- */
-import { makeLinkResolver } from "./links.mjs";
+import { makeLinkResolver, caseMismatch } from "./links.mjs";
 const idByPath = new Map([["catalog/2d/kenney-ui-pack.md", "kenney-ui-pack"], ["catalog/audio/kenney-ui-audio.md", "kenney-ui-audio"]]);
 const files = new Map([["docs/provenance.md", "file"], ["catalog/2d/README.md", "file"], ["catalog/video", "dir"]]);
 const resolve = makeLinkResolver({ entryPath: "catalog/2d/kenney-ui-pack.md", idByPath, repo: "https://github.com/o/r", kindOf: (p) => files.get(p) || null });
+eq("links: case mismatch names the component", caseMismatch("docs/Licenses.md", "docs/licenses.md"), "Licenses.md vs licenses.md");
+eq("links: directory case counts", caseMismatch("Docs/a.md", "docs/a.md"), "Docs vs docs");
+eq("links: same path is not a mismatch", caseMismatch("docs/licenses.md", "docs\\licenses.md"), null);
+eq("links: a different file is not a case mismatch", caseMismatch("docs/a.md", "docs/b.md"), null);
+eq("links: a drive letter ends the comparison", caseMismatch("e:/r/docs/a.md", "E:/r/docs/a.md"), null);
 eq("sibling entry", resolve("kenney-ui-pack.md").href, "../kenney-ui-pack/");
 eq("entry in another category", resolve("../audio/kenney-ui-audio.md").href, "../kenney-ui-audio/");
 eq("entry link is internal", resolve("../audio/kenney-ui-audio.md").external, false);
@@ -557,6 +562,10 @@ has("empty recent window wording counts the build day", freshnessPageHtml({ stat
 import { evidenceSection, parseFrontmatter, plainText, summaryFromBody } from "./frontmatter.mjs";
 import { latestAllowedDate } from "./shared.mjs";
 const fm = (lines, body = "Body.\n") => parseFrontmatter(`---\n${lines.join("\n")}\n---\n${body}`);
+eq("frontmatter: unterminated double quote is an error", fm(['name: "Foo']).errors.some((e) => e === 'line 2: "name" opens a double quote that is never closed'), true);
+eq("frontmatter: unterminated single quote in a list item", fm(["tags:", "  - 'a"]).errors.some((e) => e === "line 3: list item opens a single quote that is never closed"), true);
+eq("frontmatter: closed quotes stay clean", fm(['name: "Foo"', "tags:", "  - 'a'"]).errors.length, 0);
+eq("frontmatter: a lone quote character is unterminated", fm(['name: "']).errors.length, 1);
 const f1 = fm([
   "id: a",
   'attribution_string: "Music \\"{title}\\" by {artist}"',

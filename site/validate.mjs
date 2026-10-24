@@ -3,6 +3,7 @@
  * Catalog integrity checks. Run before every commit: node site/validate.mjs
  */
 import fs from "node:fs";
+import { caseMismatch } from "./lib/links.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -37,11 +38,12 @@ import {
 } from "./checks.mjs";
 import { evidenceSection, parseFrontmatter } from "./lib/frontmatter.mjs";
 import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, isRealDate, latestAllowedDate } from "./lib/shared.mjs";
-import { listEntryFiles } from "./lib/entry-files.mjs";
+import { listEntryFiles, ID_RE } from "./lib/entry-files.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
+const REAL_ROOT = fs.realpathSync.native(ROOT);
 const CATALOG = path.join(ROOT, "catalog");
 const CONFIG_PATH = path.join(__dirname, "config.json");
 const SPDX_ALLOWED_PATH = path.join(__dirname, "spdx-allowed.json");
@@ -64,7 +66,6 @@ const REQUIRED = [
   "verified",
   "status",
 ];
-const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 // C0 controls other than tab, LF and CR: invalid in XML, and NUL is the
 // markdown renderer's slot marker.
 const CONTROL_RE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
@@ -187,6 +188,12 @@ function checkRelativeLinks(file, errors) {
     const resolved = filePart ? path.resolve(dir, filePart) : file;
     if (!fs.existsSync(resolved)) {
       errors.push(`${relFromRoot(file)} broken link: ${href}`);
+      continue;
+    }
+    // Case-insensitive filesystems accept a wrong-case link that CI (Linux) will not.
+    const mismatch = caseMismatch(path.relative(ROOT, resolved), path.relative(REAL_ROOT, fs.realpathSync.native(resolved)));
+    if (mismatch) {
+      errors.push(`${relFromRoot(file)} broken link: ${href} (case differs on disk: ${mismatch}; CI is case-sensitive)`);
       continue;
     }
     // A fragment into a Markdown file must name one of its headings.

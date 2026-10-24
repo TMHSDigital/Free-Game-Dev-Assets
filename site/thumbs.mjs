@@ -17,7 +17,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { listEntryFiles } from "./lib/entry-files.mjs";
+import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
 import { parseFrontmatter } from "./lib/frontmatter.mjs";
 import { imageUrlFromHtml, needsFetch, previewEligibility, sharedImageIds, webpSize } from "./lib/thumbs.mjs";
 
@@ -49,7 +49,7 @@ function loadEntries() {
   const out = [];
   for (const file of listEntryFiles(CATALOG)) {
     const parsed = parseFrontmatter(fs.readFileSync(file, "utf8"));
-    if (!parsed || parsed.errors.length || !parsed.meta.id) continue;
+    if (!parsed || parsed.errors.length || !idMatchesFile(parsed.meta.id, file)) continue;
     const m = parsed.meta;
     out.push({
       id: String(m.id),

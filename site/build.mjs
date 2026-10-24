@@ -19,9 +19,9 @@ import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { categoryPageHtml } from "./lib/category-page.mjs";
 import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
-import { listEntryFiles } from "./lib/entry-files.mjs";
+import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
-import { LinkError, makeLinkResolver } from "./lib/links.mjs";
+import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
 import { atomFeed, catalogCsv, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
@@ -96,6 +96,11 @@ function loadEntries(vocab) {
     if (fileOfId.has(String(meta.id))) {
       errors.push(`duplicate id "${meta.id}": ${fileOfId.get(String(meta.id))} and ${rel}`);
       continue;
+    }
+    // Page and thumbnail paths are built from the id; never from one that
+    // could leave dist (validate reports the same mismatch with a line).
+    if (!idMatchesFile(meta.id, rel)) {
+      throw new Error(`${rel}: id "${meta.id}" must be short kebab-case and match the file name (node site/validate.mjs explains)`);
     }
     fileOfId.set(String(meta.id), rel);
     bodies.set(String(meta.id), body);
@@ -340,9 +345,12 @@ function pruneDist(dir = DIST, prefix = "") {
 /** Returns file => link resolver for links in that file's body (`file.path` is repo-relative). */
 function linkResolvers(entries, config, entryBase = "../") {
   const idByPath = new Map(entries.map((e) => [e.path, e.id]));
+  const realRoot = fs.realpathSync.native(ROOT);
   const kindOf = (repoPath) => {
     const full = path.join(ROOT, repoPath);
     if (!fs.existsSync(full)) return null;
+    // A wrong-case link resolves here on Windows and macOS but not on Linux.
+    if (caseMismatch(repoPath, path.relative(realRoot, fs.realpathSync.native(full)))) return null;
     return fs.statSync(full).isDirectory() ? "dir" : "file";
   };
   return (file) => makeLinkResolver({ entryPath: file.path, idByPath, repo: config.site.repo, kindOf, entryBase });

@@ -66,6 +66,15 @@ function cutAtHash(raw, value) {
   return /\S\s+#\S/.test(raw) && typeof value === "string" && value !== "" && !/^["'[]/.test(raw.trim());
 }
 
+/** "double" or "single" when a scalar opens a quote it never closes, else null. */
+export function unclosedQuote(raw) {
+  const v = stripComment(raw).trim();
+  const q = v[0];
+  if (q !== '"' && q !== "'") return null;
+  if (v.length >= 2 && v.endsWith(q)) return null;
+  return q === '"' ? "double" : "single";
+}
+
 export function parseScalar(raw) {
   const v = stripComment(raw).trim();
   if (v === "true") return true;
@@ -103,7 +112,9 @@ export function parseFrontmatter(text) {
       if (listKey === null) errors.push(`line ${lineNo}: list item without a key above it`);
       else {
         const value = parseScalar(item[1]);
-        if (value === null) errors.push(`line ${lineNo}: list item is empty (a value starting with # is a comment; quote it)`);
+        const open = unclosedQuote(item[1]);
+        if (open) errors.push(`line ${lineNo}: list item opens a ${open} quote that is never closed`);
+        else if (value === null) errors.push(`line ${lineNo}: list item is empty (a value starting with # is a comment; quote it)`);
         else if (cutAtHash(item[1], value)) errors.push(`line ${lineNo}: list item is cut at " #" (read as a comment); quote the value if the # is part of it`);
         else meta[listKey].push(value);
       }
@@ -122,6 +133,8 @@ export function parseFrontmatter(text) {
     }
     const rawValue = line.slice(idx + 1);
     const value = parseScalar(rawValue);
+    const open = unclosedQuote(rawValue);
+    if (open) errors.push(`line ${lineNo}: "${key}" opens a ${open} quote that is never closed`);
     if (cutAtHash(rawValue, value)) {
       errors.push(`line ${lineNo}: "${key}" is cut at " #" (read as a comment); quote the value if the # is part of it`);
     }

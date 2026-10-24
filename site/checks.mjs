@@ -7,6 +7,7 @@
  */
 
 import path from "node:path";
+import { ID_RE } from "./lib/entry-files.mjs";
 import { evidenceSection } from "./lib/frontmatter.mjs";
 import { isRealDate } from "./lib/shared.mjs";
 import { previewEligibility } from "./lib/thumbs.mjs";
@@ -803,13 +804,13 @@ export function checkThumbManifest(manifest, entriesById, files) {
   const thumbs = (manifest && manifest.thumbs) || {};
   const fileIds = new Set();
   for (const name of files) {
-    const m = name.match(/^([a-z0-9]+(?:-[a-z0-9]+)*)\.webp$/);
-    if (!m) {
+    const id = name.endsWith(".webp") ? name.slice(0, -".webp".length) : "";
+    if (!ID_RE.test(id)) {
       errors.push(`site/public/thumbs/${name} is not a <id>.webp thumbnail`);
       continue;
     }
-    fileIds.add(m[1]);
-    if (!thumbs[m[1]]) errors.push(`site/public/thumbs/${name} has no record in site/thumbs.json`);
+    fileIds.add(id);
+    if (!thumbs[id]) errors.push(`site/public/thumbs/${name} has no record in site/thumbs.json`);
   }
   for (const [id, rec] of Object.entries(thumbs)) {
     if (!fileIds.has(id)) errors.push(`site/thumbs.json has "${id}" but site/public/thumbs/${id}.webp is missing`);
