@@ -53,6 +53,40 @@ export function isAttributionLicence(license) {
   return /^CC-BY/.test(String(license));
 }
 
+/**
+ * True for hosts a fetch from CI must never reach: localhost, local-only
+ * suffixes and IP literals (a public catalog source is named by DNS).
+ */
+export function isPrivateHost(hostname) {
+  const h = String(hostname).toLowerCase().replace(/^\[|\]$/g, "");
+  if (h === "" || h === "localhost" || /\.(localhost|local|internal|lan)$/.test(h)) return true;
+  return /^\d{1,3}(\.\d{1,3}){3}$/.test(h) || h.includes(":");
+}
+
+/** An https URL on a public host, or null. http is upgraded to https; anything else is refused. */
+export function safeImageUrl(raw) {
+  let u;
+  try {
+    u = new URL(String(raw));
+  } catch {
+    return null;
+  }
+  if (u.protocol === "http:") u.protocol = "https:";
+  if (u.protocol !== "https:" || u.username || u.password || isPrivateHost(u.hostname)) return null;
+  return u.href;
+}
+
+/** The image format from its first bytes (png, jpeg, gif, webp), or null. Checked before a converter sees the file. */
+export function sniffImage(bytes) {
+  const b = bytes;
+  if (!b || b.length < 12) return null;
+  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return "png";
+  if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "jpeg";
+  if (b[0] === 0x47 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x38) return "gif";
+  if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return "webp";
+  return null;
+}
+
 function hostOf(url) {
   try {
     return new URL(String(url)).hostname.toLowerCase();
@@ -115,7 +149,7 @@ export function imageUrlFromHtml(html, pageUrl) {
   if (!raw) return null;
   try {
     const abs = new URL(decodeEntities(raw).trim(), pageUrl);
-    return /^https?:$/.test(abs.protocol) ? abs.href : null;
+    return /^https?:$/.test(abs.protocol) ? safeImageUrl(abs.href) : null;
   } catch {
     return null;
   }
@@ -136,14 +170,43 @@ export function sharedImageIds(records) {
 
 const DAY = 86400000;
 
-/** Whether a stored record is missing, forced, under a different licence, or older than maxAgeDays. */
-export function needsFetch(record, { license, today, force = false, maxAgeDays = 180 }) {
+/**
+ * Whether a stored record is missing, forced, under a different licence,
+ * older than maxAgeDays, or no longer describes the entry: its `url` moved,
+ * a `preview:` pin was added, removed or changed. Pass `url` and
+ * `preview` to get the last three checks.
+ */
+export function needsFetch(record, { license, today, force = false, maxAgeDays = 180, url, preview }) {
   if (!record || force) return true;
   if (record.license !== license) return true;
+  if (url !== undefined && record.source !== url) return true;
+  if (preview !== undefined) {
+    const pinned = /^https:\/\//.test(preview || "");
+    if (Boolean(record.pinned) !== pinned) return true;
+    if (pinned && record.image !== preview) return true;
+  }
   const fetched = Date.parse(`${record.fetched}T00:00:00Z`);
   const now = Date.parse(`${today}T00:00:00Z`);
   if (Number.isNaN(fetched) || Number.isNaN(now)) return true;
   return now - fetched > maxAgeDays * DAY;
+}
+
+/** Consecutive failed refreshes after which a stored image is dropped. */
+export const MAX_FAILURES = 3;
+
+/**
+ * After a failed refresh: the record to keep (with its failure count raised),
+ * or null when it should be dropped because the source has failed
+ * MAX_FAILURES times in a row or the image is older than twice maxAgeDays.
+ */
+export function afterFailure(record, { today, maxAgeDays = 180 }) {
+  if (!record) return null;
+  const failures = (Number(record.failures) || 0) + 1;
+  const fetched = Date.parse(`${record.fetched}T00:00:00Z`);
+  const now = Date.parse(`${today}T00:00:00Z`);
+  const ancient = Number.isNaN(fetched) || Number.isNaN(now) || now - fetched > 2 * maxAgeDays * DAY;
+  if (failures >= MAX_FAILURES || ancient) return null;
+  return { ...record, failures };
 }
 
 /** Width and height of a WebP file from its header (VP8, VP8L or VP8X), or null. */

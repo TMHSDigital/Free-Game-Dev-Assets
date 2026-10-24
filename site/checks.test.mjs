@@ -793,6 +793,7 @@ accepts("preview field: absent", checkPreviewField("ok.md", {}));
 accepts("preview field: none", checkPreviewField("ok.md", { preview: "none" }));
 accepts("preview field: https url", checkPreviewField("ok.md", { preview: "https://a/b.png" }));
 rejects("preview field: http refused", checkPreviewField("bad.md", { preview: "http://a/b.png" }), 'bad.md preview must be "none" or an https:// image URL');
+rejects("preview field: loopback refused", checkPreviewField("bad.md", { preview: "https://127.0.0.1/a.png" }), "bad.md preview must be an https:// image URL on a public host");
 rejects("preview field: word refused", checkPreviewField("bad.md", { preview: "yes" }), 'bad.md preview must be "none" or an https:// image URL');
 
 /* V30: line endings ------------------------------------------------------ */

@@ -19,7 +19,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
 import { parseFrontmatter } from "./lib/frontmatter.mjs";
-import { imageUrlFromHtml, needsFetch, previewEligibility, sharedImageIds, webpSize } from "./lib/thumbs.mjs";
+import { afterFailure, imageUrlFromHtml, needsFetch, previewEligibility, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./lib/thumbs.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -30,6 +30,8 @@ const USER_AGENT = "Mozilla/5.0 (compatible; FreeGameDevAssets-thumbs; +https://
 const MAX_IMAGE_BYTES = 15 * 1024 * 1024;
 const TIMEOUT_MS = 20000;
 const CONCURRENCY = 4;
+// A converter that hangs on a hostile file is killed rather than stalling the run.
+const CONVERT_TIMEOUT_MS = 30000;
 
 function parseArgs(argv) {
   const opts = { force: false, only: null, limit: Infinity, dryRun: false, report: null };
@@ -91,20 +93,37 @@ function convert(converter, input, output) {
     execFileSync(
       "ffmpeg",
       ["-y", "-loglevel", "error", "-i", input, "-frames:v", "1", "-vf", "scale='min(640,iw)':-2", "-c:v", "libwebp", "-quality", "78", output],
-      { stdio: ["ignore", "ignore", "pipe"] }
+      { stdio: ["ignore", "ignore", "pipe"], timeout: CONVERT_TIMEOUT_MS, killSignal: "SIGKILL", maxBuffer: 1024 * 1024 }
     );
   } else {
-    execFileSync("magick", [`${input}[0]`, "-resize", "640x>", "-quality", "78", output], { stdio: ["ignore", "ignore", "pipe"] });
+    execFileSync("magick", [`${input}[0]`, "-resize", "640x>", "-quality", "78", output], { stdio: ["ignore", "ignore", "pipe"], timeout: CONVERT_TIMEOUT_MS, killSignal: "SIGKILL", maxBuffer: 1024 * 1024 });
   }
 }
 
 async function fetchBytes(url, { maxBytes = MAX_IMAGE_BYTES } = {}) {
-  const res = await fetch(url, { headers: { "user-agent": USER_AGENT, accept: "*/*" }, signal: AbortSignal.timeout(TIMEOUT_MS), redirect: "follow" });
+  const safe = safeImageUrl(url);
+  if (!safe) throw new Error(`image URL refused (needs a public https host): ${url}`);
+  const res = await fetch(safe, { headers: { "user-agent": USER_AGENT, accept: "image/*" }, signal: AbortSignal.timeout(TIMEOUT_MS), redirect: "follow" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (res.url && !safeImageUrl(res.url)) throw new Error(`image redirected to a refused URL: ${res.url}`);
   const declared = Number(res.headers.get("content-length") || 0);
   if (declared > maxBytes) throw new Error(`image is ${declared} bytes, over the ${maxBytes} limit`);
-  const buf = Buffer.from(await res.arrayBuffer());
-  if (buf.length > maxBytes) throw new Error(`image is ${buf.length} bytes, over the ${maxBytes} limit`);
+  // Stream with a cap: content-length is optional and may lie.
+  const chunks = [];
+  let total = 0;
+  const reader = res.body.getReader();
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.length;
+    if (total > maxBytes) {
+      await reader.cancel();
+      throw new Error(`image is over the ${maxBytes} byte limit`);
+    }
+    chunks.push(value);
+  }
+  const buf = Buffer.concat(chunks);
+  if (!sniffImage(buf)) throw new Error("response is not a PNG, JPEG, GIF or WebP image");
   return buf;
 }
 
@@ -203,7 +222,7 @@ async function main() {
     }
     const rec = thumbs[entry.id];
     const fileExists = fs.existsSync(path.join(THUMBS_DIR, `${entry.id}.webp`));
-    if (!needsFetch(rec, { license: entry.license, today, force: opts.force }) && fileExists) {
+    if (!needsFetch(rec, { license: entry.license, today, force: opts.force, url: entry.url, preview: entry.preview || "" }) && fileExists) {
       summary.kept += 1;
       continue;
     }
@@ -225,6 +244,15 @@ async function main() {
         process.stdout.write(`  + ${entry.id} ${record.width}x${record.height} ${bytes.length} B\n`);
       } catch (err) {
         summary.failed.push({ id: entry.id, reason: err.message });
+        // A source that keeps failing does not keep its old image forever.
+        if (thumbs[entry.id]) {
+          const kept = afterFailure(thumbs[entry.id], { today });
+          if (kept) thumbs[entry.id] = kept;
+          else {
+            summary.removed.push({ id: entry.id, reason: `refresh failed repeatedly or image too old (${err.message})`, hash: thumbs[entry.id].hash });
+            delete thumbs[entry.id];
+          }
+        }
         process.stdout.write(`  ! ${entry.id}: ${err.message}\n`);
       }
     },

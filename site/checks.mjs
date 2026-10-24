@@ -10,7 +10,7 @@ import path from "node:path";
 import { ID_RE } from "./lib/entry-files.mjs";
 import { evidenceSection } from "./lib/frontmatter.mjs";
 import { isRealDate } from "./lib/shared.mjs";
-import { previewEligibility } from "./lib/thumbs.mjs";
+import { isPrivateHost, previewEligibility, safeImageUrl } from "./lib/thumbs.mjs";
 import { parseStack, pickPath, StackError } from "./lib/stacks.mjs";
 
 export { evidenceSection };
@@ -649,11 +649,6 @@ export function checkCategoryReadmeRows(categoryName, readmeText, entries) {
  * escaping HTML does nothing about a scheme.
  */
 /** localhost, *.local / *.internal, and IP literals: never a catalog source. */
-function isPrivateHost(hostname) {
-  const h = hostname.toLowerCase().replace(/^\[|\]$/g, "");
-  if (h === "localhost" || /\.(localhost|local|internal|lan)$/.test(h)) return true;
-  return /^\d{1,3}(\.\d{1,3}){3}$/.test(h) || h.includes(":");
-}
 
 export function checkEntryUrl(rel, meta) {
   const errors = [];
@@ -788,7 +783,9 @@ export function checkCountTables(measured, docs) {
 export function checkPreviewField(rel, meta) {
   if (meta.preview === undefined || meta.preview === null || meta.preview === "") return [];
   const v = String(meta.preview);
-  if (v === "none" || /^https:\/\/\S+$/.test(v)) return [];
+  if (v === "none") return [];
+  if (/^https:\/\/\S+$/.test(v) && safeImageUrl(v) === new URL(v).href) return [];
+  if (/^https:\/\/\S+$/.test(v)) return [`${rel} preview must be an https:// image URL on a public host`];
   return [`${rel} preview must be "none" or an https:// image URL`];
 }
 
@@ -824,6 +821,9 @@ export function checkThumbManifest(manifest, entriesById, files) {
     // entry's live licence, and the next script run refreshes the record.
     const gate = previewEligibility(entry);
     if (!gate.ok) errors.push(`thumbnail for "${id}" must be removed: ${gate.reason} (run node site/thumbs.mjs)`);
+    else if (rec.source && entry.url && rec.source !== String(entry.url)) {
+      errors.push(`thumbnail for "${id}" was fetched from ${rec.source} but the entry url is now ${entry.url} (run node site/thumbs.mjs --only ${id})`);
+    }
   }
   return errors;
 }

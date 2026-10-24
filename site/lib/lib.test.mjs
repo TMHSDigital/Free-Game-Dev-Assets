@@ -898,7 +898,7 @@ eq("new-entry sets added to today", newEntryText("added: 2026-07-19\nverified: 2
 }
 
 // Site refresh: thumbnail rules.
-import { filmstripPick, imageUrlFromHtml, needsFetch, previewCredit, previewEligibility, publisherKey, sharedImageIds, webpSize } from "./thumbs.mjs";
+import { afterFailure, filmstripPick, imageUrlFromHtml, isPrivateHost, needsFetch, previewCredit, previewEligibility, publisherKey, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./thumbs.mjs";
 eq("thumbs: CC0 active itch page is eligible", previewEligibility({ license: "CC0", status: "active", url: "https://kaylousberg.itch.io/block-bits" }).ok, true);
 eq("thumbs: custom licence refused", previewEligibility({ license: "custom", status: "active", url: "https://x.itch.io/a" }).reason, "licence custom is not in the preview allowlist");
 eq("thumbs: needs-review refused before licence", previewEligibility({ license: "custom", status: "needs-review", url: "https://x.itch.io/a" }).reason, "status is needs-review");
@@ -917,6 +917,24 @@ eq("thumbs: needsFetch fresh same licence", needsFetch({ fetched: "2026-09-01", 
 eq("thumbs: needsFetch licence changed", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC-BY-4.0", today: "2026-10-23" }), true);
 eq("thumbs: needsFetch stale", needsFetch({ fetched: "2026-01-01", license: "CC0" }, { license: "CC0", today: "2026-10-23" }), true);
 eq("thumbs: needsFetch force", needsFetch({ fetched: "2026-10-20", license: "CC0" }, { license: "CC0", today: "2026-10-23", force: true }), true);
+const recA = { source: "https://a.example/", image: "https://a.example/og.png", fetched: "2026-10-20", license: "CC0" };
+eq("thumbs: needsFetch url moved", needsFetch(recA, { license: "CC0", today: "2026-10-23", url: "https://b.example/", preview: "" }), true);
+eq("thumbs: needsFetch unchanged entry", needsFetch(recA, { license: "CC0", today: "2026-10-23", url: "https://a.example/", preview: "" }), false);
+eq("thumbs: needsFetch pin added", needsFetch(recA, { license: "CC0", today: "2026-10-23", url: "https://a.example/", preview: "https://a.example/shot.png" }), true);
+eq("thumbs: needsFetch pin changed", needsFetch({ ...recA, pinned: true, image: "https://a.example/old.png" }, { license: "CC0", today: "2026-10-23", url: "https://a.example/", preview: "https://a.example/new.png" }), true);
+eq("thumbs: needsFetch pin removed", needsFetch({ ...recA, pinned: true }, { license: "CC0", today: "2026-10-23", url: "https://a.example/", preview: "" }), true);
+eq("thumbs: afterFailure counts", afterFailure(recA, { today: "2026-10-23" }).failures, 1);
+eq("thumbs: afterFailure drops at the limit", afterFailure({ ...recA, failures: 2 }, { today: "2026-10-23" }), null);
+eq("thumbs: afterFailure drops an ancient image", afterFailure({ ...recA, fetched: "2025-01-01" }, { today: "2026-10-23" }), null);
+eq("thumbs: private host localhost", isPrivateHost("localhost"), true);
+eq("thumbs: private host ip literal", isPrivateHost("127.0.0.1"), true);
+eq("thumbs: public host", isPrivateHost("img.itch.zone"), false);
+eq("thumbs: http image upgraded", safeImageUrl("http://a.example/x.png"), "https://a.example/x.png");
+eq("thumbs: loopback image refused", safeImageUrl("https://127.0.0.1/x.png"), null);
+eq("thumbs: file scheme refused", safeImageUrl("file:///etc/passwd"), null);
+eq("thumbs: og:image on loopback refused", imageUrlFromHtml('<meta property="og:image" content="http://localhost/a.png">', "https://a.example/"), null);
+eq("thumbs: sniff png", sniffImage(Uint8Array.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0])), "png");
+eq("thumbs: sniff html refused", sniffImage(new TextEncoder().encode("<!doctype html><html>")), null);
 {
   const hex = (s) => Buffer.from(s.replaceAll(" ", ""), "hex");
   const vp8x = hex("52494646 24000000 57454250 56503858 0a000000 10000000 7f0200 8f0100");
