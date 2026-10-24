@@ -81,13 +81,14 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
   const licence =
     entry.license_spdx && entry.license_spdx !== entry.license ? `${entry.license} (${entry.license_spdx})` : entry.license;
   const rows = [
+    // Usable in one engine only: the first thing a reader must know.
+    entry.engine_lock ? ["Engine lock", esc(ENGINE_LOCK_NOTES[entry.engine_lock] || entry.engine_lock)] : null,
     ["Licence", esc(licence)],
     ["Commercial use", esc(commercialLabel(entry.commercial))],
     ["Credit", esc(c.value)],
     ["Status", `${esc(entry.status)}: ${esc(STATUS_NOTES[entry.status] || "")}`],
     ["Verified", `<span class="verified is-${age.bucket}">${esc(ageText)}</span>`],
     entry.maintenance ? ["Maintenance", `${esc(entry.maintenance)}: ${esc(MAINTENANCE_NOTES[entry.maintenance] || "")}`] : null,
-    entry.engine_lock ? ["Engine lock", esc(ENGINE_LOCK_NOTES[entry.engine_lock] || entry.engine_lock)] : null,
     entry.ue_versions ? ["Unreal Engine", `${esc(entry.ue_versions)}, as stated by the source`] : null,
     entry.publisher ? ["Publisher", esc(entry.publisher)] : null,
     ["Formats", esc((entry.formats || []).join(", ") || "none listed")],

@@ -1,4 +1,4 @@
-import { closestEntries, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, slugOf, stateQuery } from "./search.js";
+import { closestEntries, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, slugOf, stateQuery, ENGINES, engineRank } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 
@@ -29,6 +29,7 @@ import { installViewToggles } from "./views.js";
     perspective: "any",
     license: "any",
     format: "any",
+    engine: "any",
     sort: "name",
   };
   const state = { ...DEFAULTS };
@@ -78,6 +79,7 @@ import { installViewToggles } from "./views.js";
         sort: Object.keys(SORTS),
         perspective: ["any", ...Object.keys(PERSPECTIVE_LABELS)],
         license: ["any", ...Object.keys(LICENSE_FAMILIES)],
+        engine: ["any", ...Object.keys(ENGINES)],
         format: ["any", ...Object.keys(FORMAT_GROUPS)],
       })
     );
@@ -143,7 +145,7 @@ import { installViewToggles } from "./views.js";
       // Searching under the default sort: best match first, then by name.
       list.sort((a, b) => score.get(b.id) - score.get(a.id) || SORTS.name(a, b));
     } else {
-      list.sort(SORTS[state.sort] || SORTS.name);
+      list.sort(sorter());
     }
     return { list, counts, total: pool.length, ranked };
   }
@@ -178,6 +180,13 @@ import { installViewToggles } from "./views.js";
       String(b.added || "").localeCompare(String(a.added || "")) ||
       a.name.localeCompare(b.name),
   };
+
+  /** The chosen sort, with entries made for the chosen engine first. */
+  function sorter() {
+    const by = SORTS[state.sort] || SORTS.name;
+    if (state.engine === "any") return by;
+    return (a, b) => engineRank(a, state.engine) - engineRank(b, state.engine) || by(a, b);
+  }
 
   /* ---------------------------------------------------------- rendering */
 
@@ -278,6 +287,7 @@ import { installViewToggles } from "./views.js";
       });
     if (state.license !== DEFAULTS.license)
       chips.push({ key: "license", label: `licence: ${LICENSE_FAMILIES[state.license] || state.license}` });
+    if (state.engine !== DEFAULTS.engine) chips.push({ key: "engine", label: `engine: ${ENGINES[state.engine]?.label || state.engine}` });
     if (state.format !== DEFAULTS.format)
       chips.push({ key: "format", label: `format: ${FORMAT_GROUPS[state.format]?.label || state.format}` });
     if (!state.active) chips.push({ key: "active", label: "hiding active" });
@@ -443,7 +453,7 @@ import { installViewToggles } from "./views.js";
       placedKey = key;
       const shown = new Set(list.map((e) => e.id));
       const rest = data.entries.filter((e) => !shown.has(e.id));
-      const all = ranked ? [...list, ...rest] : data.entries.slice().sort(SORTS[state.sort] || SORTS.name);
+      const all = ranked ? [...list, ...rest] : data.entries.slice().sort(sorter());
       // Entries not rendered yet (the preview page) are simply not placed.
       const node = (e) => cardNodes.get(e.id);
       const order = [flatHeading];
@@ -670,6 +680,7 @@ import { installViewToggles } from "./views.js";
 
     const selects = [
       ["#license-family", "license", LICENSE_FAMILIES],
+      ["#engine", "engine", Object.fromEntries(Object.entries(ENGINES).map(([k, e]) => [k, e.label]))],
       ["#format-group", "format", Object.fromEntries(Object.entries(FORMAT_GROUPS).map(([k, g]) => [k, g.label]))],
     ];
     for (const [sel, field, choices] of selects) {
@@ -870,6 +881,7 @@ import { installViewToggles } from "./views.js";
     $("#sort").value = state.sort;
     $("#perspective").value = state.perspective;
     $("#license-family").value = state.license;
+    $("#engine").value = state.engine;
     $("#format-group").value = state.format;
   }
 

@@ -78,6 +78,7 @@ export function passesFilters(entry, state, formatGroups = {}) {
   if (state.noAttr && entry.attribution_required !== false) return false;
   if (state.perspective !== "any" && entry.camera_perspective !== state.perspective) return false;
   if (state.license !== "any" && entry.licenseFamily !== state.license) return false;
+  if (state.engine && state.engine !== "any" && entry.engine_lock && entry.engine_lock !== state.engine) return false;
   if (state.format !== "any") {
     const wanted = formatGroups[state.format]?.formats || [];
     if (!(entry.formats || []).some((f) => wanted.includes(f))) return false;
@@ -86,12 +87,32 @@ export function passesFilters(entry, state, formatGroups = {}) {
 }
 
 /** Choice params: URL key -> state field. `allowed` supplies each field's legal values. */
+/**
+ * The engine filter. An entry locked to another engine (engine_lock) is
+ * hidden; entries tagged for the chosen engine sort first. Everything else
+ * is engine-agnostic and stays listed.
+ */
+export const ENGINES = {
+  godot: { label: "Godot", tags: ["godot", "godot-4"] },
+  unity: { label: "Unity", tags: ["unity"] },
+  unreal: { label: "Unreal Engine", tags: ["unreal-engine", "unreal"] },
+};
+
+/** 0 when an entry is made for `engine` (tagged for it or locked to it), else 1. */
+export function engineRank(entry, engine) {
+  const e = ENGINES[engine];
+  if (!e) return 0;
+  if (entry.engine_lock === engine) return 0;
+  return (entry.tags || []).some((t) => e.tags.includes(t)) ? 0 : 1;
+}
+
 const CHOICES = [
   ["cat", "category"],
   ["sort", "sort"],
   ["view", "perspective"],
   ["licence", "license"],
   ["format", "format"],
+  ["engine", "engine"],
 ];
 /** On/off params: URL key -> state field, written as 1 or 0. */
 const SWITCHES = [
@@ -132,7 +153,7 @@ export function stateQuery(state, defaults) {
   const field = Object.fromEntries(CHOICES);
   if (state.category !== defaults.category) p.set("cat", state.category);
   if (state.q.trim()) p.set("q", state.q.trim());
-  for (const key of ["sort", "view", "licence", "format"]) {
+  for (const key of ["sort", "view", "licence", "format", "engine"]) {
     if (state[field[key]] !== defaults[field[key]]) p.set(key, state[field[key]]);
   }
   for (const [key, f] of SWITCHES) {

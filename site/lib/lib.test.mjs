@@ -763,7 +763,7 @@ eq("every word must match", kScore("ui zzz"), 0);
 eq("name hit outranks summary hit", kScore("kit") > kScore("panels"), true);
 eq("regex characters are literal", kScore("c++"), 0);
 
-const URL_DEF = { category: "all", q: "", active: true, review: true, deprecated: false, commercialOnly: false, noAttr: false, perspective: "any", license: "any", format: "any", sort: "name" };
+const URL_DEF = { category: "all", q: "", active: true, review: true, deprecated: false, commercialOnly: false, noAttr: false, perspective: "any", license: "any", format: "any", engine: "any", sort: "name" };
 const URL_ALLOWED = { category: ["all", "2d", "3d"], sort: ["name", "license", "verified"], perspective: ["any", "top_down"], license: ["any", "cc0"], format: ["any", "image"] };
 const urlSt = readState("?cat=2d&q=pixel&sort=bogus&view=top_down&deprecated=1&review=maybe&licence=cc0", URL_DEF, URL_ALLOWED);
 eq("url: known category kept", urlSt.category, "2d");
@@ -781,6 +781,16 @@ eq("url: blank q not written", stateQuery({ ...URL_DEF, q: "   " }, URL_DEF), ""
 const fmtGroups = { image: { formats: ["PNG", "SVG"] } };
 eq("filter: needs-review hidden when review off", passesFilters({ status: "needs-review" }, { ...URL_DEF, review: false }), false);
 eq("filter: deprecated hidden by default", passesFilters({ status: "deprecated" }, URL_DEF), false);
+{
+  const { ENGINES: EN, engineRank: er } = await import("./search.mjs");
+  eq("engine: godot hides UE-only", passesFilters({ status: "active", engine_lock: "unreal" }, { ...URL_DEF, engine: "godot" }), false);
+  eq("engine: unreal keeps UE-only", passesFilters({ status: "active", engine_lock: "unreal" }, { ...URL_DEF, engine: "unreal" }), true);
+  eq("engine: agnostic entries stay", passesFilters({ status: "active" }, { ...URL_DEF, engine: "godot" }), true);
+  eq("engine: godot-tagged ranks first", er({ tags: ["godot-4"] }, "godot") - er({ tags: ["pixel"] }, "godot"), -1);
+  eq("engine: url round-trips", readState("?engine=unity", URL_DEF, { engine: ["any", ...Object.keys(EN)] }).engine, "unity");
+  eq("engine: written to the url", stateQuery({ ...URL_DEF, engine: "godot" }, URL_DEF), "engine=godot");
+  eq("engine: unknown value ignored", readState("?engine=cryengine", URL_DEF, { engine: ["any", ...Object.keys(EN)] }).engine, "any");
+}
 eq("filter: commercial-only keeps varies", passesFilters({ status: "active", commercial: "varies" }, { ...URL_DEF, commercialOnly: true }), true);
 eq("filter: commercial-only drops unknown", passesFilters({ status: "active", commercial: "unknown" }, { ...URL_DEF, commercialOnly: true }), false);
 eq("filter: no-attribution needs false, not unknown", passesFilters({ status: "active", attribution_required: "unknown" }, { ...URL_DEF, noAttr: true }), false);
