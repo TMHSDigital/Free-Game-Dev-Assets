@@ -922,6 +922,14 @@ eq("thumbs: publisherKey falls back to host", publisherKey({ url: "https://www.k
 eq("thumbs: publisherKey prefers publisher", publisherKey({ publisher: "Kenney", url: "https://x/" }), "Kenney");
 eq("thumbs: credit with publisher", previewCredit({ publisher: "Kenney", license: "CC0" }), "Preview image from Kenney, shown under CC0");
 eq("thumbs: credit without publisher", previewCredit({ license: "CC-BY-4.0" }), "Preview image from the source page, shown under CC-BY-4.0");
+eq("thumbs: CC-BY credit prefers the recorded credit line", previewCredit({ license: "CC-BY-4.0", publisher: "Dareful", attribution_string: "Video by Dareful.com" }), "Video by Dareful.com. Preview image shown under CC-BY-4.0");
+eq("thumbs: CC-BY credit falls back to publisher", previewCredit({ license: "CC-BY-3.0", publisher: "Kevin MacLeod" }), "Kevin MacLeod. Preview image shown under CC-BY-3.0");
+eq("thumbs: tools need a pinned preview", previewEligibility({ license: "GPL-3.0-or-later", status: "active", category: "tools", url: "https://www.gimp.org/" }).ok, false);
+eq("thumbs: fonts need a pinned preview", previewEligibility({ license: "SIL OFL", status: "active", category: "fonts", url: "https://rsms.me/inter/" }).reason.startsWith("category fonts:"), true);
+eq("thumbs: a pinned preview admits a tool", previewEligibility({ license: "MIT", status: "active", category: "tools", url: "https://ldtk.io/", preview: "https://ldtk.io/shot.png" }).ok, true);
+eq("thumbs: 3d page image is the asset", previewEligibility({ license: "CC0", status: "active", category: "3d", url: "https://x.itch.io/a" }).ok, true);
+eq("thumbs: CC-BY without a creator refused", previewEligibility({ license: "CC-BY-4.0", status: "active", category: "audio", url: "https://x.itch.io/a" }).reason, "licence CC-BY-4.0 needs a creator to credit; set attribution_string or publisher");
+eq("thumbs: CC-BY with attribution_string admitted", previewEligibility({ license: "CC-BY-4.0", status: "active", category: "audio", url: "https://x.itch.io/a", attribution_string: "Sound by X" }).ok, true);
 {
   const t = { path: "thumbs/x.webp", width: 640, height: 400 };
   const pool = [

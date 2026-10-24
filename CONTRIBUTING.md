@@ -90,7 +90,14 @@ Publishers are welcome to list their own work. Say so in the pull request, write
 
 ## Preview images
 
-The site shows each entry's preview image where it can. The picture is the publisher's own `og:image` from the entry's `url`, fetched by `npm run thumbs`, resized to 640 pixels wide and committed under `site/public/thumbs/` with a record in `site/thumbs.json`. Only `active` entries whose licence is on the allowlist in `site/lib/thumbs.mjs` (CC0, CC-BY, MIT, OFL, GPL and the other open licences that allow a resized copy) get one; `custom`, `varies` and `unknown` never do, and neither do GitHub repositories, whose social card is not a preview. The validator fails when a committed image no longer passes that gate, and the script removes it on its next run.
+The site shows each entry's preview image where it can. The picture is the publisher's own `og:image` from the entry's `url`, fetched by `npm run thumbs`, resized to 640 pixels wide and committed under `site/public/thumbs/` with a record in `site/thumbs.json`. The gate in `site/lib/thumbs.mjs` is narrower than "the licence is open":
+
+- the entry must be `active`, and its licence on the allowlist (CC0, CC-BY, MIT, OFL, GPL and the other open licences that allow a resized copy); `custom`, `varies` and `unknown` never get one;
+- `tools` and `fonts` entries only get a thumbnail from a maintainer-checked `preview:` URL, because the page image there is a logo, splash screen or social card that the program's or font's licence does not cover;
+- a CC-BY entry needs `attribution_string` or `publisher`, because the caption has to name the creator;
+- GitHub repositories are skipped, since their social card is not a preview.
+
+What the gate does not verify: an itch.io store cover is taken to be under the pack's licence, which the pack's licence text does not always say; a publisher who disagrees can ask for `preview: none` (below). The validator fails when a committed image no longer passes the gate, and the script removes it on its next run.
 
 A publisher who would rather not have their preview shown can open an issue; the maintainer sets `preview: none` on the entry and the image is removed. A maintainer who has checked that a specific image is covered by the entry's licence can set `preview: https://...` to use that image instead of the page's `og:image`.
 

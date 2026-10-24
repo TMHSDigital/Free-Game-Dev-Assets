@@ -43,7 +43,7 @@ and tools that want the metadata without scraping the page. The page itself load
   `attribution_required`, `attribution_string` where set, `formats`, `tags`, `added`,
   `verified`, `status`, `publisher` where set, and the optional 2D fields), plus `path` (the entry's
   file in this repo), `page` (the entry's page, relative to the site root), `summary` (the first paragraph of its body), `thumb`
-  (`{ path, width, height }` of the entry's preview image relative to the site root, or `null`), and two derived sort
+  (`{ path, width, height, credit? }` of the entry's preview image relative to the site root, with `credit` on CC-BY images, or `null`), and two derived sort
   fields, `attributionClass` and `licenseRank`.
 - It is regenerated from `catalog/` on every push to `main`. Field names are stable;
   new optional fields may appear. The licence facts are only as current as each entry's
@@ -88,8 +88,10 @@ each entry page's breadcrumb links to its category page.
 `site/public/thumbs/<id>.webp` plus a record in `site/thumbs.json` (source, image URL,
 fetch date, content hash, size, licence at fetch). Eligible means `status: active` and a
 licence in the allowlist in `site/lib/thumbs.mjs`; `custom`, `varies`, `unknown`,
-GitHub and Google Fonts pages never qualify, and an image whose bytes three or more
-entries share is treated as a logo and dropped. `preview: none` opts an entry out;
+GitHub and Google Fonts pages never qualify; `tools` and `fonts` entries qualify only with
+a pinned `preview:` (their page image is a logo or social card the program licence does not
+cover); a CC-BY entry needs `attribution_string` or `publisher` so the caption can name the
+creator; and an image whose bytes three or more entries share is treated as a logo and dropped. `preview: none` opts an entry out;
 `preview: <https url>` pins an image a maintainer has checked. The run is incremental
 (a record under 180 days old with the same licence is kept), removes records the gate no
 longer allows, and lists failures without failing. `validate.mjs` fails when the files,

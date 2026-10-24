@@ -40,6 +40,19 @@ export const PREVIEW_LICENSES = new Set([
 /** Hosts whose og:image is a social card or a logo, never an asset preview. */
 export const SKIP_HOSTS = new Set(["github.com", "www.github.com", "fonts.google.com"]);
 
+/**
+ * Categories where the page's og:image is the project's logo, splash screen
+ * or social card rather than the asset. The program's or font's licence does
+ * not cover that artwork, so these entries only get a thumbnail from a
+ * maintainer-checked `preview:` URL.
+ */
+export const LOGO_CATEGORIES = new Set(["tools", "fonts"]);
+
+/** Licences whose terms require naming the creator wherever the work is shown. */
+export function isAttributionLicence(license) {
+  return /^CC-BY/.test(String(license));
+}
+
 function hostOf(url) {
   try {
     return new URL(String(url)).hostname.toLowerCase();
@@ -59,8 +72,18 @@ export function previewEligibility(entry) {
   if (!PREVIEW_LICENSES.has(String(entry.license))) {
     return { ok: false, reason: `licence ${entry.license} is not in the preview allowlist` };
   }
+  const pinned = /^https:\/\//.test(preview);
+  if (LOGO_CATEGORIES.has(String(entry.category)) && !pinned) {
+    return {
+      ok: false,
+      reason: `category ${entry.category}: the page image is a logo, splash or social card that the ${entry.license} licence does not cover; pin a checked image with preview:`,
+    };
+  }
+  if (isAttributionLicence(entry.license) && !entry.attribution_string && !entry.publisher) {
+    return { ok: false, reason: `licence ${entry.license} needs a creator to credit; set attribution_string or publisher` };
+  }
   const host = hostOf(entry.url);
-  if (SKIP_HOSTS.has(host) && !/^https:\/\//.test(preview)) return { ok: false, reason: `host ${host} is skipped` };
+  if (SKIP_HOSTS.has(host) && !pinned) return { ok: false, reason: `host ${host} is skipped` };
   return { ok: true, reason: null };
 }
 
@@ -152,10 +175,19 @@ export function publisherKey(entry) {
   return hostOf(entry.url).replace(/^www\./, "");
 }
 
-/** The credit line shown under a preview image. */
+/**
+ * The credit line shown under a preview image. For attribution licences the
+ * recorded credit line comes first, then the publisher: CC-BY requires the
+ * creator to be named wherever the work is shown.
+ */
 export function previewCredit(entry) {
+  const licence = String(entry.license);
+  if (isAttributionLicence(licence)) {
+    const creator = entry.attribution_string ? String(entry.attribution_string) : entry.publisher ? String(entry.publisher) : "";
+    if (creator) return `${creator.replace(/[.\s]+$/, "")}. Preview image shown under ${licence}`;
+  }
   const from = entry.publisher ? String(entry.publisher) : "the source page";
-  return `Preview image from ${from}, shown under ${entry.license}`;
+  return `Preview image from ${from}, shown under ${licence}`;
 }
 
 /**

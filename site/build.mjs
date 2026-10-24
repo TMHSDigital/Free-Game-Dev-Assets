@@ -17,7 +17,7 @@ import { fileURLToPath } from "node:url";
 import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, sponsorButtonHtml } from "./lib/shared.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { categoryPageHtml } from "./lib/category-page.mjs";
-import { filmstripPick, thumbRelPath } from "./lib/thumbs.mjs";
+import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
@@ -131,7 +131,13 @@ function loadEntries(vocab) {
       summary: summaryFromBody(body),
       // The publisher's preview, when the licence gate let the script keep one.
       thumb: thumbs[String(meta.id)]
-        ? { path: thumbRelPath(String(meta.id)), width: thumbs[String(meta.id)].width, height: thumbs[String(meta.id)].height }
+        ? {
+            path: thumbRelPath(String(meta.id)),
+            width: thumbs[String(meta.id)].width,
+            height: thumbs[String(meta.id)].height,
+            // CC-BY: the creator is named on the card too, not only on the entry page.
+            ...(isAttributionLicence(meta.license) ? { credit: previewCredit(meta) } : {}),
+          }
         : null,
       ...(meta.grid_dimensions ? { grid_dimensions: String(meta.grid_dimensions) } : {}),
       ...(meta.camera_perspective ? { camera_perspective: String(meta.camera_perspective) } : {}),

@@ -57,6 +57,8 @@ function loadEntries() {
       license: String(m.license || ""),
       status: String(m.status || ""),
       publisher: m.publisher ? String(m.publisher) : undefined,
+      category: String(m.category || ""),
+      attribution_string: m.attribution_string ? String(m.attribution_string) : undefined,
       preview: m.preview === undefined || m.preview === null ? undefined : String(m.preview),
     });
   }

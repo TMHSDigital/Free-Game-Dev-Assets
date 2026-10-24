@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23",
+  "generated": "2026-10-24",
   "thumbs": {
     "3dmodelscc0-city": {
       "source": "https://3dmodelscc0.itch.io/city-environment-pack",
@@ -91,24 +91,6 @@
       "height": 236,
       "license": "CC0"
     },
-    "atkinson-hyperlegible": {
-      "source": "https://brailleinstitute.org/freefont",
-      "image": "https://www.brailleinstitute.org/wp-content/uploads/2024/09/social_logo.jpg",
-      "fetched": "2026-10-23",
-      "hash": "603d860a40500656",
-      "width": 640,
-      "height": 336,
-      "license": "SIL OFL"
-    },
-    "audacity": {
-      "source": "https://www.audacityteam.org",
-      "image": "https://www.audacityteam.org/og-image.png",
-      "fetched": "2026-10-23",
-      "hash": "95b4fc8f75c4e8d3",
-      "width": 640,
-      "height": 336,
-      "license": "GPL-3.0"
-    },
     "barnabe-wild-lowpoly-rigged": {
       "source": "https://barnabe-wild.itch.io/low-poly-rigged-character",
       "image": "https://img.itch.zone/aW1nLzI0Nzk2MzkwLnBuZw==/original/kmBK0X.png",
@@ -135,15 +117,6 @@
       "width": 550,
       "height": 400,
       "license": "CC0"
-    },
-    "blender": {
-      "source": "https://www.blender.org",
-      "image": "https://www.blender.org/wp-content/uploads/2026/07/splash-overgrown-480x270.webp",
-      "fetched": "2026-10-23",
-      "hash": "a95f92b49425c30e",
-      "width": 480,
-      "height": 270,
-      "license": "GPL-2.0-or-later"
     },
     "blender-studio-critter": {
       "source": "https://studio.blender.org/characters/critter/",
@@ -190,15 +163,6 @@
       "height": 360,
       "license": "CC-BY-4.0"
     },
-    "blockbench": {
-      "source": "https://www.blockbench.net",
-      "image": "https://blockbench.net/logo_banner.png",
-      "fetched": "2026-10-23",
-      "hash": "764a137e99317e7e",
-      "width": 640,
-      "height": 334,
-      "license": "GPL-3.0"
-    },
     "bondoki-rotating-gems": {
       "source": "https://opengameart.org/content/rotating-gems-for-match3",
       "image": "https://opengameart.org/sites/default/files/gem_bomb_rainbow_preview.png",
@@ -215,15 +179,6 @@
       "hash": "60f2a61e9b928e84",
       "width": 640,
       "height": 320,
-      "license": "MIT"
-    },
-    "bosca-ceoil-blue": {
-      "source": "https://yurisizov.itch.io/boscaceoil-blue",
-      "image": "https://img.itch.zone/aW1nLzIwMTU4Mjg2LnBuZw==/original/u5MO49.png",
-      "fetched": "2026-10-23",
-      "hash": "2051dde32c980877",
-      "width": 640,
-      "height": 336,
       "license": "MIT"
     },
     "budgetpixel-sfx": {
@@ -244,24 +199,6 @@
       "height": 360,
       "license": "CC-BY-4.0"
     },
-    "chiptone": {
-      "source": "https://sfbgames.itch.io/chiptone",
-      "image": "https://img.itch.zone/aW1nLzM3NzY1NDIucG5n/original/yFTn8t.png",
-      "fetched": "2026-10-23",
-      "hash": "1c34852edbcae3cd",
-      "width": 603,
-      "height": 500,
-      "license": "CC0"
-    },
-    "colmap": {
-      "source": "https://colmap.github.io",
-      "image": "https://colmap.github.io/_static/og-image.png",
-      "fetched": "2026-10-23",
-      "hash": "8ee32197e8816846",
-      "width": 640,
-      "height": 336,
-      "license": "BSD-3-Clause"
-    },
     "congusbongus-footsteps-surfaces": {
       "source": "https://opengameart.org/content/footsteps-on-different-surfaces",
       "image": "https://opengameart.org/sites/default/files/styles/audio_with_background/public/audio_preview/preview_43.ogg.png",
@@ -280,15 +217,6 @@
       "height": 356,
       "license": "CC-BY-4.0"
     },
-    "departure-mono": {
-      "source": "https://departuremono.com",
-      "image": "https://departuremono.com/assets/departure-og.png",
-      "fetched": "2026-10-23",
-      "hash": "c584b9e54b9a2660",
-      "width": 640,
-      "height": 336,
-      "license": "SIL OFL"
-    },
     "eric-skiff-resistor-anthems": {
       "source": "https://ericskiff.com/music/",
       "image": "http://ericskiff.com/assets/resistor-anthems-cover_fb.png",
@@ -296,24 +224,6 @@
       "hash": "ea864b9a57b46a08",
       "width": 640,
       "height": 336,
-      "license": "CC-BY-4.0"
-    },
-    "famistudio": {
-      "source": "https://famistudio.org/",
-      "image": "https://famistudio.org/twitter_card.png",
-      "fetched": "2026-10-23",
-      "hash": "df269b39ce1d0fc8",
-      "width": 640,
-      "height": 336,
-      "license": "MIT"
-    },
-    "filmmusic-ende": {
-      "source": "https://ende.app/en/standard-license",
-      "image": "https://ende.app/images/logo_light.png",
-      "fetched": "2026-10-23",
-      "hash": "c40915a986f3e682",
-      "width": 221,
-      "height": 100,
       "license": "CC-BY-4.0"
     },
     "gameart2d-freebies": {
@@ -343,15 +253,6 @@
       "height": 426,
       "license": "public-domain"
     },
-    "ggbotnet-fonts-cc0": {
-      "source": "https://ggbot.itch.io/ggbotnet-fonts-cc0",
-      "image": "https://img.itch.zone/aW1nLzIxMzQxMTcxLmpwZw==/original/pYJAle.jpg",
-      "fetched": "2026-10-23",
-      "hash": "aecc0291024b5fb9",
-      "width": 640,
-      "height": 360,
-      "license": "CC0"
-    },
     "ggbotnet-psx-cars": {
       "source": "https://ggbot.itch.io/psx-style-cars",
       "image": "https://img.itch.zone/aW1nLzEwMDE0MjA3LmpwZw==/original/E2vCgZ.jpg",
@@ -360,33 +261,6 @@
       "width": 630,
       "height": 500,
       "license": "CC0"
-    },
-    "gimp": {
-      "source": "https://www.gimp.org",
-      "image": "https://www.gimp.org/images/frontpage/wilber-big.png",
-      "fetched": "2026-10-23",
-      "hash": "3c3d1e89d0385fae",
-      "width": 200,
-      "height": 200,
-      "license": "GPL-3.0-or-later"
-    },
-    "gltf-transform": {
-      "source": "https://gltf-transform.dev",
-      "image": "https://gltf-transform.dev/media/hero.jpg",
-      "fetched": "2026-10-23",
-      "hash": "541ac4ca5ab48e5c",
-      "width": 640,
-      "height": 320,
-      "license": "MIT"
-    },
-    "godot-engine": {
-      "source": "https://godotengine.org",
-      "image": "https://godotengine.org/assets/share-image.jpg",
-      "fetched": "2026-10-23",
-      "hash": "bddf5c22d60408b5",
-      "width": 640,
-      "height": 336,
-      "license": "MIT"
     },
     "gustavo-saraiva-city-parallax": {
       "source": "https://opengameart.org/content/city-parallax-pixel-art",
@@ -406,15 +280,6 @@
       "height": 320,
       "license": "MIT"
     },
-    "inter": {
-      "source": "https://rsms.me/inter/",
-      "image": "https://rsms.me/inter/res/share.png",
-      "fetched": "2026-10-23",
-      "hash": "ebf0477fd8e744e4",
-      "width": 640,
-      "height": 336,
-      "license": "SIL OFL"
-    },
     "jangafx-free-vdb": {
       "source": "https://jangafx.com/software/embergen/download/free-vdb-animations/",
       "image": "https://jangafx.com/opengraph-image.png?opengraph-image.2xwmfd9hv7l5u.png",
@@ -423,24 +288,6 @@
       "width": 640,
       "height": 640,
       "license": "CC0"
-    },
-    "jetbrains-mono": {
-      "source": "https://www.jetbrains.com/lp/mono/",
-      "image": "https://www.jetbrains.com/lp/mono/static/preview-0d5da2c7dc8a75121b80e025c50e3bd4.png",
-      "fetched": "2026-10-23",
-      "hash": "d7db3e085cbb13de",
-      "width": 640,
-      "height": 400,
-      "license": "SIL OFL"
-    },
-    "jsfxr": {
-      "source": "https://sfxr.me",
-      "image": "https://sfxr.me/header.png",
-      "fetched": "2026-10-23",
-      "hash": "c27db4a334d368a9",
-      "width": 640,
-      "height": 320,
-      "license": "Unlicense"
     },
     "kaykit": {
       "source": "https://kaylousberg.itch.io",
@@ -663,15 +510,6 @@
       "image": "https://kenney.nl/media/pages/assets/fantasy-town-kit/c13eafebab-1754222363/sample.png",
       "fetched": "2026-10-23",
       "hash": "ff91a6ef330b802f",
-      "width": 640,
-      "height": 360,
-      "license": "CC0"
-    },
-    "kenney-fonts": {
-      "source": "https://kenney.nl/assets/kenney-fonts",
-      "image": "https://kenney.nl/media/pages/assets/kenney-fonts/703183582c-1677661704/preview.png",
-      "fetched": "2026-10-23",
-      "hash": "c6b08203a086d445",
       "width": 640,
       "height": 360,
       "license": "CC0"
@@ -1036,24 +874,6 @@
       "height": 360,
       "license": "CC0"
     },
-    "kokoro-82m": {
-      "source": "https://huggingface.co/hexgrad/Kokoro-82M",
-      "image": "https://cdn-thumbnails.huggingface.co/social-thumbnails/models/hexgrad/Kokoro-82M.png",
-      "fetched": "2026-10-23",
-      "hash": "225c2e92e21c10c7",
-      "width": 640,
-      "height": 346,
-      "license": "Apache-2.0"
-    },
-    "ldtk": {
-      "source": "https://ldtk.io",
-      "image": "https://ldtk.io/wp-content/uploads/2021/05/open-graph.png",
-      "fetched": "2026-10-23",
-      "hash": "2dfe074f2d40acab",
-      "width": 640,
-      "height": 194,
-      "license": "MIT"
-    },
     "lucide-icons": {
       "source": "https://lucide.dev/",
       "image": "https://lucide.dev/og.png",
@@ -1090,33 +910,6 @@
       "height": 500,
       "license": "CC0"
     },
-    "material-maker": {
-      "source": "https://www.materialmaker.org",
-      "image": "https://www.materialmaker.org/data/materials/material_61.webp",
-      "fetched": "2026-10-23",
-      "hash": "b92c1570511125ee",
-      "width": 256,
-      "height": 256,
-      "license": "MIT"
-    },
-    "meshroom": {
-      "source": "https://alicevision.org",
-      "image": "https://alicevision.org/img/home_lion.jpg",
-      "fetched": "2026-10-23",
-      "hash": "e6d3b69aaddee89b",
-      "width": 640,
-      "height": 256,
-      "license": "MPL-2.0"
-    },
-    "monogram": {
-      "source": "https://datagoblin.itch.io/monogram",
-      "image": "https://img.itch.zone/aW1nLzE3MjQyNDY3LnBuZw==/original/j47gjt.png",
-      "fetched": "2026-10-23",
-      "hash": "e14fbacf0cbf4656",
-      "width": 630,
-      "height": 500,
-      "license": "CC0"
-    },
     "nasa-3d-resources": {
       "source": "https://science.nasa.gov/3d-resources/",
       "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/web/images/3d-portal-top-background.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
@@ -1144,15 +937,6 @@
       "height": 500,
       "license": "CC0"
     },
-    "normalpainter": {
-      "source": "https://winteralexander.itch.io/normalpainter",
-      "image": "https://img.itch.zone/aW1nLzU2ODU4ODgucG5n/original/MoWXdi.png",
-      "fetched": "2026-10-23",
-      "hash": "a4ff0aa423fdd984",
-      "width": 630,
-      "height": 500,
-      "license": "MIT"
-    },
     "oga-fps-arms-rigged": {
       "source": "https://opengameart.org/content/fps-arms-rigged-only",
       "image": "https://opengameart.org/sites/default/files/fps-arms-1.jpg",
@@ -1161,15 +945,6 @@
       "width": 620,
       "height": 620,
       "license": "CC0"
-    },
-    "ogmo-editor": {
-      "source": "https://ogmo-editor-3.github.io/",
-      "image": "https://raw.githubusercontent.com/Ogmo-Editor-3/Ogmo-Editor-3.github.io/master/img/cover.png",
-      "fetched": "2026-10-23",
-      "hash": "a6b4248a9737e050",
-      "width": 630,
-      "height": 500,
-      "license": "MIT"
     },
     "open-hdri": {
       "source": "https://openhdri.org",
@@ -1180,15 +955,6 @@
       "height": 342,
       "license": "CC0"
     },
-    "openmpt": {
-      "source": "https://openmpt.org/",
-      "image": "https://openmpt.org/img/logo256.png",
-      "fetched": "2026-10-23",
-      "hash": "0e895640f2aae918",
-      "width": 256,
-      "height": 256,
-      "license": "BSD-3-Clause"
-    },
     "openpeeps": {
       "source": "https://www.openpeeps.com/",
       "image": "https://cdn.prod.website-files.com/5e51b3b0337309d672efd94c/5e51ce05258ffe802886ef21_cover-1.png",
@@ -1197,33 +963,6 @@
       "width": 640,
       "height": 434,
       "license": "CC0"
-    },
-    "opentoonz": {
-      "source": "https://opentoonz.github.io/e/",
-      "image": "https://opentoonz.github.io/e/img/ogp_e.jpg",
-      "fetched": "2026-10-23",
-      "hash": "8add09c46a13c173",
-      "width": 640,
-      "height": 336,
-      "license": "BSD-3-Clause"
-    },
-    "orbitron": {
-      "source": "https://www.theleagueofmoveabletype.com/orbitron",
-      "image": "https://www.theleagueofmoveabletype.com/screenshots/orbitron.webp",
-      "fetched": "2026-10-23",
-      "hash": "52944413edc83b71",
-      "width": 640,
-      "height": 336,
-      "license": "SIL OFL"
-    },
-    "osm2world": {
-      "source": "https://osm2world.org",
-      "image": "https://osm2world.org/img/sharing-default.jpg",
-      "fetched": "2026-10-23",
-      "hash": "93420cf7a3133d07",
-      "width": 640,
-      "height": 336,
-      "license": "MIT"
     },
     "ox72-dungeon-tileset": {
       "source": "https://0x72.itch.io/16x16-dungeon-tileset",
@@ -1252,15 +991,6 @@
       "height": 640,
       "license": "CC0"
     },
-    "pencil2d": {
-      "source": "https://www.pencil2d.org/",
-      "image": "https://www.pencil2d.org/images/pencil_icon.png",
-      "fetched": "2026-10-23",
-      "hash": "8cfdcfd2dce74e28",
-      "width": 256,
-      "height": 256,
-      "license": "GPL-2.0-only"
-    },
     "phosphor-icons": {
       "source": "https://phosphoricons.com/",
       "image": "https://phosphoricons.com/phosphor-opengraph.png?v=2.0.2",
@@ -1268,15 +998,6 @@
       "hash": "48528128150ae01f",
       "width": 640,
       "height": 336,
-      "license": "MIT"
-    },
-    "pixelorama": {
-      "source": "https://orama-interactive.itch.io/pixelorama",
-      "image": "https://img.itch.zone/aW1nLzE3MTIwMjIxLnBuZw==/original/NTuV%2FB.png",
-      "fetched": "2026-10-23",
-      "hash": "32ee3207622b222d",
-      "width": 640,
-      "height": 360,
       "license": "MIT"
     },
     "playpug-simple-vector-ui": {
@@ -1297,15 +1018,6 @@
       "height": 354,
       "license": "CC0"
     },
-    "polyglot-gamedev": {
-      "source": "https://docs.google.com/spreadsheets/d/17f0dQawb-s_Fd7DHgmVvJoEGDMH_yoSd8EYigrb0zmM/",
-      "image": "https://lh7-us.googleusercontent.com/docs/AHkbwyKcVH30Q0wNeHDlaMT3t4DFQ12XERvV3DrUkiexi0rtDRU7sIoATnYJNJH_x90xxPaRrNLuE5AJoTouFdOAGMpVa4TCPmybOZqdvKbcVYCufplNoK4v=w1200-h630-p",
-      "fetched": "2026-10-23",
-      "hash": "34b635fd7ec38cdb",
-      "width": 640,
-      "height": 336,
-      "license": "CC0"
-    },
     "pulselite-ui-sfx": {
       "source": "https://bigshadex.itch.io/pulselite-ui-sfx-free",
       "image": "https://img.itch.zone/aW1nLzMwNTk5MDQ2LnBuZw==/original/LmX7Bp.png",
@@ -1314,15 +1026,6 @@
       "width": 630,
       "height": 500,
       "license": "CC-BY-4.0"
-    },
-    "quanpixel": {
-      "source": "https://diaowinner.itch.io/galmuri-extended",
-      "image": "https://img.itch.zone/aW1nLzExMDQ3NzIwLnBuZw==/original/VgRQ12.png",
-      "fetched": "2026-10-23",
-      "hash": "379e7dce3c8b1bf8",
-      "width": 640,
-      "height": 508,
-      "license": "SIL OFL"
     },
     "quaternius": {
       "source": "https://quaternius.com",
@@ -1585,33 +1288,6 @@
       "height": 254,
       "license": "CC0"
     },
-    "sim-daltonism": {
-      "source": "https://michelf.ca/projects/sim-daltonism/",
-      "image": "https://michelf.ca/img/icon/sim-daltonism-generic.png",
-      "fetched": "2026-10-23",
-      "hash": "99354c289d51e74e",
-      "width": 296,
-      "height": 150,
-      "license": "Apache-2.0"
-    },
-    "snowb-bmf": {
-      "source": "https://snowb.org",
-      "image": "https://snowb.org/summary_large_image.png",
-      "fetched": "2026-10-23",
-      "hash": "4afae44bfe931746",
-      "width": 640,
-      "height": 320,
-      "license": "MIT"
-    },
-    "squoosh": {
-      "source": "https://squoosh.app",
-      "image": "https://squoosh.app/c/icon-large-maskable-c2078ced.png",
-      "fetched": "2026-10-23",
-      "hash": "333f8909fbc77e83",
-      "width": 640,
-      "height": 640,
-      "license": "Apache-2.0"
-    },
     "subspaceaudio-5-chiptunes": {
       "source": "https://opengameart.org/content/5-chiptunes-action",
       "image": "https://opengameart.org/sites/default/files/styles/audio_with_background/public/audio_preview/level3.mp3.png",
@@ -1621,15 +1297,6 @@
       "height": 120,
       "license": "CC0"
     },
-    "svgcode": {
-      "source": "https://svgco.de",
-      "image": "https://svgco.de/screenshots/desktop-dark.png",
-      "fetched": "2026-10-23",
-      "hash": "57ee85f206fc8720",
-      "width": 640,
-      "height": 456,
-      "license": "GPL-2.0-or-later"
-    },
     "sylly-gem-match-3": {
       "source": "https://opengameart.org/content/gem-match-3-set",
       "image": "https://opengameart.org/sites/default/files/Preview_194.png",
@@ -1638,15 +1305,6 @@
       "width": 430,
       "height": 288,
       "license": "CC0"
-    },
-    "synfig": {
-      "source": "https://www.synfig.org/",
-      "image": "http://www.synfig.org/wp-content/uploads/2018/02/logo.png",
-      "fetched": "2026-10-23",
-      "hash": "19b42336a7e92009",
-      "width": 354,
-      "height": 486,
-      "license": "GPL-3.0"
     },
     "tabler-icons": {
       "source": "https://tabler.io/icons",
@@ -1666,15 +1324,6 @@
       "height": 500,
       "license": "CC0"
     },
-    "tenacity": {
-      "source": "https://codeberg.org/tenacityteam/tenacity",
-      "image": "https://codeberg.org/tenacityteam/tenacity/-/summary-card",
-      "fetched": "2026-10-23",
-      "hash": "f4493dd38a300890",
-      "width": 640,
-      "height": 320,
-      "license": "GPL-2.0-or-later"
-    },
     "texturecan": {
       "source": "https://www.texturecan.com/",
       "image": "https://www.texturecan.com/img/textures_1200.jpg",
@@ -1692,24 +1341,6 @@
       "width": 640,
       "height": 640,
       "license": "CC0"
-    },
-    "tiled": {
-      "source": "https://www.mapeditor.org/",
-      "image": "https://www.mapeditor.org/img/tiled-logo-filled.png",
-      "fetched": "2026-10-23",
-      "hash": "f2b7bbe49c0a6d3f",
-      "width": 600,
-      "height": 600,
-      "license": "GPL-2.0-or-later"
-    },
-    "tilemancer": {
-      "source": "https://led.itch.io/tilemancer",
-      "image": "https://img.itch.zone/aW1hZ2UvNTgyNDcvMjYyNDUwLnBuZw==/original/6Rmf7A.png",
-      "fetched": "2026-10-23",
-      "hash": "af9fa9c819f2dc8e",
-      "width": 315,
-      "height": 250,
-      "license": "GPL-3.0-or-later"
     },
     "unity-labs-vfx-flipbooks": {
       "source": "https://unity.com/blog/engine-platform/free-vfx-image-sequences-flipbooks",

@@ -30,7 +30,8 @@ export function tileHtml(entry, label = entry.category) {
 export function thumbHtml(entry, root = "", label) {
   const t = entry.thumb;
   if (t && t.path) {
-    return `<img class="entry-thumb-img" src="${esc(root)}${esc(t.path)}" width="${Number(t.width) || 640}" height="${Number(t.height) || 400}" alt="" loading="lazy" decoding="async">`;
+    const credit = t.credit ? ` title="${esc(t.credit)}"` : "";
+    return `<img class="entry-thumb-img" src="${esc(root)}${esc(t.path)}" width="${Number(t.width) || 640}" height="${Number(t.height) || 400}" alt=""${credit} loading="lazy" decoding="async">`;
   }
   return tileHtml(entry, label);
 }
