@@ -117,7 +117,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
       : "";
   // The publisher's preview, when the licence gate allowed one, with its credit.
   const strip = entry.thumb
-    ? `<figure class="entry-strip" style="--thumb-max:${2 * (Number(entry.thumb.width) || 640)}px">${thumbHtml(entry, "../../", undefined, { eager: true })}<figcaption class="entry-credit">${esc(previewCredit(entry))}</figcaption></figure>`
+    ? `<figure class="entry-strip" style="--thumb-max:${2 * (Number(entry.thumb.width) || 640)}px">${thumbHtml(entry, "../../", undefined, { eager: true })}<figcaption class="entry-credit">${esc(previewCredit(entry))}. <a href="../../guide/for-publishers/#preview-images">About previews</a></figcaption></figure>`
     : "";
   const usedIn = stacks.length
     ? `<p class="used-in">Used in: ${stacks.map((s) => `<a href="../../stack/${esc(s.id)}/">${esc(s.title)}</a>`).join(", ")}</p>`

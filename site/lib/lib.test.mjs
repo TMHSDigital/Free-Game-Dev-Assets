@@ -1053,7 +1053,7 @@ eq("filmstrip: empty when nothing to show", filmstripHtml([], { root: "" }), "")
   has("entry page: strip image", html, '<img class="entry-thumb-img" src="../../thumbs/x.webp"');
   has("entry page: strip capped at twice its width", html, '<figure class="entry-strip" style="--thumb-max:');
   has("entry page: strip image loads first", html, 'loading="eager" fetchpriority="high"');
-  has("entry page: credit line", html, '<figcaption class="entry-credit">Preview image from Kenney, shown under CC0</figcaption>');
+  has("entry page: credit line", html, '<figcaption class="entry-credit">Preview image from Kenney, shown under CC0. <a href="../../guide/for-publishers/#preview-images">About previews</a></figcaption>');
   has("entry page: one primary action", html, '<p class="page-actions"><a class="btn" href="https://x.itch.io/p"');
   has("entry page: secondary links row", html, '<p class="page-links">');
   eq("entry page: ghost buttons gone from actions", (html.match(/class="btn-ghost"/g) || []).length, 0);

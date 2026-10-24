@@ -255,6 +255,7 @@ Read these before you mix packs into a commercial build.
 | [`docs/high-risk.md`](docs/high-risk.md) | Sources to avoid entirely |
 | [`docs/ai-assets.md`](docs/ai-assets.md) | AI-generated assets |
 | [`docs/fivem.md`](docs/fivem.md) | GTA-format and FiveM assets |
+| [`docs/for-publishers.md`](docs/for-publishers.md) | What the catalog records about a source, and how its publisher corrects it or opts out of a preview |
 | [`docs/data.md`](docs/data.md) | The JSON, CSV and feed exports, their fields, and how to cite the catalog |
 | [`docs/trust-score.md`](docs/trust-score.md) | Review rubric used when vetting a source (not shown on entries) |
 
@@ -344,7 +345,9 @@ New sources, licence corrections, dead links and clearer notes are all welcome.
 3. Add a row for it to the category's `README.md`, then run `npm run counts` to update every count.
 4. Run `npm test && npm run validate` (quick), then open a pull request. CI also runs the full build.
 
-[`CONTRIBUTING.md`](CONTRIBUTING.md) has the full checklist and how to verify a licence.
+[`CONTRIBUTING.md`](CONTRIBUTING.md) has the full checklist and how to verify a licence. If you
+publish a source listed here, [`docs/for-publishers.md`](docs/for-publishers.md) says what is
+recorded about it and how to correct it or remove its preview.
 Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 <details>

@@ -24,6 +24,7 @@ body:
         - Commercial or attribution flag is wrong
         - Should be deprecated
         - Other metadata
+        - I publish this source (correct a fact or remove its preview image)
     validations:
       required: true
   - type: input
