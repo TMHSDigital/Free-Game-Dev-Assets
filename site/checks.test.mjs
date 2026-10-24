@@ -25,6 +25,7 @@ import {
   evidenceDates,
   markdownAnchors,
   checkLicenseVocabulary,
+  checkLicenceGuide,
   checkLineEndings,
   checkMaintenance,
   checkNonCommercialEvidence,
@@ -807,10 +808,15 @@ accepts("V31 ignores needs-review", checkNonCommercialEvidence("ok.md", { status
 accepts("V31 accepts a quoted restriction", checkNonCommercialEvidence("ok.md", { status: "active", commercial: false }, "## Evidence\n\n- Live About (2026-01-01): \"as long as you don't use these commercially\"\n"));
 rejects("V31 rejects an unquoted restriction", checkNonCommercialEvidence("bad.md", { status: "active", commercial: false }, "## Evidence\n\n- Live page (2026-01-01): \"free download\"\n"), "bad.md is active with commercial: false but no Evidence line mentions the commercial restriction");
 
+/* V32: the licence guide covers the vocabulary ---------------------------- */
+accepts("V32 accepts a guide naming every value", checkLicenceGuide({ licenses: { MIT: {}, "CC-BY": {} } }, "| **MIT** | yes |\n| **CC-BY** | yes |"));
+rejects("V32 rejects a missing value", checkLicenceGuide({ licenses: { MIT: {}, ISC: {} } }, "| **MIT** | yes |"), 'does not mention the licence value "ISC"');
+rejects("V32 a longer value does not count for its prefix", checkLicenceGuide({ licenses: { "CC-BY": {} } }, "| **CC-BY-4.0** | yes |"), 'does not mention the licence value "CC-BY"');
+
 /* ----------------------------------------------------------------------- */
 if (failures.length) {
   console.error(`checks.test failed (${failures.length}):`);
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 29 checks`);
+console.log(`checks.test ok: ${passed} assertions across 30 checks`);

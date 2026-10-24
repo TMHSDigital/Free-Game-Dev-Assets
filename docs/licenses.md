@@ -14,6 +14,7 @@ Quick reference for assets you might list or use. **Always re-check the source p
 | **CC-BY-SA** | Yes, **except Unreal** | Required | Share-alike applies to **derivatives of the asset**, not your whole game as code. Prefer shipping SA assets in extractable bundles (`.pck`, loose folders) rather than encrypted into the binary. The Unreal Engine EULA names CC-BY-SA (and GPL/LGPL) as licences you may not combine with the engine; see [unreal.md](unreal.md). |
 | **CC-BY-NC** | No | Required | Fine for prototypes / jam games; **reject for commercial catalogs** unless clearly marked non-commercial. |
 | **CC-BY-ND** | Yes | Required | No derivatives — **reject for games**. Interactive sync / remix is generally treated as a derivative; ND music and art are unsafe. |
+| **CC-BY** (no version) | Yes | Required | The source says CC-BY without a version. Credit as it asks; read the source before relying on terms that differ between 3.0 and 4.0. |
 | **ODbL** (OpenStreetMap) ([geodata.md](geodata.md)) | Yes* | Required | Game binary is usually a “Produced Work” (code not copylefted). If you redistribute a modified geodatabase, ODbL share obligations can trigger. Credit OSM. |
 
 ## Fonts
@@ -38,6 +39,38 @@ Full guidance, including what you still owe when `attribution_required` is false
 | **MB-Lab exports** | AGPL risk | Treat generated meshes as **unsafe** for closed-source games — see [`high-risk.md`](high-risk.md). |
 | **FMOD Studio (indie)** | Custom | Often free under revenue/funding caps — verify current thresholds. |
 | **Wwise free / evaluation** | Custom | Often asset-count or non-commercial caps — verify before shipping. |
+
+## Permissive software licences
+
+Most `tools/` entries and many libraries carry one of these. They all allow commercial use and closed-source games. What they ask for is a copy of the notice, not a credit on screen. The shortlist on the site collects these notices into one `CREDITS` file you can ship.
+
+| License | Commercial use | What you ship | Notes |
+| --- | --- | --- | --- |
+| **MIT** | Yes | The copyright line and licence text, in a notices file | Applies when you redistribute the code or a build containing it. Using an MIT editor to make assets owes nothing. |
+| **ISC** | Yes | Same as MIT | Functionally the MIT licence in fewer words. |
+| **BSD-2-Clause** | Yes | Copyright line and licence text | The bare value **BSD** is used where a project says "BSD" without naming the clause count; read its LICENSE before shipping. |
+| **BSD-3-Clause** | Yes | Copyright line and licence text | Adds a no-endorsement clause: do not use the authors' names to promote your game. **BSD-3-Clause-Clear** is the same, but states that no patent rights are granted. |
+| **Apache-2.0** | Yes | Licence text, plus the project's `NOTICE` file if it has one | Includes a patent grant, which ends if you sue the authors over patents. Modified files must say they were changed. |
+| **MPL-2.0** | Yes | Licence text; source of the MPL files you changed | File-level copyleft: changes to MPL files stay MPL and must be offered as source; your own files and the rest of the game do not. |
+| **CPL-1.0** | Yes | Licence text; source of the CPL code you changed | An older weak-copyleft licence with a patent clause, close to MPL in effect. |
+| **CDLA-Permissive-2.0** | Yes | The licence text or a link to it | A data licence. Results of using the data, such as a trained model or a rendered scene, carry no obligation. |
+| **Unlicense** | Yes | Nothing | A public-domain dedication with a fallback licence, treated like CC0. |
+| **public-domain** | Yes | Nothing | Used where the source states public domain without a CC0 deed, such as US government works. Check the country: a work public in the US may not be elsewhere. |
+
+## GPL family
+
+| License | Commercial use | Notes |
+| --- | --- | --- |
+| **GPL-2.0-only**, **GPL-2.0-or-later**, **GPL-3.0-only**, **GPL-3.0-or-later** | Yes | Strong copyleft on the program. Linking GPL code into your game makes the game GPL. Using a GPL editor does not, as the section below explains. The bare **GPL-2.0** and **GPL-3.0** values mean the project did not say "only" or "or later". |
+| **LGPL-3.0** | Yes | You may link the library from closed code if users can replace it, which in practice means dynamic linking. Changes to the library itself stay LGPL. The Unreal Engine EULA forbids combining LGPL code with the engine; see [unreal.md](unreal.md). |
+
+## How to read a `custom`, `varies` or `unknown` entry
+
+**custom** means the source wrote its own terms. The entry's `## Evidence` section quotes the sentences that matter, with the date they were read, and `commercial` and `attribution_required` are the catalog's reading of that specific text. Read the quote, and the Notes for limits such as no redistribution, one project per purchase or engine locks, before you rely on the summary fields.
+
+**varies** means the source hosts files under different licences, such as an aggregator or a community upload site. The entry describes the site, not any one file. Check each file's own licence before you use it, and expect `commercial: varies`.
+
+**unknown** means the licence could not be established from the live source. Such entries are never `active`. Treat them as unusable until a dated quote settles the question.
 
 ## Copyleft tools vs generated output
 

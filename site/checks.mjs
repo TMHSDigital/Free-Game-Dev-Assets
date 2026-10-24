@@ -851,3 +851,18 @@ export function checkNonCommercialEvidence(rel, meta, body) {
   if (/commercial/i.test(ev)) return [];
   return [`${rel} is active with commercial: false but no Evidence line mentions the commercial restriction; quote the source or use needs-review`];
 }
+
+/**
+ * V32: docs/licenses.md explains every licence value the vocabulary allows,
+ * so a value added to site/license-vocabulary.json cannot ship without a
+ * row or paragraph telling readers what it means.
+ */
+export function checkLicenceGuide(vocab, guideText) {
+  const text = String(guideText);
+  const keys = Object.keys((vocab && vocab.licenses) || {});
+  const missing = keys.filter((k) => {
+    const esc = k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return !new RegExp(`(?<![\\w-])${esc}(?![\\w-])`).test(text);
+  });
+  return missing.map((k) => `docs/licenses.md does not mention the licence value "${k}" (add a row or a sentence for it)`);
+}

@@ -22,6 +22,7 @@ import {
   checkFieldTypes,
   checkFormatVocabulary,
   checkLicenseVocabulary,
+  checkLicenceGuide,
   checkLineEndings,
   checkMaintenance,
   checkNonCommercialEvidence,
@@ -261,6 +262,7 @@ function main() {
     JSON.parse(fs.readFileSync(SPDX_ALLOWED_PATH, "utf8"))
   );
   const vocab = JSON.parse(fs.readFileSync(VOCAB_PATH, "utf8"));
+  errors.push(...checkLicenceGuide(vocab, fs.readFileSync(path.join(ROOT, "docs", "licenses.md"), "utf8")));
   const aliases = JSON.parse(fs.readFileSync(ALIASES_PATH, "utf8"));
   const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
   const categories = catalogCategories();
