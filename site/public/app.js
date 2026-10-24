@@ -598,7 +598,7 @@ import { installViewToggles } from "./views.js";
     $("#guide-list").innerHTML = (data.guides || [])
       .map(
         (g) =>
-          `<li><a href="${escapeHtml(`${repo}/blob/main/${g.path}`)}" rel="noopener noreferrer">${escapeHtml(g.title)}<span>${escapeHtml(g.path)}</span></a></li>`
+          `<li><a href="guide/${escapeHtml(g.id)}/">${escapeHtml(g.title)}<span>${escapeHtml(g.path)}</span></a></li>`
       )
       .join("");
   }

@@ -16,6 +16,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, PAGE_MODULES, sponsorButtonHtml } from "./lib/shared.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
+import { guidePageHtml } from "./lib/guide-page.mjs";
+import { renderGuide } from "./lib/guide-render.mjs";
 import { categoryPageHtml } from "./lib/category-page.mjs";
 import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
 import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
@@ -203,7 +205,7 @@ function guideRowsHtml(guides, repo) {
   return (guides || [])
     .map(
       (g) =>
-        `<li><a href="${esc(`${repo}/blob/main/${g.path}`)}" rel="noopener noreferrer">${esc(g.title)}<span>${esc(g.path)}</span></a></li>`
+        `<li><a href="guide/${esc(g.id)}/">${esc(g.title)}<span>${esc(g.path)}</span></a></li>`
     )
     .join("\n");
 }
@@ -484,6 +486,44 @@ function writeCategoryPages({ entries, config, stats, stamp, hasCard, now }) {
   return { written };
 }
 
+/**
+ * docs/ guides as guide/<id>/ pages. Links to entries go to their pages,
+ * links to another guide go to its page, anything else to GitHub.
+ */
+function writeGuidePages({ entries, config, stats, stamp, hasCard }) {
+  const written = [];
+  const errors = [];
+  const resolverFor = linkResolvers(entries, config, "../../entry/");
+  const guideByPath = new Map((config.guides || []).map((g) => [g.path, g.id]));
+  for (const guide of config.guides || []) {
+    const inner = resolverFor({ path: guide.path });
+    const resolveLink = (raw) => {
+      const m = String(raw).match(/^([^?#]*)((?:\?[^#]*)?(?:#.*)?)$/);
+      if (m && m[1] && !/^[a-z][a-z0-9+.-]*:/i.test(raw)) {
+        let repoPath = null;
+        try {
+          repoPath = path.posix.normalize(path.posix.join(path.posix.dirname(guide.path), decodeURI(m[1])));
+        } catch {
+          // A malformed link falls through to the entry resolver, which reports it.
+        }
+        if (repoPath && guideByPath.has(repoPath)) {
+          const id = guideByPath.get(repoPath);
+          return { href: id === guide.id ? m[2] || "#content" : `../${id}/${m[2]}`, external: false };
+        }
+      }
+      return inner(raw);
+    };
+    try {
+      const rendered = renderGuide(fs.readFileSync(path.join(ROOT, guide.path), "utf8"), { file: guide.path, resolveLink });
+      writeOut(path.join("guide", guide.id, "index.html"), guidePageHtml({ guide, rendered, site: config.site, stamp, total: stats.total, hasCard }));
+      written.push(`guide/${guide.id}/index.html`);
+    } catch (err) {
+      errors.push(err.message);
+    }
+  }
+  return { written, errors };
+}
+
 /** Runs the page checks over dist-relative files. */
 function checkPages(files) {
   // Link targets resolve against what this build produced, not what is on
@@ -637,7 +677,7 @@ function main() {
   const categoriesInSitemap = Object.keys(config.categories)
     .filter((cat) => visible.some((e) => e.category === cat))
     .map((id) => ({ id, lastmod: stamp }));
-  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates(), categories: categoriesInSitemap }));
+  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates(), categories: categoriesInSitemap, guides: config.guides }));
   writeOut("robots.txt", robotsTxt(config.site));
   writeOut("404.html", notFoundHtml(config.site));
   writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard }));
@@ -645,11 +685,13 @@ function main() {
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });
   const categoryPages = writeCategoryPages({ entries: visible, config, stats, stamp, hasCard, now });
+  const guidePages = writeGuidePages({ entries, config, stats, stamp, hasCard });
   const pageErrors = [
     ...stackErrors,
     ...pages.errors,
     ...stackPages.errors,
-    ...checkPages(["index.html", "freshness/index.html", ...pages.written, ...stackPages.written, ...categoryPages.written]),
+    ...guidePages.errors,
+    ...checkPages(["index.html", "freshness/index.html", ...pages.written, ...stackPages.written, ...categoryPages.written, ...guidePages.written]),
   ];
   if (pageErrors.length) {
     console.error(`Page build failed (${pageErrors.length}):`);
@@ -660,7 +702,7 @@ function main() {
   // After the page gate: every body link has resolved by now, and the llms
   // files read links with the same LINK_RE, so they cannot hit a link error
   // of their own.
-  writeOut("llms.txt", llmsTxt({ entries, site: config.site, categories: config.categories, stacks }));
+  writeOut("llms.txt", llmsTxt({ entries, site: config.site, categories: config.categories, stacks, guides: config.guides }));
   writeOut(
     "llms-full.txt",
     llmsFullTxt({
@@ -681,7 +723,7 @@ function main() {
     `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok, ${stats.commercialVaries} per-file)`
   );
   console.log(
-    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
+    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, ${guidePages.written.length} guide pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
   );
   console.log(`${writes} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }

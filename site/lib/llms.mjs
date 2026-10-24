@@ -50,8 +50,13 @@ function groups(entries, categories) {
     .filter((g) => g.items.length);
 }
 
-export function llmsTxt({ entries, site, categories, stacks = [] }) {
+export function llmsTxt({ entries, site, categories, stacks = [], guides = [] }) {
   const out = [header(site)];
+  if (guides.length) {
+    out.push(`\n## Guides\n`);
+    const base = String(site.siteUrl).replace(/\/+$/, "");
+    for (const g of guides) out.push(`- [${g.title}](${base}/guide/${g.id}/)`);
+  }
   if (stacks.length) {
     out.push(`\n## Starter stacks\n`);
     for (const s of stacks) out.push(`- [${s.meta.title}](${stackPageUrl(site, s.meta.id)}): ${s.meta.task}`);

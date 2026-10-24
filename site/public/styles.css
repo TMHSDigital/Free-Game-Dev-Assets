@@ -2143,6 +2143,54 @@ body.card-focus .to-top {
   }
 }
 
+/* Guide pages: tables, code and quotes that entry bodies never carry. */
+.guide-body .table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.guide-table th,
+.guide-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.guide-table th {
+  background: var(--surface);
+  font-weight: 600;
+}
+
+.guide-body blockquote {
+  margin: 1rem 0;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 3px solid var(--line);
+  color: var(--muted);
+}
+
+.guide-code {
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.facts-guide {
+  margin-left: 0.4rem;
+  font-size: 0.85rem;
+}
+
 .entry-credit {
   padding: 0.4rem 0.75rem;
   border-top: 1px solid var(--line);

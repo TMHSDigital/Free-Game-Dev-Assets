@@ -1135,6 +1135,25 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("json-ld: category lists its entries", cat.mainEntity.itemListElement[0].url, "https://s.test/site/entry/a/");
 }
 
+/* guide renderer ---------------------------------------------------------- */
+{
+  const { renderGuide, headingSlug } = await import("./guide-render.mjs");
+  const pass = (h) => ({ href: h, external: false });
+  const g = renderGuide("# Title\n\nIntro **bold**.\n\n## CC-BY & friends\n\n| A | B |\n| --- | --- |\n| `x|y` | two |\n\n> quoted\n\n1. one\n2. two\n\n```sh\necho **hi**\n```\n", { file: "g.md", resolveLink: pass });
+  eq("guide: title comes from the h1", g.title, "Title");
+  eq("guide: first paragraph", g.firstParagraph, "Intro **bold**.");
+  has("guide: heading id matches GitHub", g.html, '<h2 id="cc-by--friends">');
+  eq("guide: slug helper", headingSlug("Licence of contributions"), "licence-of-contributions");
+  has("guide: table header", g.html, '<th scope="col">A</th>');
+  has("guide: pipe inside code stays in its cell", g.html, "<td><code>x|y</code></td>");
+  has("guide: blockquote", g.html, "<blockquote><p>quoted</p></blockquote>");
+  has("guide: ordered list", g.html, "<ol><li>one</li><li>two</li></ol>");
+  has("guide: code fence escaped", g.html, '<pre class="guide-code" data-lang="sh"><code>echo **hi**</code></pre>');
+  let threw = "";
+  try { renderGuide("# T\n\n![x](a.png)\n", { file: "g.md", resolveLink: pass }); } catch (e) { threw = e.message; }
+  has("guide: images refused", threw, "g.md:3: an image is not supported");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

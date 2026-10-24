@@ -12,7 +12,7 @@ import { esc } from "./shared.mjs";
  * catalog date (`verified`, `walked`) and the file's last commit date from
  * `modified` (repo path => YYYY-MM-DD), falling back to the build date.
  */
-export function sitemapXml({ site, entries, stacks = [], stamp, modified = new Map(), categories = [] }) {
+export function sitemapXml({ site, entries, stacks = [], stamp, modified = new Map(), categories = [], guides = [] }) {
   const base = String(site.siteUrl).replace(/\/+$/, "");
   const latest = (...dates) => dates.filter(Boolean).sort().pop() || stamp;
   const url = (loc, lastmod) => `  <url><loc>${esc(loc)}</loc><lastmod>${esc(lastmod)}</lastmod></url>`;
@@ -20,6 +20,7 @@ export function sitemapXml({ site, entries, stacks = [], stamp, modified = new M
     url(`${base}/`, stamp),
     url(`${base}/freshness/`, stamp),
     ...categories.map((c) => url(`${base}/category/${c.id}/`, c.lastmod || stamp)),
+    ...guides.map((g) => url(`${base}/guide/${g.id}/`, modified.get(g.path) || stamp)),
     ...stacks.map((s) => url(`${base}/stack/${s.meta.id}/`, latest(s.meta.walked, modified.get(s.rel)))),
     ...entries.map((e) => url(`${base}/entry/${e.id}/`, latest(e.verified, modified.get(e.path)))),
   ];

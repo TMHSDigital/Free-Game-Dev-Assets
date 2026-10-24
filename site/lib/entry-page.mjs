@@ -83,7 +83,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
   const rows = [
     // Usable in one engine only: the first thing a reader must know.
     entry.engine_lock ? ["Engine lock", esc(ENGINE_LOCK_NOTES[entry.engine_lock] || entry.engine_lock)] : null,
-    ["Licence", esc(licence)],
+    ["Licence", `${esc(licence)} <a class="facts-guide" href="../../guide/licenses/">what it means</a>`],
     ["Commercial use", esc(commercialLabel(entry.commercial))],
     ["Credit", esc(c.value)],
     ["Status", `${esc(entry.status)}: ${esc(STATUS_NOTES[entry.status] || "")}`],
@@ -177,7 +177,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     <footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
       <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>
-      <p><a href="../../freshness/">Licence freshness</a> · <a href="../../data.json">data.json</a> · <a href="../../catalog.csv">CSV</a> · <a href="../../feed.xml">feed</a> · <a href="https://github.com/TMHSDigital/Free-Game-Dev-Assets/blob/main/docs/data.md">Use the data</a></p>
+      <p><a href="../../freshness/">Licence freshness</a> · <a href="../../data.json">data.json</a> · <a href="../../catalog.csv">CSV</a> · <a href="../../feed.xml">feed</a> · <a href="../../guide/data/">Use the data</a></p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
     </footer>
