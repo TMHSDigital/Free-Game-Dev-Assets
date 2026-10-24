@@ -743,6 +743,7 @@ import {
   searchFields,
   similarity,
   stateQuery,
+  MAX_QUERY,
 } from "./search.mjs";
 
 const kit = { id: "ui-kit", name: "UI Kit", publisher: "Kenney", tags: ["button", "first-person"], license: "CC0", category: "2d", camera_perspective: "isometric_3_4", formats: ["PNG"], subcategories: ["ui"], summary: "Panels for the earth biome." };
@@ -1070,6 +1071,8 @@ has("cards: title level option", entryCardHtml(cardBase, { root: "", repo: "http
   has("stack page: card titles are h3 under the section h2", html, '<h3><a class="entry-link"');
   eq("stack page: no h4", html.includes("<h4"), false);
 }
+
+eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: "" }, {}).q.length, MAX_QUERY);
 
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {

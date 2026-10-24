@@ -1050,10 +1050,31 @@ input:focus-visible,
   }
 }
 
-/* The filter disclosure exists for small screens only. app.js unhides it
-   and folds the panel; everything but the result count (the live region)
-   hides while folded. */
+/* The filter disclosure exists for small screens, and for the docked bar on
+   wider ones (app.js adds .is-docked once the bar sticks to the top). app.js
+   unhides it and folds the panel; everything but the result count (the live
+   region) hides while folded. */
 .filters-toggle {
+  display: none;
+}
+
+.controls.is-docked .filters-toggle:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 36px;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.controls.is-docked.is-collapsed #category-filters,
+.controls.is-docked.is-collapsed #meta-filters > :not(.result-count) {
   display: none;
 }
 

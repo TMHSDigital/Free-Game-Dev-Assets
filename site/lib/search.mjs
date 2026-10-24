@@ -107,6 +107,9 @@ const SWITCHES = [
  * page has no control for; each one falls back to its default, and the page
  * then rewrites the URL without it.
  */
+/** Longest search query kept from a URL or the search box. */
+export const MAX_QUERY = 200;
+
 export function readState(search, defaults, allowed) {
   const p = new URLSearchParams(search);
   const state = { ...defaults };
@@ -114,7 +117,8 @@ export function readState(search, defaults, allowed) {
     const v = p.get(key);
     if (v !== null && (allowed[field] || []).includes(v)) state[field] = v;
   }
-  if (p.has("q")) state.q = p.get("q");
+  // A shared link cannot paste a novel into the search box and the chips.
+  if (p.has("q")) state.q = p.get("q").slice(0, MAX_QUERY);
   for (const [key, field] of SWITCHES) {
     const v = p.get(key);
     if (v === "1" || v === "0") state[field] = v === "1";

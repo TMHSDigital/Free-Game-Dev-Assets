@@ -91,9 +91,13 @@ import { installViewToggles } from "./views.js";
    * keystrokes and checkbox toggles replace, so Back is not a hundred steps
    * of typing. Both in try/catch: Safari throws past 100 calls in 30 s.
    */
+  // The query string writeUrl last put in the address bar.
+  let lastSearch = location.search;
+
   function writeUrl({ push = false } = {}) {
     const qs = stateQuery(state, DEFAULTS);
     const next = `${location.pathname}${qs ? `?${qs}` : ""}${location.hash}`;
+    lastSearch = qs ? `?${qs}` : "";
     try {
       const same = next === `${location.pathname}${location.search}${location.hash}`;
       if (push && !same) history.pushState(null, "", next);
@@ -238,7 +242,8 @@ import { installViewToggles } from "./views.js";
       e.preventDefault();
       chips[to].focus();
       state.category = chips[to].getAttribute("data-cat");
-      apply({ push: true });
+      // Moving through the group is browsing, not a step to go Back to.
+      apply();
     });
   }
 
@@ -691,6 +696,11 @@ import { installViewToggles } from "./views.js";
 
     // Back and Forward step through the pushed views.
     window.addEventListener("popstate", () => {
+      // A hash-only move (#stacks, #catalog) also fires popstate; the
+      // filters did not change, and re-reading them would wipe typing
+      // that the debounce has not written yet.
+      if (location.search === lastSearch) return;
+      lastSearch = location.search;
       readUrl();
       syncControls();
       apply();
@@ -778,6 +788,36 @@ import { installViewToggles } from "./views.js";
       const open = controls.classList.toggle("is-collapsed") === false;
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
+
+    // On wider screens the bar stays sticky, and unfolded it covered about
+    // a quarter of a laptop screen. Once it docks at the top it folds to the
+    // search row and the Filters button, as on a phone; scrolling back up
+    // to it unfolds it again.
+    const wide = matchMedia("(min-width: 641px) and (min-height: 601px)");
+    const sentinel = document.createElement("div");
+    sentinel.setAttribute("aria-hidden", "true");
+    controls.before(sentinel);
+    const setDocked = (docked) => {
+      if (!wide.matches) {
+        controls.classList.remove("is-docked");
+        return;
+      }
+      if (docked === controls.classList.contains("is-docked")) return;
+      controls.classList.toggle("is-docked", docked);
+      controls.classList.toggle("is-collapsed", docked);
+      toggle.setAttribute("aria-expanded", docked ? "false" : "true");
+    };
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => setDocked(!e.isIntersecting && e.boundingClientRect.top < 0)).observe(sentinel);
+    }
+    wide.addEventListener?.("change", () => {
+      if (!wide.matches) controls.classList.remove("is-docked");
+      else controls.classList.remove("is-collapsed");
+    });
+    if (wide.matches) {
+      controls.classList.remove("is-collapsed");
+      toggle.setAttribute("aria-expanded", "true");
+    }
 
     const top = $("#to-top");
     // Returns to the catalog's search and filters, which on small screens have
