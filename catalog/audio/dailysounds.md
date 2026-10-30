@@ -1,7 +1,7 @@
 ---
 id: dailysounds
 name: DailySounds
-url: https://dailysounds.org/?ref=fgda
+url: https://dailysounds.org/
 category: audio
 subcategories: [sfx, foley, ambience]
 license: custom
