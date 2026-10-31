@@ -111,7 +111,7 @@ two carry obligations the rest do not.
 | [iconmonstr](iconmonstr.md) | iconmonstr | custom | yes | active |
 | [reiners-tilesets](reiners-tilesets.md) | Reiner's Tilesets | custom | yes | active |
 | [bitnuker-workshop-sampler](bitnuker-workshop-sampler.md) | BitNuker Workshop Sampler | custom | yes | active |
-| [bitnuker-fantasy-environments-sampler](bitnuker-fantasy-environments-sampler.md) | BitNuker Fantasy Environments Sampler | custom | yes | needs-review |
+| [bitnuker-fantasy-environments-sampler](bitnuker-fantasy-environments-sampler.md) | BitNuker Fantasy Environments Sampler | custom | yes | active |
 | [spritelib](spritelib.md) | SpriteLib | CPL-1.0 | yes | active |
 
 † Commercial OK with attribution + share-alike / GPL obligations on asset derivatives — see [`docs/high-risk.md`](../../docs/high-risk.md).  

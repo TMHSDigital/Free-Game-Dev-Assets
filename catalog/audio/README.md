@@ -62,6 +62,7 @@ you sell or redistribute the IR files as a standalone product.
 | [pacdv](pacdv.md) | PacDV Free Sound Effects | custom | unknown | needs-review |
 | [soundbible](soundbible.md) | SoundBible | varies | filter | needs-review |
 | [dailysounds](dailysounds.md) | DailySounds | custom | yes | needs-review |
+| [soundza](soundza.md) | Soundza | custom | yes | needs-review |
 
 † Zapsplat's basic (free) tier requires attribution; Premium does not.
 

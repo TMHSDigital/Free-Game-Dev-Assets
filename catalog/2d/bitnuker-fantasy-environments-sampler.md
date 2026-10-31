@@ -12,7 +12,7 @@ formats: [PNG]
 tags: [ai-generated, fantasy, background, skies]
 added: 2026-10-23
 verified: 2026-10-23
-status: needs-review
+status: active
 ---
 
 # BitNuker Fantasy Environments Sampler
