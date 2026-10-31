@@ -63,6 +63,7 @@ you sell or redistribute the IR files as a standalone product.
 | [soundbible](soundbible.md) | SoundBible | varies | filter | needs-review |
 | [dailysounds](dailysounds.md) | DailySounds | custom | yes | needs-review |
 | [soundza](soundza.md) | Soundza | custom | yes | needs-review |
+| [sfxmint](sfxmint.md) | SFXMint | CC0 | yes | needs-review |
 
 † Zapsplat's basic (free) tier requires attribution; Premium does not.
 
