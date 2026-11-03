@@ -634,6 +634,11 @@ function main() {
   writeOut("catalog.csv", catalogCsv(entries, config.site.siteUrl));
   writeOut("feed.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "added" }));
   writeOut("reverified.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "verified" }));
+  // New sources per category, linked from each category page.
+  for (const [id, meta] of Object.entries(config.categories)) {
+    if (!entries.some((e) => e.category === id)) continue;
+    writeOut(path.join("category", id, "feed.xml"), atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "added", category: { id, label: meta.label || id } }));
+  }
 
   // Prerender. The served HTML must be complete without JavaScript: this is a
   // catalog whose whole value is that its entries can be found.

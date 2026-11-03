@@ -691,6 +691,15 @@ eq("new-sources feed is by added, newest first", newFeed.indexOf("entry/c/") < n
 has("new-sources feed is the default feed.xml", newFeed, '<link rel="self" href="https://s.test/site/feed.xml" />');
 has("new-sources feed uses the added date", newFeed, "<updated>2026-09-20T00:00:00Z</updated>");
 has("new-sources feed title", newFeed, "<title>T: new sources</title>");
+{
+  const catFeed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z", category: { id: sample[0].category, label: "Cat & Co" } });
+  const others = sample.filter((e) => e.category !== sample[0].category && e.status !== "deprecated");
+  has("category feed names itself", catFeed, `<link rel="self" href="https://s.test/site/category/${sample[0].category}/feed.xml" />`);
+  has("category feed links its page", catFeed, `<link href="https://s.test/site/category/${sample[0].category}/" />`);
+  has("category feed title escapes the label", catFeed, "<title>T: new sources in Cat &amp; Co</title>");
+  has("category feed keeps its own entries", catFeed, `entry/${sample[0].id}/`);
+  for (const e of others) lacks(`category feed leaves out ${e.id}`, catFeed, `entry/${e.id}/`);
+}
 
 /* review fixes, 2026-10 (#59-#66) ------------------------------------------ */
 import { csvField } from "./exports.mjs";

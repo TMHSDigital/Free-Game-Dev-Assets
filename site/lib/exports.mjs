@@ -114,12 +114,17 @@ export const FEEDS = {
  * feed.xml) or "verified" (licence re-reads, reverified.xml). Two feeds, so
  * a re-verification sweep of old entries cannot bury the new ones.
  */
-export function atomFeed({ entries, site, generatedAt, limit = 40, kind = "added" }) {
+export function atomFeed({ entries, site, generatedAt, limit = 40, kind = "added", category = null }) {
   const spec = FEEDS[kind];
   if (!spec) throw new Error(`atomFeed: unknown kind "${kind}"`);
   const base = site.siteUrl.replace(/\/+$/, "");
+  // A category feed (category/<id>/feed.xml): new sources in that category only.
+  const file = category ? `category/${category.id}/feed.xml` : spec.file;
+  const home = category ? `${base}/category/${category.id}/` : `${base}/`;
+  const feedTitle = category ? `${spec.title} in ${category.label}` : spec.title;
+  const feedId = category ? `${base}/${file}` : `${base}/${kind === "added" ? "" : spec.file}`;
   const recent = entries
-    .filter((e) => e.status !== "deprecated" && e[kind])
+    .filter((e) => (!category || e.category === category.id) && e.status !== "deprecated" && e[kind])
     .sort((a, b) => String(b[kind]).localeCompare(String(a[kind])) || a.name.localeCompare(b.name))
     .slice(0, limit);
   const items = recent.map((e) => {
@@ -137,13 +142,13 @@ export function atomFeed({ entries, site, generatedAt, limit = 40, kind = "added
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<feed xmlns="http://www.w3.org/2005/Atom">',
-    `  <id>${esc(base)}/${kind === "added" ? "" : spec.file}</id>`,
-    `  <title>${esc(site.title)}: ${spec.title}</title>`,
+    `  <id>${esc(feedId)}</id>`,
+    `  <title>${esc(site.title)}: ${esc(feedTitle)}</title>`,
     `  <subtitle>${esc(`${site.tagline} ${spec.what[0].toUpperCase()}${spec.what.slice(1)}.`)}</subtitle>`,
     // RFC 4287 4.1.1: a feed-level author covers every entry.
     `  <author><name>${esc(site.title)}</name><uri>${esc(base)}/</uri></author>`,
-    `  <link href="${esc(base)}/" />`,
-    `  <link rel="self" href="${esc(base)}/${spec.file}" />`,
+    `  <link href="${esc(home)}" />`,
+    `  <link rel="self" href="${esc(base)}/${file}" />`,
     `  <updated>${esc(generatedAt)}</updated>`,
     ...items,
     "</feed>",

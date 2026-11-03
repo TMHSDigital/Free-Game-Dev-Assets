@@ -12,6 +12,7 @@ The catalog is published as machine-readable files on every deploy. The metadata
 | [`catalog.csv`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/catalog.csv) | One row per entry, for spreadsheets. Lists are joined with `; ` |
 | [`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml) | Atom feed of newly added sources |
 | [`reverified.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/reverified.xml) | Atom feed of entries whose licence was most recently re-read |
+| `category/<id>/feed.xml` | Atom feed of new sources in one category, such as [`category/audio/feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/category/audio/feed.xml); each category page links its own |
 | [`llms.txt`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/llms.txt) | A plain-text summary for language-model tools |
 
 These URLs always serve the latest build. To pin a version, download the same files from a tagged [release](https://github.com/TMHSDigital/Free-Game-Dev-Assets/releases). Releases are tagged `vYYYY.MM.DD`, and the attached `data.json` carries the same string as `version`.

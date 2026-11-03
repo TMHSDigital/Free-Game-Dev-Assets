@@ -48,6 +48,7 @@ export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCa
     <title>${esc(clipText(title, SEO_TITLE_MAX))}</title>
     <meta name="description" content="${esc(description)}" />
     ${baseHeadHtml({ site, title, description, url, hasCard, root: "../../", modules: PAGE_MODULES.category })}
+    <link rel="alternate" type="application/atom+xml" title="${esc(`${site.title}: new sources in ${label}`)}" href="${esc(`${url}feed.xml`)}" />
     <script type="application/ld+json">${scriptJson(categoryJsonLd({ cat, label, description, entries, site }))}</script>
   </head>
   <body>
@@ -60,7 +61,7 @@ export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCa
       </nav>
       <h1>${esc(label)}</h1>
       <p class="section-blurb">${esc(sources)} · ${esc(blurb)}</p>
-      <p class="category-search"><a href="../../?cat=${encodeURIComponent(cat)}#catalog">Search and filter on the catalog page</a></p>
+      <p class="category-search"><a href="../../?cat=${encodeURIComponent(cat)}#catalog">Search and filter on the catalog page</a> · <a href="feed.xml">Feed of new ${esc(label)} sources</a></p>
       <div class="entry-list" id="entry-grid">
 ${grid}
       </div>
