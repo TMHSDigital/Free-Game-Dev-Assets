@@ -7,6 +7,8 @@ import { caseMismatch } from "./lib/links.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  checkEntryBasics,
+  checkFeatured,
   checkKnownKeys,
   checkActiveIsSettled,
   checkPreviewField,
@@ -35,12 +37,11 @@ import {
   checkTitleMatchesName,
   checkValueAliases,
   checkValueSpellings,
-  evidenceDates,
   markdownAnchors,
 } from "./checks.mjs";
-import { evidenceSection, parseFrontmatter } from "./lib/frontmatter.mjs";
-import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, isRealDate, latestAllowedDate } from "./lib/shared.mjs";
-import { listEntryFiles, ID_RE } from "./lib/entry-files.mjs";
+import { parseFrontmatter } from "./lib/frontmatter.mjs";
+import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, latestAllowedDate } from "./lib/shared.mjs";
+import { listEntryFiles } from "./lib/entry-files.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -53,21 +54,6 @@ const VOCAB_PATH = path.join(__dirname, "license-vocabulary.json");
 const ALIASES_PATH = path.join(__dirname, "value-aliases.json");
 const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
 const STACKS = path.join(ROOT, "stacks");
-const REQUIRED = [
-  "id",
-  "name",
-  "url",
-  "category",
-  "subcategories",
-  "license",
-  "commercial",
-  "attribution_required",
-  "formats",
-  "tags",
-  "added",
-  "verified",
-  "status",
-];
 // C0 controls other than tab, LF and CR: invalid in XML, and NUL is the
 // markdown renderer's slot marker.
 const CONTROL_RE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
@@ -111,7 +97,6 @@ const SKIP_WALK = new Set(["node_modules", "dist", "RESEARCH", "_scratch"]);
 const ALLOWED_BINARY_PREFIXES = ["site/dist/", "docs/images/readme/", "site/public/thumbs/", "site/public/fonts/"];
 const EMOJI_RE = /\p{Extended_Pictographic}/u;
 const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
-const STATUS_VALUES = new Set(["active", "needs-review", "deprecated"]);
 
 function hasEmoji(text) {
   const stripped = text.replace(/[©®™]/g, "");
@@ -152,12 +137,6 @@ function catalogCategories() {
       .filter((d) => d.isDirectory())
       .map((d) => d.name)
   );
-}
-
-function enumKey(v) {
-  if (v === true) return "true";
-  if (v === false) return "false";
-  return String(v);
 }
 
 /** Heading anchors per Markdown file, read once. */
@@ -289,33 +268,15 @@ function main() {
     }
     const { meta, body } = parsed;
     for (const e of parsed.errors) errors.push(`${rel} frontmatter ${e}`);
-    const missing = REQUIRED.filter((k) => isEmptyField(meta[k]));
-    if (missing.length) errors.push(`${rel} missing/empty: ${missing.join(", ")}`);
-    errors.push(...checkKnownKeys(rel, meta));
-
     const stem = path.basename(file, ".md");
-    const dirName = path.basename(path.dirname(file));
-    if (meta.id && String(meta.id) !== stem) {
-      errors.push(`${rel} id "${meta.id}" does not match filename`);
-    }
-    if (meta.id && !ID_RE.test(String(meta.id))) {
-      errors.push(`${rel} id "${meta.id}" must be short kebab-case (a-z, 0-9, hyphens); npm run new-entry checks this`);
-    }
-    if (meta.category && String(meta.category) !== dirName) {
-      errors.push(`${rel} category "${meta.category}" does not match directory`);
-    }
-    if (meta.category && !categories.has(String(meta.category))) {
-      errors.push(`${rel} category "${meta.category}" is not a catalog/ directory`);
-    }
+    const catReadme = path.join(path.dirname(file), "README.md");
+    const readmeText = fs.existsSync(catReadme) ? fs.readFileSync(catReadme, "utf8") : null;
+    errors.push(
+      ...checkEntryBasics(rel, meta, body, { stem, dirName: path.basename(path.dirname(file)), categories, readmeText, today })
+    );
+    errors.push(...checkKnownKeys(rel, meta));
     // V24 types commercial and attribution_required (a quoted "true" is text).
     errors.push(...checkFieldTypes(rel, meta));
-    const statusKey = enumKey(meta.status);
-    if (!isEmptyField(meta.status) && !STATUS_VALUES.has(statusKey)) {
-      errors.push(`${rel} status "${statusKey}" is not active|needs-review|deprecated`);
-    }
-    if (meta.attribution_required === true && isEmptyField(meta.attribution_string)) {
-      errors.push(`${rel} attribution_required true needs attribution_string`);
-    }
     errors.push(...checkEntryUrl(rel, meta));
     errors.push(...checkLicenseVocabulary(rel, meta, vocab));
     errors.push(...checkSpdxConsistency(rel, meta, vocab, spdxAllowed));
@@ -340,30 +301,6 @@ function main() {
         ids.set(id, rel);
         metaById.set(id, meta);
       }
-    }
-
-    if (meta.verified) {
-      const v = String(meta.verified);
-      if (!isRealDate(v)) errors.push(`${rel} verified "${v}" is not a real YYYY-MM-DD date`);
-      else if (v > today) errors.push(`${rel} verified ${v} is in the future`);
-    }
-
-    if (meta.status === "active") {
-      const ev = evidenceSection(body);
-      if (!ev) errors.push(`${rel} active entry missing ## Evidence`);
-      else if (!evidenceDates(ev).length) {
-        errors.push(`${rel} active Evidence section has no YYYY-MM-DD date`);
-      }
-    }
-
-    const catReadme = path.join(path.dirname(file), "README.md");
-    if (fs.existsSync(catReadme)) {
-      const listing = fs.readFileSync(catReadme, "utf8");
-      if (!listing.includes(`(${stem}.md)`)) {
-        errors.push(`${rel} not listed in category README.md`);
-      }
-    } else {
-      errors.push(`${rel} category README.md missing`);
     }
 
     entries.push(meta);
@@ -429,10 +366,7 @@ function main() {
     })
   );
 
-  for (const item of config.featured || []) {
-    const id = typeof item === "string" ? item : item?.id;
-    if (!id || !ids.has(id)) errors.push(`featured id "${id}" does not resolve`);
-  }
+  errors.push(...checkFeatured(config.featured, ids));
 
   const mdRoots = [
     CATALOG,

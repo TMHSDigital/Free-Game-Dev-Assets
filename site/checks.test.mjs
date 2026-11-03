@@ -39,6 +39,8 @@ import {
   checkValueAliases,
   checkValueSpellings,
   checkKnownKeys,
+  checkEntryBasics,
+  checkFeatured,
   closestKnownKey,
 } from "./checks.mjs";
 
@@ -809,6 +811,41 @@ accepts("V31 ignores commercial: true", checkNonCommercialEvidence("ok.md", { st
 accepts("V31 ignores needs-review", checkNonCommercialEvidence("ok.md", { status: "needs-review", commercial: false }, "## Evidence\n\n- Live page (2026-01-01): \"free\"\n"));
 accepts("V31 accepts a quoted restriction", checkNonCommercialEvidence("ok.md", { status: "active", commercial: false }, "## Evidence\n\n- Live About (2026-01-01): \"as long as you don't use these commercially\"\n"));
 rejects("V31 rejects an unquoted restriction", checkNonCommercialEvidence("bad.md", { status: "active", commercial: false }, "## Evidence\n\n- Live page (2026-01-01): \"free download\"\n"), "bad.md is active with commercial: false but no Evidence line mentions the commercial restriction");
+
+/* V1: per-entry basics (validate.mjs) --------------------------------------- */
+{
+  const good = {
+    id: "foo", name: "Foo", url: "https://a.example/", category: "2d", subcategories: ["sprites"], license: "CC0",
+    commercial: true, attribution_required: false, formats: ["PNG"], tags: ["pixel"], added: "2026-01-01",
+    verified: "2026-02-01", status: "active",
+  };
+  const ev = "## Evidence\n\n- License page (2026-02-01): \"CC0\"\n";
+  const ctx = { stem: "foo", dirName: "2d", categories: new Set(["2d", "3d"]), readmeText: "| [Foo](foo.md) |", today: "2026-03-01" };
+  const basics = (meta, over = {}, body = ev) => checkEntryBasics("catalog/2d/foo.md", { ...good, ...meta }, body, { ...ctx, ...over });
+  accepts("V1 accepts a complete entry", basics({}));
+  rejects("V1 rejects a missing required key", basics({ tags: [] }), "missing/empty: tags");
+  rejects("V1 rejects whitespace as empty", basics({ name: "  " }), "missing/empty: name");
+  rejects("V1 rejects an id that is not the filename", basics({ id: "bar" }), 'id "bar" does not match filename');
+  rejects("V1 rejects an id that is not kebab-case", basics({ id: "Foo_Bar" }, { stem: "Foo_Bar", readmeText: "(Foo_Bar.md)" }), "must be short kebab-case");
+  rejects("V1 rejects a category that is not the directory", basics({ category: "3d" }), 'category "3d" does not match directory');
+  rejects("V1 rejects an unknown category", basics({ category: "music" }, { dirName: "music" }), 'category "music" is not a catalog/ directory');
+  rejects("V1 rejects a capitalised status", basics({ status: "Active" }), 'status "Active" is not active|needs-review|deprecated');
+  rejects("V1 rejects an unknown status", basics({ status: "retired" }), 'status "retired" is not');
+  rejects("V1 rejects a credit requirement with no credit line", basics({ attribution_required: true }), "attribution_required true needs attribution_string");
+  rejects("V1 rejects a blank credit line", basics({ attribution_required: true, attribution_string: "   " }), "needs attribution_string");
+  accepts("V1 accepts a credit requirement with a credit line", basics({ attribution_required: true, attribution_string: "Foo by Bar" }));
+  rejects("V1 rejects an impossible verified date", basics({ verified: "2026-02-30" }), 'verified "2026-02-30" is not a real YYYY-MM-DD date');
+  rejects("V1 rejects a verified date in the future", basics({ verified: "2026-03-02" }), "verified 2026-03-02 is in the future");
+  accepts("V1 accepts verified on the latest allowed day", basics({ verified: "2026-03-01" }));
+  rejects("V1 rejects an active entry without Evidence", basics({}, {}, "No evidence here.\n"), "active entry missing ## Evidence");
+  rejects("V1 rejects active Evidence with no date", basics({}, {}, "## Evidence\n\n- License page: \"CC0\"\n"), "active Evidence section has no YYYY-MM-DD date");
+  accepts("V1 accepts a needs-review entry without Evidence", basics({ status: "needs-review" }, {}, "Pending.\n"));
+  rejects("V1 rejects an entry missing from its README", basics({}, { readmeText: "| [Other](other.md) |" }), "not listed in category README.md");
+  rejects("V1 rejects a missing category README", basics({}, { readmeText: null }), "category README.md missing");
+  accepts("V1 featured ids that resolve", checkFeatured(["foo", { id: "bar", need: "x" }], new Set(["foo", "bar"])));
+  rejects("V1 featured id that does not resolve", checkFeatured([{ id: "nope" }], new Set(["foo"])), 'featured id "nope" does not resolve');
+  rejects("V1 featured item without an id", checkFeatured([{ need: "x" }], new Set(["foo"])), 'featured id "undefined" does not resolve');
+}
 
 /* V33: no unknown frontmatter keys ------------------------------------------ */
 accepts("V33 accepts the documented keys", checkKnownKeys("ok.md", { id: "a", engine_lock: "unreal", attribution_string: "x", preview: "none" }));

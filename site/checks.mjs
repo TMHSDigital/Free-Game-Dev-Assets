@@ -270,6 +270,69 @@ export function checkFieldTypes(rel, meta) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V1 */
+/** Keys every entry must fill in. */
+export const REQUIRED_KEYS = [
+  "id", "name", "url", "category", "subcategories", "license", "commercial",
+  "attribution_required", "formats", "tags", "added", "verified", "status",
+];
+export const STATUS_VALUES = new Set(["active", "needs-review", "deprecated"]);
+
+/**
+ * The per-entry basics: required keys, id and category against the file's
+ * place, status, credit line, the `verified` date, an active entry's dated
+ * Evidence, and the category README listing. `readmeText` is the category
+ * README's text, or null when it is missing. `today` is the latest allowed
+ * date (latestAllowedDate()).
+ */
+export function checkEntryBasics(rel, meta, body, { stem, dirName, categories, readmeText, today }) {
+  const errors = [];
+  const missing = REQUIRED_KEYS.filter((k) => empty(meta[k]));
+  if (missing.length) errors.push(`${rel} missing/empty: ${missing.join(", ")}`);
+  if (meta.id && String(meta.id) !== stem) {
+    errors.push(`${rel} id "${meta.id}" does not match filename`);
+  }
+  if (meta.id && !ID_RE.test(String(meta.id))) {
+    errors.push(`${rel} id "${meta.id}" must be short kebab-case (a-z, 0-9, hyphens); npm run new-entry checks this`);
+  }
+  if (meta.category && String(meta.category) !== dirName) {
+    errors.push(`${rel} category "${meta.category}" does not match directory`);
+  }
+  if (meta.category && !categories.has(String(meta.category))) {
+    errors.push(`${rel} category "${meta.category}" is not a catalog/ directory`);
+  }
+  const statusKey = meta.status === true ? "true" : meta.status === false ? "false" : String(meta.status);
+  if (!empty(meta.status) && !STATUS_VALUES.has(statusKey)) {
+    errors.push(`${rel} status "${statusKey}" is not active|needs-review|deprecated`);
+  }
+  if (meta.attribution_required === true && empty(meta.attribution_string)) {
+    errors.push(`${rel} attribution_required true needs attribution_string`);
+  }
+  if (meta.verified) {
+    const v = String(meta.verified);
+    if (!isRealDate(v)) errors.push(`${rel} verified "${v}" is not a real YYYY-MM-DD date`);
+    else if (v > today) errors.push(`${rel} verified ${v} is in the future`);
+  }
+  if (meta.status === "active") {
+    const ev = evidenceSection(body);
+    if (!ev) errors.push(`${rel} active entry missing ## Evidence`);
+    else if (!evidenceDates(ev).length) errors.push(`${rel} active Evidence section has no YYYY-MM-DD date`);
+  }
+  if (readmeText === null || readmeText === undefined) errors.push(`${rel} category README.md missing`);
+  else if (!readmeText.includes(`(${stem}.md)`)) errors.push(`${rel} not listed in category README.md`);
+  return errors;
+}
+
+/** Every `featured` item in site/config.json names an entry id (a string or { id }). */
+export function checkFeatured(featured, ids) {
+  const errors = [];
+  for (const item of featured || []) {
+    const id = typeof item === "string" ? item : item?.id;
+    if (!id || !ids.has(id)) errors.push(`featured id "${id}" does not resolve`);
+  }
+  return errors;
+}
+
 /* ----------------------------------------------------------------- V33 */
 /**
  * Every frontmatter key an entry may use. An unknown key was ignored without
