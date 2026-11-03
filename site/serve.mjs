@@ -85,7 +85,7 @@ function main() {
     if (fs.existsSync(notFound)) return send(res, 404, notFound);
     res.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("Not found\n");
   });
-  server.listen(port, "127.0.0.1", () => console.log(`Serving site/dist at http://localhost:${port}/ (Ctrl+C to stop)`));
+  server.listen(port, "127.0.0.1", () => console.log(`Serving site/dist at http://127.0.0.1:${port}/ (Ctrl+C to stop)`));
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

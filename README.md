@@ -362,7 +362,7 @@ npm run check    # all of the below, in the order CI runs them
 npm test         # the checks against known-bad fixtures, and the site modules' tests
 npm run validate # the catalog, against the checks (node site/validate.mjs)
 npm run build    # builds the site into site/dist (node site/build.mjs)
-npm run serve    # preview at http://localhost:3000 (node site/serve.mjs, no download)
+npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no download)
 ```
 
 </details>
