@@ -1169,6 +1169,17 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* heading anchors: validator and guide renderer agree ---------------------- */
+{
+  const { markdownAnchors } = await import("../checks.mjs");
+  const { renderGuide } = await import("./guide-render.mjs");
+  const md = "# Fonts\n\nIntro.\n\n## Fonts\n\nText.\n\n## Setup `npm` and [links](https://a.example/)\n\n```\n## not a heading\n```\n\n## Fonts\n\n### Q&A: what's new?\n";
+  const r = renderGuide(md, { file: "g.md", resolveLink: (href) => ({ href, external: true }) });
+  const ids = [r.titleId, ...[...r.html.matchAll(/<h\d id="([^"]+)"/g)].map((m) => m[1])];
+  eq("anchors: renderer ids", ids.join(","), "fonts,fonts-1,setup-npm-and-links,fonts-2,qa-whats-new");
+  eq("anchors: validator matches the renderer", [...markdownAnchors(md)].sort().join(","), [...ids].sort().join(","));
+}
+
 /* local preview server ---------------------------------------------------- */
 {
   const { resolveRequest } = await import("../serve.mjs");

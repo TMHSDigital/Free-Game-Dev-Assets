@@ -10,6 +10,7 @@ import path from "node:path";
 import { ID_RE } from "./lib/entry-files.mjs";
 import { evidenceSection } from "./lib/frontmatter.mjs";
 import { isRealDate } from "./lib/shared.mjs";
+import { headingSlug } from "./lib/guide-render.mjs";
 import { isAttributionLicence, isPrivateHost, PREVIEW_LICENSES, previewEligibility, safeImageUrl } from "./lib/thumbs.mjs";
 import { parseStack, pickPath, StackError } from "./lib/stacks.mjs";
 
@@ -848,12 +849,8 @@ export function markdownAnchors(text) {
     if (fenced) continue;
     const h = line.match(/^#{1,6}\s+(.*?)\s*#*\s*$/);
     if (!h) continue;
-    const base = h[1]
-      .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
-      .replace(/<[^>]+>/g, "")
-      .toLowerCase()
-      .replace(/[^\p{L}\p{N}\s_-]/gu, "")
-      .replace(/ /g, "-");
+    // The guide renderer's slug, so an anchor the validator accepts also exists on the site.
+    const base = headingSlug(h[1]);
     const n = seen.get(base) || 0;
     seen.set(base, n + 1);
     anchors.add(n ? `${base}-${n}` : base);

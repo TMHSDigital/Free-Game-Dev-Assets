@@ -43,7 +43,7 @@ export function guidePageHtml({ guide, rendered, site, stamp, total, hasCard }) 
         <a href="../../#guides">Guides</a> <span aria-hidden="true">/</span>
         <span aria-current="page">${esc(guide.title)}</span>
       </nav>
-      <h1>${esc(plainText(rendered.title))}</h1>
+      <h1${rendered.titleId ? ` id="${esc(rendered.titleId)}"` : ""}>${esc(plainText(rendered.title))}</h1>
       <div class="entry-body guide-body">
 ${rendered.html}
       </div>

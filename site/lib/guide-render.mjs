@@ -44,7 +44,7 @@ function cells(line) {
 const isSeparator = (line) => /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/.test(line);
 
 /**
- * `{ title, html, firstParagraph }`. The first `# ` heading is the page
+ * `{ title, titleId, html, firstParagraph }`. The first `# ` heading is the page
  * title (the template prints it as the h1); later `#` headings are refused.
  */
 export function renderGuide(md, { file, resolveLink }) {
@@ -53,6 +53,7 @@ export function renderGuide(md, { file, resolveLink }) {
   const html = [];
   const seen = new Map();
   let title = "";
+  let titleId = "";
   let firstParagraph = "";
   let i = 0;
   const fail = (n, what) => {
@@ -87,6 +88,10 @@ export function renderGuide(md, { file, resolveLink }) {
       if (level === 1) {
         if (title) fail(i, "a second top-level heading");
         title = h[2];
+        // GitHub gives the h1 an anchor and counts it among duplicates, so
+        // "# Fonts" then "## Fonts" is #fonts and #fonts-1 here as there.
+        titleId = headingSlug(title);
+        seen.set(titleId, (seen.get(titleId) || 0) + 1);
         i += 1;
         continue;
       }
@@ -153,7 +158,7 @@ export function renderGuide(md, { file, resolveLink }) {
     html.push(`<p>${inline(text)}</p>`);
   }
   if (!title) throw new MarkdownError(`${file}:1: a guide needs a "# " title`);
-  return { title, html: html.join("\n"), firstParagraph };
+  return { title, titleId, html: html.join("\n"), firstParagraph };
 }
 
 /** Markdown inline marks and links reduced to plain text, for a meta description. */
