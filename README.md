@@ -308,7 +308,9 @@ publishing a broken catalog. Among other things, it checks that:
   agrees with it
 - an attribution licence marked "no attribution" states the publisher's waiver
 - category indexes, counts and the badge above match the catalog
-- no third-party binaries are committed to the repository
+- no third-party asset files are committed to the repository; the only publisher images are
+  resized previews, kept to `site/public/thumbs/` and `docs/images/readme/`, and a thumbnail
+  must pass the preview licence gate
 
 The checks themselves are tested against known-bad fixtures in
 [`site/checks.test.mjs`](site/checks.test.mjs). Every review pass, and every correction it
@@ -384,6 +386,7 @@ npm run serve    # preview at http://localhost:3000
 │   ├── provenance.md high-risk.md ai-assets.md fivem.md trust-score.md
 │   ├── godot-budget-stack.md unreal.md
 │   ├── data.md                 the JSON, CSV and feed exports
+│   ├── for-publishers.md       what is recorded about a publisher, and how to correct it
 │   ├── internal/               design specs and plans behind the site (history, not guides)
 │   ├── review-ledger.md        every review pass and what it changed
 │   └── images/readme/          publisher stills used in this README
@@ -395,7 +398,12 @@ npm run serve    # preview at http://localhost:3000
 │   ├── new-entry.mjs           starts an entry from the template
 │   ├── sync-counts.mjs         rewrites every restated entry count
 │   ├── license-vocabulary.json the licence values the catalog accepts
+│   ├── format-vocabulary.json  the format values the catalog accepts, and filter groups
+│   ├── value-aliases.json      retired spellings of tags, formats and subcategories
 │   ├── spdx-allowed.json       SPDX identifiers in use
+│   ├── check-links.mjs         weekly source link check
+│   ├── reverify-batch.mjs      picks the monthly re-verification batch
+│   ├── thumbs.mjs thumbs.json  fetches preview thumbnails, and their manifest
 │   ├── build.mjs config.json   static site generator and its settings
 │   ├── lib/                    page renderers and shared helpers, with lib.test.mjs
 │   └── public/                 page, styles and script

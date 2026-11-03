@@ -6,7 +6,7 @@ If you make one of the libraries, packs or tools in this catalog, this page says
 
 Each source has one page with:
 
-- a link to your own page, never a mirror; nothing you publish is rehosted or downloaded through the catalog;
+- a link to your own page, never a mirror: your files are never rehosted or downloaded through the catalog (the one exception is a small preview image, see [Preview images](#preview-images) below);
 - the licence as the catalog reads it, with the commercial stance and whether credit is required;
 - an Evidence section that quotes your licence page word for word, with the date it was read;
 - a `verified` date, the last time someone read your licence at the source;
