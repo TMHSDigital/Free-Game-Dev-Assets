@@ -1206,6 +1206,53 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* new-entry --from-issue (scaffold.mjs) ------------------------------------ */
+{
+  const { parseIssueForm, entryFromIssue } = await import("./scaffold.mjs");
+  const { checkKnownKeys, checkEntryBasics } = await import("../checks.mjs");
+  const template = nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8");
+  const vocab = JSON.parse(nodeFs.readFileSync(new URL("../license-vocabulary.json", import.meta.url), "utf8"));
+  const body = [
+    "### Name", "", 'Sound "Pack" One', "",
+    "### Publisher URL", "", "https://sounds.example/pack", "",
+    "### Category", "", "audio", "",
+    "### License as stated on the live page", "", "CC-BY-4.0", "",
+    "### Licence quote and date", "", 'Live licence page (2026-10-30): "Use it in games, credit Sound Co."', "",
+    "### Commercial / game use", "", "Explicitly allowed", "",
+    "### Credit required?", "", "Yes", "",
+    "### Credit line as the source words it", "", "Sounds by Sound Co.", "",
+    "### Relationship to the source", "", "- [X] I publish or maintain this source (see CONTRIBUTING, \"Submitting your own source\")", "",
+    "### Why it belongs", "", "_No response_", "",
+  ].join("\n");
+  const form = parseIssueForm(body);
+  eq("issue form: a field by its label", form["Publisher URL"], "https://sounds.example/pack");
+  eq("issue form: _No response_ is empty", form["Why it belongs"], "");
+  const { text, warnings } = entryFromIssue(template, form, { id: "sound-pack-one", issue: 42, today: "2026-11-03", vocab });
+  const parsed = parseFrontmatter(text);
+  eq("from-issue: the draft parses", parsed.errors.join(" | "), "");
+  const m = parsed.meta;
+  eq("from-issue: name with quotes survives", m.name, 'Sound "Pack" One');
+  eq("from-issue: licence in the vocabulary is kept", m.license, "CC-BY-4.0");
+  eq("from-issue: SPDX filled from the vocabulary", m.license_spdx, "CC-BY-4.0");
+  eq("from-issue: commercial from the dropdown", m.commercial, true);
+  eq("from-issue: credit from the dropdown", m.attribution_required, true);
+  eq("from-issue: credit line", m.attribution_string, "Sounds by Sound Co.");
+  eq("from-issue: verified is the quote's date", m.verified, "2026-10-30");
+  eq("from-issue: always starts needs-review", m.status, "needs-review");
+  eq("from-issue: no warnings for a clean form", warnings.length, 0);
+  has("from-issue: the quote is the Evidence line", parsed.body, '- Reported in #42: Live licence page (2026-10-30): "Use it in games, credit Sound Co."');
+  has("from-issue: a publisher submission is noted", parsed.body, "Submitted by the publisher (#42).");
+  eq("from-issue: no unknown keys", checkKnownKeys("d.md", m).length, 0);
+  has("from-issue: validate fails until lists are filled", checkEntryBasics("catalog/audio/sound-pack-one.md", m, parsed.body, { stem: "sound-pack-one", dirName: "audio", categories: new Set(["audio"]), readmeText: "(sound-pack-one.md)", today: "2026-11-03" }).join(" "), "missing/empty: subcategories, formats, tags");
+  const odd = entryFromIssue(template, { ...form, "License as stated on the live page": "Royalty free!", "Commercial / game use": "maybe", "Licence quote and date": "no date here" }, { id: "x", issue: 7, today: "2026-11-03", vocab });
+  const om = parseFrontmatter(odd.text).meta;
+  eq("from-issue: an unknown licence becomes unknown", om.license, "unknown");
+  eq("from-issue: no SPDX for unknown", om.license_spdx, undefined);
+  eq("from-issue: an unexpected dropdown answer is unknown", om.commercial, "unknown");
+  eq("from-issue: no quote date means verified today", om.verified, "2026-11-03");
+  eq("from-issue: both problems are warned about", odd.warnings.length, 2);
+}
+
 /* PR licence-field summary (licence-diff.mjs) ------------------------------ */
 {
   const { licenceChanges, licenceDiffMarkdown, newestEvidenceLine } = await import("./licence-diff.mjs");
