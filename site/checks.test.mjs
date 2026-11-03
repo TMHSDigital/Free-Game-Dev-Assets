@@ -42,6 +42,7 @@ import {
   checkEntryBasics,
   checkFeatured,
   checkPreviewVocabulary,
+  checkComparisonLicences,
   closestKnownKey,
 } from "./checks.mjs";
 
@@ -867,6 +868,29 @@ rejects("V31 rejects an unquoted restriction", checkNonCommercialEvidence("bad.m
   accepts("V1 featured ids that resolve", checkFeatured(["foo", { id: "bar", need: "x" }], new Set(["foo", "bar"])));
   rejects("V1 featured id that does not resolve", checkFeatured([{ id: "nope" }], new Set(["foo"])), 'featured id "nope" does not resolve');
   rejects("V1 featured item without an id", checkFeatured([{ need: "x" }], new Set(["foo"])), 'featured id "undefined" does not resolve');
+}
+
+/* V11: comparison tables with a Licence column ------------------------------ */
+{
+  const metas = new Map([
+    ["catalog/3d/ambientcg.md", { license: "CC0" }],
+    ["catalog/environment/poly-haven.md", { license: "CC0" }],
+    ["catalog/characters/rocketbox.md", { license: "MIT" }],
+    ["catalog/3d/sharetextures.md", { license: "custom" }],
+    ["catalog/3d/ccby.md", { license: "CC-BY" }],
+  ]);
+  const table = (rows) => ["| If you need | Take | Licence |", "| --- | --- | --- |", ...rows].join("\n");
+  accepts("V11 accepts matching comparison rows, bold and notes included", checkComparisonLicences("3d", table([
+    "| A | [ambientcg](ambientcg.md): materials | **CC0** |",
+    "| B | [poly-haven](../environment/poly-haven.md) | **CC0** exports |",
+    "| C | [rb](../characters/rocketbox.md) | MIT, keep the notice |",
+    "| D | [st](sharetextures.md) | custom |",
+  ]), metas));
+  rejects("V11 rejects a comparison row with a different licence", checkComparisonLicences("3d", table(["| A | [st](sharetextures.md) | **CC0** |"]), metas), 'comparison row says "CC0" but catalog/3d/sharetextures.md has license "custom"');
+  rejects("V11 a longer licence does not pass for a shorter one", checkComparisonLicences("3d", table(["| A | [x](ccby.md) | CC-BY-4.0 |"]), metas), 'has license "CC-BY"');
+  accepts("V11 ignores links right of the Licence column", checkComparisonLicences("3d", ["| Take | Licence | Notes |", "| --- | --- | --- |", "| [a](ambientcg.md) | CC0 | see [st](sharetextures.md) |"].join("\n"), metas));
+  accepts("V11 ignores tables without a Licence column", checkComparisonLicences("3d", ["| Take | Notes |", "| --- | --- |", "| [st](sharetextures.md) | CC0 |"].join("\n"), metas));
+  accepts("V11 leaves the ID listing to checkCategoryReadmeRows", checkComparisonLicences("3d", ["| ID | Licence |", "| --- | --- |", "| [st](sharetextures.md) | CC0 |"].join("\n"), metas));
 }
 
 /* V34: preview allowlist agrees with the vocabulary ------------------------ */

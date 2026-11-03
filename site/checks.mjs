@@ -730,9 +730,9 @@ export function checkCategoryReadmeRows(categoryName, readmeText, entries) {
   const errors = [];
   const lines = readmeText.split(/\r?\n/);
 
-  // Only the catalog listing table is checked. A category README may also carry
-  // comparison tables that link entries, and those have no license column to
-  // contradict. The listing is found by its header rather than by row shape,
+  // This function checks the catalog listing table. Comparison tables that
+  // link entries are checked by checkComparisonLicences below when they have
+  // a Licence column. The listing is found by its header rather than by row shape,
   // because a comparison table can legitimately lead with the entry link too.
   //
   // A README can hold several listing tables (tools has one per section), so
@@ -778,6 +778,44 @@ export function checkCategoryReadmeRows(categoryName, readmeText, entries) {
       errors.push(
         `catalog/${categoryName}/README.md row for "${stem}" does not carry its license "${license}": ${cells.join(" | ")}`
       );
+    }
+  }
+  return errors;
+}
+
+/**
+ * V11, comparison tables: a non-listing table with a "Licence" (or
+ * "License") column states a licence for the entries linked to its left,
+ * such as "Choosing a PBR texture source" in 3d. The cell, bold removed, must
+ * start with each linked entry's `license`, followed by its end, a space,
+ * comma, "(" or "*". Notes after it ("MIT, keep the notice", "CC0 exports")
+ * are fine. `entriesByRel` maps "catalog/<cat>/<id>.md" to frontmatter, so a
+ * link into another category resolves too.
+ */
+export function checkComparisonLicences(categoryName, readmeText, entriesByRel) {
+  const errors = [];
+  const lines = readmeText.split(/\r?\n/);
+  const rowCells = (line) => line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+  for (let i = 0; i < lines.length; i += 1) {
+    const head = lines[i].trim();
+    if (!head.startsWith("|") || /^\|\s*ID\s*\|/i.test(head)) continue;
+    if (i > 0 && lines[i - 1].trim().startsWith("|")) continue; // not a header row
+    const col = rowCells(head).findIndex((h) => /^licen[cs]e$/i.test(h));
+    if (col < 0) continue;
+    for (let k = i + 2; k < lines.length && lines[k].trim().startsWith("|"); k += 1) {
+      const cells = rowCells(lines[k]);
+      const cell = (cells[col] || "").replace(/\*\*/g, "").trim();
+      const left = cells.slice(0, col).join(" ");
+      for (const m of left.matchAll(/\]\(([^)\s]+\.md)\)/g)) {
+        const rel = path.posix.normalize(`catalog/${categoryName}/${m[1]}`);
+        const meta = entriesByRel.get(rel);
+        if (!meta) continue; // a broken link is reported by the link check
+        const license = String(meta.license);
+        const next = cell.charAt(license.length);
+        if (!cell.startsWith(license) || (next && !/[\s,(*]/.test(next))) {
+          errors.push(`catalog/${categoryName}/README.md:${k + 1} comparison row says "${cell}" but ${rel} has license "${license}"`);
+        }
+      }
     }
   }
   return errors;

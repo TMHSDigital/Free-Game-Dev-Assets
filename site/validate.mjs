@@ -17,6 +17,7 @@ import {
   checkAddedDate,
   checkAttributionConsistency,
   checkCategoryReadmeRows,
+  checkComparisonLicences,
   checkCategorySets,
   checkCountTables,
   checkDeprecationReason,
@@ -356,12 +357,14 @@ function main() {
     if (!byCategory.has(cat)) byCategory.set(cat, []);
     byCategory.get(cat).push(record);
   }
+  const entriesByRel = new Map(records.map(({ rel, meta }) => [rel, meta]));
   for (const [cat, group] of byCategory) {
     const readme = path.join(CATALOG, cat, "README.md");
     if (!fs.existsSync(readme)) continue;
     errors.push(
       ...checkCategoryReadmeRows(cat, readText(readme), group)
     );
+    errors.push(...checkComparisonLicences(cat, readText(readme), entriesByRel));
   }
 
   const measured = {};
