@@ -18,7 +18,7 @@ These URLs always serve the latest build. To pin a version, download the same fi
 
 ## Fields
 
-Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CSV.
+Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CSV. Its column order is fixed and new columns are only ever appended. A CSV cell that starts with `=`, `+`, `-`, `@`, a tab or a carriage return gets a leading `'`, so a spreadsheet does not run it as a formula; strip it if you compare values.
 
 | Field | CSV | Meaning |
 | --- | --- | --- |
@@ -43,9 +43,9 @@ Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CS
 | `thumb` | | `{ path, width, height, credit? }` of the preview image, or `null` |
 | `licenseFamily` | | Coarse grouping used by the site's filter: `public-domain`, `cc-by`, `permissive`, `copyleft`, `custom` and so on. Labels are in `filters.licenseFamilies` |
 | `attributionClass`, `licenseRank` | | Derived sort keys used by the site |
-| `engine_lock`, `grid_dimensions`, `camera_perspective` and other optional fields | | Present only where they apply; see [the site README](../site/README.md) |
+| `maintenance`, `engine_lock`, `ue_versions`, `grid_dimensions`, `camera_perspective`, `hardware_tags` | | Present only where they apply; see [the site README](../site/README.md) |
 
-Top-level keys are `generatedAt`, `version`, `site`, `categories`, `guides`, `featured`, `stats` (counts of total, active, needs-review, deprecated and commercial entries), `filters` and `entries`.
+Top-level keys are `generatedAt`, `version`, `site`, `categories`, `guides`, `featured`, `stats` (counts of total, active, needs-review, deprecated and commercial entries), `filters` (`licenseFamilies` and `formatGroups`, the labels and groups behind the site's filters) and `entries`.
 
 Field names are stable. New optional fields may appear, so ignore keys you do not know rather than failing on them.
 
