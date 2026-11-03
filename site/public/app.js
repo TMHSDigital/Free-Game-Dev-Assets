@@ -386,6 +386,28 @@ import { installViewToggles } from "./views.js";
     placedKey = null;
   }
 
+  // The prerender has CARD_LIMIT nodes for a cards-default category. Shown
+  // as a List (LIST_LIMIT rows), its preview needs a few more: render just
+  // those, not the whole catalog, so a stored List choice keeps the fast load.
+  function ensurePreviewNodes(list) {
+    if (allRendered) return;
+    const byCat = new Map();
+    for (const e of list.slice().sort(sorter())) {
+      if (!byCat.has(e.category)) byCat.set(e.category, []);
+      byCat.get(e.category).push(e);
+    }
+    const missing = [];
+    for (const [cat, entries] of byCat) {
+      for (const e of entries.slice(0, limitFor(cat))) if (!cardNodes.has(e.id)) missing.push(e);
+    }
+    if (!missing.length) return;
+    const tpl = document.createElement("template");
+    tpl.innerHTML = missing.map(cardHtml).join("");
+    for (const el of [...tpl.content.children]) cardNodes.set(el.getAttribute("data-id"), el);
+    announceRendered = true;
+    placedKey = null;
+  }
+
   /**
    * "Did you mean" for a search that matched nothing: the closest entry names,
    * by the same similarity the 404 page uses. A typo ("quaternious", "kenny")
@@ -441,6 +463,7 @@ import { installViewToggles } from "./views.js";
     // the whole matching set, so every card must exist by then.
     const preview = group && !stateQuery(state, DEFAULTS);
     if (!preview) ensureAllNodes();
+    else ensurePreviewNodes(list);
 
     // Under a plain sort the order of all nodes is fixed, so filtering only
     // toggles visibility. A ranked search reorders on every change.
