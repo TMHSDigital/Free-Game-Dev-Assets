@@ -4,8 +4,14 @@
  * selection rule; site/reverify-batch.mjs does the file I/O.
  */
 
-/** Days since a licence check before the entry is due again. Half of "aging". */
-export const DUE_DAYS = 150;
+import { VERIFIED_FRESH_DAYS } from "./shared.mjs";
+
+/**
+ * Days since a licence check before the entry is due again: 30 days inside
+ * the fresh window, so a batch reaches an entry before its cue turns from
+ * fresh to aging.
+ */
+export const DUE_DAYS = VERIFIED_FRESH_DAYS - 30;
 /** Months the whole catalog should take to cycle through the batches. */
 export const CYCLE_MONTHS = 10;
 

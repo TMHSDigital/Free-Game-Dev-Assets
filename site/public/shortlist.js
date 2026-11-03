@@ -77,12 +77,15 @@ function nameOf(id) {
   return byId[id]?.name || document.querySelector(`[data-shortlist="${CSS.escape(id)}"]`)?.getAttribute("data-name") || document.querySelector("main h1")?.textContent.trim() || id;
 }
 
+// The same five replacements as esc() in shared.mjs. Kept local so entry
+// pages, which load only this script and owes.js, do not fetch shared.mjs.
 function escapeHtml(str) {
   return String(str)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
 function download(name, text, type) {

@@ -59,8 +59,6 @@ import { installViewToggles } from "./views.js";
   // scheduled build keeps the build time recent.
   const built = Date.parse(data.generatedAt);
   const NOW = Number.isNaN(built) ? Date.now() : built;
-  const FRESH_DAYS = 180;
-  const AGING_DAYS = 365;
 
   /* ------------------------------------------------------------ helpers */
 

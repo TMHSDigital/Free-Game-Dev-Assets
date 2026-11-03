@@ -29,9 +29,9 @@ export const STATUS_NOTES = {
   deprecated: "Kept for history only.",
 };
 
-/** Age buckets for the verified-date cue. Days. */
-const VERIFIED_FRESH_DAYS = 180;
-const VERIFIED_AGING_DAYS = 365;
+/** Age buckets for the verified-date cue, in days. The one place these numbers live. */
+export const VERIFIED_FRESH_DAYS = 180;
+export const VERIFIED_AGING_DAYS = 365;
 
 /** A real calendar date in strict YYYY-MM-DD form, independent of local time. */
 export function isRealDate(value) {

@@ -3,7 +3,7 @@
  * Buckets come from verifiedAge, the function the homepage cards use, so the
  * summary and the cards cannot disagree. Pure: `now` is passed in.
  */
-import { baseHeadHtml, esc, freshnessPageUrl, verifiedAge, siteHeaderHtml, siteFooterHtml } from "./shared.mjs";
+import { baseHeadHtml, esc, freshnessPageUrl, VERIFIED_FRESH_DAYS, verifiedAge, siteHeaderHtml, siteFooterHtml } from "./shared.mjs";
 
 const RECENT_DAYS = 30;
 const byName = (a, b) => a.entry.name.localeCompare(b.entry.name);
@@ -34,7 +34,7 @@ export function freshnessStats(entries, now) {
 
 /** The one-line summary, for the homepage and the top of /freshness/. */
 export function freshnessLineHtml(stats, stamp, href) {
-  return `<strong>${stats.fresh} of ${stats.total}</strong> licences re-read in the last 180 days. <a href="${esc(href)}">Every check, oldest first</a>.`;
+  return `<strong>${stats.fresh} of ${stats.total}</strong> licences re-read in the last ${VERIFIED_FRESH_DAYS} days. <a href="${esc(href)}">Every check, oldest first</a>.`;
 }
 
 /** Days an entry counts as new on the home page. */
