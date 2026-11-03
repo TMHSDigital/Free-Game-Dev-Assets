@@ -56,6 +56,7 @@ and tools that want the metadata without scraping the page. The page itself load
   (`{ path, width, height, credit? }` of the entry's preview image relative to the site root, with `credit` on CC-BY images, or `null`), `licenseFamily` (the
   coarse licence group the site filters on), and two derived sort fields, `attributionClass`
   and `licenseRank`.
+- Its shape is [`site/data.schema.json`](data.schema.json) (JSON Schema, published as `data.schema.json`); the build checks the payload against it with `lib/schema-check.mjs` and fails on any mismatch, so a renamed or retyped field must change the schema in the same commit.
 - It is regenerated from `catalog/` on every push to `main`. Field names are stable;
   new optional fields may appear. The licence facts are only as current as each entry's
   `verified` date: re-check the source before you ship on one.

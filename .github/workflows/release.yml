@@ -1,7 +1,7 @@
 name: Dataset release
 
 # A versioned snapshot of the catalog a tool can pin: tag vYYYY.MM.DD and
-# attach data.json, catalog.csv, the two feeds and llms.txt. Monthly, and on
+# attach data.json and its schema, catalog.csv, the two feeds and llms.txt. Monthly, and on
 # demand from the Actions tab. The release notes are the newest section of
 # docs/review-ledger.md. A tag that already exists is left alone.
 #
@@ -97,7 +97,7 @@ jobs:
           fi
           {
             echo
-            echo "Attached: \`data.json\` (full catalog), \`catalog.csv\`, \`feed.xml\` (new sources), \`reverified.xml\` (recent licence re-reads), \`llms.txt\`."
+            echo "Attached: \`data.json\` (full catalog), \`data.schema.json\` (its JSON Schema), \`catalog.csv\`, \`feed.xml\` (new sources), \`reverified.xml\` (recent licence re-reads), \`llms.txt\`."
             echo "\`data.json\` carries \`\"version\": \"$CATALOG_VERSION\"\`; CITATION.cff on this tag cites the same version."
             echo "Field reference: https://github.com/${GITHUB_REPOSITORY}/blob/main/site/README.md"
           } >> release-notes.md
@@ -105,4 +105,4 @@ jobs:
             --target "$(git rev-parse HEAD)" \
             --title "Catalog $CATALOG_VERSION" \
             --notes-file release-notes.md \
-            site/dist/data.json site/dist/catalog.csv site/dist/feed.xml site/dist/reverified.xml site/dist/llms.txt
+            site/dist/data.json site/dist/data.schema.json site/dist/catalog.csv site/dist/feed.xml site/dist/reverified.xml site/dist/llms.txt

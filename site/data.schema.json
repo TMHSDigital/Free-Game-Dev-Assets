@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.schema.json",
+  "title": "Free Game Dev Assets catalog (data.json)",
+  "description": "The shape of data.json. The build checks every payload against this file, so a renamed or retyped field fails the build until the schema changes with it. New optional fields may appear in later versions: consumers should ignore keys they do not know.",
+  "type": "object",
+  "required": ["generatedAt", "version", "site", "categories", "guides", "featured", "stats", "filters", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "generatedAt": { "type": "string", "description": "ISO 8601 build time" },
+    "version": { "type": "string", "pattern": "^v\\d{4}\\.\\d{2}\\.\\d{2}", "description": "Calendar version, vYYYY.MM.DD" },
+    "site": {
+      "type": "object",
+      "required": ["title", "tagline", "repo", "siteUrl"],
+      "properties": {
+        "title": { "type": "string" },
+        "tagline": { "type": "string" },
+        "repo": { "type": "string" },
+        "baseUrl": { "type": "string" },
+        "siteUrl": { "type": "string" }
+      }
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["label"],
+        "properties": {
+          "label": { "type": "string" },
+          "blurb": { "type": "string" },
+          "view": { "enum": ["cards", "list"] }
+        }
+      }
+    },
+    "guides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "path"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "path": { "type": "string" }
+        }
+      }
+    },
+    "featured": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entryBase",
+        "properties": { "need": { "type": "string" } },
+        "unevaluatedProperties": false
+      }
+    },
+    "stats": {
+      "type": "object",
+      "required": ["total", "active", "needsReview", "deprecated", "commercialOk", "commercialVaries", "categories"],
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "filters": {
+      "type": "object",
+      "required": ["licenseFamilies", "formatGroups"],
+      "properties": {
+        "licenseFamilies": { "type": "object", "additionalProperties": { "type": "string" } },
+        "formatGroups": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["label", "formats"],
+            "properties": {
+              "label": { "type": "string" },
+              "formats": { "$ref": "#/$defs/stringList" }
+            }
+          }
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entryBase", "unevaluatedProperties": false }
+    }
+  },
+  "$defs": {
+    "stringList": { "type": "array", "items": { "type": "string" } },
+    "entryBase": {
+      "type": "object",
+      "required": [
+        "id", "name", "url", "category", "subcategories", "license", "commercial", "attribution_required",
+        "formats", "tags", "added", "verified", "status", "path", "page", "summary", "thumb",
+        "licenseFamily", "attributionClass", "licenseRank"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "category": { "type": "string" },
+        "subcategories": { "$ref": "#/$defs/stringList" },
+        "license": { "type": "string" },
+        "license_spdx": { "type": "string" },
+        "commercial": { "enum": [true, false, "varies", "unknown"] },
+        "attribution_required": { "enum": [true, false, "unknown"] },
+        "attribution_string": { "type": "string" },
+        "publisher": { "type": "string" },
+        "formats": { "$ref": "#/$defs/stringList" },
+        "tags": { "$ref": "#/$defs/stringList" },
+        "added": { "type": ["string", "null"], "description": "YYYY-MM-DD the entry joined the catalog" },
+        "verified": { "type": ["string", "null"], "description": "YYYY-MM-DD the licence was last read at the source" },
+        "status": { "enum": ["active", "needs-review", "deprecated"] },
+        "path": { "type": "string" },
+        "page": { "type": "string" },
+        "summary": { "type": "string" },
+        "thumb": {
+          "type": ["object", "null"],
+          "required": ["path", "width", "height"],
+          "additionalProperties": false,
+          "properties": {
+            "path": { "type": "string" },
+            "width": { "type": "integer", "minimum": 1 },
+            "height": { "type": "integer", "minimum": 1 },
+            "credit": { "type": "string" }
+          }
+        },
+        "grid_dimensions": { "type": "string" },
+        "camera_perspective": { "type": "string" },
+        "hardware_tags": { "$ref": "#/$defs/stringList" },
+        "maintenance": { "enum": ["archived", "inactive"] },
+        "engine_lock": { "type": "string" },
+        "ue_versions": { "type": "string" },
+        "licenseFamily": { "type": "string" },
+        "attributionClass": { "type": "string" },
+        "licenseRank": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

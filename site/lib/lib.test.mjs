@@ -1206,6 +1206,38 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* data.json schema (schema-check.mjs + site/data.schema.json) -------------- */
+{
+  const { schemaErrors } = await import("./schema-check.mjs");
+  const schema = JSON.parse(nodeFs.readFileSync(new URL("../data.schema.json", import.meta.url), "utf8"));
+  const entry = {
+    id: "a", name: "A", url: "https://a.example/", category: "2d", subcategories: ["x"], license: "CC0", commercial: true,
+    attribution_required: false, formats: ["PNG"], tags: [], added: "2026-01-01", verified: "2026-01-02", status: "active",
+    path: "catalog/2d/a.md", page: "entry/a/", summary: "", thumb: null, licenseFamily: "public-domain", attributionClass: "none", licenseRank: 0,
+  };
+  const payload = (over = {}) => ({
+    generatedAt: "2026-11-03T00:00:00.000Z", version: "v2026.11.03",
+    site: { title: "T", tagline: "t", repo: "r", siteUrl: "s" }, categories: { "2d": { label: "2D", view: "cards" } },
+    guides: [{ id: "g", title: "G", path: "docs/g.md" }], featured: [{ ...entry, need: "x" }],
+    stats: { total: 1, active: 1, needsReview: 0, deprecated: 0, commercialOk: 1, commercialVaries: 0, categories: 1 },
+    filters: { licenseFamilies: { cc0: "CC0" }, formatGroups: { image: { label: "Images", formats: ["PNG"] } } },
+    entries: [entry], ...over,
+  });
+  const errs = (p) => schemaErrors(schema, p).join(" | ");
+  eq("schema: a well-formed payload passes", errs(payload()), "");
+  eq("schema: a thumb object passes", errs(payload({ entries: [{ ...entry, thumb: { path: "thumbs/a.webp", width: 640, height: 360, credit: "c" } }] })), "");
+  has("schema: a renamed field fails", errs(payload({ entries: [{ ...entry, licence: "CC0", license: undefined }] })), 'unexpected key "licence"');
+  has("schema: a missing required field fails", errs(payload({ entries: [(({ summary, ...rest }) => rest)(entry)] })), 'missing required "summary"');
+  has("schema: a retyped field fails", errs(payload({ entries: [{ ...entry, licenseRank: "0" }] })), "$.entries[0].licenseRank: expected integer, got string");
+  has("schema: an unknown status fails", errs(payload({ entries: [{ ...entry, status: "retired" }] })), '"retired" is not one of');
+  has("schema: commercial outside its values fails", errs(payload({ entries: [{ ...entry, commercial: "yes" }] })), "$.entries[0].commercial");
+  has("schema: need is not an entry field", errs(payload({ entries: [{ ...entry, need: "x" }] })), 'unexpected key "need"');
+  has("schema: a bad id pattern fails", errs(payload({ entries: [{ ...entry, id: "Bad_ID" }] })), "does not match");
+  has("schema: a new top-level key fails", errs(payload({ extra: 1 })), 'unexpected key "extra"');
+  has("schema: a negative stat fails", errs(payload({ stats: { ...payload().stats, total: -1 } })), "is below 0");
+  throws("schema: an unsupported keyword is refused, not ignored", () => schemaErrors({ type: "string", maxLength: 3 }, "abcd"), 'unsupported keyword "maxLength"');
+}
+
 /* catalog ordering, grouping and chip counts (search.mjs, used by app.js) -- */
 {
   const { computeResults, sorterFor, shouldGroup, engineRank, SORTS } = await import("./search.mjs");

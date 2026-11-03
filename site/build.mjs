@@ -25,6 +25,7 @@ import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
 import { atomFeed, catalogCsv, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
+import { schemaErrors } from "./lib/schema-check.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
 import { checkPage } from "./lib/page-checks.mjs";
@@ -611,6 +612,16 @@ function main() {
     entries,
   };
 
+  // data.json is held to its published schema (site/data.schema.json), so a
+  // renamed or retyped field fails here, before anything is written.
+  const schema = JSON.parse(fs.readFileSync(path.join(__dirname, "data.schema.json"), "utf8"));
+  const schemaProblems = schemaErrors(schema, JSON.parse(JSON.stringify(payload)));
+  if (schemaProblems.length) {
+    console.error(`Build failed: data.json does not match site/data.schema.json (${schemaProblems.length}); update the schema with the change:`);
+    for (const p of schemaProblems.slice(0, 20)) console.error(`  - ${p}`);
+    process.exit(1);
+  }
+
   // Empty dist rather than remove it: on Windows a server or editor holding the
   // folder open makes removing the folder itself fail with EPERM/EBUSY.
   ensureDir(DIST);
@@ -630,6 +641,7 @@ function main() {
   // data.json is the public machine-readable catalog (see site/README.md);
   // the page itself loads data.js.
   writeOut("data.json", JSON.stringify(payload, null, 2));
+  copyOut(path.join(__dirname, "data.schema.json"), "data.schema.json");
   writeOut("data.js", `window.__CATALOG__ = ${JSON.stringify(payload)};\n`);
   writeOut("catalog.csv", catalogCsv(entries, config.site.siteUrl));
   writeOut("feed.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "added" }));
