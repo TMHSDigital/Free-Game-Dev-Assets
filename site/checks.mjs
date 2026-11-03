@@ -10,7 +10,7 @@ import path from "node:path";
 import { ID_RE } from "./lib/entry-files.mjs";
 import { evidenceSection } from "./lib/frontmatter.mjs";
 import { isRealDate } from "./lib/shared.mjs";
-import { isPrivateHost, previewEligibility, safeImageUrl } from "./lib/thumbs.mjs";
+import { isAttributionLicence, isPrivateHost, PREVIEW_LICENSES, previewEligibility, safeImageUrl } from "./lib/thumbs.mjs";
 import { parseStack, pickPath, StackError } from "./lib/stacks.mjs";
 
 export { evidenceSection };
@@ -329,6 +329,32 @@ export function checkFeatured(featured, ids) {
   for (const item of featured || []) {
     const id = typeof item === "string" ? item : item?.id;
     if (!id || !ids.has(id)) errors.push(`featured id "${id}" does not resolve`);
+  }
+  return errors;
+}
+
+/* ----------------------------------------------------------------- V34 */
+/**
+ * The preview allowlist and the credit rule in lib/thumbs.mjs must agree
+ * with the licence vocabulary: every allowlisted licence exists there, and a
+ * licence whose vocabulary class is `required` is one the preview caption
+ * credits. Otherwise a new attribution licence could ship thumbnails with no
+ * creator credit.
+ */
+export function checkPreviewVocabulary(vocab, allow = PREVIEW_LICENSES, credits = isAttributionLicence) {
+  const errors = [];
+  for (const license of allow) {
+    const term = vocab.licenses?.[license];
+    if (!term) {
+      errors.push(`site/lib/thumbs.mjs PREVIEW_LICENSES has "${license}", which is not in site/license-vocabulary.json`);
+      continue;
+    }
+    const required = term.attribution === "required";
+    if (required !== Boolean(credits(license))) {
+      errors.push(
+        `site/lib/thumbs.mjs: "${license}" has attribution "${term.attribution}" in the vocabulary but isAttributionLicence says ${credits(license)}; previews under it would ${required ? "lack the creator credit" : "carry a credit the licence does not ask for"}`
+      );
+    }
   }
   return errors;
 }

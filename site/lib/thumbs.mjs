@@ -7,7 +7,13 @@
  * the browser, but keeping it pure keeps it testable.
  */
 
-/** Licences that allow a resized copy of the publisher's preview to be redistributed. An explicit allowlist, not a prefix match. */
+/**
+ * Licences that allow a resized copy of the publisher's preview to be
+ * redistributed. An explicit allowlist, not a prefix match. Every value must
+ * be in site/license-vocabulary.json, and the validator (V34) checks that
+ * isAttributionLicence agrees with the vocabulary's `attribution` class for
+ * each, so a new licence cannot ship previews without the creator credit.
+ */
 export const PREVIEW_LICENSES = new Set([
   "CC0",
   "Unlicense",
@@ -15,9 +21,6 @@ export const PREVIEW_LICENSES = new Set([
   "CC-BY",
   "CC-BY-3.0",
   "CC-BY-4.0",
-  "CC-BY-SA",
-  "CC-BY-SA-3.0",
-  "CC-BY-SA-4.0",
   "MIT",
   "ISC",
   "BSD",

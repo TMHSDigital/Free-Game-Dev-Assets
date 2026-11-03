@@ -974,6 +974,8 @@ eq("thumbs: sniff html refused", sniffImage(new TextEncoder().encode("<!doctype 
 }
 eq("thumbs: publisherKey falls back to host", publisherKey({ url: "https://www.kenney.nl/assets/x" }), "kenney.nl");
 eq("thumbs: publisherKey prefers publisher", publisherKey({ publisher: "Kenney", url: "https://x/" }), "Kenney");
+eq("thumbs: ODbL (attribution, not in the allowlist) gets no preview", previewEligibility({ status: "active", license: "ODbL", category: "data", url: "https://a.example/", publisher: "OSM" }).ok, false);
+eq("thumbs: CC-BY-SA is not allowlisted (not in the vocabulary)", previewEligibility({ status: "active", license: "CC-BY-SA-4.0", category: "2d", url: "https://a.example/", publisher: "X" }).ok, false);
 eq("thumbs: credit with publisher", previewCredit({ publisher: "Kenney", license: "CC0" }), "Preview image from Kenney, shown under CC0");
 eq("thumbs: credit without publisher", previewCredit({ license: "CC-BY-4.0" }), "Preview image from the source page, shown under CC-BY-4.0");
 eq("thumbs: CC-BY credit prefers the recorded credit line", previewCredit({ license: "CC-BY-4.0", publisher: "Dareful", attribution_string: "Video by Dareful.com" }), "Video by Dareful.com. Preview image shown under CC-BY-4.0");

@@ -41,6 +41,7 @@ import {
   checkKnownKeys,
   checkEntryBasics,
   checkFeatured,
+  checkPreviewVocabulary,
   closestKnownKey,
 } from "./checks.mjs";
 
@@ -846,6 +847,12 @@ rejects("V31 rejects an unquoted restriction", checkNonCommercialEvidence("bad.m
   rejects("V1 featured id that does not resolve", checkFeatured([{ id: "nope" }], new Set(["foo"])), 'featured id "nope" does not resolve');
   rejects("V1 featured item without an id", checkFeatured([{ need: "x" }], new Set(["foo"])), 'featured id "undefined" does not resolve');
 }
+
+/* V34: preview allowlist agrees with the vocabulary ------------------------ */
+accepts("V34 the real allowlist matches the real vocabulary", checkPreviewVocabulary(vocab));
+rejects("V34 rejects an allowlisted licence missing from the vocabulary", checkPreviewVocabulary({ licenses: {} }, ["CC-BY-SA-4.0"], () => true), '"CC-BY-SA-4.0", which is not in site/license-vocabulary.json');
+rejects("V34 rejects a required licence the caption would not credit", checkPreviewVocabulary({ licenses: { "OGA-BY-3.0": { attribution: "required" } } }, ["OGA-BY-3.0"], () => false), "would lack the creator credit");
+rejects("V34 rejects a credit on a licence that does not ask for one", checkPreviewVocabulary({ licenses: { MIT: { attribution: "notice" } } }, ["MIT"], () => true), "carry a credit the licence does not ask for");
 
 /* V33: no unknown frontmatter keys ------------------------------------------ */
 accepts("V33 accepts the documented keys", checkKnownKeys("ok.md", { id: "a", engine_lock: "unreal", attribution_string: "x", preview: "none" }));
