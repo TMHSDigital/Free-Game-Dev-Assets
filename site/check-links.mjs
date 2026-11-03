@@ -25,6 +25,7 @@ import { fileURLToPath } from "node:url";
 import { maintenanceFromRepo } from "./checks.mjs";
 import { parseFrontmatter } from "./lib/frontmatter.mjs";
 import { listEntryFiles } from "./lib/entry-files.mjs";
+import { safeFetch } from "./lib/safe-fetch.mjs";
 import { checkMaintenanceRepos, classify, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -54,11 +55,12 @@ function loadEntries() {
 }
 
 async function check(entry) {
-  const opts = { redirect: "follow", headers: { "user-agent": UA, accept: "text/html,*/*;q=0.8" } };
+  const opts = { headers: { "user-agent": UA, accept: "text/html,*/*;q=0.8" } };
   try {
-    const res = await fetch(entry.url, { ...opts, signal: AbortSignal.timeout(TIMEOUT_MS) });
+    // Redirects are followed hop by hop, and none may reach a private address.
+    const { response: res, finalUrl } = await safeFetch(entry.url, { ...opts, signal: AbortSignal.timeout(TIMEOUT_MS) }, { schemes: ["https:", "http:"], maxRedirects: 10 });
     res.body?.cancel().catch(() => {});
-    return classify(entry.url, res.status, res.url);
+    return classify(entry.url, res.status, finalUrl);
   } catch (err) {
     const cause = err.cause?.code || err.name || "error";
     if (cause === "TimeoutError") return { kind: "dead", detail: `no answer in ${TIMEOUT_MS / 1000}s`, timedOut: true };

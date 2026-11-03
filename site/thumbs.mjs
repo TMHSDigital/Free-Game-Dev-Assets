@@ -18,6 +18,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
+import { safeFetch } from "./lib/safe-fetch.mjs";
 import { parseFrontmatter } from "./lib/frontmatter.mjs";
 import { afterFailure, imageUrlFromHtml, needsFetch, previewEligibility, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./lib/thumbs.mjs";
 
@@ -103,9 +104,9 @@ function convert(converter, input, output) {
 async function fetchBytes(url, { maxBytes = MAX_IMAGE_BYTES } = {}) {
   const safe = safeImageUrl(url);
   if (!safe) throw new Error(`image URL refused (needs a public https host): ${url}`);
-  const res = await fetch(safe, { headers: { "user-agent": USER_AGENT, accept: "image/*" }, signal: AbortSignal.timeout(TIMEOUT_MS), redirect: "follow" });
+  // Every redirect hop and resolved address is checked before it is requested.
+  const { response: res } = await safeFetch(safe, { headers: { "user-agent": USER_AGENT, accept: "image/*" }, signal: AbortSignal.timeout(TIMEOUT_MS) }, { schemes: ["https:", "http:"] });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  if (res.url && !safeImageUrl(res.url)) throw new Error(`image redirected to a refused URL: ${res.url}`);
   const declared = Number(res.headers.get("content-length") || 0);
   if (declared > maxBytes) throw new Error(`image is ${declared} bytes, over the ${maxBytes} limit`);
   // Stream with a cap: content-length is optional and may lie.
@@ -128,16 +129,21 @@ async function fetchBytes(url, { maxBytes = MAX_IMAGE_BYTES } = {}) {
 }
 
 async function fetchText(url) {
-  const res = await fetch(url, { headers: { "user-agent": USER_AGENT, accept: "text/html,*/*" }, signal: AbortSignal.timeout(TIMEOUT_MS), redirect: "follow" });
+  const { response: res, finalUrl } = await safeFetch(url, { headers: { "user-agent": USER_AGENT, accept: "text/html,*/*" }, signal: AbortSignal.timeout(TIMEOUT_MS) }, { schemes: ["https:", "http:"] });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.text();
+  return { html: await res.text(), finalUrl };
 }
 
 /** Fetches one entry's preview. Returns { record, bytes } or throws with a reason. */
 async function fetchOne(entry, { converter, tmpDir, today }) {
   if (!converter) throw new Error("no converter on PATH (ffmpeg or magick)");
   const pinned = /^https:\/\//.test(entry.preview || "");
-  const image = pinned ? entry.preview : imageUrlFromHtml(await fetchText(entry.url), entry.url);
+  let image = entry.preview;
+  if (!pinned) {
+    // Relative og:image paths resolve against the page actually served, after redirects.
+    const page = await fetchText(entry.url);
+    image = imageUrlFromHtml(page.html, page.finalUrl);
+  }
   if (!image) throw new Error("page has no og:image or twitter:image");
   const source = await fetchBytes(image);
   const hash = createHash("sha256").update(source).digest("hex").slice(0, 16);

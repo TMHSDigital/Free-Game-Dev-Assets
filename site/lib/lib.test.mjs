@@ -1160,6 +1160,59 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* safe-fetch -------------------------------------------------------------- */
+{
+  const { isPrivateAddress, refusalFor, safeFetch } = await import("./safe-fetch.mjs");
+  for (const ip of ["127.0.0.1", "10.1.2.3", "172.16.0.1", "172.31.255.255", "192.168.1.1", "169.254.169.254", "100.64.0.1", "0.0.0.0", "224.0.0.1", "::1", "::", "fd00::1", "fe80::1", "::ffff:127.0.0.1", "::ffff:7f00:1", "not-an-ip"]) {
+    eq(`safe-fetch: ${ip} is private`, isPrivateAddress(ip), true);
+  }
+  for (const ip of ["8.8.8.8", "172.32.0.1", "100.128.0.1", "2606:4700::1111", "::ffff:8.8.8.8"]) {
+    eq(`safe-fetch: ${ip} is public`, isPrivateAddress(ip), false);
+  }
+  eq("safe-fetch: https public url allowed", refusalFor("https://example.com/a"), null);
+  has("safe-fetch: http refused by default", refusalFor("http://example.com/"), "scheme http:");
+  eq("safe-fetch: http allowed when asked", refusalFor("http://example.com/", { schemes: ["https:", "http:"] }), null);
+  has("safe-fetch: ip literal refused", refusalFor("https://169.254.169.254/"), "private or an IP literal");
+  has("safe-fetch: credentials refused", refusalFor("https://u:p@example.com/"), "credentials");
+
+  // A fake network: DNS answers and responses by URL.
+  const dns = { "public.example": "93.184.216.34", "rebind.example": "127.0.0.1", "hop.example": "93.184.216.35" };
+  const lookup = async (host) => {
+    if (!dns[host]) throw Object.assign(new Error(`getaddrinfo ENOTFOUND ${host}`), { code: "ENOTFOUND" });
+    return [{ address: dns[host], family: 4 }];
+  };
+  const routes = {
+    "https://public.example/": { status: 200 },
+    "https://public.example/to-meta": { status: 302, location: "http://169.254.169.254/latest/meta-data/" },
+    "https://public.example/to-rebind": { status: 301, location: "https://rebind.example/" },
+    "https://public.example/to-hop": { status: 302, location: "//hop.example/page" },
+    "https://hop.example/page": { status: 200 },
+    "https://public.example/loop": { status: 302, location: "/loop" },
+  };
+  const requested = [];
+  const fetchImpl = async (url, init) => {
+    requested.push(url);
+    eq(`safe-fetch: ${url} requested with manual redirects`, init.redirect, "manual");
+    const r = routes[url] || { status: 404 };
+    return { status: r.status, ok: r.status < 300, headers: new Headers(r.location ? { location: r.location } : {}), body: null };
+  };
+  const opts = { lookup, fetchImpl, schemes: ["https:", "http:"] };
+  const errOf = async (p) => { try { await p; return ""; } catch (e) { return `${e.message} ${e.cause?.code || ""}`; } };
+
+  const ok = await safeFetch("https://public.example/", {}, opts);
+  eq("safe-fetch: plain fetch returns the response", ok.response.status, 200);
+  eq("safe-fetch: plain fetch final url", ok.finalUrl, "https://public.example/");
+  const hopped = await safeFetch("https://public.example/to-hop", {}, opts);
+  eq("safe-fetch: protocol-relative redirect followed", hopped.finalUrl, "https://hop.example/page");
+  requested.length = 0;
+  has("safe-fetch: redirect to metadata IP refused", await errOf(safeFetch("https://public.example/to-meta", {}, opts)), "private or an IP literal");
+  eq("safe-fetch: metadata IP never requested", requested.includes("http://169.254.169.254/latest/meta-data/"), false);
+  has("safe-fetch: name resolving to loopback refused", await errOf(safeFetch("https://public.example/to-rebind", {}, opts)), "resolves to a private address");
+  eq("safe-fetch: loopback name never requested", requested.includes("https://rebind.example/"), false);
+  has("safe-fetch: redirect loop capped", await errOf(safeFetch("https://public.example/loop", {}, { ...opts, maxRedirects: 3 })), "EREDIRECTS");
+  has("safe-fetch: DNS failure keeps its code", await errOf(safeFetch("https://missing.example/", {}, opts)), "ENOTFOUND");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
