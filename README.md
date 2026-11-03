@@ -362,7 +362,7 @@ npm run check    # all of the below, in the order CI runs them
 npm test         # the checks against known-bad fixtures, and the site modules' tests
 npm run validate # the catalog, against the checks (node site/validate.mjs)
 npm run build    # builds the site into site/dist (node site/build.mjs)
-npm run serve    # preview at http://localhost:3000
+npm run serve    # preview at http://localhost:3000 (node site/serve.mjs, no download)
 ```
 
 </details>
@@ -397,6 +397,7 @@ npm run serve    # preview at http://localhost:3000
 │   ├── checks.test.mjs         fixtures proving each check fails on bad input
 │   ├── new-entry.mjs           starts an entry from the template
 │   ├── sync-counts.mjs         rewrites every restated entry count
+│   ├── serve.mjs               local preview server for site/dist
 │   ├── license-vocabulary.json the licence values the catalog accepts
 │   ├── format-vocabulary.json  the format values the catalog accepts, and filter groups
 │   ├── value-aliases.json      retired spellings of tags, formats and subcategories

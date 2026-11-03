@@ -1169,6 +1169,32 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* local preview server ---------------------------------------------------- */
+{
+  const { resolveRequest } = await import("../serve.mjs");
+  const os = await import("node:os");
+  const nodePath = await import("node:path");
+  const root = nodeFs.mkdtempSync(nodePath.join(os.tmpdir(), "fgda-serve-"));
+  try {
+    nodeFs.mkdirSync(nodePath.join(root, "entry", "a"), { recursive: true });
+    nodeFs.writeFileSync(nodePath.join(root, "index.html"), "home");
+    nodeFs.writeFileSync(nodePath.join(root, "entry", "a", "index.html"), "a");
+    nodeFs.writeFileSync(nodePath.join(root, "data.json"), "{}");
+    eq("serve: / is index.html", resolveRequest(root, "/"), nodePath.join(root, "index.html"));
+    eq("serve: a directory serves its index", resolveRequest(root, "/entry/a/"), nodePath.join(root, "entry", "a", "index.html"));
+    eq("serve: query strings are ignored", resolveRequest(root, "/data.json?v=1"), nodePath.join(root, "data.json"));
+    eq("serve: missing file", resolveRequest(root, "/nope.html"), null);
+    eq("serve: directory without an index", resolveRequest(root, "/entry/"), null);
+    eq("serve: dot-dot cannot escape", resolveRequest(root, "/../../etc/passwd"), null);
+    eq("serve: encoded dot-dot cannot escape", resolveRequest(root, "/%2e%2e/%2e%2e/secret"), null);
+    eq("serve: backslash dot-dot cannot escape", resolveRequest(root, "/..%5c..%5csecret"), null);
+    eq("serve: a NUL byte is refused", resolveRequest(root, "/index.html%00.txt"), null);
+    eq("serve: bad percent-encoding is refused", resolveRequest(root, "/%E0%A4%A"), null);
+  } finally {
+    nodeFs.rmSync(root, { recursive: true, force: true });
+  }
+}
+
 /* shared page chrome ------------------------------------------------------ */
 {
   const { siteHeaderHtml, siteFooterHtml, PREVIEW_CREDIT_LINE: credit } = await import("./shared.mjs");

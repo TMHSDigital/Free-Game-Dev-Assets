@@ -16,6 +16,6 @@
     "links": "node site/check-links.mjs",
     "thumbs": "node site/thumbs.mjs",
     "reverify": "node site/reverify-batch.mjs",
-    "serve": "npx --yes serve site/dist"
+    "serve": "node site/serve.mjs"
   }
 }
