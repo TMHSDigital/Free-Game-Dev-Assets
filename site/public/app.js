@@ -1,4 +1,4 @@
-import { closestEntries, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, slugOf, stateQuery, ENGINES, engineRank } from "./search.js";
+import { closestEntries, computeResults as computeResultsFor, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 
@@ -118,34 +118,9 @@ import { installViewToggles } from "./views.js";
 
   const passesFilters = (entry) => passes(entry, state, FORMAT_GROUPS);
 
-  /**
-   * One pass over the catalog per change. The pool is what passes every
-   * filter but the category: the chip counts are taken from it, because
-   * counting with the category applied would make every chip read 0 except
-   * the selected one, which tells the reader nothing.
-   */
+  /** One pass over the catalog per change (search.js, tested in lib.test.mjs). */
   function computeResults() {
-    const score = new Map();
-    const pool = [];
-    for (const e of data.entries) {
-      if (!passesFilters(e)) continue;
-      const s = searchScore(e);
-      if (!s) continue;
-      score.set(e.id, s);
-      pool.push(e);
-    }
-    const counts = new Map();
-    for (const e of pool) counts.set(e.category, (counts.get(e.category) || 0) + 1);
-    const list =
-      state.category === "all" ? pool.slice() : pool.filter((e) => e.category === state.category);
-    const ranked = state.sort === "name" && queryTests().length > 0;
-    if (ranked) {
-      // Searching under the default sort: best match first, then by name.
-      list.sort((a, b) => score.get(b.id) - score.get(a.id) || SORTS.name(a, b));
-    } else {
-      list.sort(sorter());
-    }
-    return { list, counts, total: pool.length, ranked };
+    return computeResultsFor(data.entries, state, { passes: passesFilters, score: searchScore, hasQuery: queryTests().length > 0 });
   }
 
   /* ------------------------------------------------------------- search */
@@ -165,26 +140,8 @@ import { installViewToggles } from "./views.js";
 
   const searchScore = (entry) => (queryTests().length ? scoreFields(fieldsOf(entry), queryTests()) : 1);
 
-  const SORTS = {
-    name: (a, b) => a.name.localeCompare(b.name),
-    license: (a, b) =>
-      (a.licenseRank ?? 3) - (b.licenseRank ?? 3) ||
-      a.license.localeCompare(b.license) ||
-      a.name.localeCompare(b.name),
-    verified: (a, b) =>
-      String(b.verified || "").localeCompare(String(a.verified || "")) ||
-      a.name.localeCompare(b.name),
-    added: (a, b) =>
-      String(b.added || "").localeCompare(String(a.added || "")) ||
-      a.name.localeCompare(b.name),
-  };
-
-  /** The chosen sort, with entries made for the chosen engine first. */
-  function sorter() {
-    const by = SORTS[state.sort] || SORTS.name;
-    if (state.engine === "any") return by;
-    return (a, b) => engineRank(a, state.engine) - engineRank(b, state.engine) || by(a, b);
-  }
+  /** The chosen sort, with entries made for the chosen engine first (search.js). */
+  const sorter = () => sorterFor(state);
 
   /* ---------------------------------------------------------- rendering */
 
@@ -204,15 +161,8 @@ import { installViewToggles } from "./views.js";
     return entryCardHtml(entry, { root: "", repo, now: NOW, view: viewFor(entry.category), label: categoryLabels[entry.category]?.label });
   }
 
-  /**
-   * Grouping is only meaningful under the default sort with no category
-   * filter. Sorting by verified date or license inside category buckets would
-   * hide the very ordering the reader asked for, so those fall back to a flat
-   * list. The prerendered page is always the grouped default.
-   */
-  function shouldGroup() {
-    return state.sort === "name" && state.category === "all";
-  }
+  /** Grouped by category only under the default sort and no category filter (search.js). The prerendered page is always the grouped default. */
+  const shouldGroup = () => shouldGroupFor(state);
 
   function renderCategoryFilters() {
     const host = $("#category-filters");

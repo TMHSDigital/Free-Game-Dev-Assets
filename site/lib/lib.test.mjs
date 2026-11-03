@@ -1182,6 +1182,44 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* catalog ordering, grouping and chip counts (search.mjs, used by app.js) -- */
+{
+  const { computeResults, sorterFor, shouldGroup, engineRank, SORTS } = await import("./search.mjs");
+  const E = [
+    { id: "a", name: "Alpha", category: "2d", license: "CC0", licenseRank: 0, verified: "2026-01-01", added: "2026-01-05", tags: ["godot"] },
+    { id: "b", name: "Bravo", category: "2d", license: "MIT", licenseRank: 1, verified: null, added: "2026-02-01", tags: [] },
+    { id: "c", name: "Charlie", category: "audio", license: "CC-BY", licenseRank: 2, verified: "2026-03-01", added: null, tags: [] },
+    { id: "d", name: "Delta", category: "audio", license: "custom", verified: "2026-02-01", added: "2026-01-01", tags: [], engine_lock: "unreal" },
+  ];
+  const ids = (list) => list.map((e) => e.id).join("");
+  const run = (state, { passes = () => true, score = () => 1, hasQuery = false } = {}) =>
+    computeResults(E, { sort: "name", category: "all", engine: "any", ...state }, { passes, score, hasQuery });
+
+  eq("order: name sort is alphabetical", ids(run({}).list), "abcd");
+  eq("order: name sort is not ranked without a query", run({}).ranked, false);
+  const scores = { a: 1, b: 5, c: 5, d: 0 };
+  const searched = run({}, { score: (e) => scores[e.id], hasQuery: true });
+  eq("order: a search ranks by score, ties by name, and drops non-matches", ids(searched.list), "bca");
+  eq("order: a search under the name sort is ranked", searched.ranked, true);
+  eq("order: a search under another sort keeps that sort", ids(run({ sort: "verified" }, { score: (e) => scores[e.id], hasQuery: true }).list), "cab");
+  eq("order: licence sort puts unknown rank last", ids(run({ sort: "license" }).list), "abcd");
+  eq("order: verified sort is newest first, undated last", ids(run({ sort: "verified" }).list), "cdab");
+  eq("order: added sort is newest first, undated last", ids(run({ sort: "added" }).list), "badc");
+  eq("order: unknown sort falls back to name", ids([...E].sort(sorterFor({ sort: "nope", engine: "any" }))), "abcd");
+  eq("order: engine=godot puts godot-tagged entries first", ids([...E].sort(sorterFor({ sort: "verified", engine: "godot" }))), "acdb");
+  eq("order: engine=unreal puts engine-locked entries first", ids([...E].sort(sorterFor({ sort: "name", engine: "unreal" }))), "dabc");
+  eq("order: engineRank with an unknown engine is 0", engineRank(E[0], "pico-8"), 0);
+  eq("order: SORTS.name ties nothing", SORTS.name(E[0], E[0]), 0);
+
+  const filtered = run({ category: "audio" }, { passes: (e) => e.id !== "d" });
+  eq("counts: the category filter narrows the list", ids(filtered.list), "c");
+  eq("counts: chip counts ignore the category filter", `${filtered.counts.get("2d")}/${filtered.counts.get("audio")}`, "2/1");
+  eq("counts: chip counts apply the other filters", filtered.total, 3);
+  eq("group: grouped under name sort and all categories", shouldGroup({ sort: "name", category: "all" }), true);
+  eq("group: flat under another sort", shouldGroup({ sort: "verified", category: "all" }), false);
+  eq("group: flat under a category filter", shouldGroup({ sort: "name", category: "2d" }), false);
+}
+
 /* heading anchors: validator and guide renderer agree ---------------------- */
 {
   const { markdownAnchors } = await import("../checks.mjs");

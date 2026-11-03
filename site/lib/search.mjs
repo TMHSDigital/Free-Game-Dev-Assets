@@ -106,6 +106,66 @@ export function engineRank(entry, engine) {
   return (entry.tags || []).some((t) => e.tags.includes(t)) ? 0 : 1;
 }
 
+/** The catalog's sort orders, by `sort` value. Ties fall back to the name. */
+export const SORTS = {
+  name: (a, b) => a.name.localeCompare(b.name),
+  license: (a, b) =>
+    (a.licenseRank ?? 3) - (b.licenseRank ?? 3) ||
+    a.license.localeCompare(b.license) ||
+    a.name.localeCompare(b.name),
+  verified: (a, b) =>
+    String(b.verified || "").localeCompare(String(a.verified || "")) ||
+    a.name.localeCompare(b.name),
+  added: (a, b) =>
+    String(b.added || "").localeCompare(String(a.added || "")) ||
+    a.name.localeCompare(b.name),
+};
+
+/** The chosen sort as a comparator, with entries made for the chosen engine first. */
+export function sorterFor(state) {
+  const by = SORTS[state.sort] || SORTS.name;
+  if (!state.engine || state.engine === "any") return by;
+  return (a, b) => engineRank(a, state.engine) - engineRank(b, state.engine) || by(a, b);
+}
+
+/**
+ * Grouping by category is only meaningful under the default sort with no
+ * category filter: sorting by date or licence inside category buckets would
+ * hide the order the reader asked for.
+ */
+export function shouldGroup(state) {
+  return state.sort === "name" && state.category === "all";
+}
+
+/**
+ * One pass over the catalog for the current state. `passes(entry)` applies
+ * every filter but the category; `score(entry)` is the search score (0 is no
+ * match, 1 when there is no query); `hasQuery` says a search is active.
+ *
+ * The pool is what passes every filter but the category, and the chip counts
+ * are taken from it: counting with the category applied would make every
+ * chip read 0 except the selected one. Under the default sort a search ranks
+ * by score, ties by name; otherwise the chosen sort applies.
+ */
+export function computeResults(entries, state, { passes, score, hasQuery }) {
+  const scores = new Map();
+  const pool = [];
+  for (const e of entries) {
+    if (!passes(e)) continue;
+    const s = score(e);
+    if (!s) continue;
+    scores.set(e.id, s);
+    pool.push(e);
+  }
+  const counts = new Map();
+  for (const e of pool) counts.set(e.category, (counts.get(e.category) || 0) + 1);
+  const list = state.category === "all" ? pool.slice() : pool.filter((e) => e.category === state.category);
+  const ranked = state.sort === "name" && hasQuery;
+  if (ranked) list.sort((a, b) => scores.get(b.id) - scores.get(a.id) || SORTS.name(a, b));
+  else list.sort(sorterFor(state));
+  return { list, counts, total: pool.length, ranked };
+}
+
 const CHOICES = [
   ["cat", "category"],
   ["sort", "sort"],
