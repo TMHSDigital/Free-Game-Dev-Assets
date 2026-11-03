@@ -1160,6 +1160,48 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* client scripts parse, and every named import exists --------------------- */
+{
+  const { execFileSync } = await import("node:child_process");
+  const os = await import("node:os");
+  const nodePath = await import("node:path");
+  const publicDir = new URL("../public/", import.meta.url);
+  // dist name -> source module in site/lib (build.mjs copies these out).
+  const fromLib = { "search.js": "search.mjs", "owes.js": "owes.mjs", "cards.mjs": "cards.mjs", "shared.mjs": "shared.mjs" };
+  const scripts = nodeFs.readdirSync(publicDir).filter((f) => f.endsWith(".js")).sort();
+  const tmp = nodeFs.mkdtempSync(nodePath.join(os.tmpdir(), "fgda-client-"));
+  const exportsOfPublic = (text) => {
+    const names = new Set([...text.matchAll(/^export\s+(?:async\s+)?(?:function\*?|const|let|var|class)\s+([A-Za-z_$][\w$]*)/gm)].map((m) => m[1]));
+    for (const m of text.matchAll(/^export\s*\{([^}]*)\}/gm)) for (const part of m[1].split(",")) if (part.trim()) names.add(part.trim().split(/\s+as\s+/).pop());
+    return names;
+  };
+  try {
+    for (const name of scripts) {
+      const text = nodeFs.readFileSync(new URL(name, publicDir), "utf8");
+      // Parse as an ES module: node --check reads .js as CommonJS here, so check a .mjs copy.
+      const copy = nodePath.join(tmp, name.replace(/\.js$/, ".mjs"));
+      nodeFs.writeFileSync(copy, text);
+      let parseError = "";
+      try { execFileSync(process.execPath, ["--check", copy], { stdio: ["ignore", "ignore", "pipe"] }); } catch (e) { parseError = String(e.stderr || e.message).split("\n").find((l) => /Error/.test(l)) || "parse failed"; }
+      eq(`client: ${name} parses as a module`, parseError, "");
+      for (const m of text.matchAll(/^import\s*\{([^}]*)\}\s*from\s*"\.\/([^"]+)";/gm)) {
+        const target = m[2];
+        let exported;
+        if (fromLib[target]) exported = new Set(Object.keys(await import(`./${fromLib[target]}`)));
+        else if (nodeFs.existsSync(new URL(target, publicDir))) exported = exportsOfPublic(nodeFs.readFileSync(new URL(target, publicDir), "utf8"));
+        else { eq(`client: ${name} imports a file that exists (${target})`, false, true); continue; }
+        for (const spec of m[1].split(",").map((s) => s.trim()).filter(Boolean)) {
+          const imported = spec.split(/\s+as\s+/)[0];
+          eq(`client: ${name} imports ${imported} from ${target}`, exported.has(imported), true);
+        }
+      }
+    }
+    eq("client: found the public scripts", scripts.length >= 5, true);
+  } finally {
+    nodeFs.rmSync(tmp, { recursive: true, force: true });
+  }
+}
+
 /* safe-fetch -------------------------------------------------------------- */
 {
   const { isPrivateAddress, refusalFor, safeFetch } = await import("./safe-fetch.mjs");
