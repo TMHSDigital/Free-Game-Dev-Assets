@@ -140,15 +140,45 @@ function catalogCategories() {
   );
 }
 
+/**
+ * File text, read once per run. Each entry used to re-read its category
+ * README, and the link pass re-read every entry, so a run read about 1,800
+ * times for under 500 files.
+ */
+const textCache = new Map();
+function readText(file) {
+  if (!textCache.has(file)) textCache.set(file, fs.readFileSync(file, "utf8"));
+  return textCache.get(file);
+}
+
+/** existsSync, realpath and isFile for a link target, looked up once per path. */
+const targetCache = new Map();
+function linkTarget(resolved) {
+  if (!targetCache.has(resolved)) {
+    const exists = fs.existsSync(resolved);
+    let isFile;
+    targetCache.set(resolved, {
+      exists,
+      real: exists ? fs.realpathSync.native(resolved) : null,
+      // Only links with a #fragment need it, so stat lazily.
+      get isFile() {
+        if (isFile === undefined) isFile = exists && fs.statSync(resolved).isFile();
+        return isFile;
+      },
+    });
+  }
+  return targetCache.get(resolved);
+}
+
 /** Heading anchors per Markdown file, read once. */
 const anchorCache = new Map();
 function anchorsOf(file) {
-  if (!anchorCache.has(file)) anchorCache.set(file, markdownAnchors(fs.readFileSync(file, "utf8")));
+  if (!anchorCache.has(file)) anchorCache.set(file, markdownAnchors(readText(file)));
   return anchorCache.get(file);
 }
 
 function checkRelativeLinks(file, errors) {
-  const text = fs.readFileSync(file, "utf8");
+  const text = readText(file);
   const dir = path.dirname(file);
   let m;
   MD_LINK_RE.lastIndex = 0;
@@ -168,18 +198,19 @@ function checkRelativeLinks(file, errors) {
     const filePart = hash === -1 ? href : href.slice(0, hash);
     const fragment = hash === -1 ? "" : href.slice(hash + 1);
     const resolved = filePart ? path.resolve(dir, filePart) : file;
-    if (!fs.existsSync(resolved)) {
+    const onDisk = linkTarget(resolved);
+    if (!onDisk.exists) {
       errors.push(`${relFromRoot(file)} broken link: ${href}`);
       continue;
     }
     // Case-insensitive filesystems accept a wrong-case link that CI (Linux) will not.
-    const mismatch = caseMismatch(path.relative(ROOT, resolved), path.relative(REAL_ROOT, fs.realpathSync.native(resolved)));
+    const mismatch = caseMismatch(path.relative(ROOT, resolved), path.relative(REAL_ROOT, onDisk.real));
     if (mismatch) {
       errors.push(`${relFromRoot(file)} broken link: ${href} (case differs on disk: ${mismatch}; CI is case-sensitive)`);
       continue;
     }
     // A fragment into a Markdown file must name one of its headings.
-    if (fragment && resolved.endsWith(".md") && fs.statSync(resolved).isFile()) {
+    if (fragment && resolved.endsWith(".md") && onDisk.isFile) {
       let id = fragment;
       try {
         id = decodeURIComponent(fragment);
@@ -257,7 +288,7 @@ function main() {
 
   for (const file of entryFiles) {
     const rel = relFromRoot(file);
-    const text = fs.readFileSync(file, "utf8");
+    const text = readText(file);
     if (hasEmoji(text)) errors.push(`${rel} contains emoji`);
     errors.push(...checkLineEndings(rel, text));
     const ctl = text.split("\n").findIndex((line) => CONTROL_RE.test(line));
@@ -272,7 +303,7 @@ function main() {
     for (const e of parsed.errors) errors.push(`${rel} frontmatter ${e}`);
     const stem = path.basename(file, ".md");
     const catReadme = path.join(path.dirname(file), "README.md");
-    const readmeText = fs.existsSync(catReadme) ? fs.readFileSync(catReadme, "utf8") : null;
+    const readmeText = linkTarget(catReadme).exists ? readText(catReadme) : null;
     errors.push(
       ...checkEntryBasics(rel, meta, body, { stem, dirName: path.basename(path.dirname(file)), categories, readmeText, today })
     );
@@ -329,7 +360,7 @@ function main() {
     const readme = path.join(CATALOG, cat, "README.md");
     if (!fs.existsSync(readme)) continue;
     errors.push(
-      ...checkCategoryReadmeRows(cat, fs.readFileSync(readme, "utf8"), group)
+      ...checkCategoryReadmeRows(cat, readText(readme), group)
     );
   }
 
@@ -342,12 +373,12 @@ function main() {
     ...checkCountTables(measured, [
       {
         name: "README.md",
-        text: fs.readFileSync(path.join(ROOT, "README.md"), "utf8"),
+        text: readText(path.join(ROOT, "README.md")),
         pathFragment: "catalog/CAT/",
       },
       {
         name: "catalog/README.md",
-        text: fs.readFileSync(path.join(CATALOG, "README.md"), "utf8"),
+        text: readText(path.join(CATALOG, "README.md")),
         pathFragment: "`CAT/`",
       },
     ])
@@ -385,7 +416,7 @@ function main() {
       ? walkFiles(root, [], (f) => f.endsWith(".md"))
       : [root];
     for (const file of files) {
-      errors.push(...checkLineEndings(relFromRoot(file), fs.readFileSync(file, "utf8")));
+      errors.push(...checkLineEndings(relFromRoot(file), readText(file)));
       checkRelativeLinks(file, errors);
     }
   }
