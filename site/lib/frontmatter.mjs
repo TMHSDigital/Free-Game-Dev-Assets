@@ -22,6 +22,7 @@ function splitFlowList(inner) {
     if (quote) {
       cur += ch;
       if (quote === '"' && ch === "\\" && i + 1 < inner.length) cur += inner[++i];
+      else if (quote === "'" && ch === "'" && inner[i + 1] === "'") cur += inner[++i];
       else if (ch === quote) quote = null;
     } else if (ch === '"' || ch === "'") {
       quote = ch;
@@ -47,6 +48,7 @@ function stripComment(raw) {
     const ch = raw[i];
     if (quote) {
       if (quote === '"' && ch === "\\") i += 1;
+      else if (quote === "'" && ch === "'" && raw[i + 1] === "'") i += 1; // '' is an escaped quote, as in YAML
       else if (ch === quote) quote = null;
     } else if ((ch === '"' || ch === "'") && (i === 0 || /[\s[,]/.test(raw[i - 1]))) {
       quote = ch;
@@ -120,6 +122,10 @@ export function parseFrontmatter(text) {
       }
       return;
     }
+    if (/^-(\s|$)/.test(line)) {
+      errors.push(`line ${lineNo}: list item "${line.trim()}" starts at column 0; indent list items under their key ("  - item")`);
+      return;
+    }
     listKey = null;
     const idx = line.indexOf(":");
     if (idx === -1 || /^\s/.test(line)) {
@@ -132,6 +138,10 @@ export function parseFrontmatter(text) {
       return;
     }
     const rawValue = line.slice(idx + 1);
+    if (rawValue !== "" && !/^\s/.test(rawValue)) {
+      errors.push(`line ${lineNo}: "${line.trim()}" needs a space after the colon ("${key}: value")`);
+      return;
+    }
     const value = parseScalar(rawValue);
     const open = unclosedQuote(rawValue);
     if (open) errors.push(`line ${lineNo}: "${key}" opens a ${open} quote that is never closed`);

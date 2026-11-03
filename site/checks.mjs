@@ -270,6 +270,57 @@ export function checkFieldTypes(rel, meta) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V33 */
+/**
+ * Every frontmatter key an entry may use. An unknown key was ignored without
+ * a word, so a typo in an optional field that carries a licence fact
+ * (`engine-lock: unreal`, `attribution_strng:`) dropped that fact and still
+ * passed. A new field is added here in the same change that documents it.
+ */
+export const KNOWN_KEYS = [
+  "id", "name", "url", "publisher", "category", "subcategories", "license", "license_spdx",
+  "commercial", "attribution_required", "attribution_string", "formats", "tags", "added",
+  "verified", "status", "engine_lock", "ue_versions", "camera_perspective", "grid_dimensions",
+  "maintenance", "hardware_tags", "preview",
+];
+
+function editDistance(a, b) {
+  const row = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i += 1) {
+    let prev = row[0];
+    row[0] = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      const tmp = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+      prev = tmp;
+    }
+  }
+  return row[b.length];
+}
+
+/** The known key a misspelt one most likely meant, or null. */
+export function closestKnownKey(key, known = KNOWN_KEYS) {
+  const norm = String(key).toLowerCase().replace(/[\s-]+/g, "_");
+  if (known.includes(norm)) return norm;
+  let best = null;
+  let bestDist = Infinity;
+  for (const k of known) {
+    const d = editDistance(norm, k);
+    if (d < bestDist) [best, bestDist] = [k, d];
+  }
+  return bestDist <= Math.max(2, Math.floor(norm.length / 4)) ? best : null;
+}
+
+export function checkKnownKeys(rel, meta, known = KNOWN_KEYS) {
+  const errors = [];
+  for (const key of Object.keys(meta)) {
+    if (known.includes(key)) continue;
+    const guess = closestKnownKey(key, known);
+    errors.push(`${rel} unknown frontmatter key "${key}"${guess ? ` (did you mean "${guess}"?)` : ""}; the allowed keys are listed in CONTRIBUTING.md`);
+  }
+  return errors;
+}
+
 /* ----------------------------------------------------------------- V26 */
 /**
  * `added` is the day the entry joined the catalog. The feed and the "new

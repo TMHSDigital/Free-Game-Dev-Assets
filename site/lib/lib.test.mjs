@@ -566,6 +566,13 @@ import { latestAllowedDate } from "./shared.mjs";
 const fm = (lines, body = "Body.\n") => parseFrontmatter(`---\n${lines.join("\n")}\n---\n${body}`);
 eq("frontmatter: unterminated double quote is an error", fm(['name: "Foo']).errors.some((e) => e === 'line 2: "name" opens a double quote that is never closed'), true);
 eq("frontmatter: unterminated single quote in a list item", fm(["tags:", "  - 'a"]).errors.some((e) => e === "line 3: list item opens a single quote that is never closed"), true);
+eq("frontmatter: column-0 list item is an error", fm(["tags:", "- foo: bar"]).errors.some((e) => e.startsWith('line 3: list item "- foo: bar" starts at column 0')), true);
+eq("frontmatter: column-0 list item does not become a key", Object.keys(fm(["tags:", "- foo: bar"]).meta).join(","), "tags");
+eq("frontmatter: key:value with no space is an error", fm(["key:value"]).errors.some((e) => e.includes("needs a space after the colon")), true);
+eq("frontmatter: a colon inside a value is fine", fm(["url: https://a.example/x:y"]).meta.url, "https://a.example/x:y");
+eq("frontmatter: '' inside a single-quoted scalar", fm(["name: 'Kay''s # 1'"]).meta.name, "Kay's # 1");
+eq("frontmatter: '' in a single-quoted scalar raises no error", fm(["name: 'Kay''s # 1'"]).errors.length, 0);
+eq("frontmatter: '' inside a flow-list item", fm(["tags: ['it''s', b]"]).meta.tags.join("|"), "it's|b");
 eq("frontmatter: closed quotes stay clean", fm(['name: "Foo"', "tags:", "  - 'a'"]).errors.length, 0);
 eq("frontmatter: a lone quote character is unterminated", fm(['name: "']).errors.length, 1);
 const f1 = fm([
@@ -1182,7 +1189,7 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
       const copy = nodePath.join(tmp, name.replace(/\.js$/, ".mjs"));
       nodeFs.writeFileSync(copy, text);
       let parseError = "";
-      try { execFileSync(process.execPath, ["--check", copy], { stdio: ["ignore", "ignore", "pipe"] }); } catch (e) { parseError = String(e.stderr || e.message).split("\n").find((l) => /Error/.test(l)) || "parse failed"; }
+      try { execFileSync(process.execPath, ["--check", copy], { stdio: ["ignore", "ignore", "pipe"] }); } catch (e) { parseError = String(e.stderr || e.message).split(/\r?\n/).find((l) => /Error/.test(l)) || "parse failed"; }
       eq(`client: ${name} parses as a module`, parseError, "");
       for (const m of text.matchAll(/^import\s*\{([^}]*)\}\s*from\s*"\.\/([^"]+)";/gm)) {
         const target = m[2];

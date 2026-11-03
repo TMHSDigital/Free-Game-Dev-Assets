@@ -38,6 +38,8 @@ import {
   checkTitleMatchesName,
   checkValueAliases,
   checkValueSpellings,
+  checkKnownKeys,
+  closestKnownKey,
 } from "./checks.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -807,6 +809,14 @@ accepts("V31 ignores commercial: true", checkNonCommercialEvidence("ok.md", { st
 accepts("V31 ignores needs-review", checkNonCommercialEvidence("ok.md", { status: "needs-review", commercial: false }, "## Evidence\n\n- Live page (2026-01-01): \"free\"\n"));
 accepts("V31 accepts a quoted restriction", checkNonCommercialEvidence("ok.md", { status: "active", commercial: false }, "## Evidence\n\n- Live About (2026-01-01): \"as long as you don't use these commercially\"\n"));
 rejects("V31 rejects an unquoted restriction", checkNonCommercialEvidence("bad.md", { status: "active", commercial: false }, "## Evidence\n\n- Live page (2026-01-01): \"free download\"\n"), "bad.md is active with commercial: false but no Evidence line mentions the commercial restriction");
+
+/* V33: no unknown frontmatter keys ------------------------------------------ */
+accepts("V33 accepts the documented keys", checkKnownKeys("ok.md", { id: "a", engine_lock: "unreal", attribution_string: "x", preview: "none" }));
+rejects("V33 rejects a hyphenated key and names the real one", checkKnownKeys("bad.md", { "engine-lock": "unreal" }), 'unknown frontmatter key "engine-lock" (did you mean "engine_lock"?)');
+rejects("V33 rejects a misspelt key and names the real one", checkKnownKeys("bad.md", { attribution_strng: "x" }), 'did you mean "attribution_string"?');
+rejects("V33 rejects an unrelated key without a guess", checkKnownKeys("bad.md", { colour: "red" }), 'unknown frontmatter key "colour"; the allowed keys');
+eq("V33 closestKnownKey normalises case and hyphens", closestKnownKey("License-SPDX"), "license_spdx");
+eq("V33 closestKnownKey gives up on distant words", closestKnownKey("zzzzzz"), null);
 
 /* V32: the licence guide covers the vocabulary ---------------------------- */
 accepts("V32 accepts a guide naming every value", checkLicenceGuide({ licenses: { MIT: {}, "CC-BY": {} } }, "| **MIT** | yes |\n| **CC-BY** | yes |"));

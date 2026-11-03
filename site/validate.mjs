@@ -7,6 +7,7 @@ import { caseMismatch } from "./lib/links.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  checkKnownKeys,
   checkActiveIsSettled,
   checkPreviewField,
   checkThumbManifest,
@@ -290,6 +291,7 @@ function main() {
     for (const e of parsed.errors) errors.push(`${rel} frontmatter ${e}`);
     const missing = REQUIRED.filter((k) => isEmptyField(meta[k]));
     if (missing.length) errors.push(`${rel} missing/empty: ${missing.join(", ")}`);
+    errors.push(...checkKnownKeys(rel, meta));
 
     const stem = path.basename(file, ".md");
     const dirName = path.basename(path.dirname(file));
