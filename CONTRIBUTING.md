@@ -97,7 +97,7 @@ The site shows each entry's preview image where it can. The picture is the publi
 - a CC-BY entry needs `attribution_string` or `publisher`, because the caption has to name the creator;
 - GitHub repositories are skipped, since their social card is not a preview.
 
-What the gate does not verify: an itch.io store cover is taken to be under the pack's licence, which the pack's licence text does not always say; a publisher who disagrees can ask for `preview: none` (below). The validator fails when a committed image no longer passes the gate, and the script removes it on its next run.
+What the gate does not verify: an itch.io store cover is taken to be under the pack's licence, which the pack's licence text does not always say; a publisher who disagrees can ask for `preview: none` (below). The validator fails when a committed image no longer passes the gate, or when the entry's `url` or `preview:` no longer matches the page the image was taken from. Fix it in the same pull request: run `node site/thumbs.mjs --only <id>`. It fetches the new image if it can, and otherwise deletes the stale one (no network access or ffmpeg needed for that), so `npm run validate` passes either way. Commit the changes to `site/thumbs.json` and `site/public/thumbs/`.
 
 A publisher who would rather not have their preview shown can open an issue; the maintainer sets `preview: none` on the entry and the image is removed. A maintainer who has checked that a specific image is covered by the entry's licence can set `preview: https://...` to use that image instead of the page's `og:image`.
 

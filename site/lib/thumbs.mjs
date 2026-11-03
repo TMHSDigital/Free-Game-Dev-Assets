@@ -198,9 +198,22 @@ export const MAX_FAILURES = 3;
  * After a failed refresh: the record to keep (with its failure count raised),
  * or null when it should be dropped because the source has failed
  * MAX_FAILURES times in a row or the image is older than twice maxAgeDays.
+ *
+ * Pass `url` and `preview` (the entry's current values) and a record that no
+ * longer matches them is dropped at once: the stored image shows a page the
+ * entry no longer points at, and keeping it would fail validate until a
+ * refetch succeeds. `countFailure: false` (no converter on this machine) keeps
+ * a matching record unchanged, since the source itself did not fail.
  */
-export function afterFailure(record, { today, maxAgeDays = 180 }) {
+export function afterFailure(record, { today, maxAgeDays = 180, url, preview, countFailure = true }) {
   if (!record) return null;
+  if (url !== undefined && record.source !== url) return null;
+  if (preview !== undefined) {
+    const pinned = /^https:\/\//.test(preview || "");
+    if (Boolean(record.pinned) !== pinned) return null;
+    if (pinned && record.image !== preview) return null;
+  }
+  if (!countFailure) return record;
   const failures = (Number(record.failures) || 0) + 1;
   const fetched = Date.parse(`${record.fetched}T00:00:00Z`);
   const now = Date.parse(`${today}T00:00:00Z`);

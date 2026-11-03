@@ -940,6 +940,12 @@ eq("thumbs: needsFetch pin removed", needsFetch({ ...recA, pinned: true }, { lic
 eq("thumbs: afterFailure counts", afterFailure(recA, { today: "2026-10-23" }).failures, 1);
 eq("thumbs: afterFailure drops at the limit", afterFailure({ ...recA, failures: 2 }, { today: "2026-10-23" }), null);
 eq("thumbs: afterFailure drops an ancient image", afterFailure({ ...recA, fetched: "2025-01-01" }, { today: "2026-10-23" }), null);
+eq("thumbs: afterFailure keeps a matching record", afterFailure(recA, { today: "2026-10-23", url: "https://a.example/", preview: "" }).failures, 1);
+eq("thumbs: afterFailure drops a record for a moved url", afterFailure(recA, { today: "2026-10-23", url: "https://b.example/", preview: "" }), null);
+eq("thumbs: afterFailure drops a record when a pin is added", afterFailure(recA, { today: "2026-10-23", url: "https://a.example/", preview: "https://a.example/shot.png" }), null);
+eq("thumbs: afterFailure drops a record for a changed pin", afterFailure({ ...recA, pinned: true, image: "https://a.example/old.png" }, { today: "2026-10-23", url: "https://a.example/", preview: "https://a.example/new.png" }), null);
+eq("thumbs: afterFailure without a converter keeps the record as is", afterFailure(recA, { today: "2026-10-23", url: "https://a.example/", preview: "", countFailure: false }), recA);
+eq("thumbs: afterFailure without a converter still drops a moved url", afterFailure(recA, { today: "2026-10-23", url: "https://b.example/", preview: "", countFailure: false }), null);
 eq("thumbs: private host localhost", isPrivateHost("localhost"), true);
 eq("thumbs: private host ip literal", isPrivateHost("127.0.0.1"), true);
 eq("thumbs: public host", isPrivateHost("img.itch.zone"), false);

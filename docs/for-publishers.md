@@ -30,7 +30,7 @@ An entry may show your page's own preview image (`og:image`), resized to 640 pix
 - tools and fonts get one only from an image a maintainer has checked, because a program's licence does not cover its logo or social card;
 - a CC-BY image is captioned with your credit line.
 
-To remove yours, or to suggest a better image, open a [Correction](https://github.com/TMHSDigital/Free-Game-Dev-Assets/issues/new?template=correction.yml) issue and choose "I publish this source". The maintainer sets `preview: none` and the image is deleted on the next run.
+To remove yours, or to suggest a better image, open a [Correction](https://github.com/TMHSDigital/Free-Game-Dev-Assets/issues/new?template=correction.yml) issue and choose "I publish this source". The maintainer sets `preview: none` and deletes the image in the same change.
 
 ## List your own work
 

@@ -174,7 +174,7 @@ async function pool(items, worker, size) {
 
 function reportMarkdown(summary) {
   const lines = [`# Thumbnail run ${summary.today}`, ""];
-  lines.push(`Converter: ${summary.converter || "none"}. Fetched ${summary.fetched.length}, kept ${summary.kept}, skipped ${summary.skipped.length}, failed ${summary.failed.length}, removed ${summary.removed.length}, dropped as shared images ${summary.dropped.length}.`, "");
+  lines.push(`Converter: ${summary.converter || "none"}. Fetched ${summary.fetched.length}, kept ${summary.kept}, skipped ${summary.skipped.length}, failed ${summary.failed.length} (failure count raised on ${summary.bumped.length}), removed ${summary.removed.length}, dropped as shared images ${summary.dropped.length}.`, "");
   const list = (title, rows, fmt) => {
     if (!rows.length) return;
     lines.push(`## ${title}`, "");
@@ -198,7 +198,7 @@ async function main() {
   const manifest = loadManifest();
   const thumbs = { ...manifest.thumbs };
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "fgda-thumbs-"));
-  const summary = { today, converter, fetched: [], kept: 0, skipped: [], failed: [], removed: [], dropped: [] };
+  const summary = { today, converter, fetched: [], kept: 0, skipped: [], failed: [], bumped: [], removed: [], dropped: [] };
   const pending = new Map(); // id → bytes to write
 
   // Records whose entry is gone or no longer eligible go first, so a licence
@@ -244,13 +244,19 @@ async function main() {
         process.stdout.write(`  + ${entry.id} ${record.width}x${record.height} ${bytes.length} B\n`);
       } catch (err) {
         summary.failed.push({ id: entry.id, reason: err.message });
-        // A source that keeps failing does not keep its old image forever.
-        if (thumbs[entry.id]) {
-          const kept = afterFailure(thumbs[entry.id], { today });
-          if (kept) thumbs[entry.id] = kept;
-          else {
-            summary.removed.push({ id: entry.id, reason: `refresh failed repeatedly or image too old (${err.message})`, hash: thumbs[entry.id].hash });
+        // A source that keeps failing does not keep its old image forever,
+        // and a record for a url or pin the entry no longer has goes at once.
+        const old = thumbs[entry.id];
+        if (old) {
+          const kept = afterFailure(old, { today, url: entry.url, preview: entry.preview || "", countFailure: Boolean(converter) });
+          if (!kept) {
+            summary.removed.push({ id: entry.id, reason: `refresh failed and the stored image is stale (${err.message})`, hash: old.hash });
             delete thumbs[entry.id];
+          } else if (kept !== old) {
+            thumbs[entry.id] = kept;
+            // A raised failure count is a change: without it the count never
+            // reaches the repository and the MAX_FAILURES rule cannot fire.
+            summary.bumped.push({ id: entry.id, failures: kept.failures });
           }
         }
         process.stdout.write(`  ! ${entry.id}: ${err.message}\n`);
@@ -267,7 +273,7 @@ async function main() {
   }
 
   const sorted = Object.fromEntries(Object.entries(thumbs).sort(([a], [b]) => a.localeCompare(b)));
-  const changed = summary.fetched.length + summary.removed.length + summary.dropped.length;
+  const changed = summary.fetched.length + summary.bumped.length + summary.removed.length + summary.dropped.length;
 
   if (!opts.dryRun) {
     fs.mkdirSync(THUMBS_DIR, { recursive: true });
