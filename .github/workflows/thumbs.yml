@@ -6,22 +6,33 @@ name: Monthly thumbnail refresh
 # the compare link. The repository does not let Actions open pull requests,
 # and a token-made pull request would not run CI, so the maintainer opens it
 # from the link. It never edits an entry. Rules: site/lib/thumbs.mjs.
+#
+# Two jobs. `fetch` downloads third-party images and decodes them with
+# ffmpeg, so it runs with a read-only token and no stored git credentials.
+# `publish` holds the write token, runs no converter and no repository code,
+# and only commits site/thumbs.json and site/public/thumbs/*.webp from the
+# first job's artifact.
 on:
   schedule:
     - cron: "0 9 1 * *"
   workflow_dispatch:
 
 permissions:
-  contents: write
-  issues: write
+  contents: read
 
 jobs:
-  thumbs:
+  fetch:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.run.outputs.changed }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
@@ -42,27 +53,69 @@ jobs:
       - name: Validate the result
         run: node site/validate.mjs
 
-      - name: Push the branch and open or update the issue
+      - name: Upload the result
         if: steps.run.outputs.changed != '0'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: thumbs
+          path: |
+            site/thumbs.json
+            site/public/thumbs/
+            thumbs-report.md
+          retention-days: 7
+          if-no-files-found: error
+
+  publish:
+    needs: fetch
+    if: needs.fetch.outputs.changed != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download the result
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: thumbs
+          path: ${{ runner.temp }}/thumbs
+
+      - name: Copy only the manifest and WebP files
+        env:
+          SRC: ${{ runner.temp }}/thumbs
+        run: |
+          # The artifact comes from a job that parsed untrusted images: take
+          # nothing from it but these paths, and only regular .webp files.
+          test -f "$SRC/site/thumbs.json"
+          cp "$SRC/site/thumbs.json" site/thumbs.json
+          rm -f site/public/thumbs/*.webp
+          mkdir -p site/public/thumbs
+          [ -d "$SRC/site/public/thumbs" ] && find "$SRC/site/public/thumbs" -maxdepth 1 -type f -name '*.webp' -exec cp {} site/public/thumbs/ \;
+          cp "$SRC/thumbs-report.md" "$RUNNER_TEMP/thumbs-report.md"
+
+      - name: Push the branch and open or update the issue
         env:
           GH_TOKEN: ${{ github.token }}
-          CHANGED: ${{ steps.run.outputs.changed }}
+          CHANGED: ${{ needs.fetch.outputs.changed }}
         run: |
           month=$(date -u +%Y-%m)
           branch="thumbs/${month}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
-          git add site/thumbs.json site/public/thumbs
+          git add -A site/thumbs.json site/public/thumbs
           git commit -m "thumbs: monthly refresh ${month} (${CHANGED} changes)"
           git push --force origin "$branch"
           compare="https://github.com/${GITHUB_REPOSITORY}/compare/main...$(printf '%s' "$branch" | sed 's|/|%2F|g')?expand=1"
-          { printf 'Open the pull request: %s\n\n' "$compare"; cat thumbs-report.md; } > issue-body.md
+          { printf 'Open the pull request: %s\n\n' "$compare"; cat "$RUNNER_TEMP/thumbs-report.md"; } > "$RUNNER_TEMP/issue-body.md"
           title="Thumbnail refresh ${month}: ${CHANGED} changes"
           existing=$(gh issue list --state open --label "enhancement" --json number,title \
             --jq '[.[] | select(.title | startswith("Thumbnail refresh "))][0].number // empty')
           if [ -n "$existing" ]; then
-            gh issue edit "$existing" --title "$title" --body-file issue-body.md
+            gh issue edit "$existing" --title "$title" --body-file "$RUNNER_TEMP/issue-body.md"
           else
-            gh issue create --title "$title" --label "enhancement" --body-file issue-body.md
+            gh issue create --title "$title" --label "enhancement" --body-file "$RUNNER_TEMP/issue-body.md"
           fi
