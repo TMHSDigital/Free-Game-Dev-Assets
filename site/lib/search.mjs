@@ -164,16 +164,27 @@ export function stateQuery(state, defaults) {
 
 /* ---------------------------------------------------------------- 404 page */
 
-/** The words of a missed address, relative to the site root, as a slug. */
-export function missSlug(pathname, rootPath) {
+/** Site sections whose pages live at <section>/<id>/. */
+const SECTIONS = /^(entry|stack|category|guide)\//;
+
+function missRest(pathname, rootPath) {
   let rest = pathname;
   try {
     rest = decodeURIComponent(rest);
   } catch {
     // A malformed escape: match on the raw path.
   }
-  if (rest.startsWith(rootPath)) rest = rest.slice(rootPath.length);
-  return slugOf(rest.replace(/^(entry|stack)\//, "").replace(/(index)?\.html?$/, ""));
+  return rest.startsWith(rootPath) ? rest.slice(rootPath.length) : rest;
+}
+
+/** The words of a missed address, relative to the site root, as a slug. */
+export function missSlug(pathname, rootPath) {
+  return slugOf(missRest(pathname, rootPath).replace(SECTIONS, "").replace(/(index)?\.html?$/, ""));
+}
+
+/** The section a missed address was in: "entry", "stack", "category", "guide", or "" for anything else. */
+export function missSection(pathname, rootPath) {
+  return missRest(pathname, rootPath).match(SECTIONS)?.[1] || "";
 }
 
 export const slugOf = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");

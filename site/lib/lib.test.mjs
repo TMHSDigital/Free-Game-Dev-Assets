@@ -806,6 +806,19 @@ eq("filter: format group miss", passesFilters({ status: "active", formats: ["WAV
 
 eq("404 slug from a nested miss", missSlug("/Free-Game-Dev-Assets/entry/Kenny_UI/index.html", "/Free-Game-Dev-Assets/"), "kenny-ui");
 eq("404 slug survives a bad escape", missSlug("/s/entry/%E0%A4%A/", "/s/"), "e0-a4-a");
+eq("404 slug drops the category/ prefix", missSlug("/s/category/audoi/", "/s/"), "audoi");
+eq("404 slug drops the guide/ prefix", missSlug("/s/guide/licences/", "/s/"), "licences");
+{
+  const { missSection } = await import("./search.mjs");
+  eq("404 section: category", missSection("/s/category/audoi/", "/s/"), "category");
+  eq("404 section: guide", missSection("/s/guide/licences/", "/s/"), "guide");
+  eq("404 section: entry", missSection("/s/entry/kenny-ui/", "/s/"), "entry");
+  eq("404 section: none", missSection("/s/some/other/", "/s/"), "");
+  const cats = [{ id: "audio", name: "Audio" }, { id: "animation", name: "Animation" }, { id: "3d", name: "3D" }];
+  eq("404: a mistyped category finds the category", closestEntries("audoi", cats)[0]?.id, "audio");
+  const guides = [{ id: "licenses", name: "Licenses" }, { id: "fonts", name: "Fonts" }];
+  eq("404: a British spelling finds the guide", closestEntries("licences", guides)[0]?.id, "licenses");
+}
 eq("identical strings are 1", similarity("kenney", "kenney"), 1);
 eq("disjoint strings are 0", similarity("abc", "xyz"), 0);
 const guessPool = [
