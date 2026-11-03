@@ -45,6 +45,16 @@ jobs:
       - name: Build site and check pages
         run: node site/build.mjs
 
+      # Pull requests only: a table of every changed licence field, old and
+      # new, beside the entry's newest Evidence line, on the run's summary page.
+      - name: Summarise licence-field changes
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          node site/pr-diff.mjs --base "$BASE_SHA" --out "$GITHUB_STEP_SUMMARY"
+
       - name: Upload Pages artifact
         if: ${{ inputs.upload-dist }}
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

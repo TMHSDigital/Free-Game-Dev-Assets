@@ -1206,6 +1206,31 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* PR licence-field summary (licence-diff.mjs) ------------------------------ */
+{
+  const { licenceChanges, licenceDiffMarkdown, newestEvidenceLine } = await import("./licence-diff.mjs");
+  const before = { id: "a", license: "CC-BY", commercial: true, attribution_required: true, status: "active", verified: "2026-01-01", tags: ["x"] };
+  const after = { ...before, license: "CC0", attribution_required: false, verified: "2026-11-01", tags: ["y"] };
+  const ch = licenceChanges(before, after);
+  eq("licence diff: only licence fields, in order", ch.map((c) => c.field).join(","), "license,attribution_required,verified");
+  eq("licence diff: old and new values", `${ch[0].before}>${ch[0].after}`, "CC-BY>CC0");
+  eq("licence diff: booleans as text", ch[1].after, "false");
+  eq("licence diff: an added entry lists its set fields", licenceChanges(null, after).map((c) => c.field).join(","), "status,license,commercial,attribution_required,verified");
+  eq("licence diff: no change, no rows", licenceChanges(before, { ...before, tags: ["z"] }).length, 0);
+  const body = "Intro (2027-01-01).\n\n## Evidence\n\n- Page (2026-01-01): \"old\"\n- [Release](https://x.example/2030-01-01) (2026-11-01): \"CC0\"\n\n## Notes\n\n- 2028-01-01 later note\n";
+  eq("licence diff: newest Evidence line, URL dates and other sections ignored", newestEvidenceLine(body), '- [Release](https://x.example/2030-01-01) (2026-11-01): "CC0"');
+  eq("licence diff: no Evidence section", newestEvidenceLine("Nothing."), null);
+  const md = licenceDiffMarkdown([
+    { file: "catalog/2d/a.md", change: "modified", fields: ch, evidence: "- quote with | pipe and `tick` (2026-11-01)" },
+    { file: "catalog/2d/b.md", change: "modified", fields: [], evidence: null },
+  ]);
+  has("licence diff: table counts changed entries only", md, "1 entry changed.");
+  has("licence diff: a row per field", md, "| `catalog/2d/a.md` | license | `CC-BY` | `CC0` |");
+  has("licence diff: pipes are escaped and backticks neutralised", md, "quote with \\| pipe and 'tick'");
+  lacks("licence diff: unchanged entries are left out", md, "b.md");
+  has("licence diff: nothing changed", licenceDiffMarkdown([]), "No licence field changed");
+}
+
 /* data.json schema (schema-check.mjs + site/data.schema.json) -------------- */
 {
   const { schemaErrors } = await import("./schema-check.mjs");
