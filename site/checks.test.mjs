@@ -56,7 +56,26 @@ const spdxAllowed = new Set(
 let passed = 0;
 const failures = [];
 
+// A test that throws (rather than failing an assertion) ends the run. Report
+// what had already failed and where the run stopped, so one crash does not
+// hide the failures before it.
+let lastLabel = "(none yet)";
+process.on("uncaughtException", (err) => {
+  console.error(`checks.test crashed after ${passed} passing assertions; the last one was "${lastLabel}".`);
+  for (const f of failures) console.error(`  - ${f}`);
+  console.error(err && err.stack ? err.stack : err);
+  process.exit(1);
+});
+/** The V-rule names the assertions cover, so the summary counts them instead of restating a number. */
+const checksSeen = new Set();
+const note = (label) => {
+  lastLabel = label;
+  const v = String(label).match(/^V\d+/);
+  if (v) checksSeen.add(v[0]);
+};
+
 function rejects(label, errors, needle) {
+  note(label);
   if (!errors.length) {
     failures.push(`${label}: expected an error, got none`);
     return;
@@ -71,11 +90,13 @@ function rejects(label, errors, needle) {
 }
 
 function eq(label, actual, expected) {
+  note(label);
   if (actual === expected) passed += 1;
   else failures.push(`${label}: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
 }
 
 function accepts(label, errors) {
+  note(label);
   if (errors.length) {
     failures.push(`${label}: expected no error, got: ${errors.join(" | ")}`);
     return;
@@ -873,4 +894,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across 30 checks`);
+console.log(`checks.test ok: ${passed} assertions across ${checksSeen.size} checks`);

@@ -16,19 +16,34 @@ import { atomFeed, catalogCsv } from "./exports.mjs";
 let passed = 0;
 const failures = [];
 
+// A test that throws (rather than failing an assertion) ends the run. Report
+// what had already failed and where the run stopped, so one crash does not
+// hide the failures before it.
+let lastLabel = "(none yet)";
+process.on("uncaughtException", (err) => {
+  console.error(`lib.test crashed after ${passed} passing assertions; the last one was "${lastLabel}".`);
+  for (const f of failures) console.error(`  - ${f}`);
+  console.error(err && err.stack ? err.stack : err);
+  process.exit(1);
+});
+
 function eq(label, actual, expected) {
+  lastLabel = label;
   if (actual === expected) passed += 1;
   else failures.push(`${label}: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
 }
 function has(label, text, needle) {
+  lastLabel = label;
   if (String(text).includes(needle)) passed += 1;
   else failures.push(`${label}: expected to contain ${JSON.stringify(needle)}`);
 }
 function lacks(label, text, needle) {
+  lastLabel = label;
   if (!String(text).includes(needle)) passed += 1;
   else failures.push(`${label}: expected not to contain ${JSON.stringify(needle)}`);
 }
 function throws(label, fn, needle) {
+  lastLabel = label;
   try {
     fn();
     failures.push(`${label}: expected an error`);
