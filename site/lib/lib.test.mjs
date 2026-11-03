@@ -1180,6 +1180,27 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("anchors: validator matches the renderer", [...markdownAnchors(md)].sort().join(","), [...ids].sort().join(","));
 }
 
+/* entry counts skip the same folders as build and validate ---------------- */
+{
+  const { countEntriesByCategory, listEntryFiles } = await import("./entry-files.mjs");
+  const os = await import("node:os");
+  const nodePath = await import("node:path");
+  const root = nodeFs.mkdtempSync(nodePath.join(os.tmpdir(), "fgda-count-"));
+  try {
+    const put = (rel) => {
+      nodeFs.mkdirSync(nodePath.dirname(nodePath.join(root, rel)), { recursive: true });
+      nodeFs.writeFileSync(nodePath.join(root, rel), "x");
+    };
+    ["2d/a.md", "2d/README.md", "2d/sub/b.md", "audio/c.md", "_scratch/x.md", "_scratch/y.md", ".hidden/z.md", "README.md", "TEMPLATE.md"].forEach(put);
+    const { counts, total } = countEntriesByCategory(root);
+    eq("counts: per category, nested files included", Object.entries(counts).sort().map(([k, n]) => `${k}=${n}`).join(","), "2d=2,audio=1");
+    eq("counts: total skips _scratch and hidden folders", total, 3);
+    eq("counts: total matches the entry list build and validate use", total, listEntryFiles(root).length);
+  } finally {
+    nodeFs.rmSync(root, { recursive: true, force: true });
+  }
+}
+
 /* local preview server ---------------------------------------------------- */
 {
   const { resolveRequest } = await import("../serve.mjs");

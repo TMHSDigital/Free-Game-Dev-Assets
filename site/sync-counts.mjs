@@ -10,20 +10,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { listEntryFiles } from "./lib/entry-files.mjs";
+import { countEntriesByCategory } from "./lib/entry-files.mjs";
 import { syncCatalogReadme, syncConfig, syncReadme } from "./lib/scaffold.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const CATALOG = path.join(ROOT, "catalog");
-function countEntries() {
-  const counts = {};
-  for (const d of fs.readdirSync(CATALOG, { withFileTypes: true })) {
-    if (!d.isDirectory() || d.name.startsWith(".")) continue;
-    counts[d.name] = listEntryFiles(path.join(CATALOG, d.name)).length;
-  }
-  return counts;
-}
 
 function update(file, fn) {
   const full = path.join(ROOT, file);
@@ -35,8 +27,7 @@ function update(file, fn) {
   }
 }
 
-const counts = countEntries();
-const total = Object.values(counts).reduce((a, b) => a + b, 0);
+const { counts, total } = countEntriesByCategory(CATALOG);
 
 update("README.md", (t) => syncReadme(t, counts, total));
 update("catalog/README.md", (t) => syncCatalogReadme(t, counts));

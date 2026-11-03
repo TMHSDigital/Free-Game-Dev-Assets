@@ -39,3 +39,21 @@ export function listEntryFiles(dir) {
   walk(dir);
   return out.sort();
 }
+
+/**
+ * Entry counts per category folder, from the same list build and validate
+ * use, so a skipped folder (catalog/_scratch) never counts. `total` also
+ * includes any entry file outside a category folder, as validate's does.
+ */
+export function countEntriesByCategory(catalogDir) {
+  const files = listEntryFiles(catalogDir);
+  const counts = {};
+  for (const d of fs.readdirSync(catalogDir, { withFileTypes: true })) {
+    if (d.isDirectory() && !d.name.startsWith(".") && !SKIP_DIRS.has(d.name)) counts[d.name] = 0;
+  }
+  for (const file of files) {
+    const [first, ...rest] = path.relative(catalogDir, file).split(path.sep);
+    if (rest.length && first in counts) counts[first] += 1;
+  }
+  return { counts, total: files.length };
+}
