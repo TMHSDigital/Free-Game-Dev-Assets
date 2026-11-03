@@ -1,6 +1,6 @@
 /** One category's page: every entry in it, both views, no JavaScript needed to see everything. Pure. */
 import { groupedEntriesHtml } from "./cards.mjs";
-import { baseHeadHtml, breadcrumbLd, clipText, entryPageUrl, esc, PREVIEW_CREDIT_LINE, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, sponsorButtonHtml, PAGE_MODULES } from "./shared.mjs";
+import { baseHeadHtml, breadcrumbLd, clipText, entryPageUrl, esc, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX, PAGE_MODULES, siteHeaderHtml, siteFooterHtml } from "./shared.mjs";
 import { scriptJson } from "./entry-page.mjs";
 
 export function categoryPageUrl(site, cat) {
@@ -52,17 +52,7 @@ export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCa
   </head>
   <body>
     <a class="skip-link" href="#entry-grid">Skip to the list</a>
-    <header class="topbar">
-      <a class="brand" href="../../">Free Game Dev Assets</a>
-      <nav class="topnav" aria-label="Primary">
-        <a href="../../#catalog">Catalog</a>
-        <a href="../../#stacks">Stacks</a>
-        <a href="../../#starters">Starters</a>
-        <a href="../../#guides">Guides</a>
-        <a href="${esc(repo)}" rel="noopener noreferrer">GitHub</a>
-        <span class="nav-sponsor">${sponsorButtonHtml()}</span>
-      </nav>
-    </header>
+    ${siteHeaderHtml({ root: "../../", repo: repo })}
     <main class="section category-page" id="content">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../../#catalog">Catalog</a> <span aria-hidden="true">/</span>
@@ -75,13 +65,7 @@ export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCa
 ${grid}
       </div>
     </main>
-    <footer class="footer">
-      <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
-      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>
-      <p><a href="../../freshness/">Licence freshness</a> · <a href="../../data.json">data.json</a> · <a href="../../catalog.csv">CSV</a> · <a href="../../feed.xml">feed</a> · <a href="../../guide/data/">Use the data</a></p>
-      <p class="footer-sponsor">${sponsorButtonHtml()}</p>
-      <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
-    </footer>
+    ${siteFooterHtml({ root: "../../", stamp, total })}
     <script type="module" src="../../category.js"></script>
     <script type="module" src="../../shortlist.js"></script>
   </body>

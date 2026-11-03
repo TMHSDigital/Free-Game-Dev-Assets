@@ -212,6 +212,47 @@ export function edgeVar(entry) {
 /** The one-line credit every page footer carries for the publisher previews. */
 export const PREVIEW_CREDIT_LINE = "Preview images belong to their publishers and are shown under each entry's licence.";
 
+/**
+ * The top bar every generated page shares. `root` is the relative path to the
+ * site root from the page ("../../" for entry/, "../" for freshness/).
+ * site/public/index.html keeps its own copy, since its links are in-page
+ * anchors and app.js finds them by id.
+ */
+export function siteHeaderHtml({ root, repo }) {
+  return `<header class="topbar">
+      <a class="brand" href="${root}">Free Game Dev Assets</a>
+      <nav class="topnav" aria-label="Primary">
+        <a href="${root}#catalog">Catalog</a>
+        <a href="${root}#stacks">Stacks</a>
+        <a href="${root}#starters">Starters</a>
+        <a href="${root}#guides">Guides</a>
+        <a href="${esc(repo)}" rel="noopener noreferrer">GitHub</a>
+        <span class="nav-sponsor">${sponsorButtonHtml()}</span>
+      </nav>
+    </header>`;
+}
+
+/**
+ * The footer every generated page shares. `credit: false` drops the preview
+ * credit on pages that show no previews; `current: "freshness"` drops the
+ * link to the page the reader is on.
+ */
+export function siteFooterHtml({ root, stamp, total, credit = true, current = null }) {
+  const links = [
+    current === "freshness" ? null : `<a href="${root}freshness/">Licence freshness</a>`,
+    `<a href="${root}data.json">data.json</a>`,
+    `<a href="${root}catalog.csv">CSV</a>`,
+    `<a href="${root}feed.xml">feed</a>`,
+    `<a href="${root}guide/data/">Use the data</a>`,
+  ].filter(Boolean);
+  return `<footer class="footer">
+      <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
+${credit ? `      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>\n` : ""}      <p>${links.join(" · ")}</p>
+      <p class="footer-sponsor">${sponsorButtonHtml()}</p>
+      <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
+    </footer>`;
+}
+
 /** Self-hosted fonts (site/public/fonts/, OFL). The body face and the mono face are preloaded; the italic is not. */
 export const FONT_FILES = ["fonts/public-sans.woff2", "fonts/ibm-plex-mono-400.woff2"];
 

@@ -3,7 +3,7 @@
  * Buckets come from verifiedAge, the function the homepage cards use, so the
  * summary and the cards cannot disagree. Pure: `now` is passed in.
  */
-import { baseHeadHtml, esc, freshnessPageUrl, sponsorButtonHtml, verifiedAge } from "./shared.mjs";
+import { baseHeadHtml, esc, freshnessPageUrl, verifiedAge, siteHeaderHtml, siteFooterHtml } from "./shared.mjs";
 
 const RECENT_DAYS = 30;
 const byName = (a, b) => a.entry.name.localeCompare(b.entry.name);
@@ -99,17 +99,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to the list</a>
-    <header class="topbar">
-      <a class="brand" href="../">Free Game Dev Assets</a>
-      <nav class="topnav" aria-label="Primary">
-        <a href="../#catalog">Catalog</a>
-        <a href="../#stacks">Stacks</a>
-        <a href="../#starters">Starters</a>
-        <a href="../#guides">Guides</a>
-        <a href="${esc(site.repo)}" rel="noopener noreferrer">GitHub</a>
-        <span class="nav-sponsor">${sponsorButtonHtml()}</span>
-      </nav>
-    </header>
+    ${siteHeaderHtml({ root: "../", repo: site.repo })}
     <main class="section entry-page freshness-page" id="content">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../#catalog">Catalog</a> <span aria-hidden="true">/</span>
@@ -135,12 +125,7 @@ export function freshnessPageHtml({ stats, site, stamp, total, hasCard }) {
         </table>
       </section>
     </main>
-    <footer class="footer">
-      <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
-      <p><a href="../data.json">data.json</a> · <a href="../catalog.csv">CSV</a> · <a href="../feed.xml">feed</a> · <a href="../guide/data/">Use the data</a></p>
-      <p class="footer-sponsor">${sponsorButtonHtml()}</p>
-      <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
-    </footer>
+    ${siteFooterHtml({ root: "../", stamp, total, credit: false, current: "freshness" })}
   </body>
 </html>
 `;

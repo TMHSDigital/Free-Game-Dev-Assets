@@ -11,8 +11,10 @@ import {
   STATUS_NOTES,
   stackPageUrl,
   verifiedAge,
-  sponsorButtonHtml,
-  PREVIEW_CREDIT_LINE, breadcrumbLd } from "./shared.mjs";
+  breadcrumbLd,
+  siteHeaderHtml,
+  siteFooterHtml,
+} from "./shared.mjs";
 import { copyAllText } from "./stacks.mjs";
 import { entryCardHtml } from "./cards.mjs";
 
@@ -121,17 +123,7 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to stack</a>
-    <header class="topbar">
-      <a class="brand" href="../../">Free Game Dev Assets</a>
-      <nav class="topnav" aria-label="Primary">
-        <a href="../../#catalog">Catalog</a>
-        <a href="../../#stacks">Stacks</a>
-        <a href="../../#starters">Starters</a>
-        <a href="../../#guides">Guides</a>
-        <a href="${esc(repo)}" rel="noopener noreferrer">GitHub</a>
-        <span class="nav-sponsor">${sponsorButtonHtml()}</span>
-      </nav>
-    </header>
+    ${siteHeaderHtml({ root: "../../", repo: repo })}
     <main class="section entry-page stack-page" id="content">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../../#catalog">Catalog</a> <span aria-hidden="true">/</span>
@@ -148,13 +140,7 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
       ${gaps}
       <p class="stack-note">Stack walked ${esc(meta.walked)}. Each licence is only as current as its entry's verified date.</p>
     </main>
-    <footer class="footer">
-      <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
-      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>
-      <p><a href="../../freshness/">Licence freshness</a> · <a href="../../data.json">data.json</a> · <a href="../../catalog.csv">CSV</a> · <a href="../../feed.xml">feed</a> · <a href="../../guide/data/">Use the data</a></p>
-      <p class="footer-sponsor">${sponsorButtonHtml()}</p>
-      <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
-    </footer>
+    ${siteFooterHtml({ root: "../../", stamp, total })}
     ${script}
   </body>
 </html>

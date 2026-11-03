@@ -11,8 +11,11 @@ import {
   seoTitle,
   STATUS_NOTES,
   verifiedAge,
-  sponsorButtonHtml,
-  PREVIEW_CREDIT_LINE, PAGE_MODULES, breadcrumbLd } from "./shared.mjs";
+  PAGE_MODULES,
+  breadcrumbLd,
+  siteHeaderHtml,
+  siteFooterHtml,
+} from "./shared.mjs";
 import { thumbHtml } from "./cards.mjs";
 import { previewCredit } from "./thumbs.mjs";
 
@@ -135,17 +138,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to entry</a>
-    <header class="topbar">
-      <a class="brand" href="../../">Free Game Dev Assets</a>
-      <nav class="topnav" aria-label="Primary">
-        <a href="../../#catalog">Catalog</a>
-        <a href="../../#stacks">Stacks</a>
-        <a href="../../#starters">Starters</a>
-        <a href="../../#guides">Guides</a>
-        <a href="${esc(repo)}" rel="noopener noreferrer">GitHub</a>
-        <span class="nav-sponsor">${sponsorButtonHtml()}</span>
-      </nav>
-    </header>
+    ${siteHeaderHtml({ root: "../../", repo: repo })}
     <main class="section entry-page" id="content">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="../../#catalog" data-back-to-results>Catalog</a> <span aria-hidden="true">/</span>
@@ -174,13 +167,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
       <div class="entry-content">${restHtml}</div>
       ${pager}
     </main>
-    <footer class="footer">
-      <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
-      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>
-      <p><a href="../../freshness/">Licence freshness</a> · <a href="../../data.json">data.json</a> · <a href="../../catalog.csv">CSV</a> · <a href="../../feed.xml">feed</a> · <a href="../../guide/data/">Use the data</a></p>
-      <p class="footer-sponsor">${sponsorButtonHtml()}</p>
-      <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
-    </footer>
+    ${siteFooterHtml({ root: "../../", stamp, total })}
     <script src="../../entry.js" defer></script>
     <script type="module" src="../../shortlist.js"></script>
   </body>

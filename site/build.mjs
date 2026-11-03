@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, PAGE_MODULES, sponsorButtonHtml } from "./lib/shared.mjs";
+import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, PAGE_MODULES, PREVIEW_CREDIT_LINE, sponsorButtonHtml } from "./lib/shared.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
 import { renderGuide } from "./lib/guide-render.mjs";
@@ -660,6 +660,7 @@ function main() {
     CATALOG_BLURB: `${stats.total} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file &middot; ${stats.deprecated} deprecated`,
     RESULT_COUNT: `${visible.length} of ${stats.total} entries shown`,
     SPONSOR_BUTTON: sponsorButtonHtml(),
+    PREVIEW_CREDIT: PREVIEW_CREDIT_LINE,
     FOOTER_STAMP: `Built ${esc(stamp)} from ${stats.total} catalog entries.`,
   };
   let html = fs.readFileSync(path.join(PUBLIC, "index.html"), "utf8");

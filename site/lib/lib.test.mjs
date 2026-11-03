@@ -1169,6 +1169,25 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("guide: images refused", threw, "g.md:3: an image is not supported");
 }
 
+/* shared page chrome ------------------------------------------------------ */
+{
+  const { siteHeaderHtml, siteFooterHtml, PREVIEW_CREDIT_LINE: credit } = await import("./shared.mjs");
+  const deep = siteHeaderHtml({ root: "../../", repo: "https://github.com/o/r" });
+  for (const a of ["#catalog", "#stacks", "#starters", "#guides"]) has(`chrome: header links ${a} at depth 2`, deep, `href="../../${a}"`);
+  has("chrome: header brand at depth 2", deep, '<a class="brand" href="../../">');
+  has("chrome: header repo link", deep, 'href="https://github.com/o/r" rel="noopener noreferrer"');
+  has("chrome: header brand at depth 1", siteHeaderHtml({ root: "../", repo: "x" }), '<a class="brand" href="../">');
+  has("chrome: header escapes the repo url", siteHeaderHtml({ root: "../", repo: 'x"y' }), 'href="x&quot;y"');
+  const foot = siteFooterHtml({ root: "../../", stamp: "2026-11-03", total: 7 });
+  for (const href of ["freshness/", "data.json", "catalog.csv", "feed.xml", "guide/data/"]) has(`chrome: footer links ${href}`, foot, `href="../../${href}"`);
+  has("chrome: footer carries the preview credit", foot, credit);
+  has("chrome: footer stamp", foot, "Built 2026-11-03 from 7 catalog entries.");
+  lacks("chrome: credit: false drops the preview credit", siteFooterHtml({ root: "../../", stamp: "s", total: 1, credit: false }), credit);
+  const fresh = siteFooterHtml({ root: "../", stamp: "s", total: 1, current: "freshness" });
+  lacks("chrome: the freshness page does not link to itself", fresh, "freshness/");
+  has("chrome: the freshness page keeps the data links", fresh, 'href="../guide/data/"');
+}
+
 /* client scripts parse, and every named import exists --------------------- */
 {
   const { execFileSync } = await import("node:child_process");
