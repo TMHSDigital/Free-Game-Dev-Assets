@@ -6,6 +6,7 @@ category: fonts
 subcategories: [aggregator, sans, display]
 license: varies
 commercial: true
+limits: "Most families are ITF FFL: no subsetting or format conversion, which engine font imports may do"
 attribution_required: false
 formats: [OTF, TTF, WOFF]
 tags: [foundry, itf, mixed-license, variable-font]

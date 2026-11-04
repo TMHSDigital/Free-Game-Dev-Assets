@@ -32,7 +32,8 @@ be dropped.
    licence header cannot appear in the name of your modified version. Rename the family
    before you ship a patched or subsetted-and-renamed build.
 
-Subsetting, hinting changes, and converting to another format are all permitted. They are
+Under OFL, subsetting, hinting changes, and converting to another format are all permitted.
+Other font licences can forbid them (see the ITF Free Font License below). They are
 modifications, so the licence and notice travel with the result, and the RFN rule applies
 if the original declared one.
 
@@ -50,6 +51,25 @@ Two consequences worth knowing:
 - A web build that serves the font as a separate file over HTTP is distributing the font
   file. Keep the licence reachable; a link in your credits page is enough.
 
+## The ITF Free Font License and engine font imports
+
+About two thirds of [Fontshare](../catalog/fonts/fontshare.md)'s families use the ITF Free
+Font License (FFL), not OFL; each family page says which. The FFL allows commercial use,
+Games included, and embedding in desktop and mobile applications, with credit optional.
+It also forbids changing the font, and names the changes engines make. From its
+"Limitations of Usage" section, read on 2026-10-04: "You may not modify, edit, adapt,
+translate, reverse engineer, decompile, disassemble or otherwise alter the Font Software
+... This includes modifying or replacing glyphs, subsetting, format conversion, or
+altering font names, copyright information, ownership information or other metadata."
+
+Several common import paths do one of those things: baking a signed-distance-field or
+bitmap atlas (Unity TextMeshPro font assets, MSDF or pre-rendered fonts in Godot, offline
+cached fonts in Unreal), or subsetting a web build's font to the glyphs it uses. Whether
+ITF treats a given import as "format conversion" is its call; the licence gives no
+exception for it. For a game whose pipeline converts fonts, an OFL family is the safe
+default. With an FFL family, ship the original font file and render it at runtime, or ask
+ITF first.
+
 ## CC0 fonts
 
 `ggbotnet-fonts-cc0` and similar CC0 releases owe nothing at all: no notice, no credit, no
@@ -64,8 +84,9 @@ This is the only font licence in the catalog where dropping the licence text is 
   commercial grant and it is not in this catalog.
 - **Webfont-only EULAs** grant `@font-face` use and nothing else. A game binary is not a
   web page; embedding under a webfont-only licence is outside the grant.
-- **Fontshare** is listed as `needs-review` for this reason: it mixes its own `itf_ffl`
-  terms with OFL and the terms page is not readable as plain text.
+- **Fontshare** mixes two licences: OFL on some families and the ITF Free Font License
+  on most. The FFL allows games but forbids subsetting and format conversion; see the
+  section above before you import one into an engine.
 - **Open Foundry** is a display index. Download from the upstream foundry so you get the
   real `OFL.txt` with the family.
 
