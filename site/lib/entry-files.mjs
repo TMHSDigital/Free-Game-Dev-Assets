@@ -40,6 +40,12 @@ export function listEntryFiles(dir) {
   return out.sort();
 }
 
+/** True when an entry file's frontmatter says `status: deprecated`. */
+export function isDeprecated(text) {
+  const fm = String(text).match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  return Boolean(fm && /^status:\s*["']?deprecated["']?\s*(#.*)?$/m.test(fm[1]));
+}
+
 /**
  * Entry counts per category folder, from the same list build and validate
  * use, so a skipped folder (catalog/_scratch) never counts. `total` also
@@ -47,13 +53,18 @@ export function listEntryFiles(dir) {
  */
 export function countEntriesByCategory(catalogDir) {
   const files = listEntryFiles(catalogDir);
+  let deprecated = 0;
   const counts = {};
   for (const d of fs.readdirSync(catalogDir, { withFileTypes: true })) {
     if (d.isDirectory() && !d.name.startsWith(".") && !SKIP_DIRS.has(d.name)) counts[d.name] = 0;
   }
   for (const file of files) {
     const [first, ...rest] = path.relative(catalogDir, file).split(path.sep);
+    if (isDeprecated(fs.readFileSync(file, "utf8"))) {
+      deprecated += 1;
+      continue;
+    }
     if (rest.length && first in counts) counts[first] += 1;
   }
-  return { counts, total: files.length };
+  return { counts, total: files.length - deprecated, files: files.length, deprecated };
 }

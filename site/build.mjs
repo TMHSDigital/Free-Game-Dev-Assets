@@ -216,7 +216,7 @@ function headMetaHtml(site, stats, generatedAt, hasCard) {
     baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard, root: "./", modules: PAGE_MODULES.home }),
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
-    `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total }))}</script>`,
+    `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total - stats.deprecated }))}</script>`,
   ].join("\n    ");
 }
 
@@ -674,11 +674,12 @@ function main() {
     STARTER_ROWS: starterRowsHtml(featured),
     // Each category shows its first few entries; the category pages hold the rest.
     ENTRY_ROWS: groupedEntriesHtml(visible, config.categories, { root: "", repo: repoUrl, now }),
-    HERO_COUNT: String(stats.total),
+    // The headline counts what the catalog lists; deprecated entries are hidden by default.
+    HERO_COUNT: String(visible.length),
     FILMSTRIP: filmstripHtml(filmstripPick(visible, { count: 9, cardCategories }), { root: "" }),
     CATEGORY_CHIPS: categoryChipsHtml(visible, config.categories),
     GUIDE_ROWS: guideRowsHtml(config.guides, repoUrl),
-    CATALOG_BLURB: `${stats.total} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file &middot; ${stats.deprecated} deprecated`,
+    CATALOG_BLURB: `${visible.length} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file${stats.deprecated ? ` &middot; plus ${stats.deprecated} deprecated, hidden by default` : ""}`,
     RESULT_COUNT: `${visible.length} of ${stats.total} entries shown`,
     SPONSOR_BUTTON: sponsorButtonHtml(),
     PREVIEW_CREDIT: PREVIEW_CREDIT_LINE,

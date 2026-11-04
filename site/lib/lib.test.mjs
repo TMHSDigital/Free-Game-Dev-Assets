@@ -1448,6 +1448,12 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     eq("counts: per category, nested files included", Object.entries(counts).sort().map(([k, n]) => `${k}=${n}`).join(","), "2d=2,audio=1");
     eq("counts: total skips _scratch and hidden folders", total, 3);
     eq("counts: total matches the entry list build and validate use", total, listEntryFiles(root).length);
+    nodeFs.writeFileSync(nodePath.join(root, "audio/old.md"), "---\nid: old\nstatus: deprecated # moved\n---\n\nGone.\n");
+    nodeFs.writeFileSync(nodePath.join(root, "audio/body.md"), "---\nid: body\nstatus: active\n---\n\nstatus: deprecated\n");
+    const listed = countEntriesByCategory(root);
+    eq("counts: a deprecated entry is not listed", listed.counts.audio, 2);
+    eq("counts: total is listed entries only", listed.total, 4);
+    eq("counts: files and deprecated are reported", `${listed.files}/${listed.deprecated}`, "5/1");
   } finally {
     nodeFs.rmSync(root, { recursive: true, force: true });
   }

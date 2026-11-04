@@ -3,8 +3,10 @@
  * Rewrites every place the repo restates the entry count, from the catalog
  * itself: the category tables in README.md and catalog/README.md, the README
  * badge, "Browse N sources", "searches all N entries", and
- * expectedEntryCount in site/config.json. Run after adding or removing
- * entries: node site/sync-counts.mjs. The validator (V6) checks the same
+ * expectedEntryCount in site/config.json. The README and table counts are
+ * of listed entries (deprecated ones are hidden on the site, so the numbers
+ * match its "All" chip); expectedEntryCount counts every file. Run after
+ * adding, removing or deprecating entries: node site/sync-counts.mjs. The validator (V6) checks the same
  * places, so it passes afterwards.
  */
 import fs from "node:fs";
@@ -27,10 +29,10 @@ function update(file, fn) {
   }
 }
 
-const { counts, total } = countEntriesByCategory(CATALOG);
+const { counts, total, files, deprecated } = countEntriesByCategory(CATALOG);
 
 update("README.md", (t) => syncReadme(t, counts, total));
 update("catalog/README.md", (t) => syncCatalogReadme(t, counts));
-update("site/config.json", (t) => syncConfig(t, total));
+update("site/config.json", (t) => syncConfig(t, files));
 
-console.log(`${total} entries: ${Object.entries(counts).map(([c, n]) => `${c} ${n}`).join(", ")}`);
+console.log(`${total} listed entries (${files} files, ${deprecated} deprecated): ${Object.entries(counts).map(([c, n]) => `${c} ${n}`).join(", ")}`);

@@ -372,6 +372,11 @@ function main() {
   const measured = {};
   for (const { meta } of records) {
     const cat = String(meta.category);
+    // The README counts match the site's "All" chip: deprecated entries are not listed.
+    if (meta.status === "deprecated") {
+      measured[cat] = measured[cat] || 0;
+      continue;
+    }
     measured[cat] = (measured[cat] || 0) + 1;
   }
   errors.push(
