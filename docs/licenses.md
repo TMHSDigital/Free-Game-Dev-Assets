@@ -9,8 +9,8 @@ Quick reference for assets you might list or use. **Always re-check the source p
 | License | Commercial use | Attribution | Notes |
 | --- | --- | --- | --- |
 | **CC0** | Yes | Not required | Safest default for closed-source games. Can embed in DRM builds. |
-| **CC-BY-4.0** | Yes | Required | Credit the author; a credits-screen link to the source usually satisfies. Keep a notices file. |
-| **CC-BY-3.0** | Yes | Required | Same commercial grant; some projects expect the **author named** (not only a site URL). Example: Game-Icons.net wants `Icons made by {author}. Available on https://game-icons.net`. |
+| **CC-BY-4.0** | Yes | Required | Credit the author; a credits-screen link to the source usually satisfies. Keep a notices file. DRM-wrapped store builds: see [shipping](shipping.md). |
+| **CC-BY-3.0** | Yes | Required | Same commercial grant; some projects expect the **author named** (not only a site URL). Example: Game-Icons.net wants `Icons made by {author}. Available on https://game-icons.net`. Its anti-DRM clause has no 4.0-style waiver, so check it before a console or iOS build; see [shipping](shipping.md). |
 | **CC-BY-SA** | Yes, **except Unreal** | Required | Share-alike applies to **derivatives of the asset**, not your whole game as code. Prefer shipping SA assets in extractable bundles (`.pck`, loose folders) rather than encrypted into the binary. The Unreal Engine EULA names CC-BY-SA (and GPL/LGPL) as licences you may not combine with the engine; see [unreal.md](unreal.md). |
 | **CC-BY-NC** | No | Required | Fine for prototypes / jam games; **reject for commercial catalogs** unless clearly marked non-commercial. |
 | **CC-BY-ND** | Yes | Required | No derivatives — **reject for games**. Interactive sync / remix is generally treated as a derivative; ND music and art are unsafe. |
@@ -61,8 +61,8 @@ Most `tools/` entries and many libraries carry one of these. They all allow comm
 
 | License | Commercial use | Notes |
 | --- | --- | --- |
-| **GPL-2.0-only**, **GPL-2.0-or-later**, **GPL-3.0-only**, **GPL-3.0-or-later** | Yes | Strong copyleft on the program. Linking GPL code into your game makes the game GPL. Using a GPL editor does not, as the section below explains. The bare **GPL-2.0** and **GPL-3.0** values mean the project did not say "only" or "or later". |
-| **LGPL-3.0** | Yes | You may link the library from closed code if users can replace it, which in practice means dynamic linking. Changes to the library itself stay LGPL. The Unreal Engine EULA forbids combining LGPL code with the engine; see [unreal.md](unreal.md). |
+| **GPL-2.0-only**, **GPL-2.0-or-later**, **GPL-3.0-only**, **GPL-3.0-or-later** | Yes | Strong copyleft on the program. Linking GPL code into your game makes the game GPL. Using a GPL editor does not, as the section below explains. The bare **GPL-2.0** and **GPL-3.0** values mean the project did not say "only" or "or later". App stores and consoles: see [shipping](shipping.md). |
+| **LGPL-3.0** | Yes | You may link the library from closed code if users can replace it, which in practice means dynamic linking. Changes to the library itself stay LGPL. The Unreal Engine EULA forbids combining LGPL code with the engine; see [unreal.md](unreal.md). Consoles that allow no relinking cannot meet this; see [shipping](shipping.md). |
 
 ## How to read a `custom`, `varies` or `unknown` entry
 

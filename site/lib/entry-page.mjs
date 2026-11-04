@@ -59,6 +59,9 @@ export function engineScope(entry) {
   return native.length === 1 ? ENGINES[native[0]].label : null;
 }
 
+/** Licence families with a store-build caveat (docs/shipping.md): CC-BY's anti-DRM clause, copyleft. */
+const SHIPPING_FAMILIES = new Set(["cc-by", "copyleft"]);
+
 function credit(entry) {
   if (entry.attribution_required === true && entry.attribution_string) {
     const fill = fillInNote(entry.attribution_string);
@@ -99,7 +102,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     entry.engine_lock ? ["Engine lock", esc(ENGINE_LOCK_NOTES[entry.engine_lock] || entry.engine_lock)] : null,
     !entry.engine_lock && scope ? ["Engine", `Made for ${esc(scope)}: it only opens there.`] : null,
     entry.limits ? ["Limits", esc(entry.limits)] : null,
-    ["Licence", `${esc(licence)} <a class="facts-guide" href="../../guide/licenses/">what it means</a>`],
+    ["Licence", `${esc(licence)} <a class="facts-guide" href="../../guide/licenses/">what it means</a>${SHIPPING_FAMILIES.has(entry.licenseFamily) ? ' <a class="facts-guide" href="../../guide/shipping/">shipping to stores</a>' : ""}`],
     ["Commercial use", esc(commercialLabel(entry.commercial))],
     ["Credit", esc(c.value)],
     ["Status", `${esc(entry.status)}: ${esc(STATUS_NOTES[entry.status] || "")}`],

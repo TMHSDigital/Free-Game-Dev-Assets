@@ -253,6 +253,7 @@ Read these before you mix packs into a commercial build.
 | [`docs/unreal.md`](docs/unreal.md) | Fab and Epic content, UE-only licences, and what the Unreal EULA forbids combining |
 | [`docs/provenance.md`](docs/provenance.md) | Judging a supplier, and keeping a paper trail |
 | [`docs/high-risk.md`](docs/high-risk.md) | Sources to avoid entirely |
+| [`docs/shipping.md`](docs/shipping.md) | Steam, consoles and app stores: CC-BY anti-DRM, copyleft vs store terms, LGPL on consoles |
 | [`docs/ai-assets.md`](docs/ai-assets.md) | AI-generated assets |
 | [`docs/fivem.md`](docs/fivem.md) | GTA-format and FiveM assets |
 | [`docs/for-publishers.md`](docs/for-publishers.md) | What the catalog records about a source, and how its publisher corrects it or opts out of a preview |
@@ -383,7 +384,7 @@ npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no dow
 │                               one .md per source, plus a README index
 ├── docs/
 │   ├── licenses.md fonts.md geodata.md game-vs-video-licensing.md
-│   ├── provenance.md high-risk.md ai-assets.md fivem.md trust-score.md
+│   ├── provenance.md high-risk.md shipping.md ai-assets.md fivem.md trust-score.md
 │   ├── godot-budget-stack.md unreal.md
 │   ├── data.md                 the JSON, CSV and feed exports
 │   ├── for-publishers.md       what is recorded about a publisher, and how to correct it

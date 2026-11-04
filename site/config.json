@@ -46,6 +46,7 @@
     { "id": "for-publishers", "title": "For publishers", "path": "docs/for-publishers.md" },
     { "id": "provenance", "title": "Provenance", "path": "docs/provenance.md" },
     { "id": "high-risk", "title": "Not safe to ship", "path": "docs/high-risk.md" },
+    { "id": "shipping", "title": "Shipping to stores", "path": "docs/shipping.md" },
     { "id": "ai-assets", "title": "AI assets", "path": "docs/ai-assets.md" },
     { "id": "game-vs-video", "title": "Games vs video licensing", "path": "docs/game-vs-video-licensing.md" },
     { "id": "unreal", "title": "Unreal Engine licensing", "path": "docs/unreal.md" },
