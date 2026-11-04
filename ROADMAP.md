@@ -23,12 +23,12 @@ missing entry, so freshness and accuracy come before volume.
 
 - A changelog page generated from [docs/review-ledger.md](docs/review-ledger.md).
 - Full-text search over entry bodies (Notes and Evidence), not only names, tags and summaries.
-- The guides rendered as site pages, and an engine filter on the site (see the
-  [`feature`](https://github.com/TMHSDigital/Free-Game-Dev-Assets/labels/feature) label).
 
 ## Done
 
 - Site search across names, tags and summaries, with licence, format and category filters.
+- The guides in docs/ rendered as site pages, and an engine filter that hides projects,
+  addons and plugins for other engines.
 - Accessibility fixes: focus handling, contrast, heading outline and tap targets (Lighthouse
   accessibility 100).
 - Thin categories topped up: 15 video, animation and environment sources (2026-10-04).
