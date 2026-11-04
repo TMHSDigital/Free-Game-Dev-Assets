@@ -80,8 +80,9 @@ To add a starter stack (one pick per need for a kind of game), follow [`stacks/R
 - [ ] Tool entries distinguish **software license** from **exported asset** ownership
 
 Verification ages. On the first of each month a workflow opens a "Re-verify batch" issue
-listing the live entries whose licence was read longest ago (over 150 days, about a tenth
-of the catalog). Each item is a self-contained re-read: open the source, confirm the
+listing the live entries whose licence was read longest ago: as many as keep every entry
+inside the 180-day fresh window until the next batch, about a fifth of the catalog a
+month. Each item is a self-contained re-read: open the source, confirm the
 terms, bump `verified` and add a dated Evidence quote, or set `needs-review` and say what
 changed. Those issues carry `good first issue`; pick one if you want a first contribution
 with no code.

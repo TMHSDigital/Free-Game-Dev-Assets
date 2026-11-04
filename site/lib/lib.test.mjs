@@ -980,11 +980,46 @@ import { batchIssueMarkdown, pickBatch } from "./reverify.mjs";
   eq("batch: a fresh entry is left alone", picked.some((e) => e.id === "fresh"), false);
   eq("batch: deprecated entries are never picked", picked.some((e) => e.id === "gone"), false);
   eq("batch: 150 days is not yet due", picked.some((e) => e.id === "edge"), false);
-  eq("batch: size defaults to a tenth of the live catalog, at least one", pickBatch(pool, { now: rvNow }).length, 1);
+  eq("batch: by default, everything that would turn stale before the next batch", pickBatch(pool, { now: rvNow }).map((e) => e.id).join(","), "undated,june,due,edge");
   eq("batch: nothing due means an empty batch", pickBatch(pool, { now: Date.parse("2026-08-01T00:00:00Z"), size: 10 }).map((e) => e.id).join(","), "undated");
   eq("batch: explicit size caps the list", pickBatch(pool, { now: rvNow, size: 2 }).map((e) => e.id).join(","), "undated,june");
-  const big = Array.from({ length: 100 }, (_, i) => rv(`e${String(i).padStart(3, "0")}`, "2026-01-01"));
-  eq("batch: a tenth of 100 live entries is 10", pickBatch(big, { now: rvNow }).length, 10);
+  // 100 entries read the same day, 109 days ago: they must all be re-read
+  // within two more batches, so the load is spread over the three.
+  const bulge = Array.from({ length: 100 }, (_, i) => rv(`e${String(i).padStart(3, "0")}`, "2026-07-15"));
+  eq("batch: a bulge is spread over the batches before it expires", pickBatch(bulge, { now: rvNow }).length, 34);
+  eq("batch: a bulge is picked oldest first even before it is due", pickBatch(bulge, { now: rvNow })[0].age, 109);
+
+  // The catalog's own verified dates, run through 24 monthly batches in
+  // which every picked entry is re-read on the day: nothing may pass the
+  // fresh window, and no batch may need more than the size it was given.
+  const { listEntryFiles } = await import("./entry-files.mjs");
+  const { parseFrontmatter } = await import("./frontmatter.mjs");
+  const { VERIFIED_FRESH_DAYS } = await import("./shared.mjs");
+  const catalogDir = new URL("../../catalog/", import.meta.url);
+  const { fileURLToPath } = await import("node:url");
+  let sim = listEntryFiles(fileURLToPath(catalogDir))
+    .map((f) => parseFrontmatter(nodeFs.readFileSync(f, "utf8"))?.meta)
+    .filter((m) => m?.id)
+    .map((m) => ({ id: String(m.id), verified: m.verified ? String(m.verified) : null, status: String(m.status || "needs-review") }));
+  const first = new Date();
+  let t = Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + 1, 1, 8);
+  let worstAge = 0;
+  let biggest = 0;
+  for (let m = 0; m < 24; m += 1) {
+    for (const e of sim) {
+      if (e.status === "deprecated" || !e.verified) continue;
+      worstAge = Math.max(worstAge, Math.floor((t - Date.parse(`${e.verified}T00:00:00Z`)) / 86400000));
+    }
+    const picked = new Set(pickBatch(sim, { now: t }).map((e) => e.id));
+    biggest = Math.max(biggest, picked.size);
+    const day = new Date(t).toISOString().slice(0, 10);
+    sim = sim.map((e) => (picked.has(e.id) ? { ...e, verified: day } : e));
+    const d = new Date(t);
+    t = Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1, 8);
+  }
+  eq("batch simulation: runs on the real catalog", sim.length > 100, true);
+  eq("batch simulation: no live entry passes the fresh window in 24 months", worstAge <= VERIFIED_FRESH_DAYS, true);
+  eq("batch simulation: a batch stays under a third of the catalog", biggest <= Math.ceil(sim.length / 3), true);
   const md = batchIssueMarkdown({ batch: pickBatch(pool, { now: rvNow, size: 2 }), repo: "https://github.com/o/r", date: "2026-11-01", total: 6 });
   has("batch issue links the entry file", md, "[`june`](https://github.com/o/r/blob/main/catalog/2d/june.md)");
   has("batch issue says what was recorded", md, "recorded as `CC0`, needs-review, verified 2026-06-01 (153 days ago)");

@@ -36,6 +36,7 @@ missing entry, so freshness and accuracy come before volume.
   (`feed.xml`) and one of re-verified licences (`reverified.xml`); see [docs/data.md](docs/data.md).
 - Monthly dataset releases tagged `vYYYY.MM.DD`, with the version written into `CITATION.cff`.
 - Re-verification in regular batches: since 2026-10 the `reverify.yml` workflow opens a
-  monthly checklist of the entries checked longest ago (over 150 days, about a tenth of the
-  catalog each month), so the July 2026 verifications do not all expire together in mid-2027.
+  monthly checklist of the entries checked longest ago, sized so none passes 180 days before
+  the next batch (about a fifth of the catalog a month, more while the July-September 2026
+  verifications come due); a 24-month simulation in `site/lib/lib.test.mjs` holds it to that.
 - `camera_perspective` and `grid_dimensions` on 2D entries.

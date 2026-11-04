@@ -12,8 +12,6 @@ import { VERIFIED_FRESH_DAYS } from "./shared.mjs";
  * fresh to aging.
  */
 export const DUE_DAYS = VERIFIED_FRESH_DAYS - 30;
-/** Months the whole catalog should take to cycle through the batches. */
-export const CYCLE_MONTHS = 10;
 
 /** Days since `verified` at `now`, or null when the date is unusable. */
 function ageDays(verified, now) {
@@ -22,19 +20,62 @@ function ageDays(verified, now) {
 }
 
 /**
- * The entries due for a re-read: active or needs-review, last checked more
- * than `dueDays` ago or never, oldest first. `size` defaults to a tenth of
- * the live catalog so every entry comes round in about CYCLE_MONTHS.
+ * Days between two batches, at most: the workflow runs on the 1st of each
+ * month, and the longest month has 31 days.
+ */
+export const BATCH_GAP_DAYS = 31;
+
+/**
+ * Batch `k` (0 = this one) is the last that can re-read an entry before
+ * its licence check turns VERIFIED_FRESH_DAYS old; undated entries are due
+ * now. Negative (already late) counts as 0.
+ */
+function deadlineBatch(age) {
+  if (age === null) return 0;
+  return Math.max(0, Math.floor((VERIFIED_FRESH_DAYS - age) / BATCH_GAP_DAYS));
+}
+
+/**
+ * The smallest steady batch size that re-reads every live entry before it
+ * turns VERIFIED_FRESH_DAYS old: for each coming batch k, the entries whose
+ * deadline is batch k or sooner, spread over the k + 1 batches left. A bulge
+ * of entries read in the same week is spread over the months before it
+ * expires instead of landing in one batch. The look-ahead stops where an
+ * entry re-read now would itself fall due.
+ */
+export function batchSizeNeeded(ages) {
+  const horizon = Math.floor(VERIFIED_FRESH_DAYS / BATCH_GAP_DAYS);
+  const byBatch = new Array(horizon + 1).fill(0);
+  for (const age of ages) {
+    const k = deadlineBatch(age);
+    if (k <= horizon) byBatch[k] += 1;
+  }
+  let need = 0;
+  let cumulative = 0;
+  for (let k = 0; k <= horizon; k += 1) {
+    cumulative += byBatch[k];
+    need = Math.max(need, Math.ceil(cumulative / (k + 1)));
+  }
+  return need;
+}
+
+/**
+ * This month's batch, oldest first (undated first of all), sized by
+ * batchSizeNeeded so no live entry passes VERIFIED_FRESH_DAYS before a batch
+ * reaches it. Every entry more than `dueDays` old is in it, since it would
+ * turn stale before the next one. An explicit `size` takes that many of the
+ * entries more than `dueDays` old instead.
  */
 export function pickBatch(entries, { now = Date.now(), dueDays = DUE_DAYS, size } = {}) {
-  const live = entries.filter((e) => e.status !== "deprecated");
-  const limit = size ?? Math.ceil(live.length / CYCLE_MONTHS);
-  return live
+  const live = entries
+    .filter((e) => e.status !== "deprecated")
     .map((entry) => ({ entry, age: entry.verified ? ageDays(entry.verified, now) : null }))
-    .filter((r) => r.age === null || r.age > dueDays)
-    .sort((a, b) => (b.age ?? Infinity) - (a.age ?? Infinity) || a.entry.id.localeCompare(b.entry.id))
-    .slice(0, limit)
-    .map((r) => ({ ...r.entry, age: r.age }));
+    .sort((a, b) => (b.age ?? Infinity) - (a.age ?? Infinity) || a.entry.id.localeCompare(b.entry.id));
+  const picked =
+    size === undefined
+      ? live.slice(0, batchSizeNeeded(live.map((r) => r.age)))
+      : live.filter((r) => r.age === null || r.age > dueDays).slice(0, size);
+  return picked.map((r) => ({ ...r.entry, age: r.age }));
 }
 
 const code = (s) => `\`${String(s).replaceAll("`", "%60")}\``;
@@ -42,7 +83,7 @@ const code = (s) => `\`${String(s).replaceAll("`", "%60")}\``;
 /** The issue body: how to do one, then a checklist with what to re-read. */
 export function batchIssueMarkdown({ batch, repo, date, total, dueDays = DUE_DAYS }) {
   const lines = [
-    `Monthly re-verification batch, ${date}: the ${batch.length} entries whose licence was read longest ago (more than ${dueDays} days, out of ${total} live entries). Each one is a small, self-contained check, and a good first contribution.`,
+    `Monthly re-verification batch, ${date}: the ${batch.length} entries whose licence was read longest ago, out of ${total} live entries: enough that none passes ${VERIFIED_FRESH_DAYS} days before the next batch. Each one is a small, self-contained check, and a good first contribution.`,
     "",
     "**How to do one**",
     "1. Open the entry and its source page (the `url` in the frontmatter).",

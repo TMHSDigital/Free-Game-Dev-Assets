@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * Writes the monthly "re-verify batch" issue: the live entries whose licence
- * was read longest ago (more than 150 days), oldest first, sized so the
- * catalog cycles in about ten months.
+ * was read longest ago, oldest first, as many as keep every entry inside the
+ * 180-day fresh window (lib/reverify.mjs batchSizeNeeded).
  *   node site/reverify-batch.mjs [--report <file.md>] [--size <n>]
  * Under GitHub Actions it also writes `count=<n>` to $GITHUB_OUTPUT.
  */
