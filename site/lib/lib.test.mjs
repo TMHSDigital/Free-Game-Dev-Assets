@@ -547,6 +547,18 @@ eq("seo description fits the limit", seoDescription({ license: "CC-BY-4.0", comm
 /* sitemap lastmod (#108) --------------------------------------------------- */
 import { sitemapXml } from "./exports.mjs";
 {
+  const { commitDatesFromLog, DATED_PATHS } = await import("./exports.mjs");
+  const log = "\0" + "2026-10-20\n\ndocs/fonts.md\ncatalog/2d/a.md\n\0" + "2026-09-01\n\ndocs/fonts.md\ndocs/data.md\n";
+  const dates = commitDatesFromLog(log);
+  eq("git dates: newest commit wins", dates.get("docs/fonts.md"), "2026-10-20");
+  eq("git dates: older-only file keeps its date", dates.get("docs/data.md"), "2026-09-01");
+  const siteCfg = JSON.parse(nodeFs.readFileSync(new URL("../config.json", import.meta.url), "utf8"));
+  const undated = (siteCfg.guides || []).filter((g) => !DATED_PATHS.some((d) => g.path.startsWith(`${d}/`)));
+  eq("git dates: every guide lives under a dated path", undated.map((g) => g.path).join(", "), "");
+  const sm = sitemapXml({ site, stamp: "2026-11-03", entries: [], guides: [{ id: "fonts", path: "docs/fonts.md" }], modified: dates });
+  eq("sitemap: a guide's lastmod is its doc's last commit", sm.includes("<loc>https://x.test/s/guide/fonts/</loc><lastmod>2026-10-20</lastmod>"), true);
+}
+{
   const sm = sitemapXml({
     site,
     stamp: "2026-10-22",

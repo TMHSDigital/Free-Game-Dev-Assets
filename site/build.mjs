@@ -24,7 +24,7 @@ import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
-import { atomFeed, catalogCsv, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
+import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
 import { schemaErrors } from "./lib/schema-check.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
@@ -222,33 +222,23 @@ function headMetaHtml(site, stats, generatedAt, hasCard) {
 
 /**
  * Repo-relative file => date of its last commit, from one `git log` over the
- * catalog and stacks. The sitemap's lastmod must never be earlier than the
+ * catalog, stacks and docs (DATED_PATHS). The sitemap's lastmod must never be earlier than the
  * last content change, and an entry's `verified` date is not that. Empty when
  * git is unavailable (a tarball, a shallow CI checkout with no history).
  */
 function lastCommitDates() {
-  const dates = new Map();
   try {
-    const out = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", "catalog", "stacks"], {
+    const out = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", ...DATED_PATHS], {
       cwd: ROOT,
       encoding: "utf8",
       maxBuffer: 64 * 1024 * 1024,
       stdio: ["ignore", "pipe", "ignore"],
     });
-    let date = null;
-    for (const line of out.split("\n")) {
-      if (line.startsWith("\0")) {
-        date = line.slice(1).trim();
-        continue;
-      }
-      const file = line.trim();
-      // Newest commit first, so the first date seen for a file is its latest.
-      if (file && date && !dates.has(file)) dates.set(file, date);
-    }
+    return commitDatesFromLog(out);
   } catch {
     // No git: the sitemap falls back to the build date.
+    return new Map();
   }
-  return dates;
 }
 
 function robotsTxt(site) {
@@ -491,7 +481,7 @@ function writeCategoryPages({ entries, config, stats, stamp, hasCard, now }) {
  * docs/ guides as guide/<id>/ pages. Links to entries go to their pages,
  * links to another guide go to its page, anything else to GitHub.
  */
-function writeGuidePages({ entries, config, stats, stamp, hasCard }) {
+function writeGuidePages({ entries, config, stats, stamp, hasCard, modified = new Map() }) {
   const written = [];
   const errors = [];
   const resolverFor = linkResolvers(entries, config, "../../entry/");
@@ -516,7 +506,7 @@ function writeGuidePages({ entries, config, stats, stamp, hasCard }) {
     };
     try {
       const rendered = renderGuide(fs.readFileSync(path.join(ROOT, guide.path), "utf8"), { file: guide.path, resolveLink });
-      writeOut(path.join("guide", guide.id, "index.html"), guidePageHtml({ guide, rendered, site: config.site, stamp, total: stats.total, hasCard }));
+      writeOut(path.join("guide", guide.id, "index.html"), guidePageHtml({ guide, rendered, site: config.site, stamp, total: stats.total, hasCard, modified: modified.get(guide.path) || null }));
       written.push(`guide/${guide.id}/index.html`);
     } catch (err) {
       errors.push(err.message);
@@ -695,7 +685,8 @@ function main() {
   const categoriesInSitemap = Object.keys(config.categories)
     .filter((cat) => visible.some((e) => e.category === cat))
     .map((id) => ({ id, lastmod: stamp }));
-  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified: lastCommitDates(), categories: categoriesInSitemap, guides: config.guides }));
+  const modified = lastCommitDates();
+  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified, categories: categoriesInSitemap, guides: config.guides }));
   writeOut("robots.txt", robotsTxt(config.site));
   writeOut("404.html", notFoundHtml(config.site));
   writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard }));
@@ -703,7 +694,7 @@ function main() {
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });
   const categoryPages = writeCategoryPages({ entries: visible, config, stats, stamp, hasCard, now });
-  const guidePages = writeGuidePages({ entries, config, stats, stamp, hasCard });
+  const guidePages = writeGuidePages({ entries, config, stats, stamp, hasCard, modified });
   const pageErrors = [
     ...stackErrors,
     ...pages.errors,

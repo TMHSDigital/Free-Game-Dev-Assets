@@ -7,7 +7,7 @@ export function guidePageUrl(site, id) {
   return `${String(site.siteUrl).replace(/\/+$/, "")}/guide/${id}/`;
 }
 
-export function guidePageHtml({ guide, rendered, site, stamp, total, hasCard }) {
+export function guidePageHtml({ guide, rendered, site, stamp, total, hasCard, modified = null }) {
   const url = guidePageUrl(site, guide.id);
   const title = `${guide.title} | ${site.title}`;
   const description = clipText(plainText(rendered.firstParagraph) || guide.title, SEO_DESCRIPTION_MAX);
@@ -17,6 +17,8 @@ export function guidePageHtml({ guide, rendered, site, stamp, total, hasCard }) 
     "@type": "Article",
     headline: plainText(rendered.title),
     url,
+    // The doc's last commit, the same date the sitemap gives (build.mjs).
+    ...(modified ? { dateModified: modified } : {}),
     isPartOf: { "@type": "WebSite", name: site.title, url: site.siteUrl },
     breadcrumb: breadcrumbLd([
       { name: site.title, url: site.siteUrl },

@@ -6,6 +6,31 @@
 import { esc } from "./shared.mjs";
 
 /**
+ * The folders whose files get a page with a lastmod: catalog entries, stacks
+ * and the docs/ guides. build.mjs runs one `git log` over them.
+ */
+export const DATED_PATHS = ["catalog", "stacks", "docs"];
+
+/**
+ * Repo path => YYYY-MM-DD of its last commit, from
+ * `git log --format=%x00%cs --name-only` output (newest commit first, so
+ * the first date seen for a file is its latest).
+ */
+export function commitDatesFromLog(out) {
+  const dates = new Map();
+  let date = null;
+  for (const line of String(out).split("\n")) {
+    if (line.startsWith("\0")) {
+      date = line.slice(1).trim();
+      continue;
+    }
+    const file = line.trim();
+    if (file && date && !dates.has(file)) dates.set(file, date);
+  }
+  return dates;
+}
+
+/**
  * sitemap.xml. Every URL carries a lastmod that is never earlier than the
  * last content change: the build date for the home and freshness pages, which
  * change every build by design; for entries and stacks the later of the
