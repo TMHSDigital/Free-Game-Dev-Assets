@@ -22,6 +22,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      # The job pushes HEAD to main and tags it, so a dispatch from any other
+      # ref (a thumbs/<month> branch, say) would ship that ref. Stop first.
+      - name: Refuse a ref other than main
+        if: github.ref != 'refs/heads/main'
+        env:
+          REF: ${{ github.ref }}
+        run: |
+          echo "::error::Dataset release runs from main only; this run is on $REF."
+          exit 1
+
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
