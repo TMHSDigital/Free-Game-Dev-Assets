@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [WAV, MP3]
-tags: [loops, one-shots, api]
+tags: [loops, one-shots, api, ai-generated]
 added: 2026-10-26
 verified: 2026-10-26
 status: needs-review

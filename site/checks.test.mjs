@@ -38,6 +38,8 @@ import {
   checkTitleMatchesName,
   checkValueAliases,
   checkValueSpellings,
+  checkAiGuide,
+  checkAiTag,
   checkCreditPlaceholders,
   checkLimits,
   checkKnownKeys,
@@ -900,6 +902,15 @@ accepts("V34 the real allowlist matches the real vocabulary", checkPreviewVocabu
 rejects("V34 rejects an allowlisted licence missing from the vocabulary", checkPreviewVocabulary({ licenses: {} }, ["CC-BY-SA-4.0"], () => true), '"CC-BY-SA-4.0", which is not in site/license-vocabulary.json');
 rejects("V34 rejects a required licence the caption would not credit", checkPreviewVocabulary({ licenses: { "OGA-BY-3.0": { attribution: "required" } } }, ["OGA-BY-3.0"], () => false), "would lack the creator credit");
 rejects("V34 rejects a credit on a licence that does not ask for one", checkPreviewVocabulary({ licenses: { MIT: { attribution: "notice" } } }, ["MIT"], () => true), "carry a credit the licence does not ask for");
+
+/* V37: AI-generated content stays tagged and listed ------------------------ */
+accepts("V37 accepts a tagged entry", checkAiTag("ok.md", { tags: ["ai-generated"] }, "Some sounds are AI-generated."));
+accepts("V37 ignores a denial", checkAiTag("ok.md", { tags: [] }, "itch metadata: No generative AI was used. The audio is not AI-generated."));
+accepts("V37 ignores a mention that is not a claim", checkAiTag("ok.md", { tags: [] }, "Built for AI-generated pixel art that is off-grid."));
+rejects("V37 rejects an untagged claim", checkAiTag("bad.md", { tags: ["loops"] }, "- Some library sounds are AI-generated and labelled."), "has no ai-generated tag");
+rejects("V37 rejects a partly-AI claim", checkAiTag("bad.md", {}, "The pack is partly AI-generated."), "has no ai-generated tag");
+accepts("V37 accepts a guide that links every tagged entry", checkAiGuide("- [S](../catalog/audio/s.md)", ["catalog/audio/s.md"]));
+rejects("V37 rejects a guide missing a tagged entry", checkAiGuide("nothing", ["catalog/audio/s.md"]), "does not link catalog/audio/s.md");
 
 /* V36: limits is one short plain line ------------------------------------- */
 accepts("V36 accepts a short plain line", checkLimits("ok.md", { limits: "Tree packs are Unreal-only; no standalone redistribution" }));

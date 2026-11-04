@@ -360,6 +360,36 @@ export function checkPreviewVocabulary(vocab, allow = PREVIEW_LICENSES, credits 
   return errors;
 }
 
+/* ----------------------------------------------------------------- V37 */
+/**
+ * AI-generated content stays labelled. An entry whose body says some of its
+ * content "is" or "are" AI-generated carries the `ai-generated` tag, and
+ * docs/ai-assets.md links every tagged entry, since Steam's Content Survey
+ * asks a developer to disclose AI content they ship. "No generative AI" and
+ * "not AI-generated" do not count.
+ */
+const AI_CLAIM_RE = /\b(?:is|are)\s+(?:partly\s+|partially\s+|mostly\s+)?AI[- ]generated\b/i;
+
+export function checkAiTag(rel, meta, body) {
+  const tags = Array.isArray(meta.tags) ? meta.tags.map(String) : [];
+  if (tags.includes("ai-generated")) return [];
+  for (const sentence of String(body).split(/(?<=[.!?])\s+|\n/)) {
+    if (AI_CLAIM_RE.test(sentence) && !/\b(?:not|no|never)\b/i.test(sentence)) {
+      return [`${rel} says content is AI-generated ("${sentence.trim().slice(0, 80)}") but has no ai-generated tag`];
+    }
+  }
+  return [];
+}
+
+/** docs/ai-assets.md links every entry tagged ai-generated (repo paths relative to docs/). */
+export function checkAiGuide(guideText, taggedRels) {
+  const errors = [];
+  for (const rel of taggedRels) {
+    if (!String(guideText).includes(`(../${rel})`)) errors.push(`docs/ai-assets.md does not link ${rel}, which is tagged ai-generated`);
+  }
+  return errors;
+}
+
 /* ----------------------------------------------------------------- V36 */
 /**
  * `limits`: a short line for a restriction the licence fields cannot carry,

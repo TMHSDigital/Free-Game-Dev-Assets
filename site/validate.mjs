@@ -10,6 +10,8 @@ import {
   checkEntryBasics,
   checkPreviewVocabulary,
   checkFeatured,
+  checkAiGuide,
+  checkAiTag,
   checkCreditPlaceholders,
   checkLimits,
   checkKnownKeys,
@@ -313,6 +315,7 @@ function main() {
     errors.push(...checkKnownKeys(rel, meta));
     errors.push(...checkCreditPlaceholders(rel, meta));
     errors.push(...checkLimits(rel, meta));
+    errors.push(...checkAiTag(rel, meta, body));
     // V24 types commercial and attribution_required (a quoted "true" is text).
     errors.push(...checkFieldTypes(rel, meta));
     errors.push(...checkEntryUrl(rel, meta));
@@ -370,6 +373,13 @@ function main() {
     );
     errors.push(...checkComparisonLicences(cat, readText(readme), entriesByRel));
   }
+
+  errors.push(
+    ...checkAiGuide(
+      readText(path.join(ROOT, "docs", "ai-assets.md")),
+      records.filter(({ meta }) => Array.isArray(meta.tags) && meta.tags.map(String).includes("ai-generated")).map(({ rel }) => rel)
+    )
+  );
 
   const measured = {};
   for (const { meta } of records) {
