@@ -201,6 +201,18 @@ code {
   font-size: 1.05rem;
 }
 
+.hero-search {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 34rem;
+  margin: 1.35rem 0 0;
+}
+
+.hero-search .search-field {
+  flex: 1;
+  min-width: 0;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -2045,8 +2057,9 @@ input:focus-visible,
   border-radius: 8px;
 }
 
-/* The header on a phone: brand on its own row, then one scrolling row of
-   links tall enough to tap. */
+/* The header on a phone: brand on its own row, then the links, tall enough
+   to tap. They wrap rather than scroll, so Sponsor is never cut off out of
+   sight (a sideways scroll gave no cue that it was there). */
 @media (max-width: 640px) {
   .topbar {
     flex-wrap: wrap;
@@ -2063,31 +2076,22 @@ input:focus-visible,
 
   .topnav {
     flex: 1 0 100%;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 0;
-    overflow-x: auto;
+    gap: 0 24px;
     white-space: nowrap;
-    scrollbar-width: none;
-    margin-inline: calc(-1 * clamp(1rem, 3vw, 1.5rem));
-    padding-inline: clamp(1rem, 3vw, 1.5rem);
   }
 
   .topnav a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    padding: 0 12px;
-  }
-
-  .topnav a:first-child {
-    padding-left: 0;
+    padding: 0;
   }
 
   .nav-sponsor {
     display: inline-flex;
     align-items: center;
-    padding-left: 12px;
   }
 }
 

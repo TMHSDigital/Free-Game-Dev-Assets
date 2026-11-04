@@ -619,6 +619,17 @@ import { installViewToggles } from "./views.js";
   function bindControls() {
     const search = $("#search");
     search.value = state.q;
+
+    // The hero's search box runs the catalog search in place and moves to the
+    // results; without this script its form loads ?q= at #catalog instead.
+    $("#hero-search-form")?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      state.q = $("#hero-search").value;
+      search.value = state.q;
+      apply({ push: true });
+      $("#catalog").scrollIntoView();
+      $("#result-count").focus({ preventScroll: true });
+    });
     search.addEventListener("input", (e) => {
       state.q = e.target.value;
       clearTimeout(searchTimer);

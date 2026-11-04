@@ -32,8 +32,16 @@
           2D, 3D, audio, fonts, shaders and tools, with commercial use and
           attribution spelled out per entry.
         </p>
+        <!-- Without JavaScript this loads ?q=... at #catalog, which the catalog reads. -->
+        <form class="hero-search" id="hero-search-form" role="search" action="./#catalog" method="get">
+          <label class="search-field">
+            <span class="sr-only">Search the catalog</span>
+            <input id="hero-search" name="q" maxlength="200" type="search" placeholder="Pixel tileset, footsteps, CC0 fonts…" autocomplete="off" />
+          </label>
+          <button class="btn" type="submit">Search</button>
+        </form>
         <p class="hero-actions">
-          <a class="btn" href="#catalog">Browse catalog</a>
+          <a class="text-link" href="#catalog">Browse the catalog</a>
           <a class="text-link" href="#starters">Jump to safe starters</a>
         </p>
         <p class="freshness-line"><!--FRESHNESS_LINE--> <!--NEW_LINE--></p>
