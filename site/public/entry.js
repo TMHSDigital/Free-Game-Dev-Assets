@@ -26,7 +26,8 @@
     const status = document.getElementById("copy-status");
     try {
       await navigator.clipboard.writeText(btn.getAttribute("data-copy"));
-      status.textContent = "Copied";
+      // A templated line says what to fill in (data-fill, owes.mjs fillInNote).
+      status.textContent = btn.dataset.fill ? `Copied. ${btn.dataset.fill}` : "Copied";
     } catch {
       // Clipboard access can be refused; select the text so it can be
       // copied by hand rather than failing silently.

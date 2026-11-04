@@ -10,6 +10,7 @@ import {
   checkEntryBasics,
   checkPreviewVocabulary,
   checkFeatured,
+  checkCreditPlaceholders,
   checkKnownKeys,
   checkActiveIsSettled,
   checkPreviewField,
@@ -309,6 +310,7 @@ function main() {
       ...checkEntryBasics(rel, meta, body, { stem, dirName: path.basename(path.dirname(file)), categories, readmeText, today })
     );
     errors.push(...checkKnownKeys(rel, meta));
+    errors.push(...checkCreditPlaceholders(rel, meta));
     // V24 types commercial and attribution_required (a quoted "true" is text).
     errors.push(...checkFieldTypes(rel, meta));
     errors.push(...checkEntryUrl(rel, meta));

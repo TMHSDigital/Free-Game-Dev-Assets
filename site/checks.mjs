@@ -360,6 +360,35 @@ export function checkPreviewVocabulary(vocab, allow = PREVIEW_LICENSES, credits 
   return errors;
 }
 
+/* ----------------------------------------------------------------- V35 */
+/**
+ * A templated credit line marks what the reader fills in with braces only:
+ * `"{title}" by Kevin MacLeod`. The site highlights `{…}` fields and the copy
+ * buttons and CREDITS export flag them (lib/owes.mjs); any other style
+ * (`[Font name]`, `<family>`, `MM/YYYY`, `(sound page URL)`) would be copied
+ * into a game unmarked. A bare word like `Song Name` cannot be told from a
+ * real title, so reviewers still read the line.
+ */
+const CREDIT_PLACEHOLDER_STYLES = [
+  [/\[[^\]]+\]/, "square brackets"],
+  [/<[A-Za-z][\w -]*>/, "angle brackets"],
+  [/\b(?:MM|YYYY|YY|DD)\b/, "a date pattern"],
+  [/\([^)]*\b(?:URL|url|link)\)/, "a parenthesised description"],
+];
+
+export function checkCreditPlaceholders(rel, meta) {
+  const line = meta.attribution_string;
+  if (typeof line !== "string" || !line) return [];
+  const errors = [];
+  const outside = line.replace(/\{[^{}\n]+\}/g, "");
+  if (/[{}]/.test(outside)) errors.push(`${rel} attribution_string has an unmatched or nested brace; write each field as {name}`);
+  for (const [re, style] of CREDIT_PLACEHOLDER_STYLES) {
+    const m = outside.match(re);
+    if (m) errors.push(`${rel} attribution_string marks "${m[0]}" with ${style}; write a field the reader fills in as {name} (CONTRIBUTING.md)`);
+  }
+  return errors;
+}
+
 /* ----------------------------------------------------------------- V33 */
 /**
  * Every frontmatter key an entry may use. An unknown key was ignored without

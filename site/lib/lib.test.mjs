@@ -327,6 +327,22 @@ eq("per-file bucket", ow.perFile.map((i) => i.entry.id).join(","), "c");
 eq("open questions bucket", ow.openQuestions.map((i) => i.entry.id).join(","), "c");
 eq("unclear bucket", ow.unclear.map((i) => i.entry.id).join(","), "d");
 eq("copy all joins canned lines in pick order", copyAllText(ow), 'Art by "A" <x>\nMusic by B');
+{
+  const { creditFields, fillInNote, creditLineHtml, FILL_IN_HEADER, creditsFile: cf } = await import("./owes.mjs");
+  const tpl = { id: "t", name: "Tunes", license: "CC-BY-4.0", attribution_required: true, attribution_string: 'Music: "{title}" by {artist} ({title})' };
+  const plain = { id: "p", name: "Plain", license: "CC-BY-4.0", attribution_required: true, attribution_string: "Art by P" };
+  eq("credit fields: distinct, in order", creditFields(tpl.attribution_string).join(" "), "{title} {artist}");
+  eq("credit fields: none in a plain line", creditFields("Art by P").length, 0);
+  eq("credit fill note names every field", fillInNote(tpl.attribution_string), "Fill in {title} and {artist} before you ship.");
+  eq("credit fill note is empty for a plain line", fillInNote("Art by P"), "");
+  eq("credit html marks fields and escapes the rest", creditLineHtml('"{a}" <b>', (t) => t.replace(/</g, "&lt;").replace(/"/g, "&quot;")), '&quot;<mark class="credit-field">{a}</mark>&quot; &lt;b>');
+  const owT = owes([{ need: "Music", entry: tpl }, { need: "Art", entry: plain }]);
+  eq("copy all starts with the fill-in line when a line is a template", copyAllText(owT).split("\n")[0], FILL_IN_HEADER);
+  eq("copy all has no fill-in line without templates", copyAllText(owes([{ need: "Art", entry: plain }])), "Art by P");
+  const file = cf(owT, { format: "md" });
+  eq("credits file names the templated entries", file.includes(`${FILL_IN_HEADER} The lines for Tunes are templates`), true);
+  eq("credits file has no fill-in note without templates", cf(owes([{ need: "Art", entry: plain }])).includes(FILL_IN_HEADER), false);
+}
 
 /* entry page: maintenance and shortlist toggle ----------------------------- */
 has("maintenance row on an archived entry", page({ maintenance: "archived" }), "<dt>Maintenance</dt><dd>archived: The source repository is archived");

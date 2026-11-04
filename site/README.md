@@ -48,7 +48,8 @@ and tools that want the metadata without scraping the page. The page itself load
   The reader-facing guide to the exports is [`docs/data.md`](../docs/data.md).
 - Each entry carries its frontmatter fields (`id`, `name`, `url`, `category`,
   `subcategories`, `license`, `license_spdx` where set, `commercial`,
-  `attribution_required`, `attribution_string` where set, `formats`, `tags`, `added`,
+  `attribution_required`, `attribution_string` where set (a template marks fields as `{name}`;
+  `lib/owes.mjs` highlights them and flags them on copy and export), `formats`, `tags`, `added`,
   `verified`, `status`, `publisher` where set, and, only where set, `maintenance`,
   `engine_lock`, `ue_versions` and the 2D fields `grid_dimensions`, `camera_perspective`
   and `hardware_tags`), plus `path` (the entry's

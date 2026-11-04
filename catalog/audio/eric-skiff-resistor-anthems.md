@@ -8,7 +8,7 @@ license: CC-BY-4.0
 license_spdx: CC-BY-4.0
 commercial: true
 attribution_required: true
-attribution_string: "Music: Eric Skiff - Song Name - Resistor Anthems - Available at http://EricSkiff.com/music"
+attribution_string: "Music: Eric Skiff - {song name} - Resistor Anthems - Available at http://EricSkiff.com/music"
 formats: [MP3]
 tags: [chiptune, 8-bit, retro, music, album, credit-required]
 added: 2026-09-23

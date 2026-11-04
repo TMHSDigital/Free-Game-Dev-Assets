@@ -802,6 +802,14 @@ input:focus-visible,
   overflow-wrap: anywhere;
 }
 
+/* A part of a templated credit line the reader fills in (owes.mjs). */
+.credit-field {
+  background: transparent;
+  color: var(--warn);
+  font-weight: 600;
+  border-bottom: 2px dotted var(--warn);
+}
+
 .attribution .btn-ghost {
   justify-self: start;
   border: 1px solid var(--line);

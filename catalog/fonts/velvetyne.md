@@ -10,7 +10,7 @@ commercial: true
 attribution_required: true
 formats: [OTF, TTF, WOFF]
 tags: [foundry, libre]
-attribution_string: "[Font name] by [designer] / Velvetyne Type Foundry"
+attribution_string: "{font name} by {designer} / Velvetyne Type Foundry"
 added: 2026-08-24
 verified: 2026-08-24
 status: active

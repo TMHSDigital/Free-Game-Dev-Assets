@@ -38,6 +38,7 @@ import {
   checkTitleMatchesName,
   checkValueAliases,
   checkValueSpellings,
+  checkCreditPlaceholders,
   checkKnownKeys,
   checkEntryBasics,
   checkFeatured,
@@ -898,6 +899,16 @@ accepts("V34 the real allowlist matches the real vocabulary", checkPreviewVocabu
 rejects("V34 rejects an allowlisted licence missing from the vocabulary", checkPreviewVocabulary({ licenses: {} }, ["CC-BY-SA-4.0"], () => true), '"CC-BY-SA-4.0", which is not in site/license-vocabulary.json');
 rejects("V34 rejects a required licence the caption would not credit", checkPreviewVocabulary({ licenses: { "OGA-BY-3.0": { attribution: "required" } } }, ["OGA-BY-3.0"], () => false), "would lack the creator credit");
 rejects("V34 rejects a credit on a licence that does not ask for one", checkPreviewVocabulary({ licenses: { MIT: { attribution: "notice" } } }, ["MIT"], () => true), "carry a credit the licence does not ask for");
+
+/* V35: credit-line placeholders use {name} ---------------------------------- */
+accepts("V35 accepts {field} placeholders", checkCreditPlaceholders("ok.md", { attribution_string: '"{title}" by Kevin MacLeod ({MM/YYYY})' }));
+accepts("V35 accepts an address in angle brackets", checkCreditPlaceholders("ok.md", { attribution_string: "EzSpriteSheet <z64.me>" }));
+accepts("V35 ignores a missing line", checkCreditPlaceholders("ok.md", {}));
+rejects("V35 rejects square brackets", checkCreditPlaceholders("bad.md", { attribution_string: "[Font name] by X" }), 'marks "[Font name]" with square brackets');
+rejects("V35 rejects angle-bracket fields", checkCreditPlaceholders("bad.md", { attribution_string: "@fontsource/<family>" }), "angle brackets");
+rejects("V35 rejects a bare date pattern", checkCreditPlaceholders("bad.md", { attribution_string: "Data MM/YYYY" }), "a date pattern");
+rejects("V35 rejects a parenthesised description", checkCreditPlaceholders("bad.md", { attribution_string: "By X (sound page URL)" }), "a parenthesised description");
+rejects("V35 rejects an unmatched brace", checkCreditPlaceholders("bad.md", { attribution_string: "By {artist" }), "unmatched or nested brace");
 
 /* V33: no unknown frontmatter keys ------------------------------------------ */
 accepts("V33 accepts the documented keys", checkKnownKeys("ok.md", { id: "a", engine_lock: "unreal", attribution_string: "x", preview: "none" }));

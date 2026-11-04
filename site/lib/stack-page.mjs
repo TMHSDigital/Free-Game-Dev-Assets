@@ -16,6 +16,7 @@ import {
   siteFooterHtml,
 } from "./shared.mjs";
 import { copyAllText } from "./stacks.mjs";
+import { creditLineHtml, FILL_IN_HEADER, fillInNote } from "./owes.mjs";
 import { entryCardHtml } from "./cards.mjs";
 
 export function stackJsonLd(meta, sections, site) {
@@ -48,15 +49,17 @@ function owesHtml(owed) {
         if (!c.line) {
           return `<li class="credit-item">${label}<p class="attribution-note">No canned credit line: see the entry.</p></li>`;
         }
+        const fill = fillInNote(c.line);
         return `<li class="credit-item">${label}
-            <p class="attribution-string" id="credit-${n}">${esc(c.line)}</p>
-            <button type="button" class="btn-ghost" data-copy="${esc(c.line)}" data-target="credit-${n}" hidden>Copy credit line</button>
+            <p class="attribution-string" id="credit-${n}">${creditLineHtml(c.line, esc)}</p>${fill ? `
+            <p class="attribution-note credit-fill">${esc(fill)}</p>` : ""}
+            <button type="button" class="btn-ghost" data-copy="${esc(c.line)}" data-target="credit-${n}"${fill ? ` data-fill="${esc(fill)}"` : ""} hidden>Copy credit line</button>
             <span class="copy-status" role="status" aria-live="polite"></span></li>`;
       })
       .join("\n");
     const all = copyAllText(owed);
     const allButton = all
-      ? `<p class="copy-all"><button type="button" class="btn-ghost" data-copy="${esc(all)}" data-target="credits-all" hidden>Copy all credits</button>
+      ? `<p class="copy-all"><button type="button" class="btn-ghost" data-copy="${esc(all)}" data-target="credits-all"${all.startsWith(FILL_IN_HEADER) ? ` data-fill="${esc(FILL_IN_HEADER)}"` : ""} hidden>Copy all credits</button>
           <span class="copy-status" role="status" aria-live="polite"></span></p>
           <pre class="attribution-string copy-all-text" id="credits-all" hidden>${esc(all)}</pre>`
       : "";

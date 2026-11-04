@@ -18,6 +18,7 @@ import {
 } from "./shared.mjs";
 import { thumbHtml } from "./cards.mjs";
 import { previewCredit } from "./thumbs.mjs";
+import { creditLineHtml, fillInNote } from "./owes.mjs";
 
 export function jsonLd(entry, site, { categoryLabel } = {}) {
   const work = { "@type": "CreativeWork", name: entry.name, url: entry.url };
@@ -53,12 +54,14 @@ export function scriptJson(value) {
 
 function credit(entry) {
   if (entry.attribution_required === true && entry.attribution_string) {
+    const fill = fillInNote(entry.attribution_string);
     return {
       value: "Required",
       block: `<div class="attribution">
           <p class="attribution-label">Credit line</p>
-          <p class="attribution-string" id="attribution-string">${esc(entry.attribution_string)}</p>
-          <button type="button" class="btn-ghost" id="copy-attribution" data-copy="${esc(entry.attribution_string)}" hidden>Copy credit line</button>
+          <p class="attribution-string" id="attribution-string">${creditLineHtml(entry.attribution_string, esc)}</p>${fill ? `
+          <p class="attribution-note credit-fill">${esc(fill)} The line is a template.</p>` : ""}
+          <button type="button" class="btn-ghost" id="copy-attribution" data-copy="${esc(entry.attribution_string)}"${fill ? ` data-fill="${esc(fill)}"` : ""} hidden>Copy credit line</button>
           <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
         </div>`,
     };

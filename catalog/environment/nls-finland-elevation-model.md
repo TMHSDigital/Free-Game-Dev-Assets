@@ -8,7 +8,7 @@ license: CC-BY-4.0
 license_spdx: CC-BY-4.0
 commercial: true
 attribution_required: true
-attribution_string: "Contains data from the National Land Survey of Finland Elevation Model 2 m MM/YYYY"
+attribution_string: "Contains data from the National Land Survey of Finland Elevation Model 2 m {MM/YYYY}"
 formats: [GeoTIFF, ASCII]
 tags: [terrain, government, finland, lidar-derived]
 publisher: National Land Survey of Finland

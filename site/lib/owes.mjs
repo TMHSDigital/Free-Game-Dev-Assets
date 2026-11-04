@@ -28,12 +28,48 @@ export function owes(picked) {
   };
 }
 
-/** Every canned credit line, one per line, in pick order. */
+/**
+ * A templated credit line marks each part the reader fills in with braces:
+ * `"{title}" by Kevin MacLeod`. The validator (V35) refuses other
+ * placeholder styles, so braces are the only ones to look for.
+ */
+export const CREDIT_FIELD_RE = /\{[^{}\n]+\}/g;
+
+/** The distinct `{…}` fields of a credit line, in order. */
+export function creditFields(line) {
+  return [...new Set(String(line || "").match(CREDIT_FIELD_RE) || [])];
+}
+
+/** "Fill in {title} and {artist} before you ship." for a templated line, else "". */
+export function fillInNote(line) {
+  const fields = creditFields(line);
+  if (!fields.length) return "";
+  const list = fields.length === 1 ? fields[0] : `${fields.slice(0, -1).join(", ")} and ${fields[fields.length - 1]}`;
+  return `Fill in ${list} before you ship.`;
+}
+
+/** A credit line as HTML, each `{…}` field in a <mark>. `esc` escapes text. */
+export function creditLineHtml(line, esc) {
+  const s = String(line || "");
+  let out = "";
+  let at = 0;
+  for (const m of s.matchAll(CREDIT_FIELD_RE)) {
+    out += `${esc(s.slice(at, m.index))}<mark class="credit-field">${esc(m[0])}</mark>`;
+    at = m.index + m[0].length;
+  }
+  return out + esc(s.slice(at));
+}
+
+export const FILL_IN_HEADER = "Fill in every {…} field below before you ship.";
+
+/**
+ * Every canned credit line, one per line, in pick order. When any line is a
+ * template, the first line says so, so no placeholder leaves unmarked.
+ */
 export function copyAllText(owed) {
-  return owed.credits
-    .filter((c) => c.line)
-    .map((c) => c.line)
-    .join("\n");
+  const lines = owed.credits.filter((c) => c.line).map((c) => c.line);
+  if (lines.some((l) => creditFields(l).length)) lines.unshift(FILL_IN_HEADER);
+  return lines.join("\n");
 }
 
 /**
@@ -62,6 +98,10 @@ export function creditsFile(owed, { format = "md", pageUrl = () => "", date = ""
 
   if (owed.credits.length) {
     heading("Credits to ship");
+    const templated = owed.credits.filter((c) => creditFields(c.line).length);
+    if (templated.length) {
+      out.push(`${FILL_IN_HEADER} The lines for ${templated.map((c) => c.entry.name).join(", ")} are templates: put in the work you use.`, "");
+    }
     for (const c of owed.credits) {
       if (c.line) out.push(md ? `- ${c.line}` : `  ${c.line}`);
       else out.push(`- ${name(c.entry)}${ref(c.entry)}: no canned credit line; see the entry.`);
