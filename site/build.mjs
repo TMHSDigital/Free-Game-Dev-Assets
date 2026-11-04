@@ -28,7 +28,7 @@ import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, site
 import { schemaErrors } from "./lib/schema-check.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
-import { checkPage } from "./lib/page-checks.mjs";
+import { checkPage, pageIds } from "./lib/page-checks.mjs";
 import { checkStacks } from "./checks.mjs";
 import { stackPageHtml } from "./lib/stack-page.mjs";
 import { freshnessLineHtml, freshnessPageHtml, freshnessStats, newEntriesLineHtml } from "./lib/freshness.mjs";
@@ -525,7 +525,21 @@ function checkPages(files) {
     if (produced.has(rel ? `${rel}/index.html` : "index.html")) return "dir";
     return null;
   };
-  return files.flatMap((f) => checkPage(fs.readFileSync(path.join(DIST, f), "utf8"), { file: f, kindOf }));
+  // A #fragment is checked against the ids of the page it points at.
+  const ids = new Map();
+  const idsOf = (rel) => {
+    if (!ids.has(rel)) {
+      let found = null;
+      try {
+        found = pageIds(fs.readFileSync(path.join(DIST, rel), "utf8"));
+      } catch {
+        // Not a readable page: kindOf has already vouched for it existing.
+      }
+      ids.set(rel, found);
+    }
+    return ids.get(rel);
+  };
+  return files.flatMap((f) => checkPage(fs.readFileSync(path.join(DIST, f), "utf8"), { file: f, kindOf, idsOf }));
 }
 
 function main() {

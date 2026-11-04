@@ -10,7 +10,31 @@ const LEAKS = [
   [/`/, "a backtick"],
 ];
 
-export function checkPage(html, { file, kindOf }) {
+/** Every id="..." in a page, unescaped. */
+export function pageIds(html) {
+  return new Set([...String(html).matchAll(/\sid="([^"]+)"/g)].map((m) => unescape(m[1])));
+}
+
+/** The fragment of a link, decoded, or null when it has none worth checking ("#" alone, a text fragment). */
+function fragmentOf(href) {
+  const i = href.indexOf("#");
+  if (i === -1) return null;
+  const raw = href.slice(i + 1);
+  if (!raw || raw.startsWith(":~:")) return null;
+  try {
+    return decodeURIComponent(unescape(raw));
+  } catch {
+    return unescape(raw);
+  }
+}
+
+/**
+ * `kindOf(rel)` says whether a dist path is a "file", a "dir" (with an
+ * index.html) or missing. `idsOf(rel)`, when given, returns the ids of the
+ * built page at that dist path (or null when it cannot tell), so a link's
+ * #fragment is checked against the page it points at.
+ */
+export function checkPage(html, { file, kindOf, idsOf = null }) {
   const errors = [];
   const text = html
     .replace(/<script[\s\S]*?<\/script>/g, " ")
@@ -30,9 +54,16 @@ export function checkPage(html, { file, kindOf }) {
   const description = unescape(html.match(/<meta name="description" content="([^"]*)"/)?.[1] || "");
   if (description.length > SEO_DESCRIPTION_MAX) errors.push(`${file}: description is ${description.length} characters, over ${SEO_DESCRIPTION_MAX}`);
   const dir = path.posix.dirname(file);
+  let ownIds = null;
   for (const m of html.matchAll(/\s(?:href|src)="([^"]+)"/g)) {
     const href = m[1];
-    if (EXTERNAL_SCHEME_RE.test(href) || href.startsWith("#")) continue;
+    if (EXTERNAL_SCHEME_RE.test(href)) continue;
+    if (href.startsWith("#")) {
+      const frag = fragmentOf(href);
+      ownIds ??= pageIds(html);
+      if (frag !== null && !ownIds.has(frag)) errors.push(`${file}: link ${href} names no id on this page`);
+      continue;
+    }
     const scheme = href.match(ANY_SCHEME_RE);
     if (scheme) {
       errors.push(`${file}: link ${href} uses the unsupported scheme "${scheme[1].toLowerCase()}:"`);
@@ -45,7 +76,17 @@ export function checkPage(html, { file, kindOf }) {
       errors.push(`${file}: link ${href} leaves the site`);
       continue;
     }
-    if (!kindOf(target)) errors.push(`${file}: link ${href} does not resolve`);
+    const kind = kindOf(target);
+    if (!kind) {
+      errors.push(`${file}: link ${href} does not resolve`);
+      continue;
+    }
+    const frag = fragmentOf(href);
+    if (frag !== null && idsOf) {
+      const page = kind === "dir" ? (target ? `${target}/index.html` : "index.html") : target;
+      const ids = page.endsWith(".html") ? idsOf(page) : null;
+      if (ids && !ids.has(frag)) errors.push(`${file}: link ${href} names no id on ${page}`);
+    }
   }
   return errors;
 }

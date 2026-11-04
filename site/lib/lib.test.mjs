@@ -179,6 +179,16 @@ const okPage = `<html><head><title>T</title><link rel="canonical" href="https://
 const kinds = new Map([["entry/e2", "dir"], ["", "dir"]]);
 const opts = { file: "entry/e1/index.html", kindOf: (p) => kinds.get(p) || null };
 eq("clean page passes", checkPage(okPage, opts).length, 0);
+{
+  const withLinks = (links) => okPage.replace("<h1>A</h1>", `<h1 id="top">A</h1>${links}`);
+  const fopts = { ...opts, idsOf: (p) => (p === "entry/e2/index.html" ? new Set(["preview-images"]) : null) };
+  eq("fragment: a same-page id passes", checkPage(withLinks('<a href="#top">t</a><a href="#">x</a>'), fopts).length, 0);
+  has("fragment: a missing same-page id fails", checkPage(withLinks('<a href="#nowhere">t</a>'), fopts).join(), "link #nowhere names no id on this page");
+  eq("fragment: a cross-page id passes", checkPage(withLinks('<a href="../e2/#preview-images">p</a>'), fopts).length, 0);
+  has("fragment: a missing cross-page id fails", checkPage(withLinks('<a href="../e2/#no-such-anchor">p</a>'), fopts).join(), "names no id on entry/e2/index.html");
+  eq("fragment: an encoded id is decoded", checkPage(withLinks('<a href="#t%6Fp">t</a>'), fopts).length, 0);
+  eq("fragment: unknown target ids are not guessed", checkPage(withLinks('<a href="../../#search">s</a>'), fopts).length, 0);
+}
 has("leaked bold", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1>**b**"), opts).join(), "double asterisk");
 has("leaked link", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1>[a](b)"), opts).join(), "markdown link");
 has("leaked backtick", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1>`x`"), opts).join(), "backtick");
