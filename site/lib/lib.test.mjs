@@ -827,6 +827,21 @@ eq("no match inside a word (ui/build)", scoreFields(searchFields({ ...kit, name:
 eq("no match inside a word (art/earth)", kScore("art"), 0);
 eq("plural query finds singular tag", kScore("buttons") > 0, true);
 eq("hyphenated tag found by spaced words", kScore("first person") > 0, true);
+{
+  const { joinedCompounds } = await import("./search.mjs");
+  const pack = { ...kit, name: "Space Pack", tags: ["sci-fi", "low-poly"], subcategories: [], summary: "Ships with sound effects and a tile-set." };
+  const ps = (q) => scoreFields(searchFields(pack), queryTests(q));
+  eq("compounds: hyphenated words joined", joinedCompounds("Low-poly sci_fi pack"), "lowpoly scifi");
+  eq("compounds: scifi finds the sci-fi tag", ps("scifi") > 0, true);
+  eq("compounds: scifi and sci-fi both match", ps("scifi") > 0 && ps("sci-fi") > 0, true);
+  eq("compounds: lowpoly finds the low-poly tag", ps("lowpoly") > 0, true);
+  eq("compounds: joined forms do not match inside a word", ps("cifi"), 0);
+  eq("synonyms: sfx finds sound effects", ps("sfx") > 0, true);
+  eq("synonyms: tilemap finds a tile-set", ps("tilemap") > 0, true);
+  eq("synonyms: bgm finds music", scoreFields(searchFields({ ...pack, summary: "Chiptune music." }), queryTests("bgm")) > 0, true);
+  eq("synonyms: models finds a mesh", scoreFields(searchFields({ ...pack, summary: "One mesh." }), queryTests("models")) > 0, true);
+  eq("synonyms: unrelated words stay unmatched", ps("music"), 0);
+}
 eq("3/4 view answers top down", kScore("top down") > 0, true);
 eq("every word must match", kScore("ui zzz"), 0);
 eq("name hit outranks summary hit", kScore("kit") > kScore("panels"), true);

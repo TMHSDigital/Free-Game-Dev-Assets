@@ -20,6 +20,16 @@ export function normalize(text) {
 }
 
 /**
+ * Hyphenated compounds written as one word: "low-poly sci-fi" gives
+ * "lowpoly scifi", so a reader who types the joined form finds them too.
+ */
+export function joinedCompounds(text) {
+  const out = [];
+  for (const m of String(text).toLowerCase().matchAll(/[\p{L}\p{N}]+(?:[-_][\p{L}\p{N}]+)+/gu)) out.push(m[0].replace(/[-_]/g, ""));
+  return out.join(" ");
+}
+
+/**
  * An entry's searchable text in three fields. Name, publisher and tags are
  * what a reader means by a word, so a hit there ranks above one in the other
  * metadata, which ranks above a summary-only hit. Tags no longer repeat the
@@ -27,24 +37,39 @@ export function normalize(text) {
  */
 export const FIELD_WEIGHTS = [3, 2, 1];
 export function searchFields(e) {
+  const field = (text) => normalize(`${text} ${joinedCompounds(text)}`);
   return [
-    normalize([e.name, e.publisher || "", ...(e.tags || [])].join(" ")),
-    normalize(
-      [e.license, e.category, PERSPECTIVE_SEARCH[e.camera_perspective] || "", ...(e.formats || []), ...(e.subcategories || [])].join(" ")
-    ),
-    normalize(e.summary || ""),
+    field([e.name, e.publisher || "", ...(e.tags || [])].join(" ")),
+    field([e.license, e.category, PERSPECTIVE_SEARCH[e.camera_perspective] || "", ...(e.formats || []), ...(e.subcategories || [])].join(" ")),
+    field(e.summary || ""),
   ];
 }
+
+/**
+ * A few words readers use for the same thing as the catalog's own wording.
+ * A query word also matches each listed phrase (normalised text, so a phrase
+ * may hold a space).
+ */
+export const SYNONYMS = {
+  sfx: ["sound effect"],
+  bgm: ["music"],
+  model: ["mesh"],
+  mesh: ["model"],
+  tileset: ["tilemap", "tile set"],
+  tilemap: ["tileset", "tile map"],
+};
 
 /**
  * One test per query word. A word matches at the start of a word in the
  * text, never inside one: "ui" finds "UI kit" but not "build", "art" finds
  * "artwork" but not "earth". A plural query word also matches its singular,
- * since tags are stored one way: "buttons" finds the "button" tag.
+ * since tags are stored one way: "buttons" finds the "button" tag. Each form
+ * also matches its SYNONYMS.
  */
 export function wordTest(word) {
   const forms = [word];
   if (word.length > 3 && word.endsWith("s")) forms.push(word.slice(0, -1));
+  for (const f of [...forms]) forms.push(...(SYNONYMS[f] || []));
   const alt = forms.map((f) => f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
   return new RegExp(`(?:^|[^\\p{L}\\p{N}])(?:${alt})`, "u");
 }
