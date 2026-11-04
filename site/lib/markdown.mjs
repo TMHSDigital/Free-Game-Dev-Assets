@@ -33,7 +33,7 @@ function marks(escaped) {
 }
 
 /** Ids the page templates use themselves; a heading must not take one. */
-const RESERVED_IDS = new Set([
+export const RESERVED_IDS = new Set([
   "attribution-string",
   "content",
   "copy-attribution",

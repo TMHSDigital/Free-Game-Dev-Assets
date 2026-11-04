@@ -3,10 +3,12 @@
  * entry bodies (tables, fenced code, blockquotes, numbered lists, ### headings),
  * so they get their own renderer; renderBlocks stays strict for entries.
  * Inline markup and links go through renderInline and the caller's resolver.
- * Images and raw HTML still fail the build, as on entry pages. Pure.
+ * Images and raw HTML still fail the build, as on entry pages, and so do the
+ * constructs it would otherwise get wrong: setext headings and code fences
+ * indented under a list item. Pure.
  */
 import { esc } from "./shared.mjs";
-import { MarkdownError, renderInline } from "./markdown.mjs";
+import { MarkdownError, renderInline, RESERVED_IDS } from "./markdown.mjs";
 
 /** GitHub's heading anchor, so links written for GitHub (licenses.md#cc-by) land here too. */
 export function headingSlug(text) {
@@ -41,6 +43,12 @@ function cells(line) {
   return out;
 }
 
+/** A thematic break: three or more of the same -, * or _ (spaces allowed between). */
+const isBreak = (line) => /^\s{0,3}([-*_])(\s*\1){2,}\s*$/.test(line);
+/** A setext underline (=== or ---) under a paragraph line. */
+const isSetext = (line) => /^\s{0,3}(=+|-+)\s*$/.test(line);
+const FENCE_RE = /^\s*(`{3,}|~{3,})/;
+
 const isSeparator = (line) => /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/.test(line);
 
 /**
@@ -59,7 +67,7 @@ export function renderGuide(md, { file, resolveLink }) {
   const fail = (n, what) => {
     throw new MarkdownError(`${file}:${n + 1}: ${what} is not supported on guide pages`);
   };
-  const isBlockStart = (l) => /^\s*(```|>|\||#{1,6}\s|[-*]\s|\d+[.)]\s)/.test(l);
+  const isBlockStart = (l) => /^\s*(```|~~~|>|\||#{1,6}\s|[-*]\s|\d+[.)]\s)/.test(l) || isBreak(l);
 
   while (i < ls.length) {
     const line = ls[i];
@@ -70,15 +78,26 @@ export function renderGuide(md, { file, resolveLink }) {
     if (/^\s*!\[/.test(line)) fail(i, "an image");
     if (/^\s*<(?!https?:\/\/)[A-Za-z!/]/.test(line)) fail(i, "raw HTML");
 
-    // Fenced code: literal, escaped.
-    if (/^\s*```/.test(line)) {
-      const lang = line.trim().slice(3).trim();
+    // Fenced code (``` or ~~~): literal, escaped. It closes on a fence of
+    // the same character at least as long as the opening one.
+    const fence = line.match(FENCE_RE);
+    if (fence) {
+      if (/^\s+/.test(line)) fail(i, "an indented code fence (inside a list item)");
+      const mark = fence[1];
+      const lang = line.trim().slice(mark.length).trim();
+      const closes = new RegExp(`^\\s*\\${mark[0]}{${mark.length},}\\s*$`);
       const body = [];
       i += 1;
-      while (i < ls.length && !/^\s*```/.test(ls[i])) body.push(ls[i++]);
+      while (i < ls.length && !closes.test(ls[i])) body.push(ls[i++]);
       if (i >= ls.length) fail(i - 1, "an unclosed code fence");
       i += 1;
       html.push(`<pre class="guide-code"${lang ? ` data-lang="${esc(lang)}"` : ""}><code>${esc(body.join("\n"))}</code></pre>`);
+      continue;
+    }
+
+    if (isBreak(line)) {
+      html.push("<hr />");
+      i += 1;
       continue;
     }
 
@@ -96,9 +115,14 @@ export function renderGuide(md, { file, resolveLink }) {
         continue;
       }
       const base = headingSlug(h[2]);
-      const n = seen.get(base) || 0;
+      let n = seen.get(base) || 0;
+      let id = n ? `${base}-${n}` : base;
+      // The page template owns some ids (<main id="content">): take the next suffix.
+      while (RESERVED_IDS.has(id)) {
+        n += 1;
+        id = `${base}-${n}`;
+      }
       seen.set(base, n + 1);
-      const id = n ? `${base}-${n}` : base;
       const tag = `h${Math.min(level, 4)}`;
       html.push(`<${tag} id="${esc(id)}">${inline(h[2])}</${tag}>`);
       i += 1;
@@ -131,6 +155,7 @@ export function renderGuide(md, { file, resolveLink }) {
     const li = line.match(listRe);
     if (li) {
       const ordered = /\d/.test(li[1]);
+      const start = ordered ? parseInt(li[1], 10) : 1;
       const items = [];
       while (i < ls.length) {
         const m = ls[i].match(listRe);
@@ -140,15 +165,34 @@ export function renderGuide(md, { file, resolveLink }) {
         } else if (items.length && ls[i].trim() && /^\s+/.test(ls[i]) && !isBlockStart(ls[i])) {
           items[items.length - 1] += ` ${ls[i].trim()}`;
           i += 1;
+        } else if (items.length && FENCE_RE.test(ls[i]) && /^\s+/.test(ls[i])) {
+          fail(i, "an indented code fence (inside a list item)");
+        } else if (items.length && !ls[i].trim()) {
+          // Blank lines between items of the same list keep one list
+          // (a "loose" list), so 1. a / blank / 2. b stays numbered 1, 2.
+          let j = i;
+          while (j < ls.length && !ls[j].trim()) j += 1;
+          const next = j < ls.length ? ls[j].match(listRe) : null;
+          if (next && /\d/.test(next[1]) === ordered && !/^\s+/.test(ls[j])) i = j;
+          else if (j < ls.length && FENCE_RE.test(ls[j]) && /^\s+/.test(ls[j])) fail(j, "an indented code fence (inside a list item)");
+          else break;
         } else break;
       }
       const tag = ordered ? "ol" : "ul";
-      html.push(`<${tag}>${items.map((t) => `<li>${inline(t)}</li>`).join("")}</${tag}>`);
+      const startAttr = ordered && start !== 1 ? ` start="${start}"` : "";
+      html.push(`<${tag}${startAttr}>${items.map((t) => `<li>${inline(t)}</li>`).join("")}</${tag}>`);
       continue;
     }
 
     const para = [];
-    while (i < ls.length && ls[i].trim() && !isBlockStart(ls[i])) para.push(ls[i++].trim());
+    while (i < ls.length && ls[i].trim() && !isBlockStart(ls[i])) {
+      // A === or --- under paragraph text is a setext heading on GitHub.
+      if (para.length && isSetext(ls[i])) fail(i, "a setext heading underline (use ## instead)");
+      para.push(ls[i++].trim());
+    }
+    if (para.length && i < ls.length && isBreak(ls[i]) && /^\s{0,3}-/.test(ls[i])) {
+      fail(i, "a setext heading underline (use ## instead)");
+    }
     if (!para.length) {
       // A line that looks like a block start but matched nothing above.
       para.push(ls[i++].trim());

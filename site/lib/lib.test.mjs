@@ -1261,6 +1261,21 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   let threw = "";
   try { renderGuide("# T\n\n![x](a.png)\n", { file: "g.md", resolveLink: pass }); } catch (e) { threw = e.message; }
   has("guide: images refused", threw, "g.md:3: an image is not supported");
+  const gr = (md) => renderGuide(`# T\n\n${md}`, { file: "g.md", resolveLink: pass }).html;
+  has("guide: an ordered list keeps its start number", gr("3. third\n4. fourth\n"), '<ol start="3"><li>third</li><li>fourth</li></ol>');
+  has("guide: a loose ordered list stays one list", gr("1. a\n\n2. b\n"), "<ol><li>a</li><li>b</li></ol>");
+  has("guide: a loose bullet list stays one list", gr("- a\n\n- b\n\nAfter.\n"), "<ul><li>a</li><li>b</li></ul>\n<p>After.</p>");
+  has("guide: a paragraph between lists splits them", gr("1. a\n\nText.\n\n2. b\n"), '<ol start="2"><li>b</li></ol>');
+  has("guide: --- is a thematic break", gr("Para.\n\n---\n\nNext.\n"), "<p>Para.</p>\n<hr />\n<p>Next.</p>");
+  has("guide: *** is a thematic break", gr("***\n"), "<hr />");
+  throws("guide: --- under text (a setext heading) fails", () => gr("Para\n---\n"), "a setext heading underline");
+  throws("guide: === under text (a setext heading) fails", () => gr("Para\n===\n"), "a setext heading underline");
+  has("guide: ~~~ fences render as code", gr("~~~js\nlet a = **1**;\n~~~\n"), '<pre class="guide-code" data-lang="js"><code>let a = **1**;</code></pre>');
+  has("guide: a ``` line inside a ~~~ fence is literal", gr("~~~\n```\n~~~\n"), "<code>```</code>");
+  throws("guide: a fence indented under a list item fails", () => gr("1. step\n   ```sh\n   x\n   ```\n"), "an indented code fence");
+  throws("guide: a fence after a blank line under a list item fails", () => gr("- step\n\n  ```\n  x\n  ```\n"), "an indented code fence");
+  has("guide: ## Content does not take the template's id", gr("## Content\n"), '<h2 id="content-1">Content</h2>');
+  has("guide: a second ## Content continues the count", gr("## Content\n\n## Content\n"), '<h2 id="content-2">Content</h2>');
 }
 
 /* new-entry --from-issue (scaffold.mjs) ------------------------------------ */
