@@ -42,6 +42,13 @@ jobs:
 
       - name: Validate catalog
         run: node site/validate.mjs
+      # Needs history to follow renames; a pull request checkout is shallow.
+      - name: Check added dates against git history
+        run: |
+          if [ "$(git rev-parse --is-shallow-repository)" = "true" ]; then
+            git fetch --unshallow --no-tags origin
+          fi
+          node site/check-added.mjs
       - name: Build site and check pages
         run: node site/build.mjs
 

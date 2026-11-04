@@ -39,6 +39,7 @@ import {
   checkValueAliases,
   checkValueSpellings,
   checkAiGuide,
+  checkAttributionWaiver,
   checkAiTag,
   checkCreditPlaceholders,
   checkLimits,
@@ -902,6 +903,17 @@ accepts("V34 the real allowlist matches the real vocabulary", checkPreviewVocabu
 rejects("V34 rejects an allowlisted licence missing from the vocabulary", checkPreviewVocabulary({ licenses: {} }, ["CC-BY-SA-4.0"], () => true), '"CC-BY-SA-4.0", which is not in site/license-vocabulary.json');
 rejects("V34 rejects a required licence the caption would not credit", checkPreviewVocabulary({ licenses: { "OGA-BY-3.0": { attribution: "required" } } }, ["OGA-BY-3.0"], () => false), "would lack the creator credit");
 rejects("V34 rejects a credit on a licence that does not ask for one", checkPreviewVocabulary({ licenses: { MIT: { attribution: "notice" } } }, ["MIT"], () => true), "carry a credit the licence does not ask for");
+
+/* V38: a waived credit on a BY licence is quoted --------------------------- */
+{
+  const v = { licenses: { "CC-BY-4.0": { attribution: "required" }, MIT: { attribution: "notice" } } };
+  const meta = { license: "CC-BY-4.0", attribution_required: false };
+  accepts("V38 accepts a dated waiver quote", checkAttributionWaiver("ok.md", meta, "## Evidence\n\n- Page (2026-11-03): \"You do NOT have to credit me.\"\n", v));
+  accepts("V38 ignores required credit", checkAttributionWaiver("ok.md", { ...meta, attribution_required: true }, "", v));
+  accepts("V38 ignores a licence that does not require credit", checkAttributionWaiver("ok.md", { license: "MIT", attribution_required: false }, "", v));
+  rejects("V38 rejects a waiver stated only in Notes", checkAttributionWaiver("bad.md", meta, "## Notes\n\n- Attribution waived\n\n## Evidence\n\n- Page (2026-08-24): \"CC BY 4.0\"\n", v), "quote the rights holder's waiver");
+  rejects("V38 rejects an undated waiver line", checkAttributionWaiver("bad.md", meta, "## Evidence\n\n- Page: \"credit is optional\"\n", v), "quote the rights holder's waiver");
+}
 
 /* V37: AI-generated content stays tagged and listed ------------------------ */
 accepts("V37 accepts a tagged entry", checkAiTag("ok.md", { tags: ["ai-generated"] }, "Some sounds are AI-generated."));

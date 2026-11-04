@@ -11,6 +11,7 @@ import {
   checkPreviewVocabulary,
   checkFeatured,
   checkAiGuide,
+  checkAttributionWaiver,
   checkAiTag,
   checkCreditPlaceholders,
   checkLimits,
@@ -316,6 +317,7 @@ function main() {
     errors.push(...checkCreditPlaceholders(rel, meta));
     errors.push(...checkLimits(rel, meta));
     errors.push(...checkAiTag(rel, meta, body));
+    errors.push(...checkAttributionWaiver(rel, meta, body, vocab));
     // V24 types commercial and attribution_required (a quoted "true" is text).
     errors.push(...checkFieldTypes(rel, meta));
     errors.push(...checkEntryUrl(rel, meta));

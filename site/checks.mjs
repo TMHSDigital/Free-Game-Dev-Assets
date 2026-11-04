@@ -360,6 +360,29 @@ export function checkPreviewVocabulary(vocab, allow = PREVIEW_LICENSES, credits 
   return errors;
 }
 
+/* ----------------------------------------------------------------- V38 */
+/**
+ * `attribution_required: false` on a licence that requires credit (CC-BY,
+ * ODbL: `attribution: "required"` in the vocabulary) is only true when the
+ * rights holder waived it, so Evidence must quote that waiver on a dated
+ * line: one that talks about credit or attribution and says it is optional,
+ * not required or waived.
+ */
+export function checkAttributionWaiver(rel, meta, body, vocab) {
+  if (meta.attribution_required !== false) return [];
+  if (vocab?.licenses?.[String(meta.license)]?.attribution !== "required") return [];
+  const ev = evidenceSection(body) || "";
+  const quoted = ev.split("\n").some(
+    (line) =>
+      evidenceDates(line).length &&
+      /\b(?:credit|attribution|attribute)\b/i.test(line) &&
+      /\b(?:optional|not required|no need|do not have to|don't have to|waive[sd]?|not necessary|not needed)\b|\bNOT\b/i.test(line)
+  );
+  return quoted
+    ? []
+    : [`${rel} says attribution_required false on ${meta.license}, which requires credit; quote the rights holder's waiver on a dated Evidence line`];
+}
+
 /* ----------------------------------------------------------------- V37 */
 /**
  * AI-generated content stays labelled. An entry whose body says some of its

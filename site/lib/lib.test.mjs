@@ -1471,6 +1471,27 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("group: flat under a category filter", shouldGroup({ sort: "name", category: "2d" }), false);
 }
 
+/* added dates follow renames (added-dates.mjs) ----------------------------- */
+{
+  const { firstAddedFromLog, lateAddedDates } = await import("./added-dates.mjs");
+  const log = [
+    "\0" + "2026-07-19", "", "A\tcatalog/2d/a.md", "A\tcatalog/2d/b.md",
+    "\0" + "2026-08-25", "", "R095\tcatalog/2d/a.md\tcatalog/tools/a.md", "A\tcatalog/2d/c.md",
+    "\0" + "2026-09-26", "", "R100\tcatalog/tools/a.md\tcatalog/3d/a.md",
+  ].join("\n");
+  const first = firstAddedFromLog(log);
+  eq("added: a renamed file keeps its first-add date through two moves", first.get("catalog/3d/a.md"), "2026-07-19");
+  eq("added: a plain add", first.get("catalog/2d/c.md"), "2026-08-25");
+  const errs = lateAddedDates([
+    { rel: "catalog/3d/a.md", added: "2026-09-26" },
+    { rel: "catalog/2d/b.md", added: "2026-07-18" },
+    { rel: "catalog/2d/c.md", added: "2026-08-25" },
+    { rel: "catalog/2d/new.md", added: "2026-11-01" },
+  ], first);
+  eq("added: a date reset by a move is caught", errs.length, 1);
+  has("added: the message names the right date", errs[0], "set added: 2026-07-19");
+}
+
 /* engine scope and limits on entry pages (#173) --------------------------- */
 {
   const { engineScope } = await import("./entry-page.mjs");

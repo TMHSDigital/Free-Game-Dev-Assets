@@ -9,8 +9,9 @@
   "scripts": {
     "test": "node site/checks.test.mjs && node site/lib/lib.test.mjs",
     "validate": "node site/validate.mjs",
+    "check-added": "node site/check-added.mjs",
     "build": "node site/build.mjs",
-    "check": "npm test && npm run validate && npm run build",
+    "check": "npm test && npm run validate && npm run check-added && npm run build",
     "counts": "node site/sync-counts.mjs",
     "new-entry": "node site/new-entry.mjs",
     "links": "node site/check-links.mjs",

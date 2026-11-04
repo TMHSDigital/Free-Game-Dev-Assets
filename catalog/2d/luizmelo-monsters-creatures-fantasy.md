@@ -12,7 +12,7 @@ attribution_required: false
 formats: [PNG]
 tags: [pixel, platformer, spritesheet]
 camera_perspective: side_scroller
-added: 2026-08-25
+added: 2026-07-19
 verified: 2026-08-24
 status: active
 ---
