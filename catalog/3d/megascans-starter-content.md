@@ -8,6 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [various]
+limits: "Tree packs and scenes are Unreal-only; no standalone redistribution"
 tags: [unreal-engine, photogrammetry, scanned, trees, rocks, surfaces, decals]
 publisher: Epic Games
 added: 2026-10-13

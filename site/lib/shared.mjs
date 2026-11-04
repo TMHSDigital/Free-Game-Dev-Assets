@@ -176,7 +176,13 @@ export function breadcrumbLd(items) {
   };
 }
 
-export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5) {
+/**
+ * `scope` is the engine an entry is made for when it only works there
+ * (entry-page.mjs derives it from formats); `limits` is the entry's own
+ * restriction line. Both lead the description, so a search result never
+ * reads as unrestricted.
+ */
+export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5, { scope = null } = {}) {
   const stance =
     entry.commercial === true
       ? "commercial use OK"
@@ -194,7 +200,9 @@ export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5) {
         : entry.attribution_required === false
           ? "no credit needed"
           : "credit unclear";
-  const lead = `${licencePhrase(entry.license)}, ${stance}, ${credit}.`;
+  const scopeText = entry.engine_lock ? ` ${ENGINE_LOCK_LABELS[entry.engine_lock] || entry.engine_lock}.` : scope ? ` For ${scope} only.` : "";
+  const limitsText = entry.limits ? ` ${entry.limits}.` : "";
+  const lead = `${licencePhrase(entry.license)}, ${stance}, ${credit}.${scopeText}${limitsText}`;
   const summary = String(entry.summary || "").trim();
   if (!summary) return clipText(lead, max);
   const first = summary.split(/(?<=[.!?])\s+/)[0];

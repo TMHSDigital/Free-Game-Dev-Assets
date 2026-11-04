@@ -8,6 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [Unreal]
+limits: "May not be redistributed in source form or committed to a public repository"
 tags: [unreal-engine, city, realistic, open-world, nanite]
 publisher: Epic Games
 ue_versions: "5.0-5.8"

@@ -15,6 +15,7 @@ export const LICENCE_FIELDS = [
   "attribution_required",
   "attribution_string",
   "engine_lock",
+  "limits",
   "preview",
   "verified",
 ];

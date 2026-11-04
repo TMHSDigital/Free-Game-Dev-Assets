@@ -45,7 +45,7 @@ Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CS
 | `thumb` | | `{ path, width, height, credit? }` of the preview image, or `null` |
 | `licenseFamily` | | Coarse grouping used by the site's filter: `public-domain`, `cc-by`, `permissive`, `copyleft`, `custom` and so on. Labels are in `filters.licenseFamilies` |
 | `attributionClass`, `licenseRank` | | Derived sort keys used by the site |
-| `maintenance`, `engine_lock`, `ue_versions`, `grid_dimensions`, `camera_perspective`, `hardware_tags` | | Present only where they apply; see [the site README](../site/README.md) |
+| `maintenance`, `engine_lock`, `ue_versions`, `limits`, `grid_dimensions`, `camera_perspective`, `hardware_tags` | | Present only where they apply; see [the site README](../site/README.md) |
 
 Top-level keys are `generatedAt`, `version`, `site`, `categories`, `guides`, `featured`, `stats` (counts of total, active, needs-review, deprecated and commercial entries), `filters` (`licenseFamilies` and `formatGroups`, the labels and groups behind the site's filters) and `entries`.
 

@@ -51,7 +51,7 @@ and tools that want the metadata without scraping the page. The page itself load
   `attribution_required`, `attribution_string` where set (a template marks fields as `{name}`;
   `lib/owes.mjs` highlights them and flags them on copy and export), `formats`, `tags`, `added`,
   `verified`, `status`, `publisher` where set, and, only where set, `maintenance`,
-  `engine_lock`, `ue_versions` and the 2D fields `grid_dimensions`, `camera_perspective`
+  `engine_lock`, `ue_versions`, `limits` and the 2D fields `grid_dimensions`, `camera_perspective`
   and `hardware_tags`), plus `path` (the entry's
   file in this repo), `page` (the entry's page, relative to the site root), `summary` (the first paragraph of its body), `thumb`
   (`{ path, width, height, credit? }` of the entry's preview image relative to the site root, with `credit` on CC-BY images, or `null`), `licenseFamily` (the

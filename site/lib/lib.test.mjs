@@ -1436,6 +1436,21 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("group: flat under a category filter", shouldGroup({ sort: "name", category: "2d" }), false);
 }
 
+/* engine scope and limits on entry pages (#173) --------------------------- */
+{
+  const { engineScope } = await import("./entry-page.mjs");
+  const { seoDescription } = await import("./shared.mjs");
+  const base = { license: "MIT", commercial: true, attribution_required: false, summary: "A thing." };
+  eq("scope: an Unreal project is made for Unreal", engineScope({ formats: ["Unreal"] }), "Unreal Engine");
+  eq("scope: a Godot addon is made for Godot", engineScope({ formats: ["godot-addon", "PNG"] }), "Godot");
+  eq("scope: a portable pack has none", engineScope({ formats: ["WAV", "Godot"] }), null);
+  eq("scope: a two-engine pack has none", engineScope({ formats: ["Unity", "Unreal"] }), null);
+  has("seo: the scope leads the description", seoDescription(base, undefined, { scope: "Godot" }), "no credit needed. For Godot only. A thing.");
+  has("seo: limits lead the description", seoDescription({ ...base, limits: "No redistribution" }), "no credit needed. No redistribution. A thing.");
+  has("seo: an engine lock reads as its badge", seoDescription({ ...base, engine_lock: "unreal" }), "no credit needed. UE only.");
+  eq("seo: no scope, no limits, unchanged", seoDescription(base), "MIT, commercial use OK, no credit needed. A thing.");
+}
+
 /* heading anchors: validator and guide renderer agree ---------------------- */
 {
   const { markdownAnchors } = await import("../checks.mjs");

@@ -47,6 +47,11 @@ function maintenanceFlagHtml(entry) {
   return ` <span class="maintenance-flag" title="${esc(MAINTENANCE_NOTES[entry.maintenance] || "")}">${esc(entry.maintenance)}</span>`;
 }
 
+function limitsFlagHtml(entry) {
+  if (!entry.limits) return "";
+  return ` <span class="engine-flag" title="${esc(entry.limits)}">limits</span>`;
+}
+
 function engineLockFlagHtml(entry) {
   if (!entry.engine_lock) return "";
   return ` <span class="engine-flag" title="${esc(ENGINE_LOCK_NOTES[entry.engine_lock] || "")}">${esc(ENGINE_LOCK_LABELS[entry.engine_lock] || entry.engine_lock)}</span>`;
@@ -75,7 +80,7 @@ export function entryCardHtml(entry, { root = "", repo, now, view = "list", lead
   <div class="entry-body">
     ${lead}<div class="entry-top">
       <h${titleLevel}><a class="entry-link" href="${esc(root)}entry/${esc(entry.id)}/" data-id="${esc(entry.id)}">${esc(entry.name)}</a></h${titleLevel}>
-      <span class="entry-flags">${flags}${maintenanceFlagHtml(entry)}${engineLockFlagHtml(entry)}</span>
+      <span class="entry-flags">${flags}${maintenanceFlagHtml(entry)}${engineLockFlagHtml(entry)}${limitsFlagHtml(entry)}</span>
     </div>
     <p>${esc(entry.summary || "")}</p>
     <div class="meta-line">

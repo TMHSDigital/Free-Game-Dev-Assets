@@ -360,6 +360,28 @@ export function checkPreviewVocabulary(vocab, allow = PREVIEW_LICENSES, credits 
   return errors;
 }
 
+/* ----------------------------------------------------------------- V36 */
+/**
+ * `limits`: a short line for a restriction the licence fields cannot carry,
+ * such as content that only works in one engine without a licence lock, or a
+ * ban on redistributing source files. It is shown on the card, in the
+ * entry's "At a glance" and in its search description, so it must be one
+ * plain sentence that fits there. The Notes and Evidence carry the detail.
+ */
+export const LIMITS_MAX = 120;
+
+export function checkLimits(rel, meta) {
+  if (meta.limits === undefined || meta.limits === null || meta.limits === "") return [];
+  const v = meta.limits;
+  if (typeof v !== "string") return [`${rel} limits must be a quoted line of text`];
+  const errors = [];
+  if (v.trim().length < 10) errors.push(`${rel} limits "${v}" is too short to tell a reader anything`);
+  if (v.length > LIMITS_MAX) errors.push(`${rel} limits is ${v.length} characters, over ${LIMITS_MAX}; keep the detail in Notes`);
+  if (/[*`\[\]<>]/.test(v)) errors.push(`${rel} limits must be plain text (no markdown or HTML)`);
+  if (/[.;:,]\s*$/.test(v)) errors.push(`${rel} limits ends with punctuation; the site adds its own`);
+  return errors;
+}
+
 /* ----------------------------------------------------------------- V35 */
 /**
  * A templated credit line marks what the reader fills in with braces only:
@@ -400,7 +422,7 @@ export const KNOWN_KEYS = [
   "id", "name", "url", "publisher", "category", "subcategories", "license", "license_spdx",
   "commercial", "attribution_required", "attribution_string", "formats", "tags", "added",
   "verified", "status", "engine_lock", "ue_versions", "camera_perspective", "grid_dimensions",
-  "maintenance", "hardware_tags", "preview",
+  "maintenance", "hardware_tags", "preview", "limits",
 ];
 
 function editDistance(a, b) {

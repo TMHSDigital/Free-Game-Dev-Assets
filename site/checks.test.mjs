@@ -39,6 +39,7 @@ import {
   checkValueAliases,
   checkValueSpellings,
   checkCreditPlaceholders,
+  checkLimits,
   checkKnownKeys,
   checkEntryBasics,
   checkFeatured,
@@ -899,6 +900,15 @@ accepts("V34 the real allowlist matches the real vocabulary", checkPreviewVocabu
 rejects("V34 rejects an allowlisted licence missing from the vocabulary", checkPreviewVocabulary({ licenses: {} }, ["CC-BY-SA-4.0"], () => true), '"CC-BY-SA-4.0", which is not in site/license-vocabulary.json');
 rejects("V34 rejects a required licence the caption would not credit", checkPreviewVocabulary({ licenses: { "OGA-BY-3.0": { attribution: "required" } } }, ["OGA-BY-3.0"], () => false), "would lack the creator credit");
 rejects("V34 rejects a credit on a licence that does not ask for one", checkPreviewVocabulary({ licenses: { MIT: { attribution: "notice" } } }, ["MIT"], () => true), "carry a credit the licence does not ask for");
+
+/* V36: limits is one short plain line ------------------------------------- */
+accepts("V36 accepts a short plain line", checkLimits("ok.md", { limits: "Tree packs are Unreal-only; no standalone redistribution" }));
+accepts("V36 ignores a missing field", checkLimits("ok.md", {}));
+rejects("V36 rejects a non-string", checkLimits("bad.md", { limits: true }), "must be a quoted line of text");
+rejects("V36 rejects a long line", checkLimits("bad.md", { limits: "x".repeat(121) }), "over 120");
+rejects("V36 rejects markdown", checkLimits("bad.md", { limits: "See [the notes](x) for more" }), "plain text");
+rejects("V36 rejects a closing full stop", checkLimits("bad.md", { limits: "Unreal-only in practice." }), "ends with punctuation");
+rejects("V36 rejects a near-empty line", checkLimits("bad.md", { limits: "no" }), "too short");
 
 /* V35: credit-line placeholders use {name} ---------------------------------- */
 accepts("V35 accepts {field} placeholders", checkCreditPlaceholders("ok.md", { attribution_string: '"{title}" by Kevin MacLeod ({MM/YYYY})' }));

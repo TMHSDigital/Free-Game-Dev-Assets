@@ -156,6 +156,7 @@ function loadEntries(vocab) {
       ...(meta.maintenance ? { maintenance: String(meta.maintenance) } : {}),
       ...(meta.engine_lock ? { engine_lock: String(meta.engine_lock) } : {}),
       ...(meta.ue_versions ? { ue_versions: String(meta.ue_versions) } : {}),
+      ...(meta.limits ? { limits: String(meta.limits) } : {}),
       licenseFamily: licenseFamily(vocab, String(meta.license)),
       attributionClass: vocab.licenses[String(meta.license)]?.attribution || "any",
       licenseRank:

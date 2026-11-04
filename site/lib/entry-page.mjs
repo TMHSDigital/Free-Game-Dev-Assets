@@ -19,6 +19,7 @@ import {
 import { thumbHtml } from "./cards.mjs";
 import { previewCredit } from "./thumbs.mjs";
 import { creditLineHtml, fillInNote } from "./owes.mjs";
+import { ENGINES, nativeEngines } from "./search.mjs";
 
 export function jsonLd(entry, site, { categoryLabel } = {}) {
   const work = { "@type": "CreativeWork", name: entry.name, url: entry.url };
@@ -50,6 +51,12 @@ export function jsonLd(entry, site, { categoryLabel } = {}) {
 /** JSON for a <script> element: `<` escaped so no string can close the tag. */
 export function scriptJson(value) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
+/** The engine an entry only works in, by its formats (search.mjs nativeEngines), or null. */
+export function engineScope(entry) {
+  const native = nativeEngines(entry);
+  return native.length === 1 ? ENGINES[native[0]].label : null;
 }
 
 function credit(entry) {
@@ -84,11 +91,14 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
   const age = verifiedAge(entry.verified, now);
   const ageText = age.days === null ? "verified date unknown" : `${entry.verified} (${age.days}d ago)`;
   const c = credit(entry);
+  const scope = engineScope(entry);
   const licence =
     entry.license_spdx && entry.license_spdx !== entry.license ? `${entry.license} (${entry.license_spdx})` : entry.license;
   const rows = [
     // Usable in one engine only: the first thing a reader must know.
     entry.engine_lock ? ["Engine lock", esc(ENGINE_LOCK_NOTES[entry.engine_lock] || entry.engine_lock)] : null,
+    !entry.engine_lock && scope ? ["Engine", `Made for ${esc(scope)}: it only opens there.`] : null,
+    entry.limits ? ["Limits", esc(entry.limits)] : null,
     ["Licence", `${esc(licence)} <a class="facts-guide" href="../../guide/licenses/">what it means</a>`],
     ["Commercial use", esc(commercialLabel(entry.commercial))],
     ["Credit", esc(c.value)],
@@ -134,7 +144,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${esc(seoTitle(entry.name, entry.license))}</title>
-    <meta name="description" content="${esc(seoDescription(entry))}" />
+    <meta name="description" content="${esc(seoDescription(entry, undefined, { scope }))}" />
     ${deprecated ? '<meta name="robots" content="noindex" />' : ""}
     ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard, root: "../../", modules: PAGE_MODULES.entry })}
     <script type="application/ld+json">${scriptJson(jsonLd(entry, site, { categoryLabel }))}</script>

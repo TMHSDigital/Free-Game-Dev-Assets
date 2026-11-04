@@ -126,6 +126,7 @@
         "maintenance": { "enum": ["archived", "inactive"] },
         "engine_lock": { "type": "string" },
         "ue_versions": { "type": "string" },
+        "limits": { "type": "string" },
         "licenseFamily": { "type": "string" },
         "attributionClass": { "type": "string" },
         "licenseRank": { "type": "integer", "minimum": 0 }
