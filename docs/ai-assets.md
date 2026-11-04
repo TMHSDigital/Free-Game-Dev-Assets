@@ -45,6 +45,7 @@ These entries carry the `ai-generated` tag; the validator keeps this list comple
 The [live search](https://tmhsdigital.github.io/Free-Game-Dev-Assets/?q=ai-generated) shows
 the same set.
 
+- [Avramania Free Collection](../catalog/3d/avramania-free-collection.md)
 - [BitNuker Fantasy Environments Sampler](../catalog/2d/bitnuker-fantasy-environments-sampler.md)
 - [BitNuker Workshop Sampler](../catalog/2d/bitnuker-workshop-sampler.md)
 - [BudgetPixel Sound Effects](../catalog/audio/budgetpixel-sfx.md)
