@@ -41,8 +41,9 @@ jobs:
           PROBLEMS: ${{ steps.check.outputs.problems }}
         run: |
           title="Link check: ${PROBLEMS} sources need a look"
-          existing=$(gh issue list --state open --label correction --json number,title \
-            --jq '[.[] | select(.title | startswith("Link check:"))][0].number // empty')
+          # Only the bot's own issue: anyone can open one with this label and title.
+          existing=$(gh issue list --state open --label correction --json number,title,author \
+            --jq '[.[] | select(.author.login == "app/github-actions" and (.title | startswith("Link check:")))][0].number // empty')
           if [ -n "$existing" ]; then
             gh issue edit "$existing" --title "$title" --body-file link-report.md
           else

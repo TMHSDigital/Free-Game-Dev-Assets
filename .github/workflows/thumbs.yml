@@ -112,8 +112,9 @@ jobs:
           compare="https://github.com/${GITHUB_REPOSITORY}/compare/main...$(printf '%s' "$branch" | sed 's|/|%2F|g')?expand=1"
           { printf 'Open the pull request: %s\n\n' "$compare"; cat "$RUNNER_TEMP/thumbs-report.md"; } > "$RUNNER_TEMP/issue-body.md"
           title="Thumbnail refresh ${month}: ${CHANGED} changes"
-          existing=$(gh issue list --state open --label "enhancement" --json number,title \
-            --jq '[.[] | select(.title | startswith("Thumbnail refresh "))][0].number // empty')
+          # Only the bot's own issue: anyone can open one with this label and title.
+          existing=$(gh issue list --state open --label "enhancement" --json number,title,author \
+            --jq '[.[] | select(.author.login == "app/github-actions" and (.title | startswith("Thumbnail refresh ")))][0].number // empty')
           if [ -n "$existing" ]; then
             gh issue edit "$existing" --title "$title" --body-file "$RUNNER_TEMP/issue-body.md"
           else
