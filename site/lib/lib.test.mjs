@@ -821,6 +821,25 @@ eq("filter: deprecated hidden by default", passesFilters({ status: "deprecated" 
   eq("engine: url round-trips", readState("?engine=unity", URL_DEF, { engine: ["any", ...Object.keys(EN)] }).engine, "unity");
   eq("engine: written to the url", stateQuery({ ...URL_DEF, engine: "godot" }, URL_DEF), "engine=godot");
   eq("engine: unknown value ignored", readState("?engine=cryengine", URL_DEF, { engine: ["any", ...Object.keys(EN)] }).engine, "any");
+  const { nativeEngines: ne, worksInEngine: wie, placementKey: pk } = await import("./search.mjs");
+  const on = (formats, engine) => passesFilters({ status: "active", formats }, { ...URL_DEF, engine });
+  eq("engine: godot hides an Unreal project", on(["Unreal"], "godot"), false);
+  eq("engine: godot hides an Unreal plugin with its C++", on(["unreal-plugin", "C++"], "godot"), false);
+  eq("engine: unity hides a Godot addon", on(["godot-addon"], "unity"), false);
+  eq("engine: unity hides a Godot project", on(["gdshader", "Godot"], "unity"), false);
+  eq("engine: unreal hides the Godot editor", on(["desktop-app", "Godot"], "unreal"), false);
+  eq("engine: godot hides a Unity-only entry", on(["Unity"], "godot"), false);
+  eq("engine: an addon stays native despite asset formats", ne({ formats: ["godot-addon", "gdextension", "EXR", "PNG"] }).join(), "godot");
+  eq("engine: a sound pack with a Godot demo is agnostic", on(["WAV", "Godot"], "unity"), true);
+  eq("engine: a multi-engine export is agnostic", ne({ formats: ["Unity", "Godot", "JSON", "PNG"] }).length, 0);
+  eq("engine: a pack for two engines stays under either", on(["Unity", "Unreal"], "unity"), true);
+  eq("engine: godot keeps Godot addons", on(["godot-addon"], "godot"), true);
+  eq("engine: no formats is agnostic", wie({}, "godot"), true);
+  eq("engine: an unknown engine hides nothing", wie({ formats: ["Unreal"] }, "pico-8"), true);
+  eq("engine: native format ranks first", er({ formats: ["unreal-plugin"] }, "unreal"), 0);
+  eq("placement: key changes with the engine", pk({ sort: "name", engine: "godot" }, { ranked: false, group: true, list: [] }) === pk({ sort: "name", engine: "unity" }, { ranked: false, group: true, list: [] }), false);
+  eq("placement: key ignores filters under a plain sort", pk({ sort: "name", engine: "any", q: "x" }, { ranked: false, group: false, list: [{ id: "a" }] }), pk({ sort: "name" }, { ranked: false, group: false, list: [] }));
+  eq("placement: a ranked key follows the list", pk({ sort: "name" }, { ranked: true, group: false, list: [{ id: "a" }, { id: "b" }] }), "rank:false:a,b");
 }
 eq("filter: commercial-only keeps varies", passesFilters({ status: "active", commercial: "varies" }, { ...URL_DEF, commercialOnly: true }), true);
 eq("filter: commercial-only drops unknown", passesFilters({ status: "active", commercial: "unknown" }, { ...URL_DEF, commercialOnly: true }), false);
@@ -1337,6 +1356,7 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("order: engine=godot puts godot-tagged entries first", ids([...E].sort(sorterFor({ sort: "verified", engine: "godot" }))), "acdb");
   eq("order: engine=unreal puts engine-locked entries first", ids([...E].sort(sorterFor({ sort: "name", engine: "unreal" }))), "dabc");
   eq("order: engineRank with an unknown engine is 0", engineRank(E[0], "pico-8"), 0);
+  eq("order: a ranked search breaks score ties by engine", ids(run({ engine: "unreal" }, { score: (e) => (e.id === "b" ? 0 : 1), hasQuery: true }).list), "dac");
   eq("order: SORTS.name ties nothing", SORTS.name(E[0], E[0]), 0);
 
   const filtered = run({ category: "audio" }, { passes: (e) => e.id !== "d" });

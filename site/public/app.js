@@ -1,4 +1,4 @@
-import { closestEntries, computeResults as computeResultsFor, passesFilters as passes, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
+import { closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 
@@ -415,11 +415,10 @@ import { installViewToggles } from "./views.js";
     if (!preview) ensureAllNodes();
     else ensurePreviewNodes(list);
 
-    // Under a plain sort the order of all nodes is fixed, so filtering only
-    // toggles visibility. A ranked search reorders on every change.
-    const key = ranked
-      ? `rank:${group}:${list.map((e) => e.id).join(",")}`
-      : `${group ? "group" : "flat"}:${state.sort}`;
+    // Under a plain sort the order of all nodes depends only on the sort
+    // and the engine, so filtering only toggles visibility. A ranked search
+    // reorders on every change (search.mjs placementKey).
+    const key = placementKey(state, { ranked, group, list });
     if (key !== placedKey) {
       placedKey = key;
       const shown = new Set(list.map((e) => e.id));

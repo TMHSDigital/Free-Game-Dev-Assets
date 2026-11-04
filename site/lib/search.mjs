@@ -78,7 +78,7 @@ export function passesFilters(entry, state, formatGroups = {}) {
   if (state.noAttr && entry.attribution_required !== false) return false;
   if (state.perspective !== "any" && entry.camera_perspective !== state.perspective) return false;
   if (state.license !== "any" && entry.licenseFamily !== state.license) return false;
-  if (state.engine && state.engine !== "any" && entry.engine_lock && entry.engine_lock !== state.engine) return false;
+  if (state.engine && state.engine !== "any" && !worksInEngine(entry, state.engine)) return false;
   if (state.format !== "any") {
     const wanted = formatGroups[state.format]?.formats || [];
     if (!(entry.formats || []).some((f) => wanted.includes(f))) return false;
@@ -88,21 +88,57 @@ export function passesFilters(entry, state, formatGroups = {}) {
 
 /** Choice params: URL key -> state field. `allowed` supplies each field's legal values. */
 /**
- * The engine filter. An entry locked to another engine (engine_lock) is
- * hidden; entries tagged for the chosen engine sort first. Everything else
- * is engine-agnostic and stays listed.
+ * The engine filter. An entry is hidden when it only works in another
+ * engine: its licence is locked to one (engine_lock), or everything it
+ * ships is native to one (nativeEngines). Entries made for the chosen
+ * engine sort first. Everything else is engine-agnostic and stays listed.
+ *
+ * `formats` are the engine-native formats: a project, addon, plugin or
+ * shader that only that engine opens.
  */
 export const ENGINES = {
-  godot: { label: "Godot", tags: ["godot", "godot-4"] },
-  unity: { label: "Unity", tags: ["unity"] },
-  unreal: { label: "Unreal Engine", tags: ["unreal-engine", "unreal"] },
+  godot: { label: "Godot", tags: ["godot", "godot-4"], formats: ["Godot", "godot-addon", "gdextension", "gdshader"] },
+  unity: { label: "Unity", tags: ["unity"], formats: ["Unity"] },
+  unreal: { label: "Unreal Engine", tags: ["unreal-engine", "unreal"], formats: ["Unreal", "unreal-plugin"] },
 };
 
-/** 0 when an entry is made for `engine` (tagged for it or locked to it), else 1. */
+/**
+ * Formats that ride along with an engine-native one without making an entry
+ * portable: an Unreal plugin's C++ source, the Godot editor's desktop app.
+ */
+const ENGINE_COMPANION_FORMATS = new Set(["C++", "desktop-app"]);
+
+/**
+ * The engines an entry is native to, or [] when it is engine-agnostic.
+ * Plugins and addons (godot-addon, gdextension, unreal-plugin) make an
+ * entry native whatever else it lists, since the files only load in that
+ * engine. Otherwise an entry is native only when every format it lists
+ * belongs to an engine: [WAV, Godot] is a sound pack with a Godot demo,
+ * usable anywhere, while [gdshader, Godot] is a Godot project.
+ */
+export function nativeEngines(entry) {
+  const formats = entry.formats || [];
+  const engines = Object.keys(ENGINES).filter((k) => formats.some((f) => ENGINES[k].formats.includes(f)));
+  if (!engines.length) return [];
+  if (formats.some((f) => ["godot-addon", "gdextension", "unreal-plugin"].includes(f))) return engines;
+  const portable = formats.some((f) => !ENGINE_COMPANION_FORMATS.has(f) && !Object.values(ENGINES).some((e) => e.formats.includes(f)));
+  return portable ? [] : engines;
+}
+
+/** False when the entry only works in an engine other than `engine`: by licence (engine_lock) or by format. */
+export function worksInEngine(entry, engine) {
+  if (!ENGINES[engine]) return true;
+  if (entry.engine_lock && entry.engine_lock !== engine) return false;
+  const native = nativeEngines(entry);
+  return !native.length || native.includes(engine);
+}
+
+/** 0 when an entry is made for `engine` (tagged for it, native to it or locked to it), else 1. */
 export function engineRank(entry, engine) {
   const e = ENGINES[engine];
   if (!e) return 0;
   if (entry.engine_lock === engine) return 0;
+  if ((entry.formats || []).some((f) => e.formats.includes(f))) return 0;
   return (entry.tags || []).some((t) => e.tags.includes(t)) ? 0 : 1;
 }
 
@@ -161,9 +197,23 @@ export function computeResults(entries, state, { passes, score, hasQuery }) {
   for (const e of pool) counts.set(e.category, (counts.get(e.category) || 0) + 1);
   const list = state.category === "all" ? pool.slice() : pool.filter((e) => e.category === state.category);
   const ranked = state.sort === "name" && hasQuery;
-  if (ranked) list.sort((a, b) => scores.get(b.id) - scores.get(a.id) || SORTS.name(a, b));
-  else list.sort(sorterFor(state));
+  if (ranked) {
+    // Equal scores fall back to the name sort, engine picks first.
+    const tie = sorterFor({ ...state, sort: "name" });
+    list.sort((a, b) => scores.get(b.id) - scores.get(a.id) || tie(a, b));
+  } else list.sort(sorterFor(state));
   return { list, counts, total: pool.length, ranked };
+}
+
+/**
+ * When this key changes, app.js re-places every card. Under a plain sort
+ * the order of all cards depends only on the grouping, the sort and the
+ * engine (filters just toggle visibility); a ranked search reorders on every
+ * new result list.
+ */
+export function placementKey(state, { ranked, group, list }) {
+  if (ranked) return `rank:${group}:${list.map((e) => e.id).join(",")}`;
+  return `${group ? "group" : "flat"}:${state.sort}:${state.engine || "any"}`;
 }
 
 const CHOICES = [
