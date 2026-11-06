@@ -99,11 +99,16 @@ function convert(converter, input, output) {
   }
 }
 
-async function fetchBytes(url, { maxBytes = MAX_IMAGE_BYTES } = {}) {
+/**
+ * An image's bytes, capped at maxBytes whatever content-length says, and
+ * only when they are a PNG, JPEG, GIF or WebP. `fetchOptions` reaches
+ * safeFetch (tests inject `fetchImpl` and `lookup`).
+ */
+export async function fetchBytes(url, { maxBytes = MAX_IMAGE_BYTES, fetchOptions = {} } = {}) {
   const safe = safeImageUrl(url);
   if (!safe) throw new Error(`image URL refused (needs a public https host): ${url}`);
   // Every redirect hop and resolved address is checked before it is requested.
-  const { response: res } = await safeFetch(safe, { headers: { "user-agent": USER_AGENT, accept: "image/*" }, signal: AbortSignal.timeout(TIMEOUT_MS) }, { schemes: ["https:", "http:"] });
+  const { response: res } = await safeFetch(safe, { headers: { "user-agent": USER_AGENT, accept: "image/*" }, signal: AbortSignal.timeout(TIMEOUT_MS) }, { schemes: ["https:", "http:"], ...fetchOptions });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const declared = Number(res.headers.get("content-length") || 0);
   if (declared > maxBytes) throw new Error(`image is ${declared} bytes, over the ${maxBytes} limit`);
@@ -132,6 +137,12 @@ async function fetchText(url) {
   return { html: await res.text(), finalUrl };
 }
 
+/** The reason a converter run failed: the last line of its stderr, or the error message. */
+export function convertFailure(err) {
+  const last = err && err.stderr ? String(err.stderr).trim().split("\n").pop() : "";
+  return `convert failed: ${last || (err && err.message) || "unknown error"}`;
+}
+
 /** Fetches one entry's preview. Returns { record, bytes } or throws with a reason. */
 async function fetchOne(entry, { converter, tmpDir, today }) {
   if (!converter) throw new Error("no converter on PATH (ffmpeg or magick)");
@@ -151,8 +162,7 @@ async function fetchOne(entry, { converter, tmpDir, today }) {
   try {
     convert(converter, input, output);
   } catch (err) {
-    const stderr = err.stderr ? String(err.stderr).trim().split("\n").pop() : err.message;
-    throw new Error(`convert failed: ${stderr}`);
+    throw new Error(convertFailure(err));
   } finally {
     fs.rmSync(input, { force: true });
   }
@@ -176,7 +186,7 @@ async function pool(items, worker, size) {
   await Promise.all(Array.from({ length: Math.min(size, items.length) }, run));
 }
 
-function reportMarkdown(summary) {
+export function reportMarkdown(summary) {
   const lines = [`# Thumbnail run ${summary.today}`, ""];
   lines.push(`Converter: ${summary.converter || "none"}. Fetched ${summary.fetched.length}, kept ${summary.kept}, skipped ${summary.skipped.length}, failed ${summary.failed.length} (failure count raised on ${summary.bumped.length}), removed ${summary.removed.length}, dropped as shared images ${summary.dropped.length}.`, "");
   const list = (title, rows, fmt) => {
@@ -319,7 +329,7 @@ async function main() {
   );
 }
 
-main().catch((err) => {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((err) => {
   console.error(`thumbs failed: ${err.stack || err.message}`);
   process.exit(1);
 });

@@ -1841,6 +1841,70 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("safe-fetch: DNS failure keeps its code", await errOf(safeFetch("https://missing.example/", {}, opts)), "ENOTFOUND");
 }
 
+/* CI helper scripts (#237) ------------------------------------------------ */
+{
+  const { changedEntries, diffRows, licenceDiffMarkdown } = await import("./licence-diff.mjs");
+  const z = ["A", "catalog/2d/new.md", "M", "catalog/2d/mod.md", "D", "catalog/audio/gone.md", "T", "catalog/3d/typed.md", "M", "catalog/2d/_draft.md", "M", "catalog/README.md", "A", "catalog/.hidden/x.md", "M", "catalog/2d/README.md", "M", "docs/other.md"].join("\0") + "\0";
+  const ch = changedEntries(z);
+  eq("pr-diff: A/M/D/T entry rows kept in order", ch.map((c) => `${c.status} ${c.file}`).join(", "), "A catalog/2d/new.md, M catalog/2d/mod.md, D catalog/audio/gone.md, T catalog/3d/typed.md");
+  eq("pr-diff: empty diff", changedEntries("").length, 0);
+  const fmText = (lic) => `---\nid: x\nlicense: ${lic}\nstatus: active\n---\n\n## Evidence\n\n- Live page (2026-10-01): "ok"\n`;
+  const reads = [];
+  const rows = diffRows(ch, {
+    before: (f) => (reads.push(`before ${f}`), fmText("CC0")),
+    after: (f) => (reads.push(`after ${f}`), fmText(f.includes("mod") ? "MIT" : "CC0")),
+  });
+  eq("pr-diff: an added file has no base read", reads.includes("before catalog/2d/new.md"), false);
+  eq("pr-diff: a removed file has no working read", reads.includes("after catalog/audio/gone.md"), false);
+  eq("pr-diff: change labels", rows.map((r) => r.change).join(), "added,modified,removed,modified");
+  eq("pr-diff: modified licence is a field change", JSON.stringify(rows[1].fields[0]), '{"field":"license","before":"CC0","after":"MIT"}');
+  eq("pr-diff: unchanged type change has no fields", rows[3].fields.length, 0);
+  const { baseArg } = await import("../pr-diff.mjs");
+  eq("pr-diff: a sha base is accepted", baseArg(["node", "x", "--base", "abc1234"]), "abc1234");
+  eq("pr-diff: a ref name is refused (exit 2)", baseArg(["node", "x", "--base", "main"]), null);
+  eq("pr-diff: a missing base is refused", baseArg(["node", "x", "--base"]), null);
+
+  const one = licenceDiffMarkdown([{ file: "catalog/a.md", change: "added", fields: [{ field: "tags", before: null, after: "a, b" }], evidence: null }]);
+  has("licence diff: one entry", one, "1 entry changed.");
+  has("licence diff: added label", one, "`catalog/a.md` (added)");
+  const two = licenceDiffMarkdown([
+    { file: "catalog/a.md", change: "removed", fields: [{ field: "license", before: "a|b `c`", after: null }], evidence: "x" },
+    { file: "catalog/b.md", change: "modified", fields: [{ field: "limits", before: null, after: "y".repeat(200) }], evidence: null },
+  ]);
+  has("licence diff: two entries", two, "2 entries changed.");
+  has("licence diff: removed label", two, "`catalog/a.md` (removed)");
+  has("licence diff: pipe and backtick escaped", two, "`a\\|b 'c'`");
+  has("licence diff: long cell truncated to 160", two, `\`${"y".repeat(159)}…\``);
+  const { licenceChanges } = await import("./licence-diff.mjs");
+  eq("licence diff: an array value is joined", licenceChanges({ license: ["MIT", "CC0"] }, {})[0]?.before, "MIT, CC0");
+
+  const { sniffImage } = await import("./thumbs.mjs");
+  const pad = (head) => Buffer.from([...head, ...Array(16).fill(0)]);
+  eq("sniff: png", sniffImage(pad([0x89, 0x50, 0x4e, 0x47])), "png");
+  eq("sniff: jpeg", sniffImage(pad([0xff, 0xd8, 0xff, 0xe0])), "jpeg");
+  eq("sniff: gif", sniffImage(pad([0x47, 0x49, 0x46, 0x38])), "gif");
+  eq("sniff: webp", sniffImage(Buffer.from("RIFF\0\0\0\0WEBPVP8 ", "latin1")), "webp");
+  eq("sniff: riff wave is not an image", sniffImage(Buffer.from("RIFF\0\0\0\0WAVEfmt ", "latin1")), null);
+  eq("sniff: under 12 bytes", sniffImage(Buffer.from([0x89, 0x50, 0x4e, 0x47])), null);
+
+  const { fetchBytes, convertFailure } = await import("../thumbs.mjs");
+  const png = pad([0x89, 0x50, 0x4e, 0x47]);
+  const streamOf = (chunks) => new ReadableStream({ start(c) { for (const ch of chunks) c.enqueue(ch); c.close(); } });
+  const serve = (headers, chunks) => ({
+    lookup: async () => [{ address: "93.184.216.34", family: 4 }],
+    fetchImpl: async () => ({ status: 200, ok: true, headers: new Headers(headers), body: streamOf(chunks) }),
+  });
+  const errOf = async (p) => { try { await p; return ""; } catch (e) { return e.message; } };
+  eq("fetchBytes: a small image", (await fetchBytes("https://img.example/a.png", { fetchOptions: serve({}, [png]) })).length, png.length);
+  has("fetchBytes: declared size over the cap", await errOf(fetchBytes("https://img.example/a.png", { maxBytes: 10, fetchOptions: serve({ "content-length": "999" }, [png]) })), "over the 10 limit");
+  has("fetchBytes: a body past the cap with no header", await errOf(fetchBytes("https://img.example/a.png", { maxBytes: 30, fetchOptions: serve({}, [png, png]) })), "over the 30 byte limit");
+  has("fetchBytes: a body past the cap with a lying header", await errOf(fetchBytes("https://img.example/a.png", { maxBytes: 30, fetchOptions: serve({ "content-length": "5" }, [png, png]) })), "over the 30 byte limit");
+  has("fetchBytes: not an image", await errOf(fetchBytes("https://img.example/a.png", { fetchOptions: serve({}, [Buffer.from("<html>not an image</html>")]) })), "not a PNG, JPEG, GIF or WebP");
+  has("fetchBytes: a private host is refused first", await errOf(fetchBytes("https://127.0.0.1/a.png", { fetchOptions: serve({}, [png]) })), "image URL refused");
+  eq("convert failure: last stderr line", convertFailure({ stderr: Buffer.from("noise\nInvalid data found\n"), message: "Command failed" }), "convert failed: Invalid data found");
+  eq("convert failure: no stderr", convertFailure(new Error("spawn ffmpeg ENOENT")), "convert failed: spawn ffmpeg ENOENT");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

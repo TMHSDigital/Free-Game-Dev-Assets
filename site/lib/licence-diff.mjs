@@ -4,7 +4,47 @@
  * every changed licence field, old and new, beside the newest Evidence line
  * that should back it, instead of reading raw frontmatter diffs. Pure.
  */
-import { evidenceSection } from "./frontmatter.mjs";
+import { evidenceSection, parseFrontmatter } from "./frontmatter.mjs";
+import { isEntryPath } from "./entry-files.mjs";
+
+/**
+ * The entry files in `git diff --name-status -z` output, as
+ * `[{ status, file }]`. A/M/D/T rows of non-entry files (category READMEs,
+ * underscore and dot folders) are dropped; anything outside catalog/ too.
+ */
+export function changedEntries(nameStatusZ) {
+  const parts = String(nameStatusZ).split("\0").filter(Boolean);
+  const out = [];
+  for (let i = 0; i + 1 < parts.length; i += 2) {
+    const status = parts[i];
+    const file = parts[i + 1];
+    if (!file.startsWith("catalog/") || !isEntryPath(file.slice("catalog/".length))) continue;
+    out.push({ status, file });
+  }
+  return out;
+}
+
+const metaAndBody = (text) => {
+  const parsed = text === null ? null : parseFrontmatter(text);
+  return parsed ? { meta: parsed.meta, body: parsed.body } : { meta: null, body: "" };
+};
+
+/**
+ * One table row per changed entry. `before(file)` reads the base version and
+ * `after(file)` the working one; neither is called for an added or removed file.
+ */
+export function diffRows(changes, { before, after }) {
+  return changes.map(({ status, file }) => {
+    const a = metaAndBody(status === "A" ? null : before(file));
+    const b = metaAndBody(status === "D" ? null : after(file));
+    return {
+      file,
+      change: status === "A" ? "added" : status === "D" ? "removed" : "modified",
+      fields: licenceChanges(a.meta, b.meta),
+      evidence: newestEvidenceLine(b.body || a.body),
+    };
+  });
+}
 
 /** The frontmatter fields that carry a licence fact, in table order. */
 export const LICENCE_FIELDS = [

@@ -32,7 +32,8 @@ const skipDir = (name) => name.startsWith(".") || name.startsWith("_") || name =
 export function isEntryPath(rel) {
   const parts = String(rel).split(/[\\/]/);
   const name = parts.pop();
-  return name.endsWith(".md") && !NON_ENTRY_MD.has(name) && !parts.some(skipDir);
+  // A file named like a skipped folder (_draft.md, .notes.md) is a draft, not an entry.
+  return name.endsWith(".md") && !NON_ENTRY_MD.has(name) && !skipDir(name) && !parts.some(skipDir);
 }
 
 /** Absolute paths of every entry file under `dir`, sorted. */
