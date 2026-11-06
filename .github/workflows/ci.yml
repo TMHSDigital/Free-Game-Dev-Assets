@@ -35,22 +35,17 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Test catalog checks
-        run: node site/checks.test.mjs
-      - name: Test site build modules
-        run: node site/lib/lib.test.mjs
-
-      - name: Validate catalog
-        run: node site/validate.mjs
-      # Needs history to follow renames; a pull request checkout is shallow.
-      - name: Check added dates against git history
+      # check-added needs history to follow renames; a pull request checkout is shallow.
+      - name: Fetch full history
         run: |
           if [ "$(git rev-parse --is-shallow-repository)" = "true" ]; then
             git fetch --unshallow --no-tags origin
           fi
-          node site/check-added.mjs
-      - name: Build site and check pages
-        run: node site/build.mjs
+
+      # The one check sequence (package.json "check"): lint, tests, validate,
+      # check-added, build. A step added there runs here with no YAML change.
+      - name: Lint, test, validate, check added dates, build
+        run: npm run check
 
       # Pull requests only: a table of every changed licence field, old and
       # new, beside the entry's newest Evidence line, on the run's summary page.
@@ -79,15 +74,12 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Setup Node 22
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
 
-      - name: Test, validate and build
-        run: |
-          node site/checks.test.mjs
-          node site/lib/lib.test.mjs
-          node site/validate.mjs
-          node site/build.mjs
+      - name: Lint, test, validate, check added dates, build
+        run: npm run check

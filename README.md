@@ -359,7 +359,7 @@ Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 Node 22 or newer (CI and `.nvmrc` use 24); there is nothing to install.
 
 ```bash
-npm run check    # all of the below, in the order CI runs them
+npm run check    # what CI runs: lint, tests, validate, check-added, build (CONTRIBUTING.md#what-ci-runs)
 npm test         # the checks against known-bad fixtures, and the site modules' tests
 npm run validate # the catalog, against the checks (node site/validate.mjs)
 npm run build    # builds the site into site/dist (node site/build.mjs)
@@ -396,6 +396,9 @@ npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no dow
 │   ├── validate.mjs            catalog integrity checks
 │   ├── checks.mjs              the checks, as pure functions
 │   ├── checks.test.mjs         fixtures proving each check fails on bad input
+│   ├── lint.mjs                every script parses; no unused imports
+│   ├── check-added.mjs         `added` dates against git history
+│   ├── pr-diff.mjs             a pull request's licence-field changes, for the run summary
 │   ├── new-entry.mjs           starts an entry from the template
 │   ├── sync-counts.mjs         rewrites every restated entry count
 │   ├── serve.mjs               local preview server for site/dist

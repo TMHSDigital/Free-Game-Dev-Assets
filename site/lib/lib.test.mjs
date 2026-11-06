@@ -1905,6 +1905,21 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("convert failure: no stderr", convertFailure(new Error("spawn ffmpeg ENOENT")), "convert failed: spawn ffmpeg ENOENT");
 }
 
+/* lint: unused imports (#230) --------------------------------------------- */
+{
+  const { unusedImports, scriptFiles } = await import("../lint.mjs");
+  eq("lint: a used import passes", unusedImports('import { a } from "./x.mjs";\na();\n').join(), "");
+  eq("lint: an unused named import", unusedImports('import { a, b } from "./x.mjs";\na();\n').join(), "b");
+  eq("lint: a renamed import is checked by its local name", unusedImports('import { a as z } from "./x.mjs";\na();\n').join(), "z");
+  eq("lint: default and namespace imports", unusedImports('import fs from "node:fs";\nimport * as p from "node:path";\nfs.x();\n').join(), "p");
+  eq("lint: a multi-line import", unusedImports('import {\n  a,\n  b,\n} from "./x.mjs";\nb();\n').join(), "a");
+  eq("lint: a spread counts as a use", unusedImports('import { a } from "./x.mjs";\nf(...a);\n').join(), "");
+  eq("lint: a property of the same name is not a use", unusedImports('import { a } from "./x.mjs";\nobj.a();\n').join(), "a");
+  const listed = scriptFiles().map((f) => f.split(/[\\/]/).slice(-2).join("/"));
+  eq("lint: browser scripts are listed", listed.includes("public/app.js"), true);
+  eq("lint: dist is not", listed.some((f) => f.startsWith("dist/")), false);
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

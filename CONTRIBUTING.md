@@ -37,7 +37,7 @@ The website rebuilds from frontmatter on deploy. Node 22 or newer is all you nee
 3. Write the body: a one-paragraph summary, `## Notes`, `## Evidence` with a dated line quoting the source, such as `- Live page (2026-09-25): "Free for commercial use"`, and optionally `## Related` linking sibling entries. Every Evidence section needs at least one date, and `verified` may not be newer than the newest one. The template (and so the scaffold) starts at `status: needs-review`; set `active` once the licence, the commercial stance and the credit requirement are all settled.
 4. Add a row to the matching category `README.md`. This is required: the validator fails an entry that is not listed there, and the row's licence cell must match your frontmatter.
 5. Run `node site/sync-counts.mjs` (`npm run counts`). It updates every place the repo restates the entry count: both category count tables, the README badge and "Browse N sources" line, and `expectedEntryCount` in [`site/config.json`](site/config.json).
-6. Run `npm test && npm run validate` before you push; that is quick. CI then runs `npm run check` (the tests, `node site/validate.mjs` and `node site/build.mjs`), and all of it must pass. Run `npm run check` yourself if you changed the site or want to preview your entry's page. The build renders your entry's page and fails if the body uses markdown the site does not support (tables, code fences, blockquotes, images, raw HTML, `###` headings, numbered lists) or links to a file that does not exist.
+6. Run `npm test && npm run validate` before you push; that is quick. CI then runs `npm run check` (the steps are listed under [What CI runs](#what-ci-runs)), and all of it must pass. Run `npm run check` yourself if you changed the site or want to preview your entry's page. The build renders your entry's page and fails if the body uses markdown the site does not support (tables, code fences, blockquotes, images, raw HTML, `###` headings, numbered lists) or links to a file that does not exist.
 7. Save files with LF line endings. `.editorconfig` and `.gitattributes` take care of it in most editors; the validator rejects a file that still contains a CR.
 8. Optional: add the `id` to `site/config.json` → `featured` to pin it under Safe starting points.
 
@@ -67,6 +67,18 @@ To add a starter stack (one pick per need for a kind of game), follow [`stacks/R
 - `verified`: ISO date (`YYYY-MM-DD`) of your last license check. It must be a real date, no later than tomorrow in UTC, and no newer than the newest date in `## Evidence` (V8): a new `verified` date needs a new dated Evidence line from the same check. Dates inside URLs do not count as Evidence dates.
 - `status`: `active` | `needs-review` | `deprecated`. A `deprecated` entry needs a `- Deprecated:` line in its body giving the reason (V9). `active` means the licence, the commercial stance and the credit requirement are all settled: an `unknown` in `license`, `commercial` or `attribution_required` keeps an entry at `needs-review`. The validator enforces this (V14), and rejects `formats`, `subcategories` or `tags` values that differ only by case, punctuation or a trailing "s" from one already in use (V13).
 - No other keys. An unknown key is rejected with the nearest allowed one (V33): `id`, `name`, `url`, `publisher`, `category`, `subcategories`, `license`, `license_spdx`, `commercial`, `attribution_required`, `attribution_string`, `formats`, `tags`, `added`, `verified`, `status`, `engine_lock`, `ue_versions`, `camera_perspective`, `grid_dimensions`, `maintenance`, `hardware_tags`, `preview` and `limits`. A typo such as `engine-lock` would otherwise drop the fact silently. Block-list items are indented under their key (`  - item`), and every key needs a space after its colon.
+
+## What CI runs
+
+Every pull request, every push to `main` (before the site deploys) and every release run one sequence, `npm run check` in [`package.json`](package.json), on Node 24 and again on Node 22:
+
+1. `npm run lint` (`site/lint.mjs`): every script parses, and none imports a name it does not use.
+2. `npm test`: the checks against known-bad fixtures (`site/checks.test.mjs`) and the site modules' tests (`site/lib/lib.test.mjs`).
+3. `npm run validate` (`site/validate.mjs`): every entry, link, count table and file against the checks.
+4. `npm run check-added` (`site/check-added.mjs`): no entry's `added` date is later than the file's first commit, following renames. It needs the full git history; CI fetches it, and a shallow clone of your own will fail this step.
+5. `npm run build` (`site/build.mjs`): renders every page and runs the page checks.
+
+A pull request also gets a table on its run's summary page listing every licence field it changes, old and new, beside the entry's newest Evidence line (`site/pr-diff.mjs`). It is for the reviewer and never fails the run.
 
 ## License verification checklist
 

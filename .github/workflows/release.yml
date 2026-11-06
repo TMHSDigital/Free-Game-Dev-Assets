@@ -58,7 +58,7 @@ jobs:
 
       - name: Check and build
         if: steps.tag.outputs.skip != 'true'
-        run: npm test && node site/validate.mjs && node site/build.mjs
+        run: npm run check
 
       - name: Assert the dataset carries the tag
         if: steps.tag.outputs.skip != 'true'

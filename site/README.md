@@ -196,7 +196,7 @@ Retake it when the hero changes.
 ## Commands
 
 ```bash
-npm run check   # tests, validate, build: what CI runs
+npm run check   # what CI runs: lint, tests, validate, check-added, build (see CONTRIBUTING.md, "What CI runs")
 npm run serve   # preview site/dist
 npm run links   # the link check, printed to the terminal
 npm run thumbs  # fetch and resize the previews that are due (needs ffmpeg or magick)
