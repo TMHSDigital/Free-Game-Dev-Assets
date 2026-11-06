@@ -28,6 +28,11 @@ import {
   checkLicenceGuide,
   checkLineEndings,
   checkRepoFiles,
+  checkEntryCount,
+  checkEntryText,
+  checkMarkdownLinks,
+  categoryFormOptions,
+  hasEmoji,
   checkMaintenance,
   checkNonCommercialEvidence,
   maintenanceFromRepo,
@@ -965,6 +970,55 @@ eq("V33 closestKnownKey gives up on distant words", closestKnownKey("zzzzzz"), n
 accepts("V32 accepts a guide naming every value", checkLicenceGuide({ licenses: { MIT: {}, "CC-BY": {} } }, "| **MIT** | yes |\n| **CC-BY** | yes |"));
 rejects("V32 rejects a missing value", checkLicenceGuide({ licenses: { MIT: {}, ISC: {} } }, "| **MIT** | yes |"), 'does not mention the licence value "ISC"');
 rejects("V32 a longer value does not count for its prefix", checkLicenceGuide({ licenses: { "CC-BY": {} } }, "| **CC-BY-4.0** | yes |"), 'does not mention the licence value "CC-BY"');
+
+/* validate's file-level checks, moved here to be tested (#224) ----------- */
+{
+  const { parseFrontmatter } = await import("./lib/frontmatter.mjs");
+  const { EXTERNAL_SCHEME_RE, ANY_SCHEME_RE } = await import("./lib/shared.mjs");
+  const { markdownAnchors: anchors } = await import("./checks.mjs");
+  eq("emoji: the (c), (r) and tm signs are not emoji", hasEmoji("© ® ™"), false);
+  eq("emoji: an emoji is", hasEmoji("ship it \u{1F680}"), true);
+  const good = "---\nid: a\n---\n\nBody\twith a tab\n";
+  accepts("entry text: clean text with a tab", checkEntryText("ok.md", good, parseFrontmatter(good)));
+  const bell = "---\nid: a\n---\n\nRing\u0007\n";
+  rejects("entry text: a control character names its line", checkEntryText("bad.md", bell, parseFrontmatter(bell)), "bad.md:5 contains a control character");
+  rejects("entry text: emoji", checkEntryText("bad.md", "---\nid: a\n---\n\u{1F680}\n", {}), "bad.md contains emoji");
+  rejects("entry text: no frontmatter", checkEntryText("bad.md", "# Just a heading\n", null), "bad.md missing frontmatter");
+  accepts("entry count: matches", checkEntryCount(3, 3));
+  rejects("entry count: differs", checkEntryCount(4, 3), "entry count 4 !== 3");
+  rejects("entry count: not configured", checkEntryCount(4, undefined), "expectedEntryCount must be a positive integer");
+  rejects("repo files: a pack in a category folder", checkRepoFiles([{ rel: "catalog/2d/pack.zip" }]), "binary asset file: catalog/2d/pack.zip");
+  accepts("repo files: a committed thumbnail", checkRepoFiles([{ rel: "site/public/thumbs/a.webp" }]));
+
+  // An injected filesystem: repo root /r, a README with one heading.
+  const root = path.resolve("/r");
+  const files = new Map([
+    [path.join(root, "README.md"), "# Café\n\n## Getting started\n"],
+    [path.join(root, "docs", "x.md"), "# X\n"],
+  ]);
+  const target = (abs) => {
+    // Case-insensitive lookup, as on Windows and macOS; `real` keeps the true case.
+    const hit = [...files.keys(), path.join(root, "docs")].find((k) => k.toLowerCase() === abs.toLowerCase());
+    return { exists: Boolean(hit), real: hit || null, isFile: Boolean(hit && files.has(hit)) };
+  };
+  const ctx = { root, realRoot: root, target, anchorsOf: (abs) => anchors(files.get(abs) || ""), relOf: (abs) => path.relative(root, abs).split(path.sep).join("/"), external: EXTERNAL_SCHEME_RE, anyScheme: ANY_SCHEME_RE };
+  const links = (md) => checkMarkdownLinks(path.join(root, "page.md"), md, ctx);
+  accepts("links: an existing file", links("[a](docs/x.md)"));
+  rejects("links: a missing file", links("[a](missing.md)"), "page.md broken link: missing.md");
+  accepts("links: a heading anchor", links("[a](README.md#getting-started)"));
+  rejects("links: no such heading", links("[a](README.md#no-such)"), "broken anchor: README.md#no-such");
+  accepts("links: an encoded anchor decodes", links("[a](README.md#Caf%C3%A9)"));
+  rejects("links: a malformed escape fails the lookup, not the run", links("[a](README.md#%E0%A4)"), "broken anchor");
+  accepts("links: angle brackets", links("[a](<docs/x.md>)"));
+  accepts("links: a title is not part of the href", links('[a](docs/x.md "The title")'));
+  rejects("links: wrong case", links("[a](DOCS/x.md)"), "case differs on disk");
+  accepts("links: external links are not checked", links("[a](https://example.com/nope)"));
+  rejects("links: other schemes are refused", links("[a](javascript:alert(1))"), 'unsupported scheme "javascript:"');
+
+  eq("form options: no category dropdown", categoryFormOptions("body:\n  - type: input\n    id: name\n").join(), "");
+  eq("form options: quoted options", categoryFormOptions('  - type: dropdown\n    id: category\n    attributes:\n      options:\n        - "2d"\n        - \'3d\'\n').join(), "2d,3d");
+  eq("form options: stop at the next key", categoryFormOptions("    id: category\n    attributes:\n      options:\n        - 2d\n        - audio\n    validations:\n      required: true\n").join(), "2d,audio");
+}
 
 /* ----------------------------------------------------------------------- */
 if (failures.length) {

@@ -9,6 +9,7 @@
 import path from "node:path";
 import { ID_RE } from "./lib/entry-files.mjs";
 import { evidenceSection } from "./lib/frontmatter.mjs";
+import { caseMismatch } from "./lib/links.mjs";
 import { ENGINE_LOCK_NOTES, isRealDate, MAINTENANCE_NOTES, PERSPECTIVES, STATUS_NOTES } from "./lib/shared.mjs";
 import { headingSlug } from "./lib/guide-render.mjs";
 import { isAttributionLicence, isPrivateHost, PREVIEW_LICENSES, previewEligibility, safeImageUrl } from "./lib/thumbs.mjs";
@@ -1151,6 +1152,109 @@ export function checkRepoFiles(files) {
     errors.push(`binary asset file: ${rel}`);
   }
   return errors;
+}
+
+const EMOJI_RE = /\p{Extended_Pictographic}/u;
+// C0 controls other than tab, LF and CR: invalid in XML, and NUL is the
+// markdown renderer's slot marker.
+const CONTROL_RE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
+
+/** True when text holds an emoji; the ©, ® and ™ signs are not counted. */
+export function hasEmoji(text) {
+  return EMOJI_RE.test(String(text).replace(/[©®™]/g, ""));
+}
+
+/**
+ * The text-level rules for one entry file: no emoji, LF line endings (V30),
+ * no control characters, and a frontmatter block. `parsed` is
+ * parseFrontmatter's result for `text`.
+ */
+export function checkEntryText(rel, text, parsed) {
+  const errors = [];
+  if (hasEmoji(text)) errors.push(`${rel} contains emoji`);
+  errors.push(...checkLineEndings(rel, text));
+  const ctl = text.split("\n").findIndex((line) => CONTROL_RE.test(line));
+  if (ctl !== -1) errors.push(`${rel}:${ctl + 1} contains a control character (delete it; only tab and newlines are allowed)`);
+  if (!parsed) errors.push(`${rel} missing frontmatter`);
+  return errors;
+}
+
+/** The entry count must match site/config.json's expectedEntryCount. */
+export function checkEntryCount(count, expected) {
+  if (!Number.isInteger(expected) || expected < 1) return ["site/config.json expectedEntryCount must be a positive integer"];
+  return count === expected
+    ? []
+    : [`entry count ${count} !== ${expected} (update expectedEntryCount in site/config.json when adding or removing entries)`];
+}
+
+const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
+
+/**
+ * Relative links in one Markdown file: each must reach a file (in the same
+ * case as on disk; CI is case-sensitive), and a #fragment into a Markdown
+ * file must name one of its headings. The filesystem is injected:
+ * `target(abs)` gives `{ exists, real, isFile }`, `anchorsOf(abs)` the
+ * heading ids, `relOf(abs)` the repo path to report.
+ */
+export function checkMarkdownLinks(file, text, { root, realRoot, target, anchorsOf, relOf, external, anyScheme }) {
+  const errors = [];
+  const rel = relOf(file);
+  const dir = path.dirname(file);
+  for (const m of String(text).matchAll(MD_LINK_RE)) {
+    let raw = (m[1] || m[2] || "").trim();
+    if (!raw) continue;
+    if (raw.startsWith("<") && raw.endsWith(">")) raw = raw.slice(1, -1);
+    const href = raw.split(/\s+/)[0];
+    if (!href) continue;
+    if (external.test(href)) continue;
+    const scheme = href.match(anyScheme);
+    if (scheme) {
+      errors.push(`${rel} link "${href}" uses the unsupported scheme "${scheme[1].toLowerCase()}:" (only https, http and mailto links are allowed)`);
+      continue;
+    }
+    const hash = href.indexOf("#");
+    const filePart = hash === -1 ? href : href.slice(0, hash);
+    const fragment = hash === -1 ? "" : href.slice(hash + 1);
+    const resolved = filePart ? path.resolve(dir, filePart) : file;
+    const onDisk = target(resolved);
+    if (!onDisk.exists) {
+      errors.push(`${rel} broken link: ${href}`);
+      continue;
+    }
+    const mismatch = caseMismatch(path.relative(root, resolved), path.relative(realRoot, onDisk.real));
+    if (mismatch) {
+      errors.push(`${rel} broken link: ${href} (case differs on disk: ${mismatch}; CI is case-sensitive)`);
+      continue;
+    }
+    if (fragment && resolved.endsWith(".md") && onDisk.isFile) {
+      let id = fragment;
+      try {
+        id = decodeURIComponent(fragment);
+      } catch {
+        // A malformed escape stays as written and fails the lookup below.
+      }
+      if (!anchorsOf(resolved).has(id.toLowerCase())) {
+        errors.push(`${rel} broken anchor: ${href} (no such heading in ${relOf(resolved)})`);
+      }
+    }
+  }
+  return errors;
+}
+
+/** The options of the `id: category` dropdown in the new-source issue form. */
+export function categoryFormOptions(yml) {
+  const lines = String(yml).split(/\r?\n/);
+  const at = lines.findIndex((l) => /^\s*id:\s*category\s*$/.test(l));
+  if (at === -1) return [];
+  const start = lines.findIndex((l, i) => i > at && /^\s*options:\s*$/.test(l));
+  if (start === -1) return [];
+  const out = [];
+  for (let i = start + 1; i < lines.length; i += 1) {
+    const m = lines[i].match(/^\s*-\s+(\S+)\s*$/);
+    if (!m) break;
+    out.push(m[1].replace(/^(["'])(.*)\1$/, "$2"));
+  }
+  return out;
 }
 
 /**

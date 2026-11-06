@@ -4,7 +4,6 @@
  */
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
-import { caseMismatch } from "./lib/links.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -35,6 +34,11 @@ import {
   checkLicenseVocabulary,
   checkLicenceGuide,
   checkLineEndings,
+  checkEntryCount,
+  checkEntryText,
+  checkMarkdownLinks,
+  categoryFormOptions,
+  hasEmoji,
   checkRepoFiles,
   checkMaintenance,
   checkNonCommercialEvidence,
@@ -62,22 +66,10 @@ const VOCAB_PATH = path.join(__dirname, "license-vocabulary.json");
 const ALIASES_PATH = path.join(__dirname, "value-aliases.json");
 const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
 const STACKS = path.join(ROOT, "stacks");
-// C0 controls other than tab, LF and CR: invalid in XML, and NUL is the
-// markdown renderer's slot marker.
-const CONTROL_RE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
 // Hidden folders (.git, .claude worktrees, editor state) and local scratch
 // space are not part of the repo's content. Used only for the markdown roots
 // and as the fallback file list when git is not available.
 const SKIP_WALK = new Set(["node_modules", "dist", "RESEARCH", "_scratch"]);
-/** Generated output and first-party stills (README screenshots, the social card): not third-party packs. */
-const EMOJI_RE = /\p{Extended_Pictographic}/u;
-const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
-
-function hasEmoji(text) {
-  const stripped = text.replace(/[©®™]/g, "");
-  return EMOJI_RE.test(stripped);
-}
-
 function walkFiles(dir, out = [], filter) {
   if (!fs.existsSync(dir)) return out;
   for (const name of fs.readdirSync(dir)) {
@@ -176,67 +168,17 @@ function anchorsOf(file) {
   return anchorCache.get(file);
 }
 
-function checkRelativeLinks(file, errors) {
-  const text = readText(file);
-  const dir = path.dirname(file);
-  let m;
-  MD_LINK_RE.lastIndex = 0;
-  while ((m = MD_LINK_RE.exec(text))) {
-    let target = (m[1] || m[2] || "").trim();
-    if (!target) continue;
-    if (target.startsWith("<") && target.endsWith(">")) target = target.slice(1, -1);
-    const href = target.split(/\s+/)[0];
-    if (!href) continue;
-    if (EXTERNAL_SCHEME_RE.test(href)) continue;
-    const scheme = href.match(ANY_SCHEME_RE);
-    if (scheme) {
-      errors.push(`${relFromRoot(file)} link "${href}" uses the unsupported scheme "${scheme[1].toLowerCase()}:" (only https, http and mailto links are allowed)`);
-      continue;
-    }
-    const hash = href.indexOf("#");
-    const filePart = hash === -1 ? href : href.slice(0, hash);
-    const fragment = hash === -1 ? "" : href.slice(hash + 1);
-    const resolved = filePart ? path.resolve(dir, filePart) : file;
-    const onDisk = linkTarget(resolved);
-    if (!onDisk.exists) {
-      errors.push(`${relFromRoot(file)} broken link: ${href}`);
-      continue;
-    }
-    // Case-insensitive filesystems accept a wrong-case link that CI (Linux) will not.
-    const mismatch = caseMismatch(path.relative(ROOT, resolved), path.relative(REAL_ROOT, onDisk.real));
-    if (mismatch) {
-      errors.push(`${relFromRoot(file)} broken link: ${href} (case differs on disk: ${mismatch}; CI is case-sensitive)`);
-      continue;
-    }
-    // A fragment into a Markdown file must name one of its headings.
-    if (fragment && resolved.endsWith(".md") && onDisk.isFile) {
-      let id = fragment;
-      try {
-        id = decodeURIComponent(fragment);
-      } catch {
-        // A malformed escape stays as written and fails the lookup below.
-      }
-      if (!anchorsOf(resolved).has(id.toLowerCase())) {
-        errors.push(`${relFromRoot(file)} broken anchor: ${href} (no such heading in ${relFromRoot(resolved)})`);
-      }
-    }
-  }
-}
-
-/** The options of the `id: category` dropdown in the new-source issue form. */
-function categoryFormOptions(yml) {
-  const lines = yml.split(/\r?\n/);
-  const at = lines.findIndex((l) => /^\s*id:\s*category\s*$/.test(l));
-  if (at === -1) return [];
-  const start = lines.findIndex((l, i) => i > at && /^\s*options:\s*$/.test(l));
-  if (start === -1) return [];
-  const out = [];
-  for (let i = start + 1; i < lines.length; i += 1) {
-    const m = lines[i].match(/^\s*-\s+(\S+)\s*$/);
-    if (!m) break;
-    out.push(m[1]);
-  }
-  return out;
+/** checks.mjs checkMarkdownLinks over one file, with the cached filesystem lookups. */
+function checkRelativeLinks(file) {
+  return checkMarkdownLinks(file, readText(file), {
+    root: ROOT,
+    realRoot: REAL_ROOT,
+    target: linkTarget,
+    anchorsOf,
+    relOf: relFromRoot,
+    external: EXTERNAL_SCHEME_RE,
+    anyScheme: ANY_SCHEME_RE,
+  });
 }
 
 function coverageReport(entries) {
@@ -266,9 +208,6 @@ function main() {
   const today = latestAllowedDate();
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
   const expectedCount = config.expectedEntryCount;
-  if (!Number.isInteger(expectedCount) || expectedCount < 1) {
-    errors.push("site/config.json expectedEntryCount must be a positive integer");
-  }
   const spdxAllowed = new Set(
     JSON.parse(fs.readFileSync(SPDX_ALLOWED_PATH, "utf8"))
   );
@@ -287,15 +226,8 @@ function main() {
   const metaById = new Map();
 
   for (const { file, rel, text, parsed } of entryRecords) {
-    if (hasEmoji(text)) errors.push(`${rel} contains emoji`);
-    errors.push(...checkLineEndings(rel, text));
-    const ctl = text.split("\n").findIndex((line) => CONTROL_RE.test(line));
-    if (ctl !== -1) errors.push(`${rel}:${ctl + 1} contains a control character (delete it; only tab and newlines are allowed)`);
-
-    if (!parsed) {
-      errors.push(`${rel} missing frontmatter`);
-      continue;
-    }
+    errors.push(...checkEntryText(rel, text, parsed));
+    if (!parsed) continue;
     const { meta, body } = parsed;
     for (const e of parsed.errors) errors.push(`${rel} frontmatter ${e}`);
     const stem = path.basename(file, ".md");
@@ -399,11 +331,7 @@ function main() {
     ])
   );
 
-  if (Number.isInteger(expectedCount) && entryFiles.length !== expectedCount) {
-    errors.push(
-      `entry count ${entryFiles.length} !== ${expectedCount} (update expectedEntryCount in site/config.json when adding or removing entries)`
-    );
-  }
+  errors.push(...checkEntryCount(entryFiles.length, expectedCount));
 
   const formPath = path.join(ROOT, ".github", "ISSUE_TEMPLATE", "new-source.yml");
   errors.push(
@@ -432,7 +360,7 @@ function main() {
       : [root];
     for (const file of files) {
       errors.push(...checkLineEndings(relFromRoot(file), readText(file)));
-      checkRelativeLinks(file, errors);
+      errors.push(...checkRelativeLinks(file));
     }
   }
 
