@@ -923,7 +923,7 @@ eq("every word must match", kScore("ui zzz"), 0);
 eq("name hit outranks summary hit", kScore("kit") > kScore("panels"), true);
 eq("regex characters are literal", kScore("c++"), 0);
 
-const URL_DEF = { category: "all", q: "", active: true, review: true, deprecated: false, commercialOnly: false, noAttr: false, perspective: "any", license: "any", format: "any", engine: "any", sort: "name" };
+const { FILTER_DEFAULTS: URL_DEF, CHOICES: URL_CHOICES, SWITCHES: URL_SWITCHES } = await import("./search.mjs");
 const URL_ALLOWED = { category: ["all", "2d", "3d"], sort: ["name", "license", "verified"], perspective: ["any", "top_down"], license: ["any", "cc0"], format: ["any", "image"] };
 const urlSt = readState("?cat=2d&q=pixel&sort=bogus&view=top_down&deprecated=1&review=maybe&licence=cc0", URL_DEF, URL_ALLOWED);
 eq("url: known category kept", urlSt.category, "2d");
@@ -937,6 +937,21 @@ eq("url: round trip", readState(`?${stateQuery(urlSt, URL_DEF)}`, URL_DEF, URL_A
 eq("url: defaults write nothing", stateQuery(URL_DEF, URL_DEF), "");
 eq("url: switch off written as 0", stateQuery({ ...URL_DEF, active: false }, URL_DEF), "active=0");
 eq("url: blank q not written", stateQuery({ ...URL_DEF, q: "   " }, URL_DEF), "");
+{
+  // #223: every choice and switch survives a round trip through the URL.
+  const other = { category: "3d", sort: "verified", perspective: "top_down", license: "cc0", format: "image", engine: "godot" };
+  const allowed = Object.fromEntries(URL_CHOICES.map(([, f]) => [f, [URL_DEF[f], other[f]]]));
+  const changed = { ...URL_DEF, q: "pixel art" };
+  for (const [, f] of URL_CHOICES) {
+    eq(`url: ${f} has a non-default test value`, typeof other[f] === "string" && other[f] !== URL_DEF[f], true);
+    changed[f] = other[f];
+  }
+  for (const [, f] of URL_SWITCHES) changed[f] = !URL_DEF[f];
+  const back = readState(`?${stateQuery(changed, URL_DEF)}`, URL_DEF, allowed);
+  for (const f of Object.keys(URL_DEF)) eq(`url: round trip keeps ${f}`, back[f], changed[f]);
+  eq("url: every state field is a choice, a switch or q", Object.keys(URL_DEF).sort().join(), ["q", ...URL_CHOICES.map(([, f]) => f), ...URL_SWITCHES.map(([, f]) => f)].sort().join());
+  eq("url: category first, then q", stateQuery(changed, URL_DEF).split("&").slice(0, 2).map((kv) => kv.split("=")[0]).join(), "cat,q");
+}
 
 const fmtGroups = { image: { formats: ["PNG", "SVG"] } };
 eq("filter: needs-review hidden when review off", passesFilters({ status: "needs-review" }, { ...URL_DEF, review: false }), false);

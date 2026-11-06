@@ -1,4 +1,4 @@
-import { gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
+import { FILTER_DEFAULTS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 import { PERSPECTIVES } from "./shared.mjs";
@@ -19,20 +19,7 @@ import { PERSPECTIVES } from "./shared.mjs";
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-  const DEFAULTS = {
-    category: "all",
-    q: "",
-    active: true,
-    review: true,
-    deprecated: false,
-    commercialOnly: false,
-    noAttr: false,
-    perspective: "any",
-    license: "any",
-    format: "any",
-    engine: "any",
-    sort: "name",
-  };
+  const DEFAULTS = FILTER_DEFAULTS;
   const state = { ...DEFAULTS };
   // Licence families and format groups come from the build (license-vocabulary.json, format-vocabulary.json).
   const LICENSE_FAMILIES = data.filters?.licenseFamilies || {};

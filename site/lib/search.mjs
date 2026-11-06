@@ -248,7 +248,27 @@ export function gapIssueUrl(repo, query, categoryLabel = "") {
   return `${repo}/issues/new?template=request-asset.yml&title=${encodeURIComponent(title)}`;
 }
 
-const CHOICES = [
+/**
+ * The filter state of the catalog page and its defaults: the one list. The
+ * page starts from it, and the URL holds only what differs from it.
+ */
+export const FILTER_DEFAULTS = Object.freeze({
+  category: "all",
+  q: "",
+  active: true,
+  review: true,
+  deprecated: false,
+  commercialOnly: false,
+  noAttr: false,
+  perspective: "any",
+  license: "any",
+  format: "any",
+  engine: "any",
+  sort: "name",
+});
+
+/** Choice params: URL key -> state field, in the order the URL writes them (after q). */
+export const CHOICES = [
   ["cat", "category"],
   ["sort", "sort"],
   ["view", "perspective"],
@@ -257,7 +277,7 @@ const CHOICES = [
   ["engine", "engine"],
 ];
 /** On/off params: URL key -> state field, written as 1 or 0. */
-const SWITCHES = [
+export const SWITCHES = [
   ["active", "active"],
   ["review", "review"],
   ["deprecated", "deprecated"],
@@ -292,11 +312,12 @@ export function readState(search, defaults, allowed) {
 /** The query string for a state: only what differs from the defaults. */
 export function stateQuery(state, defaults) {
   const p = new URLSearchParams();
-  const field = Object.fromEntries(CHOICES);
-  if (state.category !== defaults.category) p.set("cat", state.category);
+  // The category reads first in a shared link, then the search, then the rest.
+  const [[catKey, catField], ...rest] = CHOICES;
+  if (state[catField] !== defaults[catField]) p.set(catKey, state[catField]);
   if (state.q.trim()) p.set("q", state.q.trim());
-  for (const key of ["sort", "view", "licence", "format", "engine"]) {
-    if (state[field[key]] !== defaults[field[key]]) p.set(key, state[field[key]]);
+  for (const [key, f] of rest) {
+    if (state[f] !== defaults[f]) p.set(key, state[f]);
   }
   for (const [key, f] of SWITCHES) {
     if (state[f] !== defaults[f]) p.set(key, state[f] ? "1" : "0");
