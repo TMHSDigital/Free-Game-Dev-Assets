@@ -17,9 +17,8 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
+import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { safeFetch } from "./lib/safe-fetch.mjs";
-import { parseFrontmatter } from "./lib/frontmatter.mjs";
 import { afterFailure, imageUrlFromHtml, needsFetch, previewEligibility, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./lib/thumbs.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -50,10 +49,9 @@ function parseArgs(argv) {
 
 function loadEntries() {
   const out = [];
-  for (const file of listEntryFiles(CATALOG)) {
-    const parsed = parseFrontmatter(fs.readFileSync(file, "utf8"));
-    if (!parsed || parsed.errors.length || !idMatchesFile(parsed.meta.id, file)) continue;
-    const m = parsed.meta;
+  for (const r of readCatalog(CATALOG)) {
+    if (!usableRecord(r)) continue;
+    const m = r.parsed.meta;
     out.push({
       id: String(m.id),
       url: String(m.url || ""),

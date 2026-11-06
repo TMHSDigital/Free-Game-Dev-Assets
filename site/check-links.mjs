@@ -23,8 +23,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { maintenanceFromRepo } from "./checks.mjs";
-import { parseFrontmatter } from "./lib/frontmatter.mjs";
-import { listEntryFiles } from "./lib/entry-files.mjs";
+import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { safeFetch } from "./lib/safe-fetch.mjs";
 import { checkMaintenanceRepos, classify, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
 
@@ -45,11 +44,10 @@ function arg(name, fallback) {
 
 function loadEntries() {
   const out = [];
-  for (const full of listEntryFiles(CATALOG)) {
-    const parsed = parseFrontmatter(fs.readFileSync(full, "utf8"));
-    if (!parsed?.meta.url) continue;
-    const { id, url, verified, status, maintenance } = parsed.meta;
-    out.push({ id: String(id), url: String(url), verified: verified ? String(verified) : null, status: String(status), maintenance: maintenance ? String(maintenance) : null, rel: path.relative(ROOT, full).split(path.sep).join("/") });
+  for (const r of readCatalog(CATALOG, { root: ROOT })) {
+    if (!usableRecord(r) || !r.parsed.meta.url) continue;
+    const { id, url, verified, status, maintenance } = r.parsed.meta;
+    out.push({ id: String(id), url: String(url), verified: verified ? String(verified) : null, status: String(status), maintenance: maintenance ? String(maintenance) : null, rel: r.rel });
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }

@@ -48,9 +48,8 @@ import {
   checkValueSpellings,
   markdownAnchors,
 } from "./checks.mjs";
-import { parseFrontmatter } from "./lib/frontmatter.mjs";
 import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, latestAllowedDate } from "./lib/shared.mjs";
-import { listEntryFiles } from "./lib/entry-files.mjs";
+import { readCatalog } from "./lib/entry-files.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -279,22 +278,20 @@ function main() {
   const aliases = JSON.parse(fs.readFileSync(ALIASES_PATH, "utf8"));
   const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
   const categories = catalogCategories();
-  const entryFiles = listEntryFiles(CATALOG);
+  const entryRecords = readCatalog(CATALOG, { root: ROOT, read: readText });
+  const entryFiles = entryRecords.map((r) => r.file);
 
   const entries = [];
   const records = [];
   const ids = new Map();
   const metaById = new Map();
 
-  for (const file of entryFiles) {
-    const rel = relFromRoot(file);
-    const text = readText(file);
+  for (const { file, rel, text, parsed } of entryRecords) {
     if (hasEmoji(text)) errors.push(`${rel} contains emoji`);
     errors.push(...checkLineEndings(rel, text));
     const ctl = text.split("\n").findIndex((line) => CONTROL_RE.test(line));
     if (ctl !== -1) errors.push(`${rel}:${ctl + 1} contains a control character (delete it; only tab and newlines are allowed)`);
 
-    const parsed = parseFrontmatter(text);
     if (!parsed) {
       errors.push(`${rel} missing frontmatter`);
       continue;

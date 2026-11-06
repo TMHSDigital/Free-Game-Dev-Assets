@@ -9,8 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseFrontmatter } from "./lib/frontmatter.mjs";
-import { listEntryFiles } from "./lib/entry-files.mjs";
+import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { batchIssueMarkdown, pickBatch } from "./lib/reverify.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -24,17 +23,16 @@ function arg(name) {
 }
 
 const entries = [];
-for (const full of listEntryFiles(CATALOG)) {
-  const parsed = parseFrontmatter(fs.readFileSync(full, "utf8"));
-  if (!parsed?.meta.id) continue;
-  const { id, url, license, verified, status } = parsed.meta;
+for (const r of readCatalog(CATALOG, { root: ROOT })) {
+  if (!usableRecord(r)) continue;
+  const { id, url, license, verified, status } = r.parsed.meta;
   entries.push({
     id: String(id),
     url: String(url || ""),
     license: String(license || "unknown"),
     verified: verified ? String(verified) : null,
     status: String(status || "needs-review"),
-    rel: path.relative(ROOT, full).split(path.sep).join("/"),
+    rel: r.rel,
   });
 }
 

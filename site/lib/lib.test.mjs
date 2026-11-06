@@ -1553,6 +1553,28 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     eq("counts: a deprecated entry is not listed", listed.counts.audio, 2);
     eq("counts: total is listed entries only", listed.total, 4);
     eq("counts: files and deprecated are reported", `${listed.files}/${listed.deprecated}`, "5/1");
+    // #221: a BOM'd deprecated entry is deprecated here too, as parseFrontmatter reads it.
+    nodeFs.writeFileSync(nodePath.join(root, "audio/bom.md"), "﻿---\nid: bom\nstatus: deprecated\n---\n\nGone.\n");
+    eq("counts: a BOM'd deprecated entry is not listed", countEntriesByCategory(root).counts.audio, 2);
+    const { isDeprecated, isEntryPath, readCatalog, usableRecord } = await import("./entry-files.mjs");
+    eq("isDeprecated agrees with parseFrontmatter on a BOM", isDeprecated("﻿---\nid: a\nstatus: deprecated\n---\nx"), true);
+    eq("isDeprecated: a quoted status", isDeprecated('---\nid: a\nstatus: "deprecated"\n---\nx'), true);
+    eq("isDeprecated: active is not", isDeprecated("---\nid: a\nstatus: active\n---\nx"), false);
+    // One entry-path rule for the walker and pr-diff.
+    eq("entry path: a nested entry", isEntryPath("2d/sub/a.md"), true);
+    eq("entry path: index and template are not", [isEntryPath("2d/README.md"), isEntryPath("TEMPLATE.md")].join(), "false,false");
+    eq("entry path: underscore and dot folders are not", [isEntryPath("_scratch/a.md"), isEntryPath("2d/_wip/a.md"), isEntryPath(".hidden/a.md")].join(), "false,false,false");
+    eq("entry path: windows separators", isEntryPath("2d\\_wip\\a.md"), false);
+    eq("entry path: not markdown", isEntryPath("2d/a.txt"), false);
+    // The shared reader parses once; usableRecord names the usual filter.
+    nodeFs.writeFileSync(nodePath.join(root, "audio/wrong-name.md"), "---\nid: other\nstatus: active\n---\n\nx\n");
+    const recs = new Map(readCatalog(root, { root }).map((r) => [r.rel, r]));
+    eq("readCatalog: rel is relative to root with /", recs.has("audio/bom.md"), true);
+    eq("readCatalog: a BOM'd file parses", recs.get("audio/bom.md").parsed.meta.status, "deprecated");
+    eq("readCatalog: no frontmatter gives null", recs.get("2d/a.md").parsed, null);
+    eq("usableRecord: a clean entry", usableRecord(recs.get("audio/old.md")), true);
+    eq("usableRecord: an id that does not match its file", usableRecord(recs.get("audio/wrong-name.md")), false);
+    eq("usableRecord: no frontmatter", usableRecord(recs.get("2d/a.md")), false);
   } finally {
     nodeFs.rmSync(root, { recursive: true, force: true });
   }

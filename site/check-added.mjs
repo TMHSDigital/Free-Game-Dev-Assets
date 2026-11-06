@@ -7,12 +7,10 @@
  * Needs the full git history; in a shallow clone it says so and exits 0.
  */
 import { execFileSync } from "node:child_process";
-import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { firstAddedFromLog, lateAddedDates } from "./lib/added-dates.mjs";
-import { listEntryFiles } from "./lib/entry-files.mjs";
-import { parseFrontmatter } from "./lib/frontmatter.mjs";
+import { readCatalog } from "./lib/entry-files.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -25,9 +23,10 @@ if (git(["rev-parse", "--is-shallow-repository"]).trim() === "true") {
 
 const log = git(["log", "--reverse", "--format=%x00%as", "--name-status", "-M", "--diff-filter=AR", "--", "catalog"]);
 const firstAdded = firstAddedFromLog(log);
-const entries = listEntryFiles(path.join(ROOT, "catalog")).map((full) => ({
-  rel: path.relative(ROOT, full).split(path.sep).join("/"),
-  added: parseFrontmatter(fs.readFileSync(full, "utf8"))?.meta.added ?? null,
+// Every entry file, parsed or not: a broken one still has an added date to check.
+const entries = readCatalog(path.join(ROOT, "catalog"), { root: ROOT }).map((r) => ({
+  rel: r.rel,
+  added: r.parsed?.meta.added ?? null,
 }));
 const errors = lateAddedDates(entries, firstAdded);
 if (errors.length) {

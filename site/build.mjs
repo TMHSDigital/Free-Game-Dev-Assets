@@ -20,8 +20,8 @@ import { guidePageHtml } from "./lib/guide-page.mjs";
 import { renderGuide } from "./lib/guide-render.mjs";
 import { categoryPageHtml } from "./lib/category-page.mjs";
 import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
-import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
-import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
+import { summaryFromBody } from "./lib/frontmatter.mjs";
+import { readCatalog, idMatchesFile } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
 import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
@@ -67,7 +67,7 @@ function loadThumbs() {
 }
 
 function loadEntries(vocab) {
-  const files = listEntryFiles(CATALOG);
+  const records = readCatalog(CATALOG, { root: ROOT });
   const thumbs = loadThumbs();
   const entries = [];
   const errors = [];
@@ -76,10 +76,7 @@ function loadEntries(vocab) {
   // not quietly write one entry's page over another's.
   const fileOfId = new Map();
 
-  for (const file of files) {
-    const text = fs.readFileSync(file, "utf8");
-    const rel = path.relative(ROOT, file).split(path.sep).join("/");
-    const parsed = parseFrontmatter(text);
+  for (const { file, rel, parsed } of records) {
     if (!parsed) {
       errors.push(`${rel} has no frontmatter`);
       continue;

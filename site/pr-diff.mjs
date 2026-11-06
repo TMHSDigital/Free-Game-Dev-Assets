@@ -16,7 +16,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseFrontmatter } from "./lib/frontmatter.mjs";
 import { licenceChanges, licenceDiffMarkdown, newestEvidenceLine } from "./lib/licence-diff.mjs";
-import { NON_ENTRY_MD } from "./lib/entry-files.mjs";
+import { isEntryPath } from "./lib/entry-files.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -47,7 +47,7 @@ function main() {
   for (let i = 0; i + 1 < changes.length; i += 2) {
     const status = changes[i];
     const file = changes[i + 1];
-    if (!file.endsWith(".md") || NON_ENTRY_MD.has(path.posix.basename(file)) || file.split("/").some((p) => p.startsWith("_") || p.startsWith("."))) continue;
+    if (!isEntryPath(file.slice("catalog/".length))) continue;
     const before = status === "A" ? null : git(["show", `${base}:${file}`]);
     const after = status === "D" ? null : fs.readFileSync(path.join(ROOT, file), "utf8");
     const a = parse(before);
