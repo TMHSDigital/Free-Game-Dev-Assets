@@ -828,6 +828,8 @@ accepts("preview field: https url", checkPreviewField("ok.md", { preview: "https
 rejects("preview field: http refused", checkPreviewField("bad.md", { preview: "http://a/b.png" }), 'bad.md preview must be "none" or an https:// image URL');
 rejects("preview field: loopback refused", checkPreviewField("bad.md", { preview: "https://127.0.0.1/a.png" }), "bad.md preview must be an https:// image URL on a public host");
 rejects("preview field: word refused", checkPreviewField("bad.md", { preview: "yes" }), 'bad.md preview must be "none" or an https:// image URL');
+rejects("preview field: unparseable https url refused", checkPreviewField("bad.md", { preview: "https://[bad" }), "bad.md preview must be an https:// image URL on a public host");
+rejects("preview field: userinfo refused", checkPreviewField("bad.md", { preview: "https://u:p@a.example/b.png" }), "bad.md preview must be an https:// image URL on a public host");
 
 /* V30: line endings ------------------------------------------------------ */
 accepts("V30 accepts LF-only text", checkLineEndings("ok.md", "---\nid: a\n---\n\nBody\n"));
