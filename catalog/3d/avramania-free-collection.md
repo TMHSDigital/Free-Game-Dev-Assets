@@ -13,7 +13,7 @@ formats: [glTF, FBX]
 tags: [low-poly, medieval, ai-generated]
 added: 2026-11-04
 verified: 2026-11-05
-status: needs-review
+status: active
 ---
 
 # Avramania Free Collection
