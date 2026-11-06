@@ -237,6 +237,17 @@ export function placementKey(state, { ranked, group, list }) {
   return `${group ? "group" : "flat"}:${state.sort}:${state.engine || "any"}`;
 }
 
+/**
+ * The "Request an asset" issue form, its title pre-filled with the search
+ * that found nothing: `[gap] pixel cars (in 2D)`. Only the title is filled;
+ * the form's own fields are left for the reporter.
+ */
+export function gapIssueUrl(repo, query, categoryLabel = "") {
+  const q = String(query || "").replace(/\s+/g, " ").trim().slice(0, 100);
+  const title = `[gap] ${q}${categoryLabel ? `${q ? " " : ""}(in ${categoryLabel})` : ""}`.trim();
+  return `${repo}/issues/new?template=request-asset.yml&title=${encodeURIComponent(title)}`;
+}
+
 const CHOICES = [
   ["cat", "category"],
   ["sort", "sort"],

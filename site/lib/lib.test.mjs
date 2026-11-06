@@ -1907,6 +1907,27 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("convert failure: no stderr", convertFailure(new Error("spawn ffmpeg ENOENT")), "convert failed: spawn ffmpeg ENOENT");
 }
 
+/* empty search: request links (#226); OpenSearch (#241) -------------------- */
+{
+  const { gapIssueUrl } = await import("./search.mjs");
+  const r = "https://github.com/o/r";
+  eq("gap link: query in the title, encoded", gapIssueUrl(r, "pixel cars & trucks", ""), `${r}/issues/new?template=request-asset.yml&title=${encodeURIComponent("[gap] pixel cars & trucks")}`);
+  has("gap link: category named", decodeURIComponent(gapIssueUrl(r, "cars", "2D")), "title=[gap] cars (in 2D)");
+  has("gap link: no query, category only", decodeURIComponent(gapIssueUrl(r, "  ", "Audio")), "title=[gap] (in Audio)");
+  has("gap link: whitespace collapsed and capped", decodeURIComponent(gapIssueUrl(r, `a\n\nb ${"x".repeat(300)}`, "")), `title=[gap] a b ${"x".repeat(96)}`);
+  lacks("gap link: no raw spaces or ampersands in the query string", gapIssueUrl(r, "a & b c", "").split("title=")[1], " ");
+  const indexHtml = nodeFs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+  has("empty state links the request form", indexHtml, 'id="empty-request"');
+  has("empty state links the new-source form", indexHtml, "template=new-source.yml");
+
+  const { opensearchXml, opensearchLinkHtml } = await import("./shared.mjs");
+  const os = opensearchXml({ siteUrl: "https://x.test/s/", title: "Free Game Dev Assets", tagline: "Free <assets>" });
+  has("opensearch: query template uses q", os, 'template="https://x.test/s/?q={searchTerms}#catalog"');
+  has("opensearch: short name cut at a word, 16 at most", os, "<ShortName>Free Game Dev</ShortName>");
+  has("opensearch: text escaped", os, "Free &lt;assets&gt;");
+  has("opensearch: homepage link", opensearchLinkHtml({ siteUrl: "https://x.test/s", title: "T" }), 'href="https://x.test/s/opensearch.xml"');
+}
+
 /* lint: unused imports (#230) --------------------------------------------- */
 {
   const { unusedImports, scriptFiles } = await import("../lint.mjs");

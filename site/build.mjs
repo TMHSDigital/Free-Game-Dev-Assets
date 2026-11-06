@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, PAGE_MODULES, PREVIEW_CREDIT_LINE, sponsorButtonHtml } from "./lib/shared.mjs";
+import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, PREVIEW_CREDIT_LINE, sponsorButtonHtml } from "./lib/shared.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
 import { renderGuide } from "./lib/guide-render.mjs";
@@ -212,6 +212,7 @@ function guideRowsHtml(guides, repo) {
 function headMetaHtml(site, stats, generatedAt, hasCard) {
   return [
     baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard, root: "./", modules: PAGE_MODULES.home }),
+    opensearchLinkHtml(site),
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
     `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total - stats.deprecated }))}</script>`,
@@ -715,6 +716,7 @@ function main() {
   const modified = lastCommitDates();
   writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified, categories: categoriesInSitemap, guides: config.guides }));
   writeOut("robots.txt", robotsTxt(config.site));
+  writeOut("opensearch.xml", opensearchXml(config.site));
   writeOut("404.html", notFoundHtml(config.site));
   writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard }));
 

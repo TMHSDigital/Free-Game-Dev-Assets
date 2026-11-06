@@ -1,4 +1,4 @@
-import { closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
+import { gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 import { PERSPECTIVES } from "./shared.mjs";
@@ -408,6 +408,11 @@ import { PERSPECTIVES } from "./shared.mjs";
     $("#result-count").textContent = `${list.length} of ${data.entries.length} entries shown`;
     empty.hidden = list.length > 0;
     renderSuggestions(list.length ? "" : state.q);
+    if (!list.length) {
+      // The search that came up empty goes into the gap report's title.
+      $("#empty-request").href = gapIssueUrl(repo, state.q, state.category === "all" ? "" : categoryLabels[state.category]?.label || state.category);
+      $("#empty-new-source").href = `${repo}/issues/new?template=new-source.yml`;
+    }
 
     // The default page (no search, no filter) previews each category and
     // links to its page, as the prerender does. Any filter or search shows

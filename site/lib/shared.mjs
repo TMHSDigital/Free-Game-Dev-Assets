@@ -286,6 +286,42 @@ export const PAGE_MODULES = {
 };
 
 /**
+ * The OpenSearch description (opensearch.xml): lets a browser add the catalog
+ * as a search engine. A search opens the homepage with `?q=`, which the page
+ * already reads (search.mjs readState).
+ */
+/** A title cut at a word to OpenSearch's 16-character ShortName limit. */
+function shortName(title) {
+  let out = "";
+  for (const word of String(title).split(/\s+/)) {
+    const next = out ? `${out} ${word}` : word;
+    if (next.length > 16) break;
+    out = next;
+  }
+  return out || String(title).slice(0, 16);
+}
+
+export function opensearchXml(site) {
+  const base = String(site.siteUrl).replace(/\/+$/, "");
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>${esc(shortName(site.title))}</ShortName>
+  <Description>${esc(`Search ${site.title}: ${site.tagline}`.slice(0, 1024))}</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/svg+xml">${esc(base)}/favicon.svg</Image>
+  <Url type="text/html" method="get" template="${esc(base)}/?q={searchTerms}#catalog" />
+  <Url type="application/opensearchdescription+xml" rel="self" template="${esc(base)}/opensearch.xml" />
+  <moz:SearchForm>${esc(base)}/</moz:SearchForm>
+</OpenSearchDescription>
+`;
+}
+
+/** The homepage's <link> to opensearch.xml. */
+export function opensearchLinkHtml(site) {
+  return `<link rel="search" type="application/opensearchdescription+xml" title="${esc(site.title)}" href="${esc(String(site.siteUrl).replace(/\/+$/, ""))}/opensearch.xml" />`;
+}
+
+/**
  * The Content-Security-Policy every page carries. Pages cannot set response
  * headers, so it is a <meta> tag, first in <head>. Scripts, fonts, images and
  * requests are same-origin only; inline styles stay allowed for the few
