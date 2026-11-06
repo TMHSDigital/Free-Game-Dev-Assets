@@ -1063,8 +1063,16 @@ export function checkPreviewField(rel, meta) {
   if (meta.preview === undefined || meta.preview === null || meta.preview === "") return [];
   const v = String(meta.preview);
   if (v === "none") return [];
-  if (/^https:\/\/\S+$/.test(v) && safeImageUrl(v) === new URL(v).href) return [];
-  if (/^https:\/\/\S+$/.test(v)) return [`${rel} preview must be an https:// image URL on a public host`];
+  if (/^https:\/\/\S+$/.test(v)) {
+    // safeImageUrl is null for an unparseable or private URL; it must also
+    // leave the value unchanged, so what is stored is what gets fetched.
+    let href = null;
+    try {
+      href = new URL(v).href;
+    } catch {}
+    if (href !== null && safeImageUrl(v) === href) return [];
+    return [`${rel} preview must be an https:// image URL on a public host`];
+  }
   return [`${rel} preview must be "none" or an https:// image URL`];
 }
 

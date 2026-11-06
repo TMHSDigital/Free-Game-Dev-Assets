@@ -33,6 +33,8 @@ function splitFlowList(inner) {
     } else cur += ch;
   }
   parts.push(cur);
+  // As in YAML, one trailing comma ends the list rather than adding an item.
+  if (parts.length > 1 && !parts[parts.length - 1].trim()) parts.pop();
   return parts.map((p) => unquoteScalar(p.trim()));
 }
 
@@ -116,7 +118,7 @@ export function parseFrontmatter(text) {
         const value = parseScalar(item[1]);
         const open = unclosedQuote(item[1]);
         if (open) errors.push(`line ${lineNo}: list item opens a ${open} quote that is never closed`);
-        else if (value === null) errors.push(`line ${lineNo}: list item is empty (a value starting with # is a comment; quote it)`);
+        else if (value === null || value === "") errors.push(`line ${lineNo}: list item is empty (a value starting with # is a comment; quote it)`);
         else if (cutAtHash(item[1], value)) errors.push(`line ${lineNo}: list item is cut at " #" (read as a comment); quote the value if the # is part of it`);
         else meta[listKey].push(value);
       }
@@ -145,6 +147,9 @@ export function parseFrontmatter(text) {
     const value = parseScalar(rawValue);
     const open = unclosedQuote(rawValue);
     if (open) errors.push(`line ${lineNo}: "${key}" opens a ${open} quote that is never closed`);
+    if (Array.isArray(value) && value.some((v) => v === "")) {
+      errors.push(`line ${lineNo}: "${key}" has an empty list item (remove the extra comma)`);
+    }
     if (cutAtHash(rawValue, value)) {
       errors.push(`line ${lineNo}: "${key}" is cut at " #" (read as a comment); quote the value if the # is part of it`);
     }

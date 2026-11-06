@@ -653,6 +653,13 @@ eq("frontmatter reads a block list", JSON.stringify(f1.meta.formats), JSON.strin
 eq("frontmatter reads booleans", f1.meta.commercial, true);
 eq("frontmatter has no errors on good input", f1.errors.length, 0);
 eq("frontmatter ignores a byte-order mark", parseFrontmatter("﻿---\nid: a\n---\nB")?.meta.id, "a");
+// #234: a trailing comma ends a flow list; an empty item is an error.
+eq("flow list: one trailing comma is dropped", JSON.stringify(fm(["tags: [a, b,]"]).meta.tags), '["a","b"]');
+eq("flow list: trailing comma is not an error", fm(["tags: [a, b,]"]).errors.length, 0);
+has("flow list: an empty middle item is an error", fm(["subcategories: [x, , y]"]).errors.join("|"), 'line 2: "subcategories" has an empty list item');
+has("flow list: two trailing commas leave an empty item", fm(["tags: [a,,]"]).errors.join("|"), "has an empty list item");
+eq("flow list: a quoted comma is not a separator", JSON.stringify(fm(['tags: ["a, b", c]']).meta.tags), '["a, b","c"]');
+has("block list: an empty quoted item is an error", fm(["tags:", '  - ""', "  - b"]).errors.join("|"), "line 3: list item is empty");
 eq("frontmatter with CRLF line endings", parseFrontmatter("---\r\nid: a\r\nname: B\r\n---\r\nBody")?.meta.name, "B");
 has("frontmatter rejects a duplicate key", fm(["id: a", "id: b"]).errors.join(), 'line 3: key "id" is given twice');
 has("frontmatter rejects a line that is not key: value", fm(["id: a", "just words"]).errors.join(), 'line 3: "just words" is not a key: value line');
