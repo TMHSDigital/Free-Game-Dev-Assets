@@ -55,6 +55,10 @@ import {
 import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, latestAllowedDate } from "./lib/shared.mjs";
 import { readCatalog } from "./lib/entry-files.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
+import { cliArgs } from "./lib/cli.mjs";
+
+// No flags: a mistyped one fails instead of being ignored.
+cliArgs({}, "node site/validate.mjs");
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");

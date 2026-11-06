@@ -17,6 +17,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { entryFromIssue, newEntryProblem, newEntryText, parseIssueForm } from "./lib/scaffold.mjs";
 import { slugOf } from "./lib/search.mjs";
+import { cliArgs } from "./lib/cli.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -27,10 +28,8 @@ function fail(msg) {
   process.exit(1);
 }
 
-function flag(name) {
-  const i = process.argv.indexOf(name);
-  return i === -1 ? null : process.argv[i + 1] || "";
-}
+const USAGE = "node site/new-entry.mjs <category> <id> | --from-issue <number> [--id <id>]";
+const { values: opts, positionals } = cliArgs({ "from-issue": { type: "string" }, id: { type: "string" } }, USAGE, { positionals: true });
 
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json"), "utf8"));
 const today = new Date().toISOString().slice(0, 10);
@@ -45,7 +44,7 @@ let text;
 let fromIssue = null;
 const warnings = [];
 
-const issueArg = flag("--from-issue");
+const issueArg = opts["from-issue"] ?? null;
 if (issueArg !== null) {
   if (!/^\d+$/.test(issueArg)) fail("usage: node site/new-entry.mjs --from-issue <number> [--id <id>]");
   const repo = String(config.site?.repo || "").replace(/^https:\/\/github\.com\//, "").replace(/\/+$/, "");
@@ -59,16 +58,17 @@ if (issueArg !== null) {
   const form = parseIssueForm(issue.body);
   if (!form["Publisher URL"] || !form["Category"]) fail(`issue #${issue.number} is not a "New source" form (no Publisher URL or Category answer)`);
   category = form["Category"];
-  id = flag("--id") || slugOf(form["Name"] || "");
+  id = opts.id || slugOf(form["Name"] || "");
   fromIssue = issue.number;
   const vocab = JSON.parse(fs.readFileSync(path.join(__dirname, "license-vocabulary.json"), "utf8"));
   const problem = newEntryProblem({ category, id, categories: Object.keys(config.categories || {}), taken: takenBy(id) });
-  if (problem) fail(`${problem}${flag("--id") ? "" : " (pass --id <id> to choose another)"}`);
+  if (problem) fail(`${problem}${opts.id ? "" : " (pass --id <id> to choose another)"}`);
   const draft = entryFromIssue(template, form, { id, issue: issue.number, today, vocab });
   text = draft.text;
   warnings.push(...draft.warnings);
 } else {
-  [category, id] = process.argv.slice(2);
+  if (opts.id !== undefined) fail(`--id goes with --from-issue; usage: ${USAGE}`);
+  [category, id] = positionals;
   const problem = newEntryProblem({ category, id, categories: Object.keys(config.categories || {}), taken: takenBy(id) });
   if (problem) fail(problem);
   text = newEntryText(template, { id, category, today });

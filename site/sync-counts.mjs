@@ -14,6 +14,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { countEntriesByCategory } from "./lib/entry-files.mjs";
 import { syncCatalogReadme, syncConfig, syncReadme } from "./lib/scaffold.mjs";
+import { cliArgs } from "./lib/cli.mjs";
+
+// No flags: a mistyped one fails instead of being ignored.
+cliArgs({}, "node site/sync-counts.mjs");
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");

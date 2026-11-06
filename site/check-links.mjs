@@ -25,6 +25,7 @@ import { fileURLToPath } from "node:url";
 import { maintenanceFromRepo } from "./checks.mjs";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { safeFetch } from "./lib/safe-fetch.mjs";
+import { cliArgs } from "./lib/cli.mjs";
 import { checkMaintenanceRepos, classify, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -37,10 +38,6 @@ const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36 " +
   "(+https://github.com/TMHSDigital/Free-Game-Dev-Assets link check)";
 
-function arg(name, fallback) {
-  const i = process.argv.indexOf(name);
-  return i === -1 ? fallback : process.argv[i + 1];
-}
 
 function loadEntries() {
   const out = [];
@@ -99,6 +96,7 @@ function checkMaintenance(entries) {
 }
 
 // Flags are checked before the first request, so a typo fails in a second.
+const { values: flags } = cliArgs({ report: { type: "string" }, "stale-days": { type: "string" } }, "node site/check-links.mjs [--report <file.md>] [--stale-days 365]");
 const staleArg = staleDaysFrom(process.argv);
 if (staleArg.error) {
   console.error(staleArg.error);
@@ -153,7 +151,7 @@ const report = [
   "",
 ].join("\n");
 
-const reportPath = arg("--report", null);
+const reportPath = flags.report ?? null;
 if (reportPath) fs.writeFileSync(reportPath, report);
 else process.stdout.write(report);
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `problems=${problems}\n`);

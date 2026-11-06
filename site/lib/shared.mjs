@@ -278,6 +278,18 @@ export const FONT_FILES = ["fonts/public-sans.woff2", "fonts/ibm-plex-mono-400.w
  * them in parallel instead of discovering each import one round trip later.
  * lib.test.mjs walks the real import graph and fails if a list drifts.
  */
+/**
+ * The lib modules the browser loads, output name in site/dist -> source in
+ * site/lib. build.mjs copies exactly these, and lib.test.mjs checks that none
+ * of them (or any site/public script) imports from node:.
+ */
+export const BROWSER_MODULES = {
+  "owes.js": "owes.mjs", // the shortlist's CREDITS file, same code as the stack pages
+  "search.js": "search.mjs", // the catalog search and the 404 page's guesses
+  "cards.mjs": "cards.mjs", // the entry card template, for app.js and the category pages
+  "shared.mjs": "shared.mjs",
+};
+
 export const PAGE_MODULES = {
   home: ["app.js", "search.js", "cards.mjs", "shared.mjs", "views.js", "shortlist.js", "owes.js"],
   entry: ["shortlist.js", "owes.js"],

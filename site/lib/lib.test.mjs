@@ -1357,7 +1357,7 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const libDir = new URL("./", import.meta.url);
   const publicDir = new URL("../public/", import.meta.url);
   // dist name -> source file (build.mjs copies these four from site/lib).
-  const fromLib = { "search.js": "search.mjs", "owes.js": "owes.mjs", "cards.mjs": "cards.mjs", "shared.mjs": "shared.mjs" };
+  const { BROWSER_MODULES: fromLib } = await import("./shared.mjs");
   const src = (name) => nodeFs.readFileSync(fromLib[name] ? new URL(fromLib[name], libDir) : new URL(name, publicDir), "utf8");
   const importsOf = (name) => [...src(name).matchAll(/^import[^;]*?from "\.\/([^"]+)";/gm)].map((m) => m[1]);
   const closure = (roots) => {
@@ -1768,7 +1768,7 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const nodePath = await import("node:path");
   const publicDir = new URL("../public/", import.meta.url);
   // dist name -> source module in site/lib (build.mjs copies these out).
-  const fromLib = { "search.js": "search.mjs", "owes.js": "owes.mjs", "cards.mjs": "cards.mjs", "shared.mjs": "shared.mjs" };
+  const { BROWSER_MODULES: fromLib } = await import("./shared.mjs");
   const scripts = nodeFs.readdirSync(publicDir).filter((f) => f.endsWith(".js")).sort();
   const tmp = nodeFs.mkdtempSync(nodePath.join(os.tmpdir(), "fgda-client-"));
   const exportsOfPublic = (text) => {
@@ -1877,9 +1877,15 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("pr-diff: modified licence is a field change", JSON.stringify(rows[1].fields[0]), '{"field":"license","before":"CC0","after":"MIT"}');
   eq("pr-diff: unchanged type change has no fields", rows[3].fields.length, 0);
   const { baseArg } = await import("../pr-diff.mjs");
-  eq("pr-diff: a sha base is accepted", baseArg(["node", "x", "--base", "abc1234"]), "abc1234");
-  eq("pr-diff: a ref name is refused (exit 2)", baseArg(["node", "x", "--base", "main"]), null);
-  eq("pr-diff: a missing base is refused", baseArg(["node", "x", "--base"]), null);
+  eq("pr-diff: a sha base is accepted", baseArg(["--base", "abc1234"]), "abc1234");
+  eq("pr-diff: a ref name is refused (exit 2)", baseArg(["--base", "main"]), null);
+  let missingBase = "";
+  try { baseArg(["--base"]); } catch (e) { missingBase = e.message; }
+  has("pr-diff: --base with no value is an error", missingBase, "--base");
+  eq("pr-diff: no --base gives null", baseArg([]), null);
+  let unknownFlag = "";
+  try { baseArg(["--bsae", "abc1234"]); } catch (e) { unknownFlag = e.message; }
+  has("pr-diff: a mistyped flag is an error", unknownFlag, "Unknown option '--bsae'");
 
   const one = licenceDiffMarkdown([{ file: "catalog/a.md", change: "added", fields: [{ field: "tags", before: null, after: "a, b" }], evidence: null }]);
   has("licence diff: one entry", one, "1 entry changed.");
@@ -1959,6 +1965,46 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("fields: optionalFields copies every optional field", Object.keys(optionalFields(all)).sort().join(), [...optional].sort().join());
   eq("fields: unset optional fields are left out", Object.keys(optionalFields({ publisher: "", hardware_tags: "x" })).length, 0);
   eq("fields: preview is not exported", "preview" in optionalFields({ preview: "none" }), false);
+}
+
+/* browser modules never import from node: (#236) -------------------------- */
+{
+  const { BROWSER_MODULES, PAGE_MODULES } = await import("./shared.mjs");
+  const publicDir = new URL("../public/", import.meta.url);
+  const sources = [
+    ...Object.values(BROWSER_MODULES).map((f) => [`lib/${f}`, nodeFs.readFileSync(new URL(f, import.meta.url), "utf8")]),
+    ...nodeFs.readdirSync(publicDir).filter((f) => f.endsWith(".js")).map((f) => [`public/${f}`, nodeFs.readFileSync(new URL(f, publicDir), "utf8")]),
+  ];
+  for (const [name, text] of sources) {
+    lacks(`browser: ${name} imports nothing from node:`, text, 'from "node:');
+    lacks(`browser: ${name} imports no lib file by its source name`, [...text.matchAll(/from "\.\/([^"]+)"/g)].map((m) => m[1]).filter((f) => f.endsWith(".mjs") && !(f in BROWSER_MODULES)).join(), ".mjs");
+  }
+  const served = new Set([...Object.keys(BROWSER_MODULES), ...nodeFs.readdirSync(publicDir)]);
+  for (const [page, mods] of Object.entries(PAGE_MODULES)) for (const m of mods) eq(`browser: ${page} preloads ${m}, which is served`, served.has(m), true);
+}
+
+/* strict flags; the shortlist's esc copy (#236) --------------------------- */
+{
+  const { readArgs } = await import("./cli.mjs");
+  const errOf = (f) => { try { f(); return ""; } catch (e) { return e.message; } };
+  eq("cli: known flags read", readArgs(["--report", "r.md", "--clean"], { report: { type: "string" }, clean: { type: "boolean" } }).values.report, "r.md");
+  has("cli: an unknown flag is refused", errOf(() => readArgs(["--reprot", "r.md"], { report: { type: "string" } })), "Unknown option '--reprot'");
+  has("cli: a value flag with no value is refused", errOf(() => readArgs(["--report"], { report: { type: "string" } })), "argument missing");
+  has("cli: positionals refused unless allowed", errOf(() => readArgs(["2d"], {})), "Unexpected argument");
+  eq("cli: positionals when allowed", readArgs(["2d", "x"], {}, { positionals: true }).positionals.join(), "2d,x");
+  const { thumbsOptions } = await import("../thumbs.mjs");
+  const t = thumbsOptions(["--only", "a,b", "--limit", "3", "--dry-run"]);
+  eq("thumbs flags: parsed", `${[...t.only].join()}|${t.limit}|${t.dryRun}|${t.force}`, "a,b|3|true|false");
+  eq("thumbs flags: no limit is unlimited", thumbsOptions([]).limit, Infinity);
+  has("thumbs flags: a limit must be a whole number", errOf(() => thumbsOptions(["--limit", "x"])), "--limit needs a whole number");
+  has("thumbs flags: a limit needs a value", errOf(() => thumbsOptions(["--limit"])), "argument missing");
+
+  const { esc } = await import("./shared.mjs");
+  const short = nodeFs.readFileSync(new URL("../public/shortlist.js", import.meta.url), "utf8");
+  const body = short.match(/function escapeHtml\(str\) \{([\s\S]*?)\n\}/)[1];
+  const escapeHtml = new Function("str", body);
+  const sample = `<a href="x" title='y'>Tom & "Jerry"</a>`;
+  eq("shortlist's escapeHtml matches shared esc", escapeHtml(sample), esc(sample));
 }
 
 /* lint: unused imports (#230) --------------------------------------------- */

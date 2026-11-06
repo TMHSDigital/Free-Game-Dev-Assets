@@ -12,6 +12,7 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { cliArgs } from "./lib/cli.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.join(__dirname, "dist");
@@ -87,8 +88,8 @@ function send(req, res, status, file) {
 }
 
 function main() {
-  const i = process.argv.indexOf("--port");
-  const port = Number(i === -1 ? process.env.PORT || 3000 : process.argv[i + 1]);
+  const { values: flags } = cliArgs({ port: { type: "string" } }, "node site/serve.mjs [--port <1-65535>]");
+  const port = Number(flags.port ?? (process.env.PORT || 3000));
   if (!Number.isInteger(port) || port < 1 || port > 65535) {
     console.error("usage: node site/serve.mjs [--port <1-65535>]");
     process.exit(2);

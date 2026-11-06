@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, PREVIEW_CREDIT_LINE, sponsorButtonHtml } from "./lib/shared.mjs";
+import { baseHeadHtml, BROWSER_MODULES, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, PREVIEW_CREDIT_LINE, sponsorButtonHtml } from "./lib/shared.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
 import { renderGuide } from "./lib/guide-render.mjs";
@@ -23,6 +23,7 @@ import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from
 import { summaryFromBody } from "./lib/frontmatter.mjs";
 import { readCatalog, idMatchesFile } from "./lib/entry-files.mjs";
 import { optionalFields } from "./lib/entry-fields.mjs";
+import { cliArgs } from "./lib/cli.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
 import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
@@ -549,7 +550,7 @@ function checkPages(files) {
 
 function main() {
   const started = Date.now();
-  const clean = process.argv.includes("--clean");
+  const clean = cliArgs({ clean: { type: "boolean" } }, "node site/build.mjs [--clean]").values.clean === true;
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
   const vocab = JSON.parse(fs.readFileSync(VOCAB_PATH, "utf8"));
   const formatVocab = JSON.parse(fs.readFileSync(FORMATS_PATH, "utf8"));
@@ -637,14 +638,8 @@ function main() {
   if (clean) for (const name of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, name), { recursive: true, force: true });
   // index.html is a template; its filled-in version is written below.
   copyPublic(PUBLIC, new Set(["index.html"]));
-  // The shortlist builds its CREDITS file with the same code as the stack pages.
-  copyOut(path.join(__dirname, "lib", "owes.mjs"), "owes.js");
-  // The catalog search and the 404 page's guesses, tested in lib.test.mjs.
-  copyOut(path.join(__dirname, "lib", "search.mjs"), "search.js");
-  // The entry template and its helpers, served as modules to app.js and the
-  // category pages. Neither may import from node:.
-  copyOut(path.join(__dirname, "lib", "cards.mjs"), "cards.mjs");
-  copyOut(path.join(__dirname, "lib", "shared.mjs"), "shared.mjs");
+  // Lib modules the browser loads (shared.mjs BROWSER_MODULES; none imports node:).
+  for (const [out, src] of Object.entries(BROWSER_MODULES)) copyOut(path.join(__dirname, "lib", src), out);
   const hasCard = fs.existsSync(OG_CARD_SRC);
   if (hasCard) copyOut(OG_CARD_SRC, OG_CARD_NAME);
   // data.json is the public machine-readable catalog (see site/README.md);

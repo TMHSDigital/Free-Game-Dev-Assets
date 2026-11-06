@@ -10,6 +10,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
+import { cliArgs } from "./lib/cli.mjs";
 import { batchIssueMarkdown, pickBatch } from "./lib/reverify.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -17,10 +18,8 @@ const ROOT = path.resolve(__dirname, "..");
 const CATALOG = path.join(ROOT, "catalog");
 const REPO = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json"), "utf8")).site.repo;
 
-function arg(name) {
-  const i = process.argv.indexOf(name);
-  return i === -1 ? undefined : process.argv[i + 1];
-}
+const USAGE = "node site/reverify-batch.mjs [--report <file.md>] [--size <positive whole number>]";
+const { values: flags } = cliArgs({ report: { type: "string" }, size: { type: "string" } }, USAGE);
 
 const entries = [];
 for (const r of readCatalog(CATALOG, { root: ROOT })) {
@@ -36,10 +35,10 @@ for (const r of readCatalog(CATALOG, { root: ROOT })) {
   });
 }
 
-const sizeArg = arg("--size");
+const sizeArg = flags.size;
 const size = sizeArg === undefined ? undefined : Number(sizeArg);
 if (size !== undefined && (!Number.isInteger(size) || size < 1)) {
-  console.error("usage: node site/reverify-batch.mjs [--report <file.md>] [--size <positive whole number>]");
+  console.error(`usage: ${USAGE}`);
   process.exit(2);
 }
 
@@ -48,7 +47,7 @@ const live = entries.filter((e) => e.status !== "deprecated").length;
 const date = new Date().toISOString().slice(0, 10);
 const report = batchIssueMarkdown({ batch, repo: REPO, date, total: live });
 
-const reportPath = arg("--report");
+const reportPath = flags.report;
 if (reportPath) fs.writeFileSync(reportPath, report);
 else process.stdout.write(report);
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `count=${batch.length}\n`);

@@ -19,6 +19,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { safeFetch } from "./lib/safe-fetch.mjs";
+import { readArgs } from "./lib/cli.mjs";
 import { afterFailure, imageUrlFromHtml, manifestChanges, needsFetch, previewEligibility, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./lib/thumbs.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,18 +34,34 @@ const CONCURRENCY = 4;
 // A converter that hangs on a hostile file is killed rather than stalling the run.
 const CONVERT_TIMEOUT_MS = 30000;
 
+const USAGE = "node site/thumbs.mjs [--force] [--only id,id] [--limit n] [--dry-run] [--report path]";
+
+/** The run's options; throws on an unknown flag, a flag missing its value, or a --limit that is not a whole number. */
+export function thumbsOptions(argv) {
+  const { values: v } = readArgs(argv, {
+    force: { type: "boolean" },
+    "dry-run": { type: "boolean" },
+    only: { type: "string" },
+    limit: { type: "string" },
+    report: { type: "string" },
+  });
+  if (v.limit !== undefined && !/^\d+$/.test(v.limit)) throw new TypeError(`--limit needs a whole number, got ${JSON.stringify(v.limit)}`);
+  return {
+    force: v.force === true,
+    dryRun: v["dry-run"] === true,
+    only: v.only === undefined ? null : new Set(v.only.split(",").filter(Boolean)),
+    limit: v.limit === undefined ? Infinity : Number(v.limit),
+    report: v.report ?? null,
+  };
+}
+
 function parseArgs(argv) {
-  const opts = { force: false, only: null, limit: Infinity, dryRun: false, report: null };
-  for (let i = 0; i < argv.length; i += 1) {
-    const a = argv[i];
-    if (a === "--force") opts.force = true;
-    else if (a === "--dry-run") opts.dryRun = true;
-    else if (a === "--only") opts.only = new Set(String(argv[++i] || "").split(",").filter(Boolean));
-    else if (a === "--limit") opts.limit = Number(argv[++i]);
-    else if (a === "--report") opts.report = argv[++i];
-    else throw new Error(`unknown argument ${a}`);
+  try {
+    return thumbsOptions(argv);
+  } catch (err) {
+    console.error(`${err.message}\nusage: ${USAGE}`);
+    process.exit(2);
   }
-  return opts;
 }
 
 function loadEntries() {

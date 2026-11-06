@@ -14,6 +14,7 @@ import { ENGINE_LOCK_NOTES, isRealDate, MAINTENANCE_NOTES, PERSPECTIVES, STATUS_
 import { headingSlug } from "./lib/guide-render.mjs";
 import { isAttributionLicence, isPrivateHost, PREVIEW_LICENSES, previewEligibility, safeImageUrl } from "./lib/thumbs.mjs";
 import { parseStack, pickPath, StackError } from "./lib/stacks.mjs";
+import { slugOf } from "./lib/search.mjs";
 
 export { evidenceSection };
 
@@ -656,14 +657,11 @@ export function checkValueAliases(rel, meta, aliases) {
  * matches the publisher field, so the tag adds nothing but a way to be wrong.
  * The licence-restating tags are retired in site/value-aliases.json (V19).
  */
-export function slugify(text) {
-  return String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-}
 
 export function checkTagsRestatePublisher(rel, meta) {
   const errors = [];
   if (empty(meta.publisher)) return errors;
-  const own = slugify(meta.publisher);
+  const own = slugOf(meta.publisher);
   for (const t of Array.isArray(meta.tags) ? meta.tags.map(String) : []) {
     if (t === own) {
       errors.push(`${rel} tag "${t}" restates publisher "${meta.publisher}"; search and grouping use the publisher field`);

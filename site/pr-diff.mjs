@@ -14,32 +14,30 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { cliArgs, readArgs } from "./lib/cli.mjs";
 import { changedEntries, diffRows, licenceDiffMarkdown } from "./lib/licence-diff.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-/** The --base value, or null when it is missing or not a commit sha. */
-export function baseArg(argv) {
-  const i = argv.indexOf("--base");
-  const base = i === -1 ? null : argv[i + 1] || null;
-  return base && /^[0-9a-f]{7,40}$/i.test(base) ? base : null;
-}
+const USAGE = "node site/pr-diff.mjs --base <commit sha> [--out <file>]";
 
-function arg(name) {
-  const i = process.argv.indexOf(name);
-  return i === -1 ? null : process.argv[i + 1] || null;
+/** The --base value, or null when it is missing or not a commit sha. Throws on an unknown flag. */
+export function baseArg(args) {
+  const base = readArgs(args, { base: { type: "string" }, out: { type: "string" } }).values.base;
+  return base && /^[0-9a-f]{7,40}$/i.test(base) ? base : null;
 }
 
 const git = (args) => execFileSync("git", args, { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
 
 function main() {
-  const base = baseArg(process.argv);
+  const { values: flags } = cliArgs({ base: { type: "string" }, out: { type: "string" } }, USAGE);
+  const base = baseArg(process.argv.slice(2));
   if (!base) {
-    console.error("usage: node site/pr-diff.mjs --base <commit sha> [--out <file>]");
+    console.error(`usage: ${USAGE}`);
     process.exit(2);
   }
-  const out = arg("--out");
+  const out = flags.out ?? null;
   // Renames are reported as a removal and an addition, which shows both ids.
   const changes = changedEntries(git(["diff", "--no-renames", "--name-status", "-z", base, "HEAD", "--", "catalog/"]));
   const rows = diffRows(changes, {

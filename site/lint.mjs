@@ -9,6 +9,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { cliArgs } from "./lib/cli.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -63,6 +64,7 @@ export function unusedImports(text) {
 }
 
 function main() {
+  cliArgs({}, "node site/lint.mjs");
   const errors = [];
   const files = scriptFiles();
   for (const file of files) {

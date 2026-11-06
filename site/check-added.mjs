@@ -11,6 +11,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { firstAddedFromLog, lateAddedDates } from "./lib/added-dates.mjs";
 import { readCatalog } from "./lib/entry-files.mjs";
+import { cliArgs } from "./lib/cli.mjs";
+
+// No flags: a mistyped one fails instead of being ignored.
+cliArgs({}, "node site/check-added.mjs");
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
