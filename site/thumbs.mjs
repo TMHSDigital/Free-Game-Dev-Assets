@@ -19,7 +19,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { safeFetch } from "./lib/safe-fetch.mjs";
-import { afterFailure, imageUrlFromHtml, needsFetch, previewEligibility, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./lib/thumbs.mjs";
+import { afterFailure, imageUrlFromHtml, manifestChanges, needsFetch, previewEligibility, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./lib/thumbs.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -69,7 +69,7 @@ function loadEntries() {
 function loadManifest() {
   if (!fs.existsSync(MANIFEST)) return { generated: null, thumbs: {} };
   const m = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
-  return { generated: m.generated || null, thumbs: m.thumbs || {} };
+  return { generated: m.generated || null, thumbs: m.thumbs || {}, shared: m.shared || {} };
 }
 
 function detectConverter() {
@@ -201,6 +201,9 @@ async function main() {
   const byId = new Map(entries.map((e) => [e.id, e]));
   const manifest = loadManifest();
   const thumbs = { ...manifest.thumbs };
+  // Entries whose image turned out to be shared (a logo): remembered so they
+  // are not fetched again until the record would be refreshed anyway.
+  const shared = { ...manifest.shared };
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "fgda-thumbs-"));
   const summary = { today, converter, fetched: [], kept: 0, skipped: [], failed: [], bumped: [], removed: [], dropped: [] };
   const pending = new Map(); // id → bytes to write
@@ -215,6 +218,10 @@ async function main() {
       delete thumbs[id];
     }
   }
+  for (const id of Object.keys(shared)) {
+    const entry = byId.get(id);
+    if (!entry || !previewEligibility(entry).ok) delete shared[id];
+  }
 
   const todo = [];
   for (const entry of entries) {
@@ -225,8 +232,13 @@ async function main() {
       continue;
     }
     const rec = thumbs[entry.id];
+    const fetchOpts = { license: entry.license, today, force: opts.force, url: entry.url, preview: entry.preview || "" };
+    if (!rec && shared[entry.id] && !needsFetch(shared[entry.id], fetchOpts)) {
+      summary.skipped.push({ id: entry.id, reason: "image shared with other entries", kind: "shared" });
+      continue;
+    }
     const fileExists = fs.existsSync(path.join(THUMBS_DIR, `${entry.id}.webp`));
-    if (!needsFetch(rec, { license: entry.license, today, force: opts.force, url: entry.url, preview: entry.preview || "" }) && fileExists) {
+    if (!needsFetch(rec, fetchOpts) && fileExists) {
       summary.kept += 1;
       continue;
     }
@@ -272,12 +284,18 @@ async function main() {
   // A hash shared by three or more entries is a logo, not a preview.
   for (const id of sharedImageIds(thumbs)) {
     summary.dropped.push({ id, hash: thumbs[id].hash });
+    shared[id] = thumbs[id];
     delete thumbs[id];
     pending.delete(id);
   }
+  for (const id of Object.keys(thumbs)) delete shared[id];
 
-  const sorted = Object.fromEntries(Object.entries(thumbs).sort(([a], [b]) => a.localeCompare(b)));
-  const changed = summary.fetched.length + summary.bumped.length + summary.removed.length + summary.dropped.length;
+  const byKey = (o) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => a.localeCompare(b)));
+  const sorted = byKey(thumbs);
+  const sortedShared = byKey(shared);
+  // Only a net change to the manifest or the files counts, so a run that
+  // refetches and re-drops the same shared images changes nothing.
+  const changed = manifestChanges(manifest, { thumbs: sorted, shared: sortedShared }) + pending.size;
 
   if (!opts.dryRun) {
     fs.mkdirSync(THUMBS_DIR, { recursive: true });
@@ -286,7 +304,10 @@ async function main() {
       const id = name.replace(/\.webp$/, "");
       if (name.endsWith(".webp") && !sorted[id]) fs.rmSync(path.join(THUMBS_DIR, name), { force: true });
     }
-    fs.writeFileSync(MANIFEST, `${JSON.stringify({ generated: today, thumbs: sorted }, null, 2)}\n`);
+    if (changed) {
+      const out = { generated: today, thumbs: sorted, ...(Object.keys(sortedShared).length ? { shared: sortedShared } : {}) };
+      fs.writeFileSync(MANIFEST, `${JSON.stringify(out, null, 2)}\n`);
+    }
   }
   fs.rmSync(tmpDir, { recursive: true, force: true });
 

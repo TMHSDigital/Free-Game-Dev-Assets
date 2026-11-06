@@ -1104,6 +1104,15 @@ eq("thumbs: twitter fallback", imageUrlFromHtml('<meta name="twitter:image" cont
 eq("thumbs: no image", imageUrlFromHtml("<html></html>", "https://x/"), null);
 eq("thumbs: shared hash dropped at three", [...sharedImageIds({ a: { hash: "h1" }, b: { hash: "h1" }, c: { hash: "h1" }, d: { hash: "h2" }, e: { hash: "h2" } })].sort().join(), "a,b,c");
 eq("thumbs: pinned never dropped", [...sharedImageIds({ a: { hash: "h1", pinned: true }, b: { hash: "h1" }, c: { hash: "h1" }, d: { hash: "h1" } })].sort().join(), "b,c,d");
+{
+  // #232: a run that re-drops the same shared images changes nothing.
+  const { manifestChanges } = await import("./thumbs.mjs");
+  const rec = { hash: "h1", fetched: "2026-10-01" };
+  eq("thumbs: no change between equal manifests", manifestChanges({ thumbs: { a: rec }, shared: { s: rec } }, { thumbs: { a: { ...rec } }, shared: { s: { ...rec } } }), 0);
+  eq("thumbs: a new shared id is a change", manifestChanges({ thumbs: {} }, { thumbs: {}, shared: { s: rec } }), 1);
+  eq("thumbs: a removed and a changed record are two", manifestChanges({ thumbs: { a: rec, b: rec } }, { thumbs: { b: { ...rec, fetched: "2026-11-01" } } }), 2);
+  eq("thumbs: a missing shared map is empty", manifestChanges({ thumbs: { a: rec } }, { thumbs: { a: rec }, shared: {} }), 0);
+}
 eq("thumbs: needsFetch no record", needsFetch(undefined, { license: "CC0", today: "2026-10-23" }), true);
 eq("thumbs: needsFetch fresh same licence", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC0", today: "2026-10-23" }), false);
 eq("thumbs: needsFetch licence changed", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC-BY-4.0", today: "2026-10-23" }), true);

@@ -171,6 +171,22 @@ export function sharedImageIds(records) {
   return out;
 }
 
+/**
+ * How many ids have a different record (or none) in `after` than in
+ * `before`, over both the `thumbs` and the `shared` maps of the manifest.
+ */
+export function manifestChanges(before, after) {
+  let n = 0;
+  for (const key of ["thumbs", "shared"]) {
+    const a = (before && before[key]) || {};
+    const b = (after && after[key]) || {};
+    for (const id of new Set([...Object.keys(a), ...Object.keys(b)])) {
+      if (JSON.stringify(a[id] ?? null) !== JSON.stringify(b[id] ?? null)) n += 1;
+    }
+  }
+  return n;
+}
+
 const DAY = 86400000;
 
 /**

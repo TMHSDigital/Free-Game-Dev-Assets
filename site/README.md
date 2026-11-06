@@ -104,7 +104,9 @@ licence in the allowlist in `site/lib/thumbs.mjs`; `custom`, `varies`, `unknown`
 GitHub and Google Fonts pages never qualify; `tools` and `fonts` entries qualify only with
 a pinned `preview:` (their page image is a logo or social card the program licence does not
 cover); a CC-BY entry needs `attribution_string` or `publisher` so the caption can name the
-creator; and an image whose bytes three or more entries share is treated as a logo and dropped. `preview: none` opts an entry out;
+creator; and an image whose bytes three or more entries share is treated as a logo and dropped
+(the ids are kept under `shared` in `site/thumbs.json` so they are not fetched again until
+the record would be refreshed anyway). `preview: none` opts an entry out;
 `preview: <https url>` pins an image a maintainer has checked. The run is incremental
 (a record under 180 days old with the same licence is kept), removes records the gate no
 longer allows, and lists failures without failing. `validate.mjs` fails when the files,
