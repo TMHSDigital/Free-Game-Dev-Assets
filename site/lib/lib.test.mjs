@@ -1615,6 +1615,15 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     eq("serve: backslash dot-dot cannot escape", resolveRequest(root, "/..%5c..%5csecret"), null);
     eq("serve: a NUL byte is refused", resolveRequest(root, "/index.html%00.txt"), null);
     eq("serve: bad percent-encoding is refused", resolveRequest(root, "/%E0%A4%A"), null);
+    // #231: a directory URL without its slash redirects, as on Pages.
+    const { slashRedirect } = await import("../serve.mjs");
+    eq("serve: a directory without its slash redirects", slashRedirect(root, "/entry/a"), "/entry/a/");
+    eq("serve: the redirect keeps the query", slashRedirect(root, "/entry/a?q=1#x"), "/entry/a/?q=1#x");
+    eq("serve: a slash URL does not redirect", slashRedirect(root, "/entry/a/"), null);
+    eq("serve: a file does not redirect", slashRedirect(root, "/data.json"), null);
+    eq("serve: index.html itself does not redirect", slashRedirect(root, "/entry/a/index.html"), null);
+    eq("serve: a missing path does not redirect", slashRedirect(root, "/nope"), null);
+    eq("serve: a protocol-relative path never redirects", slashRedirect(root, "//entry/a"), null);
     // A link inside root that points outside it serves nothing (a junction
     // needs no privilege on Windows; elsewhere it is a plain dir symlink).
     const outside = nodeFs.mkdtempSync(nodePath.join(os.tmpdir(), "fgda-outside-"));

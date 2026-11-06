@@ -63,9 +63,27 @@ export function resolveRequest(root, urlPath) {
   return stat.isFile() ? full : null;
 }
 
-function send(res, status, file) {
+/**
+ * Where to redirect a directory URL that lacks its trailing slash, as GitHub
+ * Pages does (a 301), or null. Without it, an entry page's relative links
+ * resolve one level too high locally.
+ */
+export function slashRedirect(root, urlPath) {
+  const raw = String(urlPath);
+  const cut = raw.search(/[?#]/);
+  const pathname = cut === -1 ? raw : raw.slice(0, cut);
+  // "//host" would be a protocol-relative Location: never redirect it.
+  if (pathname.endsWith("/") || !pathname.startsWith("/") || pathname.startsWith("//")) return null;
+  if (/\/index\.html$/i.test(pathname)) return null;
+  const file = resolveRequest(root, pathname);
+  if (!file || path.basename(file) !== "index.html") return null;
+  return `${pathname}/${cut === -1 ? "" : raw.slice(cut)}`;
+}
+
+function send(req, res, status, file) {
   res.writeHead(status, { "content-type": TYPES[path.extname(file).toLowerCase()] || "application/octet-stream", "cache-control": "no-store" });
-  fs.createReadStream(file).pipe(res);
+  if (req.method === "HEAD") res.end();
+  else fs.createReadStream(file).pipe(res);
 }
 
 function main() {
@@ -84,10 +102,15 @@ function main() {
       res.writeHead(405, { allow: "GET, HEAD" }).end();
       return;
     }
+    const location = slashRedirect(DIST, req.url || "/");
+    if (location) {
+      res.writeHead(301, { location, "cache-control": "no-store" }).end();
+      return;
+    }
     const file = resolveRequest(DIST, req.url || "/");
-    if (file) return send(res, 200, file);
+    if (file) return send(req, res, 200, file);
     const notFound = path.join(DIST, "404.html");
-    if (fs.existsSync(notFound)) return send(res, 404, notFound);
+    if (fs.existsSync(notFound)) return send(req, res, 404, notFound);
     res.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("Not found\n");
   });
   server.listen(port, "127.0.0.1", () => console.log(`Serving site/dist at http://127.0.0.1:${port}/ (Ctrl+C to stop)`));
