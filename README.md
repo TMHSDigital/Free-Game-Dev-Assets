@@ -359,12 +359,16 @@ Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 Node 22 or newer (CI and `.nvmrc` use 24); there is nothing to install.
 
 ```bash
-npm run check    # all of the below, in the order CI runs them
+npm run check    # tests, validate, check-added, build (in this order)
 npm test         # the checks against known-bad fixtures, and the site modules' tests
 npm run validate # the catalog, against the checks (node site/validate.mjs)
+npm run check-added # checks added dates against git history (requires full history)
 npm run build    # builds the site into site/dist (node site/build.mjs)
 npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no download)
 ```
+
+Pull-request CI also runs `site/pr-diff.mjs` to summarise changed licence fields
+alongside their evidence. That PR-only step is separate from `npm run check`.
 
 </details>
 

@@ -193,11 +193,14 @@ Retake it when the hero changes.
 ## Commands
 
 ```bash
-npm run check   # tests, validate, build: what CI runs
+npm run check   # tests, validate, check-added (git history), build
 npm run serve   # preview site/dist
 npm run links   # the link check, printed to the terminal
 npm run thumbs  # fetch and resize the previews that are due (needs ffmpeg or magick)
 ```
+
+On pull requests, CI also summarises changed licence fields with
+`site/pr-diff.mjs`; this extra step is not part of `npm run check`.
 
 Deploy: `.github/workflows/pages.yml` (source = GitHub Actions), which first runs
 `ci.yml` as a reusable workflow.
