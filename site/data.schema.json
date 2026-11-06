@@ -81,7 +81,7 @@
     }
   },
   "$defs": {
-    "stringList": { "type": "array", "items": { "type": "string" } },
+    "stringList": { "type": "array", "items": { "type": "string", "minLength": 1 } },
     "entryBase": {
       "type": "object",
       "required": [

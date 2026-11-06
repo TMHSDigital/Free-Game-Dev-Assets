@@ -13,7 +13,7 @@ import { renderInline } from "./markdown.mjs";
 import { unquoteScalar } from "./shared.mjs";
 
 /** Splits the inside of a flow list on commas that are not inside quotes. */
-function splitFlowList(inner) {
+function splitFlowList(inner, onEmptyItem) {
   const parts = [];
   let cur = "";
   let quote = null;
@@ -33,7 +33,17 @@ function splitFlowList(inner) {
     } else cur += ch;
   }
   parts.push(cur);
-  return parts.map((p) => unquoteScalar(p.trim()));
+
+  // YAML permits one comma after the final item. Other empty items are invalid.
+  if (parts.length && parts[parts.length - 1].trim() === "") parts.pop();
+  return parts.flatMap((part) => {
+    const value = unquoteScalar(part.trim());
+    if (value === "") {
+      onEmptyItem?.();
+      return [];
+    }
+    return [value];
+  });
 }
 
 /**
@@ -77,7 +87,7 @@ export function unclosedQuote(raw) {
   return q === '"' ? "double" : "single";
 }
 
-export function parseScalar(raw) {
+export function parseScalar(raw, onEmptyListItem) {
   const v = stripComment(raw).trim();
   if (v === "true") return true;
   if (v === "false") return false;
@@ -87,7 +97,7 @@ export function parseScalar(raw) {
   }
   if (v.startsWith("[") && v.endsWith("]")) {
     const inner = v.slice(1, -1).trim();
-    return inner ? splitFlowList(inner) : [];
+    return inner ? splitFlowList(inner, onEmptyListItem) : [];
   }
   return v;
 }
@@ -116,7 +126,7 @@ export function parseFrontmatter(text) {
         const value = parseScalar(item[1]);
         const open = unclosedQuote(item[1]);
         if (open) errors.push(`line ${lineNo}: list item opens a ${open} quote that is never closed`);
-        else if (value === null) errors.push(`line ${lineNo}: list item is empty (a value starting with # is a comment; quote it)`);
+        else if (value === null || value === "") errors.push(`line ${lineNo}: list item is empty (a value starting with # is a comment; quote it)`);
         else if (cutAtHash(item[1], value)) errors.push(`line ${lineNo}: list item is cut at " #" (read as a comment); quote the value if the # is part of it`);
         else meta[listKey].push(value);
       }
@@ -142,7 +152,7 @@ export function parseFrontmatter(text) {
       errors.push(`line ${lineNo}: "${line.trim()}" needs a space after the colon ("${key}: value")`);
       return;
     }
-    const value = parseScalar(rawValue);
+    const value = parseScalar(rawValue, () => errors.push(`line ${lineNo}: "${key}" has an empty item in its flow list`));
     const open = unclosedQuote(rawValue);
     if (open) errors.push(`line ${lineNo}: "${key}" opens a ${open} quote that is never closed`);
     if (cutAtHash(rawValue, value)) {

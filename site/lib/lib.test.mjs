@@ -640,6 +640,14 @@ const f1 = fm([
 ]);
 eq("frontmatter undoes quote escapes", f1.meta.attribution_string, 'Music "{title}" by {artist}');
 eq("frontmatter keeps a quoted comma inside one list item", JSON.stringify(f1.meta.tags), JSON.stringify(["sci-fi, space", "ui", "it's"]));
+const trailingFlow = fm(["tags: [a, b,]"]);
+eq("frontmatter accepts a trailing flow-list comma", JSON.stringify(trailingFlow.meta.tags), JSON.stringify(["a", "b"]));
+eq("frontmatter trailing flow-list comma has no errors", trailingFlow.errors.length, 0);
+const emptyFlow = fm(["tags: [x, , y]"]);
+has("frontmatter rejects an empty flow-list item", emptyFlow.errors.join(), 'line 2: "tags" has an empty item in its flow list');
+eq("frontmatter omits an invalid empty flow-list item", JSON.stringify(emptyFlow.meta.tags), JSON.stringify(["x", "y"]));
+const emptyBlock = fm(["tags:", '  - ""']);
+has("frontmatter rejects an empty quoted block-list item", emptyBlock.errors.join(), "line 3: list item is empty");
 eq("frontmatter reads a block list", JSON.stringify(f1.meta.formats), JSON.stringify(["PNG", "SVG"]));
 eq("frontmatter reads booleans", f1.meta.commercial, true);
 eq("frontmatter has no errors on good input", f1.errors.length, 0);
