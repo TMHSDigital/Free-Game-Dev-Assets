@@ -64,6 +64,7 @@ eq("esc escapes all five characters", esc(`<a href="x">'&'</a>`), "&lt;a href=&q
 eq("commercialLabel true", commercialLabel(true), "commercial OK");
 eq("commercialLabel varies", commercialLabel("varies"), "per-file review");
 eq("commercialLabel unknown", commercialLabel("unknown"), "commercial ?");
+eq("commercialLabel false", commercialLabel(false), "non-commercial");
 eq("verifiedAge fresh", verifiedAge("2026-09-01", Date.parse("2026-09-24T00:00:00Z")).bucket, "fresh");
 eq("verifiedAge missing", verifiedAge(null, Date.now()).bucket, "unknown");
 for (const date of ["2025-13-01", "2026-02-30", "2025-02-29", "1900-02-29", "2026-04-31"]) {
@@ -362,6 +363,56 @@ has("Unreal version row", page({ ue_versions: "5.4-5.8" }), "<dt>Unreal Engine</
 lacks("no engine rows by default", page(), "<dt>Engine lock</dt>");
 has("entry page has a shortlist toggle", page(), 'data-shortlist="e1"');
 has("entry page loads the shortlist module", page(), '<script type="module" src="../../shortlist.js"></script>');
+
+/* entry page: every licence statement (#225) ------------------------------- */
+{
+  const nc = page({ commercial: false });
+  has("non-commercial active entry: banner", nc, "<strong>Not for commercial use.</strong>");
+  has("non-commercial active entry: facts row", nc, "<dt>Commercial use</dt><dd>non-commercial</dd>");
+  has("non-commercial active entry: verdict", nc, "<span>non-commercial</span>");
+  const ncDep = page({ commercial: false, status: "deprecated" });
+  has("non-commercial deprecated entry: deprecated banner", ncDep, "<strong>Deprecated.</strong>");
+  lacks("non-commercial deprecated entry: no non-commercial banner", ncDep, "Not for commercial use.");
+  lacks("commercial entry: no non-commercial banner", page(), "Not for commercial use.");
+
+  const notReq = page({ attribution_required: false, attribution_string: undefined });
+  has("credit not required: facts row", notReq, "<dt>Credit</dt><dd>Not required</dd>");
+  has("credit not required: verdict", notReq, "<span>Credit: Not required</span>");
+  lacks("credit not required: no copy button", notReq, 'id="copy-attribution"');
+  const unclear = page({ attribution_required: undefined, attribution_string: undefined });
+  has("credit unclear: facts row", unclear, "<dt>Credit</dt><dd>Unclear: read the Notes</dd>");
+  lacks("credit unclear: no copy button", unclear, 'id="copy-attribution"');
+  const noLine = page({ attribution_required: true, attribution_string: undefined });
+  has("credit required, no line: note", noLine, "Attribution is required and no canned credit line is recorded.");
+  has("credit required, no line: facts row", noLine, "<dt>Credit</dt><dd>Required</dd>");
+  lacks("credit required, no line: no copy button", noLine, 'id="copy-attribution"');
+  const plain = page();
+  has("credit line: copy button", plain, 'id="copy-attribution"');
+  lacks("plain credit line: no fill-in note", plain, "credit-fill");
+  lacks("plain credit line: no data-fill", plain, "data-fill=");
+  const tpl = page({ attribution_string: 'Music: "{title}" by Ann' });
+  has("template credit line: fill-in note", tpl, '<p class="attribution-note credit-fill">Fill in {title} before you ship. The line is a template.</p>');
+  has("template credit line: data-fill on the button", tpl, 'data-fill="Fill in {title} before you ship."');
+  has("template credit line: field marked", tpl, '<mark class="credit-field">{title}</mark>');
+
+  const shipping = '<a class="facts-guide" href="../../guide/shipping/">shipping to stores</a>';
+  has("cc-by family: shipping link", page({ licenseFamily: "cc-by" }), shipping);
+  has("copyleft family: shipping link", page({ licenseFamily: "copyleft" }), shipping);
+  lacks("cc0 family: no shipping link", page({ licenseFamily: "cc0" }), shipping);
+
+  has("spdx differs from licence: both shown", page({ license: "CC BY 4.0", license_spdx: "CC-BY-4.0" }), "<dt>Licence</dt><dd>CC BY 4.0 (CC-BY-4.0) ");
+  has("spdx equals licence: shown once", page(), "<dt>Licence</dt><dd>CC-BY-4.0 <a");
+  has("no spdx: licence alone", page({ license: "custom", license_spdx: undefined }), "<dt>Licence</dt><dd>custom <a");
+
+  const pg = (prev, next) => entryPageHtml({ entry: base, leadHtml: "", restHtml: "", deprecatedReasonHtml: null, prev, next, site, categoryLabel: "2D", stamp: "2026-09-24", total: 1, hasCard: false, now: Date.parse("2026-09-24T00:00:00Z") });
+  const onlyPrev = pg({ id: "e0", name: "Before" }, null);
+  has("pager, prev only: prev link", onlyPrev, '<a class="btn-ghost" href="../e0/" rel="prev">');
+  lacks("pager, prev only: no next link", onlyPrev, 'rel="next"');
+  const onlyNext = pg(null, { id: "e2", name: "After" });
+  has("pager, next only: next link", onlyNext, '<a class="btn-ghost" href="../e2/" rel="next">');
+  lacks("pager, next only: no prev link", onlyNext, 'rel="prev"');
+  lacks("pager, neither: no pager", pg(null, null), 'class="page-pager"');
+}
 /* shortlist: CREDITS file -------------------------------------------------- */
 import { creditsFile } from "./owes.mjs";
 const eF = { ...base, id: "f", name: "Font F", license: "SIL OFL", attributionClass: "notice", attribution_required: false, status: "active", commercial: true };
