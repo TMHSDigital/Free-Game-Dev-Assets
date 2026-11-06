@@ -411,6 +411,15 @@ lacks("no copy script without canned lines", sp({ owed: owes([{ need: "Sounds", 
 const sld = spage.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
 lacks("stack json-ld cannot close its script", sld, "</script");
 eq("stack json-ld lists the picks", JSON.parse(sld).itemListElement[0].url, "https://x.test/s/entry/a/");
+{
+  // #220: the stack panel and the CREDITS export carry the same sections.
+  const both = sp({ owed: owShort });
+  has("stack lists notices to keep", both, "<h3>Notices to keep with the files</h3>");
+  lacks("a notice pick is not also 'no credit needed'", both.match(/<h3>No credit needed<\/h3><p>[^<]*(?:<a[^>]*>[^<]*<\/a>[^<]*)*<\/p>/)?.[0] || "", "Font F");
+  const fileHeads = [...creditsFile(owShort, { format: "md" }).matchAll(/^## (.+)$/gm)].map((m) => m[1]).sort();
+  const pageHeads = [...both.matchAll(/<div class="owes-group"><h3>([^<]+)<\/h3>/g)].map((m) => m[1]).sort();
+  eq("stack panel and CREDITS export have the same sections", pageHeads.join("|"), fileHeads.join("|"));
+}
 eq("stack json-ld name survives", stackJsonLd(stackMeta, [{ rows: [] }], site).name, 'Make a "thing" </script>');
 
 /* stacks: links in --------------------------------------------------------- */

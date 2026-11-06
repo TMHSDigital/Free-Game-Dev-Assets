@@ -127,7 +127,8 @@ still references Google Fonts.
 
 `build.mjs` writes `stack/<id>/index.html` for each file in `stacks/` (the format is in
 `stacks/README.md`). The page's "What this stack owes" panel is computed from the picked
-entries: credit lines to ship, picks that need no credit, aggregators to check file by
+entries: credit lines to ship, licence notices to keep with the files, picks that need no
+credit, aggregators to check file by
 file, and open questions. A stack never states a licence itself. V15 in `checks.mjs`
 fails a stack whose pick is missing, deprecated or malformed, or whose why sentence
 names a licence; `validate.mjs` and `build.mjs` both run it.

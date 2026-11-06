@@ -65,6 +65,9 @@ function owesHtml(owed) {
       : "";
     groups.push(`<div class="owes-group"><h3>Credits to ship</h3><ul class="credit-list" id="credits-list">${items}</ul>${allButton}</div>`);
   }
+  if (owed.notices.length) {
+    groups.push(`<div class="owes-group"><h3>Notices to keep with the files</h3><p>Carry each licence and copyright notice with what you redistribute from ${names(owed.notices)}. This is not a credits-screen line.</p></div>`);
+  }
   if (owed.noCredit.length) {
     const n = owed.noCredit.length;
     groups.push(`<div class="owes-group"><h3>No credit needed</h3><p>${n} ${n === 1 ? "pick" : "picks"}: ${names(owed.noCredit)}.</p></div>`);

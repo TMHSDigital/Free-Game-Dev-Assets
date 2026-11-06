@@ -21,7 +21,8 @@ export function owes(picked) {
     // Licences that oblige you to carry their notice with the files (MIT, OFL,
     // Apache...), which is not a credits-screen line (license-vocabulary.json).
     notices: items.filter((i) => i.entry.attributionClass === "notice"),
-    noCredit: items.filter((i) => credit(i) === false),
+    // A notice pick owes something, so it is not also listed as owing nothing.
+    noCredit: items.filter((i) => credit(i) === false && i.entry.attributionClass !== "notice"),
     unclear: items.filter((i) => credit(i) !== true && credit(i) !== false),
     perFile: items.filter((i) => i.entry.commercial === "varies"),
     openQuestions: items.filter((i) => i.entry.status === "needs-review"),
