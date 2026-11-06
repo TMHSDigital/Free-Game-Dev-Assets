@@ -27,6 +27,7 @@ import {
   checkLicenseVocabulary,
   checkLicenceGuide,
   checkLineEndings,
+  checkRepoFiles,
   checkMaintenance,
   checkNonCommercialEvidence,
   maintenanceFromRepo,
@@ -833,6 +834,13 @@ rejects("preview field: word refused", checkPreviewField("bad.md", { preview: "y
 accepts("V30 accepts LF-only text", checkLineEndings("ok.md", "---\nid: a\n---\n\nBody\n"));
 rejects("V30 rejects CRLF and names the first line", checkLineEndings("bad.md", "---\nid: a\r\n---\n"), "bad.md:2 has a CR line ending");
 rejects("V30 rejects a lone CR", checkLineEndings("bad.md", "one\rtwo\n"), "bad.md:1 has a CR line ending");
+
+/* repository files: binaries and symlinks (#229, symlinks) ---------------- */
+accepts("repo files: text and allowed binaries pass", checkRepoFiles([{ rel: "catalog/2d/a.md" }, { rel: "site/public/fonts/x.woff2" }, { rel: "docs/images/readme/hero.png" }]));
+rejects("repo files: a binary at any depth is refused", checkRepoFiles([{ rel: "catalog/2d/dist/pack.zip" }]), "binary asset file: catalog/2d/dist/pack.zip");
+rejects("repo files: a binary in a dot folder is refused", checkRepoFiles([{ rel: ".github/foo.ZIP" }]), "binary asset file: .github/foo.ZIP");
+rejects("repo files: a symlink is refused", checkRepoFiles([{ rel: "site/public/leak.txt", symlink: true }]), "symlink in the repository: site/public/leak.txt");
+accepts("repo files: a dot in a folder name is not an extension", checkRepoFiles([{ rel: "docs/v1.png/README" }]));
 
 /* V31: non-commercial entries quote the restriction ----------------------- */
 accepts("V31 ignores commercial: true", checkNonCommercialEvidence("ok.md", { status: "active", commercial: true }, "## Evidence\n\n- Live page (2026-01-01): \"free\"\n"));

@@ -1119,6 +1119,37 @@ export function checkLineEndings(rel, text) {
   return [`${rel}:${line} has a CR line ending (save the file with LF; .editorconfig and .gitattributes set this)`];
 }
 
+/** Extensions of packed or binary assets: the catalog links to them, it never hosts them. */
+export const BINARY_EXT = new Set([
+  ".png", ".jpg", ".jpeg", ".gif", ".webp", ".wav", ".mp3", ".ogg", ".flac", ".glb", ".gltf", ".fbx",
+  ".blend", ".zip", ".7z", ".rar", ".psd", ".ase", ".aseprite", ".ttf", ".otf", ".woff", ".woff2",
+  ".mp4", ".webm", ".hdr", ".exr", ".tif", ".tiff", ".bin", ".pak",
+]);
+/** First-party stills and self-hosted fonts: the only binaries the repo may hold. */
+export const ALLOWED_BINARY_PREFIXES = ["docs/images/readme/", "site/public/thumbs/", "site/public/fonts/"];
+
+/**
+ * Repository files, as `[{ rel, symlink }]` with repo-relative POSIX paths:
+ * no third-party binary assets anywhere (at any depth), and no symlinks. A
+ * merged symlink would make the build copy, and Pages publish, whatever it
+ * points at on the machine that runs the build.
+ */
+export function checkRepoFiles(files) {
+  const errors = [];
+  for (const { rel, symlink } of files) {
+    if (symlink) {
+      errors.push(`symlink in the repository: ${rel} (commit the file itself, or remove it)`);
+      continue;
+    }
+    const dot = rel.lastIndexOf(".");
+    const ext = dot > rel.lastIndexOf("/") ? rel.slice(dot).toLowerCase() : "";
+    if (!BINARY_EXT.has(ext)) continue;
+    if (ALLOWED_BINARY_PREFIXES.some((p) => rel.startsWith(p))) continue;
+    errors.push(`binary asset file: ${rel}`);
+  }
+  return errors;
+}
+
 /**
  * V31: an active entry recorded as `commercial: false` must quote the
  * restriction. CONTRIBUTING accepts non-commercial free tiers only when they

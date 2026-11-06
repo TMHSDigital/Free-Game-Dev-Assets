@@ -312,12 +312,18 @@ function copyOut(src, rel) {
   writeOut(rel, fs.readFileSync(src));
 }
 
-/** Everything under site/public except the names in `skip`, dist-relative paths kept. */
+/**
+ * Everything under site/public except the names in `skip`, dist-relative paths
+ * kept. A symlink stops the build: following it would publish whatever it
+ * points at on the machine that runs the build.
+ */
 function copyPublic(src, skip, prefix = "") {
   for (const name of fs.readdirSync(src)) {
     const from = path.join(src, name);
     const rel = prefix ? `${prefix}/${name}` : name;
-    if (fs.statSync(from).isDirectory()) copyPublic(from, skip, rel);
+    const stat = fs.lstatSync(from);
+    if (stat.isSymbolicLink()) throw new Error(`site/public/${rel} is a symlink; the build copies only real files`);
+    if (stat.isDirectory()) copyPublic(from, skip, rel);
     else if (!skip.has(rel)) copyOut(from, rel);
   }
 }

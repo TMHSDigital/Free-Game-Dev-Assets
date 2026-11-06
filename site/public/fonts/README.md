@@ -9,4 +9,4 @@ Self-hosted WOFF2 files for the site, latin subset only. Fetched on 2026-10-23 f
 | `ibm-plex-mono-400.woff2` | IBM Plex Mono | 400 | SIL OFL 1.1 |
 | `ibm-plex-mono-500.woff2` | IBM Plex Mono | 500 | SIL OFL 1.1 |
 
-Licence text and copyright notices: `OFL.txt`. The validator allows binaries under this folder (`site/validate.mjs`, `ALLOWED_BINARY_PREFIXES`); the page checks fail any page that still references Google Fonts.
+Licence text and copyright notices: `OFL.txt`. The validator allows binaries under this folder (`site/checks.mjs`, `ALLOWED_BINARY_PREFIXES`); the page checks fail any page that still references Google Fonts.

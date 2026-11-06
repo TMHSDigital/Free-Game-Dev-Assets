@@ -46,14 +46,19 @@ export function resolveRequest(root, urlPath) {
   const full = path.resolve(root, `.${path.posix.normalize(`/${decoded}`)}`);
   if (full !== root && !full.startsWith(root + path.sep)) return null;
   let stat;
+  let real;
   try {
     stat = fs.statSync(full);
+    // A symlink inside root must not serve a file from outside it.
+    real = fs.realpathSync.native(full);
+    const realRoot = fs.realpathSync.native(root);
+    if (real !== realRoot && !real.startsWith(realRoot + path.sep)) return null;
   } catch {
     return null;
   }
   if (stat.isDirectory()) {
     const index = path.join(full, "index.html");
-    return fs.existsSync(index) ? index : null;
+    return fs.existsSync(index) && resolveRequest(root, path.relative(root, index).split(path.sep).join("/")) ? index : null;
   }
   return stat.isFile() ? full : null;
 }

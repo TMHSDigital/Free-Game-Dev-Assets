@@ -1579,6 +1579,19 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     eq("serve: backslash dot-dot cannot escape", resolveRequest(root, "/..%5c..%5csecret"), null);
     eq("serve: a NUL byte is refused", resolveRequest(root, "/index.html%00.txt"), null);
     eq("serve: bad percent-encoding is refused", resolveRequest(root, "/%E0%A4%A"), null);
+    // A link inside root that points outside it serves nothing (a junction
+    // needs no privilege on Windows; elsewhere it is a plain dir symlink).
+    const outside = nodeFs.mkdtempSync(nodePath.join(os.tmpdir(), "fgda-outside-"));
+    try {
+      nodeFs.writeFileSync(nodePath.join(outside, "secret.txt"), "s");
+      nodeFs.writeFileSync(nodePath.join(outside, "index.html"), "s");
+      nodeFs.symlinkSync(outside, nodePath.join(root, "leak"), "junction");
+      eq("serve: a file through a link out of root is refused", resolveRequest(root, "/leak/secret.txt"), null);
+      eq("serve: a directory index through a link out of root is refused", resolveRequest(root, "/leak/"), null);
+    } finally {
+      nodeFs.rmSync(nodePath.join(root, "leak"), { force: true, recursive: false });
+      nodeFs.rmSync(outside, { recursive: true, force: true });
+    }
   } finally {
     nodeFs.rmSync(root, { recursive: true, force: true });
   }

@@ -3,6 +3,7 @@
  * Catalog integrity checks. Run before every commit: node site/validate.mjs
  */
 import fs from "node:fs";
+import { execFileSync } from "node:child_process";
 import { caseMismatch } from "./lib/links.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -34,6 +35,7 @@ import {
   checkLicenseVocabulary,
   checkLicenceGuide,
   checkLineEndings,
+  checkRepoFiles,
   checkMaintenance,
   checkNonCommercialEvidence,
   checkPublisherConsistency,
@@ -64,44 +66,11 @@ const STACKS = path.join(ROOT, "stacks");
 // C0 controls other than tab, LF and CR: invalid in XML, and NUL is the
 // markdown renderer's slot marker.
 const CONTROL_RE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
-const BINARY_EXT = new Set([
-  ".png",
-  ".jpg",
-  ".jpeg",
-  ".gif",
-  ".webp",
-  ".wav",
-  ".mp3",
-  ".ogg",
-  ".flac",
-  ".glb",
-  ".gltf",
-  ".fbx",
-  ".blend",
-  ".zip",
-  ".7z",
-  ".rar",
-  ".psd",
-  ".ase",
-  ".aseprite",
-  ".ttf",
-  ".otf",
-  ".woff",
-  ".woff2",
-  ".mp4",
-  ".webm",
-  ".hdr",
-  ".exr",
-  ".tif",
-  ".tiff",
-  ".bin",
-  ".pak",
-]);
 // Hidden folders (.git, .claude worktrees, editor state) and local scratch
-// space are not part of the repo's content.
+// space are not part of the repo's content. Used only for the markdown roots
+// and as the fallback file list when git is not available.
 const SKIP_WALK = new Set(["node_modules", "dist", "RESEARCH", "_scratch"]);
 /** Generated output and first-party stills (README screenshots, the social card): not third-party packs. */
-const ALLOWED_BINARY_PREFIXES = ["site/dist/", "docs/images/readme/", "site/public/thumbs/", "site/public/fonts/"];
 const EMOJI_RE = /\p{Extended_Pictographic}/u;
 const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
 
@@ -115,7 +84,7 @@ function walkFiles(dir, out = [], filter) {
   for (const name of fs.readdirSync(dir)) {
     if (SKIP_WALK.has(name)) continue;
     const full = path.join(dir, name);
-    const stat = fs.statSync(full);
+    const stat = fs.lstatSync(full);
     if (stat.isDirectory()) {
       if (name.startsWith(".")) continue;
       walkFiles(full, out, filter);
@@ -124,6 +93,31 @@ function walkFiles(dir, out = [], filter) {
     if (!filter || filter(full)) out.push(full);
   }
   return out;
+}
+
+/**
+ * Every file git would commit (tracked, plus untracked files that are not
+ * ignored), at any depth, with whether it is a symlink. Without git, the disk
+ * walk stands in.
+ */
+function repoFiles() {
+  try {
+    const git = (args) => execFileSync("git", args, { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "ignore"] });
+    const tracked = git(["ls-files", "-s", "-z"]).split("\0").filter(Boolean).map((line) => {
+      const tab = line.indexOf("\t");
+      return { rel: line.slice(tab + 1), symlink: line.startsWith("120000 ") };
+    });
+    const untracked = git(["ls-files", "-o", "--exclude-standard", "-z"]).split("\0").filter(Boolean).map((rel) => {
+      let symlink = false;
+      try {
+        symlink = fs.lstatSync(path.join(ROOT, rel)).isSymbolicLink();
+      } catch {}
+      return { rel, symlink };
+    });
+    return [...tracked, ...untracked];
+  } catch {
+    return walkFiles(ROOT, [], () => true).map((full) => ({ rel: relFromRoot(full), symlink: fs.lstatSync(full).isSymbolicLink() }));
+  }
 }
 
 function isEmptyField(v) {
@@ -452,13 +446,7 @@ function main() {
   const thumbFiles = fs.existsSync(thumbsDir) ? fs.readdirSync(thumbsDir).filter((n) => n !== ".gitkeep") : [];
   errors.push(...checkThumbManifest(manifest, metaById, thumbFiles));
 
-  for (const file of walkFiles(ROOT, [], () => true)) {
-    const ext = path.extname(file).toLowerCase();
-    if (!BINARY_EXT.has(ext)) continue;
-    const rel = relFromRoot(file);
-    if (ALLOWED_BINARY_PREFIXES.some((p) => rel.startsWith(p))) continue;
-    errors.push(`binary asset file: ${rel}`);
-  }
+  errors.push(...checkRepoFiles(repoFiles()));
 
   if (errors.length) {
     console.error(`validate failed (${errors.length}):`);
