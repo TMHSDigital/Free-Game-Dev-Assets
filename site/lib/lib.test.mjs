@@ -176,7 +176,8 @@ eq("scriptJson escapes <", scriptJson({ a: "</script>" }), '{"a":"\\u003c/script
 
 /* page checks -------------------------------------------------------------- */
 import { checkPage } from "./page-checks.mjs";
-const okPage = `<html><head><title>T</title><link rel="canonical" href="https://x/" /></head><body><h1>A</h1><p><code>**x**</code></p><a href="../e2/">n</a><a href="https://a.test">x</a><script>var a = "**";</script></body></html>`;
+const { CSP_META } = await import("./shared.mjs");
+const okPage = `<html><head>${CSP_META}<title>T</title><link rel="canonical" href="https://x/" /></head><body><h1>A</h1><p><code>**x**</code></p><a href="../e2/">n</a><a href="https://a.test">x</a><script>var a = "**";</script></body></html>`;
 const kinds = new Map([["entry/e2", "dir"], ["", "dir"]]);
 const opts = { file: "entry/e1/index.html", kindOf: (p) => kinds.get(p) || null };
 eq("clean page passes", checkPage(okPage, opts).length, 0);
@@ -195,6 +196,7 @@ has("leaked link", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1>[a](b)"), o
 has("leaked backtick", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1>`x`"), opts).join(), "backtick");
 has("two h1", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1><h1>B</h1>"), opts).join(), "expected one h1, found 2");
 has("no canonical", checkPage(okPage.replace(/<link rel="canonical"[^>]*>/, ""), opts).join(), "missing canonical");
+has("no content security policy", checkPage(okPage.replace(CSP_META, ""), opts).join(), "missing the Content-Security-Policy meta tag");
 has("empty title", checkPage(okPage.replace("<title>T</title>", "<title></title>"), opts).join(), "missing or empty title");
 has("dangling link", checkPage(okPage.replace("../e2/", "../e3/"), opts).join(), "../e3/ does not resolve");
 has("link leaving the site", checkPage(okPage.replace("../e2/", "../../../x/"), opts).join(), "leaves the site");

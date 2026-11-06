@@ -1,6 +1,6 @@
 /** Checks run on every generated page; the build fails on any error. */
 import path from "node:path";
-import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX } from "./shared.mjs";
+import { ANY_SCHEME_RE, CSP_META, EXTERNAL_SCHEME_RE, SEO_DESCRIPTION_MAX, SEO_TITLE_MAX } from "./shared.mjs";
 
 const unescape = (s) => s.replace(/&(amp|lt|gt|quot|#39);/g, (m) => ({ "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'" })[m]);
 
@@ -47,6 +47,7 @@ export function checkPage(html, { file, kindOf, idsOf = null }) {
   const h1 = (html.match(/<h1[\s>]/g) || []).length;
   if (h1 !== 1) errors.push(`${file}: expected one h1, found ${h1}`);
   if (!/<link rel="canonical" href="[^"]+"/.test(html)) errors.push(`${file}: missing canonical link`);
+  if (!html.includes(CSP_META)) errors.push(`${file}: missing the Content-Security-Policy meta tag (shared.mjs CSP_META)`);
   if (!/<title>[^<\s][^<]*<\/title>/.test(html)) errors.push(`${file}: missing or empty title`);
   // Search results cut titles around 60 characters and descriptions around 160.
   const title = unescape(html.match(/<title>([^<]*)<\/title>/)?.[1] || "");

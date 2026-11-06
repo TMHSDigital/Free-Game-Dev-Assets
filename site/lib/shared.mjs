@@ -285,9 +285,21 @@ export const PAGE_MODULES = {
   notFound: ["not-found.js", "search.js", "shared.mjs"],
 };
 
-/** Icon, font preloads and stylesheet, resolved against `root`. Every page type shares them. */
+/**
+ * The Content-Security-Policy every page carries. Pages cannot set response
+ * headers, so it is a <meta> tag, first in <head>. Scripts, fonts, images and
+ * requests are same-origin only; inline styles stay allowed for the few
+ * style="--var: ..." attributes; JSON-LD blocks are data, not script, so the
+ * policy does not touch them. frame-ancestors cannot be set from a <meta>.
+ */
+export const CSP =
+  "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'";
+export const CSP_META = `<meta http-equiv="Content-Security-Policy" content="${CSP}" />`;
+
+/** The CSP, icon, font preloads and stylesheet, resolved against `root`. Every page type shares them. */
 export function headAssetsHtml(root = "./") {
   return [
+    CSP_META,
     `<link rel="icon" href="${esc(root)}favicon.svg" type="image/svg+xml" />`,
     ...FONT_FILES.map((f) => `<link rel="preload" href="${esc(root)}${f}" as="font" type="font/woff2" crossorigin />`),
     `<link rel="stylesheet" href="${esc(root)}styles.css" />`,
@@ -319,6 +331,8 @@ export function baseHeadHtml({ site, title, description, url, type = "website", 
       ]
     : [`<meta name="twitter:card" content="summary" />`];
   return [
+    // The CSP comes first, before any preload or script it governs.
+    ...headAssetsHtml(root),
     `<link rel="canonical" href="${esc(url)}" />`,
     // robots.txt is only read at a host's root, so under a project Pages path
     // its Sitemap line is never seen; point at the sitemap from the page too.
@@ -336,6 +350,5 @@ export function baseHeadHtml({ site, title, description, url, type = "website", 
     ...modules.map((m) => `<link rel="modulepreload" href="${esc(root)}${esc(m)}" />`),
     `<meta name="twitter:title" content="${esc(title)}" />`,
     `<meta name="twitter:description" content="${esc(description)}" />`,
-    ...headAssetsHtml(root),
   ].join(`\n${indent}`);
 }
