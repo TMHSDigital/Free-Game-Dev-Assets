@@ -508,11 +508,19 @@ function writeGuidePages({ entries, config, stats, stamp, hasCard, modified = ne
       }
       return inner(raw);
     };
+    const source = path.join(ROOT, guide.path);
+    if (!fs.existsSync(source)) {
+      errors.push(`site/config.json guides: ${guide.path} (guide "${guide.id}") does not exist`);
+      continue;
+    }
+    // Page errors (bad markdown, a broken link) are reported with the rest;
+    // anything else is a bug in the build and stops it, as for entry pages.
     try {
-      const rendered = renderGuide(fs.readFileSync(path.join(ROOT, guide.path), "utf8"), { file: guide.path, resolveLink });
+      const rendered = renderGuide(fs.readFileSync(source, "utf8"), { file: guide.path, resolveLink });
       writeOut(path.join("guide", guide.id, "index.html"), guidePageHtml({ guide, rendered, site: config.site, stamp, total: stats.total, hasCard, modified: modified.get(guide.path) || null }));
       written.push(`guide/${guide.id}/index.html`);
     } catch (err) {
+      if (!(err instanceof MarkdownError || err instanceof LinkError)) throw err;
       errors.push(err.message);
     }
   }

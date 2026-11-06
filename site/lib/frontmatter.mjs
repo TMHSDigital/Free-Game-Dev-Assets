@@ -135,6 +135,12 @@ export function parseFrontmatter(text) {
       return;
     }
     const key = line.slice(0, idx).trim();
+    // These names reach Object.prototype through `meta[key] =` and would hide
+    // from every key check, so they are never keys.
+    if (key === "__proto__" || key === "constructor" || key === "prototype") {
+      errors.push(`line ${lineNo}: "${key}" is not allowed as a key`);
+      return;
+    }
     if (Object.prototype.hasOwnProperty.call(meta, key)) {
       errors.push(`line ${lineNo}: key "${key}" is given twice`);
       return;

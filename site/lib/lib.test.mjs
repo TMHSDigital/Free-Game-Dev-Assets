@@ -653,6 +653,13 @@ eq("frontmatter reads a block list", JSON.stringify(f1.meta.formats), JSON.strin
 eq("frontmatter reads booleans", f1.meta.commercial, true);
 eq("frontmatter has no errors on good input", f1.errors.length, 0);
 eq("frontmatter ignores a byte-order mark", parseFrontmatter("﻿---\nid: a\n---\nB")?.meta.id, "a");
+// #227: prototype keys are refused, and their list items do not attach elsewhere.
+{
+  const p = fm(["id: x", "__proto__:", "  - evil", "name: y"]);
+  has("frontmatter refuses a __proto__ key", p.errors.join("|"), 'line 3: "__proto__" is not allowed as a key');
+  eq("frontmatter: meta keeps a plain prototype", Object.getPrototypeOf(p.meta), Object.prototype);
+  has("frontmatter refuses a constructor key", fm(["constructor: x"]).errors.join("|"), '"constructor" is not allowed as a key');
+}
 // #234: a trailing comma ends a flow list; an empty item is an error.
 eq("flow list: one trailing comma is dropped", JSON.stringify(fm(["tags: [a, b,]"]).meta.tags), '["a","b"]');
 eq("flow list: trailing comma is not an error", fm(["tags: [a, b,]"]).errors.length, 0);
