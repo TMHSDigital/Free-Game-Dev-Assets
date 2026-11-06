@@ -169,8 +169,8 @@ moved source needs its licence re-read before its entry changes. Run it locally 
 The live Pages URL changes on every push, so a tool that bundles the catalog (a plugin,
 a notebook, a paper) could not pin a version. `.github/workflows/release.yml` runs on the
 first of each month and on demand: it builds, tags `vYYYY.MM.DD` and creates a GitHub
-release with `data.json`, `catalog.csv`, `feed.xml`, `reverified.xml` and `llms.txt`
-attached, with the newest section of `docs/review-ledger.md` as the notes. Fetch a fixed
+release with `data.json`, `data.schema.json`, `catalog.csv`, `feed.xml`, `reverified.xml`
+and `llms.txt` attached, with the newest section of `docs/review-ledger.md` as the notes. Fetch a fixed
 version by tag from the Releases page; `data.json` carries the same tag as `version`.
 The workflow passes the tag into the build as `CATALOG_VERSION`, fails if the built
 `data.json` disagrees, and commits the tag into `CITATION.cff` (`version`, `date-released`)
@@ -180,8 +180,8 @@ on `main` before cutting the release, so the tagged commit cites itself.
 
 `.github/workflows/reverify.yml` runs `site/reverify-batch.mjs` on the first of each month
 (and on demand). It picks the live entries whose licence was read longest ago, more than
-150 days, about a tenth of the catalog at a time so every entry comes round in about ten
-months, and opens or updates one issue labelled `help wanted` and `good first issue`
+150 days, as many as it takes that no live entry passes 180 days before the next batch
+(about a fifth of the catalog a month; `batchSizeNeeded` in `site/lib/reverify.mjs`), and opens or updates one issue labelled `help wanted` and `good first issue`
 titled "Re-verify batch YYYY-MM: N entries due a licence re-read", with a checklist that
 names each entry's file, source URL and recorded licence. The selection rule is in
 `site/lib/reverify.mjs` and tested. When nothing is due the month is skipped. Preview it
@@ -201,6 +201,16 @@ npm run serve   # preview site/dist
 npm run links   # the link check, printed to the terminal
 npm run thumbs  # fetch and resize the previews that are due (needs ffmpeg or magick)
 ```
+
+Script options:
+
+| Command | Options |
+| --- | --- |
+| `node site/build.mjs` | `--clean` empties `site/dist` first (otherwise only changed files are written) |
+| `node site/check-links.mjs` | `--report <file.md>` writes the report to a file; `--stale-days <n>` (365) flags entries verified longer ago. Set `GITHUB_TOKEN`: without it the archived-repository checks hit GitHub's anonymous API limit and report "Could not check" |
+| `node site/reverify-batch.mjs` | `--report <file.md>`; `--size <n>` overrides the computed batch size |
+| `node site/thumbs.mjs` | `--only <id,id>` limits the run to those entries; `--force` refetches records that are not due; `--limit <n>` caps fetches per run; `--dry-run` writes nothing; `--report <file.md>` |
+| `node site/serve.mjs` | `--port <n>`, or the `PORT` environment variable (3000) |
 
 Deploy: `.github/workflows/pages.yml` (source = GitHub Actions), which first runs
 `ci.yml` as a reusable workflow.

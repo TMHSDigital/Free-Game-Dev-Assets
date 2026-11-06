@@ -30,6 +30,7 @@ status: needs-review
 # maintenance: archived   # or inactive (no push in 3 years); from the source repository, with a dated Notes line
 # engine_lock: unreal   # only when the licence restricts use to Unreal Engine products (Epic's "UE-Only Content")
 # ue_versions: "5.4-5.8"   # Unreal versions as the source states them: "5.4", "5.4-5.8" or "5.4+"
+# limits: "Source files may not be redistributed"   # one plain line, at most 120 characters, no closing full stop (V36)
 ---
 
 # Example Source

@@ -376,6 +376,10 @@ npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no dow
 ├── README.md
 ├── CONTRIBUTING.md             how to add and verify an entry
 ├── LICENSE                     CC0-1.0 for catalog metadata and docs
+├── SECURITY.md                 how to report a vulnerability
+├── CODE_OF_CONDUCT.md
+├── ROADMAP.md                  what is planned next
+├── CITATION.cff                how to cite a catalog release
 ├── catalog/
 │   ├── README.md               master index
 │   ├── TEMPLATE.md             copy this to add a source
@@ -390,7 +394,7 @@ npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no dow
 │   ├── for-publishers.md       what is recorded about a publisher, and how to correct it
 │   ├── internal/               design specs and plans behind the site (history, not guides)
 │   ├── review-ledger.md        every review pass and what it changed
-│   └── images/readme/          publisher stills used in this README
+│   └── images/readme/          publisher stills used in this README, and the social card (og-card.png)
 ├── stacks/                     starter stacks: one pick per need for a kind of game
 ├── site/
 │   ├── validate.mjs            catalog integrity checks
@@ -410,6 +414,7 @@ npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no dow
 │   ├── reverify-batch.mjs      picks the monthly re-verification batch
 │   ├── thumbs.mjs thumbs.json  fetches preview thumbnails, and their manifest
 │   ├── build.mjs config.json   static site generator and its settings
+│   ├── data.schema.json        JSON Schema for data.json (attached to each release)
 │   ├── lib/                    page renderers and shared helpers, with lib.test.mjs
 │   └── public/                 page, styles and script
 └── package.json                npm scripts only; no dependencies
