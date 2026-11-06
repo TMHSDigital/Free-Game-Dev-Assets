@@ -835,6 +835,8 @@ rejects("preview field: http refused", checkPreviewField("bad.md", { preview: "h
 rejects("preview field: loopback refused", checkPreviewField("bad.md", { preview: "https://127.0.0.1/a.png" }), "bad.md preview must be an https:// image URL on a public host");
 rejects("preview field: an unparseable https url is refused, not thrown", checkPreviewField("bad.md", { preview: "https://exa%zzmple.com/a.png" }), "bad.md preview must be an https:// image URL on a public host");
 rejects("preview field: bad port refused", checkPreviewField("bad.md", { preview: "https://a.test:99999/x.png" }), "bad.md preview must be an https:// image URL on a public host");
+rejects("preview field: an unclosed IPv6 bracket is refused, not thrown", checkPreviewField("bad.md", { preview: "https://[bad" }), "bad.md preview must be an https:// image URL on a public host");
+rejects("preview field: credentials in the URL refused", checkPreviewField("bad.md", { preview: "https://u:p@a.example/b.png" }), "bad.md preview must be an https:// image URL on a public host");
 rejects("preview field: word refused", checkPreviewField("bad.md", { preview: "yes" }), 'bad.md preview must be "none" or an https:// image URL');
 
 /* V30: line endings ------------------------------------------------------ */

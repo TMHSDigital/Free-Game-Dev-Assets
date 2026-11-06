@@ -11,7 +11,7 @@
 const KNOWN = new Set([
   "$schema", "$id", "$defs", "$ref", "title", "description",
   "type", "enum", "required", "properties", "additionalProperties", "unevaluatedProperties",
-  "items", "pattern", "minimum",
+  "items", "pattern", "minimum", "minLength",
 ]);
 
 function typeOf(v) {
@@ -62,6 +62,9 @@ export function schemaErrors(schema, value, { root = schema, path = "$" } = {}) 
   }
   if (typeof value === "string" && schema.pattern && !new RegExp(schema.pattern, "u").test(value)) {
     errors.push(`${path}: ${show(value)} does not match ${schema.pattern}`);
+  }
+  if (typeof value === "string" && schema.minLength !== undefined && [...value].length < schema.minLength) {
+    errors.push(`${path}: ${show(value)} is shorter than ${schema.minLength}`);
   }
   if (typeof value === "number" && schema.minimum !== undefined && value < schema.minimum) {
     errors.push(`${path}: ${value} is below ${schema.minimum}`);

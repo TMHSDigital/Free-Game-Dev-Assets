@@ -153,6 +153,10 @@ under `/Free-Game-Dev-Assets/` it is never seen. Submit
 `https://tmhsdigital.github.io/Free-Game-Dev-Assets/sitemap.xml` once in Google Search
 Console and Bing Webmaster Tools; that is the step that gets it read.
 
+`build.mjs` also writes `opensearch.xml`, an OpenSearch 1.1 description linked from the
+homepage with `<link rel="search">`, so a browser can add the catalog as a search engine;
+a search opens the homepage with `?q={searchTerms}`.
+
 ## Link check
 
 `.github/workflows/links.yml` runs `site/check-links.mjs` every Monday at 07:41 UTC (and

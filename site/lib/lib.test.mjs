@@ -1530,6 +1530,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
 /* data.json schema (schema-check.mjs + site/data.schema.json) -------------- */
 {
   const { schemaErrors } = await import("./schema-check.mjs");
+  // minLength (from #244): an empty list item in data.json is a schema error.
+  has("schema: minLength refuses an empty string", schemaErrors({ type: "string", minLength: 1 }, "").join(), 'is shorter than 1');
+  eq("schema: minLength accepts a long enough string", schemaErrors({ type: "string", minLength: 1 }, "a").length, 0);
+  eq("schema: minLength counts characters, not UTF-16 units", schemaErrors({ type: "string", minLength: 2 }, "\u{1F600}").length, 1);
   const schema = JSON.parse(nodeFs.readFileSync(new URL("../data.schema.json", import.meta.url), "utf8"));
   const entry = {
     id: "a", name: "A", url: "https://a.example/", category: "2d", subcategories: ["x"], license: "CC0", commercial: true,
