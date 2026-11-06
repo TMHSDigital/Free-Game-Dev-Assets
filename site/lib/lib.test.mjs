@@ -1943,6 +1943,24 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("opensearch: homepage link", opensearchLinkHtml({ siteUrl: "https://x.test/s", title: "T" }), 'href="https://x.test/s/opensearch.xml"');
 }
 
+/* every known field reaches data.json or is excluded on purpose (#235) ------- */
+{
+  const { CORE_FIELDS, OPTIONAL_FIELDS, NOT_EXPORTED, optionalFields } = await import("./entry-fields.mjs");
+  const { KNOWN_KEYS, REQUIRED_KEYS } = await import("../checks.mjs");
+  const optional = OPTIONAL_FIELDS.map((f) => f.key);
+  const covered = [...CORE_FIELDS, ...optional, ...Object.keys(NOT_EXPORTED)];
+  for (const key of KNOWN_KEYS) eq(`fields: ${key} is exported or excluded on purpose`, covered.includes(key), true);
+  eq("fields: no field is listed twice", new Set(covered).size, covered.length);
+  eq("fields: core fields are validate's required keys", [...CORE_FIELDS].sort().join(), [...REQUIRED_KEYS].sort().join());
+  const schema = JSON.parse(nodeFs.readFileSync(new URL("../data.schema.json", import.meta.url), "utf8"));
+  const props = Object.keys(schema.$defs.entryBase.properties);
+  for (const key of [...CORE_FIELDS, ...optional]) eq(`fields: ${key} is in the data.json schema`, props.includes(key), true);
+  const all = Object.fromEntries(optional.map((k) => [k, OPTIONAL_FIELDS.find((f) => f.key === k).type === "list" ? ["a"] : "v"]));
+  eq("fields: optionalFields copies every optional field", Object.keys(optionalFields(all)).sort().join(), [...optional].sort().join());
+  eq("fields: unset optional fields are left out", Object.keys(optionalFields({ publisher: "", hardware_tags: "x" })).length, 0);
+  eq("fields: preview is not exported", "preview" in optionalFields({ preview: "none" }), false);
+}
+
 /* lint: unused imports (#230) --------------------------------------------- */
 {
   const { unusedImports, scriptFiles } = await import("../lint.mjs");

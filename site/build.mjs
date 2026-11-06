@@ -22,6 +22,7 @@ import { categoryPageHtml } from "./lib/category-page.mjs";
 import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
 import { summaryFromBody } from "./lib/frontmatter.mjs";
 import { readCatalog, idMatchesFile } from "./lib/entry-files.mjs";
+import { optionalFields } from "./lib/entry-fields.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
 import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
@@ -144,16 +145,7 @@ function loadEntries(vocab) {
             ...(isAttributionLicence(meta.license) ? { credit: previewCredit(meta) } : {}),
           }
         : null,
-      ...(meta.grid_dimensions ? { grid_dimensions: String(meta.grid_dimensions) } : {}),
-      ...(meta.camera_perspective ? { camera_perspective: String(meta.camera_perspective) } : {}),
-      ...(Array.isArray(meta.hardware_tags) ? { hardware_tags: meta.hardware_tags } : {}),
-      ...(meta.attribution_string ? { attribution_string: String(meta.attribution_string) } : {}),
-      ...(meta.publisher ? { publisher: String(meta.publisher) } : {}),
-      ...(meta.license_spdx ? { license_spdx: String(meta.license_spdx) } : {}),
-      ...(meta.maintenance ? { maintenance: String(meta.maintenance) } : {}),
-      ...(meta.engine_lock ? { engine_lock: String(meta.engine_lock) } : {}),
-      ...(meta.ue_versions ? { ue_versions: String(meta.ue_versions) } : {}),
-      ...(meta.limits ? { limits: String(meta.limits) } : {}),
+      ...optionalFields(meta),
       licenseFamily: licenseFamily(vocab, String(meta.license)),
       attributionClass: vocab.licenses[String(meta.license)]?.attribution || "any",
       licenseRank:
