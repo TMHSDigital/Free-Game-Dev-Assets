@@ -2,17 +2,13 @@
  * The catalog page's search, filter and URL logic, and the 404 page's
  * closest-entry guess, as pure functions. The build copies this file into
  * site/dist as search.js; app.js and not-found.js import it there, and
- * lib.test.mjs tests it here.
+ * lib.test.mjs tests it here. Its one import, shared.mjs, sits beside it in
+ * both places.
  */
+import { PERSPECTIVES } from "./shared.mjs";
 
-// Searchable words per perspective. A 3/4 pack is what most people mean by a top-down
-// RPG, so it answers "top down" too.
-export const PERSPECTIVE_SEARCH = {
-  top_down: "top-down",
-  isometric_3_4: "3/4 view top-down",
-  side_scroller: "side-scroller",
-  "2d_flat": "flat ui",
-};
+// Searchable words per perspective (shared.mjs PERSPECTIVES).
+export const PERSPECTIVE_SEARCH = Object.fromEntries(Object.entries(PERSPECTIVES).map(([k, v]) => [k, v.search]));
 
 // Hyphens and underscores read as spaces: "first person" finds the "first-person" tag.
 export function normalize(text) {

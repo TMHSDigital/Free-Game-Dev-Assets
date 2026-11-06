@@ -1487,6 +1487,29 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("licence diff: nothing changed", licenceDiffMarkdown([]), "No licence field changed");
 }
 
+/* closed vocabularies stay in step (#222) ----------------------------------- */
+{
+  const sh = await import("./shared.mjs");
+  const ck = await import("../checks.mjs");
+  const { PERSPECTIVE_SEARCH } = await import("./search.mjs");
+  const cards = await import("./cards.mjs");
+  const schema = JSON.parse(nodeFs.readFileSync(new URL("../data.schema.json", import.meta.url), "utf8"));
+  const keys = (x) => [...(x instanceof Set ? x : Array.isArray(x) ? x : Object.keys(x))].sort().join("|");
+  const props = schema.$defs.entryBase.properties;
+  const perspective = keys(sh.PERSPECTIVES);
+  eq("vocab: validate's perspectives are the shared ones", keys(ck.CAMERA_PERSPECTIVES), perspective);
+  eq("vocab: every perspective has a card label", keys(sh.PERSPECTIVE_LABELS), perspective);
+  eq("vocab: cards use the shared labels", keys(cards.PERSPECTIVE_LABELS), perspective);
+  eq("vocab: every perspective is searchable", keys(PERSPECTIVE_SEARCH), perspective);
+  eq("vocab: every perspective has a filter option", Object.values(sh.PERSPECTIVES).every((p) => p.label && p.search && p.option), true);
+  const indexHtml = nodeFs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+  lacks("vocab: no perspective option is written into index.html", indexHtml, '<option value="top_down"');
+  eq("vocab: status values, notes and schema agree", [keys(ck.STATUS_VALUES), keys(props.status?.enum || [])].join(" / "), [keys(sh.STATUS_NOTES), keys(sh.STATUS_NOTES)].join(" / "));
+  eq("vocab: maintenance values, notes and schema agree", [keys(ck.MAINTENANCE_VALUES), keys(props.maintenance?.enum || [])].join(" / "), [keys(sh.MAINTENANCE_NOTES), keys(sh.MAINTENANCE_NOTES)].join(" / "));
+  eq("vocab: engine lock values, notes and labels agree", [keys(ck.ENGINE_LOCK_VALUES), keys(sh.ENGINE_LOCK_LABELS)].join(" / "), [keys(sh.ENGINE_LOCK_NOTES), keys(sh.ENGINE_LOCK_NOTES)].join(" / "));
+  if (props.engine_lock?.enum) eq("vocab: engine lock schema agrees", keys(props.engine_lock.enum), keys(sh.ENGINE_LOCK_NOTES));
+}
+
 /* data.json schema (schema-check.mjs + site/data.schema.json) -------------- */
 {
   const { schemaErrors } = await import("./schema-check.mjs");

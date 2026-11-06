@@ -1,12 +1,20 @@
 /** Helpers shared by build.mjs and the page modules. */
 
-/** Readable labels for the optional 2D/UI taxonomy. */
-export const PERSPECTIVE_LABELS = {
-  top_down: "top-down",
-  isometric_3_4: "3/4 view",
-  side_scroller: "side-scroller",
-  "2d_flat": "flat UI",
+/**
+ * The `camera_perspective` vocabulary, its one source (#222): the short label
+ * on cards, the words search answers to, and the camera-view filter option.
+ * validate (V12), search, cards and the filter all read it from here.
+ */
+export const PERSPECTIVES = {
+  top_down: { label: "top-down", search: "top-down", option: "Top-down, straight down" },
+  // A 3/4 pack is what most people mean by a top-down RPG, so it answers "top down" too.
+  isometric_3_4: { label: "3/4 view", search: "3/4 view top-down", option: "3/4 top-down, walls visible" },
+  side_scroller: { label: "side-scroller", search: "side-scroller", option: "Side-scroller" },
+  "2d_flat": { label: "flat UI", search: "flat ui", option: "Flat UI" },
 };
+
+/** Readable labels for the optional 2D/UI taxonomy. */
+export const PERSPECTIVE_LABELS = Object.fromEntries(Object.entries(PERSPECTIVES).map(([k, v]) => [k, v.label]));
 
 /** What each `maintenance` value tells a reader (checks.mjs V22). */
 export const MAINTENANCE_NOTES = {
@@ -274,7 +282,7 @@ export const PAGE_MODULES = {
   home: ["app.js", "search.js", "cards.mjs", "shared.mjs", "views.js", "shortlist.js", "owes.js"],
   entry: ["shortlist.js", "owes.js"],
   category: ["category.js", "views.js", "shortlist.js", "owes.js"],
-  notFound: ["not-found.js", "search.js"],
+  notFound: ["not-found.js", "search.js", "shared.mjs"],
 };
 
 /** Icon, font preloads and stylesheet, resolved against `root`. Every page type shares them. */

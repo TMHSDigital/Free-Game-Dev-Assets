@@ -9,7 +9,7 @@
 import path from "node:path";
 import { ID_RE } from "./lib/entry-files.mjs";
 import { evidenceSection } from "./lib/frontmatter.mjs";
-import { isRealDate } from "./lib/shared.mjs";
+import { ENGINE_LOCK_NOTES, isRealDate, MAINTENANCE_NOTES, PERSPECTIVES, STATUS_NOTES } from "./lib/shared.mjs";
 import { headingSlug } from "./lib/guide-render.mjs";
 import { isAttributionLicence, isPrivateHost, PREVIEW_LICENSES, previewEligibility, safeImageUrl } from "./lib/thumbs.mjs";
 import { parseStack, pickPath, StackError } from "./lib/stacks.mjs";
@@ -277,7 +277,7 @@ export const REQUIRED_KEYS = [
   "id", "name", "url", "category", "subcategories", "license", "commercial",
   "attribution_required", "formats", "tags", "added", "verified", "status",
 ];
-export const STATUS_VALUES = new Set(["active", "needs-review", "deprecated"]);
+export const STATUS_VALUES = new Set(Object.keys(STATUS_NOTES));
 
 /**
  * The per-entry basics: required keys, id and category against the file's
@@ -546,12 +546,7 @@ export function checkTitleMatchesName(rel, meta, body) {
 
 /* ----------------------------------------------------------------- V12 */
 /** Documented values for the optional 2D/UI taxonomy. See catalog/TEMPLATE.md. */
-export const CAMERA_PERSPECTIVES = new Set([
-  "top_down",
-  "isometric_3_4",
-  "side_scroller",
-  "2d_flat",
-]);
+export const CAMERA_PERSPECTIVES = new Set(Object.keys(PERSPECTIVES));
 const GRID_RE = /^\d{1,3}x\d{1,3}$/;
 
 /**
@@ -682,7 +677,7 @@ export function checkTagsRestatePublisher(rel, meta) {
  * `inactive` (no commits for over three years). check-links.mjs reports a
  * GitHub source whose state disagrees with it.
  */
-export const MAINTENANCE_VALUES = new Set(["archived", "inactive"]);
+export const MAINTENANCE_VALUES = new Set(Object.keys(MAINTENANCE_NOTES));
 
 /** Three years without a push reads as inactive. */
 export const INACTIVE_DAYS = Math.round(3 * 365.25);
@@ -713,7 +708,7 @@ export function checkMaintenance(rel, meta) {
  * `ue_versions` is the Unreal Engine range the source itself states:
  * `5.4`, `5.4-5.8` or `5.4+`.
  */
-export const ENGINE_LOCK_VALUES = new Set(["unreal"]);
+export const ENGINE_LOCK_VALUES = new Set(Object.keys(ENGINE_LOCK_NOTES));
 const UNREAL_FORMATS = new Set(["Unreal", "unreal-plugin"]);
 const UE_VERSIONS_RE = /^(\d+)\.(\d+)(?:(\+)|-(\d+)\.(\d+))?$/;
 

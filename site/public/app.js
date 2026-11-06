@@ -1,6 +1,7 @@
 import { closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
+import { PERSPECTIVES } from "./shared.mjs";
 
 (() => {
   const data = window.__CATALOG__;
@@ -653,6 +654,12 @@ import { installViewToggles } from "./views.js";
     }
 
     const view = $("#perspective");
+    view.insertAdjacentHTML(
+      "beforeend",
+      Object.entries(PERSPECTIVES)
+        .map(([value, p]) => `<option value="${escapeHtml(value)}">${escapeHtml(p.option)}</option>`)
+        .join("")
+    );
     view.value = state.perspective;
     view.addEventListener("change", (e) => {
       state.perspective = e.target.value;
