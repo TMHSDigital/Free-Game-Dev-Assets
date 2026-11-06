@@ -392,7 +392,11 @@ import { PERSPECTIVES } from "./shared.mjs";
     const grid = $("#entry-grid");
     const empty = $("#empty-state");
     const group = shouldGroup();
-    $("#result-count").textContent = `${list.length} of ${data.entries.length} entries shown`;
+    // The denominator is what the status switches could show: deprecated
+    // entries count only once their switch is on, so the default view reads
+    // "418 of 418", matching the hero and the README.
+    const pool = state.deprecated ? data.entries.length : data.entries.filter((e) => e.status !== "deprecated").length;
+    $("#result-count").textContent = `${list.length} of ${pool} sources shown`;
     empty.hidden = list.length > 0;
     renderSuggestions(list.length ? "" : state.q);
     if (!list.length) {

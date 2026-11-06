@@ -265,7 +265,7 @@ export function siteFooterHtml({ root, stamp, total, credit = true, current = nu
       <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
 ${credit ? `      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>\n` : ""}      <p>${links.join(" · ")}</p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
-      <p class="footer-stamp">Built ${esc(stamp)} from ${total} catalog entries.</p>
+      <p class="footer-stamp">Built ${esc(stamp)} from ${total} listed sources.</p>
     </footer>`;
 }
 

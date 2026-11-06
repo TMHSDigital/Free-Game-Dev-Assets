@@ -194,8 +194,10 @@ with `node site/reverify-batch.mjs` (`npm run reverify`).
 ## Social preview
 
 `docs/images/readme/og-card.png` is a 1200x630 screenshot of this site's first screen.
-`build.mjs` copies it into `dist` and emits the `og:image` and `twitter:image` tags.
-Retake it when the hero changes.
+`build.mjs` copies it into `dist` and emits the `og:image` and `twitter:image` tags. The
+README shows it too, and the hero states the entry count, so retake it whenever that count
+changes (`npm run counts` reminds you) or the hero changes: `npm run build && npm run serve`,
+then capture the top 1200x630 of `http://127.0.0.1:3000/` in light mode, with no scrollbar.
 
 ## Commands
 

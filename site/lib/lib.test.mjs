@@ -1758,7 +1758,7 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const foot = siteFooterHtml({ root: "../../", stamp: "2026-11-03", total: 7 });
   for (const href of ["freshness/", "data.json", "catalog.csv", "feed.xml", "guide/data/"]) has(`chrome: footer links ${href}`, foot, `href="../../${href}"`);
   has("chrome: footer carries the preview credit", foot, credit);
-  has("chrome: footer stamp", foot, "Built 2026-11-03 from 7 catalog entries.");
+  has("chrome: footer stamp", foot, "Built 2026-11-03 from 7 listed sources.");
   lacks("chrome: credit: false drops the preview credit", siteFooterHtml({ root: "../../", stamp: "s", total: 1, credit: false }), credit);
   const fresh = siteFooterHtml({ root: "../", stamp: "s", total: 1, current: "freshness" });
   lacks("chrome: the freshness page does not link to itself", fresh, "freshness/");

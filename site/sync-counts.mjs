@@ -23,12 +23,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const CATALOG = path.join(ROOT, "catalog");
 
+let changed = false;
 function update(file, fn) {
   const full = path.join(ROOT, file);
   const before = fs.readFileSync(full, "utf8");
   const after = fn(before);
   if (after !== before) {
     fs.writeFileSync(full, after);
+    changed = true;
     console.log(`updated ${file}`);
   }
 }
@@ -40,3 +42,8 @@ update("catalog/README.md", (t) => syncCatalogReadme(t, counts));
 update("site/config.json", (t) => syncConfig(t, files));
 
 console.log(`${total} listed entries (${files} files, ${deprecated} deprecated): ${Object.entries(counts).map(([c, n]) => `${c} ${n}`).join(", ")}`);
+// The README screenshot (also the social card) shows the count as an image,
+// which no script can update.
+if (changed) {
+  console.log("The count changed: retake docs/images/readme/og-card.png after the next build (site/README.md, \"Social preview\").");
+}
