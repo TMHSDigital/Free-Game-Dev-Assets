@@ -24,7 +24,7 @@ import { parseFrontmatter, summaryFromBody } from "./lib/frontmatter.mjs";
 import { listEntryFiles, idMatchesFile } from "./lib/entry-files.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
-import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
+import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, openSearchXml, sitemapXml } from "./lib/exports.mjs";
 import { schemaErrors } from "./lib/schema-check.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
@@ -704,6 +704,7 @@ function main() {
   const modified = lastCommitDates();
   writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified, categories: categoriesInSitemap, guides: config.guides }));
   writeOut("robots.txt", robotsTxt(config.site));
+  writeOut("opensearch.xml", openSearchXml({ site: config.site }));
   writeOut("404.html", notFoundHtml(config.site));
   writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total, hasCard }));
 
@@ -748,7 +749,7 @@ function main() {
     `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok, ${stats.commercialVaries} per-file)`
   );
   console.log(
-    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, ${guidePages.written.length} guide pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
+    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, ${guidePages.written.length} guide pages, sitemap.xml, robots.txt, 404.html, freshness/index.html, opensearch.xml`
   );
   console.log(`${writes} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }

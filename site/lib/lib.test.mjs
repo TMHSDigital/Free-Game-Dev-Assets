@@ -1685,6 +1685,49 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("safe-fetch: DNS failure keeps its code", await errOf(safeFetch("https://missing.example/", {}, opts)), "ENOTFOUND");
 }
 
+/* opensearch.xml (#241) ---------------------------------------------------- */
+import { openSearchXml } from "./exports.mjs";
+{
+  const osSite = {
+    title: "Free Game Dev Assets",
+    tagline: "Free assets and tools for commercial games, with every licence read at its source.",
+    siteUrl: "https://tmhsdigital.github.io/Free-Game-Dev-Assets/",
+  };
+  const xml = openSearchXml({ site: osSite });
+  has("opensearch: xml header", xml, '<?xml version="1.0" encoding="UTF-8"?>');
+  has("opensearch: OpenSearchDescription root with namespace", xml, '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">');
+  has("opensearch: ShortName matches site title", xml, "<ShortName>Free Game Dev Assets</ShortName>");
+  has("opensearch: Description matches site tagline", xml, "<Description>Free assets and tools for commercial games, with every licence read at its source.</Description>");
+  has("opensearch: InputEncoding is UTF-8", xml, "<InputEncoding>UTF-8</InputEncoding>");
+  has("opensearch: Image points to favicon.svg", xml, '<Image height="16" width="16" type="image/svg+xml">https://tmhsdigital.github.io/Free-Game-Dev-Assets/favicon.svg</Image>');
+  has("opensearch: Url template queries ?q={searchTerms}", xml, '<Url type="text/html" template="https://tmhsdigital.github.io/Free-Game-Dev-Assets/?q={searchTerms}" />');
+
+  // Trailing slash handling and XML escaping
+  const xmlEscaped = openSearchXml({
+    site: {
+      title: "Assets & Tools <Free>",
+      tagline: 'Quotes "and" & signs',
+      siteUrl: "https://example.com/catalog",
+    },
+  });
+  has("opensearch: title is XML escaped", xmlEscaped, "<ShortName>Assets &amp; Tools &lt;Free&gt;</ShortName>");
+  has("opensearch: tagline is XML escaped", xmlEscaped, "<Description>Quotes &quot;and&quot; &amp; signs</Description>");
+  has("opensearch: Url template handles siteUrl without trailing slash", xmlEscaped, '<Url type="text/html" template="https://example.com/catalog/?q={searchTerms}" />');
+  has("opensearch: Image handles siteUrl without trailing slash", xmlEscaped, '<Image height="16" width="16" type="image/svg+xml">https://example.com/catalog/favicon.svg</Image>');
+
+  // Direct site argument overload
+  const xmlDirect = openSearchXml(osSite);
+  eq("opensearch: accepts direct site object", xmlDirect, xml);
+
+  // Homepage links opensearch.xml
+  const indexHtml = nodeFs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+  has(
+    "homepage links opensearch.xml",
+    indexHtml,
+    '<link rel="search" type="application/opensearchdescription+xml" title="Free Game Dev Assets" href="opensearch.xml" />'
+  );
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

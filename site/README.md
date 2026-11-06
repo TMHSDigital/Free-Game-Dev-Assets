@@ -25,8 +25,10 @@ per entry, columns in this order: id, name, url, category, license, license_spdx
 commercial, attribution_required, formats, tags, added, verified, status, page,
 subcategories, publisher, attribution_string; new columns are appended, never inserted. List
 fields are joined with `; `, and a cell that starts with `=`, `+`, `-`, `@`, a tab or a
-carriage return gets a leading `'` so a spreadsheet does not run it as a formula) and two
-Atom feeds:
+carriage return gets a leading `'` so a spreadsheet does not run it as a formula),
+[`opensearch.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/opensearch.xml)
+(an OpenSearch 1.1 description document so browsers can add the catalog as a search engine)
+and two Atom feeds:
 [`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml), the 40 newest
 entries by `added` (the day each joined the catalog), and
 [`reverified.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/reverified.xml), the
@@ -141,7 +143,7 @@ not counted. `pages.yml` also runs every Monday at 06:17 UTC so the ages keep mo
 when nothing is pushed; GitHub pauses scheduled workflows in a public repository after
 60 days without activity, so a long quiet spell needs a manual run from the Actions tab.
 
-## Sitemap
+## Sitemap and OpenSearch
 
 `build.mjs` writes `sitemap.xml` (home, freshness, category pages, stacks and every non-deprecated entry)
 and links it from the homepage with `<link rel="sitemap">`. The `Sitemap:` line in
@@ -149,6 +151,9 @@ and links it from the homepage with `<link rel="sitemap">`. The `Sitemap:` line 
 under `/Free-Game-Dev-Assets/` it is never seen. Submit
 `https://tmhsdigital.github.io/Free-Game-Dev-Assets/sitemap.xml` once in Google Search
 Console and Bing Webmaster Tools; that is the step that gets it read.
+
+`opensearch.xml` is published and linked from the homepage with `<link rel="search">`
+so browsers can discover and add the catalog as a search engine using `{searchTerms}` on `?q=`.
 
 ## Link check
 

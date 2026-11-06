@@ -1,7 +1,7 @@
 /**
  * Flat exports of the catalog: catalog.csv for spreadsheets, feed.xml (Atom)
- * for readers and sitemap.xml for crawlers. data.json stays the full
- * machine-readable catalog.
+ * for readers, sitemap.xml for crawlers and opensearch.xml for browsers.
+ * data.json stays the full machine-readable catalog.
  */
 import { esc } from "./shared.mjs";
 
@@ -51,6 +51,28 @@ export function sitemapXml({ site, entries, stacks = [], stamp, modified = new M
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
 }
+
+/**
+ * opensearch.xml. An OpenSearch 1.1 description document so browsers can add
+ * the catalog as a search engine and search it directly from the address bar.
+ */
+export function openSearchXml(siteOrOpts) {
+  const site = siteOrOpts?.site || siteOrOpts;
+  const base = String(site?.siteUrl || "").replace(/\/+$/, "");
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">',
+    `  <ShortName>${esc(site?.title)}</ShortName>`,
+    `  <Description>${esc(site?.tagline)}</Description>`,
+    '  <InputEncoding>UTF-8</InputEncoding>',
+    `  <Image height="16" width="16" type="image/svg+xml">${esc(base)}/favicon.svg</Image>`,
+    `  <Url type="text/html" template="${esc(base)}/?q={searchTerms}" />`,
+    '</OpenSearchDescription>',
+    '',
+  ].join('\n');
+}
+
+export const opensearchXml = openSearchXml;
 
 const CSV_COLUMNS = [
   "id",
