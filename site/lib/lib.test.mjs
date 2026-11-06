@@ -989,20 +989,24 @@ import { batchIssueMarkdown, pickBatch } from "./reverify.mjs";
   eq("batch: a bulge is spread over the batches before it expires", pickBatch(bulge, { now: rvNow }).length, 34);
   eq("batch: a bulge is picked oldest first even before it is due", pickBatch(bulge, { now: rvNow })[0].age, 109);
 
-  // The catalog's own verified dates, run through 24 monthly batches in
-  // which every picked entry is re-read on the day: nothing may pass the
-  // fresh window, and no batch may need more than the size it was given.
-  const { listEntryFiles } = await import("./entry-files.mjs");
-  const { parseFrontmatter } = await import("./frontmatter.mjs");
+  // A catalog-shaped fixture with a fixed start date (#219: the test used to
+  // read the live catalog and today's clock, so it failed by itself once the
+  // oldest real entry aged past the window). It is run through 24 monthly
+  // batches in which every picked entry is re-read on the day: nothing may
+  // pass the fresh window, and no batch may need more than a third of it.
   const { VERIFIED_FRESH_DAYS } = await import("./shared.mjs");
-  const catalogDir = new URL("../../catalog/", import.meta.url);
-  const { fileURLToPath } = await import("node:url");
-  let sim = listEntryFiles(fileURLToPath(catalogDir))
-    .map((f) => parseFrontmatter(nodeFs.readFileSync(f, "utf8"))?.meta)
-    .filter((m) => m?.id)
-    .map((m) => ({ id: String(m.id), verified: m.verified ? String(m.verified) : null, status: String(m.status || "needs-review") }));
-  const first = new Date();
-  let t = Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + 1, 1, 8);
+  const simStart = Date.parse("2026-11-01T08:00:00Z");
+  const daysBefore = (n) => new Date(simStart - n * 86400000).toISOString().slice(0, 10);
+  let sim = [
+    // a bulge read on two days, the way the first catalog pass was
+    ...Array.from({ length: 60 }, (_, i) => ({ id: `bulge-a${i}`, verified: daysBefore(140), status: "active" })),
+    ...Array.from({ length: 80 }, (_, i) => ({ id: `bulge-b${i}`, verified: daysBefore(110), status: i % 5 ? "active" : "needs-review" })),
+    // a steady trickle over the last 150 days
+    ...Array.from({ length: 280 }, (_, i) => ({ id: `steady${i}`, verified: daysBefore(i % 150), status: "active" })),
+    ...Array.from({ length: 10 }, (_, i) => ({ id: `gone${i}`, verified: daysBefore(400), status: "deprecated" })),
+    { id: "undated", verified: null, status: "needs-review" },
+  ];
+  let t = simStart;
   let worstAge = 0;
   let biggest = 0;
   for (let m = 0; m < 24; m += 1) {
@@ -1017,7 +1021,7 @@ import { batchIssueMarkdown, pickBatch } from "./reverify.mjs";
     const d = new Date(t);
     t = Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1, 8);
   }
-  eq("batch simulation: runs on the real catalog", sim.length > 100, true);
+  eq("batch simulation: the fixture is catalog-sized", sim.length > 400, true);
   eq("batch simulation: no live entry passes the fresh window in 24 months", worstAge <= VERIFIED_FRESH_DAYS, true);
   eq("batch simulation: a batch stays under a third of the catalog", biggest <= Math.ceil(sim.length / 3), true);
   const md = batchIssueMarkdown({ batch: pickBatch(pool, { now: rvNow, size: 2 }), repo: "https://github.com/o/r", date: "2026-11-01", total: 6 });
