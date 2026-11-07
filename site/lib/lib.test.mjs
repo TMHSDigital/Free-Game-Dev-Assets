@@ -452,6 +452,9 @@ has("stack title escaped", spage, "<title>Make a &quot;thing&quot; &lt;/script&g
 has("stack canonical", spage, '<link rel="canonical" href="https://x.test/s/stack/s1/" />');
 eq("stack one h1", (spage.match(/<h1[\s>]/g) || []).length, 1);
 has("stack pick links its entry page", spage, 'href="../../entry/a/"');
+has("stack: add-all carries every pick once (#272)", sp({ sections: [{ name: "Art", rows: [{ need: "Tiles", entry: eA, whyHtml: "" }, { need: "More", entry: eA, whyHtml: "" }, { need: "Sounds", entry: eC, whyHtml: "" }] }] }), `data-shortlist-all="${eA.id},${eC.id}"`);
+has("stack: add-all names the count", spage, "Add all 2 picks to my shortlist");
+has("stack: loads stack.js for the button", sp({ owed: owes([]) }), 'src="../../stack.js"');
 has("stack credit line escaped", spage, "Art by &quot;A&quot; &lt;x&gt;");
 has("copy all carries every canned line", spage, 'data-copy="Art by &quot;A&quot; &lt;x&gt;\nMusic by B"');
 has("no canned line note", spage, "No canned credit line: see the entry.");
@@ -460,7 +463,7 @@ has("needs-review flag on the pick", spage, 'class="pick-flag"');
 has("gaps rendered", spage, "<li>No parallax.</li>");
 has("walked line", spage, "Stack walked 2026-09-20. Each licence is only as current as its entry's verified date.");
 has("copy script with canned lines", spage, '<script src="../../stack.js" defer></script>');
-lacks("no copy script without canned lines", sp({ owed: owes([{ need: "Sounds", entry: eC }]) }), "stack.js");
+lacks("no script without canned lines or picks", sp({ owed: owes([{ need: "Sounds", entry: eC }]), sections: [] }), "stack.js");
 const sld = spage.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
 lacks("stack json-ld cannot close its script", sld, "</script");
 eq("stack json-ld lists the picks", JSON.parse(sld).itemListElement[0].url, "https://x.test/s/entry/a/");

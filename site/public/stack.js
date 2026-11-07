@@ -1,4 +1,4 @@
-/** Copy buttons on a stack page. The page works without them. */
+/** Copy buttons and "Add all to shortlist" on a stack page. The page works without them. */
 (() => {
   for (const btn of document.querySelectorAll("button[data-copy]")) {
     btn.hidden = false;
@@ -20,6 +20,29 @@
         sel.removeAllRanges();
         sel.addRange(range);
         status.textContent = "Select and copy";
+      }
+    });
+  }
+
+  // Every pick into the shortlist (#272), under shortlist.js's storage key;
+  // the catalog and other open tabs pick the change up from storage.
+  const KEY = "fgda:shortlist";
+  for (const btn of document.querySelectorAll("button[data-shortlist-all]")) {
+    btn.hidden = false;
+    btn.addEventListener("click", () => {
+      const status = btn.parentElement.querySelector(".copy-status");
+      const picks = btn.getAttribute("data-shortlist-all").split(",").filter(Boolean);
+      try {
+        let ids = JSON.parse(localStorage.getItem(KEY) || "[]");
+        if (!Array.isArray(ids)) ids = [];
+        ids = ids.filter((id) => typeof id === "string");
+        const added = picks.filter((id) => !ids.includes(id));
+        localStorage.setItem(KEY, JSON.stringify([...ids, ...added]));
+        status.textContent = added.length
+          ? `Added ${added.length} of ${picks.length} to your shortlist (${ids.length + added.length} in all).`
+          : `All ${picks.length} are already on your shortlist.`;
+      } catch {
+        status.textContent = "This browser is not keeping site data, so the shortlist cannot be saved.";
       }
     });
   }

@@ -113,7 +113,12 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
         <ul class="gap-list">${gapsHtml.map((g) => `<li>${g}</li>`).join("")}</ul>
       </section>`
     : "";
-  const script = copyAllText(owed) ? '<script src="../../stack.js" defer></script>' : "";
+  // Every pick's id, once, for "Add all to shortlist" (stack.js; #272).
+  const pickIds = [...new Set(sections.flatMap((s) => s.rows.map((r) => r.entry.id)))];
+  const shortlistAll = pickIds.length
+    ? `<p class="copy-all shortlist-all"><button type="button" class="btn-ghost" data-shortlist-all="${esc(pickIds.join(","))}" hidden>Add all ${pickIds.length} picks to my shortlist</button> <span class="copy-status" role="status"></span></p>`
+    : "";
+  const script = copyAllText(owed) || pickIds.length ? '<script src="../../stack.js" defer></script>' : "";
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -136,6 +141,7 @@ export function stackPageHtml({ stack, sections, gapsHtml, leadHtml, owed, site,
       </nav>
       <h1>${esc(meta.title)}</h1>
       <div class="entry-lead"><p>${esc(meta.task)}</p>${leadHtml}</div>
+      ${shortlistAll}
       <section class="owes" aria-labelledby="owes-title">
         <h2 id="owes-title">What this stack owes</h2>
         ${owesHtml(owed)}
