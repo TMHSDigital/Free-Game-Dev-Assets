@@ -1172,6 +1172,10 @@ eq("thumbs: twitter fallback", imageUrlFromHtml('<meta name="twitter:image" cont
 eq("thumbs: no image", imageUrlFromHtml("<html></html>", "https://x/"), null);
 eq("thumbs: shared hash dropped at three", [...sharedImageIds({ a: { hash: "h1" }, b: { hash: "h1" }, c: { hash: "h1" }, d: { hash: "h2" }, e: { hash: "h2" } })].sort().join(), "a,b,c");
 eq("thumbs: pinned never dropped", [...sharedImageIds({ a: { hash: "h1", pinned: true }, b: { hash: "h1" }, c: { hash: "h1" }, d: { hash: "h1" } })].sort().join(), "b,c,d");
+// #246: hashes already recorded in manifest.shared count toward the three.
+eq("thumbs: one new record matching a known shared hash is dropped", [...sharedImageIds({ d: { hash: "h" }, e: { hash: "x" } }, { a: { hash: "h" }, b: { hash: "h" }, c: { hash: "h" } })].join(), "d");
+eq("thumbs: known shared ids never returned", [...sharedImageIds({ d: { hash: "h" } }, { a: { hash: "h" }, b: { hash: "h" } })].sort().join(), "d");
+eq("thumbs: a shared record for an id now in thumbs is not counted twice", [...sharedImageIds({ a: { hash: "h" } }, { a: { hash: "h" }, b: { hash: "h" } })].join(), "");
 {
   // #232: a run that re-drops the same shared images changes nothing.
   const { manifestChanges } = await import("./thumbs.mjs");
@@ -1621,6 +1625,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   ], first);
   eq("added: a date reset by a move is caught", errs.length, 1);
   has("added: the message names the right date", errs[0], "set added: 2026-07-19");
+  // #247: 2026-11-07T02:30Z is the evening of 11-06 in the Americas; the UTC day counts.
+  const utc = firstAddedFromLog(["\0" + String(Date.UTC(2026, 10, 7, 2, 30) / 1000), "", "A\tcatalog/2d/late.md"].join("\n"));
+  eq("added: a timestamp header is read as a UTC day", utc.get("catalog/2d/late.md"), "2026-11-07");
+  eq("added: a UTC added date on an evening commit passes", lateAddedDates([{ rel: "catalog/2d/late.md", added: "2026-11-07" }], utc).length, 0);
 }
 
 /* engine scope and limits on entry pages (#173) --------------------------- */

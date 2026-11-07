@@ -308,8 +308,9 @@ async function main() {
     CONCURRENCY
   );
 
-  // A hash shared by three or more entries is a logo, not a preview.
-  for (const id of sharedImageIds(thumbs)) {
+  // A hash shared by three or more entries is a logo, not a preview. Logos
+  // dropped in earlier runs (in `shared`) count toward the three.
+  for (const id of sharedImageIds(thumbs, shared)) {
     summary.dropped.push({ id, hash: thumbs[id].hash });
     shared[id] = thumbs[id];
     delete thumbs[id];

@@ -9,15 +9,17 @@
 
 /**
  * Repo path => YYYY-MM-DD the file was first added, following renames, from
- * `git log --reverse --format=%x00%as --name-status -M --diff-filter=AR`
- * output (oldest commit first).
+ * `git log --reverse --format=%x00%at --name-status -M --diff-filter=AR`
+ * output (oldest commit first). A Unix timestamp header is read as a UTC
+ * date, the same clock new-entry.mjs writes `added` with (#247); a
+ * YYYY-MM-DD header is taken as is.
  */
 export function firstAddedFromLog(out) {
   const first = new Map();
   let date = null;
   for (const raw of String(out).split("\n")) {
     if (raw.startsWith("\0")) {
-      date = raw.slice(1).trim();
+      date = commitDay(raw.slice(1).trim());
       continue;
     }
     const parts = raw.split("\t");
@@ -41,4 +43,9 @@ export function lateAddedDates(entries, firstAdded) {
     }
   }
   return errors;
+}
+
+/** "1730851200" (Unix seconds) => its UTC YYYY-MM-DD; anything else unchanged. */
+export function commitDay(token) {
+  return /^\d+$/.test(token) ? new Date(Number(token) * 1000).toISOString().slice(0, 10) : token;
 }

@@ -25,7 +25,9 @@ if (git(["rev-parse", "--is-shallow-repository"]).trim() === "true") {
   process.exit(0);
 }
 
-const log = git(["log", "--reverse", "--format=%x00%as", "--name-status", "-M", "--diff-filter=AR", "--", "catalog"]);
+// %at, not %as: the author's local date is a day behind UTC in the evening
+// west of UTC, while `added` is written as a UTC date (#247).
+const log = git(["log", "--reverse", "--format=%x00%at", "--name-status", "-M", "--diff-filter=AR", "--", "catalog"]);
 const firstAdded = firstAddedFromLog(log);
 // Every entry file, parsed or not: a broken one still has an added date to check.
 const entries = readCatalog(path.join(ROOT, "catalog"), { root: ROOT }).map((r) => ({

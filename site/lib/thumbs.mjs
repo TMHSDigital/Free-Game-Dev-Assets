@@ -158,16 +158,20 @@ export function imageUrlFromHtml(html, pageUrl) {
   }
 }
 
-/** Ids whose image bytes are shared by three or more records: a logo, not a preview. Pinned records are exempt. */
-export function sharedImageIds(records) {
-  const byHash = new Map();
-  for (const [id, rec] of Object.entries(records || {})) {
-    if (!rec || !rec.hash || rec.pinned) continue;
-    if (!byHash.has(rec.hash)) byHash.set(rec.hash, []);
-    byHash.get(rec.hash).push(id);
-  }
+/**
+ * Ids in `records` whose image bytes are shared by three or more records: a
+ * logo, not a preview. `known` holds records already dropped as shared in an
+ * earlier run; they count toward the three, so one new entry from a site
+ * whose logo is on file is dropped too (#246). Pinned records are exempt.
+ */
+export function sharedImageIds(records, known = {}) {
+  const count = new Map();
+  const tally = (rec) => { if (rec && rec.hash && !rec.pinned) count.set(rec.hash, (count.get(rec.hash) || 0) + 1); };
+  const own = Object.entries(records || {});
+  for (const [, rec] of own) tally(rec);
+  for (const [id, rec] of Object.entries(known || {})) if (!(records && id in records)) tally(rec);
   const out = new Set();
-  for (const ids of byHash.values()) if (ids.length >= 3) for (const id of ids) out.add(id);
+  for (const [id, rec] of own) if (rec && rec.hash && !rec.pinned && count.get(rec.hash) >= 3) out.add(id);
   return out;
 }
 
