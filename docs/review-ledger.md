@@ -4,13 +4,14 @@ Newest section at the top. One section per review run. This is the record of wha
 run measured, what it changed, what it deliberately did not change, and what the next
 run should not spend time re-deciding.
 
-## 2026-11-07 (audit pass 5 fixes: #246 to #272, then #203, #110, #89, #91)
+## 2026-11-07 (audit pass 5 fixes #246 to #272, then 15 backlog issues)
 
 Worked on main, one commit per issue or pair. Every change ran `npm run check`; the browser-side ones were also clicked through on a local build.
 
 - **Bugs:** logos already in `thumbs.json` → `shared` count toward the three-hash rule (#246); check-added compares UTC days (#247); bot workflows read every open issue (#248); the 404 page suggests stacks (#249); `--stale-days=N` (#250).
 - **Site:** one `FILTERS` table behind every catalog filter (#252) and a "Licence read" freshness filter (#271); the homepage uses the shared header and footer (#253); "Add all picks to my shortlist" on stack pages (#272); the shortlist shows what the set owes, and the catalog can copy a link to the view and download the shown results as CSV or JSON (#110); this changelog (#91).
 - **Checks and tooling:** one Markdown link reader for validate and the renderer (#254); entry checks run from one registry (#255); one `normalizeEntry` (#256) and one `isListed` (#257); test sections that survive a throw and `TEST_ONLY` (#203); `npm run coverage` (#268); CI on Windows (#267); the link check lists known script-refusing hosts as checked by hand and fetches the licence pages quoted in Evidence (#89).
+- **Backlog, same day:** search reads entry bodies (#92); every needs-review entry states its open question, V39 (#211); a credits audit page (#187); per-entry licence-change feeds and an OPML for the shortlist (#186); a CLI and an MCP server over data.json (#115); theme toggle, manifest and an offline copy (#111); per-entry badges (#117, cards still open); the README cut from 438 to 254 lines (#121); homepage helpers out of build.mjs (#85).
 - **Did not change:** the link checker does not pose as a browser to get past a host's bot blocking (#89 suggested a retry with browser headers). Branch protection (#3) is still a repository setting for the maintainer.
 
 ## 2026-10-22 (open issues sweep: #77 to #114)
