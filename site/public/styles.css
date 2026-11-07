@@ -60,9 +60,11 @@
   color-scheme: light dark;
 }
 
-/* The catalog is read at night as often as not. Same tokens, restated. */
+/* The catalog is read at night as often as not. Same tokens, restated: for
+   the system dark scheme unless the reader chose light, and whenever they
+   chose dark (theme.js sets data-theme on <html>; #111). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0f1216;
     --ink: #e8ecf1;
     --muted: #9aa5b3;
@@ -79,25 +81,80 @@
     --stale: #f08a8a;
   }
 
-  .btn {
+  :root:not([data-theme="light"]) .btn {
     border-color: var(--accent);
     background: var(--accent);
     color: #0f1216;
   }
 
-  .btn:hover {
+  :root:not([data-theme="light"]) .btn:hover {
     background: var(--ink);
     border-color: var(--ink);
     color: #0f1216;
   }
 
-  .chip.is-active {
+  :root:not([data-theme="light"]) .chip.is-active {
     border-color: var(--accent);
     background: var(--accent);
     color: #0f1216;
   }
 
 }
+  :root[data-theme="dark"] {
+    --bg: #0f1216;
+    --ink: #e8ecf1;
+    --muted: #9aa5b3;
+    --line: #2b323c;
+    --control-line: #616b7b;
+    --surface: #161b22;
+    --accent: #7fd4b4;
+    --ok: #7fd4b4;
+    --warn: #e0b060;
+    --danger: #f08a8a;
+    --unknown: #9aa5b3;
+    --fresh: #7fd4b4;
+    --aging: #e0b060;
+    --stale: #f08a8a;
+  }
+
+  :root[data-theme="dark"] .btn {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #0f1216;
+  }
+
+  :root[data-theme="dark"] .btn:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #0f1216;
+  }
+
+  :root[data-theme="dark"] .chip.is-active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #0f1216;
+  }
+
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+.theme-toggle {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 
 *,
 *::before,

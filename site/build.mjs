@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { BROWSER_MODULES, isListed, esc, latestAllowedDate, OG_CARD_NAME, opensearchXml, siteFooterHtml, siteHeaderHtml } from "./lib/shared.mjs";
+import { BROWSER_MODULES, FONT_FILES, PAGE_MODULES, isListed, esc, latestAllowedDate, OG_CARD_NAME, opensearchXml, siteFooterHtml, siteHeaderHtml } from "./lib/shared.mjs";
 import { bodySearchText } from "./lib/search.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
@@ -37,6 +37,7 @@ import { stackPageHtml } from "./lib/stack-page.mjs";
 import { freshnessLineHtml, freshnessPageHtml, freshnessStats, newEntriesLineHtml } from "./lib/freshness.mjs";
 import { licenceTerms, listStackFiles, owes, parseStack, pickPath } from "./lib/stacks.mjs";
 import { createDistWriter } from "./lib/dist-writer.mjs";
+import { serviceWorkerJs, webManifest } from "./lib/offline.mjs";
 import { ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -563,6 +564,12 @@ function main() {
   const modified = lastCommitDates();
   writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified, categories: categoriesInSitemap, guides: config.guides }));
   writeOut("robots.txt", robotsTxt(config.site));
+  // Installable, and the catalog works offline after one visit (#111).
+  writeOut("manifest.webmanifest", `${JSON.stringify(webManifest(config.site), null, 2)}\n`);
+  writeOut("sw.js", serviceWorkerJs({
+    version: payload.generatedAt,
+    precache: [...new Set(["./", "data.js", "styles.css", "theme.js", "favicon.svg", ...PAGE_MODULES.home, ...FONT_FILES])],
+  }));
   writeOut("opensearch.xml", opensearchXml(config.site));
   writeOut("404.html", notFoundHtml(config.site));
   writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.listed, hasCard }));

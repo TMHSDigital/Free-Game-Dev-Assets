@@ -2503,6 +2503,25 @@ await section("homepage helpers out of build.mjs (#85)", async () => {
   eq("pickPath: query and fragment dropped like the resolver", pickPath("stacks/s.md", "../catalog/2d/a.md?x=1#y"), "catalog/2d/a.md");
 });
 
+/* theme, manifest and offline worker (#111) -------------------------------- */
+await section("theme, manifest and offline worker (#111)", async () => {
+  const { webManifest, serviceWorkerJs } = await import("./offline.mjs");
+  const { headAssetsHtml, siteHeaderHtml } = await import("./shared.mjs");
+  const m = webManifest({ title: "Site", tagline: "Tag" });
+  eq("manifest: relative start and scope", `${m.start_url}|${m.scope}`, "./|./");
+  eq("manifest: standalone with an icon", `${m.display}|${m.icons[0].src}`, "standalone|favicon.svg");
+  const sw = serviceWorkerJs({ version: "2026-11-07T00:00:00Z", precache: ["./", "data.js"] });
+  has("worker: cache named by the build", sw, 'const CACHE = "fgda-2026-11-07T00:00:00Z";');
+  has("worker: precache list", sw, 'const PRECACHE = ["./","data.js"];');
+  has("worker: network first", sw, "fetch(req)");
+  has("worker: old caches dropped", sw, "caches.delete(k)");
+  has("worker: same origin only", sw, "self.location.origin");
+  const head = headAssetsHtml("../../").join("\n");
+  has("head: theme script, blocking, from the root", head, '<script src="../../theme.js"></script>');
+  has("head: manifest link", head, '<link rel="manifest" href="../../manifest.webmanifest" />');
+  has("header: theme toggle, hidden until theme.js runs", siteHeaderHtml({ root: "", repo: "https://g.test/o/r" }), 'id="theme-toggle" hidden');
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

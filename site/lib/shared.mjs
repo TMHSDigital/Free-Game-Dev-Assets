@@ -250,6 +250,7 @@ export function siteHeaderHtml({ root, repo }) {
         <a href="${root}#starters">Starters</a>
         <a href="${root}#guides">Guides</a>
         <a href="${esc(repo)}" rel="noopener noreferrer">GitHub</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" hidden>Theme: system</button>
         <span class="nav-sponsor">${sponsorButtonHtml()}</span>
       </nav>
     </header>`;
@@ -362,6 +363,9 @@ export function headAssetsHtml(root = "./") {
     `<link rel="icon" href="${esc(root)}favicon.svg" type="image/svg+xml" />`,
     ...FONT_FILES.map((f) => `<link rel="preload" href="${esc(root)}${f}" as="font" type="font/woff2" crossorigin />`),
     `<link rel="stylesheet" href="${esc(root)}styles.css" />`,
+    `<link rel="manifest" href="${esc(root)}manifest.webmanifest" />`,
+    // Blocking on purpose: it sets the chosen theme before the first paint (#111).
+    `<script src="${esc(root)}theme.js"></script>`,
   ];
 }
 
