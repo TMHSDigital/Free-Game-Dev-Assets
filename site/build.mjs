@@ -219,14 +219,28 @@ function headMetaHtml(site, stats, generatedAt, hasCard) {
  * git is unavailable (a tarball); a shallow checkout dates every file to HEAD.
  */
 function lastCommitDates() {
+  const git = (args) =>
+    execFileSync("git", args, { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "ignore"] });
   try {
-    const out = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", ...DATED_PATHS], {
-      cwd: ROOT,
-      encoding: "utf8",
-      maxBuffer: 64 * 1024 * 1024,
-      stdio: ["ignore", "pipe", "ignore"],
-    });
-    return commitDatesFromLog(out);
+    // The dates depend only on the commits, so they are cached per HEAD inside
+    // .git (never published, never committed): a no-change rebuild skips the
+    // full-history log, whose cost grows with every commit (#262).
+    const [gitDir, head] = git(["rev-parse", "--git-dir", "HEAD"]).trim().split("\n");
+    const cacheFile = path.resolve(ROOT, gitDir, "fgda-commit-dates.json");
+    const key = `${head} ${DATED_PATHS.join(",")}`;
+    try {
+      const cached = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
+      if (cached.key === key) return new Map(Object.entries(cached.dates));
+    } catch {
+      // No cache yet, or an unreadable one: rebuild it below.
+    }
+    const dates = commitDatesFromLog(git(["log", "--format=%x00%cs", "--name-only", "--", ...DATED_PATHS]));
+    try {
+      fs.writeFileSync(cacheFile, JSON.stringify({ key, dates: Object.fromEntries(dates) }));
+    } catch {
+      // A read-only .git still builds; it just reads the log every time.
+    }
+    return dates;
   } catch {
     // No git: the sitemap falls back to the build date.
     return new Map();
