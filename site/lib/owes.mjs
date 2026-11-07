@@ -97,7 +97,7 @@ export function copyAllText(owed) {
  * Every section a stack page shows is here, so nothing owed is dropped on the
  * way from the shortlist to the game's repository.
  */
-export function creditsFile(owed, { format = "md", pageUrl = () => "", date = "", source = "Free Game Dev Assets" } = {}) {
+export function creditsFile(owed, { format = "md", pageUrl = () => "", date = "", source = "Free Game Dev Assets", madeFrom = "a shortlist" } = {}) {
   const md = format === "md";
   const out = [];
   const heading = (text) => {
@@ -112,7 +112,7 @@ export function creditsFile(owed, { format = "md", pageUrl = () => "", date = ""
   out.push(md ? "# Credits" : "CREDITS\n=======");
   out.push(
     "",
-    `Made from a shortlist on ${source}${date ? ` on ${date}` : ""}. Each licence was checked at its source on the date its catalog entry shows. This is the catalog's reading, not legal advice: re-read the source before you ship.`
+    `Made from ${madeFrom} on ${source}${date ? ` on ${date}` : ""}. Each licence was checked at its source on the date its catalog entry shows. This is the catalog's reading, not legal advice: re-read the source before you ship.`
   );
 
   if (owed.credits.length) {

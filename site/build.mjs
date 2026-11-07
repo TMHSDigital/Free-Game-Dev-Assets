@@ -38,6 +38,7 @@ import { freshnessLineHtml, freshnessPageHtml, freshnessStats, newEntriesLineHtm
 import { licenceTerms, listStackFiles, owes, parseStack, pickPath } from "./lib/stacks.mjs";
 import { createDistWriter } from "./lib/dist-writer.mjs";
 import { serviceWorkerJs, webManifest } from "./lib/offline.mjs";
+import { auditPageHtml } from "./lib/audit-page.mjs";
 import { ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -573,6 +574,8 @@ function main() {
   writeOut("opensearch.xml", opensearchXml(config.site));
   writeOut("404.html", notFoundHtml(config.site));
   writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.listed, hasCard }));
+  // Paste a credits file, see what it owes (#187).
+  writeOut(path.join("audit", "index.html"), auditPageHtml({ site: config.site, stamp, total: stats.listed, hasCard }));
 
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });

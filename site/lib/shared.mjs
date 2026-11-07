@@ -270,6 +270,7 @@ export function siteFooterHtml({ root, stamp, total, credit = true, current = nu
     `<a href="${root}feed.xml">feed</a>`,
     `<a href="${root}guide/data/">Use the data</a>`,
     `<a href="${root}guide/changelog/">Changelog</a>`,
+    current === "audit" ? null : `<a href="${root}audit/">Credits audit</a>`,
   ].filter(Boolean);
   return `<footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
@@ -294,6 +295,7 @@ export const BROWSER_MODULES = {
   "shared.mjs": "shared.mjs",
   "client-state.js": "client-state.mjs", // shortlist parsing, escaping and the entry back link
   "exports.js": "exports.mjs", // "Download these" on the catalog: the same CSV as catalog.csv
+  "credits-audit.js": "credits-audit.mjs", // the credits audit page's matcher
 };
 
 /**
@@ -307,6 +309,7 @@ export const PAGE_MODULES = {
   entry: ["shortlist.js", "owes.js", "client-state.js"],
   category: ["category.js", "views.js", "shortlist.js", "owes.js", "client-state.js"],
   notFound: ["not-found.js", "search.js", "shared.mjs"],
+  audit: ["audit.js", "credits-audit.js", "owes.js", "client-state.js"],
 };
 
 /**

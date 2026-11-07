@@ -2522,6 +2522,57 @@ await section("theme, manifest and offline worker (#111)", async () => {
   has("header: theme toggle, hidden until theme.js runs", siteHeaderHtml({ root: "", repo: "https://g.test/o/r" }), 'id="theme-toggle" hidden');
 });
 
+/* credits audit (#187) ----------------------------------------------------- */
+await section("credits audit (#187)", async () => {
+  const { urlKey, auditIndex, auditLines, auditedEntries } = await import("./credits-audit.mjs");
+  eq("urlKey: www, case, trailing slash and query dropped", urlKey("https://WWW.Kenney.nl/Assets/?x=1#y").key, "kenney.nl/assets");
+  eq("urlKey: not http", urlKey("ftp://x.test/a"), null);
+  eq("urlKey: not a URL", urlKey("nope"), null);
+  const entries = [
+    { id: "kenney", name: "Kenney", url: "https://kenney.nl/assets" },
+    { id: "kenney-ui", name: "Kenney UI Pack", url: "https://kenney.nl/assets/ui-pack" },
+    { id: "incompetech", name: "Incompetech", url: "https://incompetech.com/music/" },
+    { id: "kit", name: "Kit", url: "https://kit.test/" },
+  ];
+  const v = auditLines([
+    "UI: https://www.kenney.nl/assets/ui-pack/download.",
+    "Props https://kenney.nl/assets/other-pack",
+    "Music: Kevin MacLeod (https://incompetech.com/)",
+    "https://kenney.nl/blog/post",
+    "Music by incompetech, licensed CC-BY",
+    "my own sprites, kit included",
+    "https://unknown.test/thing",
+    "",
+  ].join("\n"), auditIndex(entries));
+  eq("audit: empty lines skipped", v.length, 7);
+  eq("audit: the longest URL prefix wins", v[0].entries.map((e) => e.id).join(), "kenney-ui");
+  eq("audit: a deeper URL under an entry's url matches it", `${v[1].via}:${v[1].entries[0].id}`, "url:kenney");
+  eq("audit: a bare site root names the site, not one source", `${v[2].via}:${v[2].entries[0].id}`, "site:incompetech");
+  eq("audit: same site, no prefix: candidates", `${v[3].via}:${v[3].entries.length}`, "site:2");
+  eq("audit: a name without a URL", `${v[4].via}:${v[4].entries[0].id}`, "name:incompetech");
+  eq("audit: short names never match by name", v[5].via, "none");
+  eq("audit: unknown site", v[6].via, "none");
+  eq("audit: settled entries, each once, no candidates", auditedEntries(v).map((e) => e.id).sort().join(), "incompetech,kenney,kenney-ui");
+});
+
+/* credits audit: listings and publishers (#187) ----------------------------- */
+await section("credits audit: listings and publishers (#187)", async () => {
+  const { auditIndex, auditLines } = await import("./credits-audit.mjs");
+  const { creditsFile, owes } = await import("./owes.mjs");
+  const entries = [
+    { id: "lib", name: "Library", url: "https://pub.test" },
+    { id: "series", name: "Series", url: "https://pub.test/assets?series=A" },
+    { id: "pack", name: "Pack One", url: "https://pub.test/assets/pack-one", publisher: "Pubhouse" },
+    { id: "pack2", name: "Pack Two", url: "https://pub.test/assets/pack-two", publisher: "Pubhouse" },
+  ];
+  const v = auditLines("https://pub.test/assets/other\nhttps://pub.test/assets?series=A\nSprites by Pubhouse", auditIndex(entries));
+  eq("audit: a filtered listing is not a prefix of other pages", v[0].entries.map((e) => e.id).join(), "lib");
+  eq("audit: a filtered listing matches itself", v[1].entries.map((e) => e.id).join(), "series");
+  eq("audit: a named publisher lists its entries", `${v[2].via}:${v[2].entries.map((e) => e.id).join("+")}`, "name:pack+pack2");
+  has("credits file: the header says where it came from", creditsFile(owes([]), { madeFrom: "a credits audit" }), "Made from a credits audit on");
+  has("credits file: shortlist by default", creditsFile(owes([])), "Made from a shortlist on");
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

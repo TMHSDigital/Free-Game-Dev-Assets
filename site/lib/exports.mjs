@@ -44,6 +44,7 @@ export function sitemapXml({ site, entries, stacks = [], stamp, modified = new M
   const urls = [
     url(`${base}/`, stamp),
     url(`${base}/freshness/`, stamp),
+    url(`${base}/audit/`, stamp),
     ...categories.map((c) => url(`${base}/category/${c.id}/`, c.lastmod || stamp)),
     ...guides.map((g) => url(`${base}/guide/${g.id}/`, modified.get(g.path) || stamp)),
     ...stacks.map((s) => url(`${base}/stack/${s.meta.id}/`, latest(s.meta.walked, modified.get(s.rel)))),
