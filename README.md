@@ -85,28 +85,6 @@ The publishers most projects start from.
       <sub>CC0 · HDRI and PBR</sub>
     </td>
   </tr>
-  <tr>
-    <td align="center" valign="top" width="25%">
-      <a href="catalog/2d/kenney-ui-pack.md"><img src="docs/images/readme/kenney-ui.png" alt="Kenney UI pack panels and buttons" width="220" /></a><br />
-      <b><a href="catalog/2d/kenney-ui-pack.md">Kenney UI</a></b><br />
-      <sub>CC0 · HUD and menus</sub>
-    </td>
-    <td align="center" valign="top" width="25%">
-      <a href="catalog/2d/kenney-input-prompts.md"><img src="docs/images/readme/kenney-prompts.png" alt="Kenney Xbox Series input prompt icons" width="220" /></a><br />
-      <b><a href="catalog/2d/kenney-input-prompts.md">Input prompts</a></b><br />
-      <sub>CC0 · 64×64 glyphs</sub>
-    </td>
-    <td align="center" valign="top" width="25%">
-      <a href="catalog/3d/ambientcg.md"><img src="docs/images/readme/ambientcg.jpg" alt="ambientCG photogrammetry ground material sphere" width="220" /></a><br />
-      <b><a href="catalog/3d/ambientcg.md">ambientCG</a></b><br />
-      <sub>CC0 · seamless PBR</sub>
-    </td>
-    <td align="center" valign="top" width="25%">
-      <a href="catalog/fonts/departure-mono.md"><img src="docs/images/readme/departure-mono.png" alt="Departure Mono pixel type specimen" width="220" /></a><br />
-      <b><a href="catalog/fonts/departure-mono.md">Departure Mono</a></b><br />
-      <sub>SIL OFL · pixel type</sub>
-    </td>
-  </tr>
 </table>
 
 <sub>Publisher promotional stills (CC0 or SIL OFL), shown here as documentation only. The packs themselves stay on the source sites.</sub>
@@ -172,132 +150,38 @@ someone exactly what you are looking at.
 
 ## Reading an entry
 
-Each source is one Markdown file: frontmatter for the facts, then notes on what it is good
-for, what the catch is, and a dated **Evidence** section quoting the live licence page.
-
-| Status | Meaning | What to do |
-| :--- | :--- | :--- |
-| 🟢 `active` | Licence read at the source and quoted with a date | Suitable to evaluate for production |
-| 🟡 `needs-review` | Useful, but a real question is still open, and the entry says which | Verify before shipping |
-| ⚪ `deprecated` | Kept for history, with the reason stated | Use an alternative |
-
-`verified` is the date someone last read the licence at the source. The website shows its
-age on every row and marks it once it passes a year; at that point, re-read the licence
-yourself before you rely on it.
-
-Aggregators (OpenGameArt, Poly Pizza, itch collections, font indexes) are usually `license: varies`.
-The licence belongs to each file, not to the site or even to the author, so review every
-file you take.
-
-<details>
-<summary>Frontmatter fields</summary>
-
-| Field | Meaning |
-| :--- | :--- |
-| `license` | Licence as the source states it, from a closed vocabulary in [`site/license-vocabulary.json`](site/license-vocabulary.json) (`CC0`, `CC-BY-4.0`, `SIL OFL`, `GPL-3.0-or-later`, `custom`, `varies`, and so on) |
-| `license_spdx` | The SPDX identifier, whenever the licence maps to exactly one. Absent when there is no single identifier: `custom`, `varies`, `unknown`, public domain, unversioned `CC-BY`, and GPL values that do not say `-only` or `-or-later` |
-| `commercial` | `true`, `false`, `unknown` or `varies`. `varies` means per-file review; the site's Commercial OK filter still lists these, labelled **per-file review** |
-| `attribution_required` | `true`, `false` or `unknown`. For fonts, `false` means no credit line, not no obligation: see [`docs/fonts.md`](docs/fonts.md) |
-| `attribution_string` | Copy-paste credit line, present when attribution is required |
-| `formats` | Common download and interchange formats |
-| `verified` | Date the licence was last read at the source (`YYYY-MM-DD`) |
-| `status` | See the table above |
-| `publisher` | The rights holder, when it has more than one entry. Never a generic host |
-| `grid_dimensions`, `camera_perspective`, `hardware_tags` | Optional 2D metadata: tile size, projection (`top_down`, `isometric_3_4`, `side_scroller`, `2d_flat`), input-device coverage |
-
-Add a new source from [`catalog/TEMPLATE.md`](catalog/TEMPLATE.md). `id` must be unique across the whole catalog.
-
-</details>
+Each source is one Markdown file: frontmatter for the facts, notes on what it is good for and
+what the catch is, and a dated **Evidence** section quoting the licence page. `active` means
+the licence was read and quoted; `needs-review` means a question is still open, and the entry
+says which; `deprecated` is kept for history. The statuses and every field are explained in
+[`docs/entry-format.md`](docs/entry-format.md).
 
 ## Safe starting points
 
-High-signal sources that cover most early production needs. This mirrors the starter list
-on the website, which is set in [`site/config.json`](site/config.json); if the two ever
-disagree, the config is the one the site uses.
-
-<details>
-<summary>All 19 starters</summary>
-
-| Need | Source | Licence |
-| :--- | :--- | :--- |
-| Modular low-poly 3D / UI | [Kenney](catalog/3d/kenney.md) | CC0 |
-| Rigged low-poly characters | [Quaternius](catalog/3d/quaternius.md) | CC0 |
-| Atlas-optimized kits | [KayKit (Kay Lousberg)](catalog/3d/kaykit.md) | CC0 |
-| Seamless PBR materials | [ambientCG](catalog/3d/ambientcg.md) | CC0 |
-| HDRIs / calibrated env | [Poly Haven](catalog/environment/poly-haven.md) | CC0 |
-| Second CC0 HDRI publisher | [Open HDRI](catalog/environment/open-hdri.md) | CC0 |
-| Extra PBR + SBSAR | [TextureCan](catalog/3d/texturecan.md) | CC0 |
-| UI icons (brand-free) | [Lucide Icons](catalog/2d/lucide-icons.md) | ISC |
-| Hand-drawn 2D vectors | [Glitch (CC0 asset release)](catalog/2d/glitch-archive.md) | CC0 |
-| Input prompts (Deck / Switch 2 / Quest) | [Kenney Input Prompts](catalog/2d/kenney-input-prompts.md) | CC0 |
-| Pro SFX dumps | [Sonniss #GameAudioGDC Bundle](catalog/audio/sonniss-gdc.md) | custom |
-| Attribution music | [Incompetech (Kevin MacLeod)](catalog/audio/incompetech.md) | CC-BY-4.0 |
-| Pixel / terminal font | [Departure Mono](catalog/fonts/departure-mono.md) | SIL OFL |
-| Localization fonts | [Noto Sans (incl. CJK)](catalog/fonts/noto-sans.md) | SIL OFL |
-| No-attribution music stingers | [Kenney Music Jingles](catalog/audio/kenney-music-jingles.md) | CC0 |
-| No-attribution music loops | [Abstraction Music Loop Bundle](catalog/audio/tallbeard-abstraction-music-loop-bundle.md) | CC0 |
-| Generate your own retro SFX | [jsfxr](catalog/tools/jsfxr.md) | Unlicense |
-| Extra CC0 PBR (photoscans) | [cgbookcase](catalog/3d/cgbookcase.md) | CC0 |
-| CC0 16-bit platformer kit | [SunnyLand (ansimuz)](catalog/2d/ansimuz-sunnyland.md) | CC0 |
-
-</details>
+Nineteen high-signal sources that cover most early production needs are the
+[starter table on the website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/#starters),
+set in [`site/config.json`](site/config.json) (`featured`).
 
 ## Licences
 
-Read these before you mix packs into a commercial build.
-
-| Guide | Covers |
-| :--- | :--- |
-| [`docs/licenses.md`](docs/licenses.md) | The cheat sheet: what each licence allows and owes |
-| [`docs/fonts.md`](docs/fonts.md) | Embedding versus redistribution, and what an OFL font still owes |
-| [`docs/geodata.md`](docs/geodata.md) | Attribution across DEM, map and satellite sources, and why ODbL does not reach your game |
-| [`docs/game-vs-video-licensing.md`](docs/game-vs-video-licensing.md) | Why "commercial use" on a video licence may not cover a game |
-| [`docs/unreal.md`](docs/unreal.md) | Fab and Epic content, UE-only licences, and what the Unreal EULA forbids combining |
-| [`docs/provenance.md`](docs/provenance.md) | Judging a supplier, and keeping a paper trail |
-| [`docs/high-risk.md`](docs/high-risk.md) | Sources to avoid entirely |
-| [`docs/shipping.md`](docs/shipping.md) | Steam, consoles and app stores: CC-BY anti-DRM, copyleft vs store terms, LGPL on consoles |
-| [`docs/ai-assets.md`](docs/ai-assets.md) | AI-generated assets |
-| [`docs/fivem.md`](docs/fivem.md) | GTA-format and FiveM assets |
-| [`docs/for-publishers.md`](docs/for-publishers.md) | What the catalog records about a source, and how its publisher corrects it or opts out of a preview |
-| [`docs/data.md`](docs/data.md) | The JSON, CSV and feed exports, their fields, and how to cite the catalog |
-| [`docs/trust-score.md`](docs/trust-score.md) | Review rubric used when vetting a source (not shown on entries) |
-
-<details>
-<summary>The short version</summary>
-
-| Licence | In a closed-source game |
-| :--- | :--- |
-| **CC0** | The safest default. Nothing owed |
-| **CC-BY** | Commercial use is fine; credit the author. CC-BY-3.0 sources often want the author named; CC-BY-4.0 is usually met by a credits-screen line |
-| **CC-BY-SA** | Usable commercially, but share-alike applies to derivatives of the asset. Ship SA files in extractable bundles rather than encrypting them into the binary |
-| **Any ND licence** | Generally unusable in games, because interactive sync and remix count as derivatives |
-| **SIL OFL** | The default for fonts in games. No credit line, but the licence file ships with the font |
-| **ODbL (OpenStreetMap)** | A game that renders map data is a produced work, so the share-alike does not reach it. Credit OSM. Redistributing the data itself is what triggers the obligations |
-| **Marketplace "free" (Unity, Fab, Unreal)** | Often commercial in-engine only, with no redistribution, and sometimes locked to one engine |
-| **Aggregators** | The licence is per file, not per author. The same creator's uploads can differ |
-| **Trusting the supplier** | Skip anonymous mega-dumps and known traps (MB-Lab, default Shadertoy, map scrapes, GTA and FiveM rips) |
-
-</details>
-
-Catalog metadata in this repository is CC0. Linked assets keep their own licences.
+Read [`docs/licenses.md`](docs/licenses.md) before you mix packs into a commercial build: what
+each licence allows and owes, with a short version at the top. The other guides cover
+[fonts](docs/fonts.md), [geodata](docs/geodata.md), [video licences in games](docs/game-vs-video-licensing.md),
+[Unreal](docs/unreal.md), [provenance](docs/provenance.md), [sources to avoid](docs/high-risk.md),
+[shipping on stores](docs/shipping.md), [AI-generated assets](docs/ai-assets.md),
+[FiveM](docs/fivem.md) and the [review rubric](docs/trust-score.md). Catalog metadata in this
+repository is CC0; linked assets keep their own licences.
 
 ## Godot
 
-A research-backed shortlist for Godot 4 projects is in
-[`docs/godot-budget-stack.md`](docs/godot-budget-stack.md). Before adopting an add-on, check
-its row in the [maintenance table](catalog/tools/README.md#godot-4-add-ons). Some
-add-ons' latest release is years older than their maintained branch, one is alpha, and
-one is a Godot 3 runtime listed beside the Godot 4 ones.
+A shortlist for Godot 4 is in [`docs/godot-budget-stack.md`](docs/godot-budget-stack.md); check an
+add-on's row in the [maintenance table](catalog/tools/README.md#godot-4-add-ons) before adopting it.
 
 ## Unreal Engine
 
-Epic sample projects (Lyra, Cropout, Stack O Bot, City Sample, Electric Dreams, the Game
-Animation Sample), Megascans starter content, MetaHuman and a dozen open-source UE5
-plugins are catalogued with the engine range each source states and a **UE only** badge
-where Epic restricts the licence to Unreal. Read [`docs/unreal.md`](docs/unreal.md) before
-importing: the Unreal Engine EULA forbids combining the engine with GPL, LGPL or CC-BY-SA
-material, and Fab content may never go in a public repository. The plugins are in the
-[Unreal Engine plugins](catalog/tools/README.md#unreal-engine-plugins) table.
+Epic samples, Megascans starter content and UE5 plugins carry the engine range each source states
+and a **UE only** badge where Epic restricts the licence. Read [`docs/unreal.md`](docs/unreal.md)
+first: the Unreal Engine EULA forbids combining the engine with GPL, LGPL or CC-BY-SA material.
 
 ## How the catalog stays honest
 
@@ -353,76 +237,8 @@ New sources, licence corrections, dead links and clearer notes are all welcome.
 [`CONTRIBUTING.md`](CONTRIBUTING.md) has the full checklist and how to verify a licence. If you
 publish a source listed here, [`docs/for-publishers.md`](docs/for-publishers.md) says what is
 recorded about it and how to correct it or remove its preview.
-Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
-
-<details>
-<summary>Run the checks and preview the site locally</summary>
-
-Node 22 or newer (CI and `.nvmrc` use 24); there is nothing to install.
-
-```bash
-npm run check    # what CI runs: lint, tests, validate, check-added, build (CONTRIBUTING.md#what-ci-runs)
-npm test         # the checks against known-bad fixtures, and the site modules' tests
-npm run validate # the catalog, against the checks (node site/validate.mjs)
-npm run build    # builds the site into site/dist (node site/build.mjs)
-npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no download)
-```
-
-</details>
-
-<details>
-<summary>Repository layout</summary>
-
-```text
-.
-├── README.md
-├── CONTRIBUTING.md             how to add and verify an entry
-├── LICENSE                     CC0-1.0 for catalog metadata and docs
-├── SECURITY.md                 how to report a vulnerability
-├── CODE_OF_CONDUCT.md
-├── ROADMAP.md                  what is planned next
-├── CITATION.cff                how to cite a catalog release
-├── catalog/
-│   ├── README.md               master index
-│   ├── TEMPLATE.md             copy this to add a source
-│   └── 3d/ 2d/ audio/ characters/ environment/
-│       fonts/ shaders-vfx/ animation/ video/ tools/
-│                               one .md per source, plus a README index
-├── docs/
-│   ├── licenses.md fonts.md geodata.md game-vs-video-licensing.md
-│   ├── provenance.md high-risk.md shipping.md ai-assets.md fivem.md trust-score.md
-│   ├── godot-budget-stack.md unreal.md
-│   ├── data.md                 the JSON, CSV and feed exports
-│   ├── for-publishers.md       what is recorded about a publisher, and how to correct it
-│   ├── internal/               design specs and plans behind the site (history, not guides)
-│   ├── review-ledger.md        every review pass and what it changed
-│   └── images/readme/          publisher stills used in this README, and the social card (og-card.png)
-├── stacks/                     starter stacks: one pick per need for a kind of game
-├── site/
-│   ├── validate.mjs            catalog integrity checks
-│   ├── checks.mjs              the checks, as pure functions
-│   ├── checks.test.mjs         fixtures proving each check fails on bad input
-│   ├── lint.mjs                every script parses; no unused imports
-│   ├── check-added.mjs         `added` dates against git history
-│   ├── pr-diff.mjs             a pull request's licence-field changes, for the run summary
-│   ├── new-entry.mjs           starts an entry from the template
-│   ├── sync-counts.mjs         rewrites every restated entry count
-│   ├── serve.mjs               local preview server for site/dist
-│   ├── license-vocabulary.json the licence values the catalog accepts
-│   ├── format-vocabulary.json  the format values the catalog accepts, and filter groups
-│   ├── value-aliases.json      retired spellings of tags, formats and subcategories
-│   ├── spdx-allowed.json       SPDX identifiers in use
-│   ├── check-links.mjs         weekly source link check
-│   ├── reverify-batch.mjs      picks the monthly re-verification batch
-│   ├── thumbs.mjs thumbs.json  fetches preview thumbnails, and their manifest
-│   ├── build.mjs config.json   static site generator and its settings
-│   ├── data.schema.json        JSON Schema for data.json (attached to each release)
-│   ├── lib/                    page renderers and shared helpers, with lib.test.mjs
-│   └── public/                 page, styles and script
-└── package.json                npm scripts only; no dependencies
-```
-
-</details>
+Please follow the [Code of Conduct](CODE_OF_CONDUCT.md). Local commands and the repository
+layout are in [CONTRIBUTING.md](CONTRIBUTING.md#repository-layout).
 
 ## Support
 

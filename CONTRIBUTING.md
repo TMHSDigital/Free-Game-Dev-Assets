@@ -121,6 +121,68 @@ A publisher who would rather not have their preview shown can open an issue; the
 
 Changes drafted with an agent or a script are judged on the diff like any other. Keep them small, keep tests in `site/checks.test.mjs` or `site/lib/lib.test.mjs` (a test file that `npm test` does not run is dropped), and name the issue the change fixes in the body (`Fixes #N`). A pull request that lists sources or licences the author did not read is closed: the catalog's one rule is that every licence fact was read at the source by the person who recorded it.
 
+## Repository layout
+
+Node 22 or newer (CI and `.nvmrc` use 24); there is nothing to install.
+
+```bash
+npm run check    # what CI runs: lint, tests, validate, check-added, build (CONTRIBUTING.md#what-ci-runs)
+npm test         # the checks against known-bad fixtures, and the site modules' tests
+npm run validate # the catalog, against the checks (node site/validate.mjs)
+npm run build    # builds the site into site/dist (node site/build.mjs)
+npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no download)
+```
+
+```text
+.
+├── README.md
+├── CONTRIBUTING.md             how to add and verify an entry
+├── LICENSE                     CC0-1.0 for catalog metadata and docs
+├── SECURITY.md                 how to report a vulnerability
+├── CODE_OF_CONDUCT.md
+├── ROADMAP.md                  what is planned next
+├── CITATION.cff                how to cite a catalog release
+├── catalog/
+│   ├── README.md               master index
+│   ├── TEMPLATE.md             copy this to add a source
+│   └── 3d/ 2d/ audio/ characters/ environment/
+│       fonts/ shaders-vfx/ animation/ video/ tools/
+│                               one .md per source, plus a README index
+├── docs/
+│   ├── licenses.md fonts.md geodata.md game-vs-video-licensing.md
+│   ├── provenance.md high-risk.md shipping.md ai-assets.md fivem.md trust-score.md
+│   ├── godot-budget-stack.md unreal.md
+│   ├── data.md                 the JSON, CSV and feed exports
+│   ├── entry-format.md         what an entry's statuses and fields mean
+│   ├── for-publishers.md       what is recorded about a publisher, and how to correct it
+│   ├── internal/               design specs and plans behind the site (history, not guides)
+│   ├── review-ledger.md        every review pass and what it changed
+│   └── images/readme/          publisher stills used in this README, and the social card (og-card.png)
+├── stacks/                     starter stacks: one pick per need for a kind of game
+├── site/
+│   ├── validate.mjs            catalog integrity checks
+│   ├── checks.mjs              the checks, as pure functions
+│   ├── checks.test.mjs         fixtures proving each check fails on bad input
+│   ├── lint.mjs                every script parses; no unused imports
+│   ├── check-added.mjs         `added` dates against git history
+│   ├── pr-diff.mjs             a pull request's licence-field changes, for the run summary
+│   ├── new-entry.mjs           starts an entry from the template
+│   ├── sync-counts.mjs         rewrites every restated entry count
+│   ├── serve.mjs               local preview server for site/dist
+│   ├── license-vocabulary.json the licence values the catalog accepts
+│   ├── format-vocabulary.json  the format values the catalog accepts, and filter groups
+│   ├── value-aliases.json      retired spellings of tags, formats and subcategories
+│   ├── spdx-allowed.json       SPDX identifiers in use
+│   ├── check-links.mjs         weekly source link check
+│   ├── reverify-batch.mjs      picks the monthly re-verification batch
+│   ├── thumbs.mjs thumbs.json  fetches preview thumbnails, and their manifest
+│   ├── build.mjs config.json   static site generator and its settings
+│   ├── data.schema.json        JSON Schema for data.json (attached to each release)
+│   ├── lib/                    page renderers and shared helpers, with lib.test.mjs
+│   └── public/                 page, styles and script
+└── package.json                npm scripts only; no dependencies
+```
+
 ## Licence of contributions
 
 By opening a pull request you dedicate your contribution to the public domain under [CC0 1.0](LICENSE), like the rest of the repository's metadata and documentation. Quotes from licence pages stay the publisher's words; they are used as short factual quotations, and the assets they describe keep their own licences.

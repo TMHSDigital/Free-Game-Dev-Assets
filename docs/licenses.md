@@ -4,6 +4,20 @@
 
 Quick reference for assets you might list or use. **Always re-check the source page** — licenses change, packs can be dual-licensed, and marketplace “free” tiers often have extra terms.
 
+## The short version
+
+| Licence | In a closed-source game |
+| :--- | :--- |
+| **CC0** | The safest default. Nothing owed |
+| **CC-BY** | Commercial use is fine; credit the author. CC-BY-3.0 sources often want the author named; CC-BY-4.0 is usually met by a credits-screen line |
+| **CC-BY-SA** | Usable commercially, but share-alike applies to derivatives of the asset. Ship SA files in extractable bundles rather than encrypting them into the binary |
+| **Any ND licence** | Generally unusable in games, because interactive sync and remix count as derivatives |
+| **SIL OFL** | The default for fonts in games. No credit line, but the licence file ships with the font |
+| **ODbL (OpenStreetMap)** | A game that renders map data is a produced work, so the share-alike does not reach it. Credit OSM. Redistributing the data itself is what triggers the obligations |
+| **Marketplace "free" (Unity, Fab, Unreal)** | Often commercial in-engine only, with no redistribution, and sometimes locked to one engine |
+| **Aggregators** | The licence is per file, not per author. The same creator's uploads can differ |
+| **Trusting the supplier** | Skip anonymous mega-dumps and known traps (MB-Lab, default Shadertoy, map scrapes, GTA and FiveM rips) |
+
 ## Creative Commons & public domain
 
 | License | Commercial use | Attribution | Notes |
