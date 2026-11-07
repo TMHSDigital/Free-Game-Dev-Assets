@@ -1001,6 +1001,7 @@ export function markdownAnchors(text) {
  * README source-count badge and link text, all restate numbers the catalog
  * already knows. They are correct today and drift on the next addition.
  */
+const COUNTS_HINT = " (counts include listed entries only, so adding, removing or deprecating one changes them: run npm run counts)";
 export function checkCountTables(measured, docs) {
   const errors = [];
   const total = Object.values(measured).reduce((a, b) => a + b, 0);
@@ -1017,7 +1018,7 @@ export function checkCountTables(measured, docs) {
       }
       if (Number(m[1]) !== count) {
         errors.push(
-          `${name} lists ${m[1]} entries for "${cat}" but the catalog has ${count}`
+          `${name} lists ${m[1]} entries for "${cat}" but the catalog has ${count}${COUNTS_HINT}`
         );
       }
     }
@@ -1029,20 +1030,20 @@ export function checkCountTables(measured, docs) {
     if (!badge) errors.push("README.md has no sources-<count> badge");
     else if (Number(badge[1]) !== total) {
       errors.push(
-        `README.md sources badge says ${badge[1]} but the catalog has ${total}`
+        `README.md sources badge says ${badge[1]} but the catalog has ${total}${COUNTS_HINT}`
       );
     }
     const browse = readme.text.match(/Browse (\d+) sources/);
     if (!browse) errors.push('README.md has no "Browse <count> sources" link');
     else if (Number(browse[1]) !== total) {
       errors.push(
-        `README.md "Browse ${browse[1]} sources" but the catalog has ${total}`
+        `README.md "Browse ${browse[1]} sources" but the catalog has ${total}${COUNTS_HINT}`
       );
     }
     // Optional wording; checked wherever it appears.
     for (const m of readme.text.matchAll(/searches all (\d+) entries/g)) {
       if (Number(m[1]) !== total) {
-        errors.push(`README.md "searches all ${m[1]} entries" but the catalog has ${total}`);
+        errors.push(`README.md "searches all ${m[1]} entries" but the catalog has ${total}${COUNTS_HINT}`);
       }
     }
   }

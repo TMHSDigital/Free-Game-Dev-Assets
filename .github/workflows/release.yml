@@ -37,6 +37,9 @@ jobs:
         with:
           # The sitemap's lastmod dates come from git history.
           fetch-depth: 0
+          # No token in .git/config while npm run check executes repo code;
+          # only the CITATION push below gets one (#251).
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
@@ -71,6 +74,8 @@ jobs:
 
       - name: Write the version into CITATION.cff
         if: steps.tag.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           node - <<'JS'
           const fs = require("node:fs");
@@ -91,7 +96,7 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add CITATION.cff
             git commit -m "Release $CATALOG_VERSION: record the version in CITATION.cff"
-            git push origin HEAD:main
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
           fi
 
       - name: Create the release
