@@ -217,6 +217,7 @@ Script options:
 | `node site/reverify-batch.mjs` | `--report <file.md>`; `--size <n>` overrides the computed batch size |
 | `node site/thumbs.mjs` | `--only <id,id>` limits the run to those entries; `--force` refetches records that are not due; `--limit <n>` caps fetches per run; `--dry-run` writes nothing; `--report <file.md>` |
 | `node site/serve.mjs` | `--port <n>`, or the `PORT` environment variable (3000) |
+| `node site/coverage.mjs` (`npm run coverage`) | Runs both test suites under Node's built-in V8 coverage and lists, per file, the functions no test calls; `--all` lists every file. Informational, not part of `npm run check` |
 
 Deploy: `.github/workflows/pages.yml` (source = GitHub Actions), which first runs
 `ci.yml` as a reusable workflow.

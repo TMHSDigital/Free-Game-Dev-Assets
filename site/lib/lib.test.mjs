@@ -2055,6 +2055,19 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   }
 }
 
+/* coverage summary (#268) ------------------------------------------------- */
+{
+  const { functionCoverage } = await import("../coverage.mjs");
+  const run = (count) => ({ url: "file:///x.mjs", functions: [
+    { functionName: "", ranges: [{ startOffset: 0, endOffset: 30, count: 1 }] },
+    { functionName: "f", ranges: [{ startOffset: 4, endOffset: 10, count }] },
+    { functionName: "g", ranges: [{ startOffset: 12, endOffset: 20, count: 0 }] },
+  ] });
+  const cov = functionCoverage([run(0), run(2)], () => "a\nb\nc\n").get("file:///x.mjs");
+  eq("coverage: the module body is not a function", cov.total, 2);
+  eq("coverage: covered in either run counts", cov.uncovered.map((u) => u.name).join(), "g");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

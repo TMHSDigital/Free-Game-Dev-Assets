@@ -18,6 +18,7 @@
     "links": "node site/check-links.mjs",
     "thumbs": "node site/thumbs.mjs",
     "reverify": "node site/reverify-batch.mjs",
-    "serve": "node site/serve.mjs"
+    "serve": "node site/serve.mjs",
+    "coverage": "node site/coverage.mjs"
   }
 }

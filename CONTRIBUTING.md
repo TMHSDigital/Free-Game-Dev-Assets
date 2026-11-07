@@ -70,7 +70,7 @@ To add a starter stack (one pick per need for a kind of game), follow [`stacks/R
 
 ## What CI runs
 
-Every pull request, every push to `main` (before the site deploys) and every release run one sequence, `npm run check` in [`package.json`](package.json). Pull requests and pushes run it on Node 24 and again on Node 22; releases run it on Node 24:
+Every pull request, every push to `main` (before the site deploys) and every release run one sequence, `npm run check` in [`package.json`](package.json). Pull requests and pushes run it on Node 24, again on Node 22, and on Windows; releases run it on Node 24:
 
 1. `npm run lint` (`site/lint.mjs`): every script parses, and none imports a name it does not use. It is syntax-only, not ESLint: a misspelled variable still passes and fails only when that line runs, so code the tests never reach needs a test or a careful read.
 2. `npm test`: the checks against known-bad fixtures (`site/checks.test.mjs`) and the site modules' tests (`site/lib/lib.test.mjs`).
