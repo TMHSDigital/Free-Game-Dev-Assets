@@ -2573,6 +2573,63 @@ await section("credits audit: listings and publishers (#187)", async () => {
   has("credits file: shortlist by default", creditsFile(owes([])), "Made from a shortlist on");
 });
 
+/* CLI and MCP server over data.json (#115) -------------------------------- */
+await section("catalog queries, CLI and MCP (#115)", async () => {
+  const { searchAssets, getAsset, checkLicense, listStacks } = await import("./catalog-query.mjs");
+  const data = {
+    site: { siteUrl: "https://x.test/s/" },
+    stacks: [{ id: "st", title: "Stack" }],
+    entries: [
+      { id: "a", name: "Pixel Font A", page: "entry/a/", category: "fonts", license: "SIL OFL", licenseFamily: "permissive", commercial: true, attribution_required: false, attributionClass: "notice", formats: ["TTF"], tags: ["pixel"], status: "active", verified: "2026-10-01" },
+      { id: "b", name: "Pixel Pack B", page: "entry/b/", category: "2d", license: "CC-BY-4.0", licenseFamily: "cc-by", commercial: true, attribution_required: true, attribution_string: "Art by B", formats: ["PNG"], tags: ["pixel"], status: "active", verified: "2026-10-01" },
+      { id: "c", name: "Pixel NC", page: "entry/c/", category: "2d", license: "CC-BY-NC-4.0", commercial: false, attribution_required: true, formats: ["PNG"], tags: ["pixel"], status: "needs-review", review: "Confirm the NC scope.", verified: "2026-10-01" },
+      { id: "d", name: "Old pixel", page: "entry/d/", category: "2d", license: "CC0", commercial: true, attribution_required: false, formats: [], tags: ["pixel"], status: "deprecated", verified: null },
+      { id: "u", name: "UE Pixel", page: "entry/u/", category: "3d", license: "custom", commercial: true, attribution_required: false, engine_lock: "unreal", formats: ["Unreal"], tags: ["pixel"], status: "active", verified: "2026-10-01" },
+    ],
+  };
+  eq("query: deprecated entries are not listed", searchAssets(data, { q: "pixel" }).map((a) => a.id).includes("d"), false);
+  eq("query: commercial drops a non-commercial entry", searchAssets(data, { q: "pixel", commercial: true }).map((a) => a.id).includes("c"), false);
+  eq("query: licence by value or family", `${searchAssets(data, { license: "sil ofl" }).map((a) => a.id)}|${searchAssets(data, { license: "cc-by" }).map((a) => a.id)}`, "a|b");
+  eq("query: format, case-insensitive", searchAssets(data, { format: "ttf" }).map((a) => a.id).join(), "a");
+  eq("query: an engine lock hides the entry for another engine", searchAssets(data, { q: "pixel", engine: "godot" }).map((a) => a.id).includes("u"), false);
+  eq("query: page is absolute", getAsset(data, "a").page, "https://x.test/s/entry/a/");
+  eq("query: unknown id", getAsset(data, "zz"), null);
+  const nc = checkLicense(data, "c");
+  eq("check: non-commercial and needs-review are problems", `${nc.ok}|${nc.problems.length}`, "false|2");
+  has("check: the open question is given", nc.problems.join(), "Confirm the NC scope.");
+  eq("check: a credit is owed, not a problem", `${checkLicense(data, "b").ok}|${checkLicense(data, "b").owes.join()}`, "true|credit: Art by B");
+  has("check: a notice licence owes the notice", checkLicense(data, "a").owes.join(), "notice");
+  has("check: engine lock", checkLicense(data, "u", { engine: "godot" }).problems.join(), "unreal only");
+  eq("check: non-commercial use skips the commercial problem", checkLicense(data, "c", { commercial: false }).problems.length, 1);
+  eq("stacks: with pages", listStacks(data)[0].page, "https://x.test/s/stack/st/");
+
+  const { handle, TOOLS } = await import("../cli/mcp.mjs");
+  const init = handle({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-06-18" } }, data);
+  eq("mcp: initialize echoes the version and offers tools", `${init.result.protocolVersion}|${"tools" in init.result.capabilities}`, "2025-06-18|true");
+  eq("mcp: notifications get no answer", handle({ jsonrpc: "2.0", method: "notifications/initialized" }, data), null);
+  eq("mcp: four tools", handle({ jsonrpc: "2.0", id: 2, method: "tools/list" }, data).result.tools.map((t) => t.name).join(), TOOLS.map((t) => t.name).join());
+  const call = handle({ jsonrpc: "2.0", id: 3, method: "tools/call", params: { name: "get_asset", arguments: { id: "b" } } }, data);
+  has("mcp: a tool answers with JSON text", call.result.content[0].text, '"attribution_string": "Art by B"');
+  eq("mcp: an unknown id is an error result", handle({ jsonrpc: "2.0", id: 4, method: "tools/call", params: { name: "get_asset", arguments: { id: "zz" } } }, data).result.isError, true);
+  eq("mcp: an unknown method is a JSON-RPC error", handle({ jsonrpc: "2.0", id: 5, method: "resources/list" }, data).error.code, -32601);
+
+  const { main } = await import("../cli/fgda.mjs");
+  const fsm = (await import("node:fs")).default;
+  const osm = (await import("node:os")).default;
+  const file = `${osm.tmpdir()}/fgda-cli-test-${process.pid}.json`;
+  fsm.writeFileSync(file, JSON.stringify(data));
+  try {
+    const lines = [];
+    eq("cli: check exits 1 when it does not fit", await main(["check", "c", "--data", file], (s) => lines.push(s)), 1);
+    has("cli: and says why", lines.join("\n"), "not for commercial use");
+    const json = [];
+    eq("cli: search exits 0", await main(["search", "pixel", "--license", "cc-by", "--json", "--data", file], (s) => json.push(s)), 0);
+    eq("cli: --json is parseable", JSON.parse(json.join("\n"))[0].id, "b");
+  } finally {
+    fsm.rmSync(file, { force: true });
+  }
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

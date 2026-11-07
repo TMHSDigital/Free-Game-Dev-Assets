@@ -212,7 +212,8 @@ line for each entry, an Atom [feed of new sources](https://tmhsdigital.github.io
 a [feed of re-verified licences](https://tmhsdigital.github.io/Free-Game-Dev-Assets/reverified.xml) and
 [`llms.txt`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/llms.txt). Pin a version from
 [Releases](https://github.com/TMHSDigital/Free-Game-Dev-Assets/releases). [`docs/data.md`](docs/data.md)
-has the field reference, `jq` and pandas examples, and how to cite it (`CITATION.cff`).
+has the field reference, `jq` and pandas examples, how to cite it (`CITATION.cff`), a CLI
+(`npx github:TMHSDigital/Free-Game-Dev-Assets search "pixel font" --license cc0`) and an MCP server for assistants.
 
 ## Scope
 

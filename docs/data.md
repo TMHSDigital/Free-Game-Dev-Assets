@@ -71,6 +71,27 @@ print(ok[["name", "license", "attribution_required", "attribution_string", "url"
 
 Follow new sources in any feed reader by subscribing to `https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml`.
 
+## From a shell, CI or an assistant
+
+`site/cli/fgda.mjs` queries the same data with the site's search and filters, no install:
+
+```bash
+npx github:TMHSDigital/Free-Game-Dev-Assets search "pixel font" --license "SIL OFL" --commercial
+npx github:TMHSDigital/Free-Game-Dev-Assets check kenney --engine godot   # exit 1 if it does not fit
+npx github:TMHSDigital/Free-Game-Dev-Assets get incompetech --json
+```
+
+`check` exits 1 when the entry is not for commercial use, is locked to another engine, varies per file, or is
+still `needs-review` (with its open question), so a build can stop on it. In a clone, `node site/cli/fgda.mjs`
+does the same and reads `site/dist/data.json` when a build is there; `--data <file or https URL>` picks another copy.
+
+`site/cli/mcp.mjs` is a Model Context Protocol server (stdio, no dependencies) with the tools `search_assets`,
+`get_asset`, `check_license` and `list_stacks`. In Claude Desktop, Cursor or another MCP client, from a clone:
+
+```json
+{ "mcpServers": { "free-game-dev-assets": { "command": "node", "args": ["/path/to/Free-Game-Dev-Assets/site/cli/mcp.mjs"] } } }
+```
+
 ## How to cite
 
 The repository has a [`CITATION.cff`](../CITATION.cff), and GitHub's "Cite this repository" button renders it. In text:

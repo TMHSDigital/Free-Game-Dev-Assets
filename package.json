@@ -3,6 +3,9 @@
   "private": true,
   "description": "Catalog checks and static site build. No dependencies.",
   "license": "CC0-1.0",
+  "bin": {
+    "fgda": "site/cli/fgda.mjs"
+  },
   "engines": {
     "node": ">=22"
   },
