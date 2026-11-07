@@ -20,6 +20,7 @@ import { fileURLToPath } from "node:url";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { safeFetch } from "./lib/safe-fetch.mjs";
 import { readArgs } from "./lib/cli.mjs";
+import { normalizeEntry } from "./lib/entry-fields.mjs";
 import { afterFailure, imageUrlFromHtml, manifestChanges, needsFetch, previewEligibility, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./lib/thumbs.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -68,17 +69,9 @@ function loadEntries() {
   const out = [];
   for (const r of readCatalog(CATALOG)) {
     if (!usableRecord(r)) continue;
-    const m = r.parsed.meta;
-    out.push({
-      id: String(m.id),
-      url: String(m.url || ""),
-      license: String(m.license || ""),
-      status: String(m.status || ""),
-      publisher: m.publisher ? String(m.publisher) : undefined,
-      category: String(m.category || ""),
-      attribution_string: m.attribution_string ? String(m.attribution_string) : undefined,
-      preview: m.preview === undefined || m.preview === null ? undefined : String(m.preview),
-    });
+    // The shared reading (entry-fields.mjs, #256).
+    const { id, url, license, status, publisher, category, attribution_string, preview } = normalizeEntry(r.parsed.meta, r.rel);
+    out.push({ id, url, license, status, publisher, category, attribution_string, preview });
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }

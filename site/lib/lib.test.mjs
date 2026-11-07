@@ -2312,6 +2312,25 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   }
 }
 
+/* one reading of an entry's frontmatter (#256) ----------------------------- */
+{
+  const { normalizeEntry, CORE_FIELDS } = await import("./entry-fields.mjs");
+  const e = normalizeEntry({ id: "a", name: "A", commercial: "true", attribution_required: "false", formats: "PNG", tags: "x" }, "catalog/2d/a.md");
+  eq("normalize: a quoted true is not a boolean", e.commercial, "unknown");
+  eq("normalize: a quoted false is not a boolean", e.attribution_required, "unknown");
+  eq("normalize: varies is kept", normalizeEntry({ commercial: "varies" }, "x").commercial, "varies");
+  eq("normalize: a missing commercial is unknown", normalizeEntry({}, "x").commercial, "unknown");
+  eq("normalize: real booleans are kept", `${normalizeEntry({ commercial: false, attribution_required: true }, "x").commercial}|${normalizeEntry({ attribution_required: true }, "x").attribution_required}`, "false|true");
+  eq("normalize: a missing status is empty, not needs-review or undefined", e.status, "");
+  eq("normalize: list fields given as strings are empty lists", `${e.formats.length}|${e.tags.length}|${e.subcategories.length}`, "0|0|0");
+  eq("normalize: missing dates are null", `${e.added}|${e.verified}`, "null|null");
+  eq("normalize: the path is the repo path", e.path, "catalog/2d/a.md");
+  eq("normalize: every core field is present", CORE_FIELDS.every((k) => k in e), true);
+  eq("normalize: preview only when set", "preview" in e, false);
+  eq("normalize: preview kept as text", normalizeEntry({ preview: "none" }, "x").preview, "none");
+  eq("normalize: optional fields only when set", "publisher" in e, false);
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

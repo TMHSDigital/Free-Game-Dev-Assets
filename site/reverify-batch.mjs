@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { cliArgs } from "./lib/cli.mjs";
 import { isListed } from "./lib/shared.mjs";
+import { normalizeEntry } from "./lib/entry-fields.mjs";
 import { batchIssueMarkdown, pickBatch } from "./lib/reverify.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -25,15 +26,9 @@ const { values: flags } = cliArgs({ report: { type: "string" }, size: { type: "s
 const entries = [];
 for (const r of readCatalog(CATALOG, { root: ROOT })) {
   if (!usableRecord(r)) continue;
-  const { id, url, license, verified, status } = r.parsed.meta;
-  entries.push({
-    id: String(id),
-    url: String(url || ""),
-    license: String(license || "unknown"),
-    verified: verified ? String(verified) : null,
-    status: String(status || "needs-review"),
-    rel: r.rel,
-  });
+  // The shared reading (entry-fields.mjs, #256): no status stays "", not needs-review.
+  const { id, url, license, verified, status } = normalizeEntry(r.parsed.meta, r.rel);
+  entries.push({ id, url, license, verified, status, rel: r.rel });
 }
 
 const sizeArg = flags.size;

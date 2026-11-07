@@ -26,6 +26,7 @@ import { maintenanceFromRepo } from "./checks.mjs";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { safeFetch } from "./lib/safe-fetch.mjs";
 import { isListed } from "./lib/shared.mjs";
+import { normalizeEntry } from "./lib/entry-fields.mjs";
 import { cliArgs } from "./lib/cli.mjs";
 import { checkMaintenanceRepos, classify, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
 
@@ -44,8 +45,8 @@ function loadEntries() {
   const out = [];
   for (const r of readCatalog(CATALOG, { root: ROOT })) {
     if (!usableRecord(r) || !r.parsed.meta.url) continue;
-    const { id, url, verified, status, maintenance } = r.parsed.meta;
-    out.push({ id: String(id), url: String(url), verified: verified ? String(verified) : null, status: String(status), maintenance: maintenance ? String(maintenance) : null, rel: r.rel });
+    const { id, url, verified, status, maintenance = null } = normalizeEntry(r.parsed.meta, r.rel);
+    out.push({ id, url, verified, status, maintenance, rel: r.rel });
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }

@@ -22,7 +22,7 @@ import { categoryPageHtml } from "./lib/category-page.mjs";
 import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
 import { summaryFromBody } from "./lib/frontmatter.mjs";
 import { readCatalog, idMatchesFile } from "./lib/entry-files.mjs";
-import { optionalFields } from "./lib/entry-fields.mjs";
+import { normalizeEntry, RENDER_REQUIRED } from "./lib/entry-fields.mjs";
 import { cliArgs } from "./lib/cli.mjs";
 import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
@@ -90,8 +90,9 @@ function loadEntries(vocab) {
     }
     const { meta } = parsed;
     const body = parsed.body.trim();
-    const required = ["id", "name", "url", "category", "license", "status"];
-    const missing = required.filter((k) => meta[k] === undefined || meta[k] === null || meta[k] === "");
+    // validate requires every REQUIRED_KEYS field; these are the ones a page
+    // cannot be written without, so a local build stops on them too.
+    const missing = RENDER_REQUIRED.filter((k) => meta[k] === undefined || meta[k] === null || meta[k] === "");
     if (missing.length) {
       errors.push(`${rel} missing: ${missing.join(", ")}`);
       continue;
@@ -108,33 +109,11 @@ function loadEntries(vocab) {
     fileOfId.set(String(meta.id), rel);
     bodies.set(String(meta.id), body);
 
+    // The shared reading of the frontmatter (entry-fields.mjs, #256);
+    // preview is an instruction to thumbs.mjs, not exported.
+    const { preview: _preview, ...fields } = normalizeEntry(meta, rel);
     entries.push({
-      id: String(meta.id),
-      name: String(meta.name),
-      url: String(meta.url),
-      category: String(meta.category),
-      subcategories: Array.isArray(meta.subcategories) ? meta.subcategories : [],
-      license: String(meta.license),
-      commercial:
-        meta.commercial === true
-          ? true
-          : meta.commercial === false
-            ? false
-            : meta.commercial === "varies"
-              ? "varies"
-              : "unknown",
-      attribution_required:
-        meta.attribution_required === true
-          ? true
-          : meta.attribution_required === false
-            ? false
-            : "unknown",
-      formats: Array.isArray(meta.formats) ? meta.formats : [],
-      tags: Array.isArray(meta.tags) ? meta.tags : [],
-      added: meta.added ? String(meta.added) : null,
-      verified: meta.verified ? String(meta.verified) : null,
-      status: String(meta.status),
-      path: rel,
+      ...fields,
       page: `entry/${String(meta.id)}/`,
       summary: summaryFromBody(body),
       // The publisher's preview, when the licence gate let the script keep one.
@@ -147,7 +126,6 @@ function loadEntries(vocab) {
             ...(isAttributionLicence(meta.license) ? { credit: previewCredit(meta) } : {}),
           }
         : null,
-      ...optionalFields(meta),
       licenseFamily: licenseFamily(vocab, String(meta.license)),
       attributionClass: vocab.licenses[String(meta.license)]?.attribution || "any",
       licenseRank:

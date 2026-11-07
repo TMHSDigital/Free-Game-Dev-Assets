@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 import { firstAddedFromLog, lateAddedDates } from "./lib/added-dates.mjs";
 import { readCatalog } from "./lib/entry-files.mjs";
 import { cliArgs } from "./lib/cli.mjs";
+import { normalizeEntry } from "./lib/entry-fields.mjs";
 
 // No flags: a mistyped one fails instead of being ignored.
 cliArgs({}, "node site/check-added.mjs");
@@ -32,7 +33,7 @@ const firstAdded = firstAddedFromLog(log);
 // Every entry file, parsed or not: a broken one still has an added date to check.
 const entries = readCatalog(path.join(ROOT, "catalog"), { root: ROOT }).map((r) => ({
   rel: r.rel,
-  added: r.parsed?.meta.added ?? null,
+  added: r.parsed ? normalizeEntry(r.parsed.meta, r.rel).added : null,
 }));
 const errors = lateAddedDates(entries, firstAdded);
 if (errors.length) {
