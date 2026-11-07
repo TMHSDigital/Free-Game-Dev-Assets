@@ -52,9 +52,11 @@ export const USAGE = "usage: node site/check-links.mjs [--report <file.md>] [--s
  * before any fetch, so a typo cannot throw after twenty minutes of requests.
  */
 export function staleDaysFrom(argv, fallback = 365) {
+  // Both spellings parseArgs accepts: `--stale-days 30` and `--stale-days=30` (#250).
+  const eqArg = argv.find((a) => a.startsWith("--stale-days="));
   const i = argv.indexOf("--stale-days");
-  if (i === -1) return { days: fallback };
-  const raw = argv[i + 1];
+  if (i === -1 && eqArg === undefined) return { days: fallback };
+  const raw = i === -1 ? eqArg.slice("--stale-days=".length) : argv[i + 1];
   const days = Number(raw);
   if (raw === undefined || raw.startsWith("--") || !/^\d+$/.test(raw.trim()) || !Number.isSafeInteger(days)) {
     return { error: `--stale-days needs a whole number of days, got ${raw === undefined ? "nothing" : JSON.stringify(raw)}\n${USAGE}` };

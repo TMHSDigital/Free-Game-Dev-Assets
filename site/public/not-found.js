@@ -1,8 +1,8 @@
 /**
  * The 404 page reads the words in the address that missed (a mistyped
  * /entry/kenny-ui/, say), suggests the closest entries and offers a catalog
- * search for the same words. A miss under /category/ or /guide/ suggests the
- * closest category or guide instead. The page works without it.
+ * search for the same words. A miss under /category/, /guide/ or /stack/
+ * suggests the closest category, guide or stack instead. The page works without it.
  */
 import { closestEntries, missSection, missSlug } from "./search.js";
 
@@ -18,12 +18,14 @@ import { closestEntries, missSection, missSlug } from "./search.js";
   if (!slug) return;
   const section = missSection(location.pathname, root.pathname);
 
-  // Pages to match against: entries by default, or the category or guide list.
+  // Pages to match against: entries by default, or the category, guide or stack list.
   let pages;
   if (section === "category") {
     pages = Object.entries(data.categories || {}).map(([id, c]) => ({ id, name: c.label || id, note: c.blurb || "", href: `category/${id}/` }));
   } else if (section === "guide") {
     pages = (data.guides || []).map((g) => ({ id: g.id, name: g.title || g.id, note: "", href: `guide/${g.id}/` }));
+  } else if (section === "stack") {
+    pages = (data.stacks || []).map((s) => ({ id: s.id, name: s.title || s.id, note: "", href: `stack/${s.id}/` }));
   } else {
     pages = data.entries.map((e) => ({
       id: e.id,
@@ -56,13 +58,14 @@ import { closestEntries, missSection, missSlug } from "./search.js";
     }
     host.append(heading, list);
   }
-  // A catalog search only helps for entry-like words, not a mistyped category or guide name.
-  if (section === "category" || section === "guide") {
+  // A catalog search only helps for entry-like words, not a mistyped category, guide or stack name.
+  const lists = { category: ["#catalog", "Browse every category"], guide: ["#guides", "See all guides"], stack: ["#stacks", "See all stacks"] };
+  if (lists[section]) {
     if (matches.length) return;
     const back = document.createElement("p");
     const link = document.createElement("a");
-    link.href = new URL(section === "guide" ? "#guides" : "#catalog", root).href;
-    link.textContent = section === "guide" ? "See all guides" : "Browse every category";
+    link.href = new URL(lists[section][0], root).href;
+    link.textContent = lists[section][1];
     back.append(link);
     host.append(back);
     return;

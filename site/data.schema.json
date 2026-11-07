@@ -44,6 +44,18 @@
         }
       }
     },
+    "stacks": {
+      "type": "array",
+      "description": "Starter stacks: id and title; the page is stack/<id>/",
+      "items": {
+        "type": "object",
+        "required": ["id", "title"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" }
+        }
+      }
+    },
     "featured": {
       "type": "array",
       "items": {

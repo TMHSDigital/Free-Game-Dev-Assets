@@ -608,6 +608,8 @@ function main() {
     site: config.site,
     categories: config.categories,
     guides: config.guides,
+    // Stack ids and titles, so the 404 page can suggest a mistyped stack (#249).
+    stacks: stacks.map((s) => ({ id: s.meta.id, title: s.meta.title })),
     featured,
     stats,
     // Choices for the Licence and Format filters (app.js).

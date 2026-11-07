@@ -41,7 +41,7 @@ jobs:
           month=$(date -u +%Y-%m)
           title="Re-verify batch ${month}: ${COUNT} entries due a licence re-read"
           # Only the bot's own issue: anyone can open one with this label and title.
-          existing=$(gh issue list --state open --label "help wanted" --json number,title,author \
+          existing=$(gh issue list --limit 1000 --state open --label "help wanted" --json number,title,author \
             --jq '[.[] | select(.author.login == "app/github-actions" and (.title | startswith("Re-verify batch ")))][0].number // empty')
           if [ -n "$existing" ]; then
             gh issue edit "$existing" --title "$title" --body-file reverify-batch.md

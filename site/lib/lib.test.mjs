@@ -1023,6 +1023,8 @@ eq("did you mean: misspelt kenney", closestEntries(slugOf("kenny"), guessPool).s
 /* check-links: flags and API failures (#82) -------------------------------- */
 eq("stale-days default", staleDaysFrom(["node", "x"]).days, 365);
 eq("stale-days value", staleDaysFrom(["node", "x", "--stale-days", "30"]).days, 30);
+eq("stale-days=N value (#250)", staleDaysFrom(["node", "x", "--stale-days=30"]).days, 30);
+has("stale-days= empty is an error", staleDaysFrom(["node", "x", "--stale-days="]).error, "whole number");
 has("stale-days as the last argument is an error", staleDaysFrom(["node", "x", "--stale-days"]).error, "got nothing");
 has("stale-days followed by another flag is an error", staleDaysFrom(["node", "x", "--stale-days", "--report"]).error, "--stale-days needs a whole number");
 has("stale-days non-number is an error", staleDaysFrom(["node", "x", "--stale-days", "soon"]).error, '"soon"');

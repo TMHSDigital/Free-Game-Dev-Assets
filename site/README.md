@@ -41,7 +41,7 @@ and tools that want the metadata without scraping the page. The page itself load
 `data.js`, the same payload assigned to `window.__CATALOG__`.
 
 - Top-level keys: `generatedAt`, `version` (the calendar tag of the day, `vYYYY.MM.DD`),
-  `site`, `categories`, `guides`, `featured`, `stats` (counts: `total`, `active`,
+  `site`, `categories`, `guides`, `stacks` (id and title), `featured`, `stats` (counts: `total`, `active`,
   `needsReview`, `deprecated`, `commercialOk`, `commercialVaries`, `categories`), `filters`
   (`licenseFamilies`, the labels for the Licence filter, and `formatGroups`, the groups behind
   the Format filter) and `entries`.

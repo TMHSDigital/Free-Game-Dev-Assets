@@ -42,7 +42,7 @@ jobs:
         run: |
           title="Link check: ${PROBLEMS} sources need a look"
           # Only the bot's own issue: anyone can open one with this label and title.
-          existing=$(gh issue list --state open --label correction --json number,title,author \
+          existing=$(gh issue list --limit 1000 --state open --label correction --json number,title,author \
             --jq '[.[] | select(.author.login == "app/github-actions" and (.title | startswith("Link check:")))][0].number // empty')
           if [ -n "$existing" ]; then
             gh issue edit "$existing" --title "$title" --body-file link-report.md

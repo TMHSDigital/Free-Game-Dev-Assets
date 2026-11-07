@@ -8,7 +8,7 @@ The catalog is published as machine-readable files on every deploy. The metadata
 
 | File | What it is |
 | --- | --- |
-| [`data.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.json) | The whole catalog: every entry with its licence fields, plus categories, guides and counts |
+| [`data.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.json) | The whole catalog: every entry with its licence fields, plus categories, guides, stacks and counts |
 | [`data.schema.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.schema.json) | JSON Schema (draft 2020-12) for `data.json`. The build fails if `data.json` does not match it |
 | [`catalog.csv`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/catalog.csv) | One row per entry, for spreadsheets. Lists are joined with `; ` |
 | [`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml) | Atom feed of newly added sources |
@@ -47,7 +47,7 @@ Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CS
 | `attributionClass`, `licenseRank` | | Derived sort keys used by the site |
 | `maintenance`, `engine_lock`, `ue_versions`, `limits`, `grid_dimensions`, `camera_perspective`, `hardware_tags` | | Present only where they apply; see [the site README](../site/README.md) |
 
-Top-level keys are `generatedAt`, `version`, `site`, `categories`, `guides`, `featured`, `stats` (counts of total, active, needs-review, deprecated and commercial entries), `filters` (`licenseFamilies` and `formatGroups`, the labels and groups behind the site's filters) and `entries`.
+Top-level keys are `generatedAt`, `version`, `site`, `categories`, `guides`, `stacks` (id and title of each starter stack), `featured`, `stats` (counts of total, active, needs-review, deprecated and commercial entries), `filters` (`licenseFamilies` and `formatGroups`, the labels and groups behind the site's filters) and `entries`.
 
 Field names are stable, and [`data.schema.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.schema.json) states them as a JSON Schema the build enforces, so a field cannot be renamed or retyped without the schema changing too. New optional fields may appear, so ignore keys you do not know rather than failing on them (the schema itself rejects unknown keys, which is how the build catches drift).
 
