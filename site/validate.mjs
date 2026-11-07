@@ -7,31 +7,16 @@ import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  checkEntryBasics,
+  empty,
+  ENTRY_CHECKS,
   checkPreviewVocabulary,
   checkFeatured,
   checkAiGuide,
-  checkAttributionWaiver,
-  checkAiTag,
-  checkCreditPlaceholders,
-  checkLimits,
-  checkKnownKeys,
-  checkActiveIsSettled,
-  checkPreviewField,
   checkThumbManifest,
-  checkAddedDate,
-  checkAttributionConsistency,
   checkCategoryReadmeRows,
   checkComparisonLicences,
   checkCategorySets,
   checkCountTables,
-  checkDeprecationReason,
-  checkEngineFields,
-  checkEntryUrl,
-  checkEvidenceDates,
-  checkFieldTypes,
-  checkFormatVocabulary,
-  checkLicenseVocabulary,
   checkLicenceGuide,
   checkLineEndings,
   checkEntryCount,
@@ -40,15 +25,8 @@ import {
   categoryFormOptions,
   hasEmoji,
   checkRepoFiles,
-  checkMaintenance,
-  checkNonCommercialEvidence,
   checkPublisherConsistency,
-  checkSpdxConsistency,
   checkStacks,
-  checkTagsRestatePublisher,
-  checkTaxonomyValues,
-  checkTitleMatchesName,
-  checkValueAliases,
   checkValueSpellings,
   markdownAnchors,
 } from "./checks.mjs";
@@ -113,13 +91,6 @@ function repoFiles() {
   } catch {
     return walkFiles(ROOT, [], () => true).map((full) => ({ rel: relFromRoot(full), symlink: fs.lstatSync(full).isSymbolicLink() }));
   }
-}
-
-function isEmptyField(v) {
-  if (v === undefined || v === null) return true;
-  if (typeof v === "string" && v.trim() === "") return true;
-  if (Array.isArray(v) && v.length === 0) return true;
-  return false;
 }
 
 function relFromRoot(file) {
@@ -192,8 +163,8 @@ function coverageReport(entries) {
   for (const meta of entries) {
     const cat = String(meta.category || "?");
     byCat.set(cat, (byCat.get(cat) || 0) + 1);
-    if (!isEmptyField(meta.license_spdx)) spdx += 1;
-    if (!isEmptyField(meta.publisher)) publisher += 1;
+    if (!empty(meta.license_spdx)) spdx += 1;
+    if (!empty(meta.publisher)) publisher += 1;
   }
   const n = entries.length;
   const pct = (c) => (n ? ((100 * c) / n).toFixed(1) : "0.0");
@@ -206,7 +177,12 @@ function coverageReport(entries) {
   return lines.join("\n");
 }
 
-function main() {
+/**
+ * Every repository check, over this checkout. Returns the errors and what
+ * the CLI summary prints; the CLI below exits on errors. Importable, so the
+ * tests run it (#255).
+ */
+export function validateRepo() {
   const errors = [];
   // "In the future" means after tomorrow in UTC, so no time zone's today fails.
   const today = latestAllowedDate();
@@ -237,33 +213,9 @@ function main() {
     const stem = path.basename(file, ".md");
     const catReadme = path.join(path.dirname(file), "README.md");
     const readmeText = linkTarget(catReadme).exists ? readText(catReadme) : null;
-    errors.push(
-      ...checkEntryBasics(rel, meta, body, { stem, dirName: path.basename(path.dirname(file)), categories, readmeText, today })
-    );
-    errors.push(...checkKnownKeys(rel, meta));
-    errors.push(...checkCreditPlaceholders(rel, meta));
-    errors.push(...checkLimits(rel, meta));
-    errors.push(...checkAiTag(rel, meta, body));
-    errors.push(...checkAttributionWaiver(rel, meta, body, vocab));
-    // V24 types commercial and attribution_required (a quoted "true" is text).
-    errors.push(...checkFieldTypes(rel, meta));
-    errors.push(...checkEntryUrl(rel, meta));
-    errors.push(...checkLicenseVocabulary(rel, meta, vocab));
-    errors.push(...checkSpdxConsistency(rel, meta, vocab, spdxAllowed));
-    errors.push(...checkAttributionConsistency(rel, meta, body, vocab));
-    errors.push(...checkEvidenceDates(rel, meta, body, today));
-    errors.push(...checkDeprecationReason(rel, meta, body, vocab));
-    errors.push(...checkTaxonomyValues(rel, meta));
-    errors.push(...checkValueAliases(rel, meta, aliases));
-    errors.push(...checkFormatVocabulary(rel, meta, formatVocab));
-    errors.push(...checkTagsRestatePublisher(rel, meta));
-    errors.push(...checkMaintenance(rel, meta));
-    errors.push(...checkEngineFields(rel, meta));
-    errors.push(...checkActiveIsSettled(rel, meta));
-    errors.push(...checkNonCommercialEvidence(rel, meta, body));
-    errors.push(...checkPreviewField(rel, meta));
-    errors.push(...checkTitleMatchesName(rel, meta, body));
-    errors.push(...checkAddedDate(rel, meta, today));
+    // Every per-entry check, from one list (checks.mjs ENTRY_CHECKS, #255).
+    const ctx = { vocab, spdxAllowed, aliases, formatVocab, today, stem, dirName: path.basename(path.dirname(file)), categories, readmeText };
+    for (const check of ENTRY_CHECKS) errors.push(...check.run(rel, meta, body, ctx));
     if (meta.id) {
       const id = String(meta.id);
       if (ids.has(id)) errors.push(`duplicate id "${id}": ${ids.get(id)} and ${rel}`);
@@ -373,16 +325,18 @@ function main() {
 
   errors.push(...checkRepoFiles(repoFiles()));
 
+  return { errors, entries, entryCount: entryFiles.length, idCount: ids.size, stackCount: stackFiles.length };
+}
+
+function main() {
+  const { errors, entries, entryCount, idCount, stackCount } = validateRepo();
   if (errors.length) {
     console.error(`validate failed (${errors.length}):`);
     for (const e of errors) console.error(`  - ${e}`);
     process.exit(1);
   }
-
-  console.log(
-    `validate ok: ${entryFiles.length} entries, ${ids.size} ids, ${stackFiles.length} stacks, no broken links`
-  );
+  console.log(`validate ok: ${entryCount} entries, ${idCount} ids, ${stackCount} stacks, no broken links`);
   console.log(coverageReport(entries));
 }
 
-main();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

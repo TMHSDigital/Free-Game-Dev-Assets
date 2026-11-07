@@ -2331,6 +2331,39 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("normalize: optional fields only when set", "publisher" in e, false);
 }
 
+/* entry check registry and validateRepo (#255) ----------------------------- */
+{
+  const checks = await import("../checks.mjs");
+  const registered = new Set(checks.ENTRY_CHECKS.map((c) => c.name));
+  const entryShaped = Object.entries(checks)
+    .filter(([name, f]) => typeof f === "function" && name.startsWith("check"))
+    .filter(([, f]) => /^\(?\s*rel\s*,\s*meta\b/.test(f.toString().replace(/^function\s*\w*\s*/, "")))
+    .map(([name]) => name);
+  eq("registry: entry-shaped checks were found", entryShaped.length >= 20, true);
+  for (const name of entryShaped) {
+    eq(`registry: ${name} runs from ENTRY_CHECKS or is listed as not an entry check`, registered.has(name) || name in checks.NOT_ENTRY_CHECKS, true);
+  }
+  for (const name of registered) eq(`registry: ${name} is a real check`, typeof checks[name], "function");
+  eq("registry: no check is listed twice", registered.size, checks.ENTRY_CHECKS.length);
+
+  // The loop validate runs reaches a check: an unknown key is reported.
+  const ctx = { vocab: { licenses: {}, families: {} }, spdxAllowed: new Set(), aliases: {}, formatVocab: { formats: [], groups: {} }, today: "2026-11-07", stem: "a", dirName: "2d", categories: new Set(["2d"]), readmeText: "" };
+  const errs = [];
+  for (const c of checks.ENTRY_CHECKS) {
+    try {
+      errs.push(...c.run("catalog/2d/a.md", { id: "a", engine_lock_typo: "x" }, "", ctx));
+    } catch {
+      // A check that needs fuller context may throw on this stub; the one under test does not.
+    }
+  }
+  has("registry: the loop reaches checkKnownKeys", errs.join("\n"), "engine_lock_typo");
+
+  const { validateRepo } = await import("../validate.mjs");
+  const run = validateRepo();
+  eq("validateRepo: this checkout passes", run.errors.join("\n"), "");
+  eq("validateRepo: it counts the entries", run.entryCount > 400, true);
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

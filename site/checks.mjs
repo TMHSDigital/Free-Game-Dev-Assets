@@ -67,7 +67,7 @@ const MULTI_PUBLISHER_DOMAINS = new Set([
   "fonts.google.com",
 ]);
 
-function empty(v) {
+export function empty(v) {
   if (v === undefined || v === null) return true;
   if (typeof v === "string" && v.trim() === "") return true;
   if (Array.isArray(v) && v.length === 0) return true;
@@ -1282,3 +1282,44 @@ export function checkLicenceGuide(vocab, guideText) {
   });
   return missing.map((k) => `docs/licenses.md does not mention the licence value "${k}" (add a row or a sentence for it)`);
 }
+
+/* ------------------------------------------------------- entry registry */
+/**
+ * Every per-entry check, in the order validate runs them (#255). Each takes
+ * `(rel, meta, body, ctx)`, where ctx = { vocab, spdxAllowed, aliases,
+ * formatVocab, today, stem, dirName, categories, readmeText }. validate
+ * loops over this list, and lib/checks tests fail when an exported
+ * `check*(rel, meta, ...)` function is in neither this list nor
+ * NOT_ENTRY_CHECKS, so a written check cannot go unwired.
+ */
+export const ENTRY_CHECKS = [
+  { name: "checkEntryBasics", run: (rel, meta, body, c) => checkEntryBasics(rel, meta, body, { stem: c.stem, dirName: c.dirName, categories: c.categories, readmeText: c.readmeText, today: c.today }) },
+  { name: "checkKnownKeys", run: (rel, meta) => checkKnownKeys(rel, meta) },
+  { name: "checkCreditPlaceholders", run: (rel, meta) => checkCreditPlaceholders(rel, meta) },
+  { name: "checkLimits", run: (rel, meta) => checkLimits(rel, meta) },
+  { name: "checkAiTag", run: (rel, meta, body) => checkAiTag(rel, meta, body) },
+  { name: "checkAttributionWaiver", run: (rel, meta, body, c) => checkAttributionWaiver(rel, meta, body, c.vocab) },
+  // V24 types commercial and attribution_required (a quoted "true" is text).
+  { name: "checkFieldTypes", run: (rel, meta) => checkFieldTypes(rel, meta) },
+  { name: "checkEntryUrl", run: (rel, meta) => checkEntryUrl(rel, meta) },
+  { name: "checkLicenseVocabulary", run: (rel, meta, body, c) => checkLicenseVocabulary(rel, meta, c.vocab) },
+  { name: "checkSpdxConsistency", run: (rel, meta, body, c) => checkSpdxConsistency(rel, meta, c.vocab, c.spdxAllowed) },
+  { name: "checkAttributionConsistency", run: (rel, meta, body, c) => checkAttributionConsistency(rel, meta, body, c.vocab) },
+  { name: "checkEvidenceDates", run: (rel, meta, body, c) => checkEvidenceDates(rel, meta, body, c.today) },
+  { name: "checkDeprecationReason", run: (rel, meta, body, c) => checkDeprecationReason(rel, meta, body, c.vocab) },
+  { name: "checkTaxonomyValues", run: (rel, meta) => checkTaxonomyValues(rel, meta) },
+  { name: "checkValueAliases", run: (rel, meta, body, c) => checkValueAliases(rel, meta, c.aliases) },
+  { name: "checkFormatVocabulary", run: (rel, meta, body, c) => checkFormatVocabulary(rel, meta, c.formatVocab) },
+  { name: "checkTagsRestatePublisher", run: (rel, meta) => checkTagsRestatePublisher(rel, meta) },
+  { name: "checkMaintenance", run: (rel, meta) => checkMaintenance(rel, meta) },
+  { name: "checkEngineFields", run: (rel, meta) => checkEngineFields(rel, meta) },
+  { name: "checkActiveIsSettled", run: (rel, meta) => checkActiveIsSettled(rel, meta) },
+  { name: "checkNonCommercialEvidence", run: (rel, meta, body) => checkNonCommercialEvidence(rel, meta, body) },
+  { name: "checkPreviewField", run: (rel, meta) => checkPreviewField(rel, meta) },
+  { name: "checkTitleMatchesName", run: (rel, meta, body) => checkTitleMatchesName(rel, meta, body) },
+  { name: "checkAddedDate", run: (rel, meta, body, c) => checkAddedDate(rel, meta, c.today) },
+];
+
+/** Exported check*(rel, meta, ...) functions that are not per-entry checks, with where they run. */
+export const NOT_ENTRY_CHECKS = {
+};
