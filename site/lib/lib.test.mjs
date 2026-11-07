@@ -2076,6 +2076,50 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("listed: deprecated is not", isListed({ status: "deprecated" }), false);
 }
 
+/* reject branches and the guide page (#266) -------------------------------- */
+{
+  const { passesFilters, SORTS } = await import("./search.mjs");
+  const open = { active: true, review: true, deprecated: true, commercialOnly: false, noAttr: false, perspective: "any", license: "any", engine: "any", format: "any" };
+  eq("filters: a perspective mismatch is rejected", passesFilters({ status: "active", camera_perspective: "side" }, { ...open, perspective: "top-down" }), false);
+  eq("filters: a licence-family mismatch is rejected", passesFilters({ status: "active", licenseFamily: "cc0" }, { ...open, license: "cc-by" }), false);
+  eq("filters: matching perspective and family pass", passesFilters({ status: "active", camera_perspective: "side", licenseFamily: "cc0" }, { ...open, perspective: "side", license: "cc0" }), true);
+  const b = { name: "B", license: "CC0", licenseRank: 0, verified: "2026-10-01" };
+  const a = { name: "A", license: "CC0", licenseRank: 0, verified: "2026-10-01" };
+  eq("sorts: licence ties break by name", [b, a].sort(SORTS.license).map((e) => e.name).join(), "A,B");
+  eq("sorts: verified ties break by name", [b, a].sort(SORTS.verified).map((e) => e.name).join(), "A,B");
+
+  const { isPrivateAddress, refusalFor } = await import("./safe-fetch.mjs");
+  for (const ip of ["198.18.0.1", "198.19.255.255", "198.51.100.7", "::ffff:198.18.0.1"]) eq(`private: ${ip}`, isPrivateAddress(ip), true);
+  eq("private: 198.20.0.1 is public", isPrivateAddress("198.20.0.1"), false);
+  eq("refusal: not a URL", refusalFor("not a url"), "not a valid URL");
+
+  const { schemaErrors } = await import("./schema-check.mjs");
+  const throws = (fn) => { try { fn(); return ""; } catch (e) { return e.message; } };
+  has("schema: a remote $ref is refused by name", throws(() => schemaErrors({ $ref: "http://x" }, 1)), "http://x");
+  has("schema: a missing local $ref is named", throws(() => schemaErrors({ $ref: "#/$defs/y", $defs: {} }, 1)), "#/$defs/y");
+
+  const { guidePageHtml } = await import("./guide-page.mjs");
+  const site = { title: "Site", siteUrl: "https://x.test/s/", repo: "https://github.com/o/r" };
+  const page = (over = {}) => guidePageHtml({
+    guide: { id: "g", title: "A <&\"> guide", path: "docs/g.md" },
+    rendered: { title: "A <&\"> guide", titleId: "a-guide", firstParagraph: "word ".repeat(80), html: "<p>x</p>" },
+    site, stamp: "2026-11-06", total: 1, hasCard: false, modified: "2026-11-01", ...over,
+  });
+  const html = page();
+  has("guide page: title escaped in <title>", html, "<title>A &lt;&amp;&quot;&gt; guide");
+  has("guide page: title escaped in the breadcrumb", html, '<span aria-current="page">A &lt;&amp;&quot;&gt; guide</span>');
+  has("guide page: title escaped in h1", html, '<h1 id="a-guide">A &lt;&amp;&quot;&gt; guide</h1>');
+  has("guide page: dateModified from the last commit", html, '"dateModified":"2026-11-01"');
+  eq("guide page: no modified date, no dateModified", page({ modified: null }).includes("dateModified"), false);
+  const desc = html.match(/<meta name="description" content="([^"]*)"/)[1];
+  eq("guide page: description clipped to 160", desc.length <= 160, true);
+  has("guide page: edit link", html, 'href="https://github.com/o/r/blob/main/docs/g.md"');
+  has("guide page: h1 without titleId has no id", page({ rendered: { title: "T", firstParagraph: "p", html: "" } }), "<h1>T</h1>");
+
+  const { plainText } = await import("./guide-render.mjs");
+  eq("plainText: links and emphasis stripped", plainText("See **[the guide](a.md)** and `code`\n now"), "See the guide and code now");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
