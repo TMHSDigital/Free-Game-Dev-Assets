@@ -1025,7 +1025,8 @@ export function checkCountTables(measured, docs) {
   for (const { name, text, pathFragment } of docs) {
     for (const [cat, count] of Object.entries(measured)) {
       const re = new RegExp(
-        `\\|[^|\\n]*\\|\\s*(\\d+)\\s*\\|[^\\n]*${pathFragment.replace("CAT", cat)}`
+        // The fragment is literal text, not a pattern (#85).
+        `\\|[^|\\n]*\\|\\s*(\\d+)\\s*\\|[^\\n]*${pathFragment.replace("CAT", cat).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`
       );
       const m = text.match(re);
       if (!m) {

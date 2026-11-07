@@ -57,7 +57,8 @@ export function namedLicence(text, terms) {
 
 /** Repo-relative path of a pick link written in `stackFile`. */
 export function pickPath(stackFile, href) {
-  const target = href.split("#")[0];
+  // As the link resolver (links.mjs) reads an href: no query, no fragment (#85).
+  const target = href.split(/[?#]/)[0];
   let decoded = target;
   try {
     decoded = decodeURI(target);

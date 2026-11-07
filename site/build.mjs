@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, BROWSER_MODULES, isListed, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, siteFooterHtml, siteHeaderHtml } from "./lib/shared.mjs";
+import { BROWSER_MODULES, isListed, esc, latestAllowedDate, OG_CARD_NAME, opensearchXml, siteFooterHtml, siteHeaderHtml } from "./lib/shared.mjs";
 import { bodySearchText } from "./lib/search.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
@@ -25,9 +25,9 @@ import { summaryFromBody } from "./lib/frontmatter.mjs";
 import { readCatalog, idMatchesFile } from "./lib/entry-files.mjs";
 import { normalizeEntry, RENDER_REQUIRED } from "./lib/entry-fields.mjs";
 import { cliArgs } from "./lib/cli.mjs";
-import { entryPageHtml, scriptJson } from "./lib/entry-page.mjs";
+import { entryPageHtml } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
-import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
+import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, sitemapXml } from "./lib/exports.mjs";
 import { schemaErrors } from "./lib/schema-check.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, reviewQuestion, splitEntryBody } from "./lib/markdown.mjs";
@@ -37,6 +37,7 @@ import { stackPageHtml } from "./lib/stack-page.mjs";
 import { freshnessLineHtml, freshnessPageHtml, freshnessStats, newEntriesLineHtml } from "./lib/freshness.mjs";
 import { licenceTerms, listStackFiles, owes, parseStack, pickPath } from "./lib/stacks.mjs";
 import { createDistWriter } from "./lib/dist-writer.mjs";
+import { ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -52,17 +53,6 @@ const THUMBS_MANIFEST = path.join(__dirname, "thumbs.json");
 // other first-party stills (the validator allows binaries there) and copied
 // into dist at build time.
 const OG_CARD_SRC = path.join(ROOT, "docs", "images", "readme", OG_CARD_NAME);
-
-/** Sort rank for "license permissiveness": least owed first. */
-const ATTRIBUTION_RANK = { none: 0, notice: 1, required: 2, any: 3 };
-
-/** The Licence-filter family a license value belongs to (license-vocabulary.json `families`). */
-function licenseFamily(vocab, license) {
-  for (const [key, fam] of Object.entries(vocab.families || {})) {
-    if (Array.isArray(fam.licenses) && fam.licenses.includes(license)) return key;
-  }
-  return "mixed";
-}
 
 /** site/thumbs.json: id => { width, height, ... } for every committed thumbnail (site/thumbs.mjs). */
 function loadThumbs() {
@@ -143,58 +133,6 @@ function loadEntries(vocab) {
 }
 
 /**
- * Without JavaScript the chips cannot filter, so the prerender emits them as
- * jump links to the group headings instead. app.js replaces them with real
- * filter buttons on hydrate.
- */
-function categoryChipsHtml(entries, categories) {
-  const counts = new Map();
-  for (const e of entries) counts.set(e.category, (counts.get(e.category) || 0) + 1);
-  const chips = [
-    `<a class="chip" href="#catalog">All <span class="chip-count">${entries.length}</span></a>`,
-  ];
-  for (const [cat, meta] of Object.entries(categories)) {
-    const n = counts.get(cat) || 0;
-    if (!n) continue;
-    chips.push(
-      `<a class="chip" href="#group-${esc(cat)}">${esc(meta.label || cat)} <span class="chip-count">${n}</span></a>`
-    );
-  }
-  return chips.join("");
-}
-
-function starterRowsHtml(featured) {
-  return featured
-    .map(
-      (e) => `<tr>
-  <td class="need">${esc(e.need || "")}</td>
-  <td><a href="entry/${esc(e.id)}/">${esc(e.name)}</a></td>
-  <td class="license">${esc(e.license)} &middot; ${esc(commercialLabel(e.commercial))}</td>
-</tr>`
-    )
-    .join("\n");
-}
-
-function guideRowsHtml(guides) {
-  return (guides || [])
-    .map(
-      (g) =>
-        `<li><a href="guide/${esc(g.id)}/">${esc(g.title)}<span>${esc(g.path)}</span></a></li>`
-    )
-    .join("\n");
-}
-
-function headMetaHtml(site, stats, generatedAt, hasCard) {
-  return [
-    baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard, root: "./", modules: PAGE_MODULES.home }),
-    opensearchLinkHtml(site),
-    `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
-    `<meta name="catalog:entries" content="${stats.total}" />`,
-    `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.listed }))}</script>`,
-  ].join("\n    ");
-}
-
-/**
  * Repo-relative file => date of its last commit, from one `git log` over the
  * catalog, stacks and docs (DATED_PATHS). The sitemap's lastmod must never be earlier than the
  * last content change, and an entry's `verified` date is not that. Empty when
@@ -229,40 +167,6 @@ function lastCommitDates() {
   }
 }
 
-function robotsTxt(site) {
-  const base = site.siteUrl.replace(/\/+$/, "");
-  return `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`;
-}
-
-function notFoundHtml(site) {
-  const base = site.siteUrl.replace(/\/+$/, "");
-  return `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Not found - ${esc(site.title)}</title>
-    <meta name="robots" content="noindex" />
-    ${headAssetsHtml(`${base}/`).join("\n    ")}
-  </head>
-  <body>
-    <main class="section">
-      <h1>Not found</h1>
-      <p>That page is not part of this catalog.</p>
-      <p>Looking for an entry? <a href="${esc(base)}/#catalog">Search the catalog</a>.</p>
-      <div id="suggestions"></div>
-      <p class="hero-actions">
-        <a class="btn" href="${esc(base)}/">Back to the catalog</a>
-      </p>
-    </main>
-    <script src="${esc(base)}/data.js" defer></script>
-    ${PAGE_MODULES.notFound.filter((m) => m !== "not-found.js").map((m) => `<link rel="modulepreload" href="${esc(base)}/${m}" />`).join("\n    ")}
-    <script type="module" src="${esc(base)}/not-found.js"></script>
-  </body>
-</html>
-`;
-}
-
 // Output writer: writes only changed bytes and prunes what it did not produce (lib/dist-writer.mjs).
 const { ensureDir, writeOut, pruneDist, produced, writes } = createDistWriter(DIST);
 
@@ -286,7 +190,6 @@ function copyPublic(src, skip, prefix = "") {
     else if (!skip.has(rel)) copyOut(from, rel);
   }
 }
-
 
 /** Returns file => link resolver for links in that file's body (`file.path` is repo-relative). */
 function linkResolvers(entries, config, entryBase = "../") {
@@ -359,12 +262,6 @@ function writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now }
     }
   }
   return { errors, written };
-}
-
-function stackRowsHtml(stacks) {
-  return stacks
-    .map((s) => `<li><a href="stack/${esc(s.meta.id)}/">${esc(s.meta.title)}<span>${esc(s.meta.task)}</span></a></li>`)
-    .join("\n");
 }
 
 /** Writes dist/entry/<id>/index.html for every entry. */

@@ -2468,6 +2468,41 @@ await section("needs-review open question (#211)", async () => {
   lacks("reverify issue: no section without questions", batchIssueMarkdown({ batch: [], repo: "r", date: "d", total: 0 }), "Open questions");
 });
 
+/* homepage helpers out of build.mjs (#85) ---------------------------------- */
+await section("homepage helpers out of build.mjs (#85)", async () => {
+  const h = await import("./home-page.mjs");
+  const vocab = { families: { "public-domain": { licenses: ["CC0"] }, "cc-by": { licenses: ["CC-BY-4.0"] } } };
+  eq("licenseFamily: a listed licence", h.licenseFamily(vocab, "CC0"), "public-domain");
+  eq("licenseFamily: anything else is mixed", h.licenseFamily(vocab, "custom"), "mixed");
+  eq("licenseFamily: no families at all", h.licenseFamily({}, "CC0"), "mixed");
+  eq("ATTRIBUTION_RANK: least owed first", h.ATTRIBUTION_RANK.none < h.ATTRIBUTION_RANK.notice && h.ATTRIBUTION_RANK.notice < h.ATTRIBUTION_RANK.required, true);
+  const chips = h.categoryChipsHtml([{ category: "2d" }, { category: "2d" }, { category: "audio" }], { "2d": { label: "2D <x>" }, audio: {}, fonts: { label: "Fonts" } });
+  has("chips: All counts every entry", chips, 'All <span class="chip-count">3</span>');
+  has("chips: a label is escaped and counted", chips, "2D &lt;x&gt; <span class=\"chip-count\">2</span>");
+  has("chips: no label falls back to the key", chips, ">audio <span");
+  lacks("chips: an empty category gets no chip", chips, "Fonts");
+  const starters = h.starterRowsHtml([{ id: "a", name: "A & B", need: "UI", license: "CC0", commercial: true }]);
+  has("starters: name escaped and linked", starters, '<a href="entry/a/">A &amp; B</a>');
+  has("starters: licence and stance", starters, "CC0 &middot; commercial OK");
+  eq("guides: one row per guide", h.guideRowsHtml([{ id: "g", title: "G", path: "docs/g.md" }, { id: "h", title: "H", path: "docs/h.md" }]).split("<li>").length - 1, 2);
+  eq("guides: none", h.guideRowsHtml(undefined), "");
+  has("stacks: row links the stack page", h.stackRowsHtml([{ meta: { id: "s", title: "S", task: "T" } }]), '<a href="stack/s/">S<span>T</span></a>');
+  const site = { title: "Site", tagline: "Tag", siteUrl: "https://x.test/s/", repo: "https://g.test/o/r" };
+  eq("robots: the sitemap under the site URL", h.robotsTxt(site), "User-agent: *\nAllow: /\n\nSitemap: https://x.test/s/sitemap.xml\n");
+  const nf = h.notFoundHtml(site);
+  has("404: noindex", nf, '<meta name="robots" content="noindex" />');
+  has("404: loads its module from the site root", nf, '<script type="module" src="https://x.test/s/not-found.js"></script>');
+  lacks("404: does not preload its own entry script", nf, 'modulepreload" href="https://x.test/s/not-found.js"');
+  const head = h.headMetaHtml(site, { total: 5, listed: 4 }, "2026-11-07T00:00:00Z", false);
+  has("head meta: entry count", head, '<meta name="catalog:entries" content="5" />');
+  has("head meta: generator stamp", head, "site/build.mjs 2026-11-07T00:00:00Z");
+
+  const { repoOf } = await import("./link-check.mjs");
+  eq("repoOf: owner/repo, lower-cased", repoOf("https://github.com/Owner/Repo/tree/main/x"), "owner/repo");
+  const { pickPath } = await import("./stacks.mjs");
+  eq("pickPath: query and fragment dropped like the resolver", pickPath("stacks/s.md", "../catalog/2d/a.md?x=1#y"), "catalog/2d/a.md");
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
