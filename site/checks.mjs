@@ -925,8 +925,6 @@ export function checkComparisonLicences(categoryName, readmeText, entriesByRel) 
  * address. A `javascript:` or `data:` value would render as a live link, and
  * escaping HTML does nothing about a scheme.
  */
-/** localhost, *.local / *.internal, and IP literals: never a catalog source. */
-
 export function checkEntryUrl(rel, meta) {
   const errors = [];
   if (empty(meta.url)) return errors; // missing fields are reported elsewhere

@@ -107,7 +107,6 @@ export function passesFilters(entry, state, formatGroups = {}) {
   return true;
 }
 
-/** Choice params: URL key -> state field. `allowed` supplies each field's legal values. */
 /**
  * The engine filter. An entry is hidden when it only works in another
  * engine: its licence is locked to one (engine_lock), or everything it
@@ -285,14 +284,14 @@ export const SWITCHES = [
   ["noattr", "noAttr"],
 ];
 
-/**
- * State from a query string. A hand-edited or stale link can carry values the
- * page has no control for; each one falls back to its default, and the page
- * then rewrites the URL without it.
- */
 /** Longest search query kept from a URL or the search box. */
 export const MAX_QUERY = 200;
 
+/**
+ * State from a query string. A hand-edited or stale link can carry values the
+ * page has no control for; each one falls back to its default, and the page
+ * then rewrites the URL without it. `allowed` supplies each field's legal values.
+ */
 export function readState(search, defaults, allowed) {
   const p = new URLSearchParams(search);
   const state = { ...defaults };

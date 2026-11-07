@@ -8,7 +8,7 @@
 
 **Tech Stack:** Node 22+ ESM, no npm dependencies; plain CSS and ES modules in the browser; ffmpeg (optional, for the thumbnail script only); GitHub Actions with the already-pinned checkout and setup-node.
 
-**Spec:** `docs/superpowers/specs/2026-10-23-site-refresh-design.md`
+**Spec:** `docs/internal/superpowers/specs/2026-10-23-site-refresh-design.md`
 
 ## Global Constraints
 
@@ -462,7 +462,7 @@ git commit -m "site: entry page image strip and one primary action; stack picks 
 
 **Files:**
 - Create: `.github/workflows/thumbs.yml`
-- Modify: `site/README.md` (new files, `npm run thumbs`, manifest, category pages, fonts), `README.md` site section if it lists site features (one line on previews), `docs/superpowers/specs/2026-10-23-site-refresh-design.md` (no change unless a decision moved)
+- Modify: `site/README.md` (new files, `npm run thumbs`, manifest, category pages, fonts), `README.md` site section if it lists site features (one line on previews), `docs/internal/superpowers/specs/2026-10-23-site-refresh-design.md` (no change unless a decision moved)
 
 - [ ] **Step 1: Write `.github/workflows/thumbs.yml`** mirroring `reverify.yml`: `on: schedule: cron "0 9 1 * *"` and `workflow_dispatch`; `permissions: contents: write, issues: write`; steps: checkout (same pinned SHA), setup-node (same pinned SHA), `sudo apt-get install -y ffmpeg` guarded by `if ! command -v ffmpeg`, `node site/thumbs.mjs --report thumbs-report.md` with `id: run`, then if `steps.run.outputs.changed != '0'`: configure git user `github-actions[bot]`, `branch=thumbs/$(date -u +%Y-%m)`, `git switch -c "$branch"`, `git add site/thumbs.json site/public/thumbs`, commit `thumbs: monthly refresh`, `git push --force origin "$branch"`, then open or update one issue titled `Thumbnail refresh <month>: <n> changes` with the report body plus a first line `Open the pull request: https://github.com/TMHSDigital/Free-Game-Dev-Assets/compare/main...<branch>?expand=1`, using the same `gh issue list` / `edit` / `create` pattern as reverify (label `site`).
 

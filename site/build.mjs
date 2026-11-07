@@ -216,7 +216,7 @@ function headMetaHtml(site, stats, generatedAt, hasCard) {
  * Repo-relative file => date of its last commit, from one `git log` over the
  * catalog, stacks and docs (DATED_PATHS). The sitemap's lastmod must never be earlier than the
  * last content change, and an entry's `verified` date is not that. Empty when
- * git is unavailable (a tarball, a shallow CI checkout with no history).
+ * git is unavailable (a tarball); a shallow checkout dates every file to HEAD.
  */
 function lastCommitDates() {
   try {

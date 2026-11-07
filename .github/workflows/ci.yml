@@ -4,7 +4,7 @@ name: Validate catalog
 # top-level Markdown files, and the whole run takes seconds.
 #
 # Runs on pull requests, and as the first job of pages.yml on every push to
-# main (so a push builds once, not three times). With `upload-dist` the
+# main (so a push builds only here: once in this job and once in node-minimum). With `upload-dist` the
 # checkout has full history (the sitemap's lastmod dates come from git) and
 # the built site is uploaded as the Pages artifact for pages.yml to deploy.
 on:

@@ -273,12 +273,6 @@ ${credit ? `      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>\n` : ""}  
 export const FONT_FILES = ["fonts/public-sans.woff2", "fonts/ibm-plex-mono-400.woff2"];
 
 /**
- * Every ES module each page type loads, entry scripts and their imports, as
- * served from dist. The head preloads the whole set so the browser fetches
- * them in parallel instead of discovering each import one round trip later.
- * lib.test.mjs walks the real import graph and fails if a list drifts.
- */
-/**
  * The lib modules the browser loads, output name in site/dist -> source in
  * site/lib. build.mjs copies exactly these, and lib.test.mjs checks that none
  * of them (or any site/public script) imports from node:.
@@ -290,6 +284,12 @@ export const BROWSER_MODULES = {
   "shared.mjs": "shared.mjs",
 };
 
+/**
+ * Every ES module each page type loads, entry scripts and their imports, as
+ * served from dist. The head preloads the whole set so the browser fetches
+ * them in parallel instead of discovering each import one round trip later.
+ * lib.test.mjs walks the real import graph and fails if a list drifts.
+ */
 export const PAGE_MODULES = {
   home: ["app.js", "search.js", "cards.mjs", "shared.mjs", "views.js", "shortlist.js", "owes.js"],
   entry: ["shortlist.js", "owes.js"],
