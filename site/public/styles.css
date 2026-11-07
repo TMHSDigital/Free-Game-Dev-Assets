@@ -2284,3 +2284,17 @@ body.card-focus .to-top {
     min-height: 44px;
   }
 }
+
+/* What the shortlist owes, and the actions beside the result count (#110). */
+.shortlist-owes p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+.view-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  align-items: baseline;
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+}

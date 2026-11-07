@@ -2381,6 +2381,23 @@ await section("entry check registry and validateRepo (#255)", async () => {
   eq("validateRepo: it counts the entries", run.entryCount > 400, true);
 });
 
+/* shortlist owes and view actions (#110) ----------------------------------- */
+await section("shortlist owes and view actions (#110)", async () => {
+  const { owes, owesGroups } = await import("./owes.mjs");
+  const e = (id, over) => ({ id, name: id.toUpperCase(), status: "active", attribution_required: false, commercial: true, ...over });
+  const groups = owesGroups(owes([
+    { need: "shortlist", entry: e("a", { attribution_required: true, attribution_string: "Art by A" }) },
+    { need: "shortlist", entry: e("b", { commercial: "varies" }) },
+    { need: "shortlist", entry: e("c", { status: "needs-review" }) },
+  ]));
+  eq("owes groups: only kinds with entries, in order", groups.map((g) => g.key).join(), "credits,perFile,openQuestions,noCredit");
+  eq("owes groups: entries listed under each", groups.find((g) => g.key === "noCredit").entries.map((x) => x.id).join(), "b,c");
+  eq("owes groups: nothing picked, nothing owed", owesGroups(owes([])).length, 0);
+  const fsm = (await import("node:fs")).default;
+  const tpl = fsm.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+  for (const id of ["shortlist-owes", "view-actions", "copy-view-link"]) has(`homepage has #${id}`, tpl, `id="${id}"`);
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

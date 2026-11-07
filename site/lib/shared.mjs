@@ -291,6 +291,7 @@ export const BROWSER_MODULES = {
   "cards.mjs": "cards.mjs", // the entry card template, for app.js and the category pages
   "shared.mjs": "shared.mjs",
   "client-state.js": "client-state.mjs", // shortlist parsing, escaping and the entry back link
+  "exports.js": "exports.mjs", // "Download these" on the catalog: the same CSV as catalog.csv
 };
 
 /**
@@ -300,7 +301,7 @@ export const BROWSER_MODULES = {
  * lib.test.mjs walks the real import graph and fails if a list drifts.
  */
 export const PAGE_MODULES = {
-  home: ["app.js", "search.js", "cards.mjs", "shared.mjs", "views.js", "shortlist.js", "owes.js", "client-state.js"],
+  home: ["app.js", "search.js", "cards.mjs", "shared.mjs", "views.js", "shortlist.js", "owes.js", "client-state.js", "exports.js"],
   entry: ["shortlist.js", "owes.js", "client-state.js"],
   category: ["category.js", "views.js", "shortlist.js", "owes.js", "client-state.js"],
   notFound: ["not-found.js", "search.js", "shared.mjs"],

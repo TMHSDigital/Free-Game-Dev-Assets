@@ -30,6 +30,24 @@ export function owes(picked) {
 }
 
 /**
+ * The owes() result as short groups for the shortlist panel (#110): one per
+ * kind of obligation that has entries, in the stack page's order, each with
+ * the entries it covers. Empty groups are left out.
+ */
+export function owesGroups(owed) {
+  return [
+    ["credits", "Credits to ship", owed.credits],
+    ["notices", "Notices to keep with the files", owed.notices],
+    ["perFile", "Check each file", owed.perFile],
+    ["openQuestions", "Open questions", owed.openQuestions],
+    ["unclear", "Unclear credit: read the Notes", owed.unclear],
+    ["noCredit", "No credit needed", owed.noCredit],
+  ]
+    .filter(([, , items]) => items.length)
+    .map(([key, heading, items]) => ({ key, heading, entries: items.map((i) => i.entry) }));
+}
+
+/**
  * A templated credit line marks each part the reader fills in with braces:
  * `"{title}" by Kevin MacLeod`. The validator (V35) refuses other
  * placeholder styles, so braces are the only ones to look for.

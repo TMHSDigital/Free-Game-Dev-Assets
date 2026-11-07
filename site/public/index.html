@@ -162,6 +162,12 @@
               </select>
             </label>
             <p class="result-count" id="result-count" aria-live="polite" tabindex="-1"><!--RESULT_COUNT--></p>
+            <p class="view-actions" id="view-actions" hidden>
+              <button type="button" class="link-button" id="copy-view-link">Copy link to this view</button>
+              <button type="button" class="link-button" data-results-export="csv">Download these (CSV)</button>
+              <button type="button" class="link-button" data-results-export="json">Download these (JSON)</button>
+              <span class="copy-status" id="view-actions-status" role="status"></span>
+            </p>
             <p class="current-group" id="current-group"></p>
           </div>
 
@@ -183,6 +189,7 @@
           <h3 id="shortlist-title">Your shortlist (<span id="shortlist-count">0</span>)</h3>
           <p class="filter-note">Kept in this browser only. The CREDITS file lists what these entries owe: credit lines, notices to keep, files to check one by one, and open questions.</p>
           <ul class="shortlist-items" id="shortlist-items"></ul>
+          <div class="shortlist-owes" id="shortlist-owes" aria-label="What these entries owe"></div>
           <p class="shortlist-actions">
             <button type="button" class="btn-ghost" data-shortlist-action="md">Download CREDITS.md</button>
             <button type="button" class="btn-ghost" data-shortlist-action="txt">Download CREDITS.txt</button>

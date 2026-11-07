@@ -3,7 +3,7 @@
  * kept in this browser only, and exported as one CREDITS file built by the
  * same code as the stack pages' "What this stack owes" (owes.js).
  */
-import { creditsFile, owes } from "./owes.js";
+import { creditsFile, owes, owesGroups } from "./owes.js";
 import { escapeHtml, parseShortlist } from "./client-state.js";
 
 const KEY = "fgda:shortlist";
@@ -114,6 +114,13 @@ function renderPanel() {
         <button type="button" class="link-button" data-shortlist-remove="${escapeHtml(id)}">Remove<span class="sr-only"> ${escapeHtml(e.name)}</span></button></li>`;
     })
     .join("");
+  // What the set owes, as on a stack page (#110).
+  const owed = document.getElementById("shortlist-owes");
+  if (owed) {
+    owed.innerHTML = owesGroups(owes(ids.map((id) => ({ need: "shortlist", entry: byId[id] }))))
+      .map((g) => `<p><strong>${escapeHtml(g.heading)} (${g.entries.length}):</strong> ${g.entries.map((e) => escapeHtml(e.name)).join(", ")}</p>`)
+      .join("");
+  }
 }
 
 function update(next) {

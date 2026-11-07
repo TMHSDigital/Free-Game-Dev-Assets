@@ -1,6 +1,7 @@
 import { activeFilterChips, FILTER_DEFAULTS, FILTERS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
+import { catalogCsv } from "./exports.js";
 import { isListed, PERSPECTIVES } from "./shared.mjs";
 
 (() => {
@@ -524,9 +525,13 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   const SEARCH_DELAY = 120;
   let searchTimer = 0;
 
+  // The entries the current view shows, for "Download these" (#110).
+  let lastList = [];
+
   function apply({ push = false } = {}) {
     clearTimeout(searchTimer);
     const results = computeResults();
+    lastList = results.list;
     syncCategoryChips(results);
     renderActiveFilters();
     renderGrid(results);
@@ -579,6 +584,39 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   });
 
   /* ----------------------------------------------------------- controls */
+
+  /** "Copy link to this view" and "Download these" beside the result count (#110). */
+  function bindViewActions() {
+    const host = $("#view-actions");
+    if (!host) return;
+    host.hidden = false;
+    const status = $("#view-actions-status");
+    $("#copy-view-link").addEventListener("click", async () => {
+      const url = location.href.split("#")[0] + "#catalog";
+      try {
+        await navigator.clipboard.writeText(url);
+        status.textContent = "Link copied";
+      } catch {
+        // Clipboard refused: show the link so it can be copied by hand.
+        status.textContent = url;
+      }
+    });
+    for (const btn of $$("[data-results-export]", host)) {
+      btn.addEventListener("click", () => {
+        const csv = btn.getAttribute("data-results-export") === "csv";
+        const text = csv ? catalogCsv(lastList, data.site?.siteUrl || "") : `${JSON.stringify(lastList, null, 2)}\n`;
+        const url = URL.createObjectURL(new Blob([text], { type: csv ? "text/csv" : "application/json" }));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = csv ? "free-game-dev-assets.csv" : "free-game-dev-assets.json";
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        status.textContent = `Downloaded ${lastList.length} ${lastList.length === 1 ? "entry" : "entries"}`;
+      });
+    }
+  }
 
   function bindControls() {
     const search = $("#search");
@@ -808,6 +846,7 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   adoptNodes();
   renderCategoryFilters();
   bindControls();
+  bindViewActions();
   syncControls();
   apply();
   restoreScroll();
