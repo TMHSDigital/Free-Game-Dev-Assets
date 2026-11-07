@@ -21,6 +21,7 @@ missing entry, so freshness and accuracy come before volume.
 
 ## Planned
 
+The [open issues labelled `feature` or `enhancement`](https://github.com/TMHSDigital/Free-Game-Dev-Assets/issues?q=is%3Aopen+label%3Afeature%2Cenhancement) are the current plan.
 
 ## Done
 
