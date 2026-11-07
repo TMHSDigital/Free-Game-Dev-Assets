@@ -4,9 +4,14 @@
  * run monthly (thumbs, reverify, check-links): each file must parse
  * (`node --check`), and every name it imports must be used. Zero
  * dependencies; run: node site/lint.mjs
+ *
+ * It is not a linter in the ESLint sense: a misspelled variable parses, so
+ * it passes here and fails only when that line runs (#260). Tests are what
+ * catch those; CONTRIBUTING says so.
  */
-import { execFileSync } from "node:child_process";
+import { execFile } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { cliArgs } from "./lib/cli.mjs";
@@ -63,21 +68,34 @@ export function unusedImports(text) {
   return unused;
 }
 
-function main() {
+/** `node --check file`: null when it parses, else the first lines of the error. */
+function syntaxError(file) {
+  return new Promise((resolve) => {
+    execFile(process.execPath, ["--check", file], (err, _out, stderr) => {
+      resolve(err ? String(stderr || err.message).trim().split("\n").slice(0, 5).join("\n    ") : null);
+    });
+  });
+}
+
+async function main() {
   cliArgs({}, "node site/lint.mjs");
-  const errors = [];
   const files = scriptFiles();
-  for (const file of files) {
-    const rel = path.relative(ROOT, file).split(path.sep).join("/");
-    try {
-      execFileSync(process.execPath, ["--check", file], { stdio: ["ignore", "ignore", "pipe"] });
-    } catch (err) {
-      const first = String(err.stderr || err.message).trim().split("\n").slice(0, 5).join("\n    ");
-      errors.push(`${rel} does not parse:\n    ${first}`);
-      continue;
+  // One node --check per file, several at a time (#261); results stay in file order.
+  const results = new Array(files.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < files.length) {
+      const i = next++;
+      results[i] = await syntaxError(files[i]);
     }
+  };
+  await Promise.all(Array.from({ length: Math.min(files.length, Math.max(2, os.availableParallelism())) }, worker));
+  const errors = [];
+  files.forEach((file, i) => {
+    const rel = path.relative(ROOT, file).split(path.sep).join("/");
+    if (results[i]) return void errors.push(`${rel} does not parse:\n    ${results[i]}`);
     for (const name of unusedImports(fs.readFileSync(file, "utf8"))) errors.push(`${rel} imports ${name} and never uses it`);
-  }
+  });
   if (errors.length) {
     console.error(`lint failed (${errors.length}):`);
     for (const e of errors) console.error(`  - ${e}`);
@@ -86,4 +104,4 @@ function main() {
   console.log(`lint ok: ${files.length} scripts parse, no unused imports`);
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();
