@@ -5,7 +5,7 @@
  * lib.test.mjs tests it here. Its one import, shared.mjs, sits beside it in
  * both places.
  */
-import { PERSPECTIVES } from "./shared.mjs";
+import { PERSPECTIVES, VERIFIED_AGING_DAYS, VERIFIED_FRESH_DAYS, verifiedAge } from "./shared.mjs";
 
 // Searchable words per perspective (shared.mjs PERSPECTIVES).
 export const PERSPECTIVE_SEARCH = Object.fromEntries(Object.entries(PERSPECTIVES).map(([k, v]) => [k, v.search]));
@@ -90,8 +90,16 @@ export function scoreFields(fields, tests) {
   return score;
 }
 
-/** Every filter except the category and the search words. */
-export function passesFilters(entry, state, formatGroups = {}) {
+/**
+ * Every filter except the category and the search words. `now` (ms) dates
+ * the freshness filter: an entry passes `fresh` when its licence was read at
+ * most FRESH_DAYS[fresh] days before it.
+ */
+export function passesFilters(entry, state, formatGroups = {}, now = Date.now()) {
+  if (state.fresh && state.fresh !== "any") {
+    const { days } = verifiedAge(entry.verified, now);
+    if (days === null || days > (FRESH_DAYS[state.fresh] ?? Infinity)) return false;
+  }
   if (entry.status === "active" && !state.active) return false;
   if (entry.status === "needs-review" && !state.review) return false;
   if (entry.status === "deprecated" && !state.deprecated) return false;
@@ -248,41 +256,50 @@ export function gapIssueUrl(repo, query, categoryLabel = "") {
 }
 
 /**
- * The filter state of the catalog page and its defaults: the one list. The
- * page starts from it, and the URL holds only what differs from it.
+ * Every catalog filter, in the order the URL writes them (#252). The page's
+ * defaults, the URL keys, the controls it binds and syncs, and the chips
+ * that show an active filter all come from here, so a new filter is one row
+ * plus its control in index.html.
+ * - `kind: "choice"`: a <select> (`control`); the chip reads `${chip}: label`.
+ *   `options` lists fixed choices; without it app.js supplies them from data.
+ * - `kind: "switch"`: a checkbox; written to the URL as 1 or 0. The chip
+ *   shows `chipOn` when it is on, `chipOff` when it is off, where set.
+ * `category` has chips of its own instead of a control.
+ */
+export const FILTERS = Object.freeze([
+  { field: "category", urlKey: "cat", kind: "choice", default: "all", chip: "category" },
+  { field: "sort", urlKey: "sort", kind: "choice", default: "name", control: "#sort", chip: "sort" },
+  { field: "perspective", urlKey: "view", kind: "choice", default: "any", control: "#perspective", chip: "view" },
+  { field: "license", urlKey: "licence", kind: "choice", default: "any", control: "#license-family", chip: "licence" },
+  { field: "format", urlKey: "format", kind: "choice", default: "any", control: "#format-group", chip: "format" },
+  { field: "engine", urlKey: "engine", kind: "choice", default: "any", control: "#engine", chip: "engine" },
+  {
+    field: "fresh", urlKey: "fresh", kind: "choice", default: "any", control: "#fresh", chip: "licence read",
+    options: { "6m": `in the last ${VERIFIED_FRESH_DAYS} days`, "12m": `in the last ${VERIFIED_AGING_DAYS} days` },
+  },
+  { field: "active", urlKey: "active", kind: "switch", default: true, control: "#filter-active", chipOff: "hiding active" },
+  { field: "review", urlKey: "review", kind: "switch", default: true, control: "#filter-review", chipOff: "hiding needs-review" },
+  { field: "deprecated", urlKey: "deprecated", kind: "switch", default: false, control: "#filter-deprecated", chipOn: "showing deprecated" },
+  { field: "commercialOnly", urlKey: "commercial", kind: "switch", default: false, control: "#filter-commercial", chipOn: "commercial OK or per-file review" },
+  { field: "noAttr", urlKey: "noattr", kind: "switch", default: false, control: "#filter-no-attr", chipOn: "no attribution only" },
+]);
+
+/** Days since `verified` each `fresh` choice allows: the freshness page's bands. */
+export const FRESH_DAYS = Object.freeze({ "6m": VERIFIED_FRESH_DAYS, "12m": VERIFIED_AGING_DAYS });
+
+/**
+ * The filter state of the catalog page and its defaults. The page starts
+ * from it, and the URL holds only what differs from it.
  */
 export const FILTER_DEFAULTS = Object.freeze({
-  category: "all",
   q: "",
-  active: true,
-  review: true,
-  deprecated: false,
-  commercialOnly: false,
-  noAttr: false,
-  perspective: "any",
-  license: "any",
-  format: "any",
-  engine: "any",
-  sort: "name",
+  ...Object.fromEntries(FILTERS.map((f) => [f.field, f.default])),
 });
 
 /** Choice params: URL key -> state field, in the order the URL writes them (after q). */
-export const CHOICES = [
-  ["cat", "category"],
-  ["sort", "sort"],
-  ["view", "perspective"],
-  ["licence", "license"],
-  ["format", "format"],
-  ["engine", "engine"],
-];
+export const CHOICES = FILTERS.filter((f) => f.kind === "choice").map((f) => [f.urlKey, f.field]);
 /** On/off params: URL key -> state field, written as 1 or 0. */
-export const SWITCHES = [
-  ["active", "active"],
-  ["review", "review"],
-  ["deprecated", "deprecated"],
-  ["commercial", "commercialOnly"],
-  ["noattr", "noAttr"],
-];
+export const SWITCHES = FILTERS.filter((f) => f.kind === "switch").map((f) => [f.urlKey, f.field]);
 
 /** Longest search query kept from a URL or the search box. */
 export const MAX_QUERY = 200;

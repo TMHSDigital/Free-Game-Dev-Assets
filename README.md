@@ -152,7 +152,7 @@ is a page on the site.
 
 The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 418 entries
 and filters them by category, licence, format, engine, commercial use, attribution, review
-status and 2D camera view, sorted as you choose. Press `/` to search, and keep the sources you
+status, 2D camera view and how recently the licence was read, sorted as you choose. Press `/` to search, and keep the sources you
 are weighing on a shortlist. Filtered views and individual entries have their own URLs, so you can send
 someone exactly what you are looking at.
 

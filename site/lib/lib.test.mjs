@@ -939,7 +939,7 @@ eq("url: switch off written as 0", stateQuery({ ...URL_DEF, active: false }, URL
 eq("url: blank q not written", stateQuery({ ...URL_DEF, q: "   " }, URL_DEF), "");
 {
   // #223: every choice and switch survives a round trip through the URL.
-  const other = { category: "3d", sort: "verified", perspective: "top_down", license: "cc0", format: "image", engine: "godot" };
+  const other = { category: "3d", sort: "verified", perspective: "top_down", license: "cc0", format: "image", engine: "godot", fresh: "6m" };
   const allowed = Object.fromEntries(URL_CHOICES.map(([, f]) => [f, [URL_DEF[f], other[f]]]));
   const changed = { ...URL_DEF, q: "pixel art" };
   for (const [, f] of URL_CHOICES) {
@@ -2205,6 +2205,42 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("thumbs report: an empty run has no sections", reportMarkdown(empty).includes("## "), false);
   has("thumbs report: no converter prints none", reportMarkdown(empty), "Converter: none.");
   has("thumbs report: one failure gives a Failed section", reportMarkdown({ ...empty, failed: [{ id: "a", reason: "HTTP 500" }] }), "## Failed\n\n- a: HTTP 500");
+}
+
+/* one filter table (#252) and the freshness filter (#271) ----------------- */
+{
+  const { FILTERS, FILTER_DEFAULTS, CHOICES, SWITCHES, readState, stateQuery, passesFilters, FRESH_DAYS } = await import("./search.mjs");
+  const fsm = (await import("node:fs")).default;
+  const indexHtml = fsm.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+  for (const f of FILTERS) {
+    eq(`filters table: ${f.field} has a default`, f.field in FILTER_DEFAULTS && FILTER_DEFAULTS[f.field] === f.default, true);
+    eq(`filters table: ${f.field} has a URL key`, typeof f.urlKey === "string" && f.urlKey.length > 0, true);
+    if (f.control) has(`filters table: ${f.field} control exists in index.html`, indexHtml, `id="${f.control.slice(1)}"`);
+    if (f.kind === "choice") eq(`filters table: ${f.field} has a chip label`, typeof f.chip === "string", true);
+    else eq(`filters table: ${f.field} has a chip for its non-default state`, Boolean(f.default ? f.chipOff : f.chipOn), true);
+  }
+  eq("filters table: URL keys are unique", new Set(FILTERS.map((f) => f.urlKey)).size, FILTERS.length);
+  eq("filters table: URL order is unchanged", CHOICES.map(([k]) => k).join(), "cat,sort,view,licence,format,engine,fresh");
+  eq("filters table: switches", SWITCHES.map(([k]) => k).join(), "active,review,deprecated,commercial,noattr");
+
+  // Every field flipped from its default survives a trip through the URL.
+  const changed = { ...FILTER_DEFAULTS, q: "tiles", category: "2d", sort: "added", perspective: "top-down", license: "cc0", format: "gltf", engine: "godot", fresh: "6m" };
+  for (const [, field] of SWITCHES) changed[field] = !FILTER_DEFAULTS[field];
+  const allowed = Object.fromEntries(CHOICES.map(([, field]) => [field, [changed[field]]]));
+  const back = readState(stateQuery(changed, FILTER_DEFAULTS), FILTER_DEFAULTS, allowed);
+  eq("filters: readState(stateQuery(s)) round-trips every field", JSON.stringify(back), JSON.stringify(changed));
+  has("fresh: written to the URL", stateQuery(changed, FILTER_DEFAULTS), "fresh=6m");
+
+  const now = Date.parse("2026-11-06T12:00:00Z");
+  const at = (days) => new Date(now - days * 86400000).toISOString().slice(0, 10);
+  const open = { ...FILTER_DEFAULTS, deprecated: true };
+  const pass = (verified, fresh) => passesFilters({ status: "active", verified }, { ...open, fresh }, {}, now);
+  eq("fresh: 6m keeps a licence read on the last allowed day", pass(at(FRESH_DAYS["6m"]), "6m"), true);
+  eq("fresh: 6m drops one read a day earlier", pass(at(FRESH_DAYS["6m"] + 1), "6m"), false);
+  eq("fresh: 12m keeps that one", pass(at(FRESH_DAYS["6m"] + 1), "12m"), true);
+  eq("fresh: 12m drops past the aging band", pass(at(FRESH_DAYS["12m"] + 1), "12m"), false);
+  eq("fresh: an entry with no date is dropped", pass(undefined, "6m"), false);
+  eq("fresh: any keeps everything", pass(undefined, "any"), true);
 }
 
 /* report (keep last) ------------------------------------------------------ */

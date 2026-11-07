@@ -1,4 +1,4 @@
-import { FILTER_DEFAULTS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
+import { FILTER_DEFAULTS, FILTERS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 import { isListed, PERSPECTIVES } from "./shared.mjs";
@@ -26,6 +26,20 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   const FORMAT_GROUPS = data.filters?.formatGroups || {};
 
   const categoryLabels = data.categories || {};
+
+  // The choices of each filter whose options come from data, value -> chip
+  // label; a FILTERS row with fixed `options` needs nothing here (#252).
+  const CHOICE_LABELS = {
+    category: Object.fromEntries(Object.entries(categoryLabels).map(([k, c]) => [k, c.label || k])),
+    sort: Object.fromEntries(Object.keys(SORTS).map((k) => [k, k])),
+    perspective: PERSPECTIVE_LABELS,
+    license: LICENSE_FAMILIES,
+    engine: Object.fromEntries(Object.entries(ENGINES).map(([k, e]) => [k, e.label])),
+    format: Object.fromEntries(Object.entries(FORMAT_GROUPS).map(([k, g]) => [k, g.label])),
+  };
+  const choicesOf = (f) => f.options || CHOICE_LABELS[f.field] || {};
+  // Where a <select> option reads differently from the chip.
+  const OPTION_TEXT = { perspective: Object.fromEntries(Object.entries(PERSPECTIVES).map(([k, p]) => [k, p.option])) };
   const repo = data.site?.repo || "https://github.com/TMHSDigital/Free-Game-Dev-Assets";
   // No prototype: "#entry-constructor" must not look like an entry.
   const byId = Object.assign(Object.create(null), Object.fromEntries(data.entries.map((e) => [e.id, e])));
@@ -60,14 +74,11 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   function readUrl() {
     Object.assign(
       state,
-      readState(location.search, DEFAULTS, {
-        category: ["all", ...Object.keys(categoryLabels)],
-        sort: Object.keys(SORTS),
-        perspective: ["any", ...Object.keys(PERSPECTIVE_LABELS)],
-        license: ["any", ...Object.keys(LICENSE_FAMILIES)],
-        engine: ["any", ...Object.keys(ENGINES)],
-        format: ["any", ...Object.keys(FORMAT_GROUPS)],
-      })
+      readState(
+        location.search,
+        DEFAULTS,
+        Object.fromEntries(FILTERS.filter((f) => f.kind === "choice").map((f) => [f.field, [f.default, ...Object.keys(choicesOf(f))]]))
+      )
     );
   }
 
@@ -215,23 +226,15 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
       });
     }
     if (state.q.trim()) chips.push({ key: "q", label: `search: ${state.q.trim()}` });
-    if (state.sort !== DEFAULTS.sort) chips.push({ key: "sort", label: `sort: ${state.sort}` });
-    if (state.perspective !== DEFAULTS.perspective)
-      chips.push({
-        key: "perspective",
-        label: `view: ${PERSPECTIVE_LABELS[state.perspective] || state.perspective}`,
-      });
-    if (state.license !== DEFAULTS.license)
-      chips.push({ key: "license", label: `licence: ${LICENSE_FAMILIES[state.license] || state.license}` });
-    if (state.engine !== DEFAULTS.engine) chips.push({ key: "engine", label: `engine: ${ENGINES[state.engine]?.label || state.engine}` });
-    if (state.format !== DEFAULTS.format)
-      chips.push({ key: "format", label: `format: ${FORMAT_GROUPS[state.format]?.label || state.format}` });
-    if (!state.active) chips.push({ key: "active", label: "hiding active" });
-    if (!state.review) chips.push({ key: "review", label: "hiding needs-review" });
-    if (state.deprecated) chips.push({ key: "deprecated", label: "showing deprecated" });
-    if (state.commercialOnly)
-      chips.push({ key: "commercialOnly", label: "commercial OK or per-file review" });
-    if (state.noAttr) chips.push({ key: "noAttr", label: "no attribution only" });
+    // One chip per filter that differs from its default, from the FILTERS table (#252).
+    for (const f of FILTERS) {
+      if (f.field === "category") continue;
+      const v = state[f.field];
+      if (f.kind === "choice") {
+        if (v !== f.default) chips.push({ key: f.field, label: `${f.chip}: ${choicesOf(f)[v] || v}` });
+      } else if (v && f.chipOn && v !== f.default) chips.push({ key: f.field, label: f.chipOn });
+      else if (!v && f.chipOff && v !== f.default) chips.push({ key: f.field, label: f.chipOff });
+    }
 
     // The filter keeps aggregators whose files differ, which a reader
     // filtering for "safe to ship" must see, not find in a tooltip.
@@ -633,61 +636,34 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
       searchTimer = setTimeout(apply, SEARCH_DELAY);
     });
 
-    const toggles = [
-      ["#filter-active", "active"],
-      ["#filter-review", "review"],
-      ["#filter-deprecated", "deprecated"],
-      ["#filter-commercial", "commercialOnly"],
-      ["#filter-no-attr", "noAttr"],
-    ];
-    for (const [sel, field] of toggles) {
-      const el = $(sel);
-      el.checked = state[field];
+    // Every filter control, from the FILTERS table (#252). A select whose
+    // markup holds only its default option is filled from its choices.
+    for (const f of FILTERS) {
+      if (!f.control) continue;
+      const el = $(f.control);
+      if (f.kind === "switch") {
+        el.checked = state[f.field];
+        el.addEventListener("change", (e) => {
+          state[f.field] = e.target.checked;
+          apply();
+        });
+        continue;
+      }
+      if (el.options.length <= 1) {
+        el.insertAdjacentHTML(
+          "beforeend",
+          Object.entries(OPTION_TEXT[f.field] || choicesOf(f))
+            .map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`)
+            .join("")
+        );
+      }
+      el.value = state[f.field];
       el.addEventListener("change", (e) => {
-        state[field] = e.target.checked;
-        apply();
+        state[f.field] = e.target.value;
+        // A new sort is a new view worth a Back step; a narrowed list is not.
+        apply(f.field === "sort" ? { push: true } : undefined);
       });
     }
-
-    const view = $("#perspective");
-    view.insertAdjacentHTML(
-      "beforeend",
-      Object.entries(PERSPECTIVES)
-        .map(([value, p]) => `<option value="${escapeHtml(value)}">${escapeHtml(p.option)}</option>`)
-        .join("")
-    );
-    view.value = state.perspective;
-    view.addEventListener("change", (e) => {
-      state.perspective = e.target.value;
-      apply();
-    });
-
-    const selects = [
-      ["#license-family", "license", LICENSE_FAMILIES],
-      ["#engine", "engine", Object.fromEntries(Object.entries(ENGINES).map(([k, e]) => [k, e.label]))],
-      ["#format-group", "format", Object.fromEntries(Object.entries(FORMAT_GROUPS).map(([k, g]) => [k, g.label]))],
-    ];
-    for (const [sel, field, choices] of selects) {
-      const el = $(sel);
-      el.insertAdjacentHTML(
-        "beforeend",
-        Object.entries(choices)
-          .map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`)
-          .join("")
-      );
-      el.value = state[field];
-      el.addEventListener("change", (e) => {
-        state[field] = e.target.value;
-        apply();
-      });
-    }
-
-    const sort = $("#sort");
-    sort.value = state.sort;
-    sort.addEventListener("change", (e) => {
-      state.sort = e.target.value;
-      apply({ push: true });
-    });
 
     // Back and Forward step through the pushed views.
     window.addEventListener("popstate", () => {
@@ -857,16 +833,11 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
 
   function syncControls() {
     $("#search").value = state.q;
-    $("#filter-active").checked = state.active;
-    $("#filter-review").checked = state.review;
-    $("#filter-deprecated").checked = state.deprecated;
-    $("#filter-commercial").checked = state.commercialOnly;
-    $("#filter-no-attr").checked = state.noAttr;
-    $("#sort").value = state.sort;
-    $("#perspective").value = state.perspective;
-    $("#license-family").value = state.license;
-    $("#engine").value = state.engine;
-    $("#format-group").value = state.format;
+    for (const f of FILTERS) {
+      if (!f.control) continue;
+      if (f.kind === "switch") $(f.control).checked = state[f.field];
+      else $(f.control).value = state[f.field];
+    }
   }
 
   /* --------------------------------------------------------------- init */
