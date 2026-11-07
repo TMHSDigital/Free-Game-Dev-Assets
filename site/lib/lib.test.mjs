@@ -2149,6 +2149,64 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   }
 }
 
+/* thumbs run planner and settler (#264) ----------------------------------- */
+{
+  const { planRun, recordFailure, settleRun, orphanThumbs, reportMarkdown } = await import("../thumbs.mjs");
+  const today = "2026-11-06";
+  const opts = { force: false, dryRun: false, only: null, limit: Infinity, report: null };
+  const entry = (id, over = {}) => ({ id, url: `https://pub.itch.io/${id}`, license: "CC0", status: "active", preview: undefined, ...over });
+  const rec = (id, over = {}) => ({ source: `https://pub.itch.io/${id}`, image: `https://img/${id}.png`, fetched: "2026-10-01", hash: `h-${id}`, width: 1, height: 1, license: "CC0", ...over });
+  const all = () => true;
+
+  {
+    const manifest = { thumbs: { a: rec("a"), gone: rec("gone") } };
+    const plan = planRun({ entries: [entry("a", { license: "custom" })], manifest, fileExists: all, opts, today });
+    eq("thumbs plan: a licence changed to custom loses its record before any fetch", "a" in plan.thumbs, false);
+    eq("thumbs plan: an entry no longer in the catalog is removed", plan.summary.removed.map((r) => r.id).sort().join(), "a,gone");
+    const { changed } = settleRun({ manifest, thumbs: plan.thumbs, shared: plan.shared, pending: new Map(), summary: plan.summary });
+    eq("thumbs plan: the removals count as changes", changed, 2);
+    eq("thumbs plan: the custom entry is skipped by the gate", plan.summary.skipped[0].kind, "gate");
+  }
+  {
+    const plan = planRun({ entries: [entry("a"), entry("b"), entry("c")], manifest: { thumbs: {} }, fileExists: all, opts: { ...opts, limit: 1 }, today });
+    eq("thumbs plan: --limit 1 gives one todo", plan.todo.length, 1);
+    eq("thumbs plan: the rest are skipped with kind limit", plan.summary.skipped.filter((s) => s.kind === "limit").length, 2);
+  }
+  {
+    const plan = planRun({ entries: [entry("a")], manifest: { thumbs: { a: rec("a") } }, fileExists: () => false, opts, today });
+    eq("thumbs plan: a fresh record with no file on disk is fetched again", plan.todo.length, 1);
+  }
+  {
+    const summary = { failed: [], removed: [], bumped: [] };
+    const thumbs = { a: rec("a"), old: rec("old", { fetched: "2025-01-01" }) };
+    recordFailure({ thumbs, summary, entry: entry("a"), reason: "HTTP 500", today, countFailure: true });
+    eq("thumbs failure: a fresh record has its failure count raised", thumbs.a.failures, 1);
+    eq("thumbs failure: the bump is reported", summary.bumped.map((b) => b.id).join(), "a");
+    recordFailure({ thumbs, summary, entry: entry("old"), reason: "HTTP 500", today, countFailure: true });
+    eq("thumbs failure: a stale record is removed", "old" in thumbs, false);
+    eq("thumbs failure: and reported as removed", summary.removed[0].id, "old");
+  }
+  {
+    const fresh = { a: rec("a", { hash: "logo" }), b: rec("b", { hash: "logo" }), c: rec("c", { hash: "logo" }) };
+    const manifest = { thumbs: {} };
+    const pending = new Map([["a", Buffer.from("x")], ["b", Buffer.from("x")], ["c", Buffer.from("x")]]);
+    const summary = { dropped: [] };
+    const thumbs = { ...fresh };
+    const shared = {};
+    const first = settleRun({ manifest, thumbs, shared, pending, summary });
+    eq("thumbs settle: three same-hash records go to shared", Object.keys(first.sortedShared).join(), "a,b,c");
+    eq("thumbs settle: and leave pending", pending.size, 0);
+    const again = settleRun({ manifest: { thumbs: first.sorted, shared: first.sortedShared }, thumbs: { ...fresh }, shared: { ...first.sortedShared }, pending: new Map(), summary: { dropped: [] } });
+    eq("thumbs settle: re-dropping the same logos changes nothing", again.changed, 0);
+  }
+  eq("thumbs orphans: a .webp without a record goes, other files stay", orphanThumbs(["x.webp", "a.webp", "notes.txt"], { a: {} }).join(), "x.webp");
+
+  const empty = { today, converter: null, fetched: [], kept: 0, skipped: [], failed: [], bumped: [], removed: [], dropped: [] };
+  eq("thumbs report: an empty run has no sections", reportMarkdown(empty).includes("## "), false);
+  has("thumbs report: no converter prints none", reportMarkdown(empty), "Converter: none.");
+  has("thumbs report: one failure gives a Failed section", reportMarkdown({ ...empty, failed: [{ id: "a", reason: "HTTP 500" }] }), "## Failed\n\n- a: HTTP 500");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

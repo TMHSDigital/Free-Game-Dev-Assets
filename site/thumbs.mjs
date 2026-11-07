@@ -220,20 +220,20 @@ export function reportMarkdown(summary) {
   return `${lines.join("\n")}\n`;
 }
 
-async function main() {
-  const opts = parseArgs(process.argv.slice(2));
-  const today = new Date().toISOString().slice(0, 10);
-  const converter = detectConverter();
-  const entries = loadEntries();
+/**
+ * The run's plan, before any fetch (pure; #264): drops records whose entry
+ * is gone or no longer eligible, then sorts every entry into kept, skipped
+ * (gate, shared, limit) or todo. `fileExists(id)` says whether the entry's
+ * .webp is on disk. Returns `{ thumbs, shared, todo, summary }`; the maps
+ * are copies of the manifest's.
+ */
+export function planRun({ entries, manifest, fileExists, opts, today, converter = null }) {
   const byId = new Map(entries.map((e) => [e.id, e]));
-  const manifest = loadManifest();
   const thumbs = { ...manifest.thumbs };
   // Entries whose image turned out to be shared (a logo): remembered so they
   // are not fetched again until the record would be refreshed anyway.
   const shared = { ...manifest.shared };
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "fgda-thumbs-"));
   const summary = { today, converter, fetched: [], kept: 0, skipped: [], failed: [], bumped: [], removed: [], dropped: [] };
-  const pending = new Map(); // id → bytes to write
 
   // Records whose entry is gone or no longer eligible go first, so a licence
   // that changed to custom never survives a run.
@@ -264,8 +264,7 @@ async function main() {
       summary.skipped.push({ id: entry.id, reason: "image shared with other entries", kind: "shared" });
       continue;
     }
-    const fileExists = fs.existsSync(path.join(THUMBS_DIR, `${entry.id}.webp`));
-    if (!needsFetch(rec, fetchOpts) && fileExists) {
+    if (!needsFetch(rec, fetchOpts) && fileExists(entry.id)) {
       summary.kept += 1;
       continue;
     }
@@ -275,39 +274,36 @@ async function main() {
     }
     todo.push(entry);
   }
+  return { thumbs, shared, todo, summary };
+}
 
-  await pool(
-    todo,
-    async (entry) => {
-      try {
-        const { record, bytes } = await fetchOne(entry, { converter, tmpDir, today });
-        thumbs[entry.id] = record;
-        pending.set(entry.id, bytes);
-        summary.fetched.push({ id: entry.id, width: record.width, height: record.height, bytes: bytes.length });
-        process.stdout.write(`  + ${entry.id} ${record.width}x${record.height} ${bytes.length} B\n`);
-      } catch (err) {
-        summary.failed.push({ id: entry.id, reason: err.message });
-        // A source that keeps failing does not keep its old image forever,
-        // and a record for a url or pin the entry no longer has goes at once.
-        const old = thumbs[entry.id];
-        if (old) {
-          const kept = afterFailure(old, { today, url: entry.url, preview: entry.preview || "", countFailure: Boolean(converter) });
-          if (!kept) {
-            summary.removed.push({ id: entry.id, reason: `refresh failed and the stored image is stale (${err.message})`, hash: old.hash });
-            delete thumbs[entry.id];
-          } else if (kept !== old) {
-            thumbs[entry.id] = kept;
-            // A raised failure count is a change: without it the count never
-            // reaches the repository and the MAX_FAILURES rule cannot fire.
-            summary.bumped.push({ id: entry.id, failures: kept.failures });
-          }
-        }
-        process.stdout.write(`  ! ${entry.id}: ${err.message}\n`);
-      }
-    },
-    CONCURRENCY
-  );
+/**
+ * A failed fetch (pure; mutates `thumbs` and `summary`). A source that keeps
+ * failing does not keep its old image forever, and a record for a url or pin
+ * the entry no longer has goes at once.
+ */
+export function recordFailure({ thumbs, summary, entry, reason, today, countFailure }) {
+  summary.failed.push({ id: entry.id, reason });
+  const old = thumbs[entry.id];
+  if (!old) return;
+  const kept = afterFailure(old, { today, url: entry.url, preview: entry.preview || "", countFailure });
+  if (!kept) {
+    summary.removed.push({ id: entry.id, reason: `refresh failed and the stored image is stale (${reason})`, hash: old.hash });
+    delete thumbs[entry.id];
+  } else if (kept !== old) {
+    thumbs[entry.id] = kept;
+    // A raised failure count is a change: without it the count never
+    // reaches the repository and the MAX_FAILURES rule cannot fire.
+    summary.bumped.push({ id: entry.id, failures: kept.failures });
+  }
+}
 
+/**
+ * After the fetches (pure; mutates `thumbs`, `shared`, `pending`, `summary`):
+ * moves logos to `shared`, sorts both maps and counts the net change against
+ * the manifest. Returns `{ sorted, sortedShared, changed }`.
+ */
+export function settleRun({ manifest, thumbs, shared, pending, summary }) {
   // A hash shared by three or more entries is a logo, not a preview. Logos
   // dropped in earlier runs (in `shared`) count toward the three.
   for (const id of sharedImageIds(thumbs, shared)) {
@@ -324,14 +320,47 @@ async function main() {
   // Only a net change to the manifest or the files counts, so a run that
   // refetches and re-drops the same shared images changes nothing.
   const changed = manifestChanges(manifest, { thumbs: sorted, shared: sortedShared }) + pending.size;
+  return { sorted, sortedShared, changed };
+}
+
+/** Files in the thumbs folder to delete: a .webp with no manifest record. Other files stay. */
+export function orphanThumbs(names, sorted) {
+  return names.filter((name) => name.endsWith(".webp") && !sorted[name.replace(/\.webp$/, "")]);
+}
+
+async function main() {
+  const opts = parseArgs(process.argv.slice(2));
+  const today = new Date().toISOString().slice(0, 10);
+  const converter = detectConverter();
+  const manifest = loadManifest();
+  const fileExists = (id) => fs.existsSync(path.join(THUMBS_DIR, `${id}.webp`));
+  const { thumbs, shared, todo, summary } = planRun({ entries: loadEntries(), manifest, fileExists, opts, today, converter });
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "fgda-thumbs-"));
+  const pending = new Map(); // id → bytes to write
+
+  await pool(
+    todo,
+    async (entry) => {
+      try {
+        const { record, bytes } = await fetchOne(entry, { converter, tmpDir, today });
+        thumbs[entry.id] = record;
+        pending.set(entry.id, bytes);
+        summary.fetched.push({ id: entry.id, width: record.width, height: record.height, bytes: bytes.length });
+        process.stdout.write(`  + ${entry.id} ${record.width}x${record.height} ${bytes.length} B\n`);
+      } catch (err) {
+        recordFailure({ thumbs, summary, entry, reason: err.message, today, countFailure: Boolean(converter) });
+        process.stdout.write(`  ! ${entry.id}: ${err.message}\n`);
+      }
+    },
+    CONCURRENCY
+  );
+
+  const { sorted, sortedShared, changed } = settleRun({ manifest, thumbs, shared, pending, summary });
 
   if (!opts.dryRun) {
     fs.mkdirSync(THUMBS_DIR, { recursive: true });
     for (const [id, bytes] of pending) fs.writeFileSync(path.join(THUMBS_DIR, `${id}.webp`), bytes);
-    for (const name of fs.readdirSync(THUMBS_DIR)) {
-      const id = name.replace(/\.webp$/, "");
-      if (name.endsWith(".webp") && !sorted[id]) fs.rmSync(path.join(THUMBS_DIR, name), { force: true });
-    }
+    for (const name of orphanThumbs(fs.readdirSync(THUMBS_DIR), sorted)) fs.rmSync(path.join(THUMBS_DIR, name), { force: true });
     if (changed) {
       const out = { generated: today, thumbs: sorted, ...(Object.keys(sortedShared).length ? { shared: sortedShared } : {}) };
       fs.writeFileSync(MANIFEST, `${JSON.stringify(out, null, 2)}\n`);
