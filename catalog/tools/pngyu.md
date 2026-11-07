@@ -24,6 +24,7 @@ Qt front end for pngquant by nukesaq88: drop a folder of PNGs, pick colour count
 - The pre-built binaries bundle pngquant, which is GPL-3.0-or-later. That affects redistributing the download, not the PNGs you compress
 - Compressed PNGs are your own images. Neither licence claims them
 - Repository last pushed 2026-01-25
+- Review: settle whether the bare BSD licence is BSD-2-Clause or BSD-3-Clause, as there is no LICENSE file or source header.
 
 ## Evidence
 

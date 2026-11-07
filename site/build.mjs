@@ -30,7 +30,7 @@ import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
 import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, homeJsonLd, sitemapXml } from "./lib/exports.mjs";
 import { schemaErrors } from "./lib/schema-check.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
-import { deprecationReason, MarkdownError, renderBlocks, renderInline, splitEntryBody } from "./lib/markdown.mjs";
+import { deprecationReason, MarkdownError, renderBlocks, renderInline, reviewQuestion, splitEntryBody } from "./lib/markdown.mjs";
 import { checkPage, pageIds } from "./lib/page-checks.mjs";
 import { checkStacks } from "./checks.mjs";
 import { stackPageHtml } from "./lib/stack-page.mjs";
@@ -117,6 +117,8 @@ function loadEntries(vocab) {
       ...fields,
       page: `entry/${String(meta.id)}/`,
       summary: summaryFromBody(body),
+      // What a needs-review entry still has to settle (#211).
+      ...(reviewQuestion(body) ? { review: reviewQuestion(body) } : {}),
       // The publisher's preview, when the licence gate let the script keep one.
       thumb: thumbs[String(meta.id)]
         ? {

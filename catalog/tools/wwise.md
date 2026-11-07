@@ -25,6 +25,7 @@ Audiokinetic middleware — the Indie plan is free for game projects with a prod
 - The Free Trial (no registered project) is non-commercial only and capped at 200 media assets; register the project for the Indie licence before shipping
 - The licence is tied to one title; a new game needs its own registration
 - Still open on 2026-10-04: the credit / "Powered by Wwise" question. The pricing pages name "the Audiokinetic Master License Agreement, or the Audiokinetic License Agreement, and the EULA" but link to none of them; the "Licensing FAQ" link now goes to `/en/strata-library/licensing/faq/strataLicenses`, which serves a captcha, and the old `/licensing/faq/` path still 404s. The site Terms of Use only say Audiokinetic logos need written consent, which is not a credit requirement either way
+- Review: read the Wwise licence agreement or EULA to settle whether a shipped game must credit Audiokinetic or show a Powered by Wwise logo.
 
 ## Evidence
 

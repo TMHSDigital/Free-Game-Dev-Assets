@@ -28,6 +28,7 @@ status: needs-review
 - Still open (re-checked 2026-10-04): the full ToS text is now readable in the Gumroad page data and matches the earlier meta quotes word for word (commercial use including Games, credit Truebones, no resale or redistribution of the raw .FBX, .BVH or i-Motion files; the ban names those file formats and does not mention compiled games). What stays open is which terms cover the ZOO download itself: the ToS is a separate Gumroad product, and the ZOO page says "use free code to download for FREE (if you have one) Other purchase liscense for 99+", which may mean the free-code copy and the $99+ purchase carry different licences. No licence text ships on the ZOO page beyond "A 100% ROYALTY FREE License!"
 - Do not catalog the Truebones Mixamo 2400 dump. That is a Mixamo repack; see [`docs/high-risk.md`](../../docs/high-risk.md).
 - Prefer [quaternius-ultimate-monsters](../characters/quaternius-ultimate-monsters.md) / [quaternius-farm-animal-pack](../characters/quaternius-farm-animal-pack.md) when you want CC0 creatures.
+- Review: confirm which terms cover the ZOO download itself, and whether the free-code copy and the paid purchase carry different licences.
 
 ## Evidence
 

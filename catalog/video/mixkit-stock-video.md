@@ -28,6 +28,7 @@ Envato's free stock video, under the Mixkit Stock Video Free License. Commercial
 - For clips with a plainer general grant, prefer [pexels-videos](pexels-videos.md), [pixabay-videos](pixabay-videos.md) or [coverr](coverr.md)
 - The licence page opens behind a cookie consent dialog; the text is in the page and was read without accepting cookies
 - Still open (re-checked 2026-10-04): the video licence is unchanged and still has no games sentence. It also has no redistribution limit of its own, unlike the Sound Effects licence, which says "You can't redistribute the Item on its own, as stock, in a tool or template" and allows use in an End Product "larger in scope and different in nature than the Item". Shipping a clip inside a game is distribution, which the video licence grants in general terms; the only limits are the User Terms (no stock-basis or unaltered resale). The one open question is still whether Envato meant the video licence to cover games, given it names them only in the SFX licence. The Restricted licence is personal-use only and rules out "Commercial Projects"
+- Review: confirm whether Envato meant the Mixkit video licence to cover games, since it names games only in the sound effects licence.
 
 ## Evidence
 

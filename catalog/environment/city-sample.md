@@ -29,6 +29,7 @@ Epic's free sample project showing how the city from The Matrix Awakens: An Unre
 - Licence: all four listings use the Fab Standard License, free on both tiers. The three sub-pack descriptions state "UE-Only Content - Licensed for Use Only with Unreal Engine-based Products"; the main City Sample description does not. Since the sub-packs are extracted from the same project, treat the whole city as Unreal-only until Epic says otherwise. `engine_lock` is omitted only because the main listing does not carry the line; kept at needs-review for that open question
 - Redistribution: this is Epic content and may not be redistributed in source form or committed to a public repository. Epic's content licence says you "may not Distribute Licensed Content in source format to third parties except to employees, affiliates, and contractors who are utilizing the Licensed Content in good faith to develop a Project on your behalf"
 - Gotchas: the full project is a very large download and is built for high-end hardware; grab a sub-pack instead if you only need buildings, cars or crowd characters. The sub-packs have not been updated past UE 5.3 or 5.4, so check they open in your engine version before relying on them
+- Review: confirm whether the main City Sample project is UE-only like its three sub-packs, whose listings carry the UE-Only line.
 
 ## Evidence
 

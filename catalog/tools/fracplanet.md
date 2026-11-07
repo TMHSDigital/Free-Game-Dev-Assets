@@ -27,6 +27,7 @@ Tim Day's Qt/OpenGL application that generates random fractal planets and terrai
 - Community forks exist on GitHub (Qt5/Qt6 ports, a Blender export fix). They carry the same headers; they are not the author's release
 - Maintenance: SourceForge shows last update 2017-11-16, read 2026-09-30
 - Still open on 2026-10-04: which GPL version the author intends. The SourceForge page still says GPLv2 while the source headers say GPLv3 or later; only the author can reconcile them. Commercial use and credit are not in doubt under either version
+- Review: ask the author which GPL version is intended, since the SourceForge page says GPLv2 and the source headers say GPLv3 or later.
 
 ## Evidence
 

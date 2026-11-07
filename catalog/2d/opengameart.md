@@ -25,6 +25,7 @@ Community hub for game art under many licenses (CC0, CC-BY, CC-BY-SA, GPL, OGA-B
 - Filter CC0 / CC-BY before packaging
 - `commercial: true` follows the FAQ's plain site-wide statement (re-read 2026-10-04, unchanged). Still open: credit is per upload (CC0 none; CC-BY needs it; the FAQ says to assume GPL uploads need it), and the schema has no per-file value for `attribution_required`, so the entry stays `needs-review`
 - Apple App Store: the FAQ says GPL, LGPL, CC-BY-SA and CC-BY terms conflict with Apple's, so ask the artist first
+- Review: decide how to record attribution when credit is set per upload (CC0 none, CC-BY required), which attribution_required cannot express.
 
 ## Evidence
 

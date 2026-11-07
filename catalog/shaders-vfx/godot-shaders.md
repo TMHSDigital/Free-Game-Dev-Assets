@@ -24,6 +24,7 @@ Community Godot shader library. Site policy allows personal **and commercial** u
 - Browse/filter by license on the library; never assume the trending page is GPL-free
 - Featured images, screenshots, videos, and embedded assets are **outside** the shader license
 - Prefer primary MIT packs in this category ([boujie-water](boujie-water.md), [sky3d](sky3d.md), [waterways](waterways.md)) when you need a known-safe dependency
+- Review: decide how to record credit when it depends on each post's licence (CC0, MIT or GPL v3), which attribution_required cannot express.
 
 ## Evidence
 

@@ -26,6 +26,7 @@ Free sound-clip site with WAV and MP3 downloads. Each sound carries its own lice
 - Read the licence on each sound's own page, not the listing, before you ship it. The catalog has not checked uploads' provenance; SoundBible is not the recording author for most clips
 - The site also links a paid premium store; those are separate terms
 - Re-checked 2026-10-04: About page unchanged. Still open: licence and credit are per sound (CC BY 3.0, public domain, NC, Sampling Plus, Personal Use Only), so neither can be settled site-wide
+- Review: decide how to record licence and credit that are set per sound, since neither can be settled site-wide.
 
 ## Evidence
 

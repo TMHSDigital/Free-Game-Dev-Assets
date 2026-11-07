@@ -27,6 +27,7 @@ Classical recordings and scores, most of them marked public domain, some not. Ev
 - For music with a single, plain grant, prefer [incompetech](incompetech.md) or [kenney-music-jingles](kenney-music-jingles.md)
 - Musopen's licence URLs (`/license/`, `/about/license/`) return 404; the Terms of Use page (`/tos/`) and the per-recording icons are where the statements live. The site is behind Cloudflare and loads only in a browser
 - Re-checked 2026-10-04 in a browser: `/music/` and `/tos/` unchanged. Still open: licence is per recording (Public Domain Mark or CC, including BY-NC-SA), so credit and commercial use cannot be settled site-wide, and the ToS "non-commercial transitory viewing" clause still sits beside the per-recording icons
+- Review: settle how the ToS non-commercial transitory viewing clause relates to the per-recording licence icons.
 
 ## Evidence
 

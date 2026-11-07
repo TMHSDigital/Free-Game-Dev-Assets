@@ -27,6 +27,7 @@ Full-sky star map built from 1.7 billion stars (Hipparcos-2, Tycho-2, Gaia DR2),
 - The 64k EXR is 3.8 GB; the 4k is 34 MB. Convert to a compressed cubemap for shipping.
 - The page's credit line asks for NASA/Goddard SVS and for Gaia DR2: ESA/Gaia/DPAC. Constellation figures are credited to IAU / Alan MacRobert of Sky and Telescope; omit those overlays if you cannot clear them.
 - NASA's media guidelines say NASA should be acknowledged and that content must not imply endorsement. See also [nasa-3d-resources](../3d/nasa-3d-resources.md).
+- Review: confirm the licence for the star map, since the page states credits but no licence and blends NASA, ESA Gaia and Sky and Telescope material.
 
 ## Evidence
 

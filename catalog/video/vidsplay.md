@@ -27,6 +27,7 @@ Free stock video footage under a one-paragraph terms page: personal and commerci
 - Vidsplay owns the copyright and bans renting, licensing, sublicensing, selling or redistributing clips as-is
 - The terms page is short and undated; the credit line above is a suggestion, not Vidsplay's wording
 - MP4 appears on the home page (2026-10-04); no download was opened, so confirm the format per clip
+- Review: confirm whether game use is covered by the terms and whether a game credits screen satisfies the credit requirement.
 
 ## Evidence
 

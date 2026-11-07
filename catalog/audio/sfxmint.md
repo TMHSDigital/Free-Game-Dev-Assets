@@ -25,6 +25,7 @@ Library of game and app sound effects (UI clicks, coins, jumps, impacts, ambienc
 - **Download allowance, not a licence limit:** the site allows 3 library downloads a day, with or without a free account; ZIP packs come with a purchase. The licence page says this limits the download service, not the licence
 - **Paid tier:** an AI Studio generates new sounds from a text description. Generations made or downloaded with a credit or a plan are CC0; a free account's first 3 generated downloads are for personal, non-commercial use only. This entry covers the free library
 - Audio URLs are permanent and CORS-enabled, so web games can hotlink them
+- Review: the Notes do not record what is unresolved; re-read the licence at the source and record the open point.
 
 ## Evidence
 

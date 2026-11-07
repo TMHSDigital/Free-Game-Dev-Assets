@@ -28,6 +28,7 @@ The permanently free slice of Quixel Megascans on Fab. Free claiming of the whol
 - No redistribution: the Fab EULA summary says you may not "Resell or redistribute the asset for free on a standalone basis or allow others to do the same". Do not commit Megascans source files to a public repository
 - Prefer [poly-haven](../environment/poly-haven.md) or [ambientcg](ambientcg.md) when you need CC0 scans you can redistribute
 - The entry `url` is the Quixel Megascans seller page with Fab's free-price filter in the query string. If Fab changes its filter parameters the link falls back to the full seller page (`fab.com/sellers/Quixel Megascans`, checked 2026-10-22); filter by price "Free" there
+- Review: confirm the starter content stays under the Fab Standard License, not the Megascans Addendum clause limiting free assets to internal evaluation.
 
 ## Evidence
 

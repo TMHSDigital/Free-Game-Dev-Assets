@@ -30,6 +30,7 @@ Huge community audio library. Per-sound licenses are **CC0**, **CC BY**, or **CC
 - Attribution list tool: freesound.org/home/attribution/
 - Site ToS restricts commercial use of the *website portal*; sound reuse still follows the per-file Creative Commons choice
 - Prefer [kenney-rpg-audio](kenney-rpg-audio.md) / [bigsoundbank](bigsoundbank.md) when you want site-wide commercial clarity
+- Review: decide how to record attribution when credit is set per sound (CC0 none, BY required), which attribution_required cannot express.
 
 ## Evidence
 

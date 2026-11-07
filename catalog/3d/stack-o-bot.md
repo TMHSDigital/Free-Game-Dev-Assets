@@ -27,6 +27,7 @@ Epic's free third-person puzzle platformer sample, rebuilt from the ground up fo
 - Licence: Fab Standard License, free on both tiers. The current description has no "UE-Only Content" line, so `engine_lock` is omitted. Open question: Epic marks Lyra and Cropout UE-only but not this listing; confirm on the listing before exporting the robot or props to another engine. Kept at needs-review for that reason
 - Redistribution: this is Epic content and may not be redistributed in source form or committed to a public repository. Epic's content licence says you "may not Distribute Licensed Content in source format to third parties except to employees, affiliates, and contractors who are utilizing the Licensed Content in good faith to develop a Project on your behalf"
 - Gotchas: the pre-5.6 and 5.6+ versions are different projects, so tutorials written for the original Stack O Bot will not match the rebuild
+- Review: confirm on the Fab listing whether Stack O Bot is UE-only like Lyra and Cropout before exporting its robot or props to another engine.
 
 ## Evidence
 

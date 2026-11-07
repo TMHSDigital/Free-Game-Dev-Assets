@@ -26,6 +26,7 @@ Epic-owned 3D viewer and store. Free downloads are not a site-wide CC0 library. 
 - Checklist: license is per-model (not a site badge), commercial varies per model, attribution unknown at catalog level, marketplace EULA yes, Epic/Sketchfab named, not blocklisted, catalog claims no rights
 - `commercial: varies` (set 2026-10-04) follows Sketchfab's own licence list: CC0, CC BY, CC BY-SA, CC BY-ND, Free Standard and Standard allow commercial use; CC BY-NC, BY-NC-SA, BY-NC-ND and Editorial do not
 - Still open (2026-10-04): credit is per model (CC0 "Credit is not mandatory"; every CC BY variant "Author must be credited"; the Standard licences' credit terms were not read), and the schema has no per-file value for `attribution_required`, so the entry stays `needs-review`
+- Review: decide how to record credit when it is set per model, and read the Standard licences' credit terms.
 
 ## Evidence
 

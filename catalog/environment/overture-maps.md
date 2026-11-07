@@ -27,6 +27,7 @@ Open map dataset (buildings, roads, places, administrative divisions, base land 
 - Credit line used by the publisher where OSM-derived data is shown: "© OpenStreetMap contributors, Overture Maps Foundation". Other sources add their own credit lines, listed on the attribution page.
 - The getting-data docs show a Python CLI that exports by bounding box to GeoJSON, and DuckDB queries over the cloud-hosted GeoParquet files.
 - Some sources need non-standard terms (for example Australian G-NAF addresses under an end user licence agreement).
+- Review: confirm the licence and commercial terms of each theme and region you pull, since no single blanket commercial grant is stated.
 
 ## Evidence
 

@@ -26,6 +26,7 @@ Qt sprite atlas packer built on an aggressive MaxRects bin-packing heuristic, wi
 - The LGPL covers the packer. Atlases and `.atlas` files you generate from your own sprites are your output, and the LGPL does not claim them. Redistributing a modified packer is the LGPL event, not shipping a game with its atlases
 - The `.atlas` index uses the same layout as the author's UBFG bitmap-font generator. You write the loader yourself
 - Source only. Expect to fix Qt 5/6 build details
+- Review: settle whether the licence is LGPL-3.0-only or LGPL-3.0-or-later, as no source header, project file or README says.
 
 ## Evidence
 

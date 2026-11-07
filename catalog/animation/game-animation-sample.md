@@ -28,6 +28,7 @@ Epic's free Unreal Engine sample project for a third-person animation system bui
 - Redistribution: this is Epic content and may not be redistributed in source form or committed to a public repository. Epic's content licence says you "may not Distribute Licensed Content in source format to third parties except to employees, affiliates, and contractors who are utilizing the Licensed Content in good faith to develop a Project on your behalf"; the Fab Standard License summary likewise allows sharing only "via a private repository or in the Project" with collaborators. Keep the project's Content folder out of public Git
 - Gotchas: the project is large and expects the matching engine version; the animations target the UE5 Mannequin (Manny/Quinn) skeleton, so other characters need an IK retargeter; motion matching databases must be rebuilt after adding or changing animations
 - The listing's "Allows usage with AI" field reads No
+- Review: confirm whether Epic intends the Game Animation Sample animations to be usable outside Unreal Engine, as the listing has no UE-Only line.
 
 ## Evidence
 

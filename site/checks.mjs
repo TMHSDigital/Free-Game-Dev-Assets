@@ -202,6 +202,23 @@ export function checkDeprecationReason(rel, meta, body, vocab) {
   return errors;
 }
 
+/* ----------------------------------------------------------------- V39 */
+/**
+ * A needs-review entry says what is unresolved, as one `- Review:` line in
+ * its Notes (#211), the way a deprecated one gives its reason (V9). Once the
+ * entry is settled the line goes, so a stale question never shows.
+ */
+export function checkReviewQuestion(rel, meta, body) {
+  const has = /^- Review:\s*\S/m.test(String(body));
+  if (String(meta.status) === "needs-review" && !has) {
+    return [`${rel} status needs-review needs a "- Review: <what is unresolved>" line in Notes (V39)`];
+  }
+  if (String(meta.status) !== "needs-review" && has) {
+    return [`${rel} has a "- Review:" line but status is ${meta.status}: remove it once the question is settled (V39)`];
+  }
+  return [];
+}
+
 /* ------------------------------------------------------------------ V7 */
 /**
  * `publisher` names a rights holder, never a host, and entries sharing a root
@@ -1307,6 +1324,7 @@ export const ENTRY_CHECKS = [
   { name: "checkAttributionConsistency", run: (rel, meta, body, c) => checkAttributionConsistency(rel, meta, body, c.vocab) },
   { name: "checkEvidenceDates", run: (rel, meta, body, c) => checkEvidenceDates(rel, meta, body, c.today) },
   { name: "checkDeprecationReason", run: (rel, meta, body, c) => checkDeprecationReason(rel, meta, body, c.vocab) },
+  { name: "checkReviewQuestion", run: (rel, meta, body) => checkReviewQuestion(rel, meta, body) },
   { name: "checkTaxonomyValues", run: (rel, meta) => checkTaxonomyValues(rel, meta) },
   { name: "checkValueAliases", run: (rel, meta, body, c) => checkValueAliases(rel, meta, c.aliases) },
   { name: "checkFormatVocabulary", run: (rel, meta, body, c) => checkFormatVocabulary(rel, meta, c.formatVocab) },

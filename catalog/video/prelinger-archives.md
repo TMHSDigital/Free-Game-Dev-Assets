@@ -28,6 +28,7 @@ About 10,000 "ephemeral" films (advertising, educational, industrial and amateur
 - **Credit:** not required. The FAQ (question 10, read in full 2026-10-04) says they "would be delighted" if you credit Prelinger Archives and Internet Archive, "but we do not require that you do so". The earlier `unknown` came from quoting only the first half of that sentence. Crediting costs nothing
 - Still open (re-checked 2026-10-04): rights are per film, so the collection cannot be `active`. Credit and the meaning of the dedication are settled; whether a given film may ship in a commercial game depends on whether it carries the public-domain dedication (about 18% of items do) and on any third-party music or footage inside it
 - Each film is offered in several encodings: on the three items checked, MPEG4 at two sizes and h.264, MPEG2, and Ogg video
+- Review: check per film whether it carries the public-domain dedication and has no third-party music or footage before shipping it.
 
 ## Evidence
 

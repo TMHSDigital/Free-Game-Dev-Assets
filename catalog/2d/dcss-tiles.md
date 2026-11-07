@@ -31,6 +31,7 @@ Thousands of 32x32 top-down tiles covering monsters, items, dungeon features, an
 - Do not treat the game repository's GPL-2.0 as covering the art; the code license and the art license are separate questions here, and the art is the one that is unresolved
 - If a specific tile matters to your project, resolve it individually against `ARTISTS.md` rather than adopting the set wholesale
 - Still open (re-checked 2026-10-04): the `crawl/tiles` README says the export is meant to hold only CC0 tiles, but hedges ("every care possible has been taken"), describes the grant as "a license similar to \"public domain\"", and the export dates from 2015 with no push since 2020. No file states one unconditional licence for the packaged set, so `license` stays `varies` and `commercial` / `attribution_required` stay `unknown`. Settling it needs a statement from the maintainer, or a per-tile check against `ARTISTS.md`
+- Review: confirm whether the packaged tile set has one unconditional licence, or settle each tile against ARTISTS.md and the unknown-license list.
 
 ## Evidence
 

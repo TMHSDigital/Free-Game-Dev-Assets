@@ -27,6 +27,7 @@ Community procedural materials/nodes/brushes/environments with **per-item** lice
 - Per-item licences are readable from the site's JSON endpoint `https://www.materialmaker.org/api/getMaterials` (checked 2026-10-04): 1826 items, 912 "CC-BY", 892 "CC0", 22 "CC-BY-SA", nothing else. Still open: the values carry no CC version and the site still makes no commercial or credit statement of its own, so `commercial` stays `unknown`; credit is per item (CC0 none, CC-BY and CC-BY-SA required), which the schema cannot express as one `attribution_required` value
 - Bake/export for engines; keep license metadata if you redistribute `.mm`
 - Pair with [material-maker](../tools/material-maker.md); for ready CC0 PBR prefer [ambientcg](../3d/ambientcg.md)
+- Review: confirm the CC version and commercial terms of gallery items, since the values carry no version and the site makes no commercial statement.
 
 ## Evidence
 

@@ -25,6 +25,7 @@ Free convolution reverb plugin + **74** factory vintage IR samples (Impulse Reco
 - `/license/`, `/eula/`, `/terms/`, `/faq/` all 404 on 2026-07-19; only [privacy](https://impulserecord.com/privacy/) is public — no commercial/redistribution grant there
 - Re-checked 2026-09-26: `/license/`, `/eula/`, `/terms/`, `/terms-and-conditions/`, `/licensing/`, `/license-agreement/`, `/faq/` all 404, and the site's page sitemap lists no licence page. Still open: the licence for the 74 factory IRs (commercial use, credit, and whether the WAVs may ship in a game) sits behind the download form, so `commercial` and `attribution_required` stay `unknown`
 - Re-checked 2026-10-04: product page unchanged, still no public licence text. Still open: the factory-IR licence behind the download form (commercial use, credit, and whether the WAVs may ship in a game)
+- Review: read the factory-IR licence behind the download form to settle commercial use, credit and whether the WAVs may ship in a game.
 
 ## Evidence
 

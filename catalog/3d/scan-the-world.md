@@ -26,6 +26,7 @@ MyMiniFactory's collection of 3D-scanned cultural artefacts, made for **physical
 - Still open (2026-10-04): no per-object licence could be read; the Scan The World user page and a scoped search return no object links or licence fields in a plain fetch. The platform terms moved to `/pages/terms-and-conditions` (the old `/terms-and-conditions` URL 404s) with the non-commercial clause unchanged. A per-object licence from the scan's owner is what would settle `license`
 - STL/OBJ from a print pipeline are rarely game-ready: wrong scale, solid meshes, no PBR materials
 - No `attribution_string`: none could be quoted, and a guessed credit line would be a liability
+- Review: find a per-object licence from the scan's owner that would override MyMiniFactory's non-commercial download terms.
 
 ## Evidence
 

@@ -25,6 +25,7 @@ Field IRs from unusual spaces (domes, kilns, lava tubes, fortresses) by Dr. Chri
 - The homepage itself shows no licence text, only the copyright line; the terms live only in the zip
 - Prefer [voxengo-impulses](voxengo-impulses.md) for IRs with a plain commercial grant
 - Academic citations of the library are not a substitute for a licence
+- Review: settle whether the licence requires credit, and whether reverb rendered into your own music may ship in a game without the commercial licence.
 
 ## Evidence
 

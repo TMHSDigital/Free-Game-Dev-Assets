@@ -27,6 +27,7 @@ Fab, Epic's asset marketplace, has two kinds of free content. Permanently free l
 - Many free listings are Unreal-only by format even when the licence is not, because they ship as Unreal projects or asset packs
 - Epic's own free packs are catalogued separately: [megascans-starter-content](megascans-starter-content.md), [electric-dreams-environment](../environment/electric-dreams-environment.md), [paragon-characters](../characters/paragon-characters.md)
 - The entry `url` is a Fab search with the free filter on, because Fab has no stable "free listings" page. If Fab changes its search parameters the link breaks; open fab.com and filter by price "Free" instead
+- Review: decide how to record credit when each listing carries its own licence (Standard License none, CC-BY required).
 
 ## Evidence
 

@@ -26,6 +26,7 @@ Free library of sound effects, music loops, ambience, one-shots and vocal chops,
 - Some library sounds are AI-generated and are labelled as AI on their pages. The separate [sound effect generator](https://soundza.com/tools/sound-effect-generator) makes new clips from a text prompt; this entry covers the downloadable library. An AI-labelled sound you ship is AI content for Steam's Content Survey; see the [AI assets guide](../../docs/ai-assets.md)
 - **Still open:** provenance. Sounds "come from a range of sources", and the terms make no representation that whoever uploaded or released a sound held the rights to it, give no indemnity, and let Soundza ask you to stop using a sound after a rights claim. That is why this stays `needs-review`: check the page of each sound you take, and prefer ones Soundza itself made
 - Developer access: REST API at https://api.soundza.com/v1 (docs at https://soundza.com/developers) and an MCP server at https://mcp.soundza.com/mcp; search works without a key
+- Review: settle the provenance of library sounds, since Soundza makes no representation that uploaders held the rights to them.
 
 ## Evidence
 

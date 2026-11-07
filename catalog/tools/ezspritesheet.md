@@ -26,6 +26,7 @@ Sprite sheet packer by z64me. Point it at a folder and it packs, trims, rotates,
 - The GPL covers the program. Sheets and metadata you export from your own art are your output. Redistributing a modified EzSpriteSheet is the GPL event. The paid "commercial license" is for reusing or rebranding its code, not for shipping games made with its output
 - The repository was last pushed on 2026-06-11, so it is not inactive
 - Still open on 2026-10-04: (1) whether the "EULA" credit clause is a binding condition on products built with the tool or a request, and how it squares with the GPL; (2) GPL3 "only" or "or later". `LICENSE.md` is unchanged and no source file of the project's own carries a licence header. Only the author can settle either point
+- Review: ask the author whether the EULA credit clause binds products built with the tool, and whether GPL3 means only or or-later.
 
 ## Evidence
 

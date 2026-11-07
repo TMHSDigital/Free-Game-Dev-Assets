@@ -29,6 +29,7 @@ CLIP-indexed shot search over FedFlix films on the Internet Archive. About 41,00
 - Independent project by Elroddd. Not affiliated with the Internet Archive, FedFlix, NARA, or the U.S. government.
 - Stays `needs-review`: aggregator, per-clip verify required, games not named. Public-domain copyright is usually enough to ship inside a game, but that is not a blanket Destockd warranty.
 - Still open (re-checked 2026-10-04): the Legal, FAQ and About texts say the same as before and still never mention games. What stays open is per clip, not per site: Destockd makes no warranty for any individual clip, and its Legal page now says some FedFlix films are unrestricted on grounds other than U.S. government authorship ("rights transfers, donor agreements, expired copyrights"), so each clip's source record has to be read before it ships in a commercial game. Credit is settled (none required by Destockd)
+- Review: verify each clip's rights source, since Destockd gives no per-clip warranty and its pages never mention games.
 
 ## Evidence
 

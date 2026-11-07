@@ -27,6 +27,7 @@ Small free sound-effect library from PacDV: ambience, domestic, interface beeps 
 - The interface page offered MP3 downloads on 2026-09-30; check other categories for WAV
 - Email contact@pacdv.com for written confirmation before shipping a game. For UI sounds with a clear game grant use [kenney-interface-sounds](kenney-interface-sounds.md)
 - Re-checked 2026-10-04: grant paragraph unchanged. Still open: whether "multimedia productions" covers a commercially sold game; no licence or terms page beyond that paragraph exists on the site
+- Review: obtain written confirmation on whether the multimedia productions grant covers a commercially sold game.
 
 ## Evidence
 

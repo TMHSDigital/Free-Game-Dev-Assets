@@ -28,6 +28,7 @@ Searchable NASA stills, video, and audio (launch audio, mission clips, press kit
 - Do not put the meatball on a store page. Do not write "official NASA game"
 - Still open (re-checked 2026-10-04): the guidelines are unchanged on the points that matter. They still never mention games or software products; the commercial section still pairs "used editorially within published works that are not promotional in nature" with the no-endorsement rule; and third-party material is still mixed in item by item ("NASA occasionally uses copyright-protected material of third parties"), so each item's credit line has to be checked. `commercial` stays `unknown` until NASA says whether a commercial game counts, or counsel reads the clause
 - Checklist: guidelines page loaded, commercial not an explicit game grant, attribution requested, not a marketplace, NASA is the supplier, not blocklisted, catalog claims no rights
+- Review: confirm whether a commercial game counts as permitted use under NASA's guidelines, and check each item's third-party credit line.
 
 ## Evidence
 

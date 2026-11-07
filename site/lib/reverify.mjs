@@ -81,7 +81,7 @@ export function pickBatch(entries, { now = Date.now(), dueDays = DUE_DAYS, size 
 const code = (s) => `\`${String(s).replaceAll("`", "%60")}\``;
 
 /** The issue body: how to do one, then a checklist with what to re-read. */
-export function batchIssueMarkdown({ batch, repo, date, total, dueDays = DUE_DAYS }) {
+export function batchIssueMarkdown({ batch, repo, date, total, dueDays = DUE_DAYS, openQuestions = [] }) {
   const lines = [
     `Monthly re-verification batch, ${date}: the ${batch.length} entries whose licence was read longest ago, out of ${total} live entries: enough that none passes ${VERIFIED_FRESH_DAYS} days before the next batch. Each one is a small, self-contained check, and a good first contribution.`,
     "",
@@ -100,6 +100,15 @@ export function batchIssueMarkdown({ batch, repo, date, total, dueDays = DUE_DAY
       return `- [ ] [${code(e.id)}](${repo}/blob/main/${e.rel}): ${code(e.url)}, recorded as ${code(e.license)}, ${e.status}, ${when}`;
     }),
     "",
+    // Every needs-review entry's open question, whatever its age (#211).
+    ...(openQuestions.length
+      ? [
+          `**Open questions** (${openQuestions.length} needs-review ${openQuestions.length === 1 ? "entry" : "entries"}; settling one is also a good contribution)`,
+          "",
+          ...openQuestions.map((e) => `- [ ] [${code(e.id)}](${repo}/blob/main/${e.rel}): ${e.review.replace(/[\r\n]+/g, " ")}`),
+          "",
+        ]
+      : []),
     "Opened by `.github/workflows/reverify.yml`; the next batch replaces this list if it is still open.",
     "",
   ];

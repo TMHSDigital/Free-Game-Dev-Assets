@@ -121,6 +121,7 @@
         "path": { "type": "string" },
         "page": { "type": "string" },
         "summary": { "type": "string" },
+        "review": { "type": "string", "description": "needs-review entries: the open question (the Notes' - Review: line)" },
         "thumb": {
           "type": ["object", "null"],
           "required": ["path", "width", "height"],

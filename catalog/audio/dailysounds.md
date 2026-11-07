@@ -29,6 +29,7 @@ Free sound effects site with over 1,100 clips: whooshes, impacts and foley, UI a
 - **File quality:** the packs page says the free single sounds are MP3s from the Daily Sounds YouTube channel, and their WAV and OGG downloads are made from those MP3s
 - The site also sells WAV sound packs on itch.io, a separate product, and gives one pack (Game Starter, 60 sounds) away free. This entry covers the free single-sound downloads
 - The licence also bars use "in content that is illegal, hateful or harassing", and the sounds are provided "as is", without warranties
+- Review: check the provenance of creator-uploaded sounds and whether named fan-made clips are safe to use in a commercial game.
 
 ## Evidence
 

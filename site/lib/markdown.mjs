@@ -240,6 +240,18 @@ export function sectionMarkdown(body, heading) {
 }
 
 /** The text after the `- Deprecated:` marker line, or null. */
+/**
+ * The open question a needs-review entry records as `- Review: ...` in its
+ * Notes (#211), or null. Required by V39; shown on the entry page and listed
+ * in the monthly re-verify issue.
+ */
+export function reviewQuestion(body) {
+  const m = String(body).match(/^- Review:\s*(.+)$/m);
+  if (!m) return null;
+  const q = m[1].trim();
+  return q.charAt(0).toUpperCase() + q.slice(1);
+}
+
 export function deprecationReason(body) {
   const m = String(body).match(/^- Deprecated:\s*(.+)$/m);
   if (!m) return null;

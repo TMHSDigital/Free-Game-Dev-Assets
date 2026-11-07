@@ -24,6 +24,7 @@ Curated pixel palettes and tools. **No site-wide commercial grant** — most pal
 - [privacy-policy](https://lospec.com/privacy-policy) / [about](https://lospec.com/about) have no palette license grant
 - Hardware palettes are often usable as color lists; artist palettes need author terms
 - Prefer [paleto-vol01](paleto-vol01.md) when you need a verified commercial-ok starter set
+- Review: settle each palette's own terms, since the site has no licence grant and most palette pages show none.
 
 ## Evidence
 

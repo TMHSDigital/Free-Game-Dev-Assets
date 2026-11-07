@@ -2449,6 +2449,25 @@ await section("full-text search over entry bodies (#92)", async () => {
   eq("body: a name hit still ranks first", scoreFields(searchFields(e, body), queryTests("kit")), 3);
 });
 
+/* needs-review open question (#211) --------------------------------------- */
+await section("needs-review open question (#211)", async () => {
+  const { checkReviewQuestion } = await import("../checks.mjs");
+  const { reviewQuestion } = await import("./markdown.mjs");
+  const { batchIssueMarkdown } = await import("./reverify.mjs");
+  const body = "Summary.\n\n## Notes\n\n- Some note.\n- Review: confirm whether the music is covered.\n\n## Evidence\n";
+  eq("review: the question is read, first letter raised", reviewQuestion(body), "Confirm whether the music is covered.");
+  eq("review: none", reviewQuestion("## Notes\n\n- x\n"), null);
+  eq("V39: needs-review with a question passes", checkReviewQuestion("a.md", { status: "needs-review" }, body).length, 0);
+  has("V39: needs-review without one fails", checkReviewQuestion("a.md", { status: "needs-review" }, "## Notes\n\n- x\n").join(), "needs a \"- Review:");
+  has("V39: an empty Review line does not count", checkReviewQuestion("a.md", { status: "needs-review" }, "- Review: \n").join(), "V39");
+  has("V39: a settled entry with a leftover question fails", checkReviewQuestion("a.md", { status: "active" }, body).join(), "remove it");
+  eq("V39: an active entry without one passes", checkReviewQuestion("a.md", { status: "active" }, "x").length, 0);
+  const md = batchIssueMarkdown({ batch: [], repo: "https://g.test/o/r", date: "2026-11-07", total: 1, openQuestions: [{ id: "a", rel: "catalog/2d/a.md", review: "Confirm the music.\nInjected" }] });
+  has("reverify issue: open questions listed", md, "**Open questions** (1 needs-review entry");
+  has("reverify issue: one line per question", md, "): Confirm the music. Injected");
+  lacks("reverify issue: no section without questions", batchIssueMarkdown({ batch: [], repo: "r", date: "d", total: 0 }), "Open questions");
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

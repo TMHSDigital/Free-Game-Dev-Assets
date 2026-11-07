@@ -26,6 +26,7 @@ Free stock photo textures (grunge, concrete, plaster, rust, wood, stone, metal a
 - Re-read 2026-10-04: terms unchanged, so the open question stands. Clause (c) also bars placing textures "on a diskette, CD, website or any other medium" and offering them "for redistribution or resale in a fashion that would violate this license", which still does not say whether a compiled game counts. Only written consent from TextureKing settles it
 - No credit clause anywhere in the terms, hence `attribution_required: false`
 - Photos can show brands or logos; the page disclaims those trademarks
+- Review: obtain written consent from TextureKing on whether shipping its textures inside a compiled game counts as forbidden redistribution.
 
 ## Evidence
 

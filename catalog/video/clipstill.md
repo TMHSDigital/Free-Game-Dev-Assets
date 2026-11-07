@@ -26,6 +26,7 @@ Free looping cinemagraphs, made by Clipstill as derivative works of CC0 source v
 - **Do not repackage:** "Redistribution or resale as a Cinemagraph" is prohibited, and products sold mainly for the cinemagraph need a paid Extended License
 - The Standard License applies to the derived cinemagraph; the underlying CC0 source video is a separate grant, not the one to cite for these files
 - MP4 and GIF both appear on the free cinemagraphs page (2026-10-04); no download was opened, so confirm the format per file
+- Review: confirm with Clipstill whether game use, including gameplay or story use, fits the Standard License and whether in-game credits satisfy it.
 
 ## Evidence
 

@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { cliArgs } from "./lib/cli.mjs";
 import { isListed } from "./lib/shared.mjs";
+import { reviewQuestion } from "./lib/markdown.mjs";
 import { normalizeEntry } from "./lib/entry-fields.mjs";
 import { batchIssueMarkdown, pickBatch } from "./lib/reverify.mjs";
 
@@ -28,7 +29,7 @@ for (const r of readCatalog(CATALOG, { root: ROOT })) {
   if (!usableRecord(r)) continue;
   // The shared reading (entry-fields.mjs, #256): no status stays "", not needs-review.
   const { id, url, license, verified, status } = normalizeEntry(r.parsed.meta, r.rel);
-  entries.push({ id, url, license, verified, status, rel: r.rel });
+  entries.push({ id, url, license, verified, status, rel: r.rel, review: status === "needs-review" ? reviewQuestion(r.parsed.body) : null });
 }
 
 const sizeArg = flags.size;
@@ -41,7 +42,8 @@ if (size !== undefined && (!Number.isInteger(size) || size < 1)) {
 const batch = pickBatch(entries, { size });
 const live = entries.filter(isListed).length;
 const date = new Date().toISOString().slice(0, 10);
-const report = batchIssueMarkdown({ batch, repo: REPO, date, total: live });
+const openQuestions = entries.filter((e) => e.review);
+const report = batchIssueMarkdown({ batch, repo: REPO, date, total: live, openQuestions });
 
 const reportPath = flags.report;
 if (reportPath) fs.writeFileSync(reportPath, report);

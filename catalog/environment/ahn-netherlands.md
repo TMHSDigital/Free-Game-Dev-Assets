@@ -26,6 +26,7 @@ Dutch national height map built from airborne lidar, with raster grids (0.5 m an
 - Format names (GeoTIFF raster, LAZ point cloud) are from general knowledge of the PDOK downloads, not from the page; confirm on download.
 - Before moving to active, find a licence statement (for example a CC0 or public domain mark) on a PDOK or Nationaal Georegister record and quote it.
 - The licence page https://www.ahn.nl/licentie returned 404 this session.
+- Review: find and quote a licence instrument, such as a CC0 or public domain mark, on a PDOK or Nationaal Georegister record.
 
 ## Evidence
 

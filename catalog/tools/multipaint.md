@@ -24,6 +24,7 @@ Paint program that enforces the colour limits of 8-bit and 16-bit machines: Comm
 - Commercial use of the program and of images you make with it is therefore unstated, not forbidden. Pictures you draw are your own work, but the catalog cannot record a grant the author has not written down
 - To settle it, the author would need to state terms on the site or add a licence to the source zip. Re-checked 2026-10-04: still no licence, terms or copyright notice anywhere, so licence, commercial use and credit all remain open
 - macOS builds are unsigned; the site says the packaged app is likely to be reported as damaged and gives workarounds
+- Review: obtain a licence or terms statement from the author covering the program, commercial use and credit.
 
 ## Evidence
 

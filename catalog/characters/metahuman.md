@@ -30,6 +30,7 @@ Epic's framework for photoreal digital humans: MetaHuman Creator, MetaHuman Anim
 - Export: Epic states cross-engine use is allowed, but no Epic page read on 2026-10-13 documented an FBX export path for 5.6+, so `formats` lists Unreal only. Add FBX once an Epic page confirms it
 - MetaHuman 5.8 (June 2026) made "core MetaHuman libraries available as open source under MIT"; that covers code libraries, not the character content, and is not reflected in the fields above
 - No redistribution: the Epic Content License says "you may not Distribute Licensed Content in source format to third parties except to employees, affiliates, and contractors who are utilizing the Licensed Content in good faith to develop a Project on your behalf". Do not commit MetaHuman source assets to a public repository
+- Review: confirm whether MetaHuman content may leave Unreal, given the conflict between the MetaHuman licence page and the Content License UE-Only addendum.
 
 ## Evidence
 
