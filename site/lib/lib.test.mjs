@@ -2246,6 +2246,23 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("fresh: any keeps everything", pass(undefined, "any"), true);
 }
 
+/* homepage chrome from shared.mjs (#253) ---------------------------------- */
+{
+  const fsm = (await import("node:fs")).default;
+  const { siteFooterHtml, siteHeaderHtml } = await import("./shared.mjs");
+  const tpl = fsm.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+  for (const marker of ["<!--SITE_HEADER-->", "<!--SITE_FOOTER-->", "<!--REPO_URL-->"]) has(`homepage template uses ${marker}`, tpl, marker);
+  lacks("homepage template has no hand-written header", tpl, '<header class="topbar">');
+  lacks("homepage template has no hand-written footer", tpl, '<footer class="footer">');
+  lacks("homepage template has no repo URL", tpl, "github.com/");
+  const app = fsm.readFileSync(new URL("../public/app.js", import.meta.url), "utf8");
+  lacks("app.js does not patch repo links", app, "#repo-link");
+  has("home header brand goes to the top", siteHeaderHtml({ root: "", repo: "https://g.test/o/r" }), 'class="brand" href="#top"');
+  has("deep header brand goes to the root", siteHeaderHtml({ root: "../../", repo: "https://g.test/o/r" }), 'class="brand" href="../../"');
+  has("footer with repo links it", siteFooterHtml({ root: "", stamp: "s", total: 1, repo: "https://g.test/o/r" }), '<a href="https://g.test/o/r">Contribute on GitHub</a>');
+  lacks("footer without repo does not", siteFooterHtml({ root: "", stamp: "s", total: 1 }), "Contribute on GitHub");
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

@@ -13,17 +13,7 @@
   <body>
     <a class="skip-link" href="#catalog">Skip to catalog</a>
 
-    <header class="topbar">
-      <a class="brand" href="#top">Free Game Dev Assets</a>
-      <nav class="topnav" aria-label="Primary">
-        <a href="#catalog">Catalog</a>
-        <a href="#stacks">Stacks</a>
-        <a href="#starters">Starters</a>
-        <a href="#guides">Guides</a>
-        <a id="repo-link" href="https://github.com/TMHSDigital/Free-Game-Dev-Assets" rel="noopener noreferrer">GitHub</a>
-        <span class="nav-sponsor"><!--SPONSOR_BUTTON--></span>
-      </nav>
-    </header>
+    <!--SITE_HEADER-->
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
@@ -208,8 +198,8 @@
           to see the whole catalog.
           <span class="empty-suggest" id="empty-suggest" hidden></span>
           <span class="empty-next">
-            Can't find it? <a id="empty-request" href="https://github.com/TMHSDigital/Free-Game-Dev-Assets/issues/new?template=request-asset.yml" rel="noopener noreferrer">Request this asset</a>,
-            or if you know a free source, <a id="empty-new-source" href="https://github.com/TMHSDigital/Free-Game-Dev-Assets/issues/new?template=new-source.yml" rel="noopener noreferrer">suggest it</a>.
+            Can't find it? <a id="empty-request" href="<!--REPO_URL-->/issues/new?template=request-asset.yml" rel="noopener noreferrer">Request this asset</a>,
+            or if you know a free source, <a id="empty-new-source" href="<!--REPO_URL-->/issues/new?template=new-source.yml" rel="noopener noreferrer">suggest it</a>.
           </span>
         </p>
       </section>
@@ -223,31 +213,7 @@
       </section>
     </main>
 
-    <footer class="footer">
-      <p>
-        Catalog metadata is CC0. Linked assets keep their own licences. This is
-        the catalog's reading of each licence, not legal advice: re-check the
-        live source before shipping.
-      </p>
-      <p class="footer-credit"><!--PREVIEW_CREDIT--></p>
-      <p class="footer-links">
-        <a id="footer-repo" href="https://github.com/TMHSDigital/Free-Game-Dev-Assets">Contribute on GitHub</a>
-        <span aria-hidden="true">·</span>
-        add entries from <code>catalog/TEMPLATE.md</code>
-        <span aria-hidden="true">·</span>
-        <a href="freshness/">Licence freshness</a>
-        <span aria-hidden="true">·</span>
-        <a href="data.json">data.json</a>
-        <span aria-hidden="true">·</span>
-        <a href="catalog.csv">CSV</a>
-        <span aria-hidden="true">·</span>
-        <a href="feed.xml">feed</a>
-        <span aria-hidden="true">·</span>
-        <a href="guide/data/">Use the data</a>
-      </p>
-      <p class="footer-sponsor"><!--SPONSOR_BUTTON--></p>
-      <p class="footer-stamp"><!--FOOTER_STAMP--></p>
-    </footer>
+    <!--SITE_FOOTER-->
 
     <button type="button" class="to-top" id="to-top" hidden>
       <span aria-hidden="true">↑</span> Search

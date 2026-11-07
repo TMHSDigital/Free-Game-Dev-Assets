@@ -1,5 +1,5 @@
 import { FILTER_DEFAULTS, FILTERS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
-import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
+import { CARD_LIMIT, LIST_LIMIT, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 import { isListed, PERSPECTIVES } from "./shared.mjs";
 
@@ -40,7 +40,7 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   const choicesOf = (f) => f.options || CHOICE_LABELS[f.field] || {};
   // Where a <select> option reads differently from the chip.
   const OPTION_TEXT = { perspective: Object.fromEntries(Object.entries(PERSPECTIVES).map(([k, p]) => [k, p.option])) };
-  const repo = data.site?.repo || "https://github.com/TMHSDigital/Free-Game-Dev-Assets";
+  const repo = data.site.repo;
   // No prototype: "#entry-constructor" must not look like an entry.
   const byId = Object.assign(Object.create(null), Object.fromEntries(data.entries.map((e) => [e.id, e])));
 
@@ -549,29 +549,9 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
     writeUrl({ push });
   }
 
-  function renderStarters() {
-    const tbody = $("#starter-table tbody");
-    const featured = Array.isArray(data.featured) ? data.featured : [];
-    tbody.innerHTML = featured
-      .map((entry) => {
-        if (!entry || !byId[entry.id]) return "";
-        return `<tr>
-  <td class="need">${escapeHtml(entry.need || "")}</td>
-  <td><a href="entry/${escapeHtml(entry.id)}/">${escapeHtml(entry.name)}</a></td>
-  <td class="license">${escapeHtml(entry.license)} &middot; ${escapeHtml(commercialLabel(entry.commercial))}</td>
-</tr>`;
-      })
-      .join("");
-  }
+  // The starter table and the guide list are prerendered by the build and
+  // never change after it, so the page does not render them again (#258).
 
-  function renderGuides() {
-    $("#guide-list").innerHTML = (data.guides || [])
-      .map(
-        (g) =>
-          `<li><a href="guide/${escapeHtml(g.id)}/">${escapeHtml(g.title)}<span>${escapeHtml(g.path)}</span></a></li>`
-      )
-      .join("");
-  }
 
   /* ------------------------------------------------------ scroll memory */
 
@@ -827,8 +807,6 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
       }
     });
 
-    $("#repo-link").href = repo;
-    $("#footer-repo").href = repo;
   }
 
   function syncControls() {
@@ -845,8 +823,6 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   readUrl();
   adoptNodes();
   renderCategoryFilters();
-  renderStarters();
-  renderGuides();
   bindControls();
   syncControls();
   apply();

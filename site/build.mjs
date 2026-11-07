@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, BROWSER_MODULES, isListed, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, PREVIEW_CREDIT_LINE, sponsorButtonHtml } from "./lib/shared.mjs";
+import { baseHeadHtml, BROWSER_MODULES, isListed, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, siteFooterHtml, siteHeaderHtml } from "./lib/shared.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
 import { renderGuide } from "./lib/guide-render.mjs";
@@ -194,7 +194,7 @@ function starterRowsHtml(featured) {
     .join("\n");
 }
 
-function guideRowsHtml(guides, repo) {
+function guideRowsHtml(guides) {
   return (guides || [])
     .map(
       (g) =>
@@ -655,13 +655,14 @@ function main() {
     HERO_COUNT: String(visible.length),
     FILMSTRIP: filmstripHtml(filmstripPick(visible, { count: 9, cardCategories }), { root: "" }),
     CATEGORY_CHIPS: categoryChipsHtml(visible, config.categories),
-    GUIDE_ROWS: guideRowsHtml(config.guides, repoUrl),
+    GUIDE_ROWS: guideRowsHtml(config.guides),
     CATALOG_BLURB: `${visible.length} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file${stats.deprecated ? ` &middot; plus ${stats.deprecated} deprecated, hidden by default` : ""}`,
     // Deprecated entries are hidden until their switch is on, so they are not counted until then (app.js does the same).
     RESULT_COUNT: `${visible.length} of ${stats.listed} sources shown`,
-    SPONSOR_BUTTON: sponsorButtonHtml(),
-    PREVIEW_CREDIT: PREVIEW_CREDIT_LINE,
-    FOOTER_STAMP: `Built ${esc(stamp)} from ${stats.listed} listed sources.`,
+    // The chrome every page shares (shared.mjs), so the homepage cannot drift from it (#253).
+    SITE_HEADER: siteHeaderHtml({ root: "", repo: repoUrl }),
+    SITE_FOOTER: siteFooterHtml({ root: "", stamp, total: stats.listed, repo: repoUrl }),
+    REPO_URL: esc(repoUrl),
   };
   let html = fs.readFileSync(path.join(PUBLIC, "index.html"), "utf8");
   const missingMarkers = Object.keys(substitutions).filter((key) => !html.includes(`<!--${key}-->`));

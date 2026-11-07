@@ -243,7 +243,7 @@ export const PREVIEW_CREDIT_LINE = "Preview images belong to their publishers an
  */
 export function siteHeaderHtml({ root, repo }) {
   return `<header class="topbar">
-      <a class="brand" href="${root}">Free Game Dev Assets</a>
+      <a class="brand" href="${root || "#top"}">Free Game Dev Assets</a>
       <nav class="topnav" aria-label="Primary">
         <a href="${root}#catalog">Catalog</a>
         <a href="${root}#stacks">Stacks</a>
@@ -258,10 +258,11 @@ export function siteHeaderHtml({ root, repo }) {
 /**
  * The footer every generated page shares. `credit: false` drops the preview
  * credit on pages that show no previews; `current: "freshness"` drops the
- * link to the page the reader is on.
+ * link to the page the reader is on. `repo` adds "Contribute on GitHub".
  */
-export function siteFooterHtml({ root, stamp, total, credit = true, current = null }) {
+export function siteFooterHtml({ root, stamp, total, credit = true, current = null, repo = null }) {
   const links = [
+    repo ? `<a href="${esc(repo)}">Contribute on GitHub</a>` : null,
     current === "freshness" ? null : `<a href="${root}freshness/">Licence freshness</a>`,
     `<a href="${root}data.json">data.json</a>`,
     `<a href="${root}catalog.csv">CSV</a>`,
