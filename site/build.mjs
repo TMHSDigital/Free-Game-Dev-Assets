@@ -40,6 +40,7 @@ import { createDistWriter } from "./lib/dist-writer.mjs";
 import { serviceWorkerJs, webManifest } from "./lib/offline.mjs";
 import { auditPageHtml } from "./lib/audit-page.mjs";
 import { changeEventsFromLog, changesFeedXml } from "./lib/changes.mjs";
+import { badgeSvg } from "./lib/badge.mjs";
 import { ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -599,6 +600,8 @@ function main() {
   // One licence-change feed per entry, beside its page (#186).
   const changes = licenceChanges();
   for (const entry of entries) {
+    // A badge publishers can link back with (#117).
+    writeOut(path.join("badge", `${entry.id}.svg`), badgeSvg(entry));
     writeOut(path.join("entry", entry.id, "changes.xml"), changesFeedXml({ entry, events: changes.get(entry.id) || [], siteUrl: config.site.siteUrl, generatedAt: payload.generatedAt }));
   }
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });

@@ -20,6 +20,7 @@ import { thumbHtml } from "./cards.mjs";
 import { previewCredit } from "./thumbs.mjs";
 import { creditLineHtml, fillInNote } from "./owes.mjs";
 import { ENGINES, nativeEngines } from "./search.mjs";
+import { badgeSnippets } from "./badge.mjs";
 
 export function jsonLd(entry, site, { categoryLabel } = {}) {
   const work = { "@type": "CreativeWork", name: entry.name, url: entry.url };
@@ -175,6 +176,14 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
         ${c.block}
       </section>
       <p class="page-actions"><a class="btn" href="${esc(entry.url)}" rel="noopener noreferrer">Go to source</a></p>
+      <details class="entry-badge">
+        <summary>Link to this entry</summary>
+        <p><img src="../../badge/${esc(entry.id)}.svg" alt="Licence read by Free Game Dev Assets" /></p>
+        <p>Markdown:</p>
+        <pre class="attribution-string"><code>${esc(badgeSnippets(entry, site.siteUrl).markdown)}</code></pre>
+        <p>HTML:</p>
+        <pre class="attribution-string"><code>${esc(badgeSnippets(entry, site.siteUrl).html)}</code></pre>
+      </details>
       <p class="entry-feed"><a href="changes.xml" type="application/atom+xml">Follow licence changes</a> (an Atom feed of changes to this licence, its commercial use, credit or status)</p>
       <p class="page-links">
         <a href="${esc(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">View the file on GitHub</a>

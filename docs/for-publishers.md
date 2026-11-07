@@ -45,3 +45,15 @@ https://tmhsdigital.github.io/Free-Game-Dev-Assets/entry/<id>/
 ```
 
 The `<id>` is the entry's file name, for example `kenney` for `catalog/3d/kenney.md`.
+
+Each entry also has a badge saying when the catalog last read your licence, coloured by licence family:
+
+```text
+https://tmhsdigital.github.io/Free-Game-Dev-Assets/badge/<id>.svg
+```
+
+The entry page's "Link to this entry" box has it as Markdown and HTML, ready to paste into a README or store page. The date updates whenever the licence is re-read.
+
+## Hear about changes to your entry
+
+Each entry page links an Atom feed, `entry/<id>/changes.xml`, with an item whenever the recorded licence, commercial use, credit requirement or status changes.

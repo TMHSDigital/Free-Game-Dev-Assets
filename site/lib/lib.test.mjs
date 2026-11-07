@@ -2670,6 +2670,21 @@ await section("licence-change feeds (#186)", async () => {
   has("opml: names escaped", opml, 'text="A &lt;1&gt;"');
 });
 
+/* entry badge (#117) ------------------------------------------------------ */
+await section("entry badge (#117)", async () => {
+  const { badgeSvg, badgeSnippets, textWidth } = await import("./badge.mjs");
+  const svg = badgeSvg({ id: "a", license: "CC-BY-4.0", licenseFamily: "cc-by", verified: "2026-10-13" });
+  has("badge: licence and read date", svg, "CC-BY-4.0 · read 2026-10-13");
+  has("badge: accessible name", svg, 'aria-label="Free Game Dev Assets: CC-BY-4.0 · read 2026-10-13"');
+  has("badge: coloured by family", svg, 'fill="#00796b"');
+  has("badge: unknown family is grey", badgeSvg({ id: "b", license: "custom", licenseFamily: "custom", verified: null }), 'fill="#5a6472"');
+  has("badge: escaped", badgeSvg({ id: "c", license: "A<&>", verified: null }), "A&lt;&amp;&gt;");
+  eq("badge: wider text, wider badge", textWidth("MMMM") > textWidth("iiii"), true);
+  const s = badgeSnippets({ id: "a" }, "https://x.test/s/");
+  eq("badge: markdown links the entry", s.markdown, "[![Licence read by Free Game Dev Assets](https://x.test/s/badge/a.svg)](https://x.test/s/entry/a/)");
+  has("badge: html too", s.html, '<img src="https://x.test/s/badge/a.svg"');
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
