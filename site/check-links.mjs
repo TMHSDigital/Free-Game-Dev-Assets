@@ -28,12 +28,16 @@ import { safeFetch } from "./lib/safe-fetch.mjs";
 import { isListed } from "./lib/shared.mjs";
 import { normalizeEntry } from "./lib/entry-fields.mjs";
 import { cliArgs } from "./lib/cli.mjs";
-import { checkMaintenanceRepos, classify, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
+import { checkMaintenanceRepos, classify, evidenceUrls, manualHostReason, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
+import { evidenceSection } from "./lib/frontmatter.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const CATALOG = path.join(ROOT, "catalog");
-const REPO = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json"), "utf8")).site.repo;
+const CONFIG = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json"), "utf8"));
+const REPO = CONFIG.site.repo;
+// Hosts that refuse scripts every week (#89): listed as checked by hand.
+const MANUAL_HOSTS = CONFIG.linkCheck?.manualHosts || {};
 const CONCURRENCY = 8;
 const TIMEOUT_MS = 20000;
 const UA =
@@ -46,7 +50,9 @@ function loadEntries() {
   for (const r of readCatalog(CATALOG, { root: ROOT })) {
     if (!usableRecord(r) || !r.parsed.meta.url) continue;
     const { id, url, verified, status, maintenance = null } = normalizeEntry(r.parsed.meta, r.rel);
-    out.push({ id, url, verified, status, maintenance, rel: r.rel });
+    // The licence pages the Evidence quotes, other than the entry's own url.
+    const licencePages = evidenceUrls(evidenceSection(r.parsed.body)).filter((u) => u !== url);
+    out.push({ id, url, verified, status, maintenance, rel: r.rel, licencePages });
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }
@@ -76,6 +82,8 @@ async function run(entries) {
         // One retry for anything that did not answer cleanly, except a full
         // 20 s timeout: a second one would cost a worker 40 s per dead host.
         if (r.kind === "dead" && !r.timedOut) r = await check(entries[i]);
+        // A refusal is not retried, and the checker never poses as a browser:
+        // a host that refuses scripts goes on the manual list (config.json).
         results[i] = r;
       }
     })
@@ -107,6 +115,11 @@ if (staleArg.error) {
 const staleDays = staleArg.days;
 const entries = loadEntries().filter(isListed);
 const results = await run(entries);
+// Licence pages quoted in Evidence, each fetched once (#89). Only a page that
+// is gone is reported; a refusal says nothing about the licence.
+const pageJobs = [...new Map(entries.flatMap((e) => e.licencePages.map((url) => [url, { id: e.id, rel: e.rel, url }]))).values()];
+const pageResults = await run(pageJobs);
+const deadPages = pageJobs.map((j, i) => ({ ...j, ...pageResults[i] })).filter((r) => r.kind === "dead");
 const { mismatches: maintenance, skipped } = await checkMaintenance(entries);
 const cutoff = new Date(Date.now() - staleDays * 86400000).toISOString().slice(0, 10);
 const rows = entries.map((e, i) => ({ ...e, ...results[i] }));
@@ -116,8 +129,10 @@ const line = (r) => `- [ ] [\`${r.id}\`](${REPO}/blob/main/${r.rel}): ${reportUr
 
 const dead = pick("dead");
 const moved = pick("moved");
-const blocked = pick("blocked");
-const problems = dead.length + moved.length + stale.length + maintenance.length;
+const refused = pick("blocked");
+const blocked = refused.filter((r) => !manualHostReason(r.url, MANUAL_HOSTS));
+const byHand = refused.filter((r) => manualHostReason(r.url, MANUAL_HOSTS));
+const problems = dead.length + moved.length + stale.length + maintenance.length + deadPages.length;
 const date = new Date().toISOString().slice(0, 10);
 const report = [
   `Link check of ${entries.length} active and needs-review entries, run ${date}.`,
@@ -131,6 +146,10 @@ const report = [
   `### Moved to another domain or repository (${moved.length})`,
   "",
   ...(moved.length ? moved.map(line) : ["None."]),
+  "",
+  `### Licence pages quoted in Evidence that no longer load (${deadPages.length})`,
+  "",
+  ...(deadPages.length ? deadPages.map(line) : ["None."]),
   "",
   `### Verified more than ${staleDays} days ago (${stale.length})`,
   "",
@@ -151,10 +170,16 @@ const report = [
   "",
   "</details>",
   "",
+  `<details><summary>Checked by hand (${byHand.length}): hosts that refuse scripts (site/config.json linkCheck), last read on the verified date</summary>`,
+  "",
+  ...(byHand.length ? byHand.map((r) => `- [\`${r.id}\`](${REPO}/blob/main/${r.rel}): verified ${r.verified || "never"} (${manualHostReason(r.url, MANUAL_HOSTS)})`) : ["None."]),
+  "",
+  "</details>",
+  "",
 ].join("\n");
 
 const reportPath = flags.report ?? null;
 if (reportPath) fs.writeFileSync(reportPath, report);
 else process.stdout.write(report);
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `problems=${problems}\n`);
-console.error(`${entries.length} checked: ${dead.length} dead, ${moved.length} moved, ${stale.length} stale, ${maintenance.length} maintenance, ${blocked.length} blocked, ${skipped.length} API checks skipped`);
+console.error(`${entries.length} checked: ${dead.length} dead, ${moved.length} moved, ${stale.length} stale, ${maintenance.length} maintenance, ${deadPages.length} dead licence pages, ${blocked.length} blocked, ${byHand.length} checked by hand, ${skipped.length} API checks skipped`);

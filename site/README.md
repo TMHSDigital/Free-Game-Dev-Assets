@@ -213,7 +213,7 @@ Script options:
 | Command | Options |
 | --- | --- |
 | `node site/build.mjs` | `--clean` empties `site/dist` first (otherwise only changed files are written) |
-| `node site/check-links.mjs` | `--report <file.md>` writes the report to a file; `--stale-days <n>` (365) flags entries verified longer ago. Set `GITHUB_TOKEN`: without it the archived-repository checks hit GitHub's anonymous API limit and report "Could not check" |
+| `node site/check-links.mjs` | `--report <file.md>` writes the report to a file; `--stale-days <n>` (365) flags entries verified longer ago. Set `GITHUB_TOKEN`: without it the archived-repository checks hit GitHub's anonymous API limit and report "Could not check" It also fetches the licence pages quoted in each entry's Evidence and reports one that no longer loads. Entries on hosts in `site/config.json` → `linkCheck.manualHosts` (hosts that refuse scripts every week) are listed as checked by hand with their verified date, not as refused. |
 | `node site/reverify-batch.mjs` | `--report <file.md>`; `--size <n>` overrides the computed batch size |
 | `node site/thumbs.mjs` | `--only <id,id>` limits the run to those entries; `--force` refetches records that are not due; `--limit <n>` caps fetches per run; `--dry-run` writes nothing; `--report <file.md>` |
 | `node site/serve.mjs` | `--port <n>`, or the `PORT` environment variable (3000) |

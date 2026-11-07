@@ -21,6 +21,38 @@ export function siteOf(hostname) {
   return labels.slice(-take).join(".");
 }
 
+/**
+ * The reason a host is on the manual-check list (site/config.json
+ * linkCheck.manualHosts), or null. A listed host matches itself and its
+ * subdomains (#89).
+ */
+export function manualHostReason(url, manualHosts = {}) {
+  let host;
+  try {
+    host = new URL(url).hostname.toLowerCase().replace(/^www\./, "");
+  } catch {
+    return null;
+  }
+  for (const [listed, reason] of Object.entries(manualHosts)) {
+    if (host === listed || host.endsWith(`.${listed}`)) return reason;
+  }
+  return null;
+}
+
+/**
+ * The http(s) URLs quoted in an entry's `## Evidence` section, once each and
+ * in order, without trailing punctuation: the licence pages the entry rests
+ * on, which the weekly check fetches too (#89).
+ */
+export function evidenceUrls(evidence) {
+  const out = [];
+  for (const m of String(evidence || "").matchAll(/https?:\/\/[^\s<>"'`)\]]+/g)) {
+    const url = m[0].replace(/[.,;:!?]+$/, "");
+    if (!out.includes(url)) out.push(url);
+  }
+  return out;
+}
+
 /** owner/repo of a github.com URL, lowercased. A transferred repository redirects within github.com. */
 export const repoOf = (url) => new URL(url).pathname.split("/").slice(1, 3).join("/").toLowerCase();
 

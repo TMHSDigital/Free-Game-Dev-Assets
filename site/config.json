@@ -7,6 +7,28 @@
     "siteUrl": "https://tmhsdigital.github.io/Free-Game-Dev-Assets/"
   },
   "expectedEntryCount": 421,
+  "linkCheck": {
+    "_comment": "Hosts that refuse scripted requests whatever the source's health (403/429 every week in the link report, #77). check-links lists their entries under 'Checked by hand' with the entry's verified date instead of 'Refused'. Remove a host when it starts answering.",
+    "manualHosts": {
+      "fab.com": "Fab answers scripts with 403; read listings in a browser",
+      "blendkit.com": "answers scripts with 403",
+      "pixabay.com": "answers scripts with 403",
+      "pexels.com": "answers scripts with 403",
+      "zapsplat.com": "answers scripts with 403",
+      "vidsplay.com": "answers scripts with 403",
+      "si.edu": "answers scripts with 403",
+      "myminifactory.com": "answers scripts with 403",
+      "earthdata.nasa.gov": "answers scripts with 403",
+      "destockd.com": "answers scripts with 403",
+      "cloudcompare.org": "answers scripts with 403",
+      "vroid.com": "answers scripts with 403",
+      "sonniss.com": "answers scripts with 403",
+      "simpleicons.org": "answers scripts with 403",
+      "poly.pizza": "answers scripts with 403",
+      "musopen.org": "answers scripts with 403",
+      "freepbr.com": "answers scripts with 403"
+    }
+  },
   "categories": {
     "3d": { "label": "3D", "blurb": "Models, scans, PBR textures", "view": "cards" },
     "environment": { "label": "Environment", "blurb": "HDRI, terrain, geodata", "view": "cards" },

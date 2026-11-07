@@ -2398,6 +2398,25 @@ await section("shortlist owes and view actions (#110)", async () => {
   for (const id of ["shortlist-owes", "view-actions", "copy-view-link"]) has(`homepage has #${id}`, tpl, `id="${id}"`);
 });
 
+/* link check: manual hosts and licence pages (#89) ------------------------- */
+await section("link check: manual hosts and licence pages (#89)", async () => {
+  const { manualHostReason, evidenceUrls } = await import("./link-check.mjs");
+  const hosts = { "fab.com": "403 to scripts", "earthdata.nasa.gov": "403" };
+  eq("manual host: www. is ignored", manualHostReason("https://www.fab.com/listings/x", hosts), "403 to scripts");
+  eq("manual host: a subdomain matches", manualHostReason("https://cdn.fab.com/x", hosts), "403 to scripts");
+  eq("manual host: a lookalike does not", manualHostReason("https://notfab.com/x", hosts), null);
+  eq("manual host: a sibling of a listed subdomain does not", manualHostReason("https://www.nasa.gov/x", hosts), null);
+  eq("manual host: not a URL", manualHostReason("nope", hosts), null);
+  const ev = "## Evidence\n- Licence page (2026-09-01): https://x.test/licence. \"CC0\"\n- Repo LICENSE (2026-09-01): <https://github.com/o/r/blob/main/LICENSE>\n- Again: https://x.test/licence";
+  eq("evidence urls: in order, once, without trailing punctuation", evidenceUrls(ev).join(" "), "https://x.test/licence https://github.com/o/r/blob/main/LICENSE");
+  eq("evidence urls: none", evidenceUrls(null).length, 0);
+  const fsm = (await import("node:fs")).default;
+  const cfg = JSON.parse(fsm.readFileSync(new URL("../config.json", import.meta.url), "utf8"));
+  for (const [host, reason] of Object.entries(cfg.linkCheck.manualHosts)) {
+    eq(`config manual host ${host} is a bare lower-case host with a reason`, /^[a-z0-9.-]+\.[a-z]+$/.test(host) && !host.startsWith("www.") && reason.length > 0, true);
+  }
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
