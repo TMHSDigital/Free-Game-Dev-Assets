@@ -184,7 +184,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
       ${pager}
     </main>
     ${siteFooterHtml({ root: "../../", stamp, total })}
-    <script src="../../entry.js" defer></script>
+    <script type="module" src="../../entry.js"></script>
     <script type="module" src="../../shortlist.js"></script>
   </body>
 </html>

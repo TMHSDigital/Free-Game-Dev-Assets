@@ -157,8 +157,8 @@ has("description leads with licence, stance and credit", p, '<meta name="descrip
 has("canonical", p, '<link rel="canonical" href="https://x.test/s/entry/e1/" />');
 eq("one h1", (p.match(/<h1[\s>]/g) || []).length, 1);
 has("credit line escaped", p, "Art by &quot;X&quot; &lt;/script&gt;");
-has("entry script with a credit line", p, '<script src="../../entry.js" defer></script>');
-has("entry script without one, for the back link", page({ attribution_string: undefined }), '<script src="../../entry.js" defer></script>');
+has("entry script with a credit line", p, '<script type="module" src="../../entry.js"></script>');
+has("entry script without one, for the back link", page({ attribution_string: undefined }), '<script type="module" src="../../entry.js"></script>');
 lacks("no copy button without a credit line", page({ attribution_string: undefined }), "copy-attribution");
 has("breadcrumb catalog link can return to the results", p, '<a href="../../#catalog" data-back-to-results>Catalog</a>');
 has("note when credit is required but not canned", page({ attribution_string: undefined }), "no canned credit line");
@@ -2017,9 +2017,7 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("thumbs flags: a limit needs a value", errOf(() => thumbsOptions(["--limit"])), "argument missing");
 
   const { esc } = await import("./shared.mjs");
-  const short = nodeFs.readFileSync(new URL("../public/shortlist.js", import.meta.url), "utf8");
-  const body = short.match(/function escapeHtml\(str\) \{([\s\S]*?)\n\}/)[1];
-  const escapeHtml = new Function("str", body);
+  const { escapeHtml } = await import("./client-state.mjs");
   const sample = `<a href="x" title='y'>Tom & "Jerry"</a>`;
   eq("shortlist's escapeHtml matches shared esc", escapeHtml(sample), esc(sample));
 }
@@ -2261,6 +2259,57 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("deep header brand goes to the root", siteHeaderHtml({ root: "../../", repo: "https://g.test/o/r" }), 'class="brand" href="../../"');
   has("footer with repo links it", siteFooterHtml({ root: "", stamp: "s", total: 1, repo: "https://g.test/o/r" }), '<a href="https://g.test/o/r">Contribute on GitHub</a>');
   lacks("footer without repo does not", siteFooterHtml({ root: "", stamp: "s", total: 1 }), "Contribute on GitHub");
+}
+
+/* client behaviour, pure parts (#263) -------------------------------------- */
+{
+  const { activeFilterChips, FILTER_DEFAULTS: D } = await import("./search.mjs");
+  const labels = { license: { "cc-by": "CC BY" }, category: { "2d": "2D" } };
+  eq("chips: the default state has none", activeFilterChips({ ...D }, D, labels).length, 0);
+  const q = activeFilterChips({ ...D, q: "  x " }, D, labels);
+  eq("chips: a search gives one chip", q.map((c) => `${c.key}=${c.label}`).join(), "q=search: x");
+  eq("chips: the search chip is not a filter", q.filter((c) => c.key !== "q").length, 0);
+  eq("chips: active off reads hiding active", activeFilterChips({ ...D, active: false }, D, labels)[0].label, "hiding active");
+  eq("chips: a known licence uses its label", activeFilterChips({ ...D, license: "cc-by" }, D, labels)[0].label, "licence: CC BY");
+  eq("chips: an unknown licence shows as written", activeFilterChips({ ...D, license: "odd" }, D, labels)[0].label, "licence: odd");
+  eq("chips: the category comes first", activeFilterChips({ ...D, category: "2d", noAttr: true }, D, labels).map((c) => c.key).join(), "category,noAttr");
+
+  const { parseShortlist, backLinkHref } = await import("./client-state.mjs");
+  for (const raw of [null, "{", '{"a":1}']) eq(`shortlist: ${raw} reads as empty`, parseShortlist(raw).length, 0);
+  eq("shortlist: only string ids are kept", parseShortlist('["a",1,null]').join(), "a");
+  const byId = Object.assign(Object.create(null), { a: {}, b: {} });
+  eq("shortlist: constructor is not an entry", parseShortlist('["constructor"]', byId).length, 0);
+  eq("shortlist: a removed id drops out", parseShortlist('["a","gone","b"]', byId).join(), "a,b");
+
+  eq("back link: a stored search returns to it", backLinkHref("q=a&sort=added"), "../../?q=a&sort=added#catalog");
+  eq("back link: nothing stored keeps the built link", backLinkHref(null), null);
+  eq("back link: a value that is not a query string is refused", backLinkHref('"><script>'), null);
+
+  // views.js: the remembered Cards / List choice, with storage stubbed.
+  const had = Object.getOwnPropertyDescriptor(globalThis, "localStorage");
+  const store = new Map();
+  const fake = { getItem: (k) => (store.has(k) ? store.get(k) : null), setItem: (k, v) => store.set(k, String(v)), removeItem: (k) => store.delete(k) };
+  Object.defineProperty(globalThis, "localStorage", { value: fake, configurable: true, writable: true });
+  try {
+    const { readStoredView, storeView } = await import("../public/views.js");
+    for (const v of ["cards", "list"]) {
+      store.set("fgda:view:cards-default", v);
+      eq(`views: ${v} is read back`, readStoredView("cards"), v);
+    }
+    for (const v of ["grid", ""]) {
+      store.set("fgda:view:cards-default", v);
+      eq(`views: "${v}" reads as nothing`, readStoredView("cards"), null);
+    }
+    storeView("cards", "list");
+    eq("views: a non-default view is stored", store.get("fgda:view:cards-default"), "list");
+    storeView("cards", "cards");
+    eq("views: the default view removes the key", store.has("fgda:view:cards-default"), false);
+    Object.defineProperty(globalThis, "localStorage", { get() { throw new Error("blocked"); }, configurable: true });
+    eq("views: blocked storage reads as nothing", readStoredView("cards"), null);
+  } finally {
+    if (had) Object.defineProperty(globalThis, "localStorage", had);
+    else delete globalThis.localStorage;
+  }
 }
 
 /* report (keep last) ------------------------------------------------------ */

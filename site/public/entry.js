@@ -1,4 +1,5 @@
 /** Entry page helpers. The page works without them. */
+import { backLinkHref } from "./client-state.js";
 
 // "Catalog" in the breadcrumb returns to the search and filters the reader
 // left, which the homepage keeps in sessionStorage. Without them it goes to
@@ -13,8 +14,8 @@
     return;
   }
   // Only a query string the homepage wrote: URL-encoded key=value pairs.
-  if (!qs || !/^[\w.~%+=&-]+$/.test(qs)) return;
-  link.setAttribute("href", `../../?${qs}#catalog`);
+  const href = backLinkHref(qs);
+  if (href) link.setAttribute("href", href);
 })();
 
 /** Copy button for an entry page's credit line. */

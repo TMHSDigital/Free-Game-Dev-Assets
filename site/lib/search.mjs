@@ -284,6 +284,29 @@ export const FILTERS = Object.freeze([
   { field: "noAttr", urlKey: "noattr", kind: "switch", default: false, control: "#filter-no-attr", chipOn: "no attribution only" },
 ]);
 
+/**
+ * The chips for what is filtering the list (#263): the category, the search
+ * words, then one per FILTERS row that differs from its default. `labels`
+ * maps a choice field to { value: label } for choices that come from data;
+ * an unknown value shows as written. The `q` chip is not a filter: callers
+ * leave it out of the Filters (n) count.
+ */
+export function activeFilterChips(state, defaults, labels = {}) {
+  const chips = [];
+  const labelOf = (f, v) => (f.options || labels[f.field] || {})[v] || v;
+  const category = FILTERS[0];
+  if (state.category !== defaults.category) chips.push({ key: "category", label: `${category.chip}: ${labelOf(category, state.category)}` });
+  if (String(state.q || "").trim()) chips.push({ key: "q", label: `search: ${state.q.trim()}` });
+  for (const f of FILTERS.slice(1)) {
+    const v = state[f.field];
+    if (v === defaults[f.field]) continue;
+    if (f.kind === "choice") chips.push({ key: f.field, label: `${f.chip}: ${labelOf(f, v)}` });
+    else if (v && f.chipOn) chips.push({ key: f.field, label: f.chipOn });
+    else if (!v && f.chipOff) chips.push({ key: f.field, label: f.chipOff });
+  }
+  return chips;
+}
+
 /** Days since `verified` each `fresh` choice allows: the freshness page's bands. */
 export const FRESH_DAYS = Object.freeze({ "6m": VERIFIED_FRESH_DAYS, "12m": VERIFIED_AGING_DAYS });
 

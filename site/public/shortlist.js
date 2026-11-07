@@ -4,14 +4,15 @@
  * same code as the stack pages' "What this stack owes" (owes.js).
  */
 import { creditsFile, owes } from "./owes.js";
+import { escapeHtml, parseShortlist } from "./client-state.js";
 
 const KEY = "fgda:shortlist";
 
 function load() {
   try {
-    const ids = JSON.parse(localStorage.getItem(KEY) || "[]");
-    return Array.isArray(ids) ? ids.filter((id) => typeof id === "string") : [];
+    return parseShortlist(localStorage.getItem(KEY));
   } catch {
+    // Storage blocked: reading it throws.
     return [];
   }
 }
@@ -75,17 +76,6 @@ function focusFallback() {
 
 function nameOf(id) {
   return byId[id]?.name || document.querySelector(`[data-shortlist="${CSS.escape(id)}"]`)?.getAttribute("data-name") || document.querySelector("main h1")?.textContent.trim() || id;
-}
-
-// The same five replacements as esc() in shared.mjs. Kept local so entry
-// pages, which load only this script and owes.js, do not fetch shared.mjs.
-function escapeHtml(str) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
 }
 
 function download(name, text, type) {

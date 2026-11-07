@@ -1,4 +1,4 @@
-import { FILTER_DEFAULTS, FILTERS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
+import { activeFilterChips, FILTER_DEFAULTS, FILTERS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 import { isListed, PERSPECTIVES } from "./shared.mjs";
@@ -218,23 +218,7 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   /** Chips describing what is currently filtering the list, each removable. */
   function renderActiveFilters() {
     const host = $("#active-filters");
-    const chips = [];
-    if (state.category !== DEFAULTS.category) {
-      chips.push({
-        key: "category",
-        label: `category: ${categoryLabels[state.category]?.label || state.category}`,
-      });
-    }
-    if (state.q.trim()) chips.push({ key: "q", label: `search: ${state.q.trim()}` });
-    // One chip per filter that differs from its default, from the FILTERS table (#252).
-    for (const f of FILTERS) {
-      if (f.field === "category") continue;
-      const v = state[f.field];
-      if (f.kind === "choice") {
-        if (v !== f.default) chips.push({ key: f.field, label: `${f.chip}: ${choicesOf(f)[v] || v}` });
-      } else if (v && f.chipOn && v !== f.default) chips.push({ key: f.field, label: f.chipOn });
-      else if (!v && f.chipOff && v !== f.default) chips.push({ key: f.field, label: f.chipOff });
-    }
+    const chips = activeFilterChips(state, DEFAULTS, CHOICE_LABELS);
 
     // The filter keeps aggregators whose files differ, which a reader
     // filtering for "safe to ship" must see, not find in a tooltip.
