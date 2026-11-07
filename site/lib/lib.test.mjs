@@ -2036,6 +2036,25 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("lint: dist is not", listed.some((f) => f.startsWith("dist/")), false);
 }
 
+/* one link reader for validate and the renderer (#254) --------------------- */
+{
+  const { markdownLinks, MarkdownError } = await import("./markdown.mjs");
+  const hrefs = (t) => [...markdownLinks(t)].map((l) => `${l.href}${l.plain ? "" : "!"}`).join();
+  eq("links: balanced parens read whole", hrefs("[a](docs/a_(b).md)"), "docs/a_(b).md");
+  eq("links: a title is not part of the href", hrefs('[a](x.md "t")'), "x.md!");
+  eq("links: angle brackets are stripped", hrefs("[a](<x y.md>)"), "x y.md!");
+  eq("links: an empty label is still a link", hrefs("[](x.md)"), "x.md!");
+  eq("links: images are read too", hrefs("![i](p.png)"), "p.png!");
+  eq("links: code spans and fences are skipped", hrefs("`[a](x.md)`\n```\n[b](y.md)\n```\n[c](z.md)"), "z.md");
+  const r = (t) => renderInline(t, (href) => ({ href }));
+  has("links: renderer and reader agree on balanced parens", r("[a](docs/a_(b).md)"), 'href="docs/a_(b).md"');
+  for (const bad of ['[a](x.md "t")', "[a](<x y.md>)", "[](x.md)"]) {
+    let threw = false;
+    try { r(bad); } catch (e) { threw = e instanceof MarkdownError; }
+    eq(`links: the renderer rejects ${bad}`, threw, true);
+  }
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

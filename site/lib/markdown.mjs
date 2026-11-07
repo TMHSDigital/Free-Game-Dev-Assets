@@ -20,6 +20,32 @@ const count = (str, sub) => str.split(sub).length - 1;
 export const LINK_RE = /\[([^\]]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)/g;
 
 /**
+ * Any inline link or image as GitHub reads it: LINK_RE's href rule plus an
+ * optional title, an <angle-bracketed> href and an empty label. The renderer
+ * draws only the LINK_RE subset and rejects the rest (#254).
+ */
+const ANY_LINK_RE = /(!?)\[([^\]]*)\]\(\s*(<[^<>\n]*>|(?:[^()\s]|\([^()\s]*\))*)(?:\s+(?:"[^"\n]*"|'[^'\n]*'))?\s*\)/g;
+
+/**
+ * Every inline link and image in a Markdown text, outside fenced code blocks
+ * and code spans: `{ href, label, image, plain }`. `plain` is true when the
+ * site's renderer draws it as a link. validate (checkMarkdownLinks) reads
+ * links through this, so it checks the same href the build resolves.
+ */
+export function* markdownLinks(text) {
+  const prose = String(text)
+    .replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, "")
+    .replace(/`[^`\n]+`/g, "");
+  for (const m of prose.matchAll(ANY_LINK_RE)) {
+    const angled = m[3].startsWith("<");
+    const href = angled ? m[3].slice(1, -1).trim() : m[3];
+    const image = m[1] === "!";
+    const plain = !image && m[2].length > 0 && !angled && m[0] === `[${m[2]}](${m[3]})`;
+    yield { href, label: m[2], image, plain };
+  }
+}
+
+/**
  * Bold and italic on already-escaped text. Italic that would cross a bold
  * boundary (`**a *b** c*`) stays literal: wrapping it would nest the tags
  * wrongly.
@@ -70,6 +96,11 @@ export function renderInline(text, resolveLink) {
     const text = entryName && label.trim() === entryId ? esc(entryName) : marks(esc(label));
     return keep(`<a href="${esc(out)}"${rel}>${text}</a>`);
   });
+  // Link syntax LINK_RE did not draw (a title, <href>, empty label) would
+  // reach the page as literal text; fail instead (#254).
+  for (const link of markdownLinks(s)) {
+    if (!link.image) throw new MarkdownError(`unsupported link form for "${link.href}": write [label](path), without a title or angle brackets`);
+  }
   // Autolinks in angle brackets.
   s = s.replace(/<(https?:\/\/[^\s<>]+)>/g, (_, url) => keep(`<a href="${esc(url)}" rel="noopener noreferrer">${esc(url)}</a>`));
   // Bare URLs, leaving trailing sentence punctuation outside the link. A URL

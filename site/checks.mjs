@@ -10,6 +10,7 @@ import path from "node:path";
 import { ID_RE } from "./lib/entry-files.mjs";
 import { evidenceSection } from "./lib/frontmatter.mjs";
 import { caseMismatch } from "./lib/links.mjs";
+import { markdownLinks } from "./lib/markdown.mjs";
 import { ENGINE_LOCK_NOTES, isRealDate, MAINTENANCE_NOTES, PERSPECTIVES, STATUS_NOTES } from "./lib/shared.mjs";
 import { headingSlug } from "./lib/guide-render.mjs";
 import { isAttributionLicence, isPrivateHost, PREVIEW_LICENSES, previewEligibility, safeImageUrl } from "./lib/thumbs.mjs";
@@ -1184,8 +1185,6 @@ export function checkEntryCount(count, expected) {
     : [`entry count ${count} !== ${expected} (update expectedEntryCount in site/config.json when adding or removing entries)`];
 }
 
-const MD_LINK_RE = /!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)/g;
-
 /**
  * Relative links in one Markdown file: each must reach a file (in the same
  * case as on disk; CI is case-sensitive), and a #fragment into a Markdown
@@ -1197,11 +1196,9 @@ export function checkMarkdownLinks(file, text, { root, realRoot, target, anchors
   const errors = [];
   const rel = relOf(file);
   const dir = path.dirname(file);
-  for (const m of String(text).matchAll(MD_LINK_RE)) {
-    let raw = (m[1] || m[2] || "").trim();
-    if (!raw) continue;
-    if (raw.startsWith("<") && raw.endsWith(">")) raw = raw.slice(1, -1);
-    const href = raw.split(/\s+/)[0];
+  // The renderer's own reading of links (#254): balanced parens, titles and
+  // <href> are read the same way in both places.
+  for (const { href } of markdownLinks(text)) {
     if (!href) continue;
     if (external.test(href)) continue;
     const scheme = href.match(anyScheme);
@@ -1210,7 +1207,12 @@ export function checkMarkdownLinks(file, text, { root, realRoot, target, anchors
       continue;
     }
     const hash = href.indexOf("#");
-    const filePart = hash === -1 ? href : href.slice(0, hash);
+    let filePart = hash === -1 ? href : href.slice(0, hash);
+    try {
+      filePart = decodeURI(filePart); // as the build's resolver reads it: %20 is a space
+    } catch {
+      // A malformed escape stays as written and fails the lookup below.
+    }
     const fragment = hash === -1 ? "" : href.slice(hash + 1);
     const resolved = filePart ? path.resolve(dir, filePart) : file;
     const onDisk = target(resolved);
