@@ -15,6 +15,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { baseHeadHtml, BROWSER_MODULES, isListed, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, siteFooterHtml, siteHeaderHtml } from "./lib/shared.mjs";
+import { bodySearchText } from "./lib/search.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
 import { renderGuide } from "./lib/guide-render.mjs";
@@ -602,6 +603,9 @@ function main() {
   writeOut("data.json", JSON.stringify(payload, null, 2));
   copyOut(path.join(__dirname, "data.schema.json"), "data.schema.json");
   writeOut("data.js", `window.__CATALOG__ = ${JSON.stringify(payload)};\n`);
+  // Entry bodies for full-text search, fetched on the first search, not on
+  // page load (#92). Listed entries only, as search shows.
+  writeOut("search-bodies.json", JSON.stringify(Object.fromEntries(entries.filter(isListed).map((e) => [e.id, bodySearchText(bodies.get(e.id) || "")]))));
   writeOut("catalog.csv", catalogCsv(entries, config.site.siteUrl));
   writeOut("feed.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "added" }));
   writeOut("reverified.xml", atomFeed({ entries, site: config.site, generatedAt: payload.generatedAt, kind: "verified" }));

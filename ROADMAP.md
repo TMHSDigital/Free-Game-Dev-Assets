@@ -21,10 +21,10 @@ missing entry, so freshness and accuracy come before volume.
 
 ## Planned
 
-- Full-text search over entry bodies (Notes and Evidence), not only names, tags and summaries.
 
 ## Done
 
+- Full-text search over entry bodies (Notes and Evidence): `search-bodies.json`, fetched on the first search, ranked below name, tag and summary hits.
 - A changelog page: [docs/review-ledger.md](docs/review-ledger.md) on the site as guide/changelog/, and the README "Recent" block written from it by `npm run counts`.
 - Site search across names, tags and summaries, with licence, format and category filters.
 - The guides in docs/ rendered as site pages, and an engine filter that hides projects,

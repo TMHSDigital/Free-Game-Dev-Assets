@@ -2436,6 +2436,19 @@ await section("review ledger: changelog and README Recent block (#91)", async ()
   eq("recent: no sections, no block", recentBlock([]), "");
 });
 
+/* full-text search over entry bodies (#92) -------------------------------- */
+await section("full-text search over entry bodies (#92)", async () => {
+  const { searchFields, scoreFields, queryTests, bodySearchText } = await import("./search.mjs");
+  const e = { name: "Kit", tags: ["ui"], license: "CC0", category: "2d", summary: "A small kit." };
+  const body = bodySearchText("## Notes\n\n- Ships a **zorbulator** sheet, see [the page](https://x.test/zorb).\n\n## Evidence\n\n- Page (2026-09-01): \"CC0\"");
+  lacks("body text: URLs are dropped", body, "https://");
+  has("body text: link labels and words kept", body, "the page");
+  eq("body: a word only in the Notes finds the entry once bodies are loaded", scoreFields(searchFields(e, body), queryTests("zorbulator")) > 0, true);
+  eq("body: without the bodies it does not", scoreFields(searchFields(e), queryTests("zorbulator")), 0);
+  eq("body: a body hit ranks below a summary hit", scoreFields(searchFields(e, body), queryTests("zorbulator")) < scoreFields(searchFields(e, body), queryTests("small")), true);
+  eq("body: a name hit still ranks first", scoreFields(searchFields(e, body), queryTests("kit")), 3);
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

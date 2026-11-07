@@ -31,14 +31,33 @@ export function joinedCompounds(text) {
  * metadata, which ranks above a summary-only hit. Tags no longer repeat the
  * publisher or licence (V19, V21), so those fields are searched directly.
  */
-export const FIELD_WEIGHTS = [3, 2, 1];
-export function searchFields(e) {
+export const FIELD_WEIGHTS = [3, 2, 1, 0.5];
+/**
+ * `body` is the entry's Notes and Evidence as plain text (search-bodies.json,
+ * loaded on the first search; #92). It is the last and lightest field, so a
+ * body-only hit ranks below every metadata or summary hit.
+ */
+export function searchFields(e, body = "") {
   const field = (text) => normalize(`${text} ${joinedCompounds(text)}`);
   return [
     field([e.name, e.publisher || "", ...(e.tags || [])].join(" ")),
     field([e.license, e.category, PERSPECTIVE_SEARCH[e.camera_perspective] || "", ...(e.formats || []), ...(e.subcategories || [])].join(" ")),
     field(e.summary || ""),
+    body ? normalize(body) : "",
   ];
+}
+
+/**
+ * An entry body as searchable text: Markdown link and emphasis syntax and
+ * URLs dropped, headings kept as words. Built once per entry by build.mjs.
+ */
+export function bodySearchText(md) {
+  return String(md)
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/https?:\/\/\S+/g, " ")
+    .replace(/[#*_`>]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 /**

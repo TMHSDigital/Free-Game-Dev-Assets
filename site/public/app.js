@@ -127,13 +127,33 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
 
   // Each entry's searchable fields, normalised once, on the first search (search.js).
   let searchIndex = null;
+  // Entry bodies (Notes and Evidence) arrive on the first search (#92); the
+  // index is rebuilt once with them and the view re-filtered.
+  let bodies = null;
+  let bodiesRequested = false;
+  function loadBodies() {
+    if (bodiesRequested) return;
+    bodiesRequested = true;
+    fetch("search-bodies.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((map) => {
+        if (!map) return;
+        bodies = map;
+        searchIndex = null;
+        if (state.q.trim()) apply();
+      })
+      .catch(() => {
+        // Offline or blocked: search keeps to names, tags and summaries.
+      });
+  }
   function fieldsOf(entry) {
-    if (!searchIndex) searchIndex = new Map(data.entries.map((e) => [e.id, searchFields(e)]));
+    if (!searchIndex) searchIndex = new Map(data.entries.map((e) => [e.id, searchFields(e, bodies?.[e.id] || "")]));
     return searchIndex.get(entry.id) || [];
   }
 
   let compiled = { q: null, tests: [] };
   function queryTests() {
+    if (state.q.trim()) loadBodies();
     if (compiled.q !== state.q) compiled = { q: state.q, tests: compileQuery(state.q) };
     return compiled.tests;
   }
