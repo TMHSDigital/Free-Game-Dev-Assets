@@ -2630,6 +2630,46 @@ await section("catalog queries, CLI and MCP (#115)", async () => {
   }
 });
 
+/* licence-change feeds (#186) --------------------------------------------- */
+await section("licence-change feeds (#186)", async () => {
+  const { changeEventsFromLog, changesFeedXml } = await import("./changes.mjs");
+  const { changesOpml } = await import("./client-state.mjs");
+  const log = [
+    "\0aaa 2026-07-01",
+    "diff --git a/catalog/2d/a.md b/catalog/2d/a.md",
+    "+license: CC0",
+    "+status: needs-review",
+    "\0bbb 2026-08-01",
+    "diff --git a/catalog/2d/a.md b/catalog/3d/a.md",
+    "-license: CC0",
+    "+license: CC-BY-4.0",
+    "-status: needs-review",
+    "+status: needs-review",
+    "-verified: 2026-07-01",
+    "+verified: 2026-08-01",
+    "diff --git a/catalog/2d/README.md b/catalog/2d/README.md",
+    "-status: x",
+    "+status: y",
+    "\0ccc 2026-09-01",
+    "diff --git a/catalog/3d/a.md b/catalog/3d/a.md",
+    "-commercial: true",
+    "+commercial: false",
+  ].join("\n");
+  const ev = changeEventsFromLog(log);
+  eq("changes: the creating commit is not a change", (ev.get("a") || []).some((e) => e.commit === "aaa"), false);
+  eq("changes: a moved file keeps its history, unchanged values skipped", ev.get("a").map((e) => `${e.date} ${e.field} ${e.from}>${e.to}`).join("|"), "2026-08-01 license CC0>CC-BY-4.0|2026-09-01 commercial true>false");
+  eq("changes: README files are not entries", ev.has("README"), false);
+  const feed = changesFeedXml({ entry: { id: "a", name: "A & B" }, events: ev.get("a"), siteUrl: "https://x.test/s/", generatedAt: "2026-11-07T00:00:00Z" });
+  has("feed: newest first", feed.indexOf("Commercial use true → false") < feed.indexOf("Licence CC0 → CC-BY-4.0") ? "ok" : "no", "ok");
+  has("feed: self link", feed, '<link rel="self" href="https://x.test/s/entry/a/changes.xml" />');
+  has("feed: escaped title", feed, "A &amp; B: licence changes");
+  has("feed: updated is the last change", feed, "<updated>2026-09-01T00:00:00Z</updated>");
+  has("feed: an entry without changes is a valid empty feed", changesFeedXml({ entry: { id: "z", name: "Z" }, events: [], siteUrl: "https://x.test/s/", generatedAt: "2026-11-07T00:00:00Z" }), "<updated>2026-11-07T00:00:00Z</updated>");
+  const opml = changesOpml([{ id: "a", name: "A <1>" }, { id: "b", name: "B" }], "https://x.test/s/");
+  has("opml: one outline per entry", opml, 'xmlUrl="https://x.test/s/entry/b/changes.xml"');
+  has("opml: names escaped", opml, 'text="A &lt;1&gt;"');
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

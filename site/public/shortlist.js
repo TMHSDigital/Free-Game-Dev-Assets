@@ -4,7 +4,7 @@
  * same code as the stack pages' "What this stack owes" (owes.js).
  */
 import { creditsFile, owes, owesGroups } from "./owes.js";
-import { escapeHtml, parseShortlist } from "./client-state.js";
+import { changesOpml, escapeHtml, parseShortlist } from "./client-state.js";
 
 const KEY = "fgda:shortlist";
 
@@ -157,6 +157,10 @@ document.addEventListener("click", (e) => {
   if (!action) return;
   const what = action.getAttribute("data-shortlist-action");
   if (what === "md" || what === "txt") exportFile(what);
+  if (what === "opml") {
+    const siteUrl = data.site?.siteUrl || "";
+    download("licence-changes.opml", changesOpml(ids.map((id) => byId[id]), siteUrl), "text/x-opml");
+  }
   if (what === "clear") {
     update([]);
     announce("Shortlist cleared");

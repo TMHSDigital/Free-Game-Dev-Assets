@@ -175,6 +175,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
         ${c.block}
       </section>
       <p class="page-actions"><a class="btn" href="${esc(entry.url)}" rel="noopener noreferrer">Go to source</a></p>
+      <p class="entry-feed"><a href="changes.xml" type="application/atom+xml">Follow licence changes</a> (an Atom feed of changes to this licence, its commercial use, credit or status)</p>
       <p class="page-links">
         <a href="${esc(`${repo}/blob/main/${entry.path}`)}" rel="noopener noreferrer">View the file on GitHub</a>
         <a href="${esc(issue)}" rel="noopener noreferrer">Report a problem with this entry</a>

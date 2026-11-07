@@ -39,6 +39,7 @@ import { licenceTerms, listStackFiles, owes, parseStack, pickPath } from "./lib/
 import { createDistWriter } from "./lib/dist-writer.mjs";
 import { serviceWorkerJs, webManifest } from "./lib/offline.mjs";
 import { auditPageHtml } from "./lib/audit-page.mjs";
+import { changeEventsFromLog, changesFeedXml } from "./lib/changes.mjs";
 import { ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -141,31 +142,48 @@ function loadEntries(vocab) {
  * git is unavailable (a tarball); a shallow checkout dates every file to HEAD.
  */
 function lastCommitDates() {
+  // No git: the sitemap falls back to the build date.
+  const dates = gitCached("fgda-commit-dates.json", DATED_PATHS.join(","), (git) =>
+    Object.fromEntries(commitDatesFromLog(git(["log", "--format=%x00%cs", "--name-only", "--", ...DATED_PATHS])))
+  );
+  return new Map(Object.entries(dates || {}));
+}
+
+/** Entry id => its recorded licence changes (lib/changes.mjs, #186); empty without git. */
+function licenceChanges() {
+  const events = gitCached("fgda-licence-changes.json", "catalog", (git) =>
+    Object.fromEntries(changeEventsFromLog(git(["log", "--reverse", "-p", "-M", "--unified=0", "--format=%x00%H %cs", "--", "catalog"])))
+  );
+  return new Map(Object.entries(events || {}));
+}
+
+/**
+ * `compute(git)` over the commits, cached per HEAD inside .git (never
+ * published, never committed): a no-change rebuild skips full-history logs,
+ * whose cost grows with every commit (#262). null when git is unavailable.
+ */
+function gitCached(name, keyExtra, compute) {
   const git = (args) =>
-    execFileSync("git", args, { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "ignore"] });
+    execFileSync("git", args, { cwd: ROOT, encoding: "utf8", maxBuffer: 512 * 1024 * 1024, stdio: ["ignore", "pipe", "ignore"] });
   try {
-    // The dates depend only on the commits, so they are cached per HEAD inside
-    // .git (never published, never committed): a no-change rebuild skips the
-    // full-history log, whose cost grows with every commit (#262).
     const [gitDir, head] = git(["rev-parse", "--git-dir", "HEAD"]).trim().split("\n");
-    const cacheFile = path.resolve(ROOT, gitDir, "fgda-commit-dates.json");
-    const key = `${head} ${DATED_PATHS.join(",")}`;
+    const cacheFile = path.resolve(ROOT, gitDir, name);
+    const key = `${head} ${keyExtra}`;
     try {
       const cached = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
-      if (cached.key === key) return new Map(Object.entries(cached.dates));
+      if (cached.key === key && "value" in cached) return cached.value;
     } catch {
       // No cache yet, or an unreadable one: rebuild it below.
     }
-    const dates = commitDatesFromLog(git(["log", "--format=%x00%cs", "--name-only", "--", ...DATED_PATHS]));
+    const value = compute(git);
     try {
-      fs.writeFileSync(cacheFile, JSON.stringify({ key, dates: Object.fromEntries(dates) }));
+      fs.writeFileSync(cacheFile, JSON.stringify({ key, value }));
     } catch {
       // A read-only .git still builds; it just reads the log every time.
     }
-    return dates;
+    return value;
   } catch {
-    // No git: the sitemap falls back to the build date.
-    return new Map();
+    return null;
   }
 }
 
@@ -578,6 +596,11 @@ function main() {
   writeOut(path.join("audit", "index.html"), auditPageHtml({ site: config.site, stamp, total: stats.listed, hasCard }));
 
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
+  // One licence-change feed per entry, beside its page (#186).
+  const changes = licenceChanges();
+  for (const entry of entries) {
+    writeOut(path.join("entry", entry.id, "changes.xml"), changesFeedXml({ entry, events: changes.get(entry.id) || [], siteUrl: config.site.siteUrl, generatedAt: payload.generatedAt }));
+  }
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });
   const categoryPages = writeCategoryPages({ entries: visible, config, stats, stamp, hasCard, now });
   const guidePages = writeGuidePages({ entries, config, stats, stamp, hasCard, modified });

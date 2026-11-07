@@ -42,3 +42,17 @@ export function backLinkHref(qs) {
   if (!qs || !/^[\w.~%+=&-]+$/.test(qs)) return null;
   return `../../?${qs}#catalog`;
 }
+
+/** An OPML bundle of the change feeds of `entries`, for a feed reader to import in one step. */
+export function changesOpml(entries, siteUrl, title = "Free Game Dev Assets: licence changes") {
+  const base = String(siteUrl).replace(/\/+$/, "");
+  const esx = (s) => escapeHtml(s);
+  return `<?xml version="1.0" encoding="utf-8"?>
+<opml version="2.0">
+  <head><title>${esx(title)}</title></head>
+  <body>
+${entries.map((e) => `    <outline type="rss" text="${esx(e.name)}" title="${esx(e.name)}" xmlUrl="${esx(`${base}/entry/${e.id}/changes.xml`)}" htmlUrl="${esx(`${base}/entry/${e.id}/`)}" />`).join("\n")}
+  </body>
+</opml>
+`;
+}
