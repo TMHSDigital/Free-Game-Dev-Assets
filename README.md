@@ -49,9 +49,10 @@ re-check forty tabs before a release. (Thanks to magictools: many tool entries s
   </tr>
 </table>
 
-> **Recent:** 2026-10-04, 15 more video, animation and environment sources.
-> 2026-09-30, 42 more sources, mostly pipeline, pixel-art and chiptune tools.
-> 2026-09-25, starter stacks and a licence freshness page.
+> **Recent:** 2026-11-07, audit pass 5 fixes: #246 to #272, then #203, #110, #89, #91.
+> 2026-10-22, open issues sweep: #77 to #114.
+> 2026-10-13, Unreal Engine sources.
+> Every run is in the [changelog](docs/review-ledger.md).
 
 ## Contents
 

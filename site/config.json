@@ -65,6 +65,7 @@
   "guides": [
     { "id": "licenses", "title": "Licenses", "path": "docs/licenses.md" },
     { "id": "data", "title": "Use the data (JSON, CSV, feeds)", "path": "docs/data.md" },
+    { "id": "changelog", "title": "Changelog (review ledger)", "path": "docs/review-ledger.md" },
     { "id": "for-publishers", "title": "For publishers", "path": "docs/for-publishers.md" },
     { "id": "provenance", "title": "Provenance", "path": "docs/provenance.md" },
     { "id": "high-risk", "title": "Not safe to ship", "path": "docs/high-risk.md" },

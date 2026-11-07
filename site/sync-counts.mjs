@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url";
 import { countEntriesByCategory } from "./lib/entry-files.mjs";
 import { syncCatalogReadme, syncConfig, syncReadme } from "./lib/scaffold.mjs";
 import { cliArgs } from "./lib/cli.mjs";
+import { ledgerSections, recentBlock, syncRecentBlock } from "./lib/ledger.mjs";
 
 // No flags: a mistyped one fails instead of being ignored.
 cliArgs({}, "node site/sync-counts.mjs");
@@ -40,6 +41,13 @@ const { counts, total, files, deprecated } = countEntriesByCategory(CATALOG);
 update("README.md", (t) => syncReadme(t, counts, total));
 update("catalog/README.md", (t) => syncCatalogReadme(t, counts));
 update("site/config.json", (t) => syncConfig(t, files));
+
+// The README "Recent" block, from the newest review-ledger headings (#91).
+// Not a count: it does not ask for a new screenshot.
+const countsChanged = changed;
+const ledger = ledgerSections(fs.readFileSync(path.join(ROOT, "docs", "review-ledger.md"), "utf8"));
+update("README.md", (t) => syncRecentBlock(t, recentBlock(ledger)));
+changed = countsChanged;
 
 console.log(`${total} listed entries (${files} files, ${deprecated} deprecated): ${Object.entries(counts).map(([c, n]) => `${c} ${n}`).join(", ")}`);
 // The README screenshot (also the social card) shows the count as an image,

@@ -268,6 +268,7 @@ export function siteFooterHtml({ root, stamp, total, credit = true, current = nu
     `<a href="${root}catalog.csv">CSV</a>`,
     `<a href="${root}feed.xml">feed</a>`,
     `<a href="${root}guide/data/">Use the data</a>`,
+    `<a href="${root}guide/changelog/">Changelog</a>`,
   ].filter(Boolean);
   return `<footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>

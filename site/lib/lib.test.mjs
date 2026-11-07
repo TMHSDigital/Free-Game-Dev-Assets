@@ -2417,6 +2417,25 @@ await section("link check: manual hosts and licence pages (#89)", async () => {
   }
 });
 
+/* review ledger: changelog and README Recent block (#91) ------------------- */
+await section("review ledger: changelog and README Recent block (#91)", async () => {
+  const { ledgerSections, recentBlock, syncRecentBlock, readmeRecentBlock } = await import("./ledger.mjs");
+  const md = "# Review ledger\n\nIntro.\n\n## 2026-10-22 (open issues sweep)\n\n- a\n\n## Not a dated heading\n\n## 2026-10-13 (Unreal sources)\n\n## 2026-10-04 (video)\n\n## 2026-09-30 (older)\n";
+  const secs = ledgerSections(md);
+  eq("ledger: dated sections in file order", secs.map((s) => s.date).join(), "2026-10-22,2026-10-13,2026-10-04,2026-09-30");
+  eq("ledger: the title is the bracketed text", secs[1].title, "Unreal sources");
+  const block = recentBlock(secs);
+  has("recent: the newest first", block, "> **Recent:** 2026-10-22, open issues sweep.");
+  eq("recent: three sections and the changelog line", block.split("\n").length, 4);
+  lacks("recent: the fourth is left out", block, "older");
+  const readme = "intro\n\n> **Recent:** old line.\n> another old line.\n\n## Contents\n";
+  const synced = syncRecentBlock(readme, block);
+  eq("recent: the block is replaced in place", readmeRecentBlock(synced), block);
+  has("recent: what follows is kept", synced, "\n\n## Contents\n");
+  eq("recent: a README without the block is unchanged", syncRecentBlock("no block", block), "no block");
+  eq("recent: no sections, no block", recentBlock([]), "");
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

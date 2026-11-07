@@ -31,6 +31,7 @@ import {
   markdownAnchors,
 } from "./checks.mjs";
 import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, isListed, latestAllowedDate } from "./lib/shared.mjs";
+import { ledgerSections, readmeRecentBlock, recentBlock } from "./lib/ledger.mjs";
 import { readCatalog } from "./lib/entry-files.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
 import { cliArgs } from "./lib/cli.mjs";
@@ -284,6 +285,13 @@ export function validateRepo() {
   );
 
   errors.push(...checkEntryCount(entryFiles.length, expectedCount));
+
+  // The README "Recent" block is written from the review ledger (#91).
+  const wantRecent = recentBlock(ledgerSections(readText(path.join(ROOT, "docs", "review-ledger.md"))));
+  const haveRecent = readmeRecentBlock(readText(path.join(ROOT, "README.md")));
+  if (haveRecent !== null && haveRecent !== wantRecent) {
+    errors.push('README.md "Recent" block does not match the newest docs/review-ledger.md sections (run npm run counts)');
+  }
 
   const formPath = path.join(ROOT, ".github", "ISSUE_TEMPLATE", "new-source.yml");
   errors.push(

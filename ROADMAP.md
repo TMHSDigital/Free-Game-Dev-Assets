@@ -21,11 +21,11 @@ missing entry, so freshness and accuracy come before volume.
 
 ## Planned
 
-- A changelog page generated from [docs/review-ledger.md](docs/review-ledger.md).
 - Full-text search over entry bodies (Notes and Evidence), not only names, tags and summaries.
 
 ## Done
 
+- A changelog page: [docs/review-ledger.md](docs/review-ledger.md) on the site as guide/changelog/, and the README "Recent" block written from it by `npm run counts`.
 - Site search across names, tags and summaries, with licence, format and category filters.
 - The guides in docs/ rendered as site pages, and an engine filter that hides projects,
   addons and plugins for other engines.
