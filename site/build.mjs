@@ -35,6 +35,7 @@ import { checkStacks } from "./checks.mjs";
 import { stackPageHtml } from "./lib/stack-page.mjs";
 import { freshnessLineHtml, freshnessPageHtml, freshnessStats, newEntriesLineHtml } from "./lib/freshness.mjs";
 import { licenceTerms, listStackFiles, owes, parseStack, pickPath } from "./lib/stacks.mjs";
+import { createDistWriter } from "./lib/dist-writer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -281,36 +282,8 @@ function notFoundHtml(site) {
 `;
 }
 
-/*
- * Output goes through one writer that creates a directory once, writes a
- * file only when its bytes changed and remembers every path it produced, so
- * the build can prune what an earlier build left behind instead of wiping
- * dist/ and recreating 420 directories (94% of the build time on a slow
- * disk). `--clean` still wipes first; the result is byte-identical either way.
- */
-const produced = new Set();
-const madeDirs = new Set();
-let writes = 0;
-
-function ensureDir(dir) {
-  if (madeDirs.has(dir)) return;
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  madeDirs.add(dir);
-}
-
-/** Writes `content` (string or Buffer) to dist-relative `rel` if it differs. */
-function writeOut(rel, content) {
-  const full = path.join(DIST, rel);
-  produced.add(rel.split(path.sep).join("/"));
-  ensureDir(path.dirname(full));
-  const next = Buffer.isBuffer(content) ? content : Buffer.from(content, "utf8");
-  if (fs.existsSync(full)) {
-    const stat = fs.statSync(full);
-    if (stat.isFile() && stat.size === next.length && fs.readFileSync(full).equals(next)) return;
-  }
-  fs.writeFileSync(full, next);
-  writes += 1;
-}
+// Output writer: writes only changed bytes and prunes what it did not produce (lib/dist-writer.mjs).
+const { ensureDir, writeOut, pruneDist, produced, writes } = createDistWriter(DIST);
 
 /** Copies a file into dist (through writeOut, so unchanged files are left alone). */
 function copyOut(src, rel) {
@@ -333,20 +306,6 @@ function copyPublic(src, skip, prefix = "") {
   }
 }
 
-/** Removes every file and directory in dist that this build did not produce. */
-function pruneDist(dir = DIST, prefix = "") {
-  let kept = 0;
-  for (const name of fs.readdirSync(dir)) {
-    const full = path.join(dir, name);
-    const rel = prefix ? `${prefix}/${name}` : name;
-    if (fs.statSync(full).isDirectory()) {
-      if (pruneDist(full, rel) === 0) fs.rmSync(full, { recursive: true, force: true });
-      else kept += 1;
-    } else if (produced.has(rel)) kept += 1;
-    else fs.rmSync(full, { force: true });
-  }
-  return kept;
-}
 
 /** Returns file => link resolver for links in that file's body (`file.path` is repo-relative). */
 function linkResolvers(entries, config, entryBase = "../") {
@@ -769,7 +728,7 @@ function main() {
   console.log(
     `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, ${guidePages.written.length} guide pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
   );
-  console.log(`${writes} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
+  console.log(`${writes()} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }
 
 main();

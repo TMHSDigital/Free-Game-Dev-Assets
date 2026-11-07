@@ -2120,6 +2120,35 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("plainText: links and emphasis stripped", plainText("See **[the guide](a.md)** and `code`\n now"), "See the guide and code now");
 }
 
+/* incremental dist writer (#265) ------------------------------------------ */
+{
+  const { createDistWriter } = await import("./dist-writer.mjs");
+  const fsm = (await import("node:fs")).default;
+  const osm = (await import("node:os")).default;
+  const pathm = (await import("node:path")).default;
+  const dir = fsm.mkdtempSync(pathm.join(osm.tmpdir(), "fgda-dist-"));
+  try {
+    const first = createDistWriter(dir);
+    first.writeOut("a/index.html", "hello");
+    first.writeOut("b.txt", "same");
+    eq("dist: first build writes both", first.writes(), 2);
+    fsm.mkdirSync(pathm.join(dir, "old"), { recursive: true });
+    fsm.writeFileSync(pathm.join(dir, "old", "x.html"), "stale");
+
+    const second = createDistWriter(dir);
+    second.writeOut("a/index.html", "hello");
+    second.writeOut("b.txt", "diff"); // same size, other bytes
+    eq("dist: unchanged bytes are not rewritten, changed ones are", second.writes(), 1);
+    eq("dist: same-size change lands", fsm.readFileSync(pathm.join(dir, "b.txt"), "utf8"), "diff");
+    second.pruneDist();
+    eq("dist: a stale file is removed", fsm.existsSync(pathm.join(dir, "old", "x.html")), false);
+    eq("dist: its empty directory is pruned", fsm.existsSync(pathm.join(dir, "old")), false);
+    eq("dist: a directory holding a produced file stays", fsm.existsSync(pathm.join(dir, "a", "index.html")), true);
+  } finally {
+    fsm.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);
