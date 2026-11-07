@@ -27,6 +27,23 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
+// Sections (#203): each self-contained block runs as one. A section that
+// throws is reported as a failure and the run goes on, so one crash does not
+// hide the rest. TEST_ONLY=<words> runs only the sections whose name contains
+// them (the few assertions outside any section still run).
+const ONLY = String(process.env.TEST_ONLY || "").toLowerCase();
+let sectionsRun = 0;
+async function section(name, fn) {
+  if (ONLY && !name.toLowerCase().includes(ONLY)) return;
+  sectionsRun += 1;
+  try {
+    await fn();
+  } catch (err) {
+    const where = err && err.stack ? err.stack.split("\n").slice(0, 3).join(" | ") : String(err);
+    failures.push(`section "${name}" threw: ${where}`);
+  }
+}
+
 function eq(label, actual, expected) {
   lastLabel = label;
   if (actual === expected) passed += 1;
@@ -181,7 +198,7 @@ const okPage = `<html><head>${CSP_META}<title>T</title><link rel="canonical" hre
 const kinds = new Map([["entry/e2", "dir"], ["", "dir"]]);
 const opts = { file: "entry/e1/index.html", kindOf: (p) => kinds.get(p) || null };
 eq("clean page passes", checkPage(okPage, opts).length, 0);
-{
+await section("block at line 201", async () => {
   const withLinks = (links) => okPage.replace("<h1>A</h1>", `<h1 id="top">A</h1>${links}`);
   const fopts = { ...opts, idsOf: (p) => (p === "entry/e2/index.html" ? new Set(["preview-images"]) : null) };
   eq("fragment: a same-page id passes", checkPage(withLinks('<a href="#top">t</a><a href="#">x</a>'), fopts).length, 0);
@@ -190,7 +207,7 @@ eq("clean page passes", checkPage(okPage, opts).length, 0);
   has("fragment: a missing cross-page id fails", checkPage(withLinks('<a href="../e2/#no-such-anchor">p</a>'), fopts).join(), "names no id on entry/e2/index.html");
   eq("fragment: an encoded id is decoded", checkPage(withLinks('<a href="#t%6Fp">t</a>'), fopts).length, 0);
   eq("fragment: unknown target ids are not guessed", checkPage(withLinks('<a href="../../#search">s</a>'), fopts).length, 0);
-}
+});
 has("leaked bold", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1>**b**"), opts).join(), "double asterisk");
 has("leaked link", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1>[a](b)"), opts).join(), "markdown link");
 has("leaked backtick", checkPage(okPage.replace("<h1>A</h1>", "<h1>A</h1>`x`"), opts).join(), "backtick");
@@ -340,7 +357,7 @@ eq("per-file bucket", ow.perFile.map((i) => i.entry.id).join(","), "c");
 eq("open questions bucket", ow.openQuestions.map((i) => i.entry.id).join(","), "c");
 eq("unclear bucket", ow.unclear.map((i) => i.entry.id).join(","), "d");
 eq("copy all joins canned lines in pick order", copyAllText(ow), 'Art by "A" <x>\nMusic by B');
-{
+await section("block at line 360", async () => {
   const { creditFields, fillInNote, creditLineHtml, FILL_IN_HEADER, creditsFile: cf } = await import("./owes.mjs");
   const tpl = { id: "t", name: "Tunes", license: "CC-BY-4.0", attribution_required: true, attribution_string: 'Music: "{title}" by {artist} ({title})' };
   const plain = { id: "p", name: "Plain", license: "CC-BY-4.0", attribution_required: true, attribution_string: "Art by P" };
@@ -355,7 +372,7 @@ eq("copy all joins canned lines in pick order", copyAllText(ow), 'Art by "A" <x>
   const file = cf(owT, { format: "md" });
   eq("credits file names the templated entries", file.includes(`${FILL_IN_HEADER} The lines for Tunes are templates`), true);
   eq("credits file has no fill-in note without templates", cf(owes([{ need: "Art", entry: plain }])).includes(FILL_IN_HEADER), false);
-}
+});
 
 /* entry page: maintenance and shortlist toggle ----------------------------- */
 has("maintenance row on an archived entry", page({ maintenance: "archived" }), "<dt>Maintenance</dt><dd>archived: The source repository is archived");
@@ -367,7 +384,7 @@ has("entry page has a shortlist toggle", page(), 'data-shortlist="e1"');
 has("entry page loads the shortlist module", page(), '<script type="module" src="../../shortlist.js"></script>');
 
 /* entry page: every licence statement (#225) ------------------------------- */
-{
+await section("entry page: every licence statement (#225)", async () => {
   const nc = page({ commercial: false });
   has("non-commercial active entry: banner", nc, "<strong>Not for commercial use.</strong>");
   has("non-commercial active entry: facts row", nc, "<dt>Commercial use</dt><dd>non-commercial</dd>");
@@ -414,7 +431,7 @@ has("entry page loads the shortlist module", page(), '<script type="module" src=
   has("pager, next only: next link", onlyNext, '<a class="btn-ghost" href="../e2/" rel="next">');
   lacks("pager, next only: no prev link", onlyNext, 'rel="prev"');
   lacks("pager, neither: no pager", pg(null, null), 'class="page-pager"');
-}
+});
 /* shortlist: CREDITS file -------------------------------------------------- */
 import { creditsFile } from "./owes.mjs";
 const eF = { ...base, id: "f", name: "Font F", license: "SIL OFL", attributionClass: "notice", attribution_required: false, status: "active", commercial: true };
@@ -467,7 +484,7 @@ lacks("no script without canned lines or picks", sp({ owed: owes([{ need: "Sound
 const sld = spage.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
 lacks("stack json-ld cannot close its script", sld, "</script");
 eq("stack json-ld lists the picks", JSON.parse(sld).itemListElement[0].url, "https://x.test/s/entry/a/");
-{
+await section("block at line 487", async () => {
   // #220: the stack panel and the CREDITS export carry the same sections.
   const both = sp({ owed: owShort });
   has("stack lists notices to keep", both, "<h3>Notices to keep with the files</h3>");
@@ -475,7 +492,7 @@ eq("stack json-ld lists the picks", JSON.parse(sld).itemListElement[0].url, "htt
   const fileHeads = [...creditsFile(owShort, { format: "md" }).matchAll(/^## (.+)$/gm)].map((m) => m[1]).sort();
   const pageHeads = [...both.matchAll(/<div class="owes-group"><h3>([^<]+)<\/h3>/g)].map((m) => m[1]).sort();
   eq("stack panel and CREDITS export have the same sections", pageHeads.join("|"), fileHeads.join("|"));
-}
+});
 eq("stack json-ld name survives", stackJsonLd(stackMeta, [{ rows: [] }], site).name, 'Make a "thing" </script>');
 
 /* stacks: links in --------------------------------------------------------- */
@@ -579,7 +596,7 @@ has("llms points at freshness", lt, "Licence freshness, every entry by check dat
 
 /* head: every page type carries the same baseline (#104) ------------------- */
 import { baseHeadHtml } from "./shared.mjs";
-{
+await section("block at line 599", async () => {
   const homeHead = baseHeadHtml({ site, title: site.title, description: site.tagline, url: site.siteUrl, hasCard: true });
   const baseline = [
     '<link rel="sitemap" type="application/xml" href="https://x.test/s/sitemap.xml" />',
@@ -602,7 +619,7 @@ import { baseHeadHtml } from "./shared.mjs";
   has("freshness og:type is website", fp, '<meta property="og:type" content="website" />');
   has("no card falls back to a summary card", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), '<meta name="twitter:card" content="summary" />');
   lacks("no card has no image", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), "og:image");
-}
+});
 
 /* seo title and description (#103) ----------------------------------------- */
 import { clipText, seoDescription, seoTitle } from "./shared.mjs";
@@ -621,7 +638,7 @@ eq("seo description fits the limit", seoDescription({ license: "CC-BY-4.0", comm
 
 /* sitemap lastmod (#108) --------------------------------------------------- */
 import { sitemapXml } from "./exports.mjs";
-{
+await section("block at line 641", async () => {
   const { commitDatesFromLog, DATED_PATHS } = await import("./exports.mjs");
   const log = "\0" + "2026-10-20\n\ndocs/fonts.md\ncatalog/2d/a.md\n\0" + "2026-09-01\n\ndocs/fonts.md\ndocs/data.md\n";
   const dates = commitDatesFromLog(log);
@@ -632,8 +649,8 @@ import { sitemapXml } from "./exports.mjs";
   eq("git dates: every guide lives under a dated path", undated.map((g) => g.path).join(", "), "");
   const sm = sitemapXml({ site, stamp: "2026-11-03", entries: [], guides: [{ id: "fonts", path: "docs/fonts.md" }], modified: dates });
   eq("sitemap: a guide's lastmod is its doc's last commit", sm.includes("<loc>https://x.test/s/guide/fonts/</loc><lastmod>2026-10-20</lastmod>"), true);
-}
-{
+});
+await section("block at line 653", async () => {
   const sm = sitemapXml({
     site,
     stamp: "2026-10-22",
@@ -652,7 +669,7 @@ import { sitemapXml } from "./exports.mjs";
   has("sitemap entry with no dates falls back to the build date", sm, "<loc>https://x.test/s/entry/undated/</loc><lastmod>2026-10-22</lastmod>");
   has("sitemap stack takes the later commit date", sm, "<loc>https://x.test/s/stack/s1/</loc><lastmod>2026-10-02</lastmod>");
   eq("every sitemap url has a lastmod", (sm.match(/<url>/g) || []).length, (sm.match(/<lastmod>/g) || []).length);
-}
+});
 
 /* sponsor link, not an iframe (#101) --------------------------------------- */
 import { sponsorButtonHtml } from "./shared.mjs";
@@ -663,7 +680,7 @@ eq("entry page has no iframe", (p.match(/<iframe/g) || []).length, 0);
 
 /* new this month (#90) ----------------------------------------------------- */
 import { newEntriesLineHtml } from "./freshness.mjs";
-{
+await section("block at line 683", async () => {
   const ne = (id, added, status = "active") => ({ id, name: id.toUpperCase(), added, status });
   const pool = [ne("old", "2026-08-01"), ne("n1", "2026-10-20"), ne("n2", "2026-10-01"), ne("n3", "2026-09-25"), ne("dead", "2026-10-21", "deprecated"), ne("undated", null)];
   const line = newEntriesLineHtml(pool, "2026-10-22", { named: 2 });
@@ -672,7 +689,7 @@ import { newEntriesLineHtml } from "./freshness.mjs";
   has("new line links the rest to the added sort", line, '<a href="?sort=added#catalog">1 more</a>');
   lacks("new line skips deprecated", line, "DEAD");
   eq("new line is empty when nothing is new", newEntriesLineHtml([ne("old", "2026-01-01")], "2026-10-22"), "");
-}
+});
 
 /* freshness: review fixes -------------------------------------------------- */
 has("recent window wording counts the build day", fp, "Checked on 2026-09-25 or in the 30 days before it, newest first.");
@@ -710,12 +727,12 @@ eq("frontmatter reads booleans", f1.meta.commercial, true);
 eq("frontmatter has no errors on good input", f1.errors.length, 0);
 eq("frontmatter ignores a byte-order mark", parseFrontmatter("﻿---\nid: a\n---\nB")?.meta.id, "a");
 // #227: prototype keys are refused, and their list items do not attach elsewhere.
-{
+await section("block at line 730", async () => {
   const p = fm(["id: x", "__proto__:", "  - evil", "name: y"]);
   has("frontmatter refuses a __proto__ key", p.errors.join("|"), 'line 3: "__proto__" is not allowed as a key');
   eq("frontmatter: meta keeps a plain prototype", Object.getPrototypeOf(p.meta), Object.prototype);
   has("frontmatter refuses a constructor key", fm(["constructor: x"]).errors.join("|"), '"constructor" is not allowed as a key');
-}
+});
 // #234: a trailing comma ends a flow list; an empty item is an error.
 eq("flow list: one trailing comma is dropped", JSON.stringify(fm(["tags: [a, b,]"]).meta.tags), '["a","b"]');
 eq("flow list: trailing comma is not an error", fm(["tags: [a, b,]"]).errors.length, 0);
@@ -808,7 +825,7 @@ eq("new-sources feed is by added, newest first", newFeed.indexOf("entry/c/") < n
 has("new-sources feed is the default feed.xml", newFeed, '<link rel="self" href="https://s.test/site/feed.xml" />');
 has("new-sources feed uses the added date", newFeed, "<updated>2026-09-20T00:00:00Z</updated>");
 has("new-sources feed title", newFeed, "<title>T: new sources</title>");
-{
+await section("block at line 828", async () => {
   const catFeed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z", category: { id: sample[0].category, label: "Cat & Co" } });
   const others = sample.filter((e) => e.category !== sample[0].category && e.status !== "deprecated");
   has("category feed names itself", catFeed, `<link rel="self" href="https://s.test/site/category/${sample[0].category}/feed.xml" />`);
@@ -816,7 +833,7 @@ has("new-sources feed title", newFeed, "<title>T: new sources</title>");
   has("category feed title escapes the label", catFeed, "<title>T: new sources in Cat &amp; Co</title>");
   has("category feed keeps its own entries", catFeed, `entry/${sample[0].id}/`);
   for (const e of others) lacks(`category feed leaves out ${e.id}`, catFeed, `entry/${e.id}/`);
-}
+});
 
 /* review fixes, 2026-10 (#59-#66) ------------------------------------------ */
 import { csvField } from "./exports.mjs";
@@ -906,7 +923,7 @@ eq("no match inside a word (ui/build)", scoreFields(searchFields({ ...kit, name:
 eq("no match inside a word (art/earth)", kScore("art"), 0);
 eq("plural query finds singular tag", kScore("buttons") > 0, true);
 eq("hyphenated tag found by spaced words", kScore("first person") > 0, true);
-{
+await section("block at line 926", async () => {
   const { joinedCompounds } = await import("./search.mjs");
   const pack = { ...kit, name: "Space Pack", tags: ["sci-fi", "low-poly"], subcategories: [], summary: "Ships with sound effects and a tile-set." };
   const ps = (q) => scoreFields(searchFields(pack), queryTests(q));
@@ -920,7 +937,7 @@ eq("hyphenated tag found by spaced words", kScore("first person") > 0, true);
   eq("synonyms: bgm finds music", scoreFields(searchFields({ ...pack, summary: "Chiptune music." }), queryTests("bgm")) > 0, true);
   eq("synonyms: models finds a mesh", scoreFields(searchFields({ ...pack, summary: "One mesh." }), queryTests("models")) > 0, true);
   eq("synonyms: unrelated words stay unmatched", ps("music"), 0);
-}
+});
 eq("3/4 view answers top down", kScore("top down") > 0, true);
 eq("every word must match", kScore("ui zzz"), 0);
 eq("name hit outranks summary hit", kScore("kit") > kScore("panels"), true);
@@ -940,7 +957,7 @@ eq("url: round trip", readState(`?${stateQuery(urlSt, URL_DEF)}`, URL_DEF, URL_A
 eq("url: defaults write nothing", stateQuery(URL_DEF, URL_DEF), "");
 eq("url: switch off written as 0", stateQuery({ ...URL_DEF, active: false }, URL_DEF), "active=0");
 eq("url: blank q not written", stateQuery({ ...URL_DEF, q: "   " }, URL_DEF), "");
-{
+await section("block at line 960", async () => {
   // #223: every choice and switch survives a round trip through the URL.
   const other = { category: "3d", sort: "verified", perspective: "top_down", license: "cc0", format: "image", engine: "godot", fresh: "6m" };
   const allowed = Object.fromEntries(URL_CHOICES.map(([, f]) => [f, [URL_DEF[f], other[f]]]));
@@ -954,12 +971,12 @@ eq("url: blank q not written", stateQuery({ ...URL_DEF, q: "   " }, URL_DEF), ""
   for (const f of Object.keys(URL_DEF)) eq(`url: round trip keeps ${f}`, back[f], changed[f]);
   eq("url: every state field is a choice, a switch or q", Object.keys(URL_DEF).sort().join(), ["q", ...URL_CHOICES.map(([, f]) => f), ...URL_SWITCHES.map(([, f]) => f)].sort().join());
   eq("url: category first, then q", stateQuery(changed, URL_DEF).split("&").slice(0, 2).map((kv) => kv.split("=")[0]).join(), "cat,q");
-}
+});
 
 const fmtGroups = { image: { formats: ["PNG", "SVG"] } };
 eq("filter: needs-review hidden when review off", passesFilters({ status: "needs-review" }, { ...URL_DEF, review: false }), false);
 eq("filter: deprecated hidden by default", passesFilters({ status: "deprecated" }, URL_DEF), false);
-{
+await section("block at line 979", async () => {
   const { ENGINES: EN, engineRank: er } = await import("./search.mjs");
   eq("engine: godot hides UE-only", passesFilters({ status: "active", engine_lock: "unreal" }, { ...URL_DEF, engine: "godot" }), false);
   eq("engine: unreal keeps UE-only", passesFilters({ status: "active", engine_lock: "unreal" }, { ...URL_DEF, engine: "unreal" }), true);
@@ -987,7 +1004,7 @@ eq("filter: deprecated hidden by default", passesFilters({ status: "deprecated" 
   eq("placement: key changes with the engine", pk({ sort: "name", engine: "godot" }, { ranked: false, group: true, list: [] }) === pk({ sort: "name", engine: "unity" }, { ranked: false, group: true, list: [] }), false);
   eq("placement: key ignores filters under a plain sort", pk({ sort: "name", engine: "any", q: "x" }, { ranked: false, group: false, list: [{ id: "a" }] }), pk({ sort: "name" }, { ranked: false, group: false, list: [] }));
   eq("placement: a ranked key follows the list", pk({ sort: "name" }, { ranked: true, group: false, list: [{ id: "a" }, { id: "b" }] }), "rank:false:a,b");
-}
+});
 eq("filter: commercial-only keeps varies", passesFilters({ status: "active", commercial: "varies" }, { ...URL_DEF, commercialOnly: true }), true);
 eq("filter: commercial-only drops unknown", passesFilters({ status: "active", commercial: "unknown" }, { ...URL_DEF, commercialOnly: true }), false);
 eq("filter: no-attribution needs false, not unknown", passesFilters({ status: "active", attribution_required: "unknown" }, { ...URL_DEF, noAttr: true }), false);
@@ -998,7 +1015,7 @@ eq("404 slug from a nested miss", missSlug("/Free-Game-Dev-Assets/entry/Kenny_UI
 eq("404 slug survives a bad escape", missSlug("/s/entry/%E0%A4%A/", "/s/"), "e0-a4-a");
 eq("404 slug drops the category/ prefix", missSlug("/s/category/audoi/", "/s/"), "audoi");
 eq("404 slug drops the guide/ prefix", missSlug("/s/guide/licences/", "/s/"), "licences");
-{
+await section("block at line 1018", async () => {
   const { missSection } = await import("./search.mjs");
   eq("404 section: category", missSection("/s/category/audoi/", "/s/"), "category");
   eq("404 section: guide", missSection("/s/guide/licences/", "/s/"), "guide");
@@ -1008,7 +1025,7 @@ eq("404 slug drops the guide/ prefix", missSlug("/s/guide/licences/", "/s/"), "l
   eq("404: a mistyped category finds the category", closestEntries("audoi", cats)[0]?.id, "audio");
   const guides = [{ id: "licenses", name: "Licenses" }, { id: "fonts", name: "Fonts" }];
   eq("404: a British spelling finds the guide", closestEntries("licences", guides)[0]?.id, "licenses");
-}
+});
 eq("identical strings are 1", similarity("kenney", "kenney"), 1);
 eq("disjoint strings are 0", similarity("abc", "xyz"), 0);
 const guessPool = [
@@ -1032,7 +1049,7 @@ has("stale-days as the last argument is an error", staleDaysFrom(["node", "x", "
 has("stale-days followed by another flag is an error", staleDaysFrom(["node", "x", "--stale-days", "--report"]).error, "--stale-days needs a whole number");
 has("stale-days non-number is an error", staleDaysFrom(["node", "x", "--stale-days", "soon"]).error, '"soon"');
 has("stale-days error carries usage", staleDaysFrom(["node", "x", "--stale-days", "1.5"]).error, "usage:");
-{
+await section("block at line 1052", async () => {
   const gh = (id, maintenance = null) => ({ id, url: `https://github.com/o/${id}`, maintenance });
   const ents = [gh("a"), { id: "n", url: "https://kenney.nl/" }, gh("b", "archived"), gh("c"), gh("d")];
   const expected = (data) => (data.archived ? "archived" : null);
@@ -1054,11 +1071,11 @@ has("stale-days error carries usage", staleDaysFrom(["node", "x", "--stale-days"
   has("api: a real mismatch is reported", r2.mismatches[0].detail, "o/b is last push 2020-01-02; maintenance is archived, expected unset");
   const r3 = await checkMaintenanceRepos([gh("d")], fetchRepo, expected);
   has("api: a thrown timeout is skipped with its name", r3.skipped[0].detail, "GitHub API TimeoutError for o/d");
-}
+});
 
 /* monthly re-verify batch (#93) -------------------------------------------- */
 import { batchIssueMarkdown, pickBatch } from "./reverify.mjs";
-{
+await section("block at line 1078", async () => {
   const rvNow = Date.parse("2026-11-01T08:00:00Z");
   const rv = (id, verified, status = "active") => ({ id, url: `https://${id}.test/`, license: "CC0", verified, status, rel: `catalog/2d/${id}.md` });
   const pool = [
@@ -1127,7 +1144,7 @@ import { batchIssueMarkdown, pickBatch } from "./reverify.mjs";
   has("batch issue explains the steps", md, "**How to do one**");
   has("batch issue links CONTRIBUTING absolutely (relative links 404 from an issue)", md, "[CONTRIBUTING.md](https://github.com/o/r/blob/main/CONTRIBUTING.md)");
   eq("batch issue has one checkbox per entry", (md.match(/^- \[ \] /gm) || []).length, 2);
-}
+});
 
 /* sync-counts and new-entry text rewrites (scaffold.mjs, #67) -------------- */
 import { newEntryProblem, newEntryText, syncCatalogReadme, syncConfig, syncReadme } from "./scaffold.mjs";
@@ -1153,14 +1170,14 @@ const neText = newEntryText("id: example\ncategory: 3d\nverified: 2026-07-19   #
 eq("new-entry text", neText, "id: my-pack\ncategory: 2d\nverified: 2026-10-04\nstatus: needs-review\n");
 eq("template copy starts needs-review", newEntryText(nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8"), { id: "a", category: "2d", today: "2026-10-04" }).split(/\r?\n/).includes("status: needs-review"), true);
 eq("new-entry sets added to today", newEntryText("added: 2026-07-19\nverified: 2026-07-19\n", { id: "a", category: "2d", today: "2026-10-04" }), "added: 2026-10-04\nverified: 2026-10-04\n");
-{
+await section("block at line 1173", async () => {
   // #79: the template round-trips through the scaffold to typed fields.
   const fromTemplate = parseFrontmatter(newEntryText(nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8"), { id: "a", category: "2d", today: "2026-10-04" }));
   eq("template tags parse as a list", Array.isArray(fromTemplate.meta.tags), true);
   eq("template commercial parses as a boolean", fromTemplate.meta.commercial, true);
   eq("template added parses as today", fromTemplate.meta.added, "2026-10-04");
   eq("template has no frontmatter errors", fromTemplate.errors.join(), "");
-}
+});
 
 // Site refresh: thumbnail rules.
 import { afterFailure, filmstripPick, imageUrlFromHtml, isPrivateHost, needsFetch, previewCredit, previewEligibility, publisherKey, safeImageUrl, sharedImageIds, sniffImage, webpSize } from "./thumbs.mjs";
@@ -1181,7 +1198,7 @@ eq("thumbs: pinned never dropped", [...sharedImageIds({ a: { hash: "h1", pinned:
 eq("thumbs: one new record matching a known shared hash is dropped", [...sharedImageIds({ d: { hash: "h" }, e: { hash: "x" } }, { a: { hash: "h" }, b: { hash: "h" }, c: { hash: "h" } })].join(), "d");
 eq("thumbs: known shared ids never returned", [...sharedImageIds({ d: { hash: "h" } }, { a: { hash: "h" }, b: { hash: "h" } })].sort().join(), "d");
 eq("thumbs: a shared record for an id now in thumbs is not counted twice", [...sharedImageIds({ a: { hash: "h" } }, { a: { hash: "h" }, b: { hash: "h" } })].join(), "");
-{
+await section("block at line 1201", async () => {
   // #232: a run that re-drops the same shared images changes nothing.
   const { manifestChanges } = await import("./thumbs.mjs");
   const rec = { hash: "h1", fetched: "2026-10-01" };
@@ -1189,7 +1206,7 @@ eq("thumbs: a shared record for an id now in thumbs is not counted twice", [...s
   eq("thumbs: a new shared id is a change", manifestChanges({ thumbs: {} }, { thumbs: {}, shared: { s: rec } }), 1);
   eq("thumbs: a removed and a changed record are two", manifestChanges({ thumbs: { a: rec, b: rec } }, { thumbs: { b: { ...rec, fetched: "2026-11-01" } } }), 2);
   eq("thumbs: a missing shared map is empty", manifestChanges({ thumbs: { a: rec } }, { thumbs: { a: rec }, shared: {} }), 0);
-}
+});
 eq("thumbs: needsFetch no record", needsFetch(undefined, { license: "CC0", today: "2026-10-23" }), true);
 eq("thumbs: needsFetch fresh same licence", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC0", today: "2026-10-23" }), false);
 eq("thumbs: needsFetch licence changed", needsFetch({ fetched: "2026-09-01", license: "CC0" }, { license: "CC-BY-4.0", today: "2026-10-23" }), true);
@@ -1219,7 +1236,7 @@ eq("thumbs: file scheme refused", safeImageUrl("file:///etc/passwd"), null);
 eq("thumbs: og:image on loopback refused", imageUrlFromHtml('<meta property="og:image" content="http://localhost/a.png">', "https://a.example/"), null);
 eq("thumbs: sniff png", sniffImage(Uint8Array.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0])), "png");
 eq("thumbs: sniff html refused", sniffImage(new TextEncoder().encode("<!doctype html><html>")), null);
-{
+await section("block at line 1239", async () => {
   const hex = (s) => Buffer.from(s.replaceAll(" ", ""), "hex");
   const vp8x = hex("52494646 24000000 57454250 56503858 0a000000 10000000 7f0200 8f0100");
   eq("thumbs: webp VP8X size", JSON.stringify(webpSize(vp8x)), '{"width":640,"height":400}');
@@ -1228,7 +1245,7 @@ eq("thumbs: sniff html refused", sniffImage(new TextEncoder().encode("<!doctype 
   const vp8 = hex("52494646 24000000 57454250 56503820 10000000 000000 9d012a 8002 9001");
   eq("thumbs: webp VP8 size", JSON.stringify(webpSize(vp8)), '{"width":640,"height":400}');
   eq("thumbs: not webp", webpSize(Buffer.from("89504e47", "hex")), null);
-}
+});
 eq("thumbs: publisherKey falls back to host", publisherKey({ url: "https://www.kenney.nl/assets/x" }), "kenney.nl");
 eq("thumbs: publisherKey prefers publisher", publisherKey({ publisher: "Kenney", url: "https://x/" }), "Kenney");
 eq("thumbs: ODbL (attribution, not in the allowlist) gets no preview", previewEligibility({ status: "active", license: "ODbL", category: "data", url: "https://a.example/", publisher: "OSM" }).ok, false);
@@ -1243,7 +1260,7 @@ eq("thumbs: a pinned preview admits a tool", previewEligibility({ license: "MIT"
 eq("thumbs: 3d page image is the asset", previewEligibility({ license: "CC0", status: "active", category: "3d", url: "https://x.itch.io/a" }).ok, true);
 eq("thumbs: CC-BY without a creator refused", previewEligibility({ license: "CC-BY-4.0", status: "active", category: "audio", url: "https://x.itch.io/a" }).reason, "licence CC-BY-4.0 needs a creator to credit; set attribution_string or publisher");
 eq("thumbs: CC-BY with attribution_string admitted", previewEligibility({ license: "CC-BY-4.0", status: "active", category: "audio", url: "https://x.itch.io/a", attribution_string: "Sound by X" }).ok, true);
-{
+await section("block at line 1263", async () => {
   const t = { path: "thumbs/x.webp", width: 640, height: 400 };
   const pool = [
     { id: "a", name: "A", status: "active", category: "3d", verified: "2026-10-01", publisher: "P1", url: "https://p1/", thumb: t },
@@ -1255,7 +1272,7 @@ eq("thumbs: CC-BY with attribution_string admitted", previewEligibility({ licens
   ];
   eq("thumbs: filmstrip picks newest, one per publisher, card categories, active, with thumb", filmstripPick(pool, { count: 9, cardCategories: ["3d", "2d"] }).map((e) => e.id).join(), "b,f");
   eq("thumbs: filmstrip count cap", filmstripPick(pool, { count: 1, cardCategories: ["3d", "2d"] }).map((e) => e.id).join(), "b");
-}
+});
 
 // Site refresh: self-hosted fonts and one shared head.
 has("head: preloads body font", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../../" }), '<link rel="preload" href="../../fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin');
@@ -1278,7 +1295,7 @@ has("cards: lead and trail slots", entryCardHtml(cardBase, { root: "", repo: "ht
 has("cards: heading count readable", groupHeadingHtml({ cat: "3d", label: "3D", count: 77, view: "cards", root: "" }), '<span class="group-count"><span class="sr-only">, </span><span class="group-n">77</span><span class="sr-only"> entries</span></span>');
 has("cards: heading carries view", groupHeadingHtml({ cat: "3d", label: "3D", count: 77, view: "list", root: "" }), '<h3 class="group-heading" id="group-3d" data-cat="3d" data-view="list">');
 has("cards: show-all link", groupMoreHtml({ cat: "3d", label: "3D", count: 77, root: "" }), '<a class="group-more" data-cat="3d" href="category/3d/">Show all 77 in 3D</a>');
-{
+await section("block at line 1298", async () => {
   const many = Array.from({ length: 9 }, (_, i) => ({ ...cardBase, id: `e${i}`, name: `E${i}` }));
   const html = groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0 });
   eq("cards: limit six cards", (html.match(/<article /g) || []).length, 6);
@@ -1287,11 +1304,11 @@ has("cards: show-all link", groupMoreHtml({ cat: "3d", label: "3D", count: 77, r
   eq("cards: list limit eight", (groupedEntriesHtml(many, { "3d": { label: "3D", view: "list" } }, { root: "", repo: "https://r", now: 0 }).match(/<article /g) || []).length, 8);
   eq("cards: no more link under the limit", groupedEntriesHtml(many.slice(0, 3), { "3d": { label: "3D", view: "cards" } }, { root: "", repo: "https://r", now: 0 }).includes("group-more"), false);
   eq("cards: empty category skipped", groupedEntriesHtml(many, { "3d": { label: "3D", view: "cards" }, audio: { label: "Audio", view: "list" } }, { root: "", repo: "https://r", now: 0 }).includes("group-audio"), false);
-}
+});
 
 // Site refresh: static category pages.
 import { categoryPageHtml } from "./category-page.mjs";
-{
+await section("block at line 1311", async () => {
   const html = categoryPageHtml({ cat: "3d", meta: { label: "3D", blurb: "Models, scans, PBR textures", view: "cards" }, entries: [cardBase], site: { title: "Free Game Dev Assets", tagline: "t", siteUrl: "https://s/x/", repo: "https://r" }, stamp: "2026-10-23", total: 1, hasCard: false, now: 0 });
   has("category page: title", html, "<title>3D assets | Free Game Dev Assets</title>");
   has("category page: root-relative entry link", html, 'href="../../entry/x/"');
@@ -1303,22 +1320,22 @@ import { categoryPageHtml } from "./category-page.mjs";
   has("category page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
   has("category page: loads the view toggle module", html, '<script type="module" src="../../category.js"></script>');
   eq("category page: page checks pass", checkPage(html, { file: "category/3d/index.html", kindOf: () => "file" }).join(), "");
-}
+});
 has("sitemap: category pages", sitemapXml({ site: { siteUrl: "https://s/" }, entries: [], stacks: [], stamp: "2026-10-23", categories: [{ id: "3d", lastmod: "2026-10-23" }] }), "<loc>https://s/category/3d/</loc>");
 
 // Site refresh: hero filmstrip.
 import { filmstripHtml } from "./cards.mjs";
 has("filmstrip: links and alt", filmstripHtml([{ id: "x", name: "X Pack", thumb: { path: "thumbs/x.webp", width: 640, height: 400 } }], { root: "./" }), '<a href="./entry/x/"><img src="./thumbs/x.webp" width="640" height="400" alt="X Pack" loading="eager"');
 eq("filmstrip: empty when nothing to show", filmstripHtml([], { root: "" }), "");
-{
+await section("block at line 1330", async () => {
   const nine = Array.from({ length: 9 }, (_, i) => ({ id: `e${i}`, name: `E${i}`, thumb: { path: `thumbs/e${i}.webp`, width: 640, height: 400 } }));
   const strip = filmstripHtml(nine, { root: "" });
   eq("filmstrip: first three eager, rest lazy", `${(strip.match(/loading="eager"/g) || []).length}/${(strip.match(/loading="lazy"/g) || []).length}`, "3/6");
   has("filmstrip: labelled list", strip, '<ul class="filmstrip" aria-label="A few of the assets inside">');
-}
+});
 
 // Site refresh: entry page strip and actions; stack picks as cards.
-{
+await section("block at line 1338", async () => {
   const siteR = { title: "T", tagline: "t", siteUrl: "https://s/", repo: "https://r" };
   const common = { leadHtml: "<p>l</p>", restHtml: "<p>r</p>", deprecatedReasonHtml: null, prev: null, next: null, site: siteR, categoryLabel: "3D", stamp: "2026-10-23", total: 1, hasCard: false, now: 0 };
   const html = entryPageHtml({ ...common, entry: { ...cardBase, thumb: { path: "thumbs/x.webp", width: 640, height: 400 }, publisher: "Kenney" } });
@@ -1333,35 +1350,35 @@ eq("filmstrip: empty when nothing to show", filmstripHtml([], { root: "" }), "")
   has("entry page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
   eq("entry page: no strip without thumb", entryPageHtml({ ...common, entry: cardBase }).includes("entry-strip"), false);
   eq("entry page: page checks pass with strip", checkPage(html, { file: "entry/x/index.html", kindOf: () => "file" }).join(), "");
-}
-{
+});
+await section("block at line 1354", async () => {
   const html = sp();
   has("stack page: pick renders as card", html, 'class="entry-card" data-view="cards"');
   has("stack page: pick need leads the card", html, '<p class="pick-need">Tiles</p>');
   has("stack page: pick reason trails the card", html, '<p class="pick-why">Why <em>a</em>.</p>');
   has("stack page: pick list is the card grid", html, '<ul class="pick-list entry-list">');
   has("stack page: footer credit line", html, "Preview images belong to their publishers and are shown under each entry's licence.");
-}
+});
 
 // Final review: heading levels never skip on category and stack pages.
 has("cards: heading level option", groupHeadingHtml({ cat: "3d", label: "3D", count: 1, view: "cards", level: 2 }), '<h2 class="group-heading" id="group-3d"');
 has("cards: title level option", entryCardHtml(cardBase, { root: "", repo: "https://r", now: 0, view: "cards", titleLevel: 3 }), '<h3><a class="entry-link" href="entry/x/"');
-{
+await section("block at line 1366", async () => {
   const html = categoryPageHtml({ cat: "3d", meta: { label: "3D", blurb: "b", view: "cards" }, entries: [cardBase], site: { title: "T", tagline: "t", siteUrl: "https://s/", repo: "https://r" }, stamp: "2026-10-23", total: 1, hasCard: false, now: 0 });
   has("category page: group heading is h2 under the h1", html, '<h2 class="group-heading"');
   has("category page: card titles are h3", html, '<h3><a class="entry-link"');
   eq("category page: no h4", html.includes("<h4"), false);
-}
-{
+});
+await section("block at line 1372", async () => {
   const html = sp();
   has("stack page: card titles are h3 under the section h2", html, '<h3><a class="entry-link"');
   eq("stack page: no h4", html.includes("<h4"), false);
-}
+});
 
 eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: "" }, {}).q.length, MAX_QUERY);
 
 /* modulepreload lists match the import graph ---------------------------- */
-{
+await section("modulepreload lists match the import graph", async () => {
   const { PAGE_MODULES } = await import("./shared.mjs");
   const libDir = new URL("./", import.meta.url);
   const publicDir = new URL("../public/", import.meta.url);
@@ -1380,10 +1397,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     eq(`modulepreload: ${page} list matches its imports`, [...PAGE_MODULES[page]].sort().join(","), closure(list).join(","));
   }
   has("modulepreload: head emits the links", baseHeadHtml({ site: { siteUrl: "https://s/", title: "T", tagline: "x" }, title: "T", description: "d", url: "https://s/", root: "../../", modules: ["a.js"] }), '<link rel="modulepreload" href="../../a.js" />');
-}
+});
 
 /* entry links read as names; thumbnails size honestly ------------------- */
-{
+await section("entry links read as names; thumbnails size honestly", async () => {
   const r = makeLinkResolver({ entryPath: "catalog/2d/a.md", idByPath: new Map([["catalog/2d/b.md", "b"]]), repo: "https://g/r", kindOf: () => null, nameById: new Map([["b", "Bee Pack"]]) });
   has("links: an id label becomes the entry name", renderInline("[b](b.md)", r), ">Bee Pack</a>");
   has("links: a written label is kept", renderInline("[the bee one](b.md)", r), ">the bee one</a>");
@@ -1391,10 +1408,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("thumbs: small preview contained", th({ thumb: { path: "t/a.webp", width: 160, height: 120 } }), 'class="entry-thumb-img is-small"');
   lacks("thumbs: normal preview not marked small", th({ thumb: { path: "t/a.webp", width: 640, height: 400 } }), "is-small");
   has("thumbs: eager strip image", th({ thumb: { path: "t/a.webp", width: 640, height: 400 } }, "", undefined, { eager: true }), 'loading="eager" fetchpriority="high"');
-}
+});
 
 /* structured data ---------------------------------------------------------- */
-{
+await section("structured data", async () => {
   const { jsonLd: ld } = await import("./entry-page.mjs");
   const { categoryJsonLd } = await import("./category-page.mjs");
   const s = { siteUrl: "https://s.test/site/", title: "T" };
@@ -1405,10 +1422,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const cat = categoryJsonLd({ cat: "3d", label: "3D", description: "d", entries: [e], site: s });
   eq("json-ld: category is a CollectionPage", cat["@type"], "CollectionPage");
   eq("json-ld: category lists its entries", cat.mainEntity.itemListElement[0].url, "https://s.test/site/entry/a/");
-}
+});
 
 /* guide renderer ---------------------------------------------------------- */
-{
+await section("guide renderer", async () => {
   const { renderGuide, headingSlug } = await import("./guide-render.mjs");
   const pass = (h) => ({ href: h, external: false });
   const g = renderGuide("# Title\n\nIntro **bold**.\n\n## CC-BY & friends\n\n| A | B |\n| --- | --- |\n| `x|y` | two |\n\n> quoted\n\n1. one\n2. two\n\n```sh\necho **hi**\n```\n", { file: "g.md", resolveLink: pass });
@@ -1439,10 +1456,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   throws("guide: a fence after a blank line under a list item fails", () => gr("- step\n\n  ```\n  x\n  ```\n"), "an indented code fence");
   has("guide: ## Content does not take the template's id", gr("## Content\n"), '<h2 id="content-1">Content</h2>');
   has("guide: a second ## Content continues the count", gr("## Content\n\n## Content\n"), '<h2 id="content-2">Content</h2>');
-}
+});
 
 /* new-entry --from-issue (scaffold.mjs) ------------------------------------ */
-{
+await section("new-entry --from-issue (scaffold.mjs)", async () => {
   const { parseIssueForm, entryFromIssue } = await import("./scaffold.mjs");
   const { checkKnownKeys, checkEntryBasics } = await import("../checks.mjs");
   const template = nodeFs.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8");
@@ -1486,10 +1503,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("from-issue: an unexpected dropdown answer is unknown", om.commercial, "unknown");
   eq("from-issue: no quote date means verified today", om.verified, "2026-11-03");
   eq("from-issue: both problems are warned about", odd.warnings.length, 2);
-}
+});
 
 /* PR licence-field summary (licence-diff.mjs) ------------------------------ */
-{
+await section("PR licence-field summary (licence-diff.mjs)", async () => {
   const { licenceChanges, licenceDiffMarkdown, newestEvidenceLine } = await import("./licence-diff.mjs");
   const before = { id: "a", license: "CC-BY", commercial: true, attribution_required: true, status: "active", verified: "2026-01-01", tags: ["x"] };
   const after = { ...before, license: "CC0", attribution_required: false, verified: "2026-11-01", tags: ["y"] };
@@ -1511,10 +1528,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("licence diff: pipes are escaped and backticks neutralised", md, "quote with \\| pipe and 'tick'");
   lacks("licence diff: unchanged entries are left out", md, "b.md");
   has("licence diff: nothing changed", licenceDiffMarkdown([]), "No licence field changed");
-}
+});
 
 /* closed vocabularies stay in step (#222) ----------------------------------- */
-{
+await section("closed vocabularies stay in step (#222)", async () => {
   const sh = await import("./shared.mjs");
   const ck = await import("../checks.mjs");
   const { PERSPECTIVE_SEARCH } = await import("./search.mjs");
@@ -1534,10 +1551,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("vocab: maintenance values, notes and schema agree", [keys(ck.MAINTENANCE_VALUES), keys(props.maintenance?.enum || [])].join(" / "), [keys(sh.MAINTENANCE_NOTES), keys(sh.MAINTENANCE_NOTES)].join(" / "));
   eq("vocab: engine lock values, notes and labels agree", [keys(ck.ENGINE_LOCK_VALUES), keys(sh.ENGINE_LOCK_LABELS)].join(" / "), [keys(sh.ENGINE_LOCK_NOTES), keys(sh.ENGINE_LOCK_NOTES)].join(" / "));
   if (props.engine_lock?.enum) eq("vocab: engine lock schema agrees", keys(props.engine_lock.enum), keys(sh.ENGINE_LOCK_NOTES));
-}
+});
 
 /* data.json schema (schema-check.mjs + site/data.schema.json) -------------- */
-{
+await section("data.json schema (schema-check.mjs + site/data.schema.json)", async () => {
   const { schemaErrors } = await import("./schema-check.mjs");
   // minLength (from #244): an empty list item in data.json is a schema error.
   has("schema: minLength refuses an empty string", schemaErrors({ type: "string", minLength: 1 }, "").join(), 'is shorter than 1');
@@ -1570,10 +1587,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("schema: a new top-level key fails", errs(payload({ extra: 1 })), 'unexpected key "extra"');
   has("schema: a negative stat fails", errs(payload({ stats: { ...payload().stats, total: -1 } })), "is below 0");
   throws("schema: an unsupported keyword is refused, not ignored", () => schemaErrors({ type: "string", maxLength: 3 }, "abcd"), 'unsupported keyword "maxLength"');
-}
+});
 
 /* catalog ordering, grouping and chip counts (search.mjs, used by app.js) -- */
-{
+await section("catalog ordering, grouping and chip counts (search.mjs, used by app.js)", async () => {
   const { computeResults, sorterFor, shouldGroup, engineRank, SORTS } = await import("./search.mjs");
   const E = [
     { id: "a", name: "Alpha", category: "2d", license: "CC0", licenseRank: 0, verified: "2026-01-01", added: "2026-01-05", tags: ["godot"] },
@@ -1609,10 +1626,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("group: grouped under name sort and all categories", shouldGroup({ sort: "name", category: "all" }), true);
   eq("group: flat under another sort", shouldGroup({ sort: "verified", category: "all" }), false);
   eq("group: flat under a category filter", shouldGroup({ sort: "name", category: "2d" }), false);
-}
+});
 
 /* added dates follow renames (added-dates.mjs) ----------------------------- */
-{
+await section("added dates follow renames (added-dates.mjs)", async () => {
   const { firstAddedFromLog, lateAddedDates } = await import("./added-dates.mjs");
   const log = [
     "\0" + "2026-07-19", "", "A\tcatalog/2d/a.md", "A\tcatalog/2d/b.md",
@@ -1634,10 +1651,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const utc = firstAddedFromLog(["\0" + String(Date.UTC(2026, 10, 7, 2, 30) / 1000), "", "A\tcatalog/2d/late.md"].join("\n"));
   eq("added: a timestamp header is read as a UTC day", utc.get("catalog/2d/late.md"), "2026-11-07");
   eq("added: a UTC added date on an evening commit passes", lateAddedDates([{ rel: "catalog/2d/late.md", added: "2026-11-07" }], utc).length, 0);
-}
+});
 
 /* engine scope and limits on entry pages (#173) --------------------------- */
-{
+await section("engine scope and limits on entry pages (#173)", async () => {
   const { engineScope } = await import("./entry-page.mjs");
   const { seoDescription } = await import("./shared.mjs");
   const base = { license: "MIT", commercial: true, attribution_required: false, summary: "A thing." };
@@ -1649,10 +1666,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("seo: limits lead the description", seoDescription({ ...base, limits: "No redistribution" }), "no credit needed. No redistribution. A thing.");
   has("seo: an engine lock reads as its badge", seoDescription({ ...base, engine_lock: "unreal" }), "no credit needed. UE only.");
   eq("seo: no scope, no limits, unchanged", seoDescription(base), "MIT, commercial use OK, no credit needed. A thing.");
-}
+});
 
 /* heading anchors: validator and guide renderer agree ---------------------- */
-{
+await section("heading anchors: validator and guide renderer agree", async () => {
   const { markdownAnchors } = await import("../checks.mjs");
   const { renderGuide } = await import("./guide-render.mjs");
   const md = "# Fonts\n\nIntro.\n\n## Fonts\n\nText.\n\n## Setup `npm` and [links](https://a.example/)\n\n```\n## not a heading\n```\n\n## Fonts\n\n### Q&A: what's new?\n";
@@ -1660,10 +1677,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const ids = [r.titleId, ...[...r.html.matchAll(/<h\d id="([^"]+)"/g)].map((m) => m[1])];
   eq("anchors: renderer ids", ids.join(","), "fonts,fonts-1,setup-npm-and-links,fonts-2,qa-whats-new");
   eq("anchors: validator matches the renderer", [...markdownAnchors(md)].sort().join(","), [...ids].sort().join(","));
-}
+});
 
 /* entry counts skip the same folders as build and validate ---------------- */
-{
+await section("entry counts skip the same folders as build and validate", async () => {
   const { countEntriesByCategory, listEntryFiles } = await import("./entry-files.mjs");
   const os = await import("node:os");
   const nodePath = await import("node:path");
@@ -1709,10 +1726,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   } finally {
     nodeFs.rmSync(root, { recursive: true, force: true });
   }
-}
+});
 
 /* local preview server ---------------------------------------------------- */
-{
+await section("local preview server", async () => {
   const { resolveRequest } = await import("../serve.mjs");
   const os = await import("node:os");
   const nodePath = await import("node:path");
@@ -1757,10 +1774,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   } finally {
     nodeFs.rmSync(root, { recursive: true, force: true });
   }
-}
+});
 
 /* shared page chrome ------------------------------------------------------ */
-{
+await section("shared page chrome", async () => {
   const { siteHeaderHtml, siteFooterHtml, PREVIEW_CREDIT_LINE: credit } = await import("./shared.mjs");
   const deep = siteHeaderHtml({ root: "../../", repo: "https://github.com/o/r" });
   for (const a of ["#catalog", "#stacks", "#starters", "#guides"]) has(`chrome: header links ${a} at depth 2`, deep, `href="../../${a}"`);
@@ -1776,10 +1793,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const fresh = siteFooterHtml({ root: "../", stamp: "s", total: 1, current: "freshness" });
   lacks("chrome: the freshness page does not link to itself", fresh, "freshness/");
   has("chrome: the freshness page keeps the data links", fresh, 'href="../guide/data/"');
-}
+});
 
 /* client scripts parse, and every named import exists --------------------- */
-{
+await section("client scripts parse, and every named import exists", async () => {
   const { execFileSync } = await import("node:child_process");
   const os = await import("node:os");
   const nodePath = await import("node:path");
@@ -1818,10 +1835,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   } finally {
     nodeFs.rmSync(tmp, { recursive: true, force: true });
   }
-}
+});
 
 /* safe-fetch -------------------------------------------------------------- */
-{
+await section("safe-fetch", async () => {
   const { isPrivateAddress, refusalFor, safeFetch } = await import("./safe-fetch.mjs");
   for (const ip of ["127.0.0.1", "10.1.2.3", "172.16.0.1", "172.31.255.255", "192.168.1.1", "169.254.169.254", "100.64.0.1", "0.0.0.0", "224.0.0.1", "::1", "::", "fd00::1", "fe80::1", "::ffff:127.0.0.1", "::ffff:7f00:1", "not-an-ip",
     // IPv4 carried inside IPv6, cloud platform and reserved forms
@@ -1873,10 +1890,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("safe-fetch: loopback name never requested", requested.includes("https://rebind.example/"), false);
   has("safe-fetch: redirect loop capped", await errOf(safeFetch("https://public.example/loop", {}, { ...opts, maxRedirects: 3 })), "EREDIRECTS");
   has("safe-fetch: DNS failure keeps its code", await errOf(safeFetch("https://missing.example/", {}, opts)), "ENOTFOUND");
-}
+});
 
 /* CI helper scripts (#237) ------------------------------------------------ */
-{
+await section("CI helper scripts (#237)", async () => {
   const { changedEntries, diffRows, licenceDiffMarkdown } = await import("./licence-diff.mjs");
   const z = ["A", "catalog/2d/new.md", "M", "catalog/2d/mod.md", "D", "catalog/audio/gone.md", "T", "catalog/3d/typed.md", "M", "catalog/2d/_draft.md", "M", "catalog/README.md", "A", "catalog/.hidden/x.md", "M", "catalog/2d/README.md", "M", "docs/other.md"].join("\0") + "\0";
   const ch = changedEntries(z);
@@ -1943,10 +1960,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("fetchBytes: a private host is refused first", await errOf(fetchBytes("https://127.0.0.1/a.png", { fetchOptions: serve({}, [png]) })), "image URL refused");
   eq("convert failure: last stderr line", convertFailure({ stderr: Buffer.from("noise\nInvalid data found\n"), message: "Command failed" }), "convert failed: Invalid data found");
   eq("convert failure: no stderr", convertFailure(new Error("spawn ffmpeg ENOENT")), "convert failed: spawn ffmpeg ENOENT");
-}
+});
 
 /* empty search: request links (#226); OpenSearch (#241) -------------------- */
-{
+await section("empty search: request links (#226); OpenSearch (#241)", async () => {
   const { gapIssueUrl } = await import("./search.mjs");
   const r = "https://github.com/o/r";
   eq("gap link: query in the title, encoded", gapIssueUrl(r, "pixel cars & trucks", ""), `${r}/issues/new?template=request-asset.yml&title=${encodeURIComponent("[gap] pixel cars & trucks")}`);
@@ -1964,10 +1981,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("opensearch: short name cut at a word, 16 at most", os, "<ShortName>Free Game Dev</ShortName>");
   has("opensearch: text escaped", os, "Free &lt;assets&gt;");
   has("opensearch: homepage link", opensearchLinkHtml({ siteUrl: "https://x.test/s", title: "T" }), 'href="https://x.test/s/opensearch.xml"');
-}
+});
 
 /* every known field reaches data.json or is excluded on purpose (#235) ------- */
-{
+await section("every known field reaches data.json or is excluded on purpose (#235)", async () => {
   const { CORE_FIELDS, OPTIONAL_FIELDS, NOT_EXPORTED, optionalFields } = await import("./entry-fields.mjs");
   const { KNOWN_KEYS, REQUIRED_KEYS } = await import("../checks.mjs");
   const optional = OPTIONAL_FIELDS.map((f) => f.key);
@@ -1982,10 +1999,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("fields: optionalFields copies every optional field", Object.keys(optionalFields(all)).sort().join(), [...optional].sort().join());
   eq("fields: unset optional fields are left out", Object.keys(optionalFields({ publisher: "", hardware_tags: "x" })).length, 0);
   eq("fields: preview is not exported", "preview" in optionalFields({ preview: "none" }), false);
-}
+});
 
 /* browser modules never import from node: (#236) -------------------------- */
-{
+await section("browser modules never import from node: (#236)", async () => {
   const { BROWSER_MODULES, PAGE_MODULES } = await import("./shared.mjs");
   const publicDir = new URL("../public/", import.meta.url);
   const sources = [
@@ -1998,10 +2015,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   }
   const served = new Set([...Object.keys(BROWSER_MODULES), ...nodeFs.readdirSync(publicDir)]);
   for (const [page, mods] of Object.entries(PAGE_MODULES)) for (const m of mods) eq(`browser: ${page} preloads ${m}, which is served`, served.has(m), true);
-}
+});
 
 /* strict flags; the shortlist's esc copy (#236) --------------------------- */
-{
+await section("strict flags; the shortlist's esc copy (#236)", async () => {
   const { readArgs } = await import("./cli.mjs");
   const errOf = (f) => { try { f(); return ""; } catch (e) { return e.message; } };
   eq("cli: known flags read", readArgs(["--report", "r.md", "--clean"], { report: { type: "string" }, clean: { type: "boolean" } }).values.report, "r.md");
@@ -2020,10 +2037,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const { escapeHtml } = await import("./client-state.mjs");
   const sample = `<a href="x" title='y'>Tom & "Jerry"</a>`;
   eq("shortlist's escapeHtml matches shared esc", escapeHtml(sample), esc(sample));
-}
+});
 
 /* lint: unused imports (#230) --------------------------------------------- */
-{
+await section("lint: unused imports (#230)", async () => {
   const { unusedImports, scriptFiles } = await import("../lint.mjs");
   eq("lint: a used import passes", unusedImports('import { a } from "./x.mjs";\na();\n').join(), "");
   eq("lint: an unused named import", unusedImports('import { a, b } from "./x.mjs";\na();\n').join(), "b");
@@ -2035,10 +2052,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const listed = scriptFiles().map((f) => f.split(/[\\/]/).slice(-2).join("/"));
   eq("lint: browser scripts are listed", listed.includes("public/app.js"), true);
   eq("lint: dist is not", listed.some((f) => f.startsWith("dist/")), false);
-}
+});
 
 /* one link reader for validate and the renderer (#254) --------------------- */
-{
+await section("one link reader for validate and the renderer (#254)", async () => {
   const { markdownLinks, MarkdownError } = await import("./markdown.mjs");
   const hrefs = (t) => [...markdownLinks(t)].map((l) => `${l.href}${l.plain ? "" : "!"}`).join();
   eq("links: balanced parens read whole", hrefs("[a](docs/a_(b).md)"), "docs/a_(b).md");
@@ -2054,10 +2071,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     try { r(bad); } catch (e) { threw = e instanceof MarkdownError; }
     eq(`links: the renderer rejects ${bad}`, threw, true);
   }
-}
+});
 
 /* coverage summary (#268) ------------------------------------------------- */
-{
+await section("coverage summary (#268)", async () => {
   const { functionCoverage } = await import("../coverage.mjs");
   const run = (count) => ({ url: "file:///x.mjs", functions: [
     { functionName: "", ranges: [{ startOffset: 0, endOffset: 30, count: 1 }] },
@@ -2067,18 +2084,18 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const cov = functionCoverage([run(0), run(2)], () => "a\nb\nc\n").get("file:///x.mjs");
   eq("coverage: the module body is not a function", cov.total, 2);
   eq("coverage: covered in either run counts", cov.uncovered.map((u) => u.name).join(), "g");
-}
+});
 
 /* one listed rule (#257) ------------------------------------------------- */
-{
+await section("one listed rule (#257)", async () => {
   const { isListed } = await import("./shared.mjs");
   eq("listed: active", isListed({ status: "active" }), true);
   eq("listed: needs-review", isListed({ status: "needs-review" }), true);
   eq("listed: deprecated is not", isListed({ status: "deprecated" }), false);
-}
+});
 
 /* reject branches and the guide page (#266) -------------------------------- */
-{
+await section("reject branches and the guide page (#266)", async () => {
   const { passesFilters, SORTS } = await import("./search.mjs");
   const open = { active: true, review: true, deprecated: true, commercialOnly: false, noAttr: false, perspective: "any", license: "any", engine: "any", format: "any" };
   eq("filters: a perspective mismatch is rejected", passesFilters({ status: "active", camera_perspective: "side" }, { ...open, perspective: "top-down" }), false);
@@ -2119,10 +2136,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
 
   const { plainText } = await import("./guide-render.mjs");
   eq("plainText: links and emphasis stripped", plainText("See **[the guide](a.md)** and `code`\n now"), "See the guide and code now");
-}
+});
 
 /* incremental dist writer (#265) ------------------------------------------ */
-{
+await section("incremental dist writer (#265)", async () => {
   const { createDistWriter } = await import("./dist-writer.mjs");
   const fsm = (await import("node:fs")).default;
   const osm = (await import("node:os")).default;
@@ -2148,10 +2165,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   } finally {
     fsm.rmSync(dir, { recursive: true, force: true });
   }
-}
+});
 
 /* thumbs run planner and settler (#264) ----------------------------------- */
-{
+await section("thumbs run planner and settler (#264)", async () => {
   const { planRun, recordFailure, settleRun, orphanThumbs, reportMarkdown } = await import("../thumbs.mjs");
   const today = "2026-11-06";
   const opts = { force: false, dryRun: false, only: null, limit: Infinity, report: null };
@@ -2206,10 +2223,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("thumbs report: an empty run has no sections", reportMarkdown(empty).includes("## "), false);
   has("thumbs report: no converter prints none", reportMarkdown(empty), "Converter: none.");
   has("thumbs report: one failure gives a Failed section", reportMarkdown({ ...empty, failed: [{ id: "a", reason: "HTTP 500" }] }), "## Failed\n\n- a: HTTP 500");
-}
+});
 
 /* one filter table (#252) and the freshness filter (#271) ----------------- */
-{
+await section("one filter table (#252) and the freshness filter (#271)", async () => {
   const { FILTERS, FILTER_DEFAULTS, CHOICES, SWITCHES, readState, stateQuery, passesFilters, FRESH_DAYS } = await import("./search.mjs");
   const fsm = (await import("node:fs")).default;
   const indexHtml = fsm.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
@@ -2242,10 +2259,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("fresh: 12m drops past the aging band", pass(at(FRESH_DAYS["12m"] + 1), "12m"), false);
   eq("fresh: an entry with no date is dropped", pass(undefined, "6m"), false);
   eq("fresh: any keeps everything", pass(undefined, "any"), true);
-}
+});
 
 /* homepage chrome from shared.mjs (#253) ---------------------------------- */
-{
+await section("homepage chrome from shared.mjs (#253)", async () => {
   const fsm = (await import("node:fs")).default;
   const { siteFooterHtml, siteHeaderHtml } = await import("./shared.mjs");
   const tpl = fsm.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
@@ -2259,10 +2276,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   has("deep header brand goes to the root", siteHeaderHtml({ root: "../../", repo: "https://g.test/o/r" }), 'class="brand" href="../../"');
   has("footer with repo links it", siteFooterHtml({ root: "", stamp: "s", total: 1, repo: "https://g.test/o/r" }), '<a href="https://g.test/o/r">Contribute on GitHub</a>');
   lacks("footer without repo does not", siteFooterHtml({ root: "", stamp: "s", total: 1 }), "Contribute on GitHub");
-}
+});
 
 /* client behaviour, pure parts (#263) -------------------------------------- */
-{
+await section("client behaviour, pure parts (#263)", async () => {
   const { activeFilterChips, FILTER_DEFAULTS: D } = await import("./search.mjs");
   const labels = { license: { "cc-by": "CC BY" }, category: { "2d": "2D" } };
   eq("chips: the default state has none", activeFilterChips({ ...D }, D, labels).length, 0);
@@ -2310,10 +2327,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     if (had) Object.defineProperty(globalThis, "localStorage", had);
     else delete globalThis.localStorage;
   }
-}
+});
 
 /* one reading of an entry's frontmatter (#256) ----------------------------- */
-{
+await section("one reading of an entry's frontmatter (#256)", async () => {
   const { normalizeEntry, CORE_FIELDS } = await import("./entry-fields.mjs");
   const e = normalizeEntry({ id: "a", name: "A", commercial: "true", attribution_required: "false", formats: "PNG", tags: "x" }, "catalog/2d/a.md");
   eq("normalize: a quoted true is not a boolean", e.commercial, "unknown");
@@ -2329,10 +2346,10 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   eq("normalize: preview only when set", "preview" in e, false);
   eq("normalize: preview kept as text", normalizeEntry({ preview: "none" }, "x").preview, "none");
   eq("normalize: optional fields only when set", "publisher" in e, false);
-}
+});
 
 /* entry check registry and validateRepo (#255) ----------------------------- */
-{
+await section("entry check registry and validateRepo (#255)", async () => {
   const checks = await import("../checks.mjs");
   const registered = new Set(checks.ENTRY_CHECKS.map((c) => c.name));
   const entryShaped = Object.entries(checks)
@@ -2362,7 +2379,7 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const run = validateRepo();
   eq("validateRepo: this checkout passes", run.errors.join("\n"), "");
   eq("validateRepo: it counts the entries", run.entryCount > 400, true);
-}
+});
 
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
@@ -2370,4 +2387,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`lib.test ok: ${passed} assertions`);
+console.log(`lib.test ok: ${passed} assertions in ${sectionsRun} sections${ONLY ? ` matching "${ONLY}"` : ""}`);

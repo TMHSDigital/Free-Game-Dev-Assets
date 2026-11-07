@@ -101,6 +101,23 @@ function rejects(label, errors, needle) {
   passed += 1;
 }
 
+// Sections (#203): each self-contained block runs as one. A section that
+// throws is reported as a failure and the run goes on, so one crash does not
+// hide the rest. TEST_ONLY=<words> runs only the sections whose name contains
+// them (the few assertions outside any section still run).
+const ONLY = String(process.env.TEST_ONLY || "").toLowerCase();
+let sectionsRun = 0;
+async function section(name, fn) {
+  if (ONLY && !name.toLowerCase().includes(ONLY)) return;
+  sectionsRun += 1;
+  try {
+    await fn();
+  } catch (err) {
+    const where = err && err.stack ? err.stack.split("\n").slice(0, 3).join(" | ") : String(err);
+    failures.push(`section "${name}" threw: ${where}`);
+  }
+}
+
 function eq(label, actual, expected) {
   note(label);
   if (actual === expected) passed += 1;
@@ -741,25 +758,25 @@ rejects("V19 rejects a tag that restates the licence", checkValueAliases("bad.md
 accepts("V19 keeps a tag that only mentions a licence word", checkValueAliases("ok.md", { tags: ["odbl-adjacent", "free-tier"] }, aliases));
 
 /* Licence families: every licence in exactly one Licence-filter group ---- */
-{
+await section("Licence families: every licence in exactly one Licence-filter group", async () => {
   const fams = Object.entries(vocab.families).filter(([k]) => !k.startsWith("_"));
   const homeless = Object.keys(vocab.licenses).filter((l) => fams.filter(([, f]) => f.licenses.includes(l)).length !== 1);
   accepts("every licence value sits in exactly one family", homeless);
   const unknown = fams.flatMap(([, f]) => f.licenses).filter((l) => !(l in vocab.licenses));
   accepts("families name only licence values the vocabulary has", unknown);
-}
+});
 
 /* V22: maintenance ------------------------------------------------------ */
 rejects("V22 rejects an unknown maintenance value", checkMaintenance("bad.md", { maintenance: "dead" }), 'maintenance "dead" is not one of archived | inactive');
 accepts("V22 accepts archived", checkMaintenance("ok.md", { maintenance: "archived" }));
 accepts("V22 leaves the field optional", checkMaintenance("ok.md", {}));
-{
+await section("block at line 773", async () => {
   const now = Date.parse("2026-09-26T00:00:00Z");
   const same = (label, actual, expected) => (actual === expected ? accepts(label, []) : accepts(label, [`got ${actual}, want ${expected}`]));
   same("an archived repo is archived", maintenanceFromRepo({ archived: true, pushed_at: "2026-09-01T00:00:00Z" }, now), "archived");
   same("no push in over three years is inactive", maintenanceFromRepo({ archived: false, pushed_at: "2023-01-01T00:00:00Z" }, now), "inactive");
   same("a recent push is neither", maintenanceFromRepo({ archived: false, pushed_at: "2025-01-01T00:00:00Z" }, now), null);
-}
+});
 
 /* V23: engine fields ---------------------------------------------------- */
 rejects("V23 rejects an unknown engine_lock", checkEngineFields("bad.md", { engine_lock: "unity" }), 'engine_lock "unity" is not one of unreal');
@@ -816,7 +833,7 @@ accepts("V25 ignores a missing name", checkTitleMatchesName("ok.md", {}, "# Anyt
 
 /* Thumbnails: the manifest, the files and the gate must agree ------------- */
 import { checkPreviewField, checkThumbManifest } from "./checks.mjs";
-{
+await section("block at line 836", async () => {
   const okEntry = { id: "a", license: "CC0", status: "active", url: "https://a.itch.io/x" };
   const manifest = { thumbs: { a: { fetched: "2026-10-01", license: "CC0", hash: "h", width: 640, height: 400, source: "https://a.itch.io/x", image: "https://i/a.png" } } };
   accepts("thumbs manifest: file and record agree", checkThumbManifest(manifest, new Map([["a", okEntry]]), ["a.webp"]));
@@ -827,7 +844,7 @@ import { checkPreviewField, checkThumbManifest } from "./checks.mjs";
   rejects("thumbs manifest: rejects a thumbnail whose entry is no longer eligible", checkThumbManifest(manifest, new Map([["a", { ...okEntry, license: "custom" }]]), ["a.webp"]), 'thumbnail for "a" must be removed: licence custom is not in the preview allowlist (run node site/thumbs.mjs)');
   accepts("thumbs manifest: licence drift between two allowed licences is not an error", checkThumbManifest(manifest, new Map([["a", { ...okEntry, license: "MIT" }]]), ["a.webp"]));
   rejects("thumbs manifest: stray file", checkThumbManifest(manifest, new Map([["a", okEntry]]), ["a.webp", "notes.txt"]), "site/public/thumbs/notes.txt is not a <id>.webp thumbnail");
-}
+});
 accepts("preview field: absent", checkPreviewField("ok.md", {}));
 accepts("preview field: none", checkPreviewField("ok.md", { preview: "none" }));
 accepts("preview field: https url", checkPreviewField("ok.md", { preview: "https://a/b.png" }));
@@ -858,7 +875,7 @@ accepts("V31 accepts a quoted restriction", checkNonCommercialEvidence("ok.md", 
 rejects("V31 rejects an unquoted restriction", checkNonCommercialEvidence("bad.md", { status: "active", commercial: false }, "## Evidence\n\n- Live page (2026-01-01): \"free download\"\n"), "bad.md is active with commercial: false but no Evidence line mentions the commercial restriction");
 
 /* V1: per-entry basics (validate.mjs) --------------------------------------- */
-{
+await section("V1: per-entry basics (validate.mjs)", async () => {
   const good = {
     id: "foo", name: "Foo", url: "https://a.example/", category: "2d", subcategories: ["sprites"], license: "CC0",
     commercial: true, attribution_required: false, formats: ["PNG"], tags: ["pixel"], added: "2026-01-01",
@@ -890,10 +907,10 @@ rejects("V31 rejects an unquoted restriction", checkNonCommercialEvidence("bad.m
   accepts("V1 featured ids that resolve", checkFeatured(["foo", { id: "bar", need: "x" }], new Set(["foo", "bar"])));
   rejects("V1 featured id that does not resolve", checkFeatured([{ id: "nope" }], new Set(["foo"])), 'featured id "nope" does not resolve');
   rejects("V1 featured item without an id", checkFeatured([{ need: "x" }], new Set(["foo"])), 'featured id "undefined" does not resolve');
-}
+});
 
 /* V11: comparison tables with a Licence column ------------------------------ */
-{
+await section("V11: comparison tables with a Licence column", async () => {
   const metas = new Map([
     ["catalog/3d/ambientcg.md", { license: "CC0" }],
     ["catalog/environment/poly-haven.md", { license: "CC0" }],
@@ -913,7 +930,7 @@ rejects("V31 rejects an unquoted restriction", checkNonCommercialEvidence("bad.m
   accepts("V11 ignores links right of the Licence column", checkComparisonLicences("3d", ["| Take | Licence | Notes |", "| --- | --- | --- |", "| [a](ambientcg.md) | CC0 | see [st](sharetextures.md) |"].join("\n"), metas));
   accepts("V11 ignores tables without a Licence column", checkComparisonLicences("3d", ["| Take | Notes |", "| --- | --- |", "| [st](sharetextures.md) | CC0 |"].join("\n"), metas));
   accepts("V11 leaves the ID listing to checkCategoryReadmeRows", checkComparisonLicences("3d", ["| ID | Licence |", "| --- | --- |", "| [st](sharetextures.md) | CC0 |"].join("\n"), metas));
-}
+});
 
 /* V34: preview allowlist agrees with the vocabulary ------------------------ */
 accepts("V34 the real allowlist matches the real vocabulary", checkPreviewVocabulary(vocab));
@@ -922,7 +939,7 @@ rejects("V34 rejects a required licence the caption would not credit", checkPrev
 rejects("V34 rejects a credit on a licence that does not ask for one", checkPreviewVocabulary({ licenses: { MIT: { attribution: "notice" } } }, ["MIT"], () => true), "carry a credit the licence does not ask for");
 
 /* V38: a waived credit on a BY licence is quoted --------------------------- */
-{
+await section("V38: a waived credit on a BY licence is quoted", async () => {
   const v = { licenses: { "CC-BY-4.0": { attribution: "required" }, MIT: { attribution: "notice" } } };
   const meta = { license: "CC-BY-4.0", attribution_required: false };
   accepts("V38 accepts a dated waiver quote", checkAttributionWaiver("ok.md", meta, "## Evidence\n\n- Page (2026-11-03): \"You do NOT have to credit me.\"\n", v));
@@ -930,7 +947,7 @@ rejects("V34 rejects a credit on a licence that does not ask for one", checkPrev
   accepts("V38 ignores a licence that does not require credit", checkAttributionWaiver("ok.md", { license: "MIT", attribution_required: false }, "", v));
   rejects("V38 rejects a waiver stated only in Notes", checkAttributionWaiver("bad.md", meta, "## Notes\n\n- Attribution waived\n\n## Evidence\n\n- Page (2026-08-24): \"CC BY 4.0\"\n", v), "quote the rights holder's waiver");
   rejects("V38 rejects an undated waiver line", checkAttributionWaiver("bad.md", meta, "## Evidence\n\n- Page: \"credit is optional\"\n", v), "quote the rights holder's waiver");
-}
+});
 
 /* V37: AI-generated content stays tagged and listed ------------------------ */
 accepts("V37 accepts a tagged entry", checkAiTag("ok.md", { tags: ["ai-generated"] }, "Some sounds are AI-generated."));
@@ -974,7 +991,7 @@ rejects("V32 rejects a missing value", checkLicenceGuide({ licenses: { MIT: {}, 
 rejects("V32 a longer value does not count for its prefix", checkLicenceGuide({ licenses: { "CC-BY": {} } }, "| **CC-BY-4.0** | yes |"), 'does not mention the licence value "CC-BY"');
 
 /* validate's file-level checks, moved here to be tested (#224) ----------- */
-{
+await section("validate's file-level checks, moved here to be tested (#224)", async () => {
   const { parseFrontmatter } = await import("./lib/frontmatter.mjs");
   const { EXTERNAL_SCHEME_RE, ANY_SCHEME_RE } = await import("./lib/shared.mjs");
   const { markdownAnchors: anchors } = await import("./checks.mjs");
@@ -1020,7 +1037,7 @@ rejects("V32 a longer value does not count for its prefix", checkLicenceGuide({ 
   eq("form options: no category dropdown", categoryFormOptions("body:\n  - type: input\n    id: name\n").join(), "");
   eq("form options: quoted options", categoryFormOptions('  - type: dropdown\n    id: category\n    attributes:\n      options:\n        - "2d"\n        - \'3d\'\n').join(), "2d,3d");
   eq("form options: stop at the next key", categoryFormOptions("    id: category\n    attributes:\n      options:\n        - 2d\n        - audio\n    validations:\n      required: true\n").join(), "2d,audio");
-}
+});
 
 /* ----------------------------------------------------------------------- */
 if (failures.length) {
@@ -1028,4 +1045,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log(`checks.test ok: ${passed} assertions across ${checksSeen.size} checks`);
+console.log(`checks.test ok: ${passed} assertions across ${checksSeen.size} checks${ONLY ? ` (sections matching "${ONLY}")` : ""}`);
