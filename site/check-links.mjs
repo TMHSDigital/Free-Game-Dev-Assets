@@ -25,6 +25,7 @@ import { fileURLToPath } from "node:url";
 import { maintenanceFromRepo } from "./checks.mjs";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { safeFetch } from "./lib/safe-fetch.mjs";
+import { isListed } from "./lib/shared.mjs";
 import { cliArgs } from "./lib/cli.mjs";
 import { checkMaintenanceRepos, classify, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
 
@@ -103,7 +104,7 @@ if (staleArg.error) {
   process.exit(2);
 }
 const staleDays = staleArg.days;
-const entries = loadEntries().filter((e) => e.status !== "deprecated");
+const entries = loadEntries().filter(isListed);
 const results = await run(entries);
 const { mismatches: maintenance, skipped } = await checkMaintenance(entries);
 const cutoff = new Date(Date.now() - staleDays * 86400000).toISOString().slice(0, 10);

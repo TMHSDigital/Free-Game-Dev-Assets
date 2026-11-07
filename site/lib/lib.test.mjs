@@ -1550,7 +1550,7 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
     generatedAt: "2026-11-03T00:00:00.000Z", version: "v2026.11.03",
     site: { title: "T", tagline: "t", repo: "r", siteUrl: "s" }, categories: { "2d": { label: "2D", view: "cards" } },
     guides: [{ id: "g", title: "G", path: "docs/g.md" }], featured: [{ ...entry, need: "x" }],
-    stats: { total: 1, active: 1, needsReview: 0, deprecated: 0, commercialOk: 1, commercialVaries: 0, categories: 1 },
+    stats: { total: 1, active: 1, needsReview: 0, deprecated: 0, listed: 1, commercialOk: 1, commercialVaries: 0, categories: 1 },
     filters: { licenseFamilies: { cc0: "CC0" }, formatGroups: { image: { label: "Images", formats: ["PNG"] } } },
     entries: [entry], ...over,
   });
@@ -2066,6 +2066,14 @@ eq("search: q from the URL is capped", readState(`?q=${"a".repeat(5000)}`, { q: 
   const cov = functionCoverage([run(0), run(2)], () => "a\nb\nc\n").get("file:///x.mjs");
   eq("coverage: the module body is not a function", cov.total, 2);
   eq("coverage: covered in either run counts", cov.uncovered.map((u) => u.name).join(), "g");
+}
+
+/* one listed rule (#257) ------------------------------------------------- */
+{
+  const { isListed } = await import("./shared.mjs");
+  eq("listed: active", isListed({ status: "active" }), true);
+  eq("listed: needs-review", isListed({ status: "needs-review" }), true);
+  eq("listed: deprecated is not", isListed({ status: "deprecated" }), false);
 }
 
 /* report (keep last) ------------------------------------------------------ */

@@ -1,7 +1,7 @@
 import { FILTER_DEFAULTS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, commercialLabel, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
-import { PERSPECTIVES } from "./shared.mjs";
+import { isListed, PERSPECTIVES } from "./shared.mjs";
 
 (() => {
   const data = window.__CATALOG__;
@@ -395,7 +395,7 @@ import { PERSPECTIVES } from "./shared.mjs";
     // The denominator is what the status switches could show: deprecated
     // entries count only once their switch is on, so the default view reads
     // "418 of 418", matching the hero and the README.
-    const pool = state.deprecated ? data.entries.length : data.entries.filter((e) => e.status !== "deprecated").length;
+    const pool = state.deprecated ? data.entries.length : data.entries.filter(isListed).length;
     $("#result-count").textContent = `${list.length} of ${pool} sources shown`;
     empty.hidden = list.length > 0;
     renderSuggestions(list.length ? "" : state.q);

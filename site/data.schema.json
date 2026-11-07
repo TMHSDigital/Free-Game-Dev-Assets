@@ -66,7 +66,7 @@
     },
     "stats": {
       "type": "object",
-      "required": ["total", "active", "needsReview", "deprecated", "commercialOk", "commercialVaries", "categories"],
+      "required": ["total", "active", "needsReview", "deprecated", "listed", "commercialOk", "commercialVaries", "categories"],
       "additionalProperties": { "type": "integer", "minimum": 0 }
     },
     "filters": {

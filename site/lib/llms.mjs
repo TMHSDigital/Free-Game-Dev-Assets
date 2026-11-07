@@ -1,6 +1,6 @@
 /** Plain-text indexes of the catalog for AI assistants (llmstxt.org format). */
 import { LINK_RE, sectionMarkdown, splitEntryBody } from "./markdown.mjs";
-import { commercialLabel, entryPageUrl, freshnessPageUrl, stackPageUrl } from "./shared.mjs";
+import { commercialLabel, entryPageUrl, freshnessPageUrl, isListed, stackPageUrl } from "./shared.mjs";
 import { owes } from "./stacks.mjs";
 
 /** The first paragraph of the body before its first `##`, lines joined. */
@@ -46,7 +46,7 @@ Licence freshness, every entry by check date: ${freshnessPageUrl(site)}
 
 function groups(entries, categories) {
   return Object.entries(categories)
-    .map(([cat, meta]) => ({ label: meta.label || cat, items: entries.filter((e) => e.category === cat && e.status !== "deprecated") }))
+    .map(([cat, meta]) => ({ label: meta.label || cat, items: entries.filter((e) => e.category === cat && isListed(e)) }))
     .filter((g) => g.items.length);
 }
 

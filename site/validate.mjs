@@ -52,7 +52,7 @@ import {
   checkValueSpellings,
   markdownAnchors,
 } from "./checks.mjs";
-import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, latestAllowedDate } from "./lib/shared.mjs";
+import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, isListed, latestAllowedDate } from "./lib/shared.mjs";
 import { readCatalog } from "./lib/entry-files.mjs";
 import { licenceTerms, listStackFiles } from "./lib/stacks.mjs";
 import { cliArgs } from "./lib/cli.mjs";
@@ -314,11 +314,7 @@ function main() {
   for (const { meta } of records) {
     const cat = String(meta.category);
     // The README counts match the site's "All" chip: deprecated entries are not listed.
-    if (meta.status === "deprecated") {
-      measured[cat] = measured[cat] || 0;
-      continue;
-    }
-    measured[cat] = (measured[cat] || 0) + 1;
+    measured[cat] = (measured[cat] || 0) + (isListed(meta) ? 1 : 0);
   }
   errors.push(
     ...checkCountTables(measured, [

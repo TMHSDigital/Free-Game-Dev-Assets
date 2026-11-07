@@ -11,6 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readCatalog, usableRecord } from "./lib/entry-files.mjs";
 import { cliArgs } from "./lib/cli.mjs";
+import { isListed } from "./lib/shared.mjs";
 import { batchIssueMarkdown, pickBatch } from "./lib/reverify.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -43,7 +44,7 @@ if (size !== undefined && (!Number.isInteger(size) || size < 1)) {
 }
 
 const batch = pickBatch(entries, { size });
-const live = entries.filter((e) => e.status !== "deprecated").length;
+const live = entries.filter(isListed).length;
 const date = new Date().toISOString().slice(0, 10);
 const report = batchIssueMarkdown({ batch, repo: REPO, date, total: live });
 

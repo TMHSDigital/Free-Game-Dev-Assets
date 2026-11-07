@@ -14,7 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { baseHeadHtml, BROWSER_MODULES, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, PREVIEW_CREDIT_LINE, sponsorButtonHtml } from "./lib/shared.mjs";
+import { baseHeadHtml, BROWSER_MODULES, isListed, commercialLabel, headAssetsHtml, esc, latestAllowedDate, OG_CARD_NAME, opensearchLinkHtml, opensearchXml, PAGE_MODULES, PREVIEW_CREDIT_LINE, sponsorButtonHtml } from "./lib/shared.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
 import { renderGuide } from "./lib/guide-render.mjs";
@@ -208,7 +208,7 @@ function headMetaHtml(site, stats, generatedAt, hasCard) {
     opensearchLinkHtml(site),
     `<meta name="generator" content="site/build.mjs ${esc(generatedAt)}" />`,
     `<meta name="catalog:entries" content="${stats.total}" />`,
-    `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.total - stats.deprecated }))}</script>`,
+    `<script type="application/ld+json">${scriptJson(homeJsonLd({ site, generatedAt, total: stats.listed }))}</script>`,
   ].join("\n    ");
 }
 
@@ -407,7 +407,7 @@ function writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now }
         owed: owes(stack.picked),
         site: config.site,
         stamp,
-        total: stats.total - stats.deprecated,
+        total: stats.listed,
         hasCard,
         now,
       });
@@ -433,7 +433,7 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
   const written = [];
   const resolverFor = linkResolvers(entries, config);
   // Prev/next follow the homepage's default order: category, then name.
-  const visible = entries.filter((e) => e.status !== "deprecated");
+  const visible = entries.filter(isListed);
   const neighbours = new Map();
   for (const cat of Object.keys(config.categories)) {
     const group = visible.filter((e) => e.category === cat);
@@ -459,7 +459,7 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
         site: config.site,
         categoryLabel: config.categories[entry.category]?.label || entry.category,
         stamp,
-        total: stats.total - stats.deprecated,
+        total: stats.listed,
         hasCard,
         now,
         stacks: usedIn.get(entry.id) || [],
@@ -482,7 +482,7 @@ function writeCategoryPages({ entries, config, stats, stamp, hasCard, now }) {
     if (!group.length) continue;
     writeOut(
       path.join("category", cat, "index.html"),
-      categoryPageHtml({ cat, meta, entries: group, site: config.site, stamp, total: stats.total - stats.deprecated, hasCard, now })
+      categoryPageHtml({ cat, meta, entries: group, site: config.site, stamp, total: stats.listed, hasCard, now })
     );
     written.push(`category/${cat}/index.html`);
   }
@@ -525,7 +525,7 @@ function writeGuidePages({ entries, config, stats, stamp, hasCard, modified = ne
     // anything else is a bug in the build and stops it, as for entry pages.
     try {
       const rendered = renderGuide(fs.readFileSync(source, "utf8"), { file: guide.path, resolveLink });
-      writeOut(path.join("guide", guide.id, "index.html"), guidePageHtml({ guide, rendered, site: config.site, stamp, total: stats.total - stats.deprecated, hasCard, modified: modified.get(guide.path) || null }));
+      writeOut(path.join("guide", guide.id, "index.html"), guidePageHtml({ guide, rendered, site: config.site, stamp, total: stats.listed, hasCard, modified: modified.get(guide.path) || null }));
       written.push(`guide/${guide.id}/index.html`);
     } catch (err) {
       if (!(err instanceof MarkdownError || err instanceof LinkError)) throw err;
@@ -609,6 +609,8 @@ function main() {
     active: entries.filter((e) => e.status === "active").length,
     needsReview: entries.filter((e) => e.status === "needs-review").length,
     deprecated: entries.filter((e) => e.status === "deprecated").length,
+    // What every "N sources" line on the site says (#257).
+    listed: entries.filter(isListed).length,
     commercialOk: entries.filter((e) => e.commercial === true).length,
     commercialVaries: entries.filter((e) => e.commercial === "varies").length,
     categories: Object.keys(config.categories).length,
@@ -676,7 +678,7 @@ function main() {
   // catalog whose whole value is that its entries can be found.
   const now = Date.now();
   const stamp = payload.generatedAt.slice(0, 10);
-  const visible = entries.filter((e) => e.status !== "deprecated");
+  const visible = entries.filter(isListed);
   const fresh = freshnessStats(entries, now);
   // The hero filmstrip draws from the categories that default to cards.
   const cardCategories = Object.entries(config.categories)
@@ -697,10 +699,10 @@ function main() {
     GUIDE_ROWS: guideRowsHtml(config.guides, repoUrl),
     CATALOG_BLURB: `${visible.length} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file${stats.deprecated ? ` &middot; plus ${stats.deprecated} deprecated, hidden by default` : ""}`,
     // Deprecated entries are hidden until their switch is on, so they are not counted until then (app.js does the same).
-    RESULT_COUNT: `${visible.length} of ${stats.total - stats.deprecated} sources shown`,
+    RESULT_COUNT: `${visible.length} of ${stats.listed} sources shown`,
     SPONSOR_BUTTON: sponsorButtonHtml(),
     PREVIEW_CREDIT: PREVIEW_CREDIT_LINE,
-    FOOTER_STAMP: `Built ${esc(stamp)} from ${stats.total - stats.deprecated} listed sources.`,
+    FOOTER_STAMP: `Built ${esc(stamp)} from ${stats.listed} listed sources.`,
   };
   let html = fs.readFileSync(path.join(PUBLIC, "index.html"), "utf8");
   const missingMarkers = Object.keys(substitutions).filter((key) => !html.includes(`<!--${key}-->`));
@@ -722,7 +724,7 @@ function main() {
   writeOut("robots.txt", robotsTxt(config.site));
   writeOut("opensearch.xml", opensearchXml(config.site));
   writeOut("404.html", notFoundHtml(config.site));
-  writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.total - stats.deprecated, hasCard }));
+  writeOut(path.join("freshness", "index.html"), freshnessPageHtml({ stats: fresh, site: config.site, stamp, total: stats.listed, hasCard }));
 
   const pages = writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, usedIn });
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });

@@ -3,7 +3,7 @@
  * Buckets come from verifiedAge, the function the homepage cards use, so the
  * summary and the cards cannot disagree. Pure: `now` is passed in.
  */
-import { baseHeadHtml, esc, freshnessPageUrl, VERIFIED_FRESH_DAYS, verifiedAge, siteHeaderHtml, siteFooterHtml } from "./shared.mjs";
+import { baseHeadHtml, esc, isListed, freshnessPageUrl, VERIFIED_FRESH_DAYS, verifiedAge, siteHeaderHtml, siteFooterHtml } from "./shared.mjs";
 
 const RECENT_DAYS = 30;
 const byName = (a, b) => a.entry.name.localeCompare(b.entry.name);
@@ -11,7 +11,7 @@ const dayWord = (n) => `${n} ${n === 1 ? "day" : "days"}`;
 
 export function freshnessStats(entries, now) {
   const rows = entries
-    .filter((e) => e.status !== "deprecated")
+    .filter(isListed)
     .map((entry) => ({ entry, ...verifiedAge(entry.verified, now) }));
   const count = (bucket) => rows.filter((r) => r.bucket === bucket).length;
   const dated = rows.filter((r) => r.days !== null).sort((a, b) => b.days - a.days || byName(a, b));
@@ -48,7 +48,7 @@ const NEW_DAYS = 30;
 export function newEntriesLineHtml(entries, stamp, { named = 5, sortHref = "?sort=added#catalog" } = {}) {
   const since = new Date(Date.parse(`${stamp}T00:00:00Z`) - NEW_DAYS * 86400000).toISOString().slice(0, 10);
   const fresh = entries
-    .filter((e) => e.status !== "deprecated" && e.added && e.added >= since)
+    .filter((e) => isListed(e) && e.added && e.added >= since)
     .sort((a, b) => b.added.localeCompare(a.added) || a.name.localeCompare(b.name));
   if (!fresh.length) return "";
   const links = fresh.slice(0, named).map((e) => `<a href="entry/${esc(e.id)}/">${esc(e.name)}</a>`);

@@ -3,7 +3,7 @@
  * for readers and sitemap.xml for crawlers. data.json stays the full
  * machine-readable catalog.
  */
-import { esc } from "./shared.mjs";
+import { esc, isListed } from "./shared.mjs";
 
 /**
  * The folders whose files get a page with a lastmod: catalog entries, stacks
@@ -149,7 +149,7 @@ export function atomFeed({ entries, site, generatedAt, limit = 40, kind = "added
   const feedTitle = category ? `${spec.title} in ${category.label}` : spec.title;
   const feedId = category ? `${base}/${file}` : `${base}/${kind === "added" ? "" : spec.file}`;
   const recent = entries
-    .filter((e) => (!category || e.category === category.id) && e.status !== "deprecated" && e[kind])
+    .filter((e) => (!category || e.category === category.id) && isListed(e) && e[kind])
     .sort((a, b) => String(b[kind]).localeCompare(String(a[kind])) || a.name.localeCompare(b.name))
     .slice(0, limit);
   const items = recent.map((e) => {

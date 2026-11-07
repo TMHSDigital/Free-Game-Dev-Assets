@@ -4,7 +4,7 @@
  * selection rule; site/reverify-batch.mjs does the file I/O.
  */
 
-import { VERIFIED_FRESH_DAYS } from "./shared.mjs";
+import { isListed, VERIFIED_FRESH_DAYS } from "./shared.mjs";
 
 /**
  * Days since a licence check before the entry is due again: 30 days inside
@@ -68,7 +68,7 @@ export function batchSizeNeeded(ages) {
  */
 export function pickBatch(entries, { now = Date.now(), dueDays = DUE_DAYS, size } = {}) {
   const live = entries
-    .filter((e) => e.status !== "deprecated")
+    .filter(isListed)
     .map((entry) => ({ entry, age: entry.verified ? ageDays(entry.verified, now) : null }))
     .sort((a, b) => (b.age ?? Infinity) - (a.age ?? Infinity) || a.entry.id.localeCompare(b.entry.id));
   const picked =

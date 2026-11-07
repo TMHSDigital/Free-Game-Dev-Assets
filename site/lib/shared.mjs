@@ -5,6 +5,13 @@
  * on cards, the words search answers to, and the camera-view filter option.
  * validate (V12), search, cards and the filter all read it from here.
  */
+/**
+ * Whether an entry is listed: shown in search, counted in "N sources", fed
+ * to the exports and the link checks. Deprecated entries keep their pages
+ * but are not listed (#257). The one place the rule lives.
+ */
+export const isListed = (entry) => entry.status !== "deprecated";
+
 export const PERSPECTIVES = {
   top_down: { label: "top-down", search: "top-down", option: "Top-down, straight down" },
   // A 3/4 pack is what most people mean by a top-down RPG, so it answers "top down" too.
