@@ -64,6 +64,7 @@ you sell or redistribute the IR files as a standalone product.
 | [dailysounds](dailysounds.md) | DailySounds | custom | yes | needs-review |
 | [soundza](soundza.md) | Soundza | custom | yes | needs-review |
 | [sfxmint](sfxmint.md) | SFXMint | CC0 | yes | needs-review |
+| [yetiancai-cozy-ui-sfx-lite](yetiancai-cozy-ui-sfx-lite.md) | Cozy UI SFX Free Lite (yetiancai) | custom | yes | needs-review |
 
 † Zapsplat's basic (free) tier requires attribution; Premium does not.
 
