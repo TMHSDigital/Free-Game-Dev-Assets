@@ -17,7 +17,7 @@
 - Every page must be complete without JavaScript; the build's `checkPages` must pass on every generated page.
 - Refinement preserves: existing tokens in `site/public/styles.css` (`--bg`, `--ink`, `--muted`, `--line`, `--surface`, `--accent`, `--warn`, `--danger`, `--font`, `--mono`, `--max`), the copy voice, and the "every licence read at the source" promise. No new colours outside the token set.
 - Thumbnails only for entries with `status: active` and a licence in the allowlist; never for `custom`, `varies`, `unknown`, `github.com` or `fonts.google.com` sources without an explicit `preview:` URL.
-- Before any UI edit (Tasks 4 to 7 and 9), read `C:\Users\16mat\.claude\skills\impeccable\reference\craft-floor.md`. After Task 9's build, run the detector once: `sh C:/Users/16mat/.claude/skills/impeccable/scripts/impeccable detect --json site/public/styles.css site/public/index.html site/lib/cards.mjs site/lib/entry-page.mjs site/lib/stack-page.mjs site/lib/category-page.mjs`.
+- Before any UI edit (Tasks 4 to 7 and 9), read `<skills dir>/impeccable/reference/craft-floor.md`. After Task 9's build, run the detector once: `sh <skills dir>/impeccable/scripts/impeccable detect --json site/public/styles.css site/public/index.html site/lib/cards.mjs site/lib/entry-page.mjs site/lib/stack-page.mjs site/lib/category-page.mjs`.
 - Commit after each task on branch `site-refresh`; commit messages end with `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`.
 
 ## Review Focus
@@ -167,12 +167,12 @@ ffmpeg -y -loglevel error -i <in> -frames:v 1 -vf "scale='min(640,iw)':-2" -c:v 
 
 - [ ] **Step 6: Smoke-test the script on two entries**
 
-Run: `node site/thumbs.mjs --only kenney-car-kit,kaykit-block-bits --report "C:\Users\16mat\AppData\Local\Temp\claude\E--Free-Game-Dev-Assets\926d9f61-c4d8-441c-ab73-6503b49d0158\scratchpad\thumbs-smoke.md"`
+Run: `node site/thumbs.mjs --only kenney-car-kit,kaykit-block-bits --report "<scratchpad>/thumbs-smoke.md"`
 Expected: two files under `site/public/thumbs/`, each under 60 KB, manifest with two records with width 640, `node site/validate.mjs` passes.
 
 - [ ] **Step 7: Run the first full batch**
 
-Run: `node site/thumbs.mjs --report "C:\Users\16mat\AppData\Local\Temp\claude\E--Free-Game-Dev-Assets\926d9f61-c4d8-441c-ab73-6503b49d0158\scratchpad\thumbs-first-batch.md"` (allow 10 minutes; run in the background and wait for the notification).
+Run: `node site/thumbs.mjs --report "<scratchpad>/thumbs-first-batch.md"` (allow 10 minutes; run in the background and wait for the notification).
 Expected: roughly 150 to 250 files, total under 8 MB (`du -sh site/public/thumbs`), validate passes. Note the failures list from the report in the commit body.
 
 - [ ] **Step 8: Add `"thumbs": "node site/thumbs.mjs"` to `package.json`, a commented `# preview: none` line to `catalog/TEMPLATE.md`, and a CONTRIBUTING section "Preview images"** stating: previews are the publisher's own `og:image`, fetched only for active entries whose licence is in the allowlist, resized and committed; a publisher can ask for removal by issue, which is done by setting `preview: none`; a maintainer may set `preview: <https url>` to a specific image they have checked is covered by the entry's licence.
@@ -214,7 +214,7 @@ has("page check: google fonts refused", checkPage('<html><head><title>x</title><
 Run: `node site/lib/lib.test.mjs`
 Expected: the three new assertions fail.
 
-- [ ] **Step 3: Download the fonts.** Write a throwaway script `C:\Users\16mat\AppData\Local\Temp\claude\E--Free-Game-Dev-Assets\926d9f61-c4d8-441c-ab73-6503b49d0158\scratchpad\fetch-fonts.mjs` (run with `node`, not pasted into Bash) that requests `https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap` with a Chrome User-Agent, parses each `@font-face` block whose `unicode-range` is the latin block (starts `U+0000-00FF`), downloads its `url(...)`, and saves to the names above. Write `site/public/fonts/README.md` (source: Google Fonts CSS API, families and weights, date, licence OFL 1.1) and `OFL.txt` (the SIL Open Font License 1.1 text from `https://openfontlicense.org/open-font-license-official-text/`, fetched by the same script).
+- [ ] **Step 3: Download the fonts.** Write a throwaway script `<scratchpad>/fetch-fonts.mjs` (run with `node`, not pasted into Bash) that requests `https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap` with a Chrome User-Agent, parses each `@font-face` block whose `unicode-range` is the latin block (starts `U+0000-00FF`), downloads its `url(...)`, and saves to the names above. Write `site/public/fonts/README.md` (source: Google Fonts CSS API, families and weights, date, licence OFL 1.1) and `OFL.txt` (the SIL Open Font License 1.1 text from `https://openfontlicense.org/open-font-license-official-text/`, fetched by the same script).
 Expected: seven `.woff2` files, each 10 to 40 KB.
 
 - [ ] **Step 4: Add `@font-face` rules** at the top of `site/public/styles.css`, one per file: `font-family: "Public Sans"` / `"IBM Plex Mono"`, matching `font-weight`/`font-style`, `font-display: swap`, `src: url("fonts/<name>.woff2") format("woff2")`, `unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`. Stylesheet URLs resolve against `styles.css`, so `fonts/` works from every page depth.
@@ -494,14 +494,14 @@ Expected: green; `site/dist/index.html` under 150 KB; `site/dist/data.js` presen
 
 - [ ] **Step 2: Detector**
 
-Run: `sh C:/Users/16mat/.claude/skills/impeccable/scripts/impeccable detect --json site/public/styles.css site/public/index.html site/lib/cards.mjs site/lib/entry-page.mjs site/lib/stack-page.mjs site/lib/category-page.mjs`
+Run: `sh <skills dir>/impeccable/scripts/impeccable detect --json site/public/styles.css site/public/index.html site/lib/cards.mjs site/lib/entry-page.mjs site/lib/stack-page.mjs site/lib/category-page.mjs`
 Expected: no findings beyond known false positives; fix real ones.
 
 - [ ] **Step 3: One batched screenshot round** (serve `site/dist` with `npx --yes serve site/dist` in the background): homepage 1280 and 390, dark mode 390, Tools in Cards view, a category page, an entry page with an image, an entry page without, the stack page; plus a no-JS check (`browser_evaluate` after blocking `app.js`, or simply load `index.html` from the file system) confirming six cards and a working "Show all" link. Record horizontal overflow (`scrollWidth`) at 390 for each page. Fix everything the round shows in one batch, confirm with at most one more round.
 
 - [ ] **Step 4: Lighthouse**
 
-Run: `npx --yes lighthouse http://localhost:3000/ --preset=perf --form-factor=mobile --screenEmulation.mobile --output=json --output-path="C:\Users\16mat\AppData\Local\Temp\claude\E--Free-Game-Dev-Assets\926d9f61-c4d8-441c-ab73-6503b49d0158\scratchpad\lh-after.json" --chrome-flags="--headless=new"` and read `categories.performance.score`, `audits["cumulative-layout-shift"].numericValue`, `audits["largest-contentful-paint"].displayValue` with a sandboxed node one-liner.
+Run: `npx --yes lighthouse http://localhost:3000/ --preset=perf --form-factor=mobile --screenEmulation.mobile --output=json --output-path="<scratchpad>/lh-after.json" --chrome-flags="--headless=new"` and read `categories.performance.score`, `audits["cumulative-layout-shift"].numericValue`, `audits["largest-contentful-paint"].displayValue` with a sandboxed node one-liner.
 Expected: performance ≥ 0.90, CLS < 0.05. Also run the default preset once for accessibility = 1.
 
 - [ ] **Step 5: Commit the fixes and open the PR**
