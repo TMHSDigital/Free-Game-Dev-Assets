@@ -155,6 +155,19 @@
   text-underline-offset: 0.2em;
 }
 
+/* In the top bar it is one more nav item, so it looks like the links
+   beside it. */
+.topnav .theme-toggle {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.topnav .theme-toggle:hover {
+  color: var(--ink);
+}
+
 
 *,
 *::before,
@@ -549,13 +562,22 @@ code {
   color: var(--muted);
 }
 
+/* Centred to close the page the way the hero opens it. The rule is inset
+   by the padding so it ends at the content edge. */
 .footer {
+  --pad-x: clamp(1rem, 3vw, 1.5rem);
   width: min(100%, var(--max));
   margin: 0 auto;
-  padding: 1.5rem clamp(1rem, 3vw, 1.5rem) 2.5rem;
-  border-top: 1px solid var(--line);
+  padding: 1.5rem var(--pad-x) 2.5rem;
+  background: linear-gradient(var(--line), var(--line)) top center / calc(100% - 2 * var(--pad-x)) 1px no-repeat;
   color: var(--muted);
   font-size: 0.9rem;
+  text-align: center;
+}
+
+.footer > p {
+  max-width: 44rem;
+  margin-inline: auto;
 }
 
 @media (max-width: 640px) {
@@ -574,7 +596,8 @@ code {
     gap: 0.5rem 0.8rem;
   }
 
-  .topnav a {
+  .topnav a,
+  .topnav .theme-toggle {
     font-size: 0.85rem;
   }
 
@@ -944,7 +967,8 @@ input:focus-visible,
 }
 
 .footer-sponsor {
-  margin: 0.75rem 0 0.5rem;
+  justify-content: center;
+  margin: 0.75rem auto 0.5rem;
 }
 
 .footer-stamp {
@@ -1036,6 +1060,13 @@ input:focus-visible,
 
 .group-count {
   font-variant-numeric: tabular-nums;
+}
+
+/* The category name leads; its count stays a muted aside. */
+.group-name {
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 /* Live count on each filter chip. Solid colours only: fading the text with
@@ -1301,6 +1332,11 @@ input:focus-visible,
   font: inherit;
   font-weight: 600;
   text-decoration: none;
+}
+
+/* A flex box drops the space between the arrow and the title. */
+.page-pager .btn-ghost {
+  gap: 0.45rem;
 }
 
 .page-actions .btn-ghost:hover,
@@ -2171,11 +2207,15 @@ input:focus-visible,
     white-space: nowrap;
   }
 
-  .topnav a {
+  .topnav a:not(.sponsor-button) {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
     padding: 0;
+  }
+
+  .topnav .sponsor-button {
+    min-height: 44px;
   }
 
   .nav-sponsor {
