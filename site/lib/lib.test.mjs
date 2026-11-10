@@ -890,6 +890,11 @@ eq("same .co.uk site is ok", classify("https://a.co.uk/x", 200, "https://www.a.c
 eq("github repo transfer is moved", classify("https://github.com/a/b", 200, "https://github.com/c/b").kind, "moved");
 eq("403 is blocked", classify("https://a.test/", 403, "https://a.test/").kind, "blocked");
 eq("404 is dead", classify("https://a.test/", 404, "https://a.test/").kind, "dead");
+eq("410 is dead", classify("https://a.test/", 410, "https://a.test/").kind, "dead");
+for (const status of [502, 503, 504]) {
+  eq(`${status} is unavailable, not dead`, classify("https://a.test/", status, "https://a.test/").kind, "unavailable");
+}
+eq("a 502 detail names the status", classify("https://a.test/", 502, "https://a.test/").detail, "HTTP 502");
 eq("report url is an inert code span", reportUrl("https://a.test/@x](y)`z"), "`https://a.test/@x](y)%60z`");
 
 // #64: one entry walker; hidden and scratch folders are not entries.

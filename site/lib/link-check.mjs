@@ -57,9 +57,17 @@ export function evidenceUrls(evidence) {
 /** owner/repo of a github.com URL, lowercased. A transferred repository redirects within github.com. */
 export const repoOf = (url) => new URL(url).pathname.split("/").slice(1, 3).join("/").toLowerCase();
 
+/**
+ * Gateway answers that say the host was unavailable at that moment, not that
+ * the page is gone. A weekly run that hits an outage must not list every entry
+ * on that host as dead (#275).
+ */
+const TRANSIENT_STATUSES = new Set([502, 503, 504]);
+
 /** What a finished request says about an entry. */
 export function classify(entryUrl, status, finalUrl) {
   if ([401, 403, 429].includes(status)) return { kind: "blocked", detail: `HTTP ${status}` };
+  if (TRANSIENT_STATUSES.has(status)) return { kind: "unavailable", detail: `HTTP ${status}` };
   if (status >= 400) return { kind: "dead", detail: `HTTP ${status}` };
   const from = siteOf(new URL(entryUrl).hostname);
   const to = siteOf(new URL(finalUrl).hostname);
