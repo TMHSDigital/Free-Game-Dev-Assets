@@ -912,6 +912,7 @@ await section("link-check transient classification (#275)", async () => {
 
 await section("link-check transient report (#275)", async () => {
   const { execFileSync } = await import("node:child_process");
+  const { pathToFileURL } = await import("node:url");
   const root = nodeFs.mkdtempSync(nodePath.join(nodeOs.tmpdir(), "fgda-links-"));
   try {
     // Run the real CLI against a tiny catalog, with all network I/O stubbed
@@ -951,7 +952,7 @@ await section("link-check transient report (#275)", async () => {
     const reportPath = nodePath.join(root, "report.md");
     const run = () => {
       nodeFs.writeFileSync(output, "");
-      execFileSync(process.execPath, ["--import", preload, nodePath.join(root, "site/check-links.mjs"), "--report", reportPath], {
+      execFileSync(process.execPath, ["--import", pathToFileURL(preload).href,nodePath.join(root, "site/check-links.mjs"), "--report", reportPath], {
         env: { ...process.env, GITHUB_OUTPUT: output, GITHUB_TOKEN: "" },
         stdio: ["ignore", "pipe", "pipe"], timeout: 10000,
       });
