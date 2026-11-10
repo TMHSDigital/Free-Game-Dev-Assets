@@ -60,6 +60,7 @@ export const repoOf = (url) => new URL(url).pathname.split("/").slice(1, 3).join
 /** What a finished request says about an entry. */
 export function classify(entryUrl, status, finalUrl) {
   if ([401, 403, 429].includes(status)) return { kind: "blocked", detail: `HTTP ${status}` };
+  if ([502, 503, 504].includes(status)) return { kind: "unavailable", detail: `HTTP ${status}` };
   if (status >= 400) return { kind: "dead", detail: `HTTP ${status}` };
   const from = siteOf(new URL(entryUrl).hostname);
   const to = siteOf(new URL(finalUrl).hostname);

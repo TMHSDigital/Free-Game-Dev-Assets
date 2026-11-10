@@ -3,7 +3,9 @@
  * Fetches every entry's `url` and reports the ones that need a person:
  *   node site/check-links.mjs [--report <file.md>] [--stale-days 365]
  *
- * - dead: 404/410, 5xx, DNS failure or timeout
+ * - dead: 404/410 and other HTTP errors, DNS failure or timeout
+ * - unavailable: 502/503/504, a temporary server failure; listed under
+ *   "Could not check", never counted as a problem
  * - moved: the final URL is on another domain, or another GitHub repository
  * - stale: `verified` is older than --stale-days (365 by default)
  * - blocked: 401/403/429, which is usually a site refusing robots rather
@@ -84,7 +86,7 @@ async function run(entries) {
         let r = await check(entries[i]);
         // One retry for anything that did not answer cleanly, except a full
         // 20 s timeout: a second one would cost a worker 40 s per dead host.
-        if (r.kind === "dead" && !r.timedOut) r = await check(entries[i]);
+        if ((r.kind === "dead" || r.kind === "unavailable") && !r.timedOut) r = await check(entries[i]);
         // A refusal is not retried, and the checker never poses as a browser:
         // a host that refuses scripts goes on the manual list (config.json).
         results[i] = r;
@@ -118,11 +120,13 @@ if (staleArg.error) {
 const staleDays = staleArg.days;
 const entries = loadEntries().filter(isListed);
 const results = await run(entries);
-// Licence pages quoted in Evidence or linked in Notes, each fetched once (#89, #289). Only a page that
-// is gone is reported; a refusal says nothing about the licence.
+// Licence pages quoted in Evidence or linked in Notes, each fetched once (#89, #289).
+// Only a page that is gone counts as a problem; a refusal says nothing about the licence.
+// Temporary server errors are listed under "Could not check".
 const pageJobs = [...new Map(entries.flatMap((e) => e.licencePages.map((url) => [url, { id: e.id, rel: e.rel, url }]))).values()];
 const pageResults = await run(pageJobs);
-const deadPages = pageJobs.map((j, i) => ({ ...j, ...pageResults[i] })).filter((r) => r.kind === "dead");
+const pageRows = pageJobs.map((j, i) => ({ ...j, ...pageResults[i] }));
+const deadPages = pageRows.filter((r) => r.kind === "dead");
 const { mismatches: maintenance, skipped } = await checkMaintenance(entries);
 const cutoff = new Date(Date.now() - staleDays * 86400000).toISOString().slice(0, 10);
 const rows = entries.map((e, i) => ({ ...e, ...results[i] }));
@@ -132,6 +136,8 @@ const line = (r) => `- [ ] [\`${r.id}\`](${REPO}/blob/main/${r.rel}): ${reportUr
 
 const dead = pick("dead");
 const moved = pick("moved");
+const unavailable = [...pick("unavailable"), ...pageRows.filter((r) => r.kind === "unavailable")];
+const unchecked = [...unavailable, ...skipped];
 const refused = pick("blocked");
 const blocked = refused.filter((r) => !manualHostReason(r.url, MANUAL_HOSTS));
 const byHand = refused.filter((r) => manualHostReason(r.url, MANUAL_HOSTS));
@@ -162,10 +168,12 @@ const report = [
   "",
   ...(maintenance.length ? maintenance.map(line) : ["None."]),
   "",
-  // API trouble is the checker's problem, not the catalog's: listed, not counted.
-  `### Could not check (${skipped.length} skipped)`,
+  // Temporary server and API trouble: listed, not counted as catalog problems.
+  `### Could not check (${unchecked.length} skipped)`,
   "",
-  ...(skipped.length ? skipped.map(line) : ["None."]),
+  "Temporary server errors and GitHub API failures are not counted as problems.",
+  "",
+  ...(unchecked.length ? unchecked.map(line) : ["None."]),
   "",
   `<details><summary>Refused the checker (${blocked.length}): usually bot blocking, check by hand</summary>`,
   "",
@@ -185,4 +193,4 @@ const reportPath = flags.report ?? null;
 if (reportPath) fs.writeFileSync(reportPath, report);
 else process.stdout.write(report);
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `problems=${problems}\n`);
-console.error(`${entries.length} checked: ${dead.length} dead, ${moved.length} moved, ${stale.length} stale, ${maintenance.length} maintenance, ${deadPages.length} dead licence pages, ${blocked.length} blocked, ${byHand.length} checked by hand, ${skipped.length} API checks skipped`);
+console.error(`${entries.length} checked: ${dead.length} dead, ${moved.length} moved, ${stale.length} stale, ${maintenance.length} maintenance, ${deadPages.length} dead licence pages, ${unavailable.length} temporarily unavailable, ${blocked.length} blocked, ${byHand.length} checked by hand, ${skipped.length} API checks skipped`);
