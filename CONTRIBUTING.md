@@ -178,6 +178,7 @@ npm run serve    # preview at http://127.0.0.1:3000 (node site/serve.mjs, no dow
 │   ├── thumbs.mjs thumbs.json  fetches preview thumbnails, and their manifest
 │   ├── build.mjs config.json   static site generator and its settings
 │   ├── data.schema.json        JSON Schema for data.json (attached to each release)
+│   ├── plugin-feed.schema.json JSON Schema for plugin-feed.json, the editor-plugin feed
 │   ├── lib/                    page renderers and shared helpers, with lib.test.mjs
 │   └── public/                 page, styles and script
 └── package.json                npm scripts only; no dependencies

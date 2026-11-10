@@ -2686,6 +2686,36 @@ await section("entry badge (#117)", async () => {
   has("badge: html too", s.html, '<img src="https://x.test/s/badge/a.svg"');
 });
 
+/* plugin feed (#277) ------------------------------------------------------ */
+await section("plugin feed (#277)", async () => {
+  const { pluginEntry, pluginFeed, PLUGIN_FEED_FORMAT } = await import("./plugin-feed.mjs");
+  const { schemaErrors } = await import("./schema-check.mjs");
+  const fsm = (await import("node:fs")).default;
+  const schema = JSON.parse(fsm.readFileSync(new URL("../plugin-feed.schema.json", import.meta.url), "utf8"));
+  const base = { url: "https://x.test/", page: "entry/x/", category: "2d", license: "CC0", licenseFamily: "public-domain", attributionClass: "none", commercial: true, attribution_required: false, formats: ["PNG"], tags: [], status: "active", verified: "2026-11-01", summary: "s" };
+  const addon = pluginEntry({ ...base, id: "addon", name: "Addon", formats: ["godot-addon"], tags: ["godot"] });
+  eq("plugin feed: a Godot addon works only in Godot", addon.works_in.join(","), "godot");
+  eq("plugin feed: a Godot addon is made for Godot", addon.made_for.join(","), "godot");
+  const locked = pluginEntry({ ...base, id: "locked", name: "Locked", engine_lock: "unreal" });
+  eq("plugin feed: an Unreal-locked entry works only in Unreal", locked.works_in.join(","), "unreal");
+  const pack = pluginEntry({ ...base, id: "pack", name: "Pack", formats: ["PNG", "WAV"] });
+  eq("plugin feed: an engine-agnostic pack works everywhere", pack.works_in.join(","), "godot,unity,unreal");
+  eq("plugin feed: an engine-agnostic pack is made for none", pack.made_for.length, 0);
+  eq("plugin feed: no attribution_string, null credit line", pack.credit_line, null);
+  eq("plugin feed: optional fields are null, not missing", [pack.license_spdx, pack.publisher].join("|"), "|");
+  eq("plugin feed: attribution_string is the credit line", pluginEntry({ ...base, id: "c", name: "C", attribution_required: true, attribution_string: "Art by {author}" }).credit_line, "Art by {author}");
+  const feed = pluginFeed({
+    entries: [{ ...base, id: "a", name: "A" }, { ...base, id: "gone", name: "Gone", status: "deprecated" }],
+    version: "v2026.11.09", generatedAt: "2026-11-09T00:00:00Z", site: { siteUrl: "https://x.test/" },
+    categories: { "2d": { label: "2D" } }, licenseFamilies: { "public-domain": "Public domain" },
+  });
+  eq("plugin feed: deprecated entries are left out", feed.entries.map((e) => e.id).join(","), "a");
+  eq("plugin feed: format", feed.format, PLUGIN_FEED_FORMAT);
+  eq("plugin feed: category labels", feed.categories["2d"], "2D");
+  eq("plugin feed: matches its schema", schemaErrors(schema, feed).join("; "), "");
+  eq("plugin feed: schema refuses an unknown entry key", schemaErrors(schema, { ...feed, entries: [{ ...feed.entries[0], extra: 1 }] }).length > 0, true);
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

@@ -14,6 +14,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import zlib from "node:zlib";
 import { BROWSER_MODULES, FONT_FILES, PAGE_MODULES, isListed, esc, latestAllowedDate, OG_CARD_NAME, opensearchXml, siteFooterHtml, siteHeaderHtml } from "./lib/shared.mjs";
 import { bodySearchText } from "./lib/search.mjs";
 import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
@@ -29,6 +30,7 @@ import { entryPageHtml } from "./lib/entry-page.mjs";
 import { LinkError, makeLinkResolver, caseMismatch } from "./lib/links.mjs";
 import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, sitemapXml } from "./lib/exports.mjs";
 import { schemaErrors } from "./lib/schema-check.mjs";
+import { PLUGIN_FEED_BUDGET_GZIP_BYTES, pluginFeed } from "./lib/plugin-feed.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
 import { deprecationReason, MarkdownError, renderBlocks, renderInline, reviewQuestion, splitEntryBody } from "./lib/markdown.mjs";
 import { checkPage, pageIds } from "./lib/page-checks.mjs";
@@ -508,6 +510,22 @@ function main() {
     process.exit(1);
   }
 
+  // plugin-feed.json: the slim catalog editor plugins read (#277), held to its
+  // own schema the same way.
+  const pluginPayload = pluginFeed({ entries, version: payload.version, generatedAt, site: config.site, categories: config.categories, licenseFamilies: payload.filters.licenseFamilies });
+  const pluginSchema = JSON.parse(fs.readFileSync(path.join(__dirname, "plugin-feed.schema.json"), "utf8"));
+  const pluginProblems = schemaErrors(pluginSchema, JSON.parse(JSON.stringify(pluginPayload)));
+  if (pluginProblems.length) {
+    console.error(`Build failed: plugin-feed.json does not match site/plugin-feed.schema.json (${pluginProblems.length}):`);
+    for (const p of pluginProblems.slice(0, 20)) console.error(`  - ${p}`);
+    process.exit(1);
+  }
+  const pluginJson = JSON.stringify(pluginPayload);
+  const pluginGzip = zlib.gzipSync(pluginJson).length;
+  if (pluginGzip > PLUGIN_FEED_BUDGET_GZIP_BYTES) {
+    console.warn(`Warning: plugin-feed.json is ${Math.round(pluginGzip / 1024)} KB gzipped, over its ${PLUGIN_FEED_BUDGET_GZIP_BYTES / 1024} KB budget; trim a field before plugins feel it.`);
+  }
+
   // Empty dist rather than remove it: on Windows a server or editor holding the
   // folder open makes removing the folder itself fail with EPERM/EBUSY.
   ensureDir(DIST);
@@ -522,6 +540,8 @@ function main() {
   // the page itself loads data.js.
   writeOut("data.json", JSON.stringify(payload, null, 2));
   copyOut(path.join(__dirname, "data.schema.json"), "data.schema.json");
+  writeOut("plugin-feed.json", pluginJson);
+  copyOut(path.join(__dirname, "plugin-feed.schema.json"), "plugin-feed.schema.json");
   writeOut("data.js", `window.__CATALOG__ = ${JSON.stringify(payload)};\n`);
   // Entry bodies for full-text search, fetched on the first search, not on
   // page load (#92). Listed entries only, as search shows.

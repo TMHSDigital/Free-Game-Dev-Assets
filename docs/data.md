@@ -10,6 +10,8 @@ The catalog is published as machine-readable files on every deploy. The metadata
 | --- | --- |
 | [`data.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.json) | The whole catalog: every entry with its licence fields, plus categories, guides, stacks and counts |
 | [`data.schema.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.schema.json) | JSON Schema (draft 2020-12) for `data.json`. The build fails if `data.json` does not match it |
+| [`plugin-feed.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/plugin-feed.json) | A slim catalog for editor plugins, with engine fit already worked out. See [Plugin feed](#plugin-feed) |
+| [`plugin-feed.schema.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/plugin-feed.schema.json) | JSON Schema for `plugin-feed.json`. The build fails if the feed does not match it |
 | [`catalog.csv`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/catalog.csv) | One row per entry, for spreadsheets. Lists are joined with `; ` |
 | [`feed.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/feed.xml) | Atom feed of newly added sources |
 | [`reverified.xml`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/reverified.xml) | Atom feed of entries whose licence was most recently re-read |
@@ -50,6 +52,16 @@ Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CS
 Top-level keys are `generatedAt`, `version`, `site`, `categories`, `guides`, `stacks` (id and title of each starter stack), `featured`, `stats` (counts of total, active, needs-review, deprecated, listed (total less deprecated) and commercial entries), `filters` (`licenseFamilies` and `formatGroups`, the labels and groups behind the site's filters) and `entries`.
 
 Field names are stable, and [`data.schema.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.schema.json) states them as a JSON Schema the build enforces, so a field cannot be renamed or retyped without the schema changing too. New optional fields may appear, so ignore keys you do not know rather than failing on them (the schema itself rejects unknown keys, which is how the build catches drift).
+
+## Plugin feed
+
+`plugin-feed.json` is for editor plugins, starting with the [Godot plugin](https://github.com/TMHSDigital/free-game-dev-assets-godot). It lists the active and needs-review entries with the fields a plugin shows, filters and credits by. That makes it about a fifth of the size of `data.json` once gzipped.
+
+- **`format`** is a whole number that goes up only on a breaking change: a field removed, renamed or retyped. New fields can appear in any build, so ignore keys you do not know. A plugin that sees a higher `format` than it supports should keep its cached copy and ask the user to update.
+- **`version`** is the same `vYYYY.MM.DD` string as `data.json`.
+- **Optional fields** (`license_spdx`, `publisher`, `credit_line`, `verified`) are always present, as `null` when unset.
+- **`works_in`** lists the engines (`godot`, `unity`, `unreal`) an entry can be used in, based on its licence (`engine_lock`) and formats. **`made_for`** lists the engines it is built for (tagged, native format or locked to it); the site sorts these first when you pick an engine.
+- **`credit_line`** is the recorded credit line, with `{…}` fields the user fills in. With `attribution_required` and `attributionClass` (where `notice` means carry the licence text with the files), it is enough to write the same CREDITS file the site's shortlist exports.
 
 ## Examples
 

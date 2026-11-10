@@ -58,6 +58,7 @@ and tools that want the metadata without scraping the page. The page itself load
   coarse licence group the site filters on), and two derived sort fields, `attributionClass`
   and `licenseRank`.
 - Its shape is [`site/data.schema.json`](data.schema.json) (JSON Schema, published as `data.schema.json`); the build checks the payload against it with `lib/schema-check.mjs` and fails on any mismatch, so a renamed or retyped field must change the schema in the same commit.
+- `plugin-feed.json` is a slim copy for editor plugins (`lib/plugin-feed.mjs`, #277), held to `site/plugin-feed.schema.json` the same way; its `format` number goes up only on a breaking change (see `docs/data.md`).
 - It is regenerated from `catalog/` on every push to `main`. Field names are stable;
   new optional fields may appear. The licence facts are only as current as each entry's
   `verified` date: re-check the source before you ship on one.
@@ -173,8 +174,8 @@ moved source needs its licence re-read before its entry changes. Run it locally 
 The live Pages URL changes on every push, so a tool that bundles the catalog (a plugin,
 a notebook, a paper) could not pin a version. `.github/workflows/release.yml` runs on the
 first of each month and on demand: it builds, tags `vYYYY.MM.DD` and creates a GitHub
-release with `data.json`, `data.schema.json`, `catalog.csv`, `feed.xml`, `reverified.xml`
-and `llms.txt` attached, with the newest section of `docs/review-ledger.md` as the notes. Fetch a fixed
+release with `data.json`, `data.schema.json`, `plugin-feed.json`, `catalog.csv`, `feed.xml`,
+`reverified.xml` and `llms.txt` attached, with the newest section of `docs/review-ledger.md` as the notes. Fetch a fixed
 version by tag from the Releases page; `data.json` carries the same tag as `version`.
 The workflow passes the tag into the build as `CATALOG_VERSION`, fails if the built
 `data.json` disagrees, and commits the tag into `CITATION.cff` (`version`, `date-released`)

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tmhsdigital.github.io/Free-Game-Dev-Assets/plugin-feed.schema.json",
+  "title": "Free Game Dev Assets plugin feed",
+  "description": "The shape of plugin-feed.json, a slim catalog for editor plugins. The build checks the feed against this file. `format` goes up only on a breaking change; new fields may appear in any version and consumers should ignore keys they do not know. Optional fields are present as null when unset.",
+  "type": "object",
+  "required": ["format", "version", "generatedAt", "siteUrl", "categories", "licenseFamilies", "engines", "entries"],
+  "properties": {
+    "format": { "type": "integer", "minimum": 1, "description": "Breaking-change counter for this feed" },
+    "version": { "type": "string", "pattern": "^v\\d{4}\\.\\d{2}\\.\\d{2}", "description": "Catalog calendar version, the same as data.json" },
+    "generatedAt": { "type": "string" },
+    "siteUrl": { "type": "string", "pattern": "^https://" },
+    "categories": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Category id to label" },
+    "licenseFamilies": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Licence family id to label" },
+    "engines": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Engine id (as used in works_in / made_for) to label" },
+    "entries": { "type": "array", "items": { "$ref": "#/$defs/entry" } }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": [
+        "id", "name", "url", "page", "category", "license", "license_spdx", "licenseFamily", "attributionClass",
+        "commercial", "attribution_required", "credit_line", "formats", "tags", "publisher", "status", "verified",
+        "summary", "works_in", "made_for"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "pattern": "^https?://" },
+        "page": { "type": "string", "description": "Catalog page, relative to siteUrl" },
+        "category": { "type": "string" },
+        "license": { "type": "string" },
+        "license_spdx": { "type": ["string", "null"] },
+        "licenseFamily": { "type": "string" },
+        "attributionClass": { "type": "string", "description": "\"notice\": keep the licence text with the files; not a credits-screen line" },
+        "commercial": { "enum": [true, false, "varies", "unknown"] },
+        "attribution_required": { "enum": [true, false, "unknown"] },
+        "credit_line": { "type": ["string", "null"], "description": "Recorded credit line; {…} fields are filled in by the user" },
+        "formats": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "publisher": { "type": ["string", "null"] },
+        "status": { "enum": ["active", "needs-review"] },
+        "verified": { "type": ["string", "null"], "description": "YYYY-MM-DD the licence was last read at the source" },
+        "summary": { "type": "string" },
+        "works_in": { "type": "array", "items": { "enum": ["godot", "unity", "unreal"] } },
+        "made_for": { "type": "array", "items": { "enum": ["godot", "unity", "unreal"] } }
+      }
+    }
+  }
+}
