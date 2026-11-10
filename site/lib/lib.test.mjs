@@ -513,6 +513,8 @@ eq("bare url in bold", renderInline("**https://a.test/x**", passLink), '<strong>
 eq("bare url keeps a balanced paren", renderInline("see https://a.test/wiki/Foo_(bar).", passLink), 'see <a href="https://a.test/wiki/Foo_(bar)" rel="noopener noreferrer">https://a.test/wiki/Foo_(bar)</a>.');
 eq("angle-bracket autolink", renderInline("<https://a.test/x>", passLink), '<a href="https://a.test/x" rel="noopener noreferrer">https://a.test/x</a>');
 eq("bare url stops at a code span", renderInline("https://a.test/x`y`", passLink), '<a href="https://a.test/x" rel="noopener noreferrer">https://a.test/x</a><code>y</code>');
+eq("bare url stops at curly double quotes", renderInline("on “https://a.test/x”", passLink), 'on “<a href="https://a.test/x" rel="noopener noreferrer">https://a.test/x</a>”');
+eq("bare url stops at curly single quotes", renderInline("see ‘https://a.test/y’", passLink), 'see ‘<a href="https://a.test/y" rel="noopener noreferrer">https://a.test/y</a>’');
 throws("malformed escape is a link error", () => resolve("bad%E0.md"), 'link target "bad%E0.md" is malformed');
 eq("query on a relative link is kept", resolve("../../docs/provenance.md?plain=1").href, "https://github.com/o/r/blob/main/docs/provenance.md?plain=1");
 

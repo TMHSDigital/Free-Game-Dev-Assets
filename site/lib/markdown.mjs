@@ -105,8 +105,10 @@ export function renderInline(text, resolveLink) {
   s = s.replace(/<(https?:\/\/[^\s<>]+)>/g, (_, url) => keep(`<a href="${esc(url)}" rel="noopener noreferrer">${esc(url)}</a>`));
   // Bare URLs, leaving trailing sentence punctuation outside the link. A URL
   // stops at `*` (bold around it) and at a slot (a code span right after it),
-  // and keeps a closing paren that balances one inside it (Foo_(bar)).
-  s = s.replace(/https?:\/\/[^\s<>"*\u0000]+/g, (url) => {
+  // and keeps a closing paren that balances one inside it (Foo_(bar)). Curly
+  // quotes end it too, as they do in the link check: quoted licence text wraps
+  // a URL in them (#274, #285).
+  s = s.replace(/https?:\/\/[^\s<>"*‘’“”\u0000]+/g, (url) => {
     let [, core, tail] = url.match(/^(.*?)([.,;:!?)\]]*)$/);
     while (tail.startsWith(")") && count(core, "(") > count(core, ")")) {
       core += ")";
