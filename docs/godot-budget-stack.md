@@ -34,6 +34,7 @@ Paid Sonniss impact packs can fill metal/glass destruction gaps on a small budge
 | Heightmap terrain | [Terrain3D](../catalog/tools/terrain3d.md) (MIT). [Gaea Community Edition](../catalog/tools/gaea.md) is free for non-commercial use only (EULA section 1.4.1); a commercial game needs a paid edition |
 | Behavior trees | [Beehave](../catalog/tools/beehave.md) (MIT) |
 | Utility AI | [LimboAI](../catalog/tools/limboai.md) (MIT) |
+| This catalog inside the editor, and a `CREDITS.md` for what you use | [Free Game Dev Assets for Godot](../catalog/tools/free-game-dev-assets-godot.md) (MIT; made by this catalog's maintainers) |
 
 Godot **4.4+** ships **Jolt Physics** as a built-in option — prefer the engine docs over third-party mirrors when configuring.
 
@@ -46,3 +47,8 @@ Godot **4.4+** ships **Jolt Physics** as a built-in option — prefer the engine
 ## Hygiene
 
 See [`licenses.md`](licenses.md) and [`provenance.md`](provenance.md). Track source URL + license + download date for every pack that ships in a commercial build.
+
+In Godot, the [Free Game Dev Assets plugin](../catalog/tools/free-game-dev-assets-godot.md) does
+the tracking for catalog entries: add each one you use to the project's list, and **Export
+credits** writes a `CREDITS.md` with the same lines as the site's shortlist export, keeping your
+own text in the file.
