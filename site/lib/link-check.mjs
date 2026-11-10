@@ -46,7 +46,8 @@ export function manualHostReason(url, manualHosts = {}) {
  */
 export function evidenceUrls(evidence) {
   const out = [];
-  for (const m of String(evidence || "").matchAll(/https?:\/\/[^\s<>"'`)\]]+/g)) {
+  // Curly quotes end a URL too: quoted licence text uses them (#274).
+  for (const m of String(evidence || "").matchAll(/https?:\/\/[^\s<>"'`)\]‘’“”]+/g)) {
     const url = m[0].replace(/[.,;:!?]+$/, "");
     if (!out.includes(url)) out.push(url);
   }

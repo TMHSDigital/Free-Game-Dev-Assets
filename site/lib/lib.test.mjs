@@ -2410,6 +2410,7 @@ await section("link check: manual hosts and licence pages (#89)", async () => {
   const ev = "## Evidence\n- Licence page (2026-09-01): https://x.test/licence. \"CC0\"\n- Repo LICENSE (2026-09-01): <https://github.com/o/r/blob/main/LICENSE>\n- Again: https://x.test/licence";
   eq("evidence urls: in order, once, without trailing punctuation", evidenceUrls(ev).join(" "), "https://x.test/licence https://github.com/o/r/blob/main/LICENSE");
   eq("evidence urls: none", evidenceUrls(null).length, 0);
+  eq("evidence urls: a curly closing quote is not part of the URL (#274)", evidenceUrls("mention “Available on https://game-icons.net” and ‘https://y.test/a’").join(" "), "https://game-icons.net https://y.test/a");
   const fsm = (await import("node:fs")).default;
   const cfg = JSON.parse(fsm.readFileSync(new URL("../config.json", import.meta.url), "utf8"));
   for (const [host, reason] of Object.entries(cfg.linkCheck.manualHosts)) {
