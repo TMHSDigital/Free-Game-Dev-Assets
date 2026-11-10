@@ -2057,6 +2057,38 @@ input:focus-visible,
   margin-top: 1rem;
 }
 
+/* The hero reads as one centred block over the full-width filmstrip. The
+   rule under it (and over the footer) is inset by the padding so it ends at
+   the content edge, like every other rule on the page. */
+.hero {
+  --pad-x: clamp(1rem, 3vw, 1.5rem);
+  text-align: center;
+  border-bottom: 0;
+  background: linear-gradient(var(--line), var(--line)) bottom center / calc(100% - 2 * var(--pad-x)) 1px no-repeat;
+}
+
+.hero h1,
+.hero-lead,
+.hero-search,
+.hero .freshness-line {
+  margin-inline: auto;
+}
+
+/* One line per sentence, each balanced on its own, so a narrow screen
+   never strands the last word of the promise. */
+.hero-line {
+  display: block;
+  text-wrap: balance;
+}
+
+.hero-actions {
+  justify-content: center;
+}
+
+.hero .freshness-line {
+  max-width: 40rem;
+}
+
 .filmstrip {
   display: grid;
   grid-template-columns: repeat(9, minmax(0, 1fr));
