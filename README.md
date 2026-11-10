@@ -4,11 +4,11 @@
 
 **Free assets and tools for commercial games, with every licence read at its source.**
 
-[**Browse 419 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
+[**Browse 420 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
-[![Sources](https://img.shields.io/badge/sources-419-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-420-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 <br />
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
@@ -129,7 +129,7 @@ is a page on the site.
 
 ## Browse the catalog
 
-The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 419 entries
+The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 420 entries
 and filters them by category, licence, format, engine, commercial use, attribution, review
 status, 2D camera view and how recently the licence was read, sorted as you choose. Press `/` to search, and keep the sources you
 are weighing on a shortlist. Filtered views and individual entries have their own URLs, so you can send
@@ -138,7 +138,7 @@ someone exactly what you are looking at.
 | Category | Entries | Focus | Index |
 | :--- | ---: | :--- | :--- |
 | **3D** | 77 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
-| **Tools** | 121 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
+| **Tools** | 122 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 | **2D** | 60 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
 | **Audio** | 37 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Characters** | 30 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
@@ -176,6 +176,27 @@ repository is CC0; linked assets keep their own licences.
 
 A shortlist for Godot 4 is in [`docs/godot-budget-stack.md`](docs/godot-budget-stack.md); check an
 add-on's row in the [maintenance table](catalog/tools/README.md#godot-4-add-ons) before adopting it.
+
+### Spotlight: the catalog inside the Godot editor
+
+<table>
+  <tr>
+    <td width="40%" valign="top">
+      <a href="catalog/tools/free-game-dev-assets-godot.md"><img src="https://raw.githubusercontent.com/TMHSDigital/free-game-dev-assets-godot/v0.1.0/docs/images/dock.png" alt="The Free Assets dock in the Godot editor: a search for pixel, each row with its name, category and a licence badge" width="300" /></a>
+    </td>
+    <td valign="top">
+      <b><a href="https://github.com/TMHSDigital/free-game-dev-assets-godot">Free Game Dev Assets for Godot</a></b>, v0.1.0, MIT<br /><br />
+      Search and filter this catalog in a Godot 4 dock, with the licence on every row. Open an
+      entry's source or its page here, copy its credit line, and keep a list of what your project
+      uses: <b>Export credits</b> writes a <code>CREDITS.md</code> with the same lines as the
+      shortlist export, and keeps your own text in the file.<br /><br />
+      Godot 4.3 or later, GDScript only. It reads
+      <a href="https://tmhsdigital.github.io/Free-Game-Dev-Assets/plugin-feed.json"><code>plugin-feed.json</code></a>
+      at most once a day and never downloads assets. Made by this catalog's maintainers;
+      <a href="catalog/tools/free-game-dev-assets-godot.md">its entry</a> is held to the same rules as any other.
+    </td>
+  </tr>
+</table>
 
 ## Unreal Engine
 

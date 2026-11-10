@@ -167,6 +167,7 @@ engine version is. Maintenance was read from each repository on 2026-09-23.
 | Fracture a mesh into debris, inside Godot | [voronoishatter](voronoishatter.md) | 4.4+ (inferred) | v0.3, 2026-06 (pre-1.0) | 2026-06 |
 | Swap in pieces pre-broken in Blender | [godot-destruction-plugin](godot-destruction-plugin.md) | 4.x | v7.2, 2024-06 | **2024-06** |
 | Voxel destruction for MagicaVoxel models | [godot-voxel-destruction](godot-voxel-destruction.md) | 4.1+ | v1.2.0, 2026-08 | 2026-09 |
+| This catalog in the editor, and a `CREDITS.md` | [free-game-dev-assets-godot](free-game-dev-assets-godot.md) | 4.3+ | v0.1.0, 2026-11 (pre-1.0) | 2026-11 |
 
 Read the bold cells before depending on one:
 
@@ -214,6 +215,7 @@ only release are Godot 3.
 | [godot-voxel-destruction](godot-voxel-destruction.md) | Godot Voxel Destruction | MIT | active |
 | [func-godot](func-godot.md) | func_godot | MIT | active |
 | [folded-paper-engine](folded-paper-engine.md) | Folded Paper Engine | MIT | active |
+| [free-game-dev-assets-godot](free-game-dev-assets-godot.md) | Free Game Dev Assets for Godot | MIT | active |
 
 ## Unreal Engine plugins
 
