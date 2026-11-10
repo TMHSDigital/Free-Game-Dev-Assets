@@ -892,6 +892,104 @@ eq("403 is blocked", classify("https://a.test/", 403, "https://a.test/").kind, "
 eq("404 is dead", classify("https://a.test/", 404, "https://a.test/").kind, "dead");
 eq("report url is an inert code span", reportUrl("https://a.test/@x](y)`z"), "`https://a.test/@x](y)%60z`");
 
+/* transient link-check failures (#275) ------------------------------------ */
+await section("link-check transient classification (#275)", async () => {
+  const url = "https://assets.test/pack";
+  for (const status of [502, 503, 504]) {
+    const result = classify(url, status, url);
+    eq(`HTTP ${status} is unavailable`, result.kind, "unavailable");
+    eq(`HTTP ${status} keeps its status`, result.detail, `HTTP ${status}`);
+    eq(`HTTP ${status} after a redirect is still unavailable`, classify(url, status, "https://other.test/").kind, "unavailable");
+  }
+  for (const status of [400, 404, 405, 410, 422, 500, 501]) {
+    eq(`HTTP ${status} stays dead`, classify(url, status, url).kind, "dead");
+  }
+  for (const status of [401, 403, 429]) {
+    eq(`HTTP ${status} stays blocked`, classify(url, status, url).kind, "blocked");
+  }
+  eq("HTTP 200 stays ok", classify(url, 200, url).kind, "ok");
+});
+
+await section("link-check transient report (#275)", async () => {
+  const { execFileSync } = await import("node:child_process");
+  const root = nodeFs.mkdtempSync(nodePath.join(nodeOs.tmpdir(), "fgda-links-"));
+  try {
+    // Run the real CLI against a tiny catalog, with all network I/O stubbed
+    // in a child process so neither the real catalog nor other tests change.
+    nodeFs.cpSync(new URL("../", import.meta.url), nodePath.join(root, "site"), {
+      recursive: true,
+      filter: (src) => nodeFs.statSync(src).isDirectory()
+        ? !["public", "dist"].includes(nodePath.basename(src))
+        : src.endsWith(".mjs") || nodePath.basename(src) === "config.json",
+    });
+    const catalog = nodePath.join(root, "catalog");
+    nodeFs.mkdirSync(catalog);
+    const put = (id, url, evidence = "", heading = "Evidence") => nodeFs.writeFileSync(nodePath.join(catalog, `${id}.md`),
+      `---\nid: ${id}\nurl: ${url}\nstatus: active\n---\n\n## ${heading}\n\n${evidence}\n`);
+    for (const status of [502, 503, 504]) {
+      put(`source-${status}`, `https://assets.test/source-${status}`, `https://assets.test/licence-${status}`, status === 504 ? "Notes" : "Evidence");
+    }
+    put("recovered", "https://assets.test/recovered-503");
+    const preload = nodePath.join(root, "network.mjs");
+    nodeFs.writeFileSync(preload, `
+      import dns from "node:dns/promises";
+      import { syncBuiltinESMExports } from "node:module";
+      dns.lookup = async () => [{ address: "8.8.8.8", family: 4 }];
+      syncBuiltinESMExports();
+      const calls = new Map();
+      globalThis.fetch = async (url) => {
+        const u = new URL(url);
+        if (u.hostname === "api.github.com") return new Response(null, { status: 503 });
+        if (u.hostname !== "assets.test") throw new Error("unexpected test host");
+        const n = (calls.get(url) || 0) + 1;
+        calls.set(url, n);
+        const status = u.pathname.includes("recovered") && n > 1 ? 200 : Number(u.pathname.match(/(\\d+)$/)[1]);
+        return new Response(null, { status });
+      };
+    `);
+    const output = nodePath.join(root, "github-output");
+    const reportPath = nodePath.join(root, "report.md");
+    const run = () => {
+      nodeFs.writeFileSync(output, "");
+      execFileSync(process.execPath, ["--import", preload, nodePath.join(root, "site/check-links.mjs"), "--report", reportPath], {
+        env: { ...process.env, GITHUB_OUTPUT: output, GITHUB_TOKEN: "" },
+        stdio: ["ignore", "pipe", "pipe"], timeout: 10000,
+      });
+      return nodeFs.readFileSync(reportPath, "utf8");
+    };
+    const transient = run();
+    has("transient report: no dead sources", transient, "### Dead (0)");
+    has("transient report: no dead licence pages", transient, "### Pages quoted in Evidence or linked in Notes that no longer load (0)");
+    has("transient report: sources and licence pages could not be checked", transient, "### Could not check (6 skipped)");
+    const skipped = transient.split("### Could not check")[1] || "";
+    for (const status of [502, 503, 504]) {
+      has(`transient report: source HTTP ${status}`, skipped, `\`https://assets.test/source-${status}\` (HTTP ${status})`);
+      has(`transient report: licence HTTP ${status}`, skipped, `\`https://assets.test/licence-${status}\` (HTTP ${status})`);
+    }
+    lacks("transient report: a successful retry is not reported", transient, "https://assets.test/recovered-503");
+    eq("transient report: no sources need a look", nodeFs.readFileSync(output, "utf8"), "problems=0\n");
+
+    for (const status of [404, 410]) {
+      put(`dead-${status}`, `https://assets.test/source-${status}`, `https://assets.test/licence-${status}`);
+    }
+    put("api-failure", "https://github.com/o/r");
+    // GitHub's page is healthy, but its API is temporarily unavailable.
+    nodeFs.appendFileSync(preload, `
+      const stubFetch = globalThis.fetch;
+      globalThis.fetch = async (url) => new URL(url).hostname === "github.com"
+        ? new Response(null, { status: 200 }) : stubFetch(url);
+    `);
+    const mixed = run();
+    has("mixed report: 404/410 sources stay dead", mixed, "### Dead (2)");
+    has("mixed report: 404/410 licence pages stay dead", mixed, "### Pages quoted in Evidence or linked in Notes that no longer load (2)");
+    has("mixed report: transient answers and API failures stay visible", mixed, "### Could not check (7 skipped)");
+    has("mixed report: API failure keeps its reason", mixed, "GitHub API HTTP 503 for o/r");
+    eq("mixed report: only dead sources and licence pages need a look", nodeFs.readFileSync(output, "utf8"), "problems=4\n");
+  } finally {
+    nodeFs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
 // #64: one entry walker; hidden and scratch folders are not entries.
 const tmp = nodeFs.mkdtempSync(nodePath.join(nodeOs.tmpdir(), "entries-"));
 for (const rel of ["2d/a.md", "2d/README.md", "2d/TEMPLATE.md", "2d/.hidden/b.md", "_scratch/c.md", "3d/sub/d.md", "3d/e.txt"]) {
