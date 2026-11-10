@@ -698,7 +698,7 @@ has("recent window wording counts the build day", fp, "Checked on 2026-09-25 or 
 has("empty recent window wording counts the build day", freshnessPageHtml({ stats: freshnessStats([fe("a", "Alpha", 90)], fNow), site, stamp: "2026-09-25", total: 1, hasCard: false }), "None checked on 2026-09-25 or in the 30 days before it.");
 
 /* frontmatter -------------------------------------------------------------- */
-import { evidenceSection, parseFrontmatter, plainText, summaryFromBody } from "./frontmatter.mjs";
+import { evidenceSection, notesSection, parseFrontmatter, plainText, summaryFromBody } from "./frontmatter.mjs";
 import { latestAllowedDate } from "./shared.mjs";
 const fm = (lines, body = "Body.\n") => parseFrontmatter(`---\n${lines.join("\n")}\n---\n${body}`);
 eq("frontmatter: unterminated double quote is an error", fm(['name: "Foo']).errors.some((e) => e === 'line 2: "name" opens a double quote that is never closed'), true);
@@ -780,6 +780,8 @@ has("frontmatter flags a list item cut at a hashtag", fm(["id: a", "tags:", "  -
 has("frontmatter flags a list item that is only a hashtag", fm(["id: a", "tags:", "  - #gamedev"]).errors.join(), "line 4: list item is empty");
 eq("frontmatter keeps a commented list item", JSON.stringify(fm(["id: a", "tags:", "  - foo # a note", '  - "bar #baz"']).meta.tags), JSON.stringify(["foo", "bar #baz"]));
 eq("evidence stops at the next heading, whatever its letter", evidenceSection("## Evidence\n\n- e (2026-01-01)\n\n## Extras\n\n- x"), "## Evidence\n\n- e (2026-01-01)\n");
+eq("notes section stops at Evidence (#289)", notesSection("Intro\n\n## Notes\n\n- [LICENSE](https://x.test/LICENSE)\n\n## Evidence\n\n- e"), "## Notes\n\n- [LICENSE](https://x.test/LICENSE)\n");
+eq("notes section: none", notesSection("Intro\n\n## Evidence\n\n- e"), null);
 eq("summary keeps underscores", summaryFromBody("Split by Rig_Medium and **KHR_draco**.\n\n## Notes"), "Split by Rig_Medium and KHR_draco.");
 eq("summary keeps C# and link text", summaryFromBody("# T\n\nA [C#](x.md) library, `code`, *em*."), "A C# library, code, em.");
 eq("plain text undoes escapes", plainText("A \\*literal\\* & <b>"), "A *literal* & <b>");

@@ -173,14 +173,20 @@ export function parseFrontmatter(text) {
   return { meta, body: match[2] || "", errors };
 }
 
-/** The `## Evidence` section of an entry body, up to the next `## ` heading, or null. */
-export function evidenceSection(body) {
-  const idx = body.search(/^## Evidence\s*$/m);
+/** The `## <heading>` section of an entry body, up to the next `## ` heading, or null. */
+function bodySection(body, heading) {
+  const idx = body.search(new RegExp(`^## ${heading}\\s*$`, "m"));
   if (idx === -1) return null;
   const rest = body.slice(idx);
-  const next = rest.search(/\n## (?!Evidence\s*$)/m);
+  const next = rest.search(new RegExp(`\\n## (?!${heading}\\s*$)`, "m"));
   return next === -1 ? rest : rest.slice(0, next);
 }
+
+/** The `## Evidence` section of an entry body, up to the next `## ` heading, or null. */
+export const evidenceSection = (body) => bodySection(body, "Evidence");
+
+/** The `## Notes` section of an entry body, up to the next `## ` heading, or null. */
+export const notesSection = (body) => bodySection(body, "Notes");
 
 const ENTITIES = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'" };
 

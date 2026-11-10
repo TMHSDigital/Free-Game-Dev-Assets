@@ -29,7 +29,7 @@ import { isListed } from "./lib/shared.mjs";
 import { normalizeEntry } from "./lib/entry-fields.mjs";
 import { cliArgs } from "./lib/cli.mjs";
 import { checkMaintenanceRepos, classify, evidenceUrls, manualHostReason, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
-import { evidenceSection } from "./lib/frontmatter.mjs";
+import { evidenceSection, notesSection } from "./lib/frontmatter.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -50,8 +50,11 @@ function loadEntries() {
   for (const r of readCatalog(CATALOG, { root: ROOT })) {
     if (!usableRecord(r) || !r.parsed.meta.url) continue;
     const { id, url, verified, status, maintenance = null } = normalizeEntry(r.parsed.meta, r.rel);
-    // The licence pages the Evidence quotes, other than the entry's own url.
-    const licencePages = evidenceUrls(evidenceSection(r.parsed.body)).filter((u) => u !== url);
+    // The licence pages the Evidence quotes and the Notes link, other than the
+    // entry's own url. Notes carry licence-file links too, and those rot when a
+    // repository renames its LICENSE (#289).
+    const linked = `${evidenceSection(r.parsed.body) || ""}\n${notesSection(r.parsed.body) || ""}`;
+    const licencePages = evidenceUrls(linked).filter((u) => u !== url);
     out.push({ id, url, verified, status, maintenance, rel: r.rel, licencePages });
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
@@ -115,7 +118,7 @@ if (staleArg.error) {
 const staleDays = staleArg.days;
 const entries = loadEntries().filter(isListed);
 const results = await run(entries);
-// Licence pages quoted in Evidence, each fetched once (#89). Only a page that
+// Licence pages quoted in Evidence or linked in Notes, each fetched once (#89, #289). Only a page that
 // is gone is reported; a refusal says nothing about the licence.
 const pageJobs = [...new Map(entries.flatMap((e) => e.licencePages.map((url) => [url, { id: e.id, rel: e.rel, url }]))).values()];
 const pageResults = await run(pageJobs);
@@ -147,7 +150,7 @@ const report = [
   "",
   ...(moved.length ? moved.map(line) : ["None."]),
   "",
-  `### Licence pages quoted in Evidence that no longer load (${deadPages.length})`,
+  `### Pages quoted in Evidence or linked in Notes that no longer load (${deadPages.length})`,
   "",
   ...(deadPages.length ? deadPages.map(line) : ["None."]),
   "",
