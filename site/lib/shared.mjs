@@ -161,6 +161,8 @@ export function clipText(text, max) {
 /** Search-result limits (Google truncates around these). */
 export const SEO_TITLE_MAX = 60;
 export const SEO_DESCRIPTION_MAX = 160;
+/** Fewer summary characters than this say nothing; the lead stands alone. */
+const SEO_SUMMARY_MIN = 20;
 
 /**
  * An entry page's `<title>`: "name · licence", the name alone when that is
@@ -221,7 +223,13 @@ export function seoDescription(entry, max = SEO_DESCRIPTION_MAX - 5, { scope = n
   const summary = String(entry.summary || "").trim();
   if (!summary) return clipText(lead, max);
   const first = summary.split(/(?<=[.!?])\s+/)[0];
-  return clipText(`${lead} ${first}`, max);
+  // Clip the summary to the room the lead leaves, not the joined string:
+  // clipping the whole would cut at the lead's own full stop and drop the
+  // summary entirely, leaving pages that share a licence with one description
+  // (#286).
+  const room = max - lead.length - 1;
+  if (room < SEO_SUMMARY_MIN) return clipText(lead, max);
+  return `${lead} ${clipText(first, room)}`;
 }
 
 /** The commercial-use colour an entry row carries (`--edge`). */

@@ -1668,6 +1668,12 @@ await section("engine scope and limits on entry pages (#173)", async () => {
   has("seo: limits lead the description", seoDescription({ ...base, limits: "No redistribution" }), "no credit needed. No redistribution. A thing.");
   has("seo: an engine lock reads as its badge", seoDescription({ ...base, engine_lock: "unreal" }), "no credit needed. UE only.");
   eq("seo: no scope, no limits, unchanged", seoDescription(base), "MIT, commercial use OK, no credit needed. A thing.");
+  // #286: a long first sentence is clipped, not dropped at the lead's full stop.
+  const long = { ...base, summary: "Behavior tree addon for Godot 4 that gives enemy and NPC logic a visible structure instead of a growing pile of state booleans. More." };
+  const d = seoDescription(long, undefined, { scope: "Godot" });
+  has("seo: a long summary keeps its start (#286)", d, "For Godot only. Behavior tree addon for Godot 4");
+  eq("seo: a clipped summary ends in an ellipsis (#286)", d.endsWith("…"), true);
+  eq("seo: a clipped summary still fits (#286)", d.length <= 155, true);
 });
 
 /* heading anchors: validator and guide renderer agree ---------------------- */
