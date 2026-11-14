@@ -64,5 +64,6 @@ Rocketbox, whose MIT licence requires the copyright notice to ship with your bui
 | [kenney-animated-characters](kenney-animated-characters.md) | Kenney Animated Characters | CC0 | yes | active |
 | [paragon-characters](paragon-characters.md) | Paragon Characters (Epic, on Fab) | custom | yes | needs-review |
 | [metahuman](metahuman.md) | MetaHuman | custom | yes | needs-review |
+| [csaf-psx-characters-sampler](csaf-psx-characters-sampler.md) | CSAF PSX Characters Sampler | custom | yes | needs-review |
 
 \* MPFB/MakeHuman: **core exports/assets CC0**; app/addon code AGPL/GPL. Avoid **MB-Lab** and CharMorph **`mb_*`** AGPL bases — [`docs/high-risk.md`](../../docs/high-risk.md).
