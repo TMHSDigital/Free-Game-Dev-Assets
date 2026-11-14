@@ -49,6 +49,7 @@ the same set.
 - [BitNuker Fantasy Environments Sampler](../catalog/2d/bitnuker-fantasy-environments-sampler.md)
 - [BitNuker Workshop Sampler](../catalog/2d/bitnuker-workshop-sampler.md)
 - [BudgetPixel Sound Effects](../catalog/audio/budgetpixel-sfx.md)
+- [CSAF PSX Characters Sampler](../catalog/characters/csaf-psx-characters-sampler.md)
 - [SFXMint](../catalog/audio/sfxmint.md)
 - [Soundza](../catalog/audio/soundza.md)
 

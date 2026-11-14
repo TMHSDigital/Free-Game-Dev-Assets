@@ -8,7 +8,7 @@ One markdown file per source under a category folder. To add one, run `npm run n
 | Tools | 122 | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
 | 2D | 60 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
 | Audio | 37 | [`audio/`](audio/) | SFX, music, foley, IRs |
-| Characters | 30 | [`characters/`](characters/) | Generators & modular humanoids |
+| Characters | 31 | [`characters/`](characters/) | Generators & modular humanoids |
 | Fonts | 25 | [`fonts/`](fonts/) | OFL / commercial-ok type |
 | Environment | 20 | [`environment/`](environment/) | HDRI, terrain, geodata |
 | Shaders & VFX | 18 | [`shaders-vfx/`](shaders-vfx/) | Shaders, particle textures, FX |
