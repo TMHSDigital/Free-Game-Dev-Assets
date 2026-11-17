@@ -87,6 +87,26 @@ function send(req, res, status, file) {
   else fs.createReadStream(file).pipe(res);
 }
 
+/** An http.Server (not yet listening) that serves `root` as described above. */
+export function createSiteServer(root = DIST) {
+  return http.createServer((req, res) => {
+    if (req.method !== "GET" && req.method !== "HEAD") {
+      res.writeHead(405, { allow: "GET, HEAD" }).end();
+      return;
+    }
+    const location = slashRedirect(root, req.url || "/");
+    if (location) {
+      res.writeHead(301, { location, "cache-control": "no-store" }).end();
+      return;
+    }
+    const file = resolveRequest(root, req.url || "/");
+    if (file) return send(req, res, 200, file);
+    const notFound = path.join(root, "404.html");
+    if (fs.existsSync(notFound)) return send(req, res, 404, notFound);
+    res.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("Not found\n");
+  });
+}
+
 function main() {
   const { values: flags } = cliArgs({ port: { type: "string" } }, "node site/serve.mjs [--port <1-65535>]");
   const port = Number(flags.port ?? (process.env.PORT || 3000));
@@ -98,23 +118,7 @@ function main() {
     console.error("site/dist has no index.html; run npm run build first");
     process.exit(1);
   }
-  const server = http.createServer((req, res) => {
-    if (req.method !== "GET" && req.method !== "HEAD") {
-      res.writeHead(405, { allow: "GET, HEAD" }).end();
-      return;
-    }
-    const location = slashRedirect(DIST, req.url || "/");
-    if (location) {
-      res.writeHead(301, { location, "cache-control": "no-store" }).end();
-      return;
-    }
-    const file = resolveRequest(DIST, req.url || "/");
-    if (file) return send(req, res, 200, file);
-    const notFound = path.join(DIST, "404.html");
-    if (fs.existsSync(notFound)) return send(req, res, 404, notFound);
-    res.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("Not found\n");
-  });
-  server.listen(port, "127.0.0.1", () => console.log(`Serving site/dist at http://127.0.0.1:${port}/ (Ctrl+C to stop)`));
+  createSiteServer(DIST).listen(port, "127.0.0.1", () => console.log(`Serving site/dist at http://127.0.0.1:${port}/ (Ctrl+C to stop)`));
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

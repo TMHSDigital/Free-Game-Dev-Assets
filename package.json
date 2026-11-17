@@ -22,6 +22,7 @@
     "thumbs": "node site/thumbs.mjs",
     "reverify": "node site/reverify-batch.mjs",
     "serve": "node site/serve.mjs",
+    "og-card": "node site/og-card.mjs",
     "coverage": "node site/coverage.mjs"
   }
 }

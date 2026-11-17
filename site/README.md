@@ -196,9 +196,13 @@ with `node site/reverify-batch.mjs` (`npm run reverify`).
 
 `docs/images/readme/og-card.png` is a 1200x630 screenshot of this site's first screen.
 `build.mjs` copies it into `dist` and emits the `og:image` and `twitter:image` tags. The
-README shows it too, and the hero states the entry count, so retake it whenever that count
-changes (`npm run counts` reminds you) or the hero changes: `npm run build && npm run serve`,
-then capture the top 1200x630 of `http://127.0.0.1:3000/` in light mode, with no scrollbar.
+README shows it too, and the hero states the entry count, so it is retaken whenever the
+home page can change. `.github/workflows/og-card.yml` runs after each push to main that
+touches `catalog/`, `docs/`, `site/` or the top-level Markdown: it builds the site, captures
+the top 1200x630 of the home page in light mode with no scrollbar (`site/og-card.mjs`,
+headless Chrome), commits the PNG to main only when it differs, and redeploys Pages so the
+`og:image` matches. To retake it by hand: `npm run build && npm run og-card` (set
+`CHROME_PATH` if Chrome, Chromium or Edge is not found).
 
 ## Commands
 

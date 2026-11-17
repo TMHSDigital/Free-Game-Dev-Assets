@@ -1,0 +1,108 @@
+name: Retake the README screenshot
+
+# docs/images/readme/og-card.png is the README screenshot and the site's
+# og:image, and it shows the entry count. After a push to main that can change
+# the home page, build the site, capture its first 1200x630 (site/og-card.mjs,
+# headless Chrome), and commit the PNG to main only when it differs. Then
+# redeploy Pages, because a push made with GITHUB_TOKEN does not start
+# pages.yml, and the deployed og:image would otherwise lag a week.
+#
+# Two jobs, as in thumbs.yml. `capture` runs the build and a browser with a
+# read-only token and no stored git credentials. `publish` holds the write
+# token, runs no repository code, and takes only one checked PNG from the
+# first job's artifact.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "catalog/**"
+      - "docs/**"
+      - "site/**"
+      - "*.md"
+      - "!docs/images/readme/og-card.png"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer push supersedes a capture that has not landed yet.
+concurrency:
+  group: og-card
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          # The home page's "new in the last 30 days" reads git history, as in pages.yml.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Build
+        run: npm run build
+
+      - name: Capture
+        run: |
+          google-chrome --version
+          node site/og-card.mjs --out "$RUNNER_TEMP/og-card.png"
+
+      - name: Upload the capture
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: og-card
+          path: ${{ runner.temp }}/og-card.png
+          retention-days: 7
+          if-no-files-found: error
+
+  publish:
+    needs: capture
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download the capture
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: og-card
+          path: ${{ runner.temp }}/og-card
+
+      - name: Take only a 1200x630 PNG
+        env:
+          SRC: ${{ runner.temp }}/og-card/og-card.png
+        run: |
+          test -f "$SRC" && ! test -L "$SRC"
+          file -b "$SRC" | grep -Eq '^PNG image data, 1200 x 630,'
+          cp "$SRC" docs/images/readme/og-card.png
+
+      - name: Commit to main and redeploy Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- docs/images/readme/og-card.png; then
+            echo "Screenshot unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/images/readme/og-card.png
+          git commit -m "Retake the README screenshot for ${GITHUB_SHA::7}"
+          # main may have moved while the capture ran; the PNG is the only change.
+          git pull --rebase --quiet origin main
+          git push origin HEAD:main
+          gh workflow run pages.yml --ref main

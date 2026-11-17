@@ -2825,6 +2825,28 @@ await section("plugin feed (#277)", async () => {
   eq("plugin feed: schema refuses an unknown entry key", schemaErrors(schema, { ...feed, entries: [{ ...feed.entries[0], extra: 1 }] }).length > 0, true);
 });
 
+await section("og card capture", async () => {
+  const { chromeArgs, chromeCandidates, pngSize } = await import("./og-card.mjs");
+  const ihdr = Buffer.alloc(24);
+  Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(ihdr, 0);
+  ihdr.write("IHDR", 12, "latin1");
+  ihdr.writeUInt32BE(1200, 16);
+  ihdr.writeUInt32BE(630, 20);
+  eq("og card: PNG size read from IHDR", JSON.stringify(pngSize(ihdr)), '{"width":1200,"height":630}');
+  eq("og card: not a PNG", pngSize(Buffer.from("GIF89a-not-a-png-at-all!")), null);
+  eq("og card: too short", pngSize(ihdr.subarray(0, 20)), null);
+  eq("og card: not a buffer", pngSize("png"), null);
+  eq("og card: CHROME_PATH first", chromeCandidates("linux", { CHROME_PATH: "/x/chrome" })[0], "/x/chrome");
+  eq("og card: linux looks on PATH", chromeCandidates("linux", {}).includes("google-chrome"), true);
+  eq("og card: windows uses Program Files", chromeCandidates("win32", { PROGRAMFILES: "C:\\PF" })[0], "C:\\PF\\Google\\Chrome\\Application\\chrome.exe");
+  const args = chromeArgs({ url: "http://127.0.0.1:1/", out: "/t/o.png", profileDir: "/t/p" });
+  eq("og card: url is the last argument", args.at(-1), "http://127.0.0.1:1/");
+  eq("og card: 1200x630 window", args.includes("--window-size=1200,630"), true);
+  eq("og card: no scrollbar", args.includes("--hide-scrollbars"), true);
+  eq("og card: light mode", args.includes("--blink-settings=preferredColorScheme=1"), true);
+  eq("og card: fresh profile", args.includes("--user-data-dir=/t/p"), true);
+});
+
 /* report (keep last) ------------------------------------------------------ */
 if (failures.length) {
   console.error(`lib.test failed (${failures.length}):`);

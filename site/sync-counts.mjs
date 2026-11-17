@@ -50,8 +50,8 @@ update("README.md", (t) => syncRecentBlock(t, recentBlock(ledger)));
 changed = countsChanged;
 
 console.log(`${total} listed entries (${files} files, ${deprecated} deprecated): ${Object.entries(counts).map(([c, n]) => `${c} ${n}`).join(", ")}`);
-// The README screenshot (also the social card) shows the count as an image,
-// which no script can update.
+// The README screenshot (also the social card) shows the count as an image.
+// .github/workflows/og-card.yml retakes it after the push to main.
 if (changed) {
-  console.log("The count changed: retake docs/images/readme/og-card.png after the next build (site/README.md, \"Social preview\").");
+  console.log("The count changed: the og-card workflow retakes docs/images/readme/og-card.png after the push to main (or run npm run build && npm run og-card).");
 }
