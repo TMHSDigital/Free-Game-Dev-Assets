@@ -2,6 +2,7 @@
 id: ldtk
 name: LDtk
 url: https://ldtk.io
+publisher: Deepnight Games
 category: tools
 subcategories: [level-editor]
 license: MIT
@@ -24,6 +25,7 @@ status: active
 - Site: "Pay what you want" plus a free download; GitHub LICENSE is MIT
 - JSON `.ldtk` files import via community Godot/Unity loaders; pin a loader version to the editor version
 - Prefer [tiled](tiled.md) if you need the older TMX ecosystem
+- Publisher: the live ldtk.io page (read 2026-11-18) is signed Deepnight Games.
 
 ## Evidence
 

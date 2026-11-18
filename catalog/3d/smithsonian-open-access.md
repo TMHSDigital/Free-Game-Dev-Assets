@@ -3,6 +3,7 @@ id: smithsonian-open-access
 name: Smithsonian Open Access
 url: https://www.si.edu/openaccess
 license_url: https://www.si.edu/termsofuse
+publisher: Smithsonian
 category: 3d
 subcategories: [photogrammetry]
 license: CC0

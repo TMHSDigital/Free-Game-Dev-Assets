@@ -2,6 +2,7 @@
 id: tiled
 name: Tiled Map Editor
 url: https://www.mapeditor.org/
+publisher: Thorbjørn Lindeijer
 category: tools
 subcategories: [level-editor]
 license: GPL-2.0-or-later
@@ -25,6 +26,7 @@ Mature tilemap editor (isometric/hex/ortho). The editor (`src/tiled`) is GPL-2.0
 - `COPYING` table: plugins GPL; libtiled / tmxviewer / tmxrasterizer BSD-2-Clause
 - Complements [ldtk](ldtk.md) (MIT editor)
 - Version precision corrected 2026-09-22. The bundled `LICENSE.GPL` is simply the stock GPLv2 text; the editor's own source headers elect "or any later version", making it `GPL-2.0-or-later`.
+- Publisher: the live mapeditor.org home page (read 2026-11-18) names Thorbjørn Lindeijer as the developer whose Tiled work sponsors fund.
 
 ## Evidence
 

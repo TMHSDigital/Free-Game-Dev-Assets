@@ -2,6 +2,7 @@
 id: instant-meshes
 name: Instant Meshes
 url: https://github.com/wjakob/instant-meshes
+publisher: Wenzel Jakob
 category: tools
 subcategories: [pipeline]
 license: BSD-3-Clause
@@ -28,6 +29,7 @@ Interactive field-aligned remesher from Jakob / Tarini / Panozzo / Sorkine-Hornu
 - Workflow: orientation field, then position field, then Export mesh. Brush tools exist; they are easy to overfit
 - Modo 10.2+ ships a related auto-retopo. That is Foundry's product, not a second license for this repo
 - Checklist: license file visible, commercial redistribution of the *software* permitted with notice, no NC/ND, not a marketplace, ETH/authors are named, not blocklisted, tool vs export ownership unquoted
+- Publisher: the live LICENSE.txt (read 2026-11-18) reads "Copyright (c) 2015 Wenzel Jakob, Daniele Panozzo, Marco Tarini, and Olga Sorkine-Hornung".
 
 ## Evidence
 

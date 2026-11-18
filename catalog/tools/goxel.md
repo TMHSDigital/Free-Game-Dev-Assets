@@ -2,6 +2,7 @@
 id: goxel
 name: Goxel
 url: https://goxel.xyz
+publisher: Guillaume Chereau
 category: tools
 subcategories: [voxel]
 license: GPL-3.0-or-later
@@ -27,6 +28,7 @@ Open-source voxel editor (Windows, Mac, Linux, iOS, Android) with sparse unlimit
 - MagicaVoxel remains the faster painter for many people. Goxel is the one you can audit and rebuild
 - CLA required for contributions, in part so mobile builds can be non-GPL. Irrelevant unless you fork
 - Source headers elect "or any later version", so the SPDX identifier is `GPL-3.0-or-later`.
+- Publisher: the live README (read 2026-11-18) reads "By Guillaume Chereau".
 
 ## Evidence
 
