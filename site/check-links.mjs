@@ -30,7 +30,7 @@ import { safeFetch } from "./lib/safe-fetch.mjs";
 import { isListed } from "./lib/shared.mjs";
 import { normalizeEntry } from "./lib/entry-fields.mjs";
 import { cliArgs } from "./lib/cli.mjs";
-import { checkMaintenanceRepos, classify, evidenceUrls, manualHostReason, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
+import { checkMaintenanceRepos, classify, classifyLinkedPage, evidenceUrls, manualHostReason, reportUrl, staleDaysFrom } from "./lib/link-check.mjs";
 import { evidenceSection, notesSection } from "./lib/frontmatter.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -62,13 +62,13 @@ function loadEntries() {
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }
 
-async function check(entry) {
+async function check(entry, classifier = classify) {
   const opts = { headers: { "user-agent": UA, accept: "text/html,*/*;q=0.8" } };
   try {
     // Redirects are followed hop by hop, and none may reach a private address.
     const { response: res, finalUrl } = await safeFetch(entry.url, { ...opts, signal: AbortSignal.timeout(TIMEOUT_MS) }, { schemes: ["https:", "http:"], maxRedirects: 10 });
     res.body?.cancel().catch(() => {});
-    return classify(entry.url, res.status, finalUrl);
+    return classifier(entry.url, res.status, finalUrl);
   } catch (err) {
     const cause = err.cause?.code || err.name || "error";
     if (cause === "TimeoutError") return { kind: "dead", detail: `no answer in ${TIMEOUT_MS / 1000}s`, timedOut: true };
@@ -76,17 +76,17 @@ async function check(entry) {
   }
 }
 
-async function run(entries) {
+async function run(entries, classifier = classify) {
   const results = new Array(entries.length);
   let next = 0;
   await Promise.all(
     Array.from({ length: CONCURRENCY }, async () => {
       while (next < entries.length) {
         const i = next++;
-        let r = await check(entries[i]);
+        let r = await check(entries[i], classifier);
         // One retry for anything that did not answer cleanly, except a full
         // 20 s timeout: a second one would cost a worker 40 s per dead host.
-        if ((r.kind === "dead" || r.kind === "unavailable") && !r.timedOut) r = await check(entries[i]);
+        if ((r.kind === "dead" || r.kind === "unavailable") && !r.timedOut) r = await check(entries[i], classifier);
         // A refusal is not retried, and the checker never poses as a browser:
         // a host that refuses scripts goes on the manual list (config.json).
         results[i] = r;
@@ -124,7 +124,7 @@ const results = await run(entries);
 // Only a page that is gone counts as a problem; a refusal says nothing about the licence.
 // Temporary server errors are listed under "Could not check".
 const pageJobs = [...new Map(entries.flatMap((e) => e.licencePages.map((url) => [url, { id: e.id, rel: e.rel, url }]))).values()];
-const pageResults = await run(pageJobs);
+const pageResults = await run(pageJobs, classifyLinkedPage);
 const pageRows = pageJobs.map((j, i) => ({ ...j, ...pageResults[i] }));
 const deadPages = pageRows.filter((r) => r.kind === "dead");
 const { mismatches: maintenance, skipped } = await checkMaintenance(entries);

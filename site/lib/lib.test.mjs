@@ -841,7 +841,7 @@ await section("block at line 828", async () => {
 
 /* review fixes, 2026-10 (#59-#66) ------------------------------------------ */
 import { csvField } from "./exports.mjs";
-import { checkMaintenanceRepos, classify, reportUrl, siteOf, staleDaysFrom } from "./link-check.mjs";
+import { checkMaintenanceRepos, classify, classifyLinkedPage, reportUrl, siteOf, staleDaysFrom } from "./link-check.mjs";
 import { listEntryFiles } from "./entry-files.mjs";
 import nodeFs from "node:fs";
 import nodeOs from "node:os";
@@ -908,6 +908,17 @@ await section("link-check transient classification (#275)", async () => {
     eq(`HTTP ${status} stays blocked`, classify(url, status, url).kind, "blocked");
   }
   eq("HTTP 200 stays ok", classify(url, 200, url).kind, "ok");
+});
+
+/* linked API endpoints answer 405 (#305) ---------------------------------- */
+await section("link-check linked-page classification (#305)", async () => {
+  const api = "https://mcp.assets.test/mcp";
+  eq("HTTP 405 on a linked page is ok", classifyLinkedPage(api, 405, api).kind, "ok");
+  eq("HTTP 405 on an entry url stays dead", classify(api, 405, api).kind, "dead");
+  eq("HTTP 404 on a linked page is dead", classifyLinkedPage(api, 404, api).kind, "dead");
+  eq("HTTP 503 on a linked page is unavailable", classifyLinkedPage(api, 503, api).kind, "unavailable");
+  eq("HTTP 403 on a linked page is blocked", classifyLinkedPage(api, 403, api).kind, "blocked");
+  eq("HTTP 200 on a linked page is ok", classifyLinkedPage(api, 200, api).kind, "ok");
 });
 
 await section("link-check transient report (#275)", async () => {

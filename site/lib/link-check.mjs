@@ -72,6 +72,18 @@ export function classify(entryUrl, status, finalUrl) {
 }
 
 /**
+ * What a finished request says about a page linked from Evidence or Notes.
+ * Notes also link API endpoints (a REST base, an MCP server), and those answer
+ * a GET with 405: the server is up and the endpoint exists, it just takes
+ * another method, so it is not a dead page (#305). An entry's own `url` keeps
+ * the stricter `classify`, where 405 is dead.
+ */
+export function classifyLinkedPage(pageUrl, status, finalUrl) {
+  if (status === 405) return { kind: "ok" };
+  return classify(pageUrl, status, finalUrl);
+}
+
+/**
  * A URL as inert Markdown for the report issue: a code span, so a crafted URL
  * cannot add links, images or @mentions to the issue.
  */
