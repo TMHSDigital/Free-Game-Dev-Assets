@@ -29,7 +29,7 @@ export function categoryJsonLd({ cat, label, description, entries, site }) {
   };
 }
 
-export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCard, now }) {
+export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCard, now, alternatives = [] }) {
   const label = meta.label || cat;
   const blurb = meta.blurb || "";
   const url = categoryPageUrl(site, cat);
@@ -62,7 +62,8 @@ export function categoryPageHtml({ cat, meta, entries, site, stamp, total, hasCa
       <h1>${esc(label)}</h1>
       <p class="section-blurb">${esc(sources)} · ${esc(blurb)}</p>
       <p class="category-search"><a href="../../?cat=${encodeURIComponent(cat)}#catalog">Search and filter on the catalog page</a> · <a href="feed.xml">Feed of new ${esc(label)} sources</a></p>
-      <div class="entry-list" id="entry-grid">
+${alternatives.length ? `      <p class="category-search">Free alternatives: ${alternatives.map((a) => `<a href="../../alternatives/${esc(a.slug)}/">${esc(a.title.replace(/^Free alternatives to /, ""))}</a>`).join(" · ")}</p>
+` : ""}      <div class="entry-list" id="entry-grid">
 ${grid}
       </div>
     </main>

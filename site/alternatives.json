@@ -1,0 +1,52 @@
+{
+  "_comment": "\"Free alternatives to ...\" pages (#189), one per common search, written to dist/alternatives/<slug>/. Each lists the active entries that match: any id in `ids`, or an entry in one of `categories` that carries one of `tags` or `subcategories`, less any id in `exclude`. Name the paid product only to describe the search; `context` says what it is and what to look for here, with no claims about it. The build fails when a page matches fewer than three active entries.",
+  "pages": [
+    {
+      "slug": "synty-low-poly-packs",
+      "title": "Free alternatives to Synty low-poly packs",
+      "context": "Synty sells themed low-poly 3D packs (towns, dungeons, sci-fi) for game engines. These catalog sources offer free low-poly 3D kits and characters in a similar flat, stylised look; each card shows the licence as read at the source.",
+      "categories": ["3d", "characters"],
+      "tags": ["low-poly", "modular"],
+      "subcategories": ["modular"]
+    },
+    {
+      "slug": "mixamo",
+      "title": "Free alternatives to Mixamo",
+      "context": "Mixamo is Adobe's online service for rigging characters and applying motion-capture animations. These catalog sources are free animation libraries, motion capture and rigging tools you can download and use directly.",
+      "categories": ["animation", "tools"],
+      "tags": ["mocap", "retarget", "auto-rig", "locomotion"],
+      "subcategories": ["mocap", "retarget", "rigs"],
+      "exclude": ["mixamo"]
+    },
+    {
+      "slug": "quixel-megascans",
+      "title": "Free alternatives to Quixel Megascans",
+      "context": "Megascans is a library of scanned 3D assets and surfaces, now sold through Fab. These catalog sources offer free PBR textures, scanned models and HDRI skies.",
+      "categories": ["3d", "environment"],
+      "tags": ["pbr", "photogrammetry", "seamless"],
+      "subcategories": ["textures", "materials", "photogrammetry", "hdri"]
+    },
+    {
+      "slug": "aseprite",
+      "title": "Free alternatives to Aseprite",
+      "context": "Aseprite is a paid pixel-art and sprite animation editor. These catalog sources are free pixel-art editors and sprite tools; each tool's own licence is separate from the art you make with it.",
+      "categories": ["tools"],
+      "tags": ["sprite-editor"],
+      "subcategories": ["pixel"]
+    },
+    {
+      "slug": "substance-painter",
+      "title": "Free alternatives to Substance Painter",
+      "context": "Substance 3D Painter is Adobe's paid tool for painting textures onto 3D models. These catalog sources are free texturing, material and painting tools.",
+      "ids": ["material-maker", "materialize", "normalpainter", "xnormal", "krita", "blender"]
+    },
+    {
+      "slug": "stock-music-subscriptions",
+      "title": "Free alternatives to stock music subscriptions",
+      "context": "Subscription libraries license music for videos and games for a monthly fee. These catalog sources offer free music for games; several ask for credit, and each card shows what the licence asks.",
+      "categories": ["audio"],
+      "tags": ["chiptune", "loops"],
+      "subcategories": ["music", "loops", "jingles"]
+    }
+  ]
+}

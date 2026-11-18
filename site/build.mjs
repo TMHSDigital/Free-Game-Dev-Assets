@@ -21,6 +21,7 @@ import { filmstripHtml, groupedEntriesHtml } from "./lib/cards.mjs";
 import { guidePageHtml } from "./lib/guide-page.mjs";
 import { renderGuide } from "./lib/guide-render.mjs";
 import { categoryPageHtml } from "./lib/category-page.mjs";
+import { alternativesFor, alternativesForCategory, alternativesPageHtml, checkAlternatives } from "./lib/alternatives-page.mjs";
 import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
 import { summaryFromBody } from "./lib/frontmatter.mjs";
 import { readCatalog, idMatchesFile } from "./lib/entry-files.mjs";
@@ -54,6 +55,7 @@ const CONFIG_PATH = path.join(__dirname, "config.json");
 const VOCAB_PATH = path.join(__dirname, "license-vocabulary.json");
 const SPDX_ALLOWED_PATH = path.join(__dirname, "spdx-allowed.json");
 const FORMATS_PATH = path.join(__dirname, "format-vocabulary.json");
+const ALTERNATIVES_PATH = path.join(__dirname, "alternatives.json");
 const THUMBS_MANIFEST = path.join(__dirname, "thumbs.json");
 // Social preview image: a first-party screenshot of this site, kept with the
 // other first-party stills (the validator allows binaries there) and copied
@@ -337,16 +339,29 @@ function writeEntryPages({ entries, bodies, config, stats, stamp, hasCard, now, 
 }
 
 /** Writes dist/category/<id>/index.html for every configured category with a visible entry. */
-function writeCategoryPages({ entries, config, stats, stamp, hasCard, now }) {
+function writeCategoryPages({ entries, config, stats, stamp, hasCard, now, altDefs = [] }) {
   const written = [];
   for (const [cat, meta] of Object.entries(config.categories)) {
     const group = entries.filter((e) => e.category === cat);
     if (!group.length) continue;
     writeOut(
       path.join("category", cat, "index.html"),
-      categoryPageHtml({ cat, meta, entries: group, site: config.site, stamp, total: stats.listed, hasCard, now })
+      categoryPageHtml({ cat, meta, entries: group, site: config.site, stamp, total: stats.listed, hasCard, now, alternatives: alternativesForCategory(altDefs, entries, cat) })
     );
     written.push(`category/${cat}/index.html`);
+  }
+  return { written };
+}
+
+/** Writes dist/alternatives/<slug>/index.html for every page in alternatives.json (#189). */
+function writeAlternativesPages({ entries, config, stats, stamp, hasCard, now, altDefs }) {
+  const written = [];
+  for (const def of altDefs) {
+    writeOut(
+      path.join("alternatives", def.slug, "index.html"),
+      alternativesPageHtml({ def, entries: alternativesFor(def, entries), categories: config.categories, site: config.site, stamp, total: stats.listed, hasCard, now })
+    );
+    written.push(`alternatives/${def.slug}/index.html`);
   }
   return { written };
 }
@@ -605,7 +620,7 @@ function main() {
     .filter((cat) => visible.some((e) => e.category === cat))
     .map((id) => ({ id, lastmod: stamp }));
   const modified = lastCommitDates();
-  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified, categories: categoriesInSitemap, guides: config.guides }));
+  writeOut("sitemap.xml", sitemapXml({ site: config.site, entries: visible, stacks, stamp, modified, categories: categoriesInSitemap, guides: config.guides, alternatives: JSON.parse(fs.readFileSync(ALTERNATIVES_PATH, "utf8")).pages.map((p) => ({ slug: p.slug, lastmod: stamp })) }));
   writeOut("robots.txt", robotsTxt(config.site));
   // Installable, and the catalog works offline after one visit (#111).
   writeOut("manifest.webmanifest", `${JSON.stringify(webManifest(config.site), null, 2)}\n`);
@@ -628,7 +643,14 @@ function main() {
     writeOut(path.join("entry", entry.id, "changes.xml"), changesFeedXml({ entry, events: changes.get(entry.id) || [], siteUrl: config.site.siteUrl, generatedAt: payload.generatedAt }));
   }
   const stackPages = writeStackPages({ stacks, entries, config, stats, stamp, hasCard, now });
-  const categoryPages = writeCategoryPages({ entries: visible, config, stats, stamp, hasCard, now });
+  const altDefs = JSON.parse(fs.readFileSync(ALTERNATIVES_PATH, "utf8")).pages;
+  const altErrors = checkAlternatives(altDefs, visible, config.categories);
+  if (altErrors.length) {
+    console.error(`Build failed:\n  - ${altErrors.join("\n  - ")}`);
+    process.exit(1);
+  }
+  const categoryPages = writeCategoryPages({ entries: visible, config, stats, stamp, hasCard, now, altDefs });
+  const altPages = writeAlternativesPages({ entries: visible, config, stats, stamp, hasCard, now, altDefs });
   const guidePages = writeGuidePages({ entries, config, stats, stamp, hasCard, modified });
   const pageErrors = [
     ...stackErrors,
@@ -667,7 +689,7 @@ function main() {
     `Built ${entries.length} entries → site/dist (${stats.active} active, ${stats.commercialOk} commercial-ok, ${stats.commercialVaries} per-file)`
   );
   console.log(
-    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, ${guidePages.written.length} guide pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
+    `Prerendered ${visible.length} entry rows into index.html; wrote ${pages.written.length} entry pages, ${stackPages.written.length} stack pages, ${categoryPages.written.length} category pages, ${altPages.written.length} alternatives pages, ${guidePages.written.length} guide pages, sitemap.xml, robots.txt, 404.html, freshness/index.html`
   );
   console.log(`${writes()} of ${produced.size} output files changed${clean ? " (clean build)" : ""}; ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }

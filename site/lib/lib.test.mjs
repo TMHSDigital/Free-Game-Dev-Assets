@@ -2622,6 +2622,26 @@ await section("needs-review open question (#211)", async () => {
   eq("singleton report: counts unique tags", report.unique, 3);
   eq("singleton report: lists one-off tags", report.singles.join(), "b,c");
   eq("singleton report: flags a share over a fifth", report.over, true);
+  // #189: "free alternatives to ..." pages list active matches only.
+  const alt = await import("./alternatives-page.mjs");
+  const altEntries = [
+    { id: "a", name: "A", status: "active", category: "3d", tags: ["low-poly"], subcategories: [] },
+    { id: "b", name: "B", status: "needs-review", category: "3d", tags: ["low-poly"], subcategories: [] },
+    { id: "c", name: "C", status: "active", category: "audio", tags: ["low-poly"], subcategories: [] },
+    { id: "d", name: "D", status: "active", category: "3d", tags: [], subcategories: ["modular"] },
+    { id: "e", name: "E", status: "active", category: "tools", tags: [], subcategories: [] },
+    { id: "x", name: "X", status: "active", category: "3d", tags: ["low-poly"], subcategories: [] },
+  ];
+  const altDef = { slug: "s", title: "Free alternatives to S", context: "c", categories: ["3d"], tags: ["low-poly"], subcategories: ["modular"], ids: ["e"], exclude: ["x"] };
+  eq("alternatives: active matches by tag, subcategory and id, less exclude", alt.alternativesFor(altDef, altEntries).map((e) => e.id).join(), "a,d,e");
+  eq("alternatives: a valid page passes", alt.checkAlternatives([altDef], altEntries, { "3d": {}, tools: {} }).length, 0);
+  has("alternatives: too few matches fails", alt.checkAlternatives([{ ...altDef, ids: [], subcategories: [] }], altEntries, { "3d": {} }).join(), "needs at least 3");
+  has("alternatives: an unknown id fails", alt.checkAlternatives([{ ...altDef, ids: ["nope"] }], altEntries, { "3d": {} }).join(), 'unknown entry "nope"');
+  has("alternatives: a bad slug fails", alt.checkAlternatives([{ ...altDef, slug: "Bad Slug" }], altEntries, { "3d": {} }).join(), "kebab-case");
+  eq("alternatives: linked from the categories it lists", alt.alternativesForCategory([altDef], altEntries, "tools").length, 1);
+  eq("alternatives: not from a category it does not list", alt.alternativesForCategory([altDef], altEntries, "audio").length, 0);
+  const altSitemap = (await import("./exports.mjs")).sitemapXml({ site: { siteUrl: "https://x.test/s/" }, entries: [], stamp: "2026-11-18", alternatives: [{ slug: "s" }] });
+  has("alternatives: in the sitemap", altSitemap, "<loc>https://x.test/s/alternatives/s/</loc>");
   // #117: every entry page has its own social card.
   const { entryCardRef, entryCardHtml } = await import("./og-card.mjs");
   const { baseHeadHtml } = await import("./shared.mjs");
