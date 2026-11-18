@@ -2,6 +2,7 @@
 id: sunvox
 name: SunVox
 url: https://www.warmplace.ru/soft/sunvox/
+publisher: Alexander Zolotov
 category: tools
 subcategories: [music]
 license: custom

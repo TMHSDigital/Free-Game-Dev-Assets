@@ -2,6 +2,7 @@
 id: ue5coro
 name: UE5Coro
 url: https://github.com/landelare/ue5coro
+publisher: landelare
 category: tools
 subcategories: [unreal]
 license: BSD-3-Clause-Clear

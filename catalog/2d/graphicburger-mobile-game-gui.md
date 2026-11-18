@@ -2,6 +2,7 @@
 id: graphicburger-mobile-game-gui
 name: Mobile Game GUI
 url: https://graphicburger.com/mobile-game-gui/
+publisher: GraphicBurger
 category: 2d
 subcategories: [ui]
 license: custom

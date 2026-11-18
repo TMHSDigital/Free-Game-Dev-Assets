@@ -2,6 +2,7 @@
 id: quadriflow
 name: QuadriFlow
 url: https://github.com/hjwdzh/QuadriFlow
+publisher: hjwdzh
 category: tools
 subcategories: [pipeline]
 license: BSD-3-Clause

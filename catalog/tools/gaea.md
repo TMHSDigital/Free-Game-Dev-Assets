@@ -2,6 +2,7 @@
 id: gaea
 name: Gaea (Community Edition)
 url: https://quadspinner.com/download
+publisher: QuadSpinner
 category: tools
 subcategories: [terrain]
 license: custom

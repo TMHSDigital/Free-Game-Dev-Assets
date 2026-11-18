@@ -2,6 +2,7 @@
 id: barnabe-wild-lowpoly-rigged
 name: Barnabe Wild Low-poly Rigged Character
 url: https://barnabe-wild.itch.io/low-poly-rigged-character
+publisher: Barnabe Wild
 category: characters
 subcategories: [rigged]
 license: CC0

@@ -2,6 +2,7 @@
 id: espeak-ng
 name: eSpeak NG
 url: https://github.com/espeak-ng/espeak-ng
+publisher: eSpeak NG
 category: tools
 subcategories: [speech]
 license: GPL-3.0-or-later

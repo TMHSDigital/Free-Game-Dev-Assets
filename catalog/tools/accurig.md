@@ -3,6 +3,7 @@ id: accurig
 name: AccuRig (Reallusion)
 url: https://www.reallusion.com/auto-rig/accurig/
 license_url: https://actorcore.reallusion.com/learn-and-support/faq/accurig
+publisher: Reallusion
 category: tools
 subcategories: [rigs]
 license: custom

@@ -3,6 +3,7 @@ id: texturecan
 name: TextureCan
 url: https://www.texturecan.com/
 license_url: https://www.texturecan.com/terms/
+publisher: TextureCan
 category: 3d
 subcategories: [textures]
 license: CC0

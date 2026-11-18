@@ -2,6 +2,7 @@
 id: famistudio
 name: FamiStudio
 url: https://famistudio.org/
+publisher: BleuBleu
 category: tools
 subcategories: [music]
 license: MIT

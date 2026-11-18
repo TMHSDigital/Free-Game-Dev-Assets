@@ -2,6 +2,7 @@
 id: rokoko-vision
 name: Rokoko Vision (Create)
 url: https://www.rokoko.com/products/vision
+publisher: Rokoko
 category: animation
 subcategories: [mocap]
 license: custom

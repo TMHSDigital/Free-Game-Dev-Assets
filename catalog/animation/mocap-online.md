@@ -2,6 +2,7 @@
 id: mocap-online
 name: MoCap Online (free samples)
 url: https://mocaponline.com/collections/free-mocap-animations
+publisher: MoCap Online
 category: animation
 subcategories: [mocap]
 license: custom

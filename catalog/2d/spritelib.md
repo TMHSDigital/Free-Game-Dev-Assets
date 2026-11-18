@@ -2,6 +2,7 @@
 id: spritelib
 name: SpriteLib
 url: https://www.widgetworx.com/spritelib/
+publisher: WidgetWorx
 category: 2d
 subcategories: [sprites, pixel]
 license: CPL-1.0

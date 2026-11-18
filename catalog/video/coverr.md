@@ -3,6 +3,7 @@ id: coverr
 name: Coverr
 url: https://coverr.co/
 license_url: https://coverr.co/license
+publisher: Coverr
 category: video
 subcategories: [stock-footage]
 license: custom

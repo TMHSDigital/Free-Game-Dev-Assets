@@ -2,6 +2,7 @@
 id: gas-documentation
 name: GASDocumentation
 url: https://github.com/tranek/GASDocumentation
+publisher: Dan Kestranek
 category: tools
 subcategories: [unreal]
 license: MIT

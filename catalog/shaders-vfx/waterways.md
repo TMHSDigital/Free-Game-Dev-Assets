@@ -2,6 +2,7 @@
 id: waterways
 name: Waterways
 url: https://github.com/Arnklit/Waterways
+publisher: Kasper Arnklit Frandsen
 category: shaders-vfx
 subcategories: [water, godot]
 license: MIT

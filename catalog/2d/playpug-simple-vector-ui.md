@@ -2,6 +2,7 @@
 id: playpug-simple-vector-ui
 name: PlayPug Simple Vector UI Pack
 url: https://playpug.itch.io/simple-vector-ui-pack
+publisher: Playpug
 category: 2d
 subcategories: [ui]
 license: CC0

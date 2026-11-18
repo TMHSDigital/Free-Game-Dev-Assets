@@ -3,6 +3,7 @@ id: magicavoxel
 name: MagicaVoxel
 url: https://ephtracy.github.io/
 license_url: https://ephtracy.github.io/mv_main.html
+publisher: ephtracy
 category: 3d
 subcategories: [voxel]
 license: custom

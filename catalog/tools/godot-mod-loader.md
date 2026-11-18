@@ -3,6 +3,7 @@ id: godot-mod-loader
 name: Godot Mod Loader
 url: https://github.com/GodotModding/godot-mod-loader
 license_url: https://godotengine.org/asset-library/asset/1938
+publisher: GodotModding
 category: tools
 subcategories: [godot]
 license: CC0

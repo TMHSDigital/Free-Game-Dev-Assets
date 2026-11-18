@@ -2,6 +2,7 @@
 id: daltonlens
 name: DaltonLens
 url: https://github.com/DaltonLens/DaltonLens
+publisher: Nicolas Burrus
 category: tools
 subcategories: [accessibility]
 license: BSD-2-Clause

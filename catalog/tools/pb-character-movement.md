@@ -2,6 +2,7 @@
 id: pb-character-movement
 name: PBCharacterMovement
 url: https://github.com/ProjectBorealis/PBCharacterMovement
+publisher: Project Borealis
 category: tools
 subcategories: [unreal]
 license: MIT

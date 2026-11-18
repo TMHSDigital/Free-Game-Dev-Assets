@@ -2,6 +2,7 @@
 id: jfxr
 name: jfxr
 url: https://jfxr.frozenfractal.com/
+publisher: Thomas ten Cate
 category: tools
 subcategories: [sfx-generator]
 license: BSD-3-Clause

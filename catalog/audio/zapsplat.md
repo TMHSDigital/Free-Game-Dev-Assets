@@ -3,6 +3,7 @@ id: zapsplat
 name: Zapsplat
 url: https://www.zapsplat.com
 license_url: https://www.zapsplat.com/license-type/standard-license/
+publisher: ZapSplat
 category: audio
 subcategories: [sfx, ui]
 license: custom

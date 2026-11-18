@@ -2,6 +2,7 @@
 id: rx-pixel-editor
 name: rx
 url: https://rx.cloudhead.io/
+publisher: Alexis Sellier
 category: tools
 subcategories: [pixel]
 license: GPL-3.0-only

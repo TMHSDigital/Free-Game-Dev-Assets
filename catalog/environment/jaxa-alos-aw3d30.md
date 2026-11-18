@@ -3,6 +3,7 @@ id: jaxa-alos-aw3d30
 name: JAXA ALOS World 3D (AW3D30)
 url: https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm
 license_url: https://earth.jaxa.jp/en/data/policy/
+publisher: JAXA
 category: environment
 subcategories: [heightmaps, dem]
 license: custom

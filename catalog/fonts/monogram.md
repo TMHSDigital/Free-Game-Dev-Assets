@@ -2,6 +2,7 @@
 id: monogram
 name: Monogram
 url: https://datagoblin.itch.io/monogram
+publisher: datagoblin
 category: fonts
 subcategories: [pixel, mono]
 license: CC0

@@ -2,6 +2,7 @@
 id: source-sans-3
 name: Source Sans 3
 url: https://github.com/adobe-fonts/source-sans
+publisher: Adobe
 category: fonts
 subcategories: [sans, ui]
 license: SIL OFL
@@ -9,7 +10,7 @@ license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [OTF, TTF, WOFF]
-tags: [adobe, variable-font]
+tags: [variable-font]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

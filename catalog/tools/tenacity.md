@@ -2,6 +2,7 @@
 id: tenacity
 name: Tenacity
 url: https://codeberg.org/tenacityteam/tenacity
+publisher: Tenacity
 category: tools
 subcategories: [audio-editing]
 license: GPL-2.0-or-later

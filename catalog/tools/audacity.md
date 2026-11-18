@@ -2,6 +2,7 @@
 id: audacity
 name: Audacity
 url: https://www.audacityteam.org
+publisher: Muse Group
 category: tools
 subcategories: [audio-editing]
 license: GPL-3.0-only

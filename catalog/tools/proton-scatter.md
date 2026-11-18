@@ -2,6 +2,7 @@
 id: proton-scatter
 name: ProtonScatter
 url: https://github.com/HungryProton/scatter
+publisher: HungryProton
 category: tools
 subcategories: [godot]
 license: MIT

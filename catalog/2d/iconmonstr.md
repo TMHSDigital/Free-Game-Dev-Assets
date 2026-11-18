@@ -3,6 +3,7 @@ id: iconmonstr
 name: iconmonstr
 url: https://iconmonstr.com
 license_url: https://iconmonstr.com/license/
+publisher: Alexander Kahlkopf
 category: 2d
 subcategories: [icons, ui]
 license: custom

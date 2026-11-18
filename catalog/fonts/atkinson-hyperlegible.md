@@ -2,6 +2,7 @@
 id: atkinson-hyperlegible
 name: Atkinson Hyperlegible
 url: https://brailleinstitute.org/freefont
+publisher: Braille Institute
 category: fonts
 subcategories: [sans, accessibility, ui]
 license: SIL OFL

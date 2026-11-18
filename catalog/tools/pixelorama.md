@@ -2,6 +2,7 @@
 id: pixelorama
 name: Pixelorama
 url: https://orama-interactive.itch.io/pixelorama
+publisher: Orama Interactive
 category: tools
 subcategories: [pixel]
 license: MIT

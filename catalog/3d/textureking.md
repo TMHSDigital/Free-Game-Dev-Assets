@@ -3,6 +3,7 @@ id: textureking
 name: TextureKing
 url: https://www.textureking.com
 license_url: https://www.textureking.com/terms/
+publisher: TextureKing
 category: 3d
 subcategories: [textures]
 license: custom

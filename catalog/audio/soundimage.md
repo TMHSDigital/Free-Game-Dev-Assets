@@ -2,6 +2,7 @@
 id: soundimage
 name: Soundimage.org (Eric Matyas)
 url: https://soundimage.org
+publisher: Eric Matyas
 category: audio
 subcategories: [music, ambience]
 license: custom

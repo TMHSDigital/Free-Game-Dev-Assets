@@ -2,6 +2,7 @@
 id: multipaint
 name: Multipaint
 url: https://multipaint.kameli.net/
+publisher: Tero Heikkinen
 category: tools
 subcategories: [pixel]
 license: unknown

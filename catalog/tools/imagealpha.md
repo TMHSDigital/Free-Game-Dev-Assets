@@ -3,6 +3,7 @@ id: imagealpha
 name: ImageAlpha
 url: https://pngmini.com
 license_url: https://pngmini.com/
+publisher: Kornel Lesiński
 category: tools
 subcategories: [compression, pipeline]
 license: GPL-2.0-only

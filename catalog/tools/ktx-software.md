@@ -2,6 +2,7 @@
 id: ktx-software
 name: KTX-Software
 url: https://github.com/KhronosGroup/KTX-Software
+publisher: Khronos Group
 category: tools
 subcategories: [compression, textures]
 license: Apache-2.0

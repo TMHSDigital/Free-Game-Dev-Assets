@@ -2,6 +2,7 @@
 id: melotts
 name: MeloTTS
 url: https://github.com/myshell-ai/MeloTTS
+publisher: MyShell
 category: tools
 subcategories: [speech]
 license: MIT

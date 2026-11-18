@@ -2,6 +2,7 @@
 id: sharetextures
 name: ShareTextures
 url: https://www.sharetextures.com
+publisher: ShareTextures
 category: 3d
 subcategories: [textures]
 license: custom

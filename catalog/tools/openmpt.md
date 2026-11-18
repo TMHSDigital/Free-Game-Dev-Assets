@@ -2,6 +2,7 @@
 id: openmpt
 name: OpenMPT
 url: https://openmpt.org/
+publisher: OpenMPT
 category: tools
 subcategories: [music]
 license: BSD-3-Clause

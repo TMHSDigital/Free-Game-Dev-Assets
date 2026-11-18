@@ -2,6 +2,7 @@
 id: creature-2d-runtimes
 name: Creature 2D Runtimes (Godot)
 url: https://github.com/kestrelm/Creature_Godot
+publisher: Kestrel Moon Studios
 category: tools
 subcategories: [animation]
 license: Apache-2.0

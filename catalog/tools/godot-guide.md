@@ -2,6 +2,7 @@
 id: godot-guide
 name: G.U.I.D.E.
 url: https://github.com/godotneers/G.U.I.D.E
+publisher: godotneers
 category: tools
 subcategories: [godot, input]
 license: MIT

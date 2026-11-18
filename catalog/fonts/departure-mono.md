@@ -2,6 +2,7 @@
 id: departure-mono
 name: Departure Mono
 url: https://departuremono.com
+publisher: Helena Zhang
 category: fonts
 subcategories: [pixel, mono]
 license: SIL OFL

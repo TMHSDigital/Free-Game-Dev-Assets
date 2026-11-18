@@ -3,6 +3,7 @@ id: incompetech
 name: Incompetech (Kevin MacLeod)
 url: https://incompetech.com
 license_url: https://incompetech.com/music/royalty-free/faq.html
+publisher: Kevin MacLeod
 category: audio
 subcategories: [music]
 license: CC-BY-4.0

@@ -2,6 +2,7 @@
 id: free-game-dev-assets-godot
 name: Free Game Dev Assets for Godot
 url: https://github.com/TMHSDigital/free-game-dev-assets-godot
+publisher: TMHSDigital
 category: tools
 subcategories: [godot]
 license: MIT

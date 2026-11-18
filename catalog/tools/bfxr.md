@@ -2,6 +2,7 @@
 id: bfxr
 name: Bfxr
 url: https://www.bfxr.net
+publisher: Stephen Lavelle
 category: tools
 subcategories: [sfx-generator]
 license: MIT

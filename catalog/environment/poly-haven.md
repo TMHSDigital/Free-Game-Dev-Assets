@@ -2,6 +2,7 @@
 id: poly-haven
 name: Poly Haven
 url: https://polyhaven.com
+publisher: Poly Haven
 category: environment
 subcategories: [hdri]
 license: CC0

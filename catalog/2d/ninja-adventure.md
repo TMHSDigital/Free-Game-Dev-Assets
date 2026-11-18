@@ -2,6 +2,7 @@
 id: ninja-adventure
 name: Ninja Adventure
 url: https://pixel-boy.itch.io/ninja-adventure-asset-pack
+publisher: Pixel-Boy
 category: 2d
 subcategories: [sprites, tileset, pixel]
 license: CC0

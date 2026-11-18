@@ -2,6 +2,7 @@
 id: inter
 name: Inter
 url: https://rsms.me/inter/
+publisher: Rasmus Andersson
 category: fonts
 subcategories: [sans, ui]
 license: SIL OFL

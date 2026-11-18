@@ -2,6 +2,7 @@
 id: limboai
 name: LimboAI
 url: https://github.com/limbonaut/limboai
+publisher: Serhii Snitsaruk
 category: tools
 subcategories: [godot]
 license: MIT

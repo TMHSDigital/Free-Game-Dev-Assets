@@ -2,6 +2,7 @@
 id: nebula-forge
 name: Nebula Forge
 url: https://nebulakit.itch.io/nebula-forge
+publisher: nebulakit
 category: tools
 subcategories: [procedural]
 license: custom

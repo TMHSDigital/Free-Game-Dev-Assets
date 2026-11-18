@@ -2,6 +2,7 @@
 id: ultimate-retro-shader-collection
 name: Ultimate Retro Shader Collection
 url: https://github.com/Zorochase/ultimate-retro-shader-collection
+publisher: Zorochase
 category: shaders-vfx
 subcategories: [retro, post-process, godot]
 license: MIT

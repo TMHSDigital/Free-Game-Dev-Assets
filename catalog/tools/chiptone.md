@@ -2,6 +2,7 @@
 id: chiptone
 name: ChipTone
 url: https://sfbgames.itch.io/chiptone
+publisher: SFB Games
 category: tools
 subcategories: [sfx-generator]
 license: CC0

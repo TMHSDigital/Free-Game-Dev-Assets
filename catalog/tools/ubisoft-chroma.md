@@ -2,6 +2,7 @@
 id: ubisoft-chroma
 name: Ubisoft Chroma
 url: https://github.com/ubisoft/chroma
+publisher: Ubisoft
 category: tools
 subcategories: [accessibility]
 license: Apache-2.0

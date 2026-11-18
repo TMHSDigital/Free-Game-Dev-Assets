@@ -2,6 +2,7 @@
 id: furnace
 name: Furnace
 url: https://github.com/tildearrow/furnace
+publisher: tildearrow
 category: tools
 subcategories: [music]
 license: GPL-2.0-or-later

@@ -2,6 +2,7 @@
 id: meta-animated-drawings
 name: Meta Animated Drawings
 url: https://github.com/facebookresearch/AnimatedDrawings
+publisher: Meta
 category: animation
 subcategories: [2d]
 license: MIT

@@ -2,6 +2,7 @@
 id: gustavo-saraiva-city-parallax
 name: City Parallax Pixel Art (Gustavo Saraiva)
 url: https://opengameart.org/content/city-parallax-pixel-art
+publisher: Gustavo Saraiva
 category: 2d
 subcategories: [backgrounds, pixel]
 license: CC0

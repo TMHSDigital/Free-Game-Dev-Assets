@@ -2,6 +2,7 @@
 id: gameart2d-freebies
 name: GameArt2D freebies
 url: https://www.gameart2d.com/freebies.html
+publisher: GameArt2D
 category: 2d
 subcategories: [sprites, tileset, ui, platformer]
 license: CC0

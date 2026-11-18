@@ -2,6 +2,7 @@
 id: kawaii-physics
 name: Kawaii Physics
 url: https://github.com/pafuhana1213/KawaiiPhysics
+publisher: pafuhana1213
 category: tools
 subcategories: [unreal, animation]
 license: MIT

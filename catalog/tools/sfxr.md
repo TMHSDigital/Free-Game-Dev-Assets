@@ -2,6 +2,7 @@
 id: sfxr
 name: sfxr
 url: https://www.drpetter.se/project_sfxr.html
+publisher: DrPetter
 category: tools
 subcategories: [sfx-generator]
 license: MIT

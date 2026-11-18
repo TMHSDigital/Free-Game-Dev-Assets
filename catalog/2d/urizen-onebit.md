@@ -2,6 +2,7 @@
 id: urizen-onebit
 name: Urizen 1Bit Tileset
 url: https://vurmux.itch.io/urizen-onebit-tileset
+publisher: vurmux
 category: 2d
 subcategories: [tileset, sprites, pixel]
 license: CC0

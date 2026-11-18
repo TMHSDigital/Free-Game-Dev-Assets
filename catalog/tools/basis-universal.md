@@ -2,6 +2,7 @@
 id: basis-universal
 name: Basis Universal
 url: https://github.com/BinomialLLC/basis_universal
+publisher: Binomial
 category: tools
 subcategories: [compression, textures]
 license: Apache-2.0

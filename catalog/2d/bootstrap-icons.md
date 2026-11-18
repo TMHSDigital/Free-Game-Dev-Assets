@@ -2,6 +2,7 @@
 id: bootstrap-icons
 name: Bootstrap Icons
 url: https://icons.getbootstrap.com/
+publisher: The Bootstrap Authors
 category: 2d
 subcategories: [icons, ui]
 license: MIT

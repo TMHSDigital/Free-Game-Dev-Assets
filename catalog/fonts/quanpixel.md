@@ -2,6 +2,7 @@
 id: quanpixel
 name: QuanPixel
 url: https://diaowinner.itch.io/galmuri-extended
+publisher: Galmuri
 category: fonts
 subcategories: [pixel, cjk, display]
 license: SIL OFL

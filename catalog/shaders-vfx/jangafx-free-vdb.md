@@ -2,6 +2,7 @@
 id: jangafx-free-vdb
 name: JangaFX free EmberGen VDBs
 url: https://jangafx.com/software/embergen/download/free-vdb-animations/
+publisher: JangaFX
 category: shaders-vfx
 subcategories: [particles]
 license: CC0

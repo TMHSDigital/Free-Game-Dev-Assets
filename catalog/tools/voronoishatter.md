@@ -2,6 +2,7 @@
 id: voronoishatter
 name: VoronoiShatter
 url: https://github.com/robertvaradan/voronoishatter
+publisher: Robert Varadan
 category: tools
 subcategories: [godot, destruction]
 license: MIT

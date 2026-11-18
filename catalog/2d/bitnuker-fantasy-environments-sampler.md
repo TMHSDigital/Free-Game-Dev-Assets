@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 publisher: BitNuker
 formats: [PNG]
+grid_dimensions: 512x512
 tags: [ai-generated, fantasy, background, environment]
 added: 2026-10-23
 verified: 2026-10-23
@@ -25,6 +26,7 @@ Free 19-file pixel art environment sampler for fantasy games: four seamless grou
 - AI provenance: the art in this sampler was created with generative AI tools, then hand-selected, cleaned and assembled by the publisher (disclosed in the listing's "AI disclosure" section; see docs/ai-assets.md). The license text alone governs use.
 - Source: the publisher submitted this entry and says so in the pull request.
 - This entry covers the free sampler only. The publisher also sells paid full packs (Fantasy Environments Grounds, Fantasy Environments Skies & Horizons, Fantasy Environments Complete) that expand every group in this sampler; those paid packs are out of scope for this entry.
+- Grid: the live itch page (read 2026-11-18) says "Ground, water, and path tiles are 512x512 and seamless on both axes"; the skies are full-frame images, not tiles.
 
 ## Evidence
 

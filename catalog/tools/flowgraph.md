@@ -3,6 +3,7 @@ id: flowgraph
 name: Flow Graph
 url: https://github.com/MothCocoon/FlowGraph
 license_url: https://github.com/MothCocoon/FlowGraph/graphs/contributors
+publisher: Moth Cocoon
 category: tools
 subcategories: [unreal]
 license: MIT

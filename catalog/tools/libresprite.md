@@ -2,6 +2,7 @@
 id: libresprite
 name: LibreSprite
 url: https://github.com/LibreSprite/LibreSprite
+publisher: LibreSprite
 category: tools
 subcategories: [pixel]
 license: GPL-2.0-only

@@ -2,6 +2,7 @@
 id: phantom-camera
 name: Phantom Camera
 url: https://github.com/ramokz/phantom-camera
+publisher: ramokz
 category: tools
 subcategories: [godot]
 license: MIT

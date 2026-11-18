@@ -2,6 +2,7 @@
 id: godot-volumetric-cloud-demo
 name: Godot Volumetric Cloud Demo
 url: https://github.com/clayjohn/godot-volumetric-cloud-demo
+publisher: clayjohn
 category: shaders-vfx
 subcategories: [sky, godot]
 license: MIT

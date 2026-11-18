@@ -3,6 +3,7 @@ id: sonniss-gdc
 name: "Sonniss #GameAudioGDC Bundle"
 url: https://sonniss.com/gameaudiogdc/
 license_url: https://sonniss.com/gdc-bundle-license/
+publisher: Sonniss
 category: audio
 subcategories: [sfx, foley, ambience]
 license: custom

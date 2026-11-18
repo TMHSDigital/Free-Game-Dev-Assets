@@ -2,6 +2,7 @@
 id: tilesplit
 name: tilesplit
 url: https://github.com/morganholly/tilesplit
+publisher: Morgan Holly
 category: tools
 subcategories: [atlas, pipeline]
 license: MIT

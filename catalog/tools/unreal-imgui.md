@@ -2,6 +2,7 @@
 id: unreal-imgui
 name: UnrealImGui (IDI-Systems fork)
 url: https://github.com/IDI-Systems/UnrealImGui
+publisher: Sebastian Gross
 category: tools
 subcategories: [unreal, ui]
 license: MIT

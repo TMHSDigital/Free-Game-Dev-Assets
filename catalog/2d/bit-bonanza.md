@@ -2,6 +2,7 @@
 id: bit-bonanza
 name: Bit Bonanza
 url: https://v3x3d.itch.io/bit-bonanza
+publisher: v3x3d
 category: 2d
 subcategories: [sprites, icons, pixel]
 license: CC0

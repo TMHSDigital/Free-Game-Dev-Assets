@@ -3,6 +3,7 @@ id: truebones-zoo
 name: Truebones ZOO
 url: https://truebones.gumroad.com/l/skZMC
 license_url: https://truebones.gumroad.com/l/vlvPq
+publisher: Truebones
 category: animation
 subcategories: [mocap, creatures]
 license: custom

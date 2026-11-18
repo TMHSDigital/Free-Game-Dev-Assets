@@ -3,6 +3,7 @@ id: lucide-icons
 name: Lucide Icons
 url: https://lucide.dev/
 license_url: https://lucide.dev/license
+publisher: Lucide Contributors
 category: 2d
 subcategories: [icons, ui]
 license: ISC

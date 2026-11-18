@@ -2,6 +2,7 @@
 id: ibm-plex-sans
 name: IBM Plex Sans
 url: https://github.com/IBM/plex
+publisher: IBM
 category: fonts
 subcategories: [sans, ui]
 license: SIL OFL

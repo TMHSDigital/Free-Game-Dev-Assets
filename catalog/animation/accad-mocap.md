@@ -2,6 +2,7 @@
 id: accad-mocap
 name: ACCAD Open Motion Project
 url: https://accad.osu.edu/research/motion-lab/mocap-system-and-data
+publisher: ACCAD
 category: animation
 subcategories: [mocap]
 license: CC-BY-3.0

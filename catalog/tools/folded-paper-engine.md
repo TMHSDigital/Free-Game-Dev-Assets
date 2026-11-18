@@ -2,6 +2,7 @@
 id: folded-paper-engine
 name: Folded Paper Engine
 url: https://github.com/papercraftgames/folded-paper-engine
+publisher: Papercraft Games
 category: tools
 subcategories: [godot, level-editor]
 license: MIT

@@ -2,6 +2,7 @@
 id: open-hdri
 name: Open HDRI
 url: https://openhdri.org
+publisher: Grzegorz Wronkowski
 category: environment
 subcategories: [hdri]
 license: CC0

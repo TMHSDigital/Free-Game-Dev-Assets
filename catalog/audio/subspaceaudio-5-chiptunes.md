@@ -3,6 +3,7 @@ id: subspaceaudio-5-chiptunes
 name: 5 Chiptunes (Action), SubspaceAudio
 url: https://opengameart.org/content/5-chiptunes-action
 license_url: https://subspaceaudio.itch.io/indie-game-music-loops
+publisher: Juhani Junkala
 category: audio
 subcategories: [music]
 license: CC0

@@ -2,6 +2,7 @@
 id: unity-labs-vfx-flipbooks
 name: Unity Labs VFX flipbooks
 url: https://unity.com/blog/engine-platform/free-vfx-image-sequences-flipbooks
+publisher: Unity
 category: shaders-vfx
 subcategories: [particles, textures]
 license: CC0

@@ -2,6 +2,7 @@
 id: cgbookcase
 name: cgbookcase
 url: https://www.cgbookcase.com
+publisher: Dorian Zgraggen
 category: 3d
 subcategories: [textures, materials]
 license: CC0

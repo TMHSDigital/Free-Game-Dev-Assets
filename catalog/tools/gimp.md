@@ -2,6 +2,7 @@
 id: gimp
 name: GIMP
 url: https://www.gimp.org
+publisher: The GIMP Team
 category: tools
 subcategories: [painting]
 license: GPL-3.0-or-later

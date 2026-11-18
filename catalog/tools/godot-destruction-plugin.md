@@ -2,6 +2,7 @@
 id: godot-destruction-plugin
 name: Godot Destruction Plugin (Jummit)
 url: https://github.com/Jummit/godot-destruction-plugin
+publisher: Jummit
 category: tools
 subcategories: [godot, destruction]
 license: MIT

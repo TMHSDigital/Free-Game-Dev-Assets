@@ -2,6 +2,7 @@
 id: blockbench
 name: Blockbench
 url: https://www.blockbench.net
+publisher: JannisX11
 category: tools
 subcategories: [modeling, animation]
 license: GPL-3.0-only

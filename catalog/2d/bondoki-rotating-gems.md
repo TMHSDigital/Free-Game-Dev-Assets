@@ -2,6 +2,7 @@
 id: bondoki-rotating-gems
 name: Rotating Gems for Match-3 (Bondoki)
 url: https://opengameart.org/content/rotating-gems-for-match3
+publisher: Bondoki
 category: 2d
 subcategories: [sprites, puzzle]
 license: CC0

@@ -2,6 +2,7 @@
 id: graphicsgale
 name: GraphicsGale
 url: https://graphicsgale.com/us/
+publisher: HUMANBALANCE
 category: tools
 subcategories: [pixel]
 license: custom

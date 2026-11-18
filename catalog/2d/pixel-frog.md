@@ -2,6 +2,7 @@
 id: pixel-frog
 name: Pixel Frog
 url: https://pixelfrog-assets.itch.io/
+publisher: Pixel Frog
 category: 2d
 subcategories: [sprites, tileset, pixel, platformer]
 license: varies

@@ -2,6 +2,7 @@
 id: octave-ui-sounds
 name: Octave
 url: https://github.com/scopegate/octave
+publisher: Raised Beaches
 category: audio
 subcategories: [sfx, ui]
 license: custom

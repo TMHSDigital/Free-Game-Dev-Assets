@@ -3,6 +3,7 @@ id: penzilla
 name: Penzilla
 url: https://penzilla.itch.io
 license_url: https://penzilla.itch.io/hooded-protagonist
+publisher: Penzilla Design
 category: 2d
 subcategories: [sprites, ui, pixel, icons]
 license: custom

@@ -3,6 +3,7 @@ id: usgs-earth-explorer
 name: USGS EarthExplorer
 url: https://earthexplorer.usgs.gov/
 license_url: https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits
+publisher: USGS
 category: environment
 subcategories: [heightmaps, imagery, dem]
 license: public-domain

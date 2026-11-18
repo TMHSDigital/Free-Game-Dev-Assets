@@ -2,6 +2,7 @@
 id: godot-input-helper
 name: Godot Input Helper
 url: https://github.com/nathanhoad/godot_input_helper
+publisher: Nathan Hoad
 category: tools
 subcategories: [godot, input]
 license: MIT

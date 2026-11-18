@@ -2,6 +2,7 @@
 id: palette-extractor
 name: Palette Extractor (SpriteWright)
 url: https://pixelpixi.github.io/spritewright/palette-extractor/
+publisher: SpriteWright
 category: tools
 subcategories: [pixel]
 license: MIT

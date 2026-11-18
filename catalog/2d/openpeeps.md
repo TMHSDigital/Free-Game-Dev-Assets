@@ -2,6 +2,7 @@
 id: openpeeps
 name: Open Peeps
 url: https://www.openpeeps.com/
+publisher: Pablo Stanley
 category: 2d
 subcategories: [characters, ui]
 license: CC0

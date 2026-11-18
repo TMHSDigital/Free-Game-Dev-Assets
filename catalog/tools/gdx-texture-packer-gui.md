@@ -2,6 +2,7 @@
 id: gdx-texture-packer-gui
 name: GDX Texture Packer GUI
 url: https://github.com/crashinvaders/gdx-texture-packer-gui
+publisher: Crashinvaders
 category: tools
 subcategories: [atlas, pipeline]
 license: Apache-2.0

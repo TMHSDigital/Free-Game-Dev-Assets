@@ -2,6 +2,7 @@
 id: spritemate
 name: Spritemate
 url: https://www.spritemate.com/
+publisher: Ingo Hinterding
 category: tools
 subcategories: [pixel]
 license: MIT

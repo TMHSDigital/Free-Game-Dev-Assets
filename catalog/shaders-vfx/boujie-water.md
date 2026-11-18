@@ -2,6 +2,7 @@
 id: boujie-water
 name: Boujie Water Shader
 url: https://github.com/Chrisknyfe/boujie_water_shader
+publisher: Chrisknyfe
 category: shaders-vfx
 subcategories: [water, godot]
 license: MIT

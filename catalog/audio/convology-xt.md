@@ -2,6 +2,7 @@
 id: convology-xt
 name: Convology XT (Free Factory)
 url: https://impulserecord.com/convology-xt/
+publisher: Impulse Record
 category: audio
 subcategories: [impulse-responses, reverb]
 license: custom

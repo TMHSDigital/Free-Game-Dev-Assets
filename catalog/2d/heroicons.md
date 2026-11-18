@@ -2,6 +2,7 @@
 id: heroicons
 name: Heroicons
 url: https://heroicons.com/
+publisher: Tailwind Labs
 category: 2d
 subcategories: [icons, ui]
 license: MIT

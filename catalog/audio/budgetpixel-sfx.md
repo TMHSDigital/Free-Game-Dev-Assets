@@ -3,6 +3,7 @@ id: budgetpixel-sfx
 name: BudgetPixel Sound Effects
 url: https://budgetpixel.com/sfx
 license_url: https://budgetpixel.com/audio-license
+publisher: BudgetPixel
 category: audio
 subcategories: [sfx]
 license: CC-BY-4.0

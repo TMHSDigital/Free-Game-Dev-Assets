@@ -2,6 +2,7 @@
 id: 3dtexel
 name: 3DTexel
 url: https://3dtexel.com/free-library/
+publisher: 3DTexel
 category: 3d
 subcategories: [textures, materials, hdri]
 license: CC0

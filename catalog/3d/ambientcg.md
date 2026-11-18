@@ -2,6 +2,7 @@
 id: ambientcg
 name: ambientCG
 url: https://ambientcg.com
+publisher: ambientCG
 category: 3d
 subcategories: [textures, materials]
 license: CC0

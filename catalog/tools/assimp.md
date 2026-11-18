@@ -2,6 +2,7 @@
 id: assimp
 name: Open Asset Import Library (assimp)
 url: https://github.com/assimp/assimp
+publisher: assimp team
 category: tools
 subcategories: [pipeline, conversion]
 license: BSD-3-Clause

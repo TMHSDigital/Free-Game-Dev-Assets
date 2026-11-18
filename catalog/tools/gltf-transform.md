@@ -2,6 +2,7 @@
 id: gltf-transform
 name: glTF Transform
 url: https://gltf-transform.dev
+publisher: Don McCurdy
 category: tools
 subcategories: [pipeline, compression]
 license: MIT

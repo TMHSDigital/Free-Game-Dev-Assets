@@ -2,6 +2,7 @@
 id: scatter2d
 name: Scatter2D
 url: https://github.com/alex9978/scatter2d
+publisher: Alessandro Rasulo
 category: tools
 subcategories: [godot]
 license: MIT

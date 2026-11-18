@@ -2,6 +2,7 @@
 id: tilemancer
 name: Tilemancer
 url: https://led.itch.io/tilemancer
+publisher: led
 category: tools
 subcategories: [procedural]
 license: GPL-3.0-or-later

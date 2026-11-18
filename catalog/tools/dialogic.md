@@ -2,6 +2,7 @@
 id: dialogic
 name: Dialogic
 url: https://github.com/dialogic-godot/dialogic
+publisher: Dialogic
 category: tools
 subcategories: [godot, dialogue, ui]
 license: MIT

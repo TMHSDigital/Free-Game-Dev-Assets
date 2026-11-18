@@ -3,6 +3,7 @@ id: pixel-composer
 name: Pixel Composer
 url: https://github.com/Ttanasart-pt/Pixel-Composer
 license_url: https://makham.itch.io/pixel-composer
+publisher: MakhamDev
 category: tools
 subcategories: [pixel, procedural]
 license: MIT

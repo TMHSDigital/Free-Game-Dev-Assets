@@ -2,6 +2,7 @@
 id: pacdv
 name: PacDV Free Sound Effects
 url: https://www.pacdv.com/sounds/
+publisher: PacDV
 category: audio
 subcategories: [sfx, ui, ambience]
 license: custom

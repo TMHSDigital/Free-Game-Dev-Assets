@@ -2,6 +2,7 @@
 id: bosca-ceoil-blue
 name: Bosca Ceoil Blue
 url: https://yurisizov.itch.io/boscaceoil-blue
+publisher: Yuri Sizov
 category: tools
 subcategories: [music]
 license: MIT

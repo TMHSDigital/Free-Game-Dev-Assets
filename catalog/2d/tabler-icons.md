@@ -2,6 +2,7 @@
 id: tabler-icons
 name: Tabler Icons
 url: https://tabler.io/icons
+publisher: Paweł Kuna
 category: 2d
 subcategories: [icons, ui]
 license: MIT

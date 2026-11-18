@@ -2,6 +2,7 @@
 id: inkscape
 name: Inkscape
 url: https://inkscape.org
+publisher: Inkscape Project
 category: tools
 subcategories: [vectors, ui]
 license: GPL-3.0-or-later

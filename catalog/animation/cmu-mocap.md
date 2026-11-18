@@ -2,6 +2,7 @@
 id: cmu-mocap
 name: CMU Graphics Lab Motion Capture Database
 url: http://mocap.cs.cmu.edu
+publisher: Carnegie Mellon Graphics Lab
 category: animation
 subcategories: [mocap]
 license: custom

@@ -2,6 +2,7 @@
 id: beehave
 name: Beehave
 url: https://github.com/bitbrain/beehave
+publisher: bitbrain
 category: tools
 subcategories: [godot]
 license: MIT

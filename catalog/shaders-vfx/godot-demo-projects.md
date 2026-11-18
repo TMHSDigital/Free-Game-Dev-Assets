@@ -2,6 +2,7 @@
 id: godot-demo-projects
 name: Godot Demo Projects
 url: https://github.com/godotengine/godot-demo-projects
+publisher: Godot Engine
 category: shaders-vfx
 subcategories: [particles, shaders, godot]
 license: MIT

@@ -2,6 +2,7 @@
 id: tallbeard-abstraction-music-loop-bundle
 name: Abstraction Music Loop Bundle
 url: https://tallbeard.itch.io/music-loop-bundle
+publisher: Tallbeard
 category: audio
 subcategories: [music, loops]
 license: CC0

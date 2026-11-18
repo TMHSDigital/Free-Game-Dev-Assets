@@ -2,6 +2,7 @@
 id: etopo-2022
 name: ETOPO 2022 (NOAA)
 url: https://www.ncei.noaa.gov/products/etopo-global-relief-model
+publisher: NOAA
 category: environment
 subcategories: [heightmaps, dem, bathymetry]
 license: CC0

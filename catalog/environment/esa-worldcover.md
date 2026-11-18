@@ -2,6 +2,7 @@
 id: esa-worldcover
 name: ESA WorldCover
 url: https://esa-worldcover.org/en/data-access
+publisher: ESA
 category: environment
 subcategories: [geodata, landcover]
 license: CC-BY-4.0

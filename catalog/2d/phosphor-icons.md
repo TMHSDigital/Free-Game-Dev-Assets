@@ -2,6 +2,7 @@
 id: phosphor-icons
 name: Phosphor Icons
 url: https://phosphoricons.com/
+publisher: Phosphor Icons
 category: 2d
 subcategories: [icons, ui]
 license: MIT

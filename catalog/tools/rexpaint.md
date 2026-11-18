@@ -2,6 +2,7 @@
 id: rexpaint
 name: REXPaint
 url: https://www.gridsagegames.com/rexpaint/
+publisher: Grid Sage Games
 category: tools
 subcategories: [painting]
 license: custom

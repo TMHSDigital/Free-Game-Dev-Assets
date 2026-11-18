@@ -2,6 +2,7 @@
 id: copernicus-dem-glo30
 name: Copernicus DEM GLO-30
 url: https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM
+publisher: Copernicus
 category: environment
 subcategories: [heightmaps, dem]
 license: custom

@@ -2,6 +2,7 @@
 id: adventure-kid-irs
 name: Adventure Kid Reverb IRs (AKRT)
 url: https://www.adventurekid.se/akrt/free-reverb-impulse-responses/
+publisher: Adventure Kid Research
 category: audio
 subcategories: [impulse-responses, reverb]
 license: CC-BY-4.0

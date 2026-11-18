@@ -3,6 +3,7 @@ id: fesliyan-footsteps
 name: Fesliyan Studios Footsteps
 url: https://www.fesliyanstudios.com/royalty-free-sound-effects-download/footsteps-31
 license_url: https://www.fesliyanstudios.com/sound-effects-policy
+publisher: Fesliyan Studios
 category: audio
 subcategories: [sfx, footsteps]
 license: custom

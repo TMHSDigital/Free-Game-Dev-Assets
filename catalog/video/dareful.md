@@ -2,6 +2,7 @@
 id: dareful
 name: Dareful
 url: https://dareful.com/
+publisher: Joel Holland
 category: video
 subcategories: [stock-footage]
 license: CC-BY-4.0

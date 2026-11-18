@@ -2,6 +2,7 @@
 id: armm1998-zelda-like
 name: Zelda-like tilesets and sprites (ArMM1998)
 url: https://opengameart.org/content/zelda-like-tilesets-and-sprites
+publisher: ArMM1998
 category: 2d
 subcategories: [tileset, sprites, pixel]
 license: CC0

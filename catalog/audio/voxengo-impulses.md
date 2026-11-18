@@ -2,6 +2,7 @@
 id: voxengo-impulses
 name: Voxengo Free Impulse Responses
 url: https://www.voxengo.com/impulses/
+publisher: Voxengo
 category: audio
 subcategories: [impulse-responses, reverb]
 license: custom

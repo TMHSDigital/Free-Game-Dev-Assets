@@ -2,6 +2,7 @@
 id: godot-voxel-destruction
 name: Godot Voxel Destruction
 url: https://github.com/Terabase-Studios/Godot-Voxel-Destruction
+publisher: Terabase Studios
 category: tools
 subcategories: [godot, destruction, voxel]
 license: MIT

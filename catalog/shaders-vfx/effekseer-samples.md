@@ -2,6 +2,7 @@
 id: effekseer-samples
 name: Effekseer sample effects
 url: https://effekseer.github.io/en/contribute.html
+publisher: Effekseer
 category: shaders-vfx
 subcategories: [particles]
 license: CC0

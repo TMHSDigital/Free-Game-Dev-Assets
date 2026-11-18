@@ -2,6 +2,7 @@
 id: godot-psx-style-demo
 name: Godot PSX Style Demo
 url: https://github.com/MenacingMecha/godot-psx-style-demo
+publisher: MenacingMecha
 category: shaders-vfx
 subcategories: [retro, post-process, godot]
 license: MIT

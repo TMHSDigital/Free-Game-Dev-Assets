@@ -2,6 +2,7 @@
 id: echothief
 name: EchoThief Impulse Response Library
 url: https://www.echothief.com/
+publisher: Chris Warren
 category: audio
 subcategories: [impulse-responses, reverb]
 license: custom

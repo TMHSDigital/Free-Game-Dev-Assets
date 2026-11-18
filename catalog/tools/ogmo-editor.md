@@ -2,6 +2,7 @@
 id: ogmo-editor
 name: Ogmo Editor 3
 url: https://ogmo-editor-3.github.io/
+publisher: Noel Berry
 category: tools
 subcategories: [level-editor]
 license: MIT

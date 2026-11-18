@@ -2,6 +2,7 @@
 id: natural-earth
 name: Natural Earth
 url: https://www.naturalearthdata.com/
+publisher: Natural Earth
 category: environment
 subcategories: [geodata, maps]
 license: public-domain

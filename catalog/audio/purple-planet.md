@@ -2,6 +2,7 @@
 id: purple-planet
 name: Purple Planet Music
 url: https://www.purple-planet.com
+publisher: Purple Planet
 category: audio
 subcategories: [music]
 license: custom

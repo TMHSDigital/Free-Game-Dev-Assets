@@ -2,6 +2,7 @@
 id: filmmusic-ende
 name: FilmMusic / Sascha Ende (ENDE.APP)
 url: https://ende.app/en/standard-license
+publisher: Sascha Ende
 category: audio
 subcategories: [music]
 license: CC-BY-4.0

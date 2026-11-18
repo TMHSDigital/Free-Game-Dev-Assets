@@ -2,6 +2,7 @@
 id: opentoonz
 name: OpenToonz
 url: https://opentoonz.github.io/e/
+publisher: DWANGO
 category: tools
 subcategories: [animation]
 license: BSD-3-Clause

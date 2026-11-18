@@ -2,6 +2,7 @@
 id: beepbox
 name: BeepBox
 url: https://www.beepbox.co/
+publisher: John Nesky
 category: tools
 subcategories: [music]
 license: MIT

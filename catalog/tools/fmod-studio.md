@@ -2,6 +2,7 @@
 id: fmod-studio
 name: FMOD Studio
 url: https://www.fmod.com/licensing
+publisher: Firelight Technologies
 category: tools
 subcategories: [audio-middleware]
 license: custom

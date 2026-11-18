@@ -3,6 +3,7 @@ id: normalpainter
 name: NormalPainter
 url: https://winteralexander.itch.io/normalpainter
 license_url: https://github.com/WinterAlexander/NormalPainter
+publisher: Alexander Winter
 category: tools
 subcategories: [textures]
 license: MIT

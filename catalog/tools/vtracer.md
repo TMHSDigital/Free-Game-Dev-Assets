@@ -2,6 +2,7 @@
 id: vtracer
 name: VTracer
 url: https://github.com/visioncortex/vtracer
+publisher: Vision Cortex
 category: tools
 subcategories: [vectors, conversion]
 license: MIT

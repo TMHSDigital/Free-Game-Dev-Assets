@@ -2,6 +2,7 @@
 id: milkytracker
 name: MilkyTracker
 url: https://milkytracker.org/
+publisher: MilkyTracker
 category: tools
 subcategories: [music]
 license: GPL-3.0-or-later

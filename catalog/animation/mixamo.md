@@ -3,13 +3,14 @@ id: mixamo
 name: Mixamo
 url: https://www.mixamo.com
 license_url: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
+publisher: Adobe
 category: animation
 subcategories: [mocap, characters]
 license: custom
 commercial: true
 attribution_required: false
 formats: [FBX]
-tags: [adobe, humanoid]
+tags: [humanoid]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

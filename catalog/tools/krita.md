@@ -2,6 +2,7 @@
 id: krita
 name: Krita
 url: https://krita.org
+publisher: Krita Foundation
 category: tools
 subcategories: [painting]
 license: GPL-3.0-or-later

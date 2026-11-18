@@ -3,6 +3,7 @@ id: openstreetmap
 name: OpenStreetMap
 url: https://www.openstreetmap.org
 license_url: https://www.openstreetmap.org/copyright
+publisher: OpenStreetMap contributors
 category: environment
 subcategories: [geodata, maps]
 license: ODbL

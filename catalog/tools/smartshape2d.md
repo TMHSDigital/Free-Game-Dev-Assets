@@ -2,6 +2,7 @@
 id: smartshape2d
 name: SmartShape2D
 url: https://github.com/SirRamEsq/SmartShape2D
+publisher: Robert Morse
 category: tools
 subcategories: [godot, terrain]
 license: MIT

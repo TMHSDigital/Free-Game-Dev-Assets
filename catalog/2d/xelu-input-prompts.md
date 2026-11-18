@@ -2,6 +2,7 @@
 id: xelu-input-prompts
 name: Xelu's Free Controller & Keyboard Prompts
 url: https://thoseawesomeguys.com/prompts/
+publisher: Those Awesome Guys
 category: 2d
 subcategories: [ui, input]
 license: CC0
