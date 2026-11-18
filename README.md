@@ -222,7 +222,7 @@ publishing a broken catalog. Among other things, it checks that:
 
 The checks themselves are tested against known-bad fixtures in
 [`site/checks.test.mjs`](site/checks.test.mjs). Every review pass, and every correction it
-made, is recorded in [`docs/review-ledger.md`](docs/review-ledger.md).
+made, is recorded in [`docs/review-ledger.md`](docs/review-ledger.md). [`docs/method.md`](docs/method.md) explains, for readers rather than contributors, how each licence is read and what an entry promises.
 
 ## Use the data
 
