@@ -38,7 +38,7 @@ function header(site) {
 
 > ${site.tagline}
 
-A curated catalog of free game assets, libraries and tools. It holds links and licence metadata only; nothing is rehosted. Each licence was read at its source on the entry's verified date, and the entry page quotes it with dates. "needs-review" means a real question is open: read the entry's Notes before shipping. Deprecated entries are not listed.
+A curated catalog of free game assets, libraries and tools. It holds links and licence metadata only; nothing is rehosted. Each licence was read at its source on the entry's verified date, and the entry page quotes it with dates. "needs-review" means a real question is open: read the entry's Notes before shipping. "per-item" marks an aggregator whose licence is set per file or listing: read each item's licence. Deprecated entries are not listed.
 
 Licence freshness, every entry by check date: ${freshnessPageUrl(site)}
 `;

@@ -1700,7 +1700,7 @@ await section("data.json schema (schema-check.mjs + site/data.schema.json)", asy
     generatedAt: "2026-11-03T00:00:00.000Z", version: "v2026.11.03",
     site: { title: "T", tagline: "t", repo: "r", siteUrl: "s" }, categories: { "2d": { label: "2D", view: "cards" } },
     guides: [{ id: "g", title: "G", path: "docs/g.md" }], featured: [{ ...entry, need: "x" }],
-    stats: { total: 1, active: 1, needsReview: 0, deprecated: 0, listed: 1, commercialOk: 1, commercialVaries: 0, categories: 1 },
+    stats: { total: 1, active: 1, needsReview: 0, perItem: 0, deprecated: 0, listed: 1, commercialOk: 1, commercialVaries: 0, categories: 1 },
     filters: { licenseFamilies: { cc0: "CC0" }, formatGroups: { image: { label: "Images", formats: ["PNG"] } } },
     entries: [entry], ...over,
   });
@@ -2599,6 +2599,17 @@ await section("needs-review open question (#211)", async () => {
   has("V39: an empty Review line does not count", checkReviewQuestion("a.md", { status: "needs-review" }, "- Review: \n").join(), "V39");
   has("V39: a settled entry with a leftover question fails", checkReviewQuestion("a.md", { status: "active" }, body).join(), "remove it");
   eq("V39: an active entry without one passes", checkReviewQuestion("a.md", { status: "active" }, "x").length, 0);
+  // V40 (#99): per-item aggregators say how to read each item's licence.
+  const { checkPerItem, STATUS_VALUES } = await import("../checks.mjs");
+  const { perItemNote } = await import("./markdown.mjs");
+  const perBody = "## Notes\n\n- Per item: read the licence on each sound's page.\n";
+  eq("V40: per-item is a status", STATUS_VALUES.has("per-item"), true);
+  eq("V40: per-item with varies and a line passes", checkPerItem("a.md", { status: "per-item", license: "varies" }, perBody).length, 0);
+  has("V40: per-item without a line fails", checkPerItem("a.md", { status: "per-item", license: "varies" }, "x").join(), "needs a \"- Per item:");
+  has("V40: per-item needs license varies", checkPerItem("a.md", { status: "per-item", license: "CC0" }, perBody).join(), "license: varies");
+  has("V40: the line on another status fails", checkPerItem("a.md", { status: "needs-review", license: "varies" }, perBody).join(), "belongs to per-item");
+  eq("V40: an active entry without the line passes", checkPerItem("a.md", { status: "active", license: "CC0" }, "x").length, 0);
+  eq("V40: the note is read and capitalised", perItemNote(perBody), "Read the licence on each sound's page.");
   const md = batchIssueMarkdown({ batch: [], repo: "https://g.test/o/r", date: "2026-11-07", total: 1, openQuestions: [{ id: "a", rel: "catalog/2d/a.md", review: "Confirm the music.\nInjected" }] });
   has("reverify issue: open questions listed", md, "**Open questions** (1 needs-review entry");
   has("reverify issue: one line per question", md, "): Confirm the music. Injected");

@@ -66,7 +66,7 @@
     },
     "stats": {
       "type": "object",
-      "required": ["total", "active", "needsReview", "deprecated", "listed", "commercialOk", "commercialVaries", "categories"],
+      "required": ["total", "active", "needsReview", "perItem", "deprecated", "listed", "commercialOk", "commercialVaries", "categories"],
       "additionalProperties": { "type": "integer", "minimum": 0 }
     },
     "filters": {
@@ -117,11 +117,12 @@
         "tags": { "$ref": "#/$defs/stringList" },
         "added": { "type": ["string", "null"], "description": "YYYY-MM-DD the entry joined the catalog" },
         "verified": { "type": ["string", "null"], "description": "YYYY-MM-DD the licence was last read at the source" },
-        "status": { "enum": ["active", "needs-review", "deprecated"] },
+        "status": { "enum": ["active", "needs-review", "per-item", "deprecated"] },
         "path": { "type": "string" },
         "page": { "type": "string" },
         "summary": { "type": "string" },
         "review": { "type": "string", "description": "needs-review entries: the open question (the Notes' - Review: line)" },
+        "perItem": { "type": "string", "description": "per-item entries: how to read each item's licence (the Notes' - Per item: line)" },
         "thumb": {
           "type": ["object", "null"],
           "required": ["path", "width", "height"],

@@ -12,7 +12,7 @@ formats: [MP3, WAV]
 tags: [aggregator, remix, youtube-first]
 added: 2026-08-24
 verified: 2026-10-04
-status: needs-review
+status: per-item
 ---
 
 # ccMixter
@@ -26,8 +26,8 @@ Remix community and CC music archive (stems, a cappellas, finished tracks). Ther
 - MixterPlus (`mixter.plus`) is a separate invite product. This entry is ccMixter.org
 - Interactive sync of an ND track is still the usual trap. On 2026-08-24's attribution page only pictured BY and BY-NC. That is not proof ND never appears
 - Checklist: CC flavors named, commercial per track, attribution required, not a Unity/Fab EULA, named community, not blocklisted, catalog claims no rights
-- `commercial: varies` (set 2026-10-04): the attribution page names CC BY as commercial-ok and CC BY NC as personal use only, so this is the per-file case. Still open: whether any tracks carry ND (the page shows only BY and BY-NC), and each track's licence must be read on its own page, so the entry stays `needs-review`
-- Review: confirm whether any ccMixter tracks carry ND terms, since each track's licence must be read on its own page.
+- `commercial: varies` (set 2026-10-04): the attribution page names CC BY as commercial-ok and CC BY NC as personal use only, so this is the per-file case. Still open: whether any tracks carry ND (the page shows only BY and BY-NC), and each track's licence must be read on its own page, which is why the entry is `per-item`
+- Per item: open each track's page and read its licence: CC BY is commercial with credit, CC BY-NC is not commercial, and an ND track cannot be synced into a game.
 
 ## Evidence
 

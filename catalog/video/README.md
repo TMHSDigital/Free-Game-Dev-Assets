@@ -33,7 +33,7 @@ people and brands out of anything prominent, such as a title screen.
 | [coverr](coverr.md) | Coverr | custom | yes | active |
 | [dareful](dareful.md) | Dareful | CC-BY-4.0 | yes | active |
 | [mixkit-stock-video](mixkit-stock-video.md) | Mixkit Stock Video | custom | yes | needs-review |
-| [prelinger-archives](prelinger-archives.md) | Prelinger Archives | varies | varies | needs-review |
+| [prelinger-archives](prelinger-archives.md) | Prelinger Archives | varies | varies | per-item |
 | [nasa-image-video-library](nasa-image-video-library.md) | NASA Image and Video Library | custom | unknown | needs-review |
 | [big-buck-bunny](big-buck-bunny.md) | Big Buck Bunny | CC-BY-3.0 | yes | active |
 | [sintel](sintel.md) | Sintel | CC-BY-3.0 | yes | active |

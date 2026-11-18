@@ -41,6 +41,7 @@ export const ENGINE_LOCK_LABELS = { unreal: "UE only" };
 export const STATUS_NOTES = {
   active: "Licence spot-checked at the source; the entry carries dated evidence.",
   "needs-review": "Useful, but a real question is open. Verify before you ship.",
+  "per-item": "An aggregator: the licence is set per file or listing. Read each item's licence before you use it.",
   deprecated: "Kept for history only.",
 };
 

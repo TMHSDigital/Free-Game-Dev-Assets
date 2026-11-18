@@ -17,7 +17,7 @@
 | [opentopography](opentopography.md) | OpenTopography | varies | varies | active |
 | [nls-finland-elevation-model](nls-finland-elevation-model.md) | NLS Finland Elevation Model 2 m | CC-BY-4.0 | yes | active |
 | [swisstopo-swissalti3d](swisstopo-swissalti3d.md) | swisstopo swissALTI3D | custom | yes* | active |
-| [overture-maps](overture-maps.md) | Overture Maps | varies | unknown | needs-review |
+| [overture-maps](overture-maps.md) | Overture Maps | varies | unknown | per-item |
 | [nasa-deep-star-maps](nasa-deep-star-maps.md) | NASA Deep Star Maps 2020 | custom | unknown | needs-review |
 | [ahn-netherlands](ahn-netherlands.md) | AHN (Netherlands) | unknown | unknown | needs-review |
 | [city-sample](city-sample.md) | City Sample | custom | yes | needs-review |

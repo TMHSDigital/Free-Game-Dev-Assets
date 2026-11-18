@@ -57,7 +57,7 @@ export function pluginEntry(e) {
   };
 }
 
-/** The whole feed: listed entries only (active and needs-review), as the site shows. */
+/** The whole feed: listed entries only (active, needs-review and per-item), as the site shows. */
 export function pluginFeed({ entries, version, generatedAt, site, categories, licenseFamilies }) {
   return {
     format: PLUGIN_FEED_FORMAT,

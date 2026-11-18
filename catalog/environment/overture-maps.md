@@ -13,12 +13,12 @@ tags: [buildings, roads, places, world-data]
 publisher: Overture Maps Foundation
 added: 2026-10-04
 verified: 2026-10-04
-status: needs-review
+status: per-item
 ---
 
 # Overture Maps
 
-Open map dataset (buildings, roads, places, administrative divisions, base land and water, addresses) conflated from many sources. It is convenient for generating city layouts, but there is no single licence: each theme carries the licences of its sources, and several themes include ODbL (share-alike) OpenStreetMap data. Marked needs-review because licence depends on which theme and region you pull.
+Open map dataset (buildings, roads, places, administrative divisions, base land and water, addresses) conflated from many sources. It is convenient for generating city layouts, but there is no single licence: each theme carries the licences of its sources, and several themes include ODbL (share-alike) OpenStreetMap data. Marked per-item because the licence depends on which theme and region you pull.
 
 ## Notes
 
@@ -27,14 +27,14 @@ Open map dataset (buildings, roads, places, administrative divisions, base land 
 - Credit line used by the publisher where OSM-derived data is shown: "© OpenStreetMap contributors, Overture Maps Foundation". Other sources add their own credit lines, listed on the attribution page.
 - The getting-data docs show a Python CLI that exports by bounding box to GeoJSON, and DuckDB queries over the cloud-hosted GeoParquet files.
 - Some sources need non-standard terms (for example Australian G-NAF addresses under an end user licence agreement).
-- Review: confirm the licence and commercial terms of each theme and region you pull, since no single blanket commercial grant is stated.
+- Per item: check the licence of each theme and source you pull on the attribution page (ODbL, CDLA Permissive 2.0, Apache 2.0, CC0, CC BY 4.0) and carry each source's credit line.
 
 ## Evidence
 
 - Attribution page (2026-10-04): "Some of the data sources we use in Overture datasets require their own attribution"
 - Same page (2026-10-04): Buildings, Base, Divisions and Transportation each state "License for theme: ODbL".
 - Same page (2026-10-04): Places sources "Available under CDLA Permissive 2.0".
-- No single blanket commercial grant is stated; status is needs-review for that reason.
+- No single blanket commercial grant is stated; status is per-item for that reason.
 
 ## Related
 

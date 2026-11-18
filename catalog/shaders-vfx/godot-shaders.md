@@ -11,20 +11,20 @@ formats: [gdshader]
 tags: [godot, canvas-item, spatial, per-item-license]
 added: 2026-07-19
 verified: 2026-10-04
-status: needs-review
+status: per-item
 ---
 
 # Godot Shaders
 
-Community Godot shader library. Site policy allows personal **and commercial** use of posted **shader code**, but each post is **CC0, MIT, or GPL v3**. Stay `needs-review` as a catalog whole — filter per post; prefer CC0/MIT. **GPL posts are unsafe for closed-source games** (see high-risk).
+Community Godot shader library. Site policy allows personal **and commercial** use of posted **shader code**, but each post is **CC0, MIT, or GPL v3**. The entry is `per-item` as a catalog whole — filter per post; prefer CC0/MIT. **GPL posts are unsafe for closed-source games** (see high-risk).
 
 ## Notes
 
-- Still open (re-checked 2026-10-04, terms unchanged): credit depends on each post's licence (CC0 none; MIT keeps its notice; GPL v3 carries its own terms), and the schema has no per-file value for `attribution_required`, so the entry stays `needs-review`
+- Still open (re-checked 2026-10-04, terms unchanged): credit depends on each post's licence (CC0 none; MIT keeps its notice; GPL v3 carries its own terms), and the schema has no per-file value for `attribution_required`, which is why the entry is `per-item`
 - Browse/filter by license on the library; never assume the trending page is GPL-free
 - Featured images, screenshots, videos, and embedded assets are **outside** the shader license
 - Prefer primary MIT packs in this category ([boujie-water](boujie-water.md), [sky3d](sky3d.md), [waterways](waterways.md)) when you need a known-safe dependency
-- Review: decide how to record credit when it depends on each post's licence (CC0, MIT or GPL v3), which attribution_required cannot express.
+- Per item: read the licence on each shader's post: CC0 needs nothing, MIT keeps its notice, GPL v3 brings its own terms; screenshots and embedded assets are not covered.
 
 ## Evidence
 

@@ -254,6 +254,14 @@ export function reviewQuestion(body) {
   return q.charAt(0).toUpperCase() + q.slice(1);
 }
 
+/** How to read each item's licence on a per-item aggregator: its `- Per item: ...` Notes line (#99, V40). */
+export function perItemNote(body) {
+  const m = String(body).match(/^- Per item:\s*(.+)$/m);
+  if (!m) return null;
+  const note = m[1].trim();
+  return note.charAt(0).toUpperCase() + note.slice(1);
+}
+
 export function deprecationReason(body) {
   const m = String(body).match(/^- Deprecated:\s*(.+)$/m);
   if (!m) return null;

@@ -9,6 +9,7 @@ for, what the catch is, and a dated **Evidence** section quoting the live licenc
 | :--- | :--- | :--- |
 | 🟢 `active` | Licence read at the source and quoted with a date | Suitable to evaluate for production |
 | 🟡 `needs-review` | Useful, but a real question is still open, and the entry says which | Verify before shipping |
+| 🔵 `per-item` | An aggregator whose licence is set per file or listing; the entry says how to read each one | Read each item's licence before you use it |
 | ⚪ `deprecated` | Kept for history, with the reason stated | Use an alternative |
 
 `verified` is the date someone last read the licence at the source. The website shows its

@@ -32,7 +32,7 @@ import { atomFeed, catalogCsv, commitDatesFromLog, DATED_PATHS, sitemapXml } fro
 import { schemaErrors } from "./lib/schema-check.mjs";
 import { PLUGIN_FEED_BUDGET_GZIP_BYTES, pluginFeed } from "./lib/plugin-feed.mjs";
 import { llmsFullTxt, llmsTxt } from "./lib/llms.mjs";
-import { deprecationReason, MarkdownError, renderBlocks, renderInline, reviewQuestion, splitEntryBody } from "./lib/markdown.mjs";
+import { deprecationReason, MarkdownError, perItemNote, renderBlocks, renderInline, reviewQuestion, splitEntryBody } from "./lib/markdown.mjs";
 import { checkPage, pageIds } from "./lib/page-checks.mjs";
 import { checkStacks } from "./checks.mjs";
 import { stackPageHtml } from "./lib/stack-page.mjs";
@@ -115,6 +115,8 @@ function loadEntries(vocab) {
       summary: summaryFromBody(body),
       // What a needs-review entry still has to settle (#211).
       ...(reviewQuestion(body) ? { review: reviewQuestion(body) } : {}),
+      // How to read each item's licence on a per-item aggregator (#99).
+      ...(perItemNote(body) ? { perItem: perItemNote(body) } : {}),
       // The publisher's preview, when the licence gate let the script keep one.
       thumb: thumbs[String(meta.id)]
         ? {
@@ -468,6 +470,7 @@ function main() {
     total: entries.length,
     active: entries.filter((e) => e.status === "active").length,
     needsReview: entries.filter((e) => e.status === "needs-review").length,
+    perItem: entries.filter((e) => e.status === "per-item").length,
     deprecated: entries.filter((e) => e.status === "deprecated").length,
     // What every "N sources" line on the site says (#257).
     listed: entries.filter(isListed).length,

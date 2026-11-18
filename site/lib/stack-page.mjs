@@ -85,7 +85,7 @@ function owesHtml(owed) {
 
 /** One pick: the entry's card with the need above its title and the reason below its meta line. */
 function rowHtml(r, now, repo) {
-  const flag = r.entry.status === "needs-review" ? ' <span class="pick-flag">needs review</span>' : "";
+  const flag = r.entry.status === "needs-review" ? ' <span class="pick-flag">needs review</span>' : r.entry.status === "per-item" ? ' <span class="pick-flag">licence per item</span>' : "";
   const lead = `<p class="pick-need">${esc(r.need)}${flag}</p>`;
   const trail = `<p class="pick-why">${r.whyHtml}</p>`;
   // Picks sit under a section h2, so the card titles are h3.

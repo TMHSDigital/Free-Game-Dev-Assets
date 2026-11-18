@@ -24,7 +24,7 @@ const run = () => {
     if (e.commercial === false) bits.push("<strong>not for commercial use</strong>");
     if (e.commercial === "varies") bits.push("check each file");
     if (e.engine_lock) bits.push(`<strong>locked to ${escapeHtml(e.engine_lock)}</strong>`);
-    if (e.status !== "active") bits.push(`<strong>${escapeHtml(e.status)}</strong>${e.review ? `: ${escapeHtml(e.review)}` : ""}`);
+    if (e.status !== "active") bits.push(`<strong>${escapeHtml(e.status)}</strong>${e.review || e.perItem ? `: ${escapeHtml(e.review || e.perItem)}` : ""}`);
     bits.push(`licence read ${escapeHtml(e.verified || "never")}`);
     return bits.join(" · ");
   };

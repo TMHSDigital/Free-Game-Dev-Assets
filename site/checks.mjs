@@ -219,6 +219,23 @@ export function checkReviewQuestion(rel, meta, body) {
   return [];
 }
 
+/* ----------------------------------------------------------------- V40 */
+/**
+ * A per-item entry is an aggregator whose licence is settled as "set per
+ * file or listing" (#99): its `license` is `varies`, and one `- Per item:`
+ * line in Notes says how to read each item's licence on that site. The line
+ * belongs to per-item entries only.
+ */
+export function checkPerItem(rel, meta, body) {
+  const has = /^- Per item:\s*\S/m.test(String(body));
+  const perItem = String(meta.status) === "per-item";
+  const errors = [];
+  if (perItem && !has) errors.push(`${rel} status per-item needs a "- Per item: <how to read each item's licence>" line in Notes (V40)`);
+  if (perItem && String(meta.license) !== "varies") errors.push(`${rel} status per-item needs license: varies, got ${meta.license} (V40)`);
+  if (!perItem && has) errors.push(`${rel} has a "- Per item:" line but status is ${meta.status}; it belongs to per-item entries (V40)`);
+  return errors;
+}
+
 /* ------------------------------------------------------------------ V7 */
 /**
  * `publisher` names a rights holder, never a host, and entries sharing a root
@@ -324,7 +341,7 @@ export function checkEntryBasics(rel, meta, body, { stem, dirName, categories, r
   }
   const statusKey = meta.status === true ? "true" : meta.status === false ? "false" : String(meta.status);
   if (!empty(meta.status) && !STATUS_VALUES.has(statusKey)) {
-    errors.push(`${rel} status "${statusKey}" is not active|needs-review|deprecated`);
+    errors.push(`${rel} status "${statusKey}" is not one of ${[...STATUS_VALUES].join("|")}`);
   }
   if (meta.attribution_required === true && empty(meta.attribution_string)) {
     errors.push(`${rel} attribution_required true needs attribution_string`);
@@ -1326,6 +1343,7 @@ export const ENTRY_CHECKS = [
   { name: "checkEvidenceDates", run: (rel, meta, body, c) => checkEvidenceDates(rel, meta, body, c.today) },
   { name: "checkDeprecationReason", run: (rel, meta, body, c) => checkDeprecationReason(rel, meta, body, c.vocab) },
   { name: "checkReviewQuestion", run: (rel, meta, body) => checkReviewQuestion(rel, meta, body) },
+  { name: "checkPerItem", run: (rel, meta, body) => checkPerItem(rel, meta, body) },
   { name: "checkTaxonomyValues", run: (rel, meta) => checkTaxonomyValues(rel, meta) },
   { name: "checkValueAliases", run: (rel, meta, body, c) => checkValueAliases(rel, meta, c.aliases) },
   { name: "checkFormatVocabulary", run: (rel, meta, body, c) => checkFormatVocabulary(rel, meta, c.formatVocab) },

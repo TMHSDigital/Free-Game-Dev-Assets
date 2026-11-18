@@ -40,7 +40,7 @@
         "formats": { "type": "array", "items": { "type": "string" } },
         "tags": { "type": "array", "items": { "type": "string" } },
         "publisher": { "type": ["string", "null"] },
-        "status": { "enum": ["active", "needs-review"] },
+        "status": { "enum": ["active", "needs-review", "per-item"] },
         "verified": { "type": ["string", "null"], "description": "YYYY-MM-DD the licence was last read at the source" },
         "summary": { "type": "string" },
         "works_in": { "type": "array", "items": { "enum": ["godot", "unity", "unreal"] } },

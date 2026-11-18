@@ -898,7 +898,7 @@ await section("V1: per-entry basics (validate.mjs)", async () => {
   rejects("V1 rejects an id that is not kebab-case", basics({ id: "Foo_Bar" }, { stem: "Foo_Bar", readmeText: "(Foo_Bar.md)" }), "must be short kebab-case");
   rejects("V1 rejects a category that is not the directory", basics({ category: "3d" }), 'category "3d" does not match directory');
   rejects("V1 rejects an unknown category", basics({ category: "music" }, { dirName: "music" }), 'category "music" is not a catalog/ directory');
-  rejects("V1 rejects a capitalised status", basics({ status: "Active" }), 'status "Active" is not active|needs-review|deprecated');
+  rejects("V1 rejects a capitalised status", basics({ status: "Active" }), 'status "Active" is not one of active|needs-review|per-item|deprecated');
   rejects("V1 rejects an unknown status", basics({ status: "retired" }), 'status "retired" is not');
   rejects("V1 rejects a credit requirement with no credit line", basics({ attribution_required: true }), "attribution_required true needs attribution_string");
   rejects("V1 rejects a blank credit line", basics({ attribution_required: true, attribution_string: "   " }), "needs attribution_string");

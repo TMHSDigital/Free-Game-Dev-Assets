@@ -22,6 +22,7 @@ export function assetSummary(e, siteUrl = "") {
     ...(e.limits ? { limits: e.limits } : {}),
     status: e.status,
     ...(e.review ? { open_question: e.review } : {}),
+    ...(e.perItem ? { per_item: e.perItem } : {}),
     verified: e.verified,
     url: e.url,
     page: base ? `${base}/${e.page}` : e.page,
@@ -75,6 +76,7 @@ export function checkLicense(data, id, { commercial = true, engine } = {}) {
   if (engine && ENGINES[engine] && !worksInEngine(e, engine)) problems.push(e.engine_lock ? `licensed for ${e.engine_lock} only` : `made for another engine than ${engine}`);
   if (e.status === "deprecated") problems.push("deprecated in the catalog");
   if (e.status === "needs-review") problems.push(`needs review${e.review ? `: ${e.review}` : ""}`);
+  if (e.status === "per-item") problems.push(`licence set per item${e.perItem ? `: ${e.perItem}` : ""}`);
   if (e.attribution_required === "unknown") problems.push("the credit requirement is not established");
   const owes = [];
   if (e.attribution_required === true) owes.push(e.attribution_string ? `credit: ${e.attribution_string}` : "a credit line (see the entry)");

@@ -40,7 +40,7 @@ Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CS
 | `formats`, `tags` | yes | File formats and search tags |
 | `added` | yes | Date the entry joined the catalog |
 | `verified` | yes | Date the licence was last read at the source. A read date, not a validity date |
-| `status` | yes | `active`, `needs-review` (an open question, read the Notes) or `deprecated` |
+| `status` | yes | `active`, `needs-review` (an open question, read the Notes), `per-item` (an aggregator whose licence is set per file; `perItem` says how to read it) or `deprecated` |
 | `page` | yes | The entry's page on the site |
 | `summary` | | The first paragraph of the entry |
 | `path` | | The entry's file in this repository |
@@ -49,13 +49,13 @@ Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CS
 | `attributionClass`, `licenseRank` | | Derived sort keys used by the site |
 | `maintenance`, `engine_lock`, `ue_versions`, `limits`, `grid_dimensions`, `camera_perspective`, `hardware_tags` | | Present only where they apply; see [the site README](../site/README.md) |
 
-Top-level keys are `generatedAt`, `version`, `site`, `categories`, `guides`, `stacks` (id and title of each starter stack), `featured`, `stats` (counts of total, active, needs-review, deprecated, listed (total less deprecated) and commercial entries), `filters` (`licenseFamilies` and `formatGroups`, the labels and groups behind the site's filters) and `entries`.
+Top-level keys are `generatedAt`, `version`, `site`, `categories`, `guides`, `stacks` (id and title of each starter stack), `featured`, `stats` (counts of total, active, needs-review, per-item, deprecated, listed (total less deprecated) and commercial entries), `filters` (`licenseFamilies` and `formatGroups`, the labels and groups behind the site's filters) and `entries`.
 
 Field names are stable, and [`data.schema.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.schema.json) states them as a JSON Schema the build enforces, so a field cannot be renamed or retyped without the schema changing too. New optional fields may appear, so ignore keys you do not know rather than failing on them (the schema itself rejects unknown keys, which is how the build catches drift).
 
 ## Plugin feed
 
-`plugin-feed.json` is for editor plugins, starting with the [Godot plugin](https://github.com/TMHSDigital/free-game-dev-assets-godot). It lists the active and needs-review entries with the fields a plugin shows, filters and credits by. That makes it about a fifth of the size of `data.json` once gzipped.
+`plugin-feed.json` is for editor plugins, starting with the [Godot plugin](https://github.com/TMHSDigital/free-game-dev-assets-godot). It lists the active, needs-review and per-item entries with the fields a plugin shows, filters and credits by. That makes it about a fifth of the size of `data.json` once gzipped.
 
 - **`format`** is a whole number that goes up only on a breaking change: a field removed, renamed or retyped. New fields can appear in any build, so ignore keys you do not know. A plugin that sees a higher `format` than it supports should keep its cached copy and ask the user to update.
 - **`version`** is the same `vYYYY.MM.DD` string as `data.json`.

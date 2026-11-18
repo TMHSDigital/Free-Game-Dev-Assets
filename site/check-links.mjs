@@ -144,7 +144,7 @@ const byHand = refused.filter((r) => manualHostReason(r.url, MANUAL_HOSTS));
 const problems = dead.length + moved.length + stale.length + maintenance.length + deadPages.length;
 const date = new Date().toISOString().slice(0, 10);
 const report = [
-  `Link check of ${entries.length} active and needs-review entries, run ${date}.`,
+  `Link check of ${entries.length} listed entries, run ${date}.`,
   "",
   "Re-read the licence before changing an entry: a moved or rebuilt source can come back under different terms.",
   "",

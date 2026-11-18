@@ -55,12 +55,12 @@ you sell or redistribute the IR files as a standalone product.
 | [bigsoundbank](bigsoundbank.md) | BigSoundBank | CC0 | yes | active |
 | [pixabay-audio](pixabay-audio.md) | Pixabay Audio | custom | yes | active |
 | [zapsplat](zapsplat.md) | Zapsplat | custom | yes† | active |
-| [freesound](freesound.md) | Freesound | varies | filter | needs-review |
+| [freesound](freesound.md) | Freesound | varies | filter | per-item |
 | [budgetpixel-sfx](budgetpixel-sfx.md) | BudgetPixel Sound Effects | CC-BY-4.0 | yes | active |
 | [pulselite-ui-sfx](pulselite-ui-sfx.md) | PulseLite UI SFX (free sample) | CC-BY-4.0 | yes | active |
 | [octave-ui-sounds](octave-ui-sounds.md) | Octave | custom | yes | active |
 | [pacdv](pacdv.md) | PacDV Free Sound Effects | custom | unknown | needs-review |
-| [soundbible](soundbible.md) | SoundBible | varies | filter | needs-review |
+| [soundbible](soundbible.md) | SoundBible | varies | filter | per-item |
 | [dailysounds](dailysounds.md) | DailySounds | custom | yes | needs-review |
 | [soundza](soundza.md) | Soundza | custom | yes | needs-review |
 | [sfxmint](sfxmint.md) | SFXMint | CC0 | yes | needs-review |
@@ -124,7 +124,7 @@ sites are gone.
 | [eric-skiff-resistor-anthems](eric-skiff-resistor-anthems.md) | Eric Skiff, Resistor Anthems | CC-BY-4.0 | yes | active |
 | [freepd](freepd.md) | FreePD | unknown | unknown | deprecated |
 | [free-music-archive](free-music-archive.md) | Free Music Archive | varies | filter | needs-review |
-| [ccmixter](ccmixter.md) | ccMixter | varies | filter | needs-review |
+| [ccmixter](ccmixter.md) | ccMixter | varies | filter | per-item |
 | [musopen](musopen.md) | Musopen | varies (PD Mark / CC BY-NC-SA) | varies | needs-review |
 
 Avoid **ND**-licensed music in games — see [`docs/licenses.md`](../../docs/licenses.md) / [`docs/high-risk.md`](../../docs/high-risk.md).

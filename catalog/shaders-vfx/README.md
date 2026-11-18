@@ -17,7 +17,7 @@
 | [jangafx-free-vdb](jangafx-free-vdb.md) | JangaFX free EmberGen VDBs | CC0 | yes | active |
 | [kenney-smoke-particles](kenney-smoke-particles.md) | Kenney Smoke Particles | CC0 | yes | active |
 | [kenney-light-masks](kenney-light-masks.md) | Kenney Light Masks | CC0 | yes | active |
-| [godot-shaders](godot-shaders.md) | Godot Shaders | varies (CC0/MIT/GPL) | yes* | needs-review |
+| [godot-shaders](godot-shaders.md) | Godot Shaders | varies (CC0/MIT/GPL) | yes* | per-item |
 | [material-maker-gallery](material-maker-gallery.md) | Material Maker Gallery | varies | unknown | needs-review |
 | [nixie-fx](nixie-fx.md) | NixieFX | MIT | yes | active |
 

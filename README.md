@@ -153,7 +153,7 @@ someone exactly what you are looking at.
 Each source is one Markdown file: frontmatter for the facts, notes on what it is good for and
 what the catch is, and a dated **Evidence** section quoting the licence page. `active` means
 the licence was read and quoted; `needs-review` means a question is still open, and the entry
-says which; `deprecated` is kept for history. The statuses and every field are explained in
+says which; `per-item` marks an aggregator whose licence is set per file; `deprecated` is kept for history. The statuses and every field are explained in
 [`docs/entry-format.md`](docs/entry-format.md).
 
 ## Safe starting points
