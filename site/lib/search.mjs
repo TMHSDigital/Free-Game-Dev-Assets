@@ -142,6 +142,7 @@ export function passesFilters(entry, state, formatGroups = {}, now = Date.now())
   }
   if (entry.status === "active" && !state.active) return false;
   if (entry.status === "needs-review" && !state.review) return false;
+  if (entry.status === "per-item" && state.perItem === false) return false;
   if (entry.status === "deprecated" && !state.deprecated) return false;
   if (state.commercialOnly && entry.commercial !== true && entry.commercial !== "varies") return false;
   if (state.noAttr && entry.attribution_required !== false) return false;
@@ -349,6 +350,7 @@ export const FILTERS = Object.freeze([
   },
   { field: "active", urlKey: "active", kind: "switch", default: true, control: "#filter-active", chipOff: "hiding active" },
   { field: "review", urlKey: "review", kind: "switch", default: true, control: "#filter-review", chipOff: "hiding needs-review" },
+  { field: "perItem", urlKey: "peritem", kind: "switch", default: true, control: "#filter-peritem", chipOff: "hiding per-item" },
   { field: "deprecated", urlKey: "deprecated", kind: "switch", default: false, control: "#filter-deprecated", chipOn: "showing deprecated" },
   { field: "commercialOnly", urlKey: "commercial", kind: "switch", default: false, control: "#filter-commercial", chipOn: "commercial OK or per-file review" },
   { field: "noAttr", urlKey: "noattr", kind: "switch", default: false, control: "#filter-no-attr", chipOn: "no attribution only" },

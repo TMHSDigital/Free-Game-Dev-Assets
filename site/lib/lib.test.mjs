@@ -2377,7 +2377,7 @@ await section("one filter table (#252) and the freshness filter (#271)", async (
   }
   eq("filters table: URL keys are unique", new Set(FILTERS.map((f) => f.urlKey)).size, FILTERS.length);
   eq("filters table: URL order is unchanged", CHOICES.map(([k]) => k).join(), "cat,sort,view,licence,format,delivery,engine,fresh");
-  eq("filters table: switches", SWITCHES.map(([k]) => k).join(), "active,review,deprecated,commercial,noattr");
+  eq("filters table: switches", SWITCHES.map(([k]) => k).join(), "active,review,peritem,deprecated,commercial,noattr");
 
   // Every field flipped from its default survives a trip through the URL.
   const changed = { ...FILTER_DEFAULTS, q: "tiles", category: "2d", sort: "added", perspective: "top-down", license: "cc0", format: "gltf", engine: "godot", fresh: "6m" };

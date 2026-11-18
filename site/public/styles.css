@@ -815,6 +815,39 @@ input:focus-visible,
   border-left: 1px solid var(--line);
 }
 
+/* The filter panel: switches on one wrapping line, then the selects in an
+   aligned grid (label column, full-width select), so wrapped rows line up
+   instead of carrying a stray divider at each row start. */
+.filter-switches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  flex-basis: 100%;
+}
+
+.filter-selects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18.5rem, 1fr));
+  gap: 0.5rem 1.5rem;
+  flex-basis: 100%;
+  margin: 0.25rem 0 0.15rem;
+}
+
+.filter-selects .sort-field {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  align-items: center;
+  margin-left: 0;
+  padding-left: 0;
+  border-left: 0;
+}
+
+.filter-selects .sort-field select {
+  width: 100%;
+  max-width: none;
+}
+
 .sort-field select {
   max-width: 14rem;
   border: 1px solid var(--control-line);
