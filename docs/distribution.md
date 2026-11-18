@@ -8,9 +8,9 @@ The landing pages for posts: the [catalog](https://tmhsdigital.github.io/Free-Ga
 
 | Target | What to add | Status |
 | --- | --- | --- |
-| magictools | One line under the assets or resources section | |
-| awesome-gamedev | One line under free assets | |
-| awesome-godot | One line under resources; the Godot plugin under plugins once it is in the Asset Library (#284) | |
+| magictools | One line under the assets or resources section | PR [ellisonleao/magictools#538](https://github.com/ellisonleao/magictools/pull/538) opened 2026-11-18 (replaces #418, closed after the list's new submission rules) |
+| awesome-gamedev | One line under free assets | PR [Calinou/awesome-gamedev#98](https://github.com/Calinou/awesome-gamedev/pull/98) open since 2026-09-25, still mergeable on 2026-11-18 |
+| awesome-godot | The Godot plugin under Plugins and scripts, Godot 4 | PR [Calinou/awesome-godot#555](https://github.com/Calinou/awesome-godot/pull/555) opened 2026-11-18 |
 | awesome-unity | One line under assets or resources | |
 | awesome-unreal | One line under resources | |
 | A CC0 / public-domain awesome list | One line; the catalog's metadata is CC0 | |
