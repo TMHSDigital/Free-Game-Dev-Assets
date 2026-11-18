@@ -57,6 +57,14 @@ jobs:
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
           node site/pr-diff.mjs --base "$BASE_SHA" --out "$GITHUB_STEP_SUMMARY"
 
+      # Deploys only: each entry page's own social card (#117), rendered with
+      # the runner's Chrome into site/dist/entry/<id>/card.png. Build output,
+      # never committed; a failure stops the deploy rather than shipping pages
+      # whose og:image is missing.
+      - name: Render per-entry social cards
+        if: ${{ inputs.upload-dist }}
+        run: npm run entry-cards
+
       - name: Upload Pages artifact
         if: ${{ inputs.upload-dist }}
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

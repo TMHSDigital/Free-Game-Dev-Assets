@@ -606,17 +606,19 @@ await section("block at line 599", async () => {
     '<link rel="alternate" type="application/atom+xml" title="Free Game Dev Assets: recently verified" href="https://x.test/s/reverified.xml" />',
     '<meta name="theme-color" content="#1a4d3e" media="(prefers-color-scheme: light)" />',
     '<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />',
-    '<meta property="og:image" content="https://x.test/s/og-card.png" />',
     '<meta property="og:image:width" content="1200" />',
     '<meta property="og:image:height" content="630" />',
-    '<meta property="og:image:alt" content="Free Game Dev Assets: T" />',
     '<meta name="twitter:card" content="summary_large_image" />',
     '<meta property="og:site_name" content="Free Game Dev Assets" />',
   ];
+  // The site card on every page but entry pages, which have their own (#117).
+  const siteCard = ['<meta property="og:image" content="https://x.test/s/og-card.png" />', '<meta property="og:image:alt" content="Free Game Dev Assets: T" />'];
   for (const [name, html] of [["home head", homeHead], ["entry page", p], ["stack page", spage], ["freshness page", fp]]) {
     for (const tag of baseline) has(`${name} has ${tag.slice(0, 40)}`, html, tag);
+    if (name !== "entry page") for (const tag of siteCard) has(`${name} has ${tag.slice(0, 40)}`, html, tag);
     eq(`${name} has one canonical`, (html.match(/<link rel="canonical"/g) || []).length, 1);
   }
+  has("entry page has its own card", p, '/card.png" />');
   has("entry page og:type is article", p, '<meta property="og:type" content="article" />');
   has("freshness og:type is website", fp, '<meta property="og:type" content="website" />');
   has("no card falls back to a summary card", baseHeadHtml({ site, title: "t", description: "d", url: "https://x.test/s/", hasCard: false }), '<meta name="twitter:card" content="summary" />');
@@ -2620,6 +2622,19 @@ await section("needs-review open question (#211)", async () => {
   eq("singleton report: counts unique tags", report.unique, 3);
   eq("singleton report: lists one-off tags", report.singles.join(), "b,c");
   eq("singleton report: flags a share over a fifth", report.over, true);
+  // #117: every entry page has its own social card.
+  const { entryCardRef, entryCardHtml } = await import("./og-card.mjs");
+  const { baseHeadHtml } = await import("./shared.mjs");
+  const cardEntry = { id: "kit", name: "Kit <b>&", license: "CC0", commercial: true, verified: "2026-11-01", status: "active", category: "2d" };
+  eq("entry card: served next to the page", entryCardRef(cardEntry).path, "entry/kit/card.png");
+  has("entry card: alt names the licence and date", entryCardRef(cardEntry).alt, "CC0 licence, read at the source 2026-11-01");
+  const cardHtml = entryCardHtml(cardEntry, { siteTitle: "FGDA", categoryLabel: "2D" });
+  has("entry card: escapes the name", cardHtml, "Kit &lt;b&gt;&amp;");
+  has("entry card: shows the read date", cardHtml, "Licence read at the source 2026-11-01");
+  has("entry card: shows the commercial verdict", cardHtml, "Commercial use OK");
+  const ownHead = baseHeadHtml({ site: { siteUrl: "https://x.test/s/", title: "T", tagline: "g" }, title: "t", description: "d", url: "u", hasCard: true, ownCard: entryCardRef(cardEntry) });
+  has("entry card: og:image points at the entry's card", ownHead, 'property="og:image" content="https://x.test/s/entry/kit/card.png"');
+  has("entry card: twitter:image too", ownHead, 'name="twitter:image" content="https://x.test/s/entry/kit/card.png"');
   // #97: delivery is a closed list beside formats, with its own filter.
   const fv = JSON.parse(fsTest.readFileSync(new URL("../format-vocabulary.json", import.meta.url), "utf8"));
   const { DELIVERY_GROUPS, passesFilters: pf, FILTER_DEFAULTS: FD } = await import("./search.mjs");

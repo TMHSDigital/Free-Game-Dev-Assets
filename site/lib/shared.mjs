@@ -398,15 +398,17 @@ export const OG_CARD_NAME = "og-card.png";
  * page's path back to the site root ("./", "../", "../../"): the icon, the
  * self-hosted font preloads and the stylesheet are resolved against it.
  */
-export function baseHeadHtml({ site, title, description, url, type = "website", hasCard, indent = "    ", root = "./", modules = [] }) {
+export function baseHeadHtml({ site, title, description, url, type = "website", hasCard, indent = "    ", root = "./", modules = [], ownCard = null }) {
   const base = String(site.siteUrl).replace(/\/+$/, "");
-  const card = `${base}/${OG_CARD_NAME}`;
+  // An entry page has its own card (#117: entry/<id>/card.png, rendered at
+  // deploy by site/entry-cards.mjs); every other page shares the site card.
+  const card = ownCard ? `${base}/${ownCard.path}` : `${base}/${OG_CARD_NAME}`;
   const cardMeta = hasCard
     ? [
         `<meta property="og:image" content="${esc(card)}" />`,
         `<meta property="og:image:width" content="1200" />`,
         `<meta property="og:image:height" content="630" />`,
-        `<meta property="og:image:alt" content="${esc(`${site.title}: ${site.tagline}`)}" />`,
+        `<meta property="og:image:alt" content="${esc(ownCard ? ownCard.alt : `${site.title}: ${site.tagline}`)}" />`,
         `<meta name="twitter:card" content="summary_large_image" />`,
         `<meta name="twitter:image" content="${esc(card)}" />`,
       ]

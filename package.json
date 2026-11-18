@@ -23,6 +23,7 @@
     "reverify": "node site/reverify-batch.mjs",
     "serve": "node site/serve.mjs",
     "og-card": "node site/og-card.mjs",
-    "coverage": "node site/coverage.mjs"
+    "coverage": "node site/coverage.mjs",
+    "entry-cards": "node site/entry-cards.mjs"
   }
 }

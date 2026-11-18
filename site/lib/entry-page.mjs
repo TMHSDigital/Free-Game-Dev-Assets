@@ -21,6 +21,7 @@ import { previewCredit } from "./thumbs.mjs";
 import { creditLineHtml, fillInNote } from "./owes.mjs";
 import { ENGINES, nativeEngines } from "./search.mjs";
 import { badgeSnippets } from "./badge.mjs";
+import { entryCardRef } from "./og-card.mjs";
 
 export function jsonLd(entry, site, { categoryLabel } = {}) {
   const work = { "@type": "CreativeWork", name: entry.name, url: entry.url };
@@ -153,7 +154,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     <title>${esc(seoTitle(entry.name, entry.license))}</title>
     <meta name="description" content="${esc(seoDescription(entry, undefined, { scope }))}" />
     ${deprecated ? '<meta name="robots" content="noindex" />' : ""}
-    ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard, root: "../../", modules: PAGE_MODULES.entry })}
+    ${baseHeadHtml({ site, title, description: desc, url, type: "article", hasCard, root: "../../", modules: PAGE_MODULES.entry, ownCard: entryCardRef(entry) })}
     <script type="application/ld+json">${scriptJson(jsonLd(entry, site, { categoryLabel }))}</script>
   </head>
   <body>
