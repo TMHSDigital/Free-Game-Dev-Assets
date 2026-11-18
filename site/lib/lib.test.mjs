@@ -2653,6 +2653,29 @@ await section("needs-review open question (#211)", async () => {
   eq("alternatives: not from a category it does not list", alt.alternativesForCategory([altDef], altEntries, "audio").length, 0);
   const altSitemap = (await import("./exports.mjs")).sitemapXml({ site: { siteUrl: "https://x.test/s/" }, entries: [], stamp: "2026-11-18", alternatives: [{ slug: "s" }] });
   has("alternatives: in the sitemap", altSitemap, "<loc>https://x.test/s/alternatives/s/</loc>");
+  // #118: outreach pull request tracking.
+  {
+    const o = await import("./outreach.mjs");
+    eq("outreach: parses a reference", JSON.stringify(o.parsePrRef("ellisonleao/magictools#538")), JSON.stringify({ owner: "ellisonleao", repo: "magictools", number: 538 }));
+    eq("outreach: rejects a bad reference", o.parsePrRef("magictools 538"), null);
+    const body = o.writeState("Tracking.", { state: "open", seen: [1] });
+    eq("outreach: state round-trips through the body", JSON.stringify(o.readState(body)), JSON.stringify({ state: "open", seen: [1] }));
+    eq("outreach: rewriting keeps one marker", (o.writeState(body, { state: "merged", seen: [] }).match(/outreach-state/g) || []).length, 1);
+    const pr = { state: "open", merged_at: null, html_url: "https://g.test/o/r/pull/1" };
+    const act = [{ id: 5, user: "TMHSDigital", kind: "comment", url: "u0" }, { id: 7, user: "bot[bot]", kind: "review", state: "CHANGES_REQUESTED", url: "u1" }];
+    const first = o.plan("o/r#1", pr, act, null, "TMHSDigital");
+    eq("outreach: the first run records quietly", first.comment, null);
+    eq("outreach: our own activity is not tracked", JSON.stringify(first.state.seen), "[7]");
+    eq("outreach: nothing new, nothing posted", o.plan("o/r#1", pr, act, first.state, "TMHSDigital").comment, null);
+    const later = o.plan("o/r#1", pr, [...act, { id: 9, user: "maint", kind: "comment", url: "u2" }], first.state, "TMHSDigital");
+    has("outreach: a new comment is reported", later.comment, "comment by `maint`: u2");
+    const review = o.plan("o/r#1", pr, act, { state: "open", seen: [] }, "TMHSDigital");
+    has("outreach: requested changes are flagged", review.comment, "needs a reply or an update");
+    const merged = o.plan("o/r#1", { ...pr, state: "closed", merged_at: "2026-11-19" }, act, first.state, "TMHSDigital");
+    eq("outreach: a merge closes as completed", merged.close, "completed");
+    eq("outreach: a close without merge closes as not planned", o.plan("o/r#1", { ...pr, state: "closed" }, act, first.state, "TMHSDigital").close, "not_planned");
+    has("outreach: logins are inert", o.plan("o/r#1", pr, [{ id: 3, user: "@everyone`x", kind: "comment", url: "u" }], { state: "open", seen: [] }, "me").comment, "`@everyone'x`");
+  }
   // #306 (regression of #27): the entry template passes the vocabulary checks.
   {
     const ck = await import("../checks.mjs");

@@ -1,0 +1,45 @@
+name: Track outreach pull requests
+
+# Checks the catalog's pull requests to other repositories (curated lists,
+# #118) once a day and reports on their tracking issues here: new reviews
+# and comments, merges, closes (site/outreach-prs.mjs). A tracking issue is
+# an open issue labelled `outreach` whose title ends with the reference,
+# e.g. "Outreach: magictools (ellisonleao/magictools#538)".
+#
+# Read-only towards the other repositories; it writes only to this repo's
+# tracking issues. Nothing from those pull requests is run or put into a
+# shell command, and posted comments quote logins as code spans.
+on:
+  schedule:
+    - cron: "17 8 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: outreach-prs
+  cancel-in-progress: false
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Check tracked pull requests
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node site/outreach-prs.mjs

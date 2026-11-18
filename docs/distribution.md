@@ -6,6 +6,8 @@ The landing pages for posts: the [catalog](https://tmhsdigital.github.io/Free-Ga
 
 ## Curated lists
 
+Each open pull request to another repository has a tracking issue here, labelled `outreach` and titled with the reference ("Outreach: magictools (ellisonleao/magictools#538)"). A daily workflow (`.github/workflows/outreach-prs.yml`, `site/outreach-prs.mjs`) comments on the tracking issue when someone reviews or comments, and closes it when the pull request is merged or closed. To track a new one, open an issue in that shape; the first run records its state quietly.
+
 | Target | What to add | Status |
 | --- | --- | --- |
 | magictools | One line under the assets or resources section | PR [ellisonleao/magictools#538](https://github.com/ellisonleao/magictools/pull/538) opened 2026-11-18 (replaces #418, closed after the list's new submission rules) |
