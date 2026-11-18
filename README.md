@@ -266,6 +266,8 @@ layout are in [CONTRIBUTING.md](CONTRIBUTING.md#repository-layout).
 
 If the catalog saves you time, you can [sponsor TMHSDigital on GitHub](https://github.com/sponsors/TMHSDigital). Entirely optional.
 
+**Funding and independence.** Sponsorship pays for the upkeep that keeps the licence records honest: the monthly re-verify batch (about 40 licence pages re-read by hand) and the weekly link check. It never buys anything in the catalog. No sponsor, publisher or vendor can pay for an entry's position, `featured` flag, `active` status, a stack pick, or a softer licence summary, and entries are written and reviewed the same way whoever publishes them. If a publisher of a listed source sponsors the project, they are named in this section with their entries, and nothing on the entries themselves changes.
+
 <p align="right"><a href="#free-game-dev-assets">Back to top ↑</a></p>
 
 ## License
