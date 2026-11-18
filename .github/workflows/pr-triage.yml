@@ -1,0 +1,77 @@
+name: Label and welcome pull requests
+
+# Labels each pull request by the paths it touches and welcomes a
+# first-time contributor (#119).
+#
+# pull_request_target runs with the base repository's token, so a fork's
+# pull request can be labelled. That is safe only because this job never
+# checks out or runs the pull request's code: it reads the changed file
+# list and the author association through the API and calls `gh`. Nothing
+# from the pull request (title, body, branch name) is put into a shell
+# command; file paths are only compared against fixed patterns.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-triage-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PR: ${{ github.event.pull_request.number }}
+    steps:
+      - name: Label by path
+        run: |
+          set -euo pipefail
+          labels=()
+          added=0; modified=0; site=0; docs=0
+          while IFS=$'\t' read -r status path; do
+            case "$path" in
+              catalog/*/*.md)
+                case "$path" in */README.md) ;; *)
+                  if [ "$status" = "added" ]; then added=1; else modified=1; fi ;;
+                esac ;;
+            esac
+            case "$path" in site/*) site=1 ;; esac
+            case "$path" in docs/*|*.md) case "$path" in catalog/*) ;; *) docs=1 ;; esac ;; esac
+          done < <(gh api --paginate "repos/$GH_REPO/pulls/$PR/files" --jq '.[] | [.status, .filename] | @tsv')
+          if [ "$added" = 1 ] || [ "$modified" = 1 ]; then labels+=(catalog); fi
+          if [ "$added" = 1 ]; then labels+=(new-source); fi
+          if [ "$modified" = 1 ]; then labels+=(correction); fi
+          if [ "$site" = 1 ]; then labels+=(site); fi
+          if [ "$docs" = 1 ]; then labels+=(documentation); fi
+          if [ "${#labels[@]}" -gt 0 ]; then
+            joined=$(IFS=,; echo "${labels[*]}")
+            gh pr edit "$PR" --add-label "$joined"
+            echo "labelled #$PR: $joined"
+          fi
+
+      - name: Welcome a first-time contributor
+        if: >-
+          github.event.action == 'opened' &&
+          (github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR' ||
+           github.event.pull_request.author_association == 'FIRST_TIMER')
+        run: |
+          set -euo pipefail
+          body_file=$(mktemp)
+          cat > "$body_file" <<'EOF'
+          Thanks for your first pull request here!
+
+          - GitHub holds the CI run on a first pull request until a maintainer approves it. That is a GitHub safeguard, not a judgement on the change.
+          - Review is best effort by one maintainer, with a goal of a first reply within a week.
+          - For a new or corrected source, the [licence verification checklist](https://github.com/TMHSDigital/Free-Game-Dev-Assets/blob/main/CONTRIBUTING.md#license-verification-checklist) is what the review checks first.
+          EOF
+          gh pr comment "$PR" --body-file "$body_file"

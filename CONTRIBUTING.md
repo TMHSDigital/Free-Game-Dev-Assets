@@ -80,6 +80,13 @@ Every pull request, every push to `main` (before the site deploys) and every rel
 
 A pull request also gets a table on its run's summary page listing every licence field it changes, old and new, beside the entry's newest Evidence line (`site/pr-diff.mjs`). It is for the reviewer and never fails the run.
 
+## What to expect after you open a pull request
+
+- Labels are added from the paths it touches (`catalog`, `new-source`, `correction`, `site`, `documentation`; `.github/workflows/pr-triage.yml`), and a first pull request gets a short welcome comment.
+- On your first pull request, GitHub holds the CI run until a maintainer approves it. That is a GitHub safeguard for first-time contributors, not a judgement on the change.
+- Review is best effort by one maintainer; the goal is a first reply within a week, for issues as well as pull requests. Review requests go out automatically (`.github/CODEOWNERS`).
+- Questions that are not a bug or a source ("is this licence fine for…") belong in [Discussions](https://github.com/TMHSDigital/Free-Game-Dev-Assets/discussions).
+
 ## License verification checklist
 
 - [ ] License text or badge visible on the source
