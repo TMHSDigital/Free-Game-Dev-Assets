@@ -2,6 +2,7 @@
 id: megascans-starter-content
 name: Megascans Starter Content (Free on Fab)
 url: https://www.fab.com/sellers/Quixel%20Megascans?ui_filter_price=1&is_free=1
+license_url: https://www.fab.com/eula
 category: 3d
 subcategories: [photogrammetry, foliage, materials, environment]
 license: custom

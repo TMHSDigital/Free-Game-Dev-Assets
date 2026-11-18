@@ -2,6 +2,7 @@
 id: city-sample
 name: City Sample
 url: https://www.fab.com/listings/4898e707-7855-404b-af0e-a505ee690e68
+license_url: https://www.fab.com/eula
 category: environment
 subcategories: [sample-projects, buildings]
 license: custom

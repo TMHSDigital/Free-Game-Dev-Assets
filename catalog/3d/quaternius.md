@@ -2,6 +2,7 @@
 id: quaternius
 name: Quaternius
 url: https://quaternius.com
+license_url: https://quaternius.com/packs/downtowncitymegakit.html
 publisher: Quaternius
 category: 3d
 subcategories: [characters, environment, props]

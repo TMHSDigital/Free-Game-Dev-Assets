@@ -2,6 +2,7 @@
 id: free-music-archive
 name: Free Music Archive
 url: https://freemusicarchive.org
+license_url: https://freemusicarchive.org/License_Guide
 category: audio
 subcategories: [music]
 license: varies

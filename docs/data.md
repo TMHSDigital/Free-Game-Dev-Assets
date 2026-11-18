@@ -29,6 +29,7 @@ Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CS
 | `id` | yes | Short kebab-case id, unique across the catalog |
 | `name` | yes | Display name |
 | `url` | yes | The source's own page |
+| `license_url` | yes (last column) | Where the quoted licence text lives: a terms page, LICENSE file or FAQ, or `url` when the licence is on the source's own page (#144) |
 | `category` | yes | One of the ten category folders, such as `3d`, `audio` or `tools` |
 | `subcategories` | yes | Finer grouping within the category |
 | `license` | yes | The licence as the catalog reads it. A value from [the vocabulary](../site/license-vocabulary.json), explained in [licenses.md](licenses.md) |

@@ -2,6 +2,7 @@
 id: nixie-fx
 name: NixieFX
 url: https://github.com/azakhary/nixie-fx
+license_url: https://nixiefx.com
 category: shaders-vfx
 subcategories: [particles]
 license: MIT

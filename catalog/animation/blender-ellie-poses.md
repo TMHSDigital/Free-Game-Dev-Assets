@@ -2,6 +2,7 @@
 id: blender-ellie-poses
 name: Blender Studio Ellie Pose Library
 url: https://www.blender.org/download/demo-files/#assets
+license_url: https://www.blender.org/download/demo-files/
 publisher: Blender Studio
 category: animation
 subcategories: [poses, rigs]

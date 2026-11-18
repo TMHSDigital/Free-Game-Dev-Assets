@@ -22,6 +22,7 @@ export const OPTIONAL_FIELDS = [
   { key: "attribution_string", type: "string" },
   { key: "publisher", type: "string" },
   { key: "license_spdx", type: "string" },
+  { key: "license_url", type: "string" },
   { key: "maintenance", type: "string" },
   { key: "engine_lock", type: "string" },
   { key: "ue_versions", type: "string" },
@@ -68,6 +69,8 @@ export function normalizeEntry(meta, rel) {
     status: text(meta.status),
     path: rel,
     ...optionalFields(meta),
+    // Where the quoted licence text lives (#144); the entry's own url unless set.
+    license_url: text(meta.license_url || meta.url),
     ...(meta.preview === undefined || meta.preview === null ? {} : { preview: String(meta.preview) }),
   };
 }

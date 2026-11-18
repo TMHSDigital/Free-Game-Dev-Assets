@@ -2,6 +2,7 @@
 id: poly-pizza
 name: Poly Pizza
 url: https://poly.pizza
+license_url: https://poly.pizza/docs/tos
 category: 3d
 subcategories: [aggregator]
 license: varies

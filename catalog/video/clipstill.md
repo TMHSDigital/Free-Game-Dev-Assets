@@ -2,6 +2,7 @@
 id: clipstill
 name: Clipstill
 url: https://www.clipstill.com/
+license_url: https://www.clipstill.com/license
 category: video
 subcategories: [cinemagraphs]
 license: custom

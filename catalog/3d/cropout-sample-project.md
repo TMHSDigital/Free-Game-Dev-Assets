@@ -2,6 +2,7 @@
 id: cropout-sample-project
 name: Cropout Sample Project
 url: https://www.fab.com/listings/bd733d81-7c29-44fe-b53f-65b14d06a9e2
+license_url: https://www.fab.com/eula
 category: 3d
 subcategories: [sample-projects, environment]
 license: custom

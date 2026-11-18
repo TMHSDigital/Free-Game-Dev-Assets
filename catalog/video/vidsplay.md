@@ -2,6 +2,7 @@
 id: vidsplay
 name: Vidsplay
 url: https://www.vidsplay.com/
+license_url: https://www.vidsplay.com/terms/
 category: video
 subcategories: [stock-footage]
 license: custom

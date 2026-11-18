@@ -2,6 +2,7 @@
 id: microsoft-rocketbox
 name: Microsoft Rocketbox
 url: https://github.com/microsoft/Microsoft-Rocketbox
+license_url: https://github.com/microsoft/Microsoft-Rocketbox/blob/master/LICENSE.md
 publisher: Microsoft
 category: characters
 subcategories: [humanoid, rigged, library]

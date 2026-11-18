@@ -73,6 +73,7 @@ const CSV_COLUMNS = [
   "subcategories",
   "publisher",
   "attribution_string",
+  "license_url",
 ];
 
 /**

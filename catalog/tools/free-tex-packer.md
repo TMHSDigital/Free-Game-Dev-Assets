@@ -2,6 +2,7 @@
 id: free-tex-packer
 name: Free Tex Packer
 url: https://github.com/odrick/free-tex-packer
+license_url: https://free-tex-packer.com/
 category: tools
 subcategories: [atlas, pipeline]
 license: MIT

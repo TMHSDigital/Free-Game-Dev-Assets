@@ -2,6 +2,7 @@
 id: big-buck-bunny
 name: Big Buck Bunny
 url: https://peach.blender.org/
+license_url: https://peach.blender.org/about/
 category: video
 subcategories: [open-movie]
 license: CC-BY-3.0

@@ -2,6 +2,7 @@
 id: simple-icons
 name: Simple Icons
 url: https://simpleicons.org/
+license_url: https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md
 category: 2d
 subcategories: [icons]
 license: CC0

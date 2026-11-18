@@ -2,6 +2,7 @@
 id: ark-pixel-font
 name: Ark Pixel Font
 url: https://github.com/TakWolf/ark-pixel-font
+license_url: https://takwolf.com
 category: fonts
 subcategories: [pixel, cjk, display]
 license: SIL OFL

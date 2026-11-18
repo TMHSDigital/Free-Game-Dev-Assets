@@ -2,6 +2,7 @@
 id: pnggauntlet
 name: PNGGauntlet
 url: https://pnggauntlet.com
+license_url: https://pnggauntlet.com/
 category: tools
 subcategories: [compression, pipeline]
 license: custom

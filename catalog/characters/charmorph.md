@@ -2,6 +2,7 @@
 id: charmorph
 name: CharMorph
 url: https://github.com/Upliner/CharMorph
+license_url: https://github.com/Upliner/CharMorph/blob/master/license.txt
 category: characters
 subcategories: [humanoid]
 license: varies

@@ -2,6 +2,7 @@
 id: fab-free-content
 name: Fab Free Listings and Limited-Time Free
 url: https://www.fab.com/search?is_free=1
+license_url: https://www.fab.com/eula
 category: 3d
 subcategories: [aggregator, environment, materials]
 license: varies

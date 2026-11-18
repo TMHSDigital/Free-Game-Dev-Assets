@@ -2,6 +2,7 @@
 id: fab-megascans-standard
 name: Fab / Quixel Megascans (Standard License)
 url: https://www.fab.com
+license_url: https://www.fab.com/eula
 category: 3d
 subcategories: [photogrammetry, foliage]
 license: custom

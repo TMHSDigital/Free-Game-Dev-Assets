@@ -2,6 +2,7 @@
 id: stack-o-bot
 name: Stack O Bot
 url: https://www.fab.com/listings/b4dfff49-0e7d-4c4b-a6c5-8a0315831c9c
+license_url: https://www.fab.com/eula
 category: 3d
 subcategories: [sample-projects, characters]
 license: custom

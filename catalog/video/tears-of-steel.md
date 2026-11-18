@@ -2,6 +2,7 @@
 id: tears-of-steel
 name: Tears of Steel
 url: https://mango.blender.org/
+license_url: https://mango.blender.org/sharing/
 category: video
 subcategories: [open-movie]
 license: CC-BY-3.0

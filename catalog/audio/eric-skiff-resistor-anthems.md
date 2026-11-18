@@ -2,6 +2,7 @@
 id: eric-skiff-resistor-anthems
 name: Eric Skiff, Resistor Anthems
 url: https://ericskiff.com/music/
+license_url: http://EricSkiff.com/music
 category: audio
 subcategories: [music]
 license: CC-BY-4.0

@@ -2,6 +2,7 @@
 id: soundza
 name: Soundza
 url: https://soundza.com/
+license_url: https://soundza.com/license
 category: audio
 subcategories: [sfx, music, ambience]
 license: custom

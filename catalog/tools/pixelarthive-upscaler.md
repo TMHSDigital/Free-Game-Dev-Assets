@@ -2,6 +2,7 @@
 id: pixelarthive-upscaler
 name: Pixel Art Upscaler (PixelArtHive)
 url: https://pixelarthive.com/pixel-art-upscaler
+license_url: https://pixelarthive.com/terms
 category: tools
 subcategories: [pixel]
 license: custom

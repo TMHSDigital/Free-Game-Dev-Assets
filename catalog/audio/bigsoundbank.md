@@ -2,6 +2,7 @@
 id: bigsoundbank
 name: BigSoundBank
 url: https://bigsoundbank.com/
+license_url: https://bigsoundbank.com/licenses.html
 category: audio
 subcategories: [sfx, foley, field-recordings]
 license: CC0

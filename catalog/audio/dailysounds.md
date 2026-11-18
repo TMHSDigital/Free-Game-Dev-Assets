@@ -2,6 +2,7 @@
 id: dailysounds
 name: DailySounds
 url: https://dailysounds.org/
+license_url: https://dailysounds.org/license
 category: audio
 subcategories: [sfx, foley, ambience]
 license: custom

@@ -2,6 +2,7 @@
 id: ccmixter
 name: ccMixter
 url: https://ccmixter.org
+license_url: https://ccmixter.org/how-to-attribute-ccmixter-tracks
 category: audio
 subcategories: [music]
 license: varies

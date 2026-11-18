@@ -2,6 +2,7 @@
 id: iconmonstr
 name: iconmonstr
 url: https://iconmonstr.com
+license_url: https://iconmonstr.com/license/
 category: 2d
 subcategories: [icons, ui]
 license: custom

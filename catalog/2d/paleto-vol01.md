@@ -2,6 +2,7 @@
 id: paleto-vol01
 name: Paleto Vol.01 (The Classics)
 url: https://paleto.itch.io/paleto-vol01
+license_url: https://lospec.com/palette-list/deep-sea
 category: 2d
 subcategories: [palettes, pixel]
 license: CC0

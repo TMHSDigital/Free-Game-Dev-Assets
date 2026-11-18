@@ -2,6 +2,7 @@
 id: mpfb
 name: MPFB (MakeHuman for Blender)
 url: https://static.makehumancommunity.org/mpfb.html
+license_url: https://static.makehumancommunity.org/about/license.html
 publisher: MakeHuman Community
 category: characters
 subcategories: [generator, base-meshes]

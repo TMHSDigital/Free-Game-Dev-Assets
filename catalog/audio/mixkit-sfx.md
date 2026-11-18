@@ -2,6 +2,7 @@
 id: mixkit-sfx
 name: Mixkit Sound Effects
 url: https://mixkit.co/free-sound-effects/
+license_url: https://mixkit.co/terms/
 publisher: Envato
 category: audio
 subcategories: [sfx]

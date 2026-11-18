@@ -2,6 +2,7 @@
 id: godot-engine
 name: Godot Engine
 url: https://godotengine.org
+license_url: https://godotengine.org/license/
 category: tools
 subcategories: [godot]
 license: MIT

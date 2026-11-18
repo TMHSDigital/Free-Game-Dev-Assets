@@ -2,6 +2,7 @@
 id: metahuman
 name: MetaHuman
 url: https://www.metahuman.com
+license_url: https://www.metahuman.com/license
 category: characters
 subcategories: [humanoid, rigged]
 license: custom

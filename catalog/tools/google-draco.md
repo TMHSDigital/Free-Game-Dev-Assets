@@ -2,6 +2,7 @@
 id: google-draco
 name: Google Draco
 url: https://github.com/google/draco
+license_url: https://github.com/google/draco/blob/main/LICENSE
 category: tools
 subcategories: [pipeline, compression]
 license: Apache-2.0

@@ -2,6 +2,7 @@
 id: wwise
 name: Wwise (Indie tier)
 url: https://www.audiokinetic.com/en/wwise/pricing/
+license_url: https://www.audiokinetic.com/en/terms-of-use/
 category: tools
 subcategories: [audio-middleware]
 license: custom

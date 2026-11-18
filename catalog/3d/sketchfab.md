@@ -2,6 +2,7 @@
 id: sketchfab
 name: Sketchfab
 url: https://sketchfab.com
+license_url: https://sketchfab.com/terms
 category: 3d
 subcategories: [aggregator]
 license: varies

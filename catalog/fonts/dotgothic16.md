@@ -2,6 +2,7 @@
 id: dotgothic16
 name: DotGothic16
 url: https://fonts.google.com/specimen/DotGothic16
+license_url: https://raw.githubusercontent.com/google/fonts/main/ofl/dotgothic16/OFL.txt
 category: fonts
 subcategories: [pixel, display, cjk]
 license: SIL OFL

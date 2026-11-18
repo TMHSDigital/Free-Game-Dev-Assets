@@ -105,6 +105,7 @@
         "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
         "name": { "type": "string" },
         "url": { "type": "string" },
+        "license_url": { "type": "string", "description": "Where the quoted licence text lives; the entry url unless the Evidence quotes another page (#144)" },
         "category": { "type": "string" },
         "subcategories": { "$ref": "#/$defs/stringList" },
         "license": { "type": "string" },

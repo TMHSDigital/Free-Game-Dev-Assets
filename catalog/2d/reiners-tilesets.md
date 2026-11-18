@@ -2,6 +2,7 @@
 id: reiners-tilesets
 name: Reiner's Tilesets
 url: https://www.reinerstilesets.de/graphics/
+license_url: https://www.reinerstilesets.de/graphics/lizenz/
 category: 2d
 subcategories: [sprites, isometric, characters, tileset]
 license: custom

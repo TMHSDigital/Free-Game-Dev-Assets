@@ -2,6 +2,7 @@
 id: makehuman
 name: MakeHuman Community
 url: http://www.makehumancommunity.org
+license_url: https://static.makehumancommunity.org/about/license.html
 publisher: MakeHuman Community
 category: characters
 subcategories: [humanoid, generator]

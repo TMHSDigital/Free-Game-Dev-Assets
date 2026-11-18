@@ -2,6 +2,7 @@
 id: electric-dreams-environment
 name: Electric Dreams Env
 url: https://www.fab.com/listings/d79688f5-29be-4fb2-a650-2d4a813f5306
+license_url: https://www.fab.com/eula
 category: environment
 subcategories: [sample-projects]
 license: custom

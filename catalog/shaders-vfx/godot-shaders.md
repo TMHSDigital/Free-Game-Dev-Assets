@@ -2,6 +2,7 @@
 id: godot-shaders
 name: Godot Shaders
 url: https://godotshaders.com
+license_url: https://godotshaders.com/license/
 category: shaders-vfx
 subcategories: [shaders]
 license: varies

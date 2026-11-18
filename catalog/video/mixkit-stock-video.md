@@ -2,6 +2,7 @@
 id: mixkit-stock-video
 name: Mixkit Stock Video
 url: https://mixkit.co/free-stock-video/
+license_url: https://mixkit.co/terms/
 publisher: Envato
 category: video
 subcategories: [stock-footage]

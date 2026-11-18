@@ -2,6 +2,7 @@
 id: sfxmint
 name: SFXMint
 url: https://sfxmint.com/
+license_url: https://sfxmint.com/license
 category: audio
 subcategories: [sfx, ui, ambience]
 license: CC0

@@ -2,6 +2,7 @@
 id: lospec
 name: Lospec
 url: https://lospec.com
+license_url: https://lospec.com/terms-and-conditions
 category: 2d
 subcategories: [palettes, pixel]
 license: varies

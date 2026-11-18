@@ -2,6 +2,7 @@
 id: soundbible
 name: SoundBible
 url: https://soundbible.com
+license_url: https://soundbible.com/about.php
 category: audio
 subcategories: [sfx]
 license: varies

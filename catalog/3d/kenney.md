@@ -2,6 +2,7 @@
 id: kenney
 name: Kenney
 url: https://kenney.nl
+license_url: https://kenney.nl/assets/city-kit-roads
 publisher: Kenney
 category: 3d
 subcategories: [environment]

@@ -2,6 +2,7 @@
 id: pixabay-audio
 name: Pixabay Audio
 url: https://pixabay.com/sound-effects/
+license_url: https://pixabay.com/service/license-summary/
 publisher: Pixabay
 category: audio
 subcategories: [sfx, music]

@@ -250,6 +250,22 @@ export function singletonTagReport(metas, limit = 0.2) {
   return { unique: count.size, singles, share, over: share > limit };
 }
 
+/* ----------------------------------------------------------------- V42 */
+/**
+ * `license_url` (#144) is where the quoted licence text lives when that is
+ * not the entry's own `url`: a terms page, a LICENSE file, a FAQ. It must be
+ * a URL the Evidence actually quotes, so "where it says it" always points at
+ * the page a dated quote came from.
+ */
+export function checkLicenseUrl(rel, meta, body) {
+  if (empty(meta.license_url)) return [];
+  const u = String(meta.license_url);
+  if (!/^https?:\/\/\S+$/.test(u)) return [`${rel} license_url "${u}" must be an http(s) URL (V42)`];
+  if (u === String(meta.url)) return [`${rel} license_url repeats url; leave it out, it defaults to url (V42)`];
+  if (!String(evidenceSection(body) || "").includes(u)) return [`${rel} license_url "${u}" is not quoted in Evidence; link it on the Evidence line that quotes the licence (V42)`];
+  return [];
+}
+
 /* ----------------------------------------------------------------- V41 */
 /**
  * Each category has a short list of subcategories in site/config.json
@@ -542,7 +558,7 @@ export function checkCreditPlaceholders(rel, meta) {
  * passed. A new field is added here in the same change that documents it.
  */
 export const KNOWN_KEYS = [
-  "id", "name", "url", "publisher", "category", "subcategories", "license", "license_spdx",
+  "id", "name", "url", "license_url", "publisher", "category", "subcategories", "license", "license_spdx",
   "commercial", "attribution_required", "attribution_string", "formats", "delivery", "tags", "added",
   "verified", "status", "engine_lock", "ue_versions", "camera_perspective", "grid_dimensions",
   "maintenance", "hardware_tags", "preview", "limits",
@@ -1388,6 +1404,7 @@ export const ENTRY_CHECKS = [
   { name: "checkDeprecationReason", run: (rel, meta, body, c) => checkDeprecationReason(rel, meta, body, c.vocab) },
   { name: "checkReviewQuestion", run: (rel, meta, body) => checkReviewQuestion(rel, meta, body) },
   { name: "checkPerItem", run: (rel, meta, body) => checkPerItem(rel, meta, body) },
+  { name: "checkLicenseUrl", run: (rel, meta, body) => checkLicenseUrl(rel, meta, body) },
   { name: "checkSubcategoryList", run: (rel, meta, body, c) => checkSubcategoryList(rel, meta, c.categoryConfig) },
   { name: "checkTaxonomyValues", run: (rel, meta) => checkTaxonomyValues(rel, meta) },
   { name: "checkValueAliases", run: (rel, meta, body, c) => checkValueAliases(rel, meta, c.aliases) },

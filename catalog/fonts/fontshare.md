@@ -2,6 +2,7 @@
 id: fontshare
 name: Fontshare
 url: https://www.fontshare.com
+license_url: https://www.fontshare.com/fonts/satoshi
 category: fonts
 subcategories: [sans, display]
 license: varies

@@ -2,6 +2,7 @@
 id: lyra-starter-game
 name: Lyra Starter Game
 url: https://www.fab.com/listings/93faede1-4434-47c0-85f1-bf27c0820ad0
+license_url: https://www.fab.com/eula
 category: 3d
 subcategories: [sample-projects, characters]
 license: custom

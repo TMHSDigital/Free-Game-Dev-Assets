@@ -2,6 +2,7 @@
 id: ms-building-footprints
 name: Microsoft Global Building Footprints
 url: https://github.com/microsoft/GlobalMLBuildingFootprints
+license_url: https://cdla.dev/permissive-2-0/
 publisher: Microsoft
 category: environment
 subcategories: [geodata, buildings]

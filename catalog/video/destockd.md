@@ -2,6 +2,7 @@
 id: destockd
 name: Destockd
 url: https://www.destockd.com/
+license_url: https://www.destockd.com/#/faq
 category: video
 subcategories: [stock-footage, archival]
 license: varies

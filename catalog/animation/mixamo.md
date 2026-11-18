@@ -2,6 +2,7 @@
 id: mixamo
 name: Mixamo
 url: https://www.mixamo.com
+license_url: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
 category: animation
 subcategories: [mocap, characters]
 license: custom

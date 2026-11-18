@@ -2,6 +2,7 @@
 id: charge-materials
 name: Charge Material Asset Library
 url: https://studio.blender.org/projects/charge/gallery/?asset=7249
+license_url: https://studio.blender.org/terms-and-conditions/
 publisher: Blender Studio
 category: 3d
 subcategories: [materials]

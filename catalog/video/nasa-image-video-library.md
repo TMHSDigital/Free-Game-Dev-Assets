@@ -2,6 +2,7 @@
 id: nasa-image-video-library
 name: NASA Image and Video Library
 url: https://images.nasa.gov
+license_url: https://www.nasa.gov/nasa-brand-center/images-and-media/
 publisher: NASA
 category: video
 subcategories: [archival]

@@ -2,6 +2,7 @@
 id: xnormal
 name: xNormal
 url: https://xnormal.net
+license_url: https://xnormal.net/infLeg_en.php
 category: tools
 subcategories: [textures]
 license: custom

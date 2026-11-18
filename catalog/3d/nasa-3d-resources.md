@@ -2,6 +2,7 @@
 id: nasa-3d-resources
 name: NASA 3D Resources
 url: https://science.nasa.gov/3d-resources/
+license_url: https://www.nasa.gov/nasa-brand-center/images-and-media/
 publisher: NASA
 category: 3d
 subcategories: [vehicles]

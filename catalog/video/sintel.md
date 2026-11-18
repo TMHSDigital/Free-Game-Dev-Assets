@@ -2,6 +2,7 @@
 id: sintel
 name: Sintel
 url: https://durian.blender.org/
+license_url: https://durian.blender.org/sharing/
 category: video
 subcategories: [open-movie]
 license: CC-BY-3.0

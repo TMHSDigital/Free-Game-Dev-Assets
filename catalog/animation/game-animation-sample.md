@@ -2,6 +2,7 @@
 id: game-animation-sample
 name: Game Animation Sample (GASP)
 url: https://www.fab.com/listings/880e319a-a59e-4ed2-b268-b32dac7fa016
+license_url: https://www.fab.com/eula
 category: animation
 subcategories: [sample-projects, mocap]
 license: custom

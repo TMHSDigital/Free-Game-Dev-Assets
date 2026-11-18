@@ -2,6 +2,7 @@
 id: scan-the-world
 name: Scan the World
 url: https://www.myminifactory.com/scantheworld
+license_url: https://www.myminifactory.com/pages/terms-and-conditions
 category: 3d
 subcategories: [photogrammetry]
 license: unknown

@@ -2,6 +2,7 @@
 id: imagealpha
 name: ImageAlpha
 url: https://pngmini.com
+license_url: https://pngmini.com/
 category: tools
 subcategories: [compression, pipeline]
 license: GPL-2.0-only

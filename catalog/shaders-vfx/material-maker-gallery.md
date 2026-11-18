@@ -2,6 +2,7 @@
 id: material-maker-gallery
 name: Material Maker Community Gallery
 url: https://www.materialmaker.org/materials
+license_url: https://www.materialmaker.org/terms
 publisher: Material Maker
 category: shaders-vfx
 subcategories: [materials]

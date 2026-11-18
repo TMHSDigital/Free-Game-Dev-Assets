@@ -2,6 +2,7 @@
 id: kaykit
 name: KayKit (Kay Lousberg)
 url: https://kaylousberg.itch.io
+license_url: https://kaylousberg.itch.io/kaykit-adventurers
 publisher: KayKit
 category: 3d
 subcategories: [characters, environment]

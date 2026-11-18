@@ -2,6 +2,7 @@
 id: gebco
 name: GEBCO Grid
 url: https://www.gebco.net/data-products/gridded-bathymetry-data
+license_url: https://www.gebco.net/data-products/gridded-bathymetry/terms-of-use
 category: environment
 subcategories: [heightmaps, dem, bathymetry]
 license: public-domain

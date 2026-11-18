@@ -2,6 +2,7 @@
 id: pngyu
 name: Pngyu
 url: https://github.com/nukesaq88/Pngyu
+license_url: https://nukesaq88.github.io/Pngyu/
 category: tools
 subcategories: [compression, pipeline]
 license: BSD

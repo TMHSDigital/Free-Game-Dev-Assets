@@ -2,6 +2,7 @@
 id: pexels-videos
 name: Pexels Videos
 url: https://www.pexels.com/videos/
+license_url: https://www.pexels.com/license/
 publisher: Pexels
 category: video
 subcategories: [stock-footage]

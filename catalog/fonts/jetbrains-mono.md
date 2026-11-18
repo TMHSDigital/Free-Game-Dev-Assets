@@ -2,6 +2,7 @@
 id: jetbrains-mono
 name: JetBrains Mono
 url: https://www.jetbrains.com/lp/mono/
+license_url: https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/OFL.txt
 category: fonts
 subcategories: [mono, ui]
 license: SIL OFL

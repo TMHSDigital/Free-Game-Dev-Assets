@@ -819,7 +819,7 @@ has("csv header", csv, "id,name,url,category");
 has("csv has the added column before verified", csv, "tags,added,verified,status");
 has("csv quotes commas and quotes", csv, '"Say ""hi"", ok"');
 has("csv joins lists", csv, "PNG; SVG");
-has("csv ends with the credit columns", csv, "status,page,subcategories,publisher,attribution_string\r\n");
+has("csv keeps the credit columns, then license_url (#144)", csv, "status,page,subcategories,publisher,attribution_string,license_url\r\n");
 has("csv absolute page url", csv, "https://s.test/site/entry/a/");
 const feed = atomFeed({ entries: sample, site: { title: "T", tagline: "t", siteUrl: "https://s.test/site/" }, generatedAt: "2026-10-01T00:00:00.000Z", kind: "verified" });
 has("feed escapes summary", feed, "CC0. A &amp; B");
@@ -2622,6 +2622,17 @@ await section("needs-review open question (#211)", async () => {
   eq("singleton report: counts unique tags", report.unique, 3);
   eq("singleton report: lists one-off tags", report.singles.join(), "b,c");
   eq("singleton report: flags a share over a fifth", report.over, true);
+  // V42 (#144): license_url names a page the Evidence quotes.
+  const { checkLicenseUrl } = await import("../checks.mjs");
+  const { normalizeEntry: ne144 } = await import("./entry-fields.mjs");
+  const lBody = "## Evidence\n\n- Live [terms](https://a.test/terms) (2026-11-18): \"Free for games\"\n";
+  eq("V42: a quoted licence page passes", checkLicenseUrl("a.md", { url: "https://a.test/", license_url: "https://a.test/terms" }, lBody).length, 0);
+  has("V42: an unquoted page fails", checkLicenseUrl("a.md", { url: "https://a.test/", license_url: "https://a.test/other" }, lBody).join(), "not quoted in Evidence");
+  has("V42: repeating url fails", checkLicenseUrl("a.md", { url: "https://a.test/terms", license_url: "https://a.test/terms" }, lBody).join(), "defaults to url");
+  has("V42: not a URL fails", checkLicenseUrl("a.md", { url: "https://a.test/", license_url: "terms page" }, lBody).join(), "http(s) URL");
+  eq("V42: unset passes", checkLicenseUrl("a.md", { url: "https://a.test/" }, lBody).length, 0);
+  eq("license_url: data defaults to url", ne144({ id: "a", url: "https://a.test/" }, "x.md").license_url, "https://a.test/");
+  eq("license_url: data keeps a set value", ne144({ id: "a", url: "https://a.test/", license_url: "https://a.test/terms" }, "x.md").license_url, "https://a.test/terms");
   // #189: "free alternatives to ..." pages list active matches only.
   const alt = await import("./alternatives-page.mjs");
   const altEntries = [

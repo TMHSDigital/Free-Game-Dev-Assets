@@ -2,6 +2,7 @@
 id: freesound
 name: Freesound
 url: https://freesound.org
+license_url: https://freesound.org/help/faq/
 category: audio
 subcategories: [sfx, field-recordings]
 license: varies

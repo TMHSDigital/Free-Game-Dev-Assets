@@ -2,6 +2,7 @@
 id: musopen
 name: Musopen
 url: https://musopen.org
+license_url: https://musopen.org/tos/
 category: audio
 subcategories: [music]
 license: varies

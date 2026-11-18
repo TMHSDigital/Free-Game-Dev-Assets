@@ -2,6 +2,7 @@
 id: paragon-characters
 name: Paragon Characters (Epic, on Fab)
 url: https://www.fab.com/search?q=paragon&seller=Epic%20Games
+license_url: https://www.fab.com/eula
 category: characters
 subcategories: [humanoid, rigged]
 license: custom

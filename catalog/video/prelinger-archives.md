@@ -2,6 +2,7 @@
 id: prelinger-archives
 name: Prelinger Archives (Internet Archive)
 url: https://archive.org/details/prelinger
+license_url: https://www.panix.com/~footage/prelarch.html
 publisher: Prelinger Archives
 category: video
 subcategories: [archival, stock-footage]
