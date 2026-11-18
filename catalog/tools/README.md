@@ -78,6 +78,7 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [palette-extractor](palette-extractor.md) | Palette Extractor (SpriteWright) | MIT | active |
 | [piskel](piskel.md) | Piskel | Apache-2.0 | active |
 | [pixel-composer](pixel-composer.md) | Pixel Composer | MIT | active |
+| [pixelarthive-upscaler](pixelarthive-upscaler.md) | Pixel Art Upscaler (PixelArtHive) | custom | needs-review |
 | [rexpaint](rexpaint.md) | REXPaint | custom | active |
 | [rx-pixel-editor](rx-pixel-editor.md) | rx | GPL-3.0-only | active |
 | [sprite-fusion-pixel-snapper](sprite-fusion-pixel-snapper.md) | Sprite Fusion Pixel Snapper | MIT | active |
