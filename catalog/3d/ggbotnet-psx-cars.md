@@ -4,7 +4,7 @@ name: GGBotNet PSX Style Cars
 url: https://ggbot.itch.io/psx-style-cars
 publisher: GGBotNet
 category: 3d
-subcategories: [vehicles, low-poly]
+subcategories: [vehicles]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true

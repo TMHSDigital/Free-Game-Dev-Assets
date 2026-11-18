@@ -4,12 +4,12 @@ name: VRoid Studio
 url: https://vroid.com/en/studio
 publisher: pixiv
 category: characters
-subcategories: [anime, vrm]
+subcategories: [vrm]
 license: custom
 commercial: true
 attribution_required: false
 formats: [VRM]
-tags: [anime, stylized, vrm, character-creator, not-cc0]
+tags: [stylized, character-creator]
 added: 2026-07-19
 verified: 2026-09-23
 status: active

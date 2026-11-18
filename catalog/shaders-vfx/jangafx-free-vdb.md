@@ -3,13 +3,13 @@ id: jangafx-free-vdb
 name: JangaFX free EmberGen VDBs
 url: https://jangafx.com/software/embergen/download/free-vdb-animations/
 category: shaders-vfx
-subcategories: [vfx, volumes, particles]
+subcategories: [particles]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [VDB]
-tags: [vdb, volumes, explosion, smoke]
+tags: [explosion, smoke, vfx]
 added: 2026-08-29
 verified: 2026-08-29
 status: active

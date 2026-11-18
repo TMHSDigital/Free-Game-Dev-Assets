@@ -3,7 +3,7 @@ id: piper-plus
 name: Piper Plus
 url: https://github.com/ayutaz/piper-plus
 category: tools
-subcategories: [tts, speech]
+subcategories: [speech]
 license: MIT
 license_spdx: MIT
 commercial: true

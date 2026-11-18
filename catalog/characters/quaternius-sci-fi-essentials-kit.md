@@ -4,13 +4,13 @@ name: Quaternius Sci-Fi Essentials Kit
 url: https://quaternius.com/packs/scifiessentialskit.html
 publisher: Quaternius
 category: characters
-subcategories: [sci-fi, creatures, animated]
+subcategories: [creatures, animated]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend, glTF]
-tags: [sci-fi, robots, enemies, guns]
+tags: [sci-fi, enemies, guns]
 added: 2026-08-25
 verified: 2026-08-25
 status: active

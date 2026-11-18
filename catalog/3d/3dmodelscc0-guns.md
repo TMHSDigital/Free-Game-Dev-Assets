@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [GLB]
-tags: [weapons, firearms]
+tags: [weapons]
 added: 2026-08-29
 verified: 2026-10-23
 status: active

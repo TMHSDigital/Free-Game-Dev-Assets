@@ -3,12 +3,12 @@ id: opengameart
 name: OpenGameArt
 url: https://opengameart.org
 category: 2d
-subcategories: [sprites, tileset, aggregator]
+subcategories: [sprites, tileset]
 license: varies
 commercial: true
 attribution_required: unknown
 formats: [PNG, SVG, OGG]
-tags: [community, pixel-art, aggregator]
+tags: [community, pixel, aggregator]
 added: 2026-07-19
 verified: 2026-10-04
 status: per-item

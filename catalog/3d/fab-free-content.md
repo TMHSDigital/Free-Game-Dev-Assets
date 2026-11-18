@@ -3,12 +3,12 @@ id: fab-free-content
 name: Fab Free Listings and Limited-Time Free
 url: https://www.fab.com/search?is_free=1
 category: 3d
-subcategories: [aggregator, models, environment, materials]
+subcategories: [aggregator, environment, materials]
 license: varies
 commercial: varies
 attribution_required: unknown
 formats: [various]
-tags: [marketplace, per-listing-license, unreal-engine, giveaways]
+tags: [marketplace, unreal-engine, models]
 added: 2026-10-13
 verified: 2026-10-13
 status: per-item

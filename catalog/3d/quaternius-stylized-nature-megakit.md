@@ -4,13 +4,13 @@ name: Quaternius Stylized Nature MegaKit
 url: https://quaternius.com/packs/stylizednaturemegakit.html
 publisher: Quaternius
 category: 3d
-subcategories: [foliage, nature, trees]
+subcategories: [foliage]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF, Blend, OBJ]
-tags: [ghibli-ish, trees, plants]
+tags: [trees, nature]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

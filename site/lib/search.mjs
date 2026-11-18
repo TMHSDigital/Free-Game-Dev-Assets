@@ -72,7 +72,26 @@ export const SYNONYMS = {
   mesh: ["model"],
   tileset: ["tilemap", "tile set"],
   tilemap: ["tileset", "tile map"],
+  // Tag spellings merged in site/value-aliases.json (#96): the old spelling
+  // still finds the entries that now carry the kept one.
+  ps1: ["psx"],
+  gui: ["ui"],
+  l10n: ["localization"],
+  a11y: ["accessibility"],
+  walking: ["locomotion"],
+  running: ["locomotion"],
+  japanese: ["cjk"],
 };
+
+/**
+ * Merged tag spellings of more than one word (#96): the query phrase folds to
+ * the kept tag before it is split, so "pixel-art" finds every "pixel" entry,
+ * not only those that also say "art" somewhere.
+ */
+export const QUERY_FOLDS = [
+  [/\bpixel art\b/g, "pixel"],
+  [/\bgodot 4\b/g, "godot"],
+];
 
 /**
  * One test per query word. A word matches at the start of a word in the
@@ -90,7 +109,9 @@ export function wordTest(word) {
 }
 
 export function queryTests(q) {
-  return normalize(q).split(" ").filter(Boolean).map(wordTest);
+  let text = normalize(q);
+  for (const [re, kept] of QUERY_FOLDS) text = text.replace(re, kept);
+  return text.split(" ").filter(Boolean).map(wordTest);
 }
 
 /**

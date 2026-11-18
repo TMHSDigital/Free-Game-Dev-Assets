@@ -3,13 +3,13 @@ id: godot-demo-projects
 name: Godot Demo Projects
 url: https://github.com/godotengine/godot-demo-projects
 category: shaders-vfx
-subcategories: [demos, particles, shaders, godot]
+subcategories: [particles, shaders, godot]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [gdshader, Godot]
-tags: [godot, official, particles, shader, templates]
+tags: [shader, demos]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

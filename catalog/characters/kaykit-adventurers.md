@@ -4,13 +4,13 @@ name: KayKit Adventurers Character Pack
 url: https://kaylousberg.itch.io/kaykit-adventurers
 publisher: KayKit
 category: characters
-subcategories: [rigged, animated, modular-accessories]
+subcategories: [rigged, animated]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF]
-tags: [low-poly, stylized, adventurers]
+tags: [low-poly, stylized]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

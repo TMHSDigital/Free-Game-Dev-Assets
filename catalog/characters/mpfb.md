@@ -4,13 +4,13 @@ name: MPFB (MakeHuman for Blender)
 url: https://static.makehumancommunity.org/mpfb.html
 publisher: MakeHuman Community
 category: characters
-subcategories: [generator, base-meshes, blender]
+subcategories: [generator, base-meshes]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [Blend, FBX, glTF, OBJ]
-tags: [cc0-exports, blender, makehuman, generator]
+tags: [blender]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

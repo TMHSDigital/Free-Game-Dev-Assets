@@ -3,13 +3,13 @@ id: poly-haven
 name: Poly Haven
 url: https://polyhaven.com
 category: environment
-subcategories: [hdri, textures, models]
+subcategories: [hdri]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [EXR, HDR, PNG, glTF, FBX]
-tags: [hdri, pbr, calibrated, low-provenance-risk, concrete, metal, brick]
+tags: [pbr, concrete, metal, brick, models]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

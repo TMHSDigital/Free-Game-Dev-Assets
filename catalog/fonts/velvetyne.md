@@ -3,13 +3,13 @@ id: velvetyne
 name: Velvetyne
 url: https://velvetyne.fr
 category: fonts
-subcategories: [display, foundry]
+subcategories: [display]
 license: SIL OFL
 license_spdx: OFL-1.1
 commercial: true
 attribution_required: true
 formats: [OTF, TTF, WOFF]
-tags: [foundry, libre]
+tags: [foundry]
 attribution_string: "{font name} by {designer} / Velvetyne Type Foundry"
 added: 2026-08-24
 verified: 2026-08-24

@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [desktop-app, JSON]
-tags: [2d, levels, tilemap, entities]
+tags: [2d, levels, tilemap]
 added: 2026-09-26
 verified: 2026-09-26
 status: active

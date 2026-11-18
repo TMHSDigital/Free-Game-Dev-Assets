@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [desktop-app]
-tags: [pixel-art, node-editor, vfx, animation]
+tags: [vfx, animation]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

@@ -3,13 +3,13 @@ id: beehave
 name: Beehave
 url: https://github.com/bitbrain/beehave
 category: tools
-subcategories: [godot, ai]
+subcategories: [godot]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [godot-addon]
-tags: [godot, godot-4, behavior-tree, ai, enemy-logic]
+tags: [behavior-tree, ai]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

@@ -9,7 +9,7 @@ license_spdx: BSD-3-Clause
 commercial: true
 attribution_required: false
 formats: [desktop-app]
-tags: [tracker, modules, vst]
+tags: [tracker]
 added: 2026-09-26
 verified: 2026-09-26
 status: active

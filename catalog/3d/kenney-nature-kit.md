@@ -4,13 +4,13 @@ name: Kenney Nature Kit
 url: https://kenney.nl/assets/nature-kit
 publisher: Kenney
 category: 3d
-subcategories: [foliage, nature, environment-props]
+subcategories: [foliage]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, FBX, Blend]
-tags: [trees, rocks, foliage]
+tags: [trees, rocks, nature]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [isometric, tiles, itch, 2-to-1]
+tags: [itch]
 camera_perspective: isometric_3_4
 added: 2026-08-29
 verified: 2026-08-29

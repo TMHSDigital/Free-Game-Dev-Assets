@@ -3,13 +3,13 @@ id: gimp
 name: GIMP
 url: https://www.gimp.org
 category: tools
-subcategories: [raster, painting, texturing]
+subcategories: [painting]
 license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [XCF, PNG, TIFF, PSD, EXR]
-tags: [painting, texture-work, dcc]
+tags: [texture-work, dcc, raster, texturing]
 added: 2026-08-24
 verified: 2026-09-22
 status: active

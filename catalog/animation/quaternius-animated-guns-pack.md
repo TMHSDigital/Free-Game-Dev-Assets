@@ -4,13 +4,13 @@ name: Quaternius Animated Guns Pack
 url: https://quaternius.com/packs/animatedguns.html
 publisher: Quaternius
 category: animation
-subcategories: [weapons, props]
+subcategories: [weapons]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend]
-tags: [animated, weapons, fps, low-poly]
+tags: [animated, fps, low-poly]
 added: 2026-10-04
 verified: 2026-10-04
 status: active

@@ -3,12 +3,12 @@ id: fab-megascans-standard
 name: Fab / Quixel Megascans (Standard License)
 url: https://www.fab.com
 category: 3d
-subcategories: [photogrammetry, foliage, decals]
+subcategories: [photogrammetry, foliage]
 license: custom
 commercial: true
 attribution_required: false
 formats: [various]
-tags: [fab, quixel, engine-check-required]
+tags: [decals]
 added: 2026-07-19
 verified: 2026-11-03
 status: deprecated

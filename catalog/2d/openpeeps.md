@@ -3,13 +3,13 @@ id: openpeeps
 name: Open Peeps
 url: https://www.openpeeps.com/
 category: 2d
-subcategories: [illustrations, characters, ui]
+subcategories: [characters, ui]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [SVG, PNG, Sketch, Figma]
-tags: [illustration, characters, mix-match]
+tags: [vector]
 camera_perspective: 2d_flat
 added: 2026-07-19
 verified: 2026-07-19

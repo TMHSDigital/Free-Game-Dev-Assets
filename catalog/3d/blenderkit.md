@@ -3,12 +3,12 @@ id: blenderkit
 name: Blendkit
 url: https://www.blendkit.com
 category: 3d
-subcategories: [models, materials, hdri]
+subcategories: [materials, hdri]
 license: varies
 commercial: varies
 attribution_required: false
 formats: [Blend, glTF, HDR]
-tags: [blender, marketplace]
+tags: [blender, marketplace, models]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

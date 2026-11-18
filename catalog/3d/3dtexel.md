@@ -3,13 +3,13 @@ id: 3dtexel
 name: 3DTexel
 url: https://3dtexel.com/free-library/
 category: 3d
-subcategories: [textures, pbr, materials, hdri]
+subcategories: [textures, materials, hdri]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [TIFF, TGA, EXR, HDR]
-tags: [pbr, seamless, stylized, hand-painted, decals]
+tags: [pbr, seamless, stylized, decals]
 added: 2026-09-29
 verified: 2026-09-29
 status: active

@@ -4,13 +4,13 @@ name: KayKit (Kay Lousberg)
 url: https://kaylousberg.itch.io
 publisher: KayKit
 category: 3d
-subcategories: [characters, environment, animation]
+subcategories: [characters, environment]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, Blend]
-tags: [low-poly, atlas, mobile-friendly, characters]
+tags: [low-poly, atlas, animation]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

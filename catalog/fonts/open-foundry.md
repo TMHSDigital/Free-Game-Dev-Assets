@@ -3,12 +3,12 @@ id: open-foundry
 name: Open Foundry
 url: https://open-foundry.com
 category: fonts
-subcategories: [aggregator, display, foundry]
+subcategories: [display]
 license: varies
 commercial: varies
 attribution_required: true
 formats: [OTF, TTF]
-tags: [aggregator, display-only]
+tags: [aggregator, foundry]
 attribution_string: "See the licence on the typeface's own GitHub or foundry page"
 added: 2026-08-24
 verified: 2026-08-24

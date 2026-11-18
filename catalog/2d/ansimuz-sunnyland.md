@@ -4,13 +4,13 @@ name: SunnyLand (ansimuz)
 url: https://ansimuz.itch.io/sunny-land-pixel-game-art
 publisher: ansimuz
 category: 2d
-subcategories: [sprites, tileset, pixel, platformer, audio]
+subcategories: [sprites, tileset, pixel, platformer]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, WAV]
-tags: [pixel, platformer, itch, 16-bit]
+tags: [itch, audio]
 camera_perspective: side_scroller
 added: 2026-08-24
 verified: 2026-08-24

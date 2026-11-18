@@ -9,7 +9,7 @@ license_spdx: BSD-3-Clause
 commercial: true
 attribution_required: false
 formats: [FBX, glTF, OBJ, DAE]
-tags: [importer, converter, pipeline]
+tags: [importer]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

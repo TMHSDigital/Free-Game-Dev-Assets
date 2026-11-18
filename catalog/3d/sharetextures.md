@@ -3,12 +3,12 @@ id: sharetextures
 name: ShareTextures
 url: https://www.sharetextures.com
 category: 3d
-subcategories: [textures, pbr, models]
+subcategories: [textures]
 license: custom
 commercial: true
 attribution_required: false
 formats: [PNG, glTF]
-tags: [pbr, cc0-custom, redistribution-ban, metal]
+tags: [pbr, metal, models]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

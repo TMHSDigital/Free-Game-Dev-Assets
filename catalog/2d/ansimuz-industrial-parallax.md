@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, PSD]
-tags: [parallax, background, layers, pixel, industrial, night, platformer, side-scroller]
+tags: [parallax, background, layers, industrial, platformer, side-scroller]
 camera_perspective: side_scroller
 added: 2026-09-23
 verified: 2026-09-23

@@ -4,7 +4,7 @@ name: Kenney Roguelike/RPG Pack
 url: https://kenney.nl/assets/roguelike-rpg-pack
 publisher: Kenney
 category: 2d
-subcategories: [tileset, pixel, rpg]
+subcategories: [tileset, pixel]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true

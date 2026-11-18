@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Made using FMOD Studio by Firelight Technologies Pty Ltd."
 formats: [middleware]
-tags: [audio, freemium, indie-threshold]
+tags: [audio]
 added: 2026-07-19
 verified: 2026-09-26
 status: active

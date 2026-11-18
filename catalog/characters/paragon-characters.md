@@ -3,12 +3,12 @@ id: paragon-characters
 name: Paragon Characters (Epic, on Fab)
 url: https://www.fab.com/search?q=paragon&seller=Epic%20Games
 category: characters
-subcategories: [characters, humanoid, rigged]
+subcategories: [humanoid, rigged]
 license: custom
 commercial: true
 attribution_required: false
 formats: [Unreal]
-tags: [unreal-engine, moba, animated, realistic, fantasy, sci-fi]
+tags: [unreal-engine, animated, realistic, fantasy, sci-fi]
 publisher: Epic Games
 ue_versions: "4.19-5.8"
 added: 2026-10-13

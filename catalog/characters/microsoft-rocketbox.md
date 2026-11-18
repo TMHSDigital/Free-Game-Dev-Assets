@@ -10,7 +10,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [FBX]
-tags: [rigged, vr, research-origin, diverse]
+tags: [humanoid]
 added: 2026-07-19
 verified: 2026-09-26
 status: active

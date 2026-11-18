@@ -3,13 +3,13 @@ id: the-base-mesh
 name: The Base Mesh
 url: https://www.thebasemesh.com
 category: 3d
-subcategories: [base-meshes, prototype]
+subcategories: [prototype]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OBJ, glTF]
-tags: [topology, sculpting, reference]
+tags: [topology]
 added: 2026-07-19
 verified: 2026-10-23
 status: active

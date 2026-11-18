@@ -4,13 +4,13 @@ name: Blender Studio Ellie Pose Library
 url: https://www.blender.org/download/demo-files/#assets
 publisher: Blender Studio
 category: animation
-subcategories: [poses, rigging]
+subcategories: [poses, rigs]
 license: CC-BY
 commercial: true
 attribution_required: true
 attribution_string: "Ellie Pose Library (c) Blender Studio. CC-BY. Suggested format; card does not specify wording."
 formats: [Blend]
-tags: [poses]
+tags: [humanoid]
 preview: none   # the page's og:image is the publisher's general promo, not this pack
 added: 2026-07-19
 verified: 2026-08-24

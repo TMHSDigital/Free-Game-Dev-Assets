@@ -8,7 +8,7 @@ license: custom
 commercial: false
 attribution_required: unknown
 formats: [WAV]
-tags: [impulse-response, reverb, field-recording]
+tags: [impulse-response, field-recording]
 added: 2026-08-29
 verified: 2026-10-04
 status: needs-review

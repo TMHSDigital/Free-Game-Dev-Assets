@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [Unreal]
-tags: [unreal-engine, platformer, third-person, puzzle, stylized, blueprint]
+tags: [unreal-engine, platformer, third-person, stylized, blueprint]
 publisher: Epic Games
 ue_versions: "5.0-5.8"
 added: 2026-10-13

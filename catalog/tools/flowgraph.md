@@ -3,13 +3,13 @@ id: flowgraph
 name: Flow Graph
 url: https://github.com/MothCocoon/FlowGraph
 category: tools
-subcategories: [unreal, scripting]
+subcategories: [unreal]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, node-graph, event-scripting, narrative, quest, blueprint]
+tags: [unreal-engine, narrative, quest, blueprint, scripting]
 ue_versions: "5.6-5.8"
 added: 2026-10-13
 verified: 2026-10-13

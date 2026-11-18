@@ -760,9 +760,9 @@ rejects("V19 rejects a retired subcategory", checkValueAliases("bad.md", { subca
 rejects("V19 rejects a retired format", checkValueAliases("bad.md", { formats: ["JPEG"] }, aliases), 'use "JPG"');
 rejects("V19 rejects a licence as a subcategory", checkValueAliases("bad.md", { subcategories: ["public-domain"] }, aliases), "a licence, not a kind of content");
 rejects("V19 rejects an internal review tag", checkValueAliases("bad.md", { tags: ["r04"] }, aliases), "internal review marker");
-accepts("V19 lets a tag use a word retired only as a subcategory", checkValueAliases("ok.md", { tags: ["tiles", "gui"] }, aliases));
+accepts("V19 lets a tag use a word retired only as a subcategory", checkValueAliases("ok.md", { tags: ["ir", "base-mesh"] }, aliases));
 rejects("V19 rejects a tag that restates the licence", checkValueAliases("bad.md", { tags: ["cc0"] }, aliases), 'tags must not carry "cc0"');
-accepts("V19 keeps a tag that only mentions a licence word", checkValueAliases("ok.md", { tags: ["odbl-adjacent", "free-tier"] }, aliases));
+accepts("V19 keeps a tag that only mentions a licence word", checkValueAliases("ok.md", { tags: ["license-plates", "mit-scratch"] }, aliases));
 
 /* Licence families: every licence in exactly one Licence-filter group ---- */
 await section("Licence families: every licence in exactly one Licence-filter group", async () => {

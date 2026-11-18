@@ -10,7 +10,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Contains data from the National Land Survey of Finland Elevation Model 2 m {MM/YYYY}"
 formats: [GeoTIFF, ASCII]
-tags: [terrain, government, finland, lidar-derived]
+tags: [terrain, government, lidar-derived]
 publisher: National Land Survey of Finland
 added: 2026-10-04
 verified: 2026-10-04

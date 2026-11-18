@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, debug-ui, imgui, immediate-mode, developer-tools, implot]
+tags: [unreal-engine]
 ue_versions: "4.27-5.5"
 added: 2026-10-13
 verified: 2026-10-13

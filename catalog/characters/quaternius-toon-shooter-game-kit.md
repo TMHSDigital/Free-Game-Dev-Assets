@@ -4,13 +4,13 @@ name: Quaternius Toon Shooter Game Kit
 url: https://quaternius.com/packs/toonshootergamekit.html
 publisher: Quaternius
 category: characters
-subcategories: [rigged, animated, shooter]
+subcategories: [rigged, animated]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend, glTF]
-tags: [shooter, toon, characters, enemies]
+tags: [shooter, enemies]
 added: 2026-08-25
 verified: 2026-08-25
 status: active

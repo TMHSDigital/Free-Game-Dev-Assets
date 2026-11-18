@@ -3,13 +3,13 @@ id: oga-fps-arms-rigged
 name: FPS Arms, rigged (OpenGameArt)
 url: https://opengameart.org/content/fps-arms-rigged-only
 category: characters
-subcategories: [rigged, first-person]
+subcategories: [rigged]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, Blend]
-tags: [first-person, fps, arms, ik, fingers, opengameart]
+tags: [first-person, fps, fingers, opengameart]
 added: 2026-09-23
 verified: 2026-09-23
 status: active

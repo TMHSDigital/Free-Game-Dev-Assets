@@ -4,13 +4,13 @@ name: GDQuest Godot Shaders
 url: https://github.com/gdquest-demos/godot-shaders
 publisher: GDQuest
 category: shaders-vfx
-subcategories: [shaders, demos, godot]
+subcategories: [shaders, godot]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [gdshader, Godot]
-tags: [godot, 2d, 3d, demos]
+tags: [2d, 3d, demos]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

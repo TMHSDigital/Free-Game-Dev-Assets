@@ -3,7 +3,7 @@ id: lmms
 name: LMMS
 url: https://lmms.io
 category: tools
-subcategories: [daw, music]
+subcategories: [music]
 license: GPL-2.0-or-later
 license_spdx: GPL-2.0-or-later
 commercial: true

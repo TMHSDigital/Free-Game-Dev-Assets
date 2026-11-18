@@ -3,13 +3,13 @@ id: nixie-fx
 name: NixieFX
 url: https://github.com/azakhary/nixie-fx
 category: shaders-vfx
-subcategories: [particles, vfx]
+subcategories: [particles]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [npm, JavaScript, JSON]
-tags: [particles, web, threejs, pixijs]
+tags: [web, threejs, vfx]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

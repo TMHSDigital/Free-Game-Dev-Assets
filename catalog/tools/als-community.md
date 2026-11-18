@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, locomotion, character-movement, anim-blueprint, replication, mantling, ragdoll]
+tags: [unreal-engine, locomotion, character-movement, replication]
 ue_versions: "5.4"
 added: 2026-10-13
 verified: 2026-10-13

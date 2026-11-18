@@ -4,13 +4,13 @@ name: Quaternius Ultimate Monsters
 url: https://quaternius.com/packs/ultimatemonsters.html
 publisher: Quaternius
 category: characters
-subcategories: [creatures, enemies, animated]
+subcategories: [creatures, animated]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, Blend, OBJ, glTF]
-tags: [monsters, animated, enemies]
+tags: [monsters, enemies]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

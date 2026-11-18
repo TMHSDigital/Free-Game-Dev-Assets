@@ -4,13 +4,13 @@ name: Kenney Tiny Dungeon
 url: https://kenney.nl/assets/tiny-dungeon
 publisher: Kenney
 category: 2d
-subcategories: [tileset, pixel, dungeon]
+subcategories: [tileset, pixel]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [dungeon, sewer, roguelike, pixel, tiny]
+tags: [dungeon, roguelike]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 added: 2026-07-19

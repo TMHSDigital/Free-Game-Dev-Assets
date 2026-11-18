@@ -3,13 +3,13 @@ id: simple-icons
 name: Simple Icons
 url: https://simpleicons.org/
 category: 2d
-subcategories: [icons, brands]
+subcategories: [icons]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [SVG]
-tags: [icons, brands, logos, svg]
+tags: [svg]
 camera_perspective: 2d_flat
 added: 2026-07-19
 verified: 2026-07-19

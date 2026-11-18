@@ -3,13 +3,13 @@ id: godotsteam
 name: GodotSteam (GDExtension)
 url: https://godotengine.org/asset-library/asset/2445
 category: tools
-subcategories: [godot, steam]
+subcategories: [godot]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [gdextension]
-tags: [godot, godot-4, steamworks, achievements, leaderboards]
+tags: [steamworks]
 added: 2026-07-19
 verified: 2026-09-23
 status: active

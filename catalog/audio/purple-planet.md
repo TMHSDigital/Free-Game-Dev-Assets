@@ -8,7 +8,7 @@ license: custom
 commercial: unknown
 attribution_required: unknown
 formats: [MP3, WAV]
-tags: [music, ambient, cinematic]
+tags: [cinematic]
 added: 2026-07-19
 verified: 2026-08-25
 status: deprecated

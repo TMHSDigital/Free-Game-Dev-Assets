@@ -8,7 +8,7 @@ license: custom
 commercial: unknown
 attribution_required: false
 formats: [JPG]
-tags: [photos, grunge, concrete, rust, metal, wood]
+tags: [photos, concrete, rust, metal]
 added: 2026-09-30
 verified: 2026-10-04
 status: needs-review

@@ -9,7 +9,7 @@ license_spdx: BSD-3-Clause
 commercial: true
 attribution_required: false
 formats: [BIN, TXT, PLY, OBJ]
-tags: [photogrammetry, sfm, mvs]
+tags: [mvs]
 added: 2026-08-24
 verified: 2026-11-09
 status: active

@@ -3,7 +3,7 @@ id: texturecan
 name: TextureCan
 url: https://www.texturecan.com/
 category: 3d
-subcategories: [textures, pbr, sbsar]
+subcategories: [textures]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true

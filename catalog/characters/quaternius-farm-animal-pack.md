@@ -4,13 +4,13 @@ name: Quaternius Farm Animal Pack
 url: https://quaternius.com/packs/farmanimal.html
 publisher: Quaternius
 category: characters
-subcategories: [creatures, quadruped, animated]
+subcategories: [creatures, animated]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend]
-tags: [animals, quadruped, animated]
+tags: [animals]
 added: 2026-08-25
 verified: 2026-08-25
 status: active

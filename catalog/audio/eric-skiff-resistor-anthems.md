@@ -10,7 +10,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Music: Eric Skiff - {song name} - Resistor Anthems - Available at http://EricSkiff.com/music"
 formats: [MP3]
-tags: [chiptune, 8-bit, retro, music, album, credit-required]
+tags: [chiptune, 8-bit, retro]
 added: 2026-09-23
 verified: 2026-09-23
 status: active

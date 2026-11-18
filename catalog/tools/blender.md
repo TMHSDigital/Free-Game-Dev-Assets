@@ -3,13 +3,13 @@ id: blender
 name: Blender
 url: https://www.blender.org
 category: tools
-subcategories: [dcc, modeling, animation]
+subcategories: [modeling, animation]
 license: GPL-2.0-or-later
 license_spdx: GPL-2.0-or-later
 commercial: true
 attribution_required: false
 formats: [Blend, glTF, FBX, OBJ, USD]
-tags: [dcc, modeling]
+tags: [dcc]
 added: 2026-08-25
 verified: 2026-08-25
 status: active

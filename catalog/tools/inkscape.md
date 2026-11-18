@@ -3,13 +3,13 @@ id: inkscape
 name: Inkscape
 url: https://inkscape.org
 category: tools
-subcategories: [vectors, ui, icons]
+subcategories: [vectors, ui]
 license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [SVG, PNG, PDF, EPS]
-tags: [vector, svg, ui, icons, dcc]
+tags: [vector, svg, dcc]
 added: 2026-08-24
 verified: 2026-09-22
 status: active

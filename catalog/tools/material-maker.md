@@ -4,13 +4,13 @@ name: Material Maker
 url: https://www.materialmaker.org
 publisher: Material Maker
 category: tools
-subcategories: [materials, procedural]
+subcategories: [procedural]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [PNG, mm]
-tags: [pbr, procedural]
+tags: [pbr]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

@@ -3,12 +3,12 @@ id: nebula-forge
 name: Nebula Forge
 url: https://nebulakit.itch.io/nebula-forge
 category: tools
-subcategories: [backgrounds, procedural]
+subcategories: [procedural]
 license: custom
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [space, nebula, skybox, generator, browser, sci-fi]
+tags: [space, skybox, browser, sci-fi]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

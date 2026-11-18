@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [MP3, OGG]
-tags: [loops, music, itch, games-ok]
+tags: [itch]
 added: 2026-08-29
 verified: 2026-08-29
 status: active

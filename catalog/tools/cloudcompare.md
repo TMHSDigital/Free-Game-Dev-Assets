@@ -3,7 +3,7 @@ id: cloudcompare
 name: CloudCompare
 url: https://www.cloudcompare.org
 category: tools
-subcategories: [point-cloud, pipeline]
+subcategories: [pipeline]
 license: GPL-2.0-or-later
 license_spdx: GPL-2.0-or-later
 commercial: true

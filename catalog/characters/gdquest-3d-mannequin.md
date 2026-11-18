@@ -4,14 +4,14 @@ name: GDQuest Open 3D Mannequin
 url: https://github.com/gdquest-demos/godot-3d-mannequin
 publisher: GDQuest
 category: characters
-subcategories: [mannequin, godot]
+subcategories: [humanoid]
 license: CC-BY-4.0
 license_spdx: CC-BY-4.0
 commercial: true
 attribution_required: true
 attribution_string: "GDQuest and contributors (https://www.gdquest.com/)"
 formats: [glTF, Godot]
-tags: [godot, mannequin, controller]
+tags: [godot]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

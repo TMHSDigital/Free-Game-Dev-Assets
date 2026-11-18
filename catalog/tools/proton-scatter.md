@@ -3,13 +3,13 @@ id: proton-scatter
 name: ProtonScatter
 url: https://github.com/HungryProton/scatter
 category: tools
-subcategories: [godot, foliage, scatter]
+subcategories: [godot]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [godot-addon]
-tags: [godot, godot-4, foliage]
+tags: [foliage, scatter]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

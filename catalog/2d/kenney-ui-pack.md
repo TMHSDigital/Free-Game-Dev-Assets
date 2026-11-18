@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [ui, button, panels]
+tags: [button]
 camera_perspective: 2d_flat
 added: 2026-07-19
 verified: 2026-07-19

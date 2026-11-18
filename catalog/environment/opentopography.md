@@ -8,7 +8,7 @@ license: varies
 commercial: varies
 attribution_required: true
 formats: [GeoTIFF, LAS, LAZ]
-tags: [terrain, lidar, nsf, portal]
+tags: [terrain]
 attribution_string: "Cite the dataset landing page plus OpenTopography (see opentopography.org/citations)"
 added: 2026-08-24
 verified: 2026-08-24

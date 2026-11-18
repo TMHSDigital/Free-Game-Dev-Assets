@@ -3,13 +3,13 @@ id: smartshape2d
 name: SmartShape2D
 url: https://github.com/SirRamEsq/SmartShape2D
 category: tools
-subcategories: [godot, 2d, terrain]
+subcategories: [godot, terrain]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [godot-addon]
-tags: [godot, godot-4, 2d, terrain, polygons]
+tags: [2d]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

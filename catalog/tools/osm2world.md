@@ -3,13 +3,13 @@ id: osm2world
 name: OSM2World
 url: https://osm2world.org
 category: tools
-subcategories: [geo, conversion]
+subcategories: [conversion]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [glTF, OBJ]
-tags: [openstreetmap, odbl-adjacent]
+tags: [geo]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

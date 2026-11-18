@@ -3,7 +3,7 @@ id: quadriflow
 name: QuadriFlow
 url: https://github.com/hjwdzh/QuadriFlow
 category: tools
-subcategories: [remesh, pipeline]
+subcategories: [pipeline]
 license: BSD-3-Clause
 license_spdx: BSD-3-Clause
 commercial: true

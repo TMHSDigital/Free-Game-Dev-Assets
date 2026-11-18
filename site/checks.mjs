@@ -236,6 +236,37 @@ export function checkPerItem(rel, meta, body) {
   return errors;
 }
 
+/**
+ * Tags used by exactly one entry (#96). Not an error: a new tag starts as a
+ * singleton. Printed by validate as a warning so the share stays visible
+ * (the target is under a fifth of all tags); search already reads each
+ * entry's text, so a one-off tag the text repeats adds nothing.
+ */
+export function singletonTagReport(metas, limit = 0.2) {
+  const count = new Map();
+  for (const m of metas) for (const t of Array.isArray(m.tags) ? m.tags.map(String) : []) count.set(t, (count.get(t) || 0) + 1);
+  const singles = [...count].filter(([, n]) => n === 1).map(([t]) => t).sort();
+  const share = count.size ? singles.length / count.size : 0;
+  return { unique: count.size, singles, share, over: share > limit };
+}
+
+/* ----------------------------------------------------------------- V41 */
+/**
+ * Each category has a short list of subcategories in site/config.json
+ * (categories.<id>.subcategories, #96). A value outside it is either a
+ * tag (a long-tail description) or belongs to another category; leaving it
+ * free let subcategories sprawl to 190 values.
+ */
+export function checkSubcategoryList(rel, meta, categoryConfig = {}) {
+  const allowed = categoryConfig[String(meta.category)]?.subcategories;
+  if (!Array.isArray(allowed)) return [];
+  const errors = [];
+  for (const s of Array.isArray(meta.subcategories) ? meta.subcategories.map(String) : []) {
+    if (!allowed.includes(s)) errors.push(`${rel} subcategory "${s}" is not in the ${meta.category} list (site/config.json): use one of ${allowed.join(", ")}, or make it a tag (V41)`);
+  }
+  return errors;
+}
+
 /* ------------------------------------------------------------------ V7 */
 /**
  * `publisher` names a rights holder, never a host, and entries sharing a root
@@ -1344,6 +1375,7 @@ export const ENTRY_CHECKS = [
   { name: "checkDeprecationReason", run: (rel, meta, body, c) => checkDeprecationReason(rel, meta, body, c.vocab) },
   { name: "checkReviewQuestion", run: (rel, meta, body) => checkReviewQuestion(rel, meta, body) },
   { name: "checkPerItem", run: (rel, meta, body) => checkPerItem(rel, meta, body) },
+  { name: "checkSubcategoryList", run: (rel, meta, body, c) => checkSubcategoryList(rel, meta, c.categoryConfig) },
   { name: "checkTaxonomyValues", run: (rel, meta) => checkTaxonomyValues(rel, meta) },
   { name: "checkValueAliases", run: (rel, meta, body, c) => checkValueAliases(rel, meta, c.aliases) },
   { name: "checkFormatVocabulary", run: (rel, meta, body, c) => checkFormatVocabulary(rel, meta, c.formatVocab) },

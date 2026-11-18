@@ -10,7 +10,7 @@ commercial: true
 attribution_required: true
 attribution_string: "\"{sound title}\" by BudgetPixel AI ({sound page URL}), CC BY 4.0"
 formats: [WAV, MP3]
-tags: [ai-generated, ui, impact, whoosh]
+tags: [ai-generated, ui, impact]
 added: 2026-09-30
 verified: 2026-10-04
 status: active

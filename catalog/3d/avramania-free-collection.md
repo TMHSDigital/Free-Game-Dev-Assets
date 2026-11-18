@@ -4,13 +4,13 @@ name: Avramania Free Collection
 url: https://avramania.itch.io/free-collection
 publisher: Avramania
 category: 3d
-subcategories: [models, props]
+subcategories: [props]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, FBX]
-tags: [low-poly, medieval, ai-generated]
+tags: [low-poly, medieval, ai-generated, models]
 added: 2026-11-04
 verified: 2026-11-05
 status: active

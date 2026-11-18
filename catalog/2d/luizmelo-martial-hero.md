@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [pixel, platformer, player]
+tags: [pixel, platformer]
 camera_perspective: side_scroller
 added: 2026-07-19
 verified: 2026-08-24

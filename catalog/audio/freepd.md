@@ -8,7 +8,7 @@ license: unknown
 commercial: unknown
 attribution_required: false
 formats: [MP3]
-tags: [music, offline]
+tags: [offline]
 added: 2026-08-24
 verified: 2026-08-24
 status: deprecated

@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [WAV, OGG]
-tags: [ui, menu, cozy, procedural]
+tags: [ui, menu, procedural]
 added: 2026-11-07
 verified: 2026-11-07
 status: needs-review

@@ -9,7 +9,7 @@ license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [desktop-app]
-tags: [tracker, fasttracker, xm, amiga, retro]
+tags: [tracker, amiga, retro]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

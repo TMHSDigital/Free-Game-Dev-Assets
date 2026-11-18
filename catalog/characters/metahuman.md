@@ -3,12 +3,12 @@ id: metahuman
 name: MetaHuman
 url: https://www.metahuman.com
 category: characters
-subcategories: [characters, humanoid, rigged]
+subcategories: [humanoid, rigged]
 license: custom
 commercial: true
 attribution_required: false
 formats: [Unreal]
-tags: [unreal-engine, digital-humans, realistic, facial-animation, character-creator]
+tags: [unreal-engine, realistic, character-creator]
 publisher: Epic Games
 ue_versions: "5.6+"
 added: 2026-10-13

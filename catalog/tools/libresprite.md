@@ -9,7 +9,7 @@ license_spdx: GPL-2.0-only
 commercial: true
 attribution_required: false
 formats: [ASE, PNG, GIF]
-tags: [pixel-art, editor, aseprite-fork]
+tags: [editor]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

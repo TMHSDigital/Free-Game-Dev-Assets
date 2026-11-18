@@ -4,13 +4,13 @@ name: Quaternius Animated Mech Pack
 url: https://quaternius.com/packs/animatedmech.html
 publisher: Quaternius
 category: characters
-subcategories: [sci-fi, creatures, animated]
+subcategories: [creatures, animated]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend, glTF]
-tags: [mech, sci-fi, animated]
+tags: [sci-fi]
 added: 2026-08-25
 verified: 2026-08-25
 status: active

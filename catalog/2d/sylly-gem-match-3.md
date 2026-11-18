@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, SVG]
-tags: [match-3, gems, jewels, vector, puzzle, casual, mobile]
+tags: [match-3, gems, jewels, vector, casual, mobile]
 camera_perspective: 2d_flat
 added: 2026-09-23
 verified: 2026-09-23

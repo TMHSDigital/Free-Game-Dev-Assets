@@ -8,7 +8,7 @@ license: varies
 commercial: varies
 attribution_required: false
 formats: [MP4]
-tags: [fedflix, government, clip-search, aggregator]
+tags: [government, aggregator]
 added: 2026-09-06
 verified: 2026-10-04
 status: needs-review

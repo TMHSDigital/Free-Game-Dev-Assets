@@ -3,7 +3,7 @@ id: kokoro-82m
 name: Kokoro-82M
 url: https://huggingface.co/hexgrad/Kokoro-82M
 category: tools
-subcategories: [tts, speech]
+subcategories: [speech]
 license: Apache-2.0
 license_spdx: Apache-2.0
 commercial: true

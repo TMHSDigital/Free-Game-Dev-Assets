@@ -9,7 +9,7 @@ license_spdx: MPL-2.0
 commercial: true
 attribution_required: false
 formats: [OBJ, ABC, EXR, SFMdata]
-tags: [photogrammetry, alicevision, gpu]
+tags: [alicevision]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

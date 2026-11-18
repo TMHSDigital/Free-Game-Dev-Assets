@@ -3,12 +3,12 @@ id: rexpaint
 name: REXPaint
 url: https://www.gridsagegames.com/rexpaint/
 category: tools
-subcategories: [ascii]
+subcategories: [painting]
 license: custom
 commercial: true
 attribution_required: false
 formats: [desktop-app, PNG, TXT, CSV, XML]
-tags: [ascii, roguelike, mockups, ui, maps, windows]
+tags: [roguelike, ui, windows]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

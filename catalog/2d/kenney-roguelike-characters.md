@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [rpg, characters, roguelike, overworld, front-facing]
+tags: [rpg, roguelike, overworld]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 added: 2026-09-22

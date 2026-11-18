@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [desktop-app, PNG, GIF]
-tags: [pixel-art, sprite-editor, animation, onion-skin, windows]
+tags: [sprite-editor, animation, windows]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

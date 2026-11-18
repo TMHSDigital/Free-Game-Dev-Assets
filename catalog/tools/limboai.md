@@ -3,13 +3,13 @@ id: limboai
 name: LimboAI
 url: https://github.com/limbonaut/limboai
 category: tools
-subcategories: [godot, ai]
+subcategories: [godot]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [godot-addon, gdextension]
-tags: [godot, godot-4, behavior-tree, state-machine, ai, gdextension]
+tags: [behavior-tree, ai, gdextension]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

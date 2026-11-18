@@ -9,7 +9,7 @@ license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [TTF]
-tags: [pixel, retro, arcade]
+tags: [retro]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

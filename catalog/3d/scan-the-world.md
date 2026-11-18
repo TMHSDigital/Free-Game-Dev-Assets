@@ -3,12 +3,12 @@ id: scan-the-world
 name: Scan the World
 url: https://www.myminifactory.com/scantheworld
 category: 3d
-subcategories: [scans, historical]
+subcategories: [photogrammetry]
 license: unknown
 commercial: false
 attribution_required: unknown
 formats: [STL, OBJ]
-tags: [photogrammetry, museum, print, aggregator]
+tags: [museum, aggregator, historical]
 added: 2026-08-24
 verified: 2026-10-04
 status: needs-review

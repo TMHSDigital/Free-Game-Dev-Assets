@@ -3,13 +3,13 @@ id: ninja-adventure
 name: Ninja Adventure
 url: https://pixel-boy.itch.io/ninja-adventure-asset-pack
 category: 2d
-subcategories: [sprites, tileset, pixel, audio]
+subcategories: [sprites, tileset, pixel]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, WAV]
-tags: [16x16, top-down, rpg, itch, godot, 4-directional]
+tags: [16x16, top-down, rpg, itch, godot, 4-directional, audio]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 added: 2026-08-15

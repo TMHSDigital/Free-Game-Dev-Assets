@@ -8,7 +8,7 @@ license: varies
 commercial: varies
 attribution_required: unknown
 formats: [MP3]
-tags: [music, recordings, classical, per-file-license]
+tags: [classical]
 added: 2026-08-24
 verified: 2026-10-04
 status: needs-review

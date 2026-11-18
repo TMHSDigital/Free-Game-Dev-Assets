@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [WAV]
-tags: [impulse-response, reverb, convolution]
+tags: [impulse-response]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

@@ -3,12 +3,12 @@ id: soundbible
 name: SoundBible
 url: https://soundbible.com
 category: audio
-subcategories: [sfx, aggregator]
+subcategories: [sfx]
 license: varies
 commercial: varies
 attribution_required: unknown
 formats: [WAV, MP3]
-tags: [animals, guns, nature, comedy]
+tags: [animals, guns, nature, aggregator]
 added: 2026-09-30
 verified: 2026-10-04
 status: per-item

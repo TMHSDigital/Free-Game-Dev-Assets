@@ -9,7 +9,7 @@ license_spdx: ISC
 commercial: true
 attribution_required: false
 formats: [SVG]
-tags: [icons, brand-free]
+tags: [svg]
 camera_perspective: 2d_flat
 added: 2026-07-19
 verified: 2026-08-24

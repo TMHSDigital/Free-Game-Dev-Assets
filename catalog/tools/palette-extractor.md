@@ -3,13 +3,13 @@ id: palette-extractor
 name: Palette Extractor (SpriteWright)
 url: https://pixelpixi.github.io/spritewright/palette-extractor/
 category: tools
-subcategories: [pixel, palettes]
+subcategories: [pixel]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [gpl-palette, JSON, PNG]
-tags: [pixel-art, palettes, aseprite, browser, quantization]
+tags: [browser, quantization]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

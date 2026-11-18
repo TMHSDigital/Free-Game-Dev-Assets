@@ -3,12 +3,12 @@ id: paint-net
 name: Paint.NET
 url: https://paint.net/
 category: tools
-subcategories: [raster, painting]
+subcategories: [painting]
 license: custom
 commercial: true
 attribution_required: false
 formats: [desktop-app]
-tags: [image-editor, layers, plugin, windows]
+tags: [layers, plugin, windows, raster]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

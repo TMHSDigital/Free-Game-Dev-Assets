@@ -3,12 +3,12 @@ id: freepbr
 name: FreePBR
 url: https://freepbr.com
 category: 3d
-subcategories: [textures, pbr, materials]
+subcategories: [textures, materials]
 license: custom
 commercial: false
 attribution_required: false
 formats: [PNG, PSD]
-tags: [pbr, 2k, non-commercial-free-tier, concrete, metal, brick]
+tags: [pbr, concrete, metal, brick]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

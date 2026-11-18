@@ -3,13 +3,13 @@ id: suqs
 name: SUQS (Steve's Unreal Quest System)
 url: https://github.com/sinbad/SUQS
 category: tools
-subcategories: [unreal, quests]
+subcategories: [unreal]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, quest, data-driven, json, blueprint]
+tags: [unreal-engine, quest, blueprint]
 added: 2026-10-13
 verified: 2026-10-13
 status: active

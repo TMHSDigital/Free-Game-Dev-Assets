@@ -4,13 +4,13 @@ name: Kenney Smoke Particles
 url: https://kenney.nl/assets/smoke-particles
 publisher: Kenney
 category: shaders-vfx
-subcategories: [particles, smoke, 2d-vfx]
+subcategories: [particles, 2d-vfx]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [smoke, explosion, particles, vfx]
+tags: [smoke, explosion, vfx]
 added: 2026-07-27
 verified: 2026-07-27
 status: active

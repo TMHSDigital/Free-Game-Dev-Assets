@@ -8,7 +8,7 @@ license: custom
 commercial: unknown
 attribution_required: unknown
 formats: [VST, AU, AAX, WAV]
-tags: [reverb, ir, plugin, free-factory]
+tags: [plugin]
 added: 2026-07-19
 verified: 2026-10-04
 status: needs-review

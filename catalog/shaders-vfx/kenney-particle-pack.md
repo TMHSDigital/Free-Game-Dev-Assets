@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [particles, shader, vfx]
+tags: [shader, vfx]
 added: 2026-07-27
 verified: 2026-07-27
 status: active

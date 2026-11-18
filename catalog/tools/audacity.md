@@ -9,7 +9,7 @@ license_spdx: GPL-3.0-only
 commercial: true
 attribution_required: false
 formats: [WAV, FLAC, OGG, MP3, AUP3]
-tags: [audio, editor, muse-group]
+tags: [audio, editor]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

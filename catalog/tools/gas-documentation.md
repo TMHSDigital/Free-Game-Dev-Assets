@@ -3,13 +3,13 @@ id: gas-documentation
 name: GASDocumentation
 url: https://github.com/tranek/GASDocumentation
 category: tools
-subcategories: [unreal, learning]
+subcategories: [unreal]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [Unreal]
-tags: [unreal-engine, gameplay-ability-system, multiplayer, replication, tutorial, sample-project]
+tags: [unreal-engine, multiplayer, replication]
 ue_versions: "5.3"
 added: 2026-10-13
 verified: 2026-10-13

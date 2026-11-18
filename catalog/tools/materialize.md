@@ -3,7 +3,7 @@ id: materialize
 name: Materialize
 url: https://boundingboxsoftware.com/materialize/
 category: tools
-subcategories: [textures, pbr, baker]
+subcategories: [textures]
 license: GPL-3.0-only
 license_spdx: GPL-3.0-only
 commercial: true

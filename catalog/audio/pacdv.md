@@ -8,7 +8,7 @@ license: custom
 commercial: unknown
 attribution_required: false
 formats: [MP3]
-tags: [interface, machines, household, voices]
+tags: [interface]
 added: 2026-09-30
 verified: 2026-10-04
 status: needs-review

@@ -3,13 +3,13 @@ id: sollumz
 name: Sollumz
 url: https://github.com/Sollumz/Sollumz
 category: tools
-subcategories: [blender-addon, gta-format]
+subcategories: [blender-addon]
 license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [YDR, YDD, YFT, YBN, YTYP, YCD, YMAP, Blend]
-tags: [blender-addon, gta-format, fivem]
+tags: [gta-format]
 added: 2026-08-25
 verified: 2026-09-22
 status: active

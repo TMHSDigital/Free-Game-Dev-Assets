@@ -9,7 +9,7 @@ commercial: unknown
 attribution_required: true
 attribution_string: "NASA/Goddard Space Flight Center Scientific Visualization Studio. Gaia DR2: ESA/Gaia/DPAC."
 formats: [EXR, TIFF]
-tags: [stars, space, milky-way, skybox]
+tags: [space, milky-way]
 publisher: NASA
 added: 2026-10-04
 verified: 2026-10-04

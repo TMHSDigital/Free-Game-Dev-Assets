@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [BVH]
-tags: [academic, mocap, research]
+tags: [academic, research]
 added: 2026-07-19
 verified: 2026-10-23
 status: active

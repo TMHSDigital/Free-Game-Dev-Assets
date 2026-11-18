@@ -3,13 +3,13 @@ id: ue5coro
 name: UE5Coro
 url: https://github.com/landelare/ue5coro
 category: tools
-subcategories: [unreal, library]
+subcategories: [unreal]
 license: BSD-3-Clause-Clear
 license_spdx: BSD-3-Clause-Clear
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, coroutines, async, latent-actions, multithreading, gameplay-programming]
+tags: [unreal-engine, latent-actions, multithreading, gameplay-programming]
 added: 2026-10-13
 verified: 2026-10-13
 status: active

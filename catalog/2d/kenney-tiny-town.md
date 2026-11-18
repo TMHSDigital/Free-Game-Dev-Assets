@@ -4,7 +4,7 @@ name: Kenney Tiny Town
 url: https://kenney.nl/assets/tiny-town
 publisher: Kenney
 category: 2d
-subcategories: [tileset, pixel, overworld]
+subcategories: [tileset, pixel]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true

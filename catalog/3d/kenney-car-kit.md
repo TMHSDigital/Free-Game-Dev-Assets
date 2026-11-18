@@ -4,13 +4,13 @@ name: Kenney Car Kit
 url: https://kenney.nl/assets/car-kit
 publisher: Kenney
 category: 3d
-subcategories: [vehicles, transport]
+subcategories: [vehicles]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, FBX, Blend]
-tags: [cars, vehicles]
+tags: [cars, transport]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

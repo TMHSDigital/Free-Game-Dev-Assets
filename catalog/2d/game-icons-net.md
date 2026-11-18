@@ -10,7 +10,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Icons made by {author}. Available on https://game-icons.net"
 formats: [SVG, PNG]
-tags: [icons, vector, monochrome]
+tags: [vector]
 camera_perspective: 2d_flat
 added: 2026-07-19
 verified: 2026-08-15

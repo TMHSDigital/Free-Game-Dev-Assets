@@ -9,7 +9,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [MP4]
-tags: [stock, b-roll, standalone-ban]
+tags: [stock, b-roll]
 added: 2026-09-23
 verified: 2026-09-23
 status: active

@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [pxo, PNG]
-tags: [pixel-art, editor]
+tags: [editor]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

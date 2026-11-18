@@ -9,7 +9,7 @@ commercial: varies
 attribution_required: true
 attribution_string: "Credit the track artist and the CC license named on that FMA track page."
 formats: [MP3]
-tags: [aggregator, tribe-of-noise]
+tags: [aggregator]
 added: 2026-08-24
 verified: 2026-10-04
 status: needs-review

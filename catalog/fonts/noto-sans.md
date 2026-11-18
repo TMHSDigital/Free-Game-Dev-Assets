@@ -3,13 +3,13 @@ id: noto-sans
 name: Noto Sans (incl. CJK)
 url: https://fonts.google.com/noto
 category: fonts
-subcategories: [sans, cjk, localization]
+subcategories: [sans, cjk]
 license: SIL OFL
 license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [OTF, TTF]
-tags: [localization, cjk, variable-font]
+tags: [localization, variable-font]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

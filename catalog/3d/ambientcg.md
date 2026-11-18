@@ -3,13 +3,13 @@ id: ambientcg
 name: ambientCG
 url: https://ambientcg.com
 category: 3d
-subcategories: [textures, pbr, materials]
+subcategories: [textures, materials]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, EXR, SBSAR]
-tags: [pbr, seamless, materials, concrete, metal, brick]
+tags: [pbr, seamless, concrete, metal, brick]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

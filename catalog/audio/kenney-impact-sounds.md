@@ -4,13 +4,13 @@ name: Kenney Impact Sounds
 url: https://kenney.nl/assets/impact-sounds
 publisher: Kenney
 category: audio
-subcategories: [sfx, foley, impact]
+subcategories: [sfx, foley]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OGG, WAV]
-tags: [impact, foley]
+tags: [impact]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

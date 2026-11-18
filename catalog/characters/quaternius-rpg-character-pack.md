@@ -4,13 +4,13 @@ name: Quaternius RPG Character Pack
 url: https://quaternius.com/packs/rpgcharacters.html
 publisher: Quaternius
 category: characters
-subcategories: [rigged, animated, fantasy]
+subcategories: [rigged, animated]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, Blend, glTF]
-tags: [fantasy, rpg, animated]
+tags: [fantasy, rpg]
 added: 2026-08-25
 verified: 2026-08-25
 status: active

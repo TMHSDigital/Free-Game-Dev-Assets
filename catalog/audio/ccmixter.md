@@ -3,13 +3,13 @@ id: ccmixter
 name: ccMixter
 url: https://ccmixter.org
 category: audio
-subcategories: [music, stems, aggregator]
+subcategories: [music]
 license: varies
 commercial: varies
 attribution_required: true
 attribution_string: "Music \"{title}\" by {artist} Available at ccMixter.org {url} Under {CC license} {license-url}"
 formats: [MP3, WAV]
-tags: [aggregator, remix, youtube-first]
+tags: [aggregator]
 added: 2026-08-24
 verified: 2026-10-04
 status: per-item

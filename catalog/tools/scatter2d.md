@@ -3,13 +3,13 @@ id: scatter2d
 name: Scatter2D
 url: https://github.com/alex9978/scatter2d
 category: tools
-subcategories: [godot, scatter]
+subcategories: [godot]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [godot-addon]
-tags: [godot, godot-4, 2d]
+tags: [2d, scatter]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

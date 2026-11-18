@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, PNG, SVG]
-tags: [low-poly, survivors, zombie, skins]
+tags: [low-poly, zombie]
 preview: none   # the page's og:image is the publisher's general promo, not this pack
 added: 2026-09-26
 verified: 2026-09-26

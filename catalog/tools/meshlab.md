@@ -9,7 +9,7 @@ license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [OBJ, PLY, glTF, 3MF]
-tags: [mesh, cleanup, scan]
+tags: [cleanup]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

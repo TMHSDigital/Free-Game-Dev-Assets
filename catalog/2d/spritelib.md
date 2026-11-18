@@ -9,7 +9,7 @@ license_spdx: CPL-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [retro, shooter, breakout, platformer, maze]
+tags: [retro, shooter, breakout, platformer]
 camera_perspective: 2d_flat
 added: 2026-09-30
 verified: 2026-09-30

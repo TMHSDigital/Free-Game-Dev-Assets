@@ -8,7 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [Unreal]
-tags: [unreal-engine, top-down, rts, stylized, blueprint]
+tags: [unreal-engine, top-down, stylized, blueprint]
 publisher: Epic Games
 engine_lock: unreal
 ue_versions: "5.2-5.8"

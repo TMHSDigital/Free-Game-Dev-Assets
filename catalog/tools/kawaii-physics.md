@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, physics, bone-physics, secondary-motion, anim-graph, hair, cloth]
+tags: [unreal-engine, anim-graph]
 ue_versions: "5.3-5.8"
 added: 2026-10-13
 verified: 2026-10-13

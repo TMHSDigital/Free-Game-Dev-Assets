@@ -3,13 +3,13 @@ id: goxel
 name: Goxel
 url: https://goxel.xyz
 category: tools
-subcategories: [voxel, editor]
+subcategories: [voxel]
 license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [VOX, glTF, OBJ, PLY]
-tags: [voxel, dcc]
+tags: [dcc, editor]
 added: 2026-08-24
 verified: 2026-09-22
 status: active

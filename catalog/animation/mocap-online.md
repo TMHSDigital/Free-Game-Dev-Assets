@@ -3,12 +3,12 @@ id: mocap-online
 name: MoCap Online (free samples)
 url: https://mocaponline.com/collections/free-mocap-animations
 category: animation
-subcategories: [mocap, combat]
+subcategories: [mocap]
 license: custom
 commercial: true
 attribution_required: false
 formats: [FBX, BIP, Unity, Unreal, Blend]
-tags: [professional, combat, freemium, revenue-cap]
+tags: [professional, combat]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

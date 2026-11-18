@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [desktop-app, mobile-app]
-tags: [nes, chiptune, sequencer, sound-engine, retro]
+tags: [nes, chiptune, sequencer, retro]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

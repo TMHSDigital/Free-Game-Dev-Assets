@@ -3,7 +3,7 @@ id: cgbookcase
 name: cgbookcase
 url: https://www.cgbookcase.com
 category: 3d
-subcategories: [textures, pbr, materials]
+subcategories: [textures, materials]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true

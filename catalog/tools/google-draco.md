@@ -9,7 +9,7 @@ license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [DRC, glTF]
-tags: [mesh-compression, gltf]
+tags: [gltf]
 added: 2026-07-19
 verified: 2026-10-23
 status: active

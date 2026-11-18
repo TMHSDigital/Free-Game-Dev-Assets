@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Federal Office of Topography swisstopo"
 formats: [COG, GeoTIFF, ASCII]
-tags: [terrain, government, switzerland, alps]
+tags: [terrain, government]
 publisher: swisstopo
 added: 2026-10-04
 verified: 2026-10-04

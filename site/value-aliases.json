@@ -1,15 +1,30 @@
 {
-  "_comment": "Spellings merged by the 2026-09-25 review, per field: the key is the retired value, the value is the one to use. 'retired' lists values a field must not carry at all, with the reason. checks.mjs V19 enforces both.",
+  "_comment": "Spellings merged by the 2026-09-25 review, per field: the key is the retired value, the value is the one to use. 'retired' lists values a field must not carry at all, with the reason. checks.mjs V19 enforces both. The 2026-11-18 cleanup (#96) merged duplicate tags and retired licence-shaped ones.",
   "subcategories": {
     "tiles": "tileset",
     "pixel-art": "pixel",
     "ir": "impulse-responses",
     "gui": "ui",
-    "base-mesh": "base-meshes"
+    "base-mesh": "base-meshes",
+    "rigging": "rigs",
+    "scans": "photogrammetry",
+    "tts": "speech",
+    "mannequin": "humanoid",
+    "skeletal-2d": "animation",
+    "ascii": "painting"
   },
   "tags": {
     "ps1": "psx",
-    "game-ok": "games-ok"
+    "pixel-art": "pixel",
+    "godot-4": "godot",
+    "unreal": "unreal-engine",
+    "gui": "ui",
+    "l10n": "localization",
+    "a11y": "accessibility",
+    "tiles": "tileset",
+    "walking": "locomotion",
+    "running": "locomotion",
+    "japanese": "cjk"
   },
   "formats": {
     "JPEG": "JPG",
@@ -41,7 +56,41 @@
       "freeware": "restates the licence terms; license and commercial record them",
       "free": "every entry is free; the licence fields say on what terms",
       "non-commercial": "restates commercial: false, which the Commercial OK filter uses",
-      "archived": "restates the maintenance field, which shows as a badge"
+      "archived": "restates the maintenance field, which shows as a badge",
+      "freemium": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "per-model-license": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "mixed-license": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "per-item-license": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "cc0-exports": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "cc0-custom": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "cc0-filter": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "not-cc0": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "non-commercial-free-tier": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "free-tier": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "per-file-license": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "per-listing-license": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "per-film-license": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "credit-required": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "attribution-basic": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "redistribution-ban": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "standalone-ban": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "no-nd": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "revenue-cap": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "budget-cap": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "indie-threshold": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "low-provenance-risk": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "provenance-risk": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "vendor-risk": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "engine-check-required": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "filter-required": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "endorsement-trap": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "games-ok": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "game-ok": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "games-not-named": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "odbl-adjacent": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "no-ai-training": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "eula-pdf": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)",
+      "brand-free": "a licence or risk judgement, not a description of the asset; the license, commercial and attribution fields and the Notes record it (#96)"
     }
   }
 }

@@ -8,7 +8,7 @@ license: varies
 commercial: varies
 attribution_required: unknown
 formats: [WAV, FLAC, OGG]
-tags: [community, filter-required, cc0-filter]
+tags: [community]
 added: 2026-07-19
 verified: 2026-10-04
 status: per-item

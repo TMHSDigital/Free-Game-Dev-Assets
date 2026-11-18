@@ -3,13 +3,13 @@ id: openclipart
 name: Openclipart
 url: https://openclipart.org
 category: 2d
-subcategories: [icons, vectors, clipart]
+subcategories: [icons, vectors]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [SVG, PNG]
-tags: [svg, clipart, provenance-risk]
+tags: [svg]
 camera_perspective: 2d_flat
 added: 2026-08-24
 verified: 2026-08-24

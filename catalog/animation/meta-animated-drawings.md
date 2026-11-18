@@ -3,13 +3,13 @@ id: meta-animated-drawings
 name: Meta Animated Drawings
 url: https://github.com/facebookresearch/AnimatedDrawings
 category: animation
-subcategories: [2d, drawings, pipeline]
+subcategories: [2d]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [Python]
-tags: [2d, research, fair]
+tags: [research, pipeline]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

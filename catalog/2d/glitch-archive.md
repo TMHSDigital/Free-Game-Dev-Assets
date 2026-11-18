@@ -4,13 +4,13 @@ name: Glitch (CC0 asset release)
 url: https://github.com/tinyspeck/glitch-items
 publisher: Tiny Speck
 category: 2d
-subcategories: [sprites, vectors, environment]
+subcategories: [sprites, vectors]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, SVG, FLA]
-tags: [hand-drawn, vector, large-pack]
+tags: [hand-drawn, vector, environment]
 added: 2026-07-19
 verified: 2026-08-29
 status: active

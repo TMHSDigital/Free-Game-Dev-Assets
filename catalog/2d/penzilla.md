@@ -9,7 +9,7 @@ commercial: false
 attribution_required: true
 attribution_string: "Graphics created by Penzilla Design"
 formats: [PNG]
-tags: [pixel, gui, itch]
+tags: [itch]
 added: 2026-08-24
 verified: 2026-10-04
 status: active

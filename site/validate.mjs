@@ -28,6 +28,7 @@ import {
   checkPublisherConsistency,
   checkStacks,
   checkValueSpellings,
+  singletonTagReport,
   markdownAnchors,
 } from "./checks.mjs";
 import { ANY_SCHEME_RE, EXTERNAL_SCHEME_RE, isListed, latestAllowedDate } from "./lib/shared.mjs";
@@ -215,7 +216,7 @@ export function validateRepo() {
     const catReadme = path.join(path.dirname(file), "README.md");
     const readmeText = linkTarget(catReadme).exists ? readText(catReadme) : null;
     // Every per-entry check, from one list (checks.mjs ENTRY_CHECKS, #255).
-    const ctx = { vocab, spdxAllowed, aliases, formatVocab, today, stem, dirName: path.basename(path.dirname(file)), categories, readmeText };
+    const ctx = { vocab, spdxAllowed, aliases, formatVocab, today, stem, dirName: path.basename(path.dirname(file)), categories, readmeText, categoryConfig: config.categories };
     for (const check of ENTRY_CHECKS) errors.push(...check.run(rel, meta, body, ctx));
     if (meta.id) {
       const id = String(meta.id);
@@ -345,6 +346,10 @@ function main() {
   }
   console.log(`validate ok: ${entryCount} entries, ${idCount} ids, ${stackCount} stacks, no broken links`);
   console.log(coverageReport(entries));
+  // Warning only (#96): one-off tags rarely help search, which reads entry text.
+  const tags = singletonTagReport(entries);
+  const pct = Math.round(tags.share * 100);
+  console.log(`${tags.over ? "warning: " : ""}${tags.singles.length} of ${tags.unique} tags (${pct}%) are used by one entry${tags.over ? "; the target is under 20%" : ""}: ${tags.singles.join(", ")}`);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

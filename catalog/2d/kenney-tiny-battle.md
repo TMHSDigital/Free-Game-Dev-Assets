@@ -4,13 +4,13 @@ name: Kenney Tiny Battle
 url: https://kenney.nl/assets/tiny-battle
 publisher: Kenney
 category: 2d
-subcategories: [tileset, pixel, strategy]
+subcategories: [tileset, pixel]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [16x16, strategy, wargame, units, top-down]
+tags: [16x16, top-down]
 grid_dimensions: 16x16
 camera_perspective: top_down
 added: 2026-09-22

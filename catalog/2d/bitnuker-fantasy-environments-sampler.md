@@ -3,13 +3,13 @@ id: bitnuker-fantasy-environments-sampler
 name: BitNuker Fantasy Environments Sampler
 url: https://bitnuker.itch.io/fantasy-environments-sampler
 category: 2d
-subcategories: [environment, tileset, pixel]
+subcategories: [tileset, pixel]
 license: custom
 commercial: true
 attribution_required: false
 publisher: BitNuker
 formats: [PNG]
-tags: [ai-generated, fantasy, background, skies]
+tags: [ai-generated, fantasy, background, environment]
 added: 2026-10-23
 verified: 2026-10-23
 status: active

@@ -4,14 +4,14 @@ name: Charge Material Asset Library
 url: https://studio.blender.org/projects/charge/gallery/?asset=7249
 publisher: Blender Studio
 category: 3d
-subcategories: [materials, blender]
+subcategories: [materials]
 license: CC-BY-4.0
 license_spdx: CC-BY-4.0
 commercial: true
 attribution_required: true
 attribution_string: "Charge Material Asset Library by Blender Studio (Simon Thommes), CC BY 4.0"
 formats: [Blend]
-tags: [eevee, bake-out]
+tags: [bake-out, blender]
 added: 2026-07-19
 verified: 2026-10-04
 status: active

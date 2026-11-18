@@ -3,13 +3,13 @@ id: waterways
 name: Waterways
 url: https://github.com/Arnklit/Waterways
 category: shaders-vfx
-subcategories: [water, rivers, godot]
+subcategories: [water, godot]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [gdshader, godot-addon]
-tags: [godot, rivers, flowmaps, foam]
+tags: [flowmaps]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

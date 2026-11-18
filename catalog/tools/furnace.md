@@ -9,7 +9,7 @@ license_spdx: GPL-2.0-or-later
 commercial: true
 attribution_required: false
 formats: [desktop-app]
-tags: [tracker, chiptune, sound-chips, retro]
+tags: [tracker, chiptune, retro]
 added: 2026-09-26
 verified: 2026-09-26
 status: active

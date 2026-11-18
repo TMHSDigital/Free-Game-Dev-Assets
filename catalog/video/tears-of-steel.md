@@ -10,7 +10,7 @@ commercial: true
 attribution_required: true
 attribution_string: "(CC) Blender Foundation | mango.blender.org"
 formats: [MP4]
-tags: [live-action, sci-fi, vfx, cutscene, test-footage]
+tags: [sci-fi, vfx, cutscene, test-footage]
 added: 2026-10-04
 verified: 2026-10-04
 status: active

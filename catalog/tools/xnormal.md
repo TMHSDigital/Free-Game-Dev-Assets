@@ -3,7 +3,7 @@ id: xnormal
 name: xNormal
 url: https://xnormal.net
 category: tools
-subcategories: [textures, baker]
+subcategories: [textures]
 license: custom
 commercial: true
 attribution_required: false

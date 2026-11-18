@@ -3,13 +3,13 @@ id: overture-maps
 name: Overture Maps
 url: https://docs.overturemaps.org/attribution/
 category: environment
-subcategories: [geodata, vectors]
+subcategories: [geodata]
 license: varies
 commercial: unknown
 attribution_required: true
 attribution_string: "© OpenStreetMap contributors, Overture Maps Foundation"
 formats: [GeoJSON]
-tags: [buildings, roads, places, world-data]
+tags: [buildings, roads]
 publisher: Overture Maps Foundation
 added: 2026-10-04
 verified: 2026-10-04

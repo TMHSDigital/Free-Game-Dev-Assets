@@ -9,7 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [WAV]
-tags: [chiptune, 8-bit, retro, music, looping, platformer]
+tags: [chiptune, 8-bit, retro, looping, platformer]
 added: 2026-09-23
 verified: 2026-09-23
 status: active

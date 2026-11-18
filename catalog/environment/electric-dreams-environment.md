@@ -3,12 +3,12 @@ id: electric-dreams-environment
 name: Electric Dreams Env
 url: https://www.fab.com/listings/d79688f5-29be-4fb2-a650-2d4a813f5306
 category: environment
-subcategories: [sample-projects, environment, foliage, procedural]
+subcategories: [sample-projects]
 license: custom
 commercial: true
 attribution_required: false
 formats: [Unreal]
-tags: [unreal-engine, pcg, substrate, nanite, lumen, jungle, photogrammetry]
+tags: [unreal-engine, nanite, photogrammetry, foliage, procedural]
 publisher: Epic Games
 engine_lock: unreal
 ue_versions: "5.2-5.8"

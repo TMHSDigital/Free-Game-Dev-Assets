@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [1-bit, roguelike, rpg, pixel, multi-perspective]
+tags: [1-bit, rpg]
 grid_dimensions: 16x16
 added: 2026-07-19
 verified: 2026-07-19

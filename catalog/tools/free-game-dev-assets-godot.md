@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [godot-addon]
-tags: [godot, godot-4, editor-plugin, asset-browser, credits]
+tags: [asset-browser]
 added: 2026-11-10
 verified: 2026-11-10
 status: active

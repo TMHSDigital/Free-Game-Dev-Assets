@@ -2610,6 +2610,23 @@ await section("needs-review open question (#211)", async () => {
   has("V40: the line on another status fails", checkPerItem("a.md", { status: "needs-review", license: "varies" }, perBody).join(), "belongs to per-item");
   eq("V40: an active entry without the line passes", checkPerItem("a.md", { status: "active", license: "CC0" }, "x").length, 0);
   eq("V40: the note is read and capitalised", perItemNote(perBody), "Read the licence on each sound's page.");
+  // V41 (#96): subcategories come from the category's list in config.json.
+  const { checkSubcategoryList, singletonTagReport } = await import("../checks.mjs");
+  const cats = { "2d": { subcategories: ["sprites", "ui"] } };
+  eq("V41: listed subcategories pass", checkSubcategoryList("a.md", { category: "2d", subcategories: ["ui"] }, cats).length, 0);
+  has("V41: an unlisted subcategory fails", checkSubcategoryList("a.md", { category: "2d", subcategories: ["audio"] }, cats).join(), "make it a tag (V41)");
+  eq("V41: a category without a list is not checked", checkSubcategoryList("a.md", { category: "3d", subcategories: ["x"] }, cats).length, 0);
+  const report = singletonTagReport([{ tags: ["a", "b"] }, { tags: ["a", "c"] }, { tags: [] }]);
+  eq("singleton report: counts unique tags", report.unique, 3);
+  eq("singleton report: lists one-off tags", report.singles.join(), "b,c");
+  eq("singleton report: flags a share over a fifth", report.over, true);
+  // Every merged tag spelling still finds an entry tagged with the kept one (#96).
+  const tagAliases = JSON.parse(fsTest.readFileSync(new URL("../value-aliases.json", import.meta.url), "utf8")).tags;
+  const { searchFields: sf, scoreFields: sc, queryTests: qt } = await import("./search.mjs");
+  for (const [old, kept] of Object.entries(tagAliases)) {
+    const entry = { id: "x", name: "Pack", tags: [kept], subcategories: [], formats: [], license: "CC0", category: "2d" };
+    eq(`merged tag: "${old}" finds an entry tagged "${kept}"`, sc(sf(entry), qt(old)) > 0, true);
+  }
   const md = batchIssueMarkdown({ batch: [], repo: "https://g.test/o/r", date: "2026-11-07", total: 1, openQuestions: [{ id: "a", rel: "catalog/2d/a.md", review: "Confirm the music.\nInjected" }] });
   has("reverify issue: open questions listed", md, "**Open questions** (1 needs-review entry");
   has("reverify issue: one line per question", md, "): Confirm the music. Injected");

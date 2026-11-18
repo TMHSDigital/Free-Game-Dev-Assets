@@ -8,7 +8,7 @@ license: public-domain
 commercial: true
 attribution_required: false
 formats: [GeoTIFF, DEM, various]
-tags: [government, terrain, gis, srtm]
+tags: [government, terrain, srtm]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

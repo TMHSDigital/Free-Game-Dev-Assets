@@ -3,13 +3,13 @@ id: fontshare
 name: Fontshare
 url: https://www.fontshare.com
 category: fonts
-subcategories: [aggregator, sans, display]
+subcategories: [sans, display]
 license: varies
 commercial: true
 limits: "Most families are ITF FFL: no subsetting or format conversion, which engine font imports may do"
 attribution_required: false
 formats: [OTF, TTF, WOFF]
-tags: [foundry, itf, mixed-license, variable-font]
+tags: [foundry, variable-font, aggregator]
 added: 2026-08-24
 verified: 2026-10-04
 status: active

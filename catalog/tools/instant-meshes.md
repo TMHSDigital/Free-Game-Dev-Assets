@@ -3,7 +3,7 @@ id: instant-meshes
 name: Instant Meshes
 url: https://github.com/wjakob/instant-meshes
 category: tools
-subcategories: [remesh, pipeline]
+subcategories: [pipeline]
 license: BSD-3-Clause
 license_spdx: BSD-3-Clause
 commercial: true

@@ -3,12 +3,12 @@ id: fontsource
 name: Fontsource
 url: https://fontsource.org
 category: fonts
-subcategories: [aggregator, sans, npm]
+subcategories: [sans]
 license: varies
 commercial: varies
 attribution_required: true
 formats: [TTF, WOFF, WOFF2, npm]
-tags: [npm, self-host, aggregator]
+tags: [aggregator]
 attribution_string: "See the OFL.txt / LICENSE in the @fontsource/{family} package you installed"
 added: 2026-08-24
 verified: 2026-08-24

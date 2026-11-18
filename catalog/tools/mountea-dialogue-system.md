@@ -9,7 +9,7 @@ license_spdx: MPL-2.0
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, dialogue, dialogue-graph, branching-dialogue, blueprint, narrative]
+tags: [unreal-engine, dialogue-graph, branching-dialogue, blueprint, narrative]
 ue_versions: "5.2-5.8"
 added: 2026-10-13
 verified: 2026-10-13

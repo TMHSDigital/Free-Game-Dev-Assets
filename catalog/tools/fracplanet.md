@@ -9,7 +9,7 @@ license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [desktop-app]
-tags: [planet, heightfield, fractal, pov-ray]
+tags: [heightfield]
 maintenance: inactive
 added: 2026-09-30
 verified: 2026-10-04

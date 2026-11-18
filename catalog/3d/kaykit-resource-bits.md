@@ -4,13 +4,13 @@ name: KayKit Resource Bits
 url: https://kaylousberg.itch.io/resource-bits
 publisher: KayKit
 category: 3d
-subcategories: [models, props, resources]
+subcategories: [props]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OBJ, FBX, glTF]
-tags: [low-poly, atlas, crafting]
+tags: [low-poly, atlas, crafting, models]
 added: 2026-08-15
 verified: 2026-08-15
 status: active

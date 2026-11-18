@@ -10,7 +10,7 @@ license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [OTF, TTF]
-tags: [sci-fi, geometric, display]
+tags: [sci-fi]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

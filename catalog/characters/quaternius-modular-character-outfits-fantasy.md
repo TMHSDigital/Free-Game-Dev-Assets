@@ -4,13 +4,13 @@ name: Quaternius Modular Character Outfits (Fantasy)
 url: https://quaternius.com/packs/modularcharacteroutfitsfantasy.html
 publisher: Quaternius
 category: characters
-subcategories: [modular, clothing, rigged]
+subcategories: [modular, rigged]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, glTF, Blend, OBJ]
-tags: [modular, fantasy, outfits]
+tags: [fantasy, clothing]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

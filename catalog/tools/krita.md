@@ -3,13 +3,13 @@ id: krita
 name: Krita
 url: https://krita.org
 category: tools
-subcategories: [raster, painting, texturing]
+subcategories: [painting]
 license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [KRA, PNG, TIFF, PSD, EXR]
-tags: [painting, texture-work, dcc]
+tags: [texture-work, dcc, raster, texturing]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG, SVG, XML]
-tags: [puzzle, casual, breakout, brick, pipes, coins, particles, mobile]
+tags: [casual, breakout, brick, mobile]
 camera_perspective: 2d_flat
 added: 2026-09-23
 verified: 2026-09-23

@@ -3,13 +3,13 @@ id: tilemancer
 name: Tilemancer
 url: https://led.itch.io/tilemancer
 category: tools
-subcategories: [tileset, procedural]
+subcategories: [procedural]
 license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [desktop-app]
-tags: [pixel-art, tileset, node-based, lua, heightmap]
+tags: [pixel, tileset, heightmap]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

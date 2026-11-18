@@ -3,12 +3,12 @@ id: sketchfab
 name: Sketchfab
 url: https://sketchfab.com
 category: 3d
-subcategories: [models, aggregator]
+subcategories: [aggregator]
 license: varies
 commercial: varies
 attribution_required: unknown
 formats: [glTF, FBX, OBJ, USD]
-tags: [aggregator, per-model-license, epic, marketplace]
+tags: [marketplace, models]
 added: 2026-08-24
 verified: 2026-10-04
 status: per-item

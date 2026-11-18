@@ -4,13 +4,13 @@ name: Kenney Music Jingles
 url: https://kenney.nl/assets/music-jingles
 publisher: Kenney
 category: audio
-subcategories: [music, jingles, stingers]
+subcategories: [music, jingles]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OGG]
-tags: [music, stinger, jingle, ui]
+tags: [ui]
 added: 2026-08-24
 verified: 2026-08-24
 status: active

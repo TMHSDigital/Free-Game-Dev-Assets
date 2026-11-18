@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [dungeon, pixel, tileset, itch]
+tags: [dungeon, itch]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 added: 2026-07-19

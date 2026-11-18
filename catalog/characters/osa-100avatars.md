@@ -3,13 +3,13 @@ id: osa-100avatars
 name: Open Source Avatars (100Avatars CC0)
 url: https://www.opensourceavatars.com/
 category: characters
-subcategories: [vrm, avatar, library]
+subcategories: [vrm, library]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [VRM]
-tags: [vrm, web, metaverse]
+tags: [web]
 added: 2026-07-19
 verified: 2026-08-25
 status: active

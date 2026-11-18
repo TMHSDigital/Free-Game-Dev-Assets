@@ -10,7 +10,7 @@ license_spdx: CDLA-Permissive-2.0
 commercial: true
 attribution_required: false
 formats: [GeoJSON, CSV]
-tags: [buildings, footprints, height-estimates]
+tags: [city]
 added: 2026-07-19
 verified: 2026-09-26
 status: active

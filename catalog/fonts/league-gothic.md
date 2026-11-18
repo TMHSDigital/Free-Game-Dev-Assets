@@ -4,13 +4,13 @@ name: League Gothic
 url: https://github.com/theleagueof/league-gothic
 publisher: The League of Moveable Type
 category: fonts
-subcategories: [display, sans, condensed]
+subcategories: [display, sans]
 license: SIL OFL
 license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [OTF, TTF]
-tags: [display, condensed, gothic]
+tags: [gothic]
 added: 2026-08-29
 verified: 2026-08-29
 status: active

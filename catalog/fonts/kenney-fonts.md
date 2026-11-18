@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [TTF]
-tags: [pixel, display, mono, ui]
+tags: [ui]
 added: 2026-09-26
 verified: 2026-09-26
 status: active

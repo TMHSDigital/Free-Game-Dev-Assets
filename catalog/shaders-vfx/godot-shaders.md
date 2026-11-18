@@ -8,7 +8,7 @@ license: varies
 commercial: true
 attribution_required: unknown
 formats: [gdshader]
-tags: [godot, canvas-item, spatial, per-item-license]
+tags: [godot, canvas-item, spatial]
 added: 2026-07-19
 verified: 2026-10-04
 status: per-item

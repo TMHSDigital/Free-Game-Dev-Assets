@@ -4,13 +4,13 @@ name: Kenney Cursor Pack
 url: https://kenney.nl/assets/cursor-pack
 publisher: Kenney
 category: 2d
-subcategories: [ui, cursors]
+subcategories: [ui]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [cursor, pointer, ui]
+tags: [interface]
 camera_perspective: 2d_flat
 added: 2026-07-19
 verified: 2026-07-19

@@ -4,13 +4,13 @@ name: NASA 3D Resources
 url: https://science.nasa.gov/3d-resources/
 publisher: NASA
 category: 3d
-subcategories: [models, planetary]
+subcategories: [vehicles]
 license: public-domain
 commercial: true
 attribution_required: true
 attribution_string: "NASA 3D Resources / NASA. Suggested format; NASA asks to be acknowledged as the source and forbids implied endorsement."
 formats: [OBJ, STL, various]
-tags: [government, space, low-provenance-risk]
+tags: [government, space, models]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

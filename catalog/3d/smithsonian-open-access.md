@@ -3,13 +3,13 @@ id: smithsonian-open-access
 name: Smithsonian Open Access
 url: https://www.si.edu/openaccess
 category: 3d
-subcategories: [scans, historical]
+subcategories: [photogrammetry]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, OBJ]
-tags: [photogrammetry, museum, realistic]
+tags: [museum, realistic, historical]
 added: 2026-07-19
 verified: 2026-09-25
 status: active

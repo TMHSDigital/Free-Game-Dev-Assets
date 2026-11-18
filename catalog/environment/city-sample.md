@@ -3,13 +3,13 @@ id: city-sample
 name: City Sample
 url: https://www.fab.com/listings/4898e707-7855-404b-af0e-a505ee690e68
 category: environment
-subcategories: [sample-projects, buildings, vehicles]
+subcategories: [sample-projects, buildings]
 license: custom
 commercial: true
 attribution_required: false
 formats: [Unreal]
 limits: "May not be redistributed in source form or committed to a public repository"
-tags: [unreal-engine, city, realistic, open-world, nanite]
+tags: [unreal-engine, city, realistic, nanite, vehicles]
 publisher: Epic Games
 ue_versions: "5.0-5.8"
 added: 2026-10-13

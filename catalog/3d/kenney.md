@@ -4,13 +4,13 @@ name: Kenney
 url: https://kenney.nl
 publisher: Kenney
 category: 3d
-subcategories: [models, environment, ui, audio]
+subcategories: [environment]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, PNG]
-tags: [low-poly, modular, beginner-friendly, huge-library]
+tags: [low-poly, modular, beginner-friendly, models, ui, audio]
 added: 2026-07-19
 verified: 2026-08-25
 status: active

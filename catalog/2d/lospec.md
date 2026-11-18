@@ -8,7 +8,7 @@ license: varies
 commercial: unknown
 attribution_required: unknown
 formats: [gpl-palette, PAL, ASE, PNG]
-tags: [palettes, pixel-art, retro]
+tags: [retro]
 added: 2026-07-19
 verified: 2026-10-04
 status: needs-review

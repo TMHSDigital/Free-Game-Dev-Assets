@@ -3,13 +3,13 @@ id: espeak-ng
 name: eSpeak NG
 url: https://github.com/espeak-ng/espeak-ng
 category: tools
-subcategories: [tts, speech]
+subcategories: [speech]
 license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [WAV, espeak-ng-data]
-tags: [tts, formant, offline]
+tags: [tts, offline]
 added: 2026-08-24
 verified: 2026-09-22
 status: active

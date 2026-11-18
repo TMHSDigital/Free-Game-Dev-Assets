@@ -9,7 +9,7 @@ commercial: true
 attribution_required: true
 attribution_string: "Truebones"
 formats: [FBX, BVH]
-tags: [creature, animals, mocap, gumroad, vendor-risk]
+tags: [creature, animals]
 added: 2026-08-29
 verified: 2026-10-04
 status: needs-review

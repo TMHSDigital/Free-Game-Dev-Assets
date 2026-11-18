@@ -3,13 +3,13 @@ id: melotts
 name: MeloTTS
 url: https://github.com/myshell-ai/MeloTTS
 category: tools
-subcategories: [tts, speech]
+subcategories: [speech]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [Python, WAV]
-tags: [local, multilingual, tts]
+tags: [local, tts]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

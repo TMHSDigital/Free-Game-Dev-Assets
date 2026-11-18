@@ -3,12 +3,12 @@ id: game-animation-sample
 name: Game Animation Sample (GASP)
 url: https://www.fab.com/listings/880e319a-a59e-4ed2-b268-b32dac7fa016
 category: animation
-subcategories: [sample-projects, mocap, animation]
+subcategories: [sample-projects, mocap]
 license: custom
 commercial: true
 attribution_required: false
 formats: [Unreal]
-tags: [unreal-engine, third-person, motion-matching, locomotion, humanoid]
+tags: [unreal-engine, third-person, locomotion, humanoid]
 publisher: Epic Games
 ue_versions: "5.4-5.8"
 added: 2026-10-13

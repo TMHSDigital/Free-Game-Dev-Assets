@@ -3,13 +3,13 @@ id: spud
 name: SPUD (Steve's Persistent Unreal Data)
 url: https://github.com/sinbad/SPUD
 category: tools
-subcategories: [unreal, save-system]
+subcategories: [unreal]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, save-game, persistence, level-streaming, blueprint]
+tags: [unreal-engine, blueprint, save-system]
 added: 2026-10-13
 verified: 2026-10-13
 status: active

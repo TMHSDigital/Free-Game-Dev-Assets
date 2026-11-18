@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [desktop-app, PNG]
-tags: [normals, painting, pixel-art, 2d, java]
+tags: [normals, pixel, 2d, java]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

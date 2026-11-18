@@ -8,7 +8,7 @@ license: custom
 commercial: false
 attribution_required: false
 formats: [desktop-app]
-tags: [terrain, freemium, eula-pdf, heightfield]
+tags: [heightfield]
 added: 2026-07-19
 verified: 2026-10-04
 status: active

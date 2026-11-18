@@ -9,7 +9,7 @@ commercial: true
 attribution_required: unknown
 publisher: ailora will
 formats: [PNG]
-tags: [ui, animation, procedural, loading]
+tags: [animation, procedural]
 added: 2026-11-17
 verified: 2026-11-17
 status: needs-review

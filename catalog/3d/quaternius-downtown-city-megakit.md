@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [FBX, OBJ, glTF, Blend]
-tags: [city, modular]
+tags: [city]
 added: 2026-08-25
 verified: 2026-08-25
 status: active

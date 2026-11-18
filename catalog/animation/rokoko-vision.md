@@ -3,12 +3,12 @@ id: rokoko-vision
 name: Rokoko Vision (Create)
 url: https://www.rokoko.com/products/vision
 category: animation
-subcategories: [mocap, ai]
+subcategories: [mocap]
 license: custom
 commercial: true
 attribution_required: false
 formats: [FBX, BVH]
-tags: [freemium, video-to-fbx, ai, text-to-motion]
+tags: [ai]
 added: 2026-07-19
 verified: 2026-08-24
 status: active

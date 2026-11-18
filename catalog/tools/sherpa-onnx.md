@@ -3,13 +3,13 @@ id: sherpa-onnx
 name: sherpa-onnx
 url: https://github.com/k2-fsa/sherpa-onnx
 category: tools
-subcategories: [tts, speech, asr]
+subcategories: [speech]
 license: Apache-2.0
 license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [ONNX, C++, Python, WASM]
-tags: [local, offline, tts, asr]
+tags: [local, offline, tts]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

@@ -4,13 +4,13 @@ name: Reem Kufi
 url: https://github.com/aliftype/reem-kufi
 publisher: Alif Type
 category: fonts
-subcategories: [arabic, display, kufi]
+subcategories: [arabic, display]
 license: SIL OFL
 license_spdx: OFL-1.1
 commercial: true
 attribution_required: false
 formats: [TTF, OTF]
-tags: [arabic, kufi, headline]
+tags: [kufi]
 added: 2026-08-29
 verified: 2026-08-29
 status: active

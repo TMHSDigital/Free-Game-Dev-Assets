@@ -9,7 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [cli, PNG]
-tags: [pixel-art, cleanup, quantization, batch, rust]
+tags: [cleanup, quantization, batch, rust]
 added: 2026-09-30
 verified: 2026-09-30
 status: active

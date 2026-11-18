@@ -3,7 +3,7 @@ id: universal-lpc-generator
 name: Universal LPC Spritesheet Generator
 url: https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/
 category: 2d
-subcategories: [sprites, paper-doll, tileset-adjacent]
+subcategories: [sprites]
 license: varies
 commercial: varies
 attribution_required: true

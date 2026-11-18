@@ -3,12 +3,12 @@ id: accurig
 name: AccuRig (Reallusion)
 url: https://www.reallusion.com/auto-rig/accurig/
 category: tools
-subcategories: [rigging, characters]
+subcategories: [rigs]
 license: custom
 commercial: true
 attribution_required: false
 formats: [FBX, USD]
-tags: [auto-rig, reallusion, actorcore, freemium]
+tags: [auto-rig]
 added: 2026-07-19
 verified: 2026-10-04
 status: active

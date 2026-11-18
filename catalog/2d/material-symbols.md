@@ -10,7 +10,7 @@ license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [SVG, TTF, WOFF2]
-tags: [icons, variable-font]
+tags: [variable-font]
 camera_perspective: 2d_flat
 added: 2026-08-24
 verified: 2026-09-26

@@ -3,13 +3,13 @@ id: pb-character-movement
 name: PBCharacterMovement
 url: https://github.com/ProjectBorealis/PBCharacterMovement
 category: tools
-subcategories: [unreal, first-person]
+subcategories: [unreal]
 license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [unreal-plugin, C++]
-tags: [unreal-engine, character-movement, fps, bunny-hopping, air-strafing, crouch-slide]
+tags: [unreal-engine, character-movement, fps, crouch-slide, first-person]
 ue_versions: "5.5"
 added: 2026-10-13
 verified: 2026-10-13

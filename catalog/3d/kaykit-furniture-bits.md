@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OBJ, FBX, glTF]
-tags: [furniture, stylized]
+tags: [stylized]
 added: 2026-07-19
 verified: 2026-07-19
 status: active

@@ -4,13 +4,13 @@ name: KayKit Prototype Bits
 url: https://kaylousberg.itch.io/prototype-bits
 publisher: KayKit
 category: 3d
-subcategories: [models, props, prototype]
+subcategories: [props, prototype]
 license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [OBJ, FBX, glTF]
-tags: [low-poly, atlas, prototype]
+tags: [low-poly, atlas, models]
 added: 2026-08-15
 verified: 2026-08-15
 status: active

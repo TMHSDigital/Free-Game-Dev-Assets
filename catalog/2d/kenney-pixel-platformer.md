@@ -10,7 +10,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [PNG]
-tags: [pixel, platformer, tiles]
+tags: [pixel]
 grid_dimensions: 18x18
 camera_perspective: side_scroller
 added: 2026-07-19
