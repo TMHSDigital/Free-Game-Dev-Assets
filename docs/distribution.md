@@ -11,9 +11,9 @@ The landing pages for posts: the [catalog](https://tmhsdigital.github.io/Free-Ga
 | magictools | One line under the assets or resources section | PR [ellisonleao/magictools#538](https://github.com/ellisonleao/magictools/pull/538) opened 2026-11-18 (replaces #418, closed after the list's new submission rules) |
 | awesome-gamedev | One line under free assets | PR [Calinou/awesome-gamedev#98](https://github.com/Calinou/awesome-gamedev/pull/98) open since 2026-09-25, still mergeable on 2026-11-18 |
 | awesome-godot | The Godot plugin under Plugins and scripts, Godot 4 | PR [Calinou/awesome-godot#555](https://github.com/Calinou/awesome-godot/pull/555) opened 2026-11-18 |
-| awesome-unity | One line under assets or resources | |
-| awesome-unreal | One line under resources | |
-| A CC0 / public-domain awesome list | One line; the catalog's metadata is CC0 | |
+| awesome-unity3d (insthync) | One line under Collections / Forums / Shops | PR [insthync/awesome-unity3d#73](https://github.com/insthync/awesome-unity3d/pull/73) opened 2026-11-18. RyanNielson/awesome-unity is archived |
+| Awesome Unreal Engine 4/5 (aiekick) | One line under Assets | PR [aiekick/Awesome_Unreal_Engine_4_-_5#10](https://github.com/aiekick/Awesome_Unreal_Engine_4_-_5/pull/10) opened 2026-11-18. insthync/awesome-unreal lists code repositories only (no resources section); terrehbyte/awesome-ue4 is inactive since 2023 |
+| A CC0 / public-domain awesome list | One line; the catalog's metadata is CC0 | Skipped 2026-11-18: madjin/awesome-cc0, the only active-looking one, has had no push since 2024 and five unmerged PRs |
 | Engine docs "community resources" pages | Only where the engine accepts external links | |
 
 ## Dataset hubs
