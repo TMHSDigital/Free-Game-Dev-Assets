@@ -12,7 +12,7 @@ attribution_required: false
 formats: [Python]
 tags: [research, pipeline]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 maintenance: archived
 ---
@@ -31,6 +31,7 @@ MIT code to animate children’s-style human figure drawings (FAIR paper impleme
 ## Evidence
 
 - Live `LICENSE` (2026-07-19): “MIT License … Copyright (c) Meta Platforms, Inc. and affiliates” with use/modify/sell rights subject to notice
+- Re-read [at the source](https://github.com/facebookresearch/AnimatedDrawings) (2026-11-18): unchanged, “MIT License”
 
 ## Related
 

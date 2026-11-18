@@ -13,7 +13,7 @@ formats: [gdshader]
 delivery: [godot-project]
 tags: [psx]
 added: 2026-07-27
-verified: 2026-07-27
+verified: 2026-11-18
 status: active
 maintenance: inactive
 ---
@@ -34,6 +34,7 @@ MIT Godot 4 shader set recreating PS1 quirks: vertex snap, affine mapping, color
 
 - Live `LICENSE` (2026-07-27): “MIT License … Copyright (c) 2020 MenacingMecha” with use/modify/sell rights subject to notice inclusion
 - GitHub license metadata: MIT
+- Re-read [at the source](https://github.com/MenacingMecha/godot-psx-style-demo) (2026-11-18): unchanged, “MIT License”
 
 ## Related
 

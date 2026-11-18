@@ -12,7 +12,7 @@ attribution_required: false
 formats: [FBX, glTF, GLB, Blend]
 tags: [combat, zombie]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -28,6 +28,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): License badge **CC0**; “130+ Animations” for Godot/Unity/Unreal
+- Re-read [at the source](https://quaternius.com/packs/universalanimationlibrary2.html) (2026-11-18): unchanged, “License CC0”
 
 ## Related
 

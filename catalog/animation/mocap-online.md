@@ -12,7 +12,7 @@ formats: [FBX, BIP, Blend]
 delivery: [unity-package, unreal-project]
 tags: [professional, combat]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Professional optical mocap shop with **$0 demo packs** (sampler, sword combat, U
 
 - Live Licensing page (2026-07-19): Standard License “Use in personal & commercial projects … Up to 1M end users / $1M revenue … Royalty-free, perpetual”
 - Live free collection (2026-07-19): three $0 packs for evaluation/getting started; site banner “Standard License included”
+- Re-read [at the source](https://mocaponline.com/pages/licensing) (2026-11-18): unchanged, “Use in personal & commercial projects … Up to 1M end users / $1M gross revenue … Unlimited projects … Modify animations for your project … Royalty-free, perpetual”
 
 ## Related
 

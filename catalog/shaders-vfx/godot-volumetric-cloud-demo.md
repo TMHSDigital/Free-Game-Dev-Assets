@@ -13,7 +13,7 @@ formats: [gdshader]
 delivery: [godot-project]
 tags: [clouds]
 added: 2026-07-27
-verified: 2026-07-27
+verified: 2026-11-18
 status: active
 ---
 
@@ -32,6 +32,7 @@ Clay John’s MIT demo of ray-marched volumetric cloudscapes in Godot sky shader
 
 - Live `LICENSE.md` on `main` (2026-07-27): MIT permission grant (“use, copy, modify, merge, publish, distribute, sublicense, and/or sell”) with Godot Engine contributor copyright header
 - GitHub repo license metadata: MIT
+- Re-read [at the source](https://github.com/clayjohn/godot-volumetric-cloud-demo/blob/main/LICENSE.md) (2026-11-18): unchanged, “use, copy, modify, merge, publish, distribute, sublicense, and/or sell”
 
 ## Related
 

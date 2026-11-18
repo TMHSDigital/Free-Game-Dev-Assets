@@ -13,7 +13,7 @@ attribution_required: false
 formats: [TTF]
 tags: [gothic]
 added: 2026-08-15
-verified: 2026-08-15
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Fontworks’ 16px-grid gothic pixel face — JP-capable HUD/title type that Pres
 ## Evidence
 
 - Live `https://raw.githubusercontent.com/google/fonts/main/ofl/dotgothic16/OFL.txt` (2026-08-15): “This Font Software is licensed under the SIL Open Font License, Version 1.1.” Copyright 2020 The DotGothic16 Project Authors.
+- Re-read [at the source](https://github.com/google/fonts/blob/main/ofl/dotgothic16/OFL.txt) (2026-11-18): unchanged, “This Font Software is licensed under the SIL Open Font License, Version 1.1.”
 
 ## Related
 

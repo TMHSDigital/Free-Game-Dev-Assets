@@ -12,7 +12,7 @@ attribution_required: false
 formats: [Python, WAV]
 tags: [local, tts]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ MIT multilingual neural TTS (MyShell / MIT lineage). README states free for **co
 
 - Live LICENSE (2026-07-19): **MIT License** Copyright (c) 2024 MyShell.ai
 - Live README License section: “MIT License… free for both commercial and non-commercial use”
+- Re-read [at the source](https://github.com/myshell-ai/MeloTTS) (2026-11-18): unchanged, “MIT License”
 
 ## Related
 

@@ -14,7 +14,7 @@ tags: [dungeon, itch]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Classic CC0 16×16 dungeon tiles (Robert / 0x72). Explicit commercial + modify +
 ## Evidence
 
 - Live itch page (2026-07-19): “You can use this tileset for whatever you like (CC-0)… private and commercial projects… modify… distribute… not required to credit”
+- Re-read [at the source](https://0x72.itch.io/16x16-dungeon-tileset) (2026-11-18): unchanged, “You can use this tileset for whatever you like (CC-0)”
 
 ## Related
 

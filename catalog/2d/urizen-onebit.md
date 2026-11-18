@@ -14,7 +14,7 @@ tags: [1-bit, 12x12, itch]
 grid_dimensions: 12x12
 camera_perspective: isometric_3_4
 added: 2026-08-15
-verified: 2026-08-15
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ vurmux’s 5500+ CC0 12×12 one-bit tiles (one non-black color per tile): overwo
 ## Evidence
 
 - Live itch page (2026-08-15): License **Creative Commons Zero**; “Credits are not required, but highly appreciated”
+- Re-read [at the source](https://vurmux.itch.io/urizen-onebit-tileset) (2026-11-18): unchanged, “License: Creative Commons Zero Credits are not required, but highly appreciated”
 
 ## Related
 

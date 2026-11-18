@@ -4,6 +4,14 @@ Newest section at the top. One section per review run. This is the record of wha
 run measured, what it changed, what it deliberately did not change, and what the next
 run should not spend time re-deciding.
 
+## 2026-11-18 (re-verify the oldest readings, #94; backlog decisions)
+
+Re-read 68 licences at their sources: the 53 entries last read on 2026-07-19/20 (#94) and the 15 others older than 90 days. Every quoted licence line was still there, so no licence, commercial or attribution field changed; each entry gained a dated "Re-read" Evidence line linking the page read, and `verified: 2026-11-18`. Pages that refuse scripts (itch.io, Ko-fi, MoCap Online) were read in a browser.
+
+- **Method:** a script compared each entry's quoted Evidence words with the live page, its `license_url` and, for GitHub sources, the LICENSE file; every entry the script could not match was read by hand. Quotes that only matched loosely were replaced by the page's own licence line.
+- **Did not change:** copyright years that moved on (Sky3D now 2023-2026, the retro shader collection 2024-2026) are recorded in the new quote; the licences are the same.
+- **Same day, owner decisions:** GPL/LGPL recorded as -only or -or-later (#95), a `per-item` status (#99), the tag and subcategory cleanup (#96), the `delivery` field (#97), `license_url` (#144, no archiving), publishers on 176 entries (#98), per-entry social cards (#117), jam stacks (#188), alternatives pages (#189), GoatCounter (#120).
+
 ## 2026-11-07 (audit pass 5 fixes #246 to #272, then 15 backlog issues)
 
 Worked on main, one commit per issue or pair. Every change ran `npm run check`; the browser-side ones were also clicked through on a local build.

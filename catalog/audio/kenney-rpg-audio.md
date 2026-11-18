@@ -12,7 +12,7 @@ attribution_required: false
 formats: [OGG, WAV]
 tags: [rpg, weapons]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -28,6 +28,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): License = Creative Commons **CC0** (`creativecommons.org/publicdomain/zero/1.0/`); tags include footstep/foley/weapon
+- Re-read [at the source](https://kenney.nl/assets/rpg-audio) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

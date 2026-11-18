@@ -14,7 +14,7 @@ delivery: [library]
 tags: [outline]
 camera_perspective: 2d_flat
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ status: active
 ## Evidence
 
 - Live GitHub LICENSE (2026-07-19): **MIT License** Copyright (c) 2020-2026 Paweł Kuna — use/modify/sell permitted with copyright notice retained
+- Re-read [at the source](https://tabler.io/icons) (2026-11-18): unchanged, “MIT License”
 
 ## Related
 

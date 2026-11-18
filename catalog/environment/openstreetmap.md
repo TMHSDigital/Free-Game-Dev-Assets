@@ -14,7 +14,7 @@ attribution_string: "© OpenStreetMap contributors"
 formats: [OSM, PBF]
 tags: [geo]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Global geodata under **ODbL**. Compiled games are usually “Produced Works” (
 ## Evidence
 
 - Live [Copyright and License](https://www.openstreetmap.org/copyright) (2026-07-19): “OpenStreetMap is open data, licensed under the Open Data Commons Open Database License (ODbL) … free to copy, distribute, transmit and adapt … as long as you credit OpenStreetMap and its contributors.”
+- Re-read [at the source](https://www.openstreetmap.org/copyright) (2026-11-18): unchanged, “OpenStreetMap is open data, licensed under the Open Data Commons Open Database License (ODbL)”
 
 ## Related
 

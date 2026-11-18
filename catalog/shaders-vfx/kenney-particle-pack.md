@@ -12,7 +12,7 @@ attribution_required: false
 formats: [PNG]
 tags: [shader, vfx]
 added: 2026-07-27
-verified: 2026-07-27
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-27): Tags particle/shader/vfx; Files 80×; License = Creative Commons **CC0** (creativecommons.org/publicdomain/zero/1.0/)
+- Re-read [at the source](https://kenney.nl/assets/particle-pack) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

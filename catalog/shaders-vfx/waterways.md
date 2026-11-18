@@ -13,7 +13,7 @@ formats: [gdshader]
 delivery: [godot-addon]
 tags: [flowmaps]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Godot tool that generates river meshes with flow/foam maps from Bézier curves. 
 ## Evidence
 
 - Live `LICENSE` (2026-07-19): “MIT License … Copyright (c) 2021 Kasper Arnklit Frandsen” with use/modify/sell rights subject to notice inclusion
+- Re-read [at the source](https://github.com/Arnklit/Waterways) (2026-11-18): unchanged, “MIT License”
 
 ## Related
 

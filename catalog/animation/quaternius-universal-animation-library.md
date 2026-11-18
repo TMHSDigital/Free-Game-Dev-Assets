@@ -12,7 +12,7 @@ attribution_required: false
 formats: [FBX, glTF, GLB, Blend]
 tags: [godot, unreal-engine, locomotion]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): License badge links **CC0** (`creativecommons.org/publicdomain/zero/1.0/`); describes 120+ animations for UE/Godot/Unity retargeting
+- Re-read [at the source](https://quaternius.com/packs/universalanimationlibrary.html) (2026-11-18): unchanged, “License CC0”
 
 ## Related
 

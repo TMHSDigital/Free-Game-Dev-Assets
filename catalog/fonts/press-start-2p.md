@@ -13,7 +13,7 @@ attribution_required: false
 formats: [TTF]
 tags: [retro]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -32,6 +32,7 @@ Cody “Zone38” Boisclair’s arcade-style bitmap face — classic 8-bit title
 ## Evidence
 
 - Live-checked `https://raw.githubusercontent.com/google/fonts/main/ofl/pressstart2p/OFL.txt` (2026-07-19): “This Font Software is licensed under the SIL Open Font License, Version 1.1.” Copyright 2012 The Press Start 2P Project Authors, Reserved Font Name “Press Start 2P”. OFL allows embed/bundle/sell with software.
+- Re-read [at the source](https://github.com/google/fonts/blob/main/ofl/pressstart2p/OFL.txt) (2026-11-18): unchanged, “This Font Software is licensed under the SIL Open Font License, Version 1.1.”
 
 ## Related
 

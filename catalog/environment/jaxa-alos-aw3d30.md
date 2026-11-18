@@ -13,7 +13,7 @@ attribution_string: "Credit: AW3D30 (JAXA)"
 formats: [GeoTIFF]
 tags: [terrain, government]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Global ~30 m DSM from ALOS/PRISM. Free for commercial and non-commercial use und
 
 - Live AW3D30 page (2026-07-19): “Any of the commercial and non-commercial purposes can be used free of charge under the conditions of the Terms of Use”
 - Live [Terms of Use of Research Data](https://earth.jaxa.jp/en/data/policy/) (2026-07-19): use/modify/distribute without fee if credit JAXA; “The user can use the Research Data for commercial purposes without a fee; however, the user needs to notify JAXA thereof in advance.”
+- Re-read [at the source](https://earth.jaxa.jp/en/data/policy/) (2026-11-18): unchanged, “The user can use the Research Data for commercial purposes without a fee; however, the user needs to notify JAXA thereof in advance”
 
 ## Related
 

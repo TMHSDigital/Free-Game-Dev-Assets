@@ -13,7 +13,7 @@ attribution_required: false
 formats: [OTF, TTF]
 tags: [localization, variable-font]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -33,6 +33,7 @@ Google’s SIL OFL family with broad script coverage including CJK — default p
 
 - Live-checked `https://raw.githubusercontent.com/notofonts/noto-fonts/main/LICENSE` (2026-07-19): “This Font Software is licensed under the SIL Open Font License, Version 1.1.” — OFL text states fonts may be “bundled, embedded, redistributed and/or sold with any software.”
 - Google Fonts Noto hub (`fonts.google.com/noto`) remains the distribution entrypoint; page is JS-heavy so license verified via upstream LICENSE file.
+- Re-read [at the source](https://github.com/notofonts/noto-fonts/blob/main/LICENSE) (2026-11-18): unchanged, “can be bundled, embedded, redistributed and/or sold with any software”
 
 ## Related
 

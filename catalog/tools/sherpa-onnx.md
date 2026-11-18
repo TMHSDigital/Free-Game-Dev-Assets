@@ -11,7 +11,7 @@ attribution_required: false
 formats: [ONNX, C++, Python, WASM]
 tags: [local, offline, tts]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ Local ONNX runtime for **TTS + ASR** (and VAD/diarization) across desktop/mobile
 
 - Live LICENSE (2026-07-19): **Apache License 2.0**
 - Live README: supports local speech synthesis (TTS) and recognition
+- Re-read [at the source](https://github.com/k2-fsa/sherpa-onnx/blob/master/LICENSE) (2026-11-18): unchanged, “Apache License Version 2.0”
 
 ## Related
 

@@ -14,7 +14,7 @@ tags: [dungeon, itch, 16x16]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 added: 2026-08-15
-verified: 2026-08-15
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Robert / 0x72’s newer 16×16 dungeon set (recolored vs vol. I). Characters, wa
 ## Evidence
 
 - Live itch page (2026-08-15): “You can use this tileset for whatever you like (CC-0).” Credit not necessary.
+- Re-read [at the source](https://0x72.itch.io/dungeontileset-ii) (2026-11-18): unchanged, “You can use this tileset for whatever you like (CC-0)”
 
 ## Related
 

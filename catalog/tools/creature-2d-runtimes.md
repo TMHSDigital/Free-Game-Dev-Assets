@@ -13,7 +13,7 @@ formats: []
 delivery: [godot-project]
 tags: [2d, soft-body, godot]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 maintenance: inactive
 ---
@@ -34,6 +34,7 @@ Godot plugin/runtime for Creature mesh-deformation 2D animation. **Apache 2.0** 
 
 - Live `LICENSE.md` (2026-07-19): Apache License Version 2.0
 - Live README License section: non-owners use Apache; Creature license holders use included Creature License (publish/sell without Apache notice requirements)
+- Re-read [at the source](https://github.com/kestrelm/Creature_Godot/blob/master/LICENSE.md) (2026-11-18): unchanged, “Apache License Version 2.0, January 2004”
 
 ## Related
 

@@ -13,7 +13,7 @@ attribution_required: false
 formats: [TTF, WOFF2]
 tags: [variable-font]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -32,6 +32,7 @@ JetBrains’ free open-source coding mono under SIL OFL 1.1. Strong for debug ov
 
 - Live landing License section (2026-07-19): “JetBrains Mono typeface is available under the SIL Open Font License 1.1 … free of charge, for both commercial and non-commercial purposes.”
 - Live `https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/OFL.txt`: “This Font Software is licensed under the SIL Open Font License, Version 1.1.”
+- Re-read [at the source](https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt) (2026-11-18): unchanged, “JetBrains Mono typeface is available under the SIL Open Font License 1.1”
 
 ## Related
 

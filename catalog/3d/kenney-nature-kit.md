@@ -12,7 +12,7 @@ attribution_required: false
 formats: [glTF, FBX, Blend]
 tags: [trees, rocks, nature]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): Category 3D; tags nature/tree/rock/foliage; License = Creative Commons **CC0**; 330 files
+- Re-read [at the source](https://kenney.nl/assets/nature-kit) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

@@ -13,7 +13,7 @@ formats: []
 delivery: [desktop-app]
 tags: [colorblind, simulator]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ BSD-2-Clause desktop color-vision-deficiency simulator/filter. Free commercial u
 ## Evidence
 
 - Live LICENSE (2026-07-19): BSD 2-Clause Copyright (c) 2017 Nicolas Burrus — redistribution permitted with notice
+- Re-read [at the source](https://github.com/DaltonLens/DaltonLens/blob/master/LICENSE) (2026-11-18): unchanged, “Copyright (c) 2017, Nicolas Burrus All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted”
 
 ## Related
 

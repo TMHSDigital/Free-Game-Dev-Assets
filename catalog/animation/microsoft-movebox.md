@@ -13,7 +13,7 @@ formats: []
 delivery: [unity-package]
 tags: [kinect]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 maintenance: archived
 ---
@@ -32,6 +32,7 @@ MIT Unity toolbox to drive [Microsoft Rocketbox](../characters/microsoft-rocketb
 ## Evidence
 
 - Live `LICENSE` (2026-07-19): MIT License, Copyright (c) Microsoft Corporation — use/modify/sell with notice retention
+- Re-read [at the source](https://github.com/microsoft/MoveBox-for-Microsoft-Rocketbox/blob/master/LICENSE) (2026-11-18): unchanged, “MIT License Copyright (c) Microsoft Corporation”
 
 ## Related
 

@@ -12,7 +12,7 @@ attribution_required: false
 formats: [FBX, Blend, OBJ, glTF]
 tags: [monsters, enemies]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -28,6 +28,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): License = **CC0**; “50 fully animated monsters… free to use in personal and commercial projects”
+- Re-read [at the source](https://quaternius.com/packs/ultimatemonsters.html) (2026-11-18): unchanged, “License CC0”
 
 ## Related
 

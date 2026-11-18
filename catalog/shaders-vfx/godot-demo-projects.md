@@ -13,7 +13,7 @@ formats: [gdshader]
 delivery: [godot-project]
 tags: [shader, demos]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ Official Godot Engine demonstration/template projects (2D/3D, particles, compute
 ## Evidence
 
 - Live `LICENSE.md` (2026-07-19): MIT permission grant (“use, copy, modify, merge, publish, distribute, sublicense, and/or sell”) Copyright Godot Engine contributors / Juan Linietsky, Ariel Manzur
+- Re-read [at the source](https://github.com/godotengine/godot-demo-projects/blob/master/LICENSE.md) (2026-11-18): unchanged, “use, copy, modify, merge, publish, distribute, sublicense, and/or sell”
 
 ## Related
 

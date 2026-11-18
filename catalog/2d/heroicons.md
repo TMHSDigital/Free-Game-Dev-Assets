@@ -14,7 +14,7 @@ delivery: [library]
 tags: [svg]
 camera_perspective: 2d_flat
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ MIT icon set from Tailwind Labs — solid/outline SVGs sized for product UI and 
 ## Evidence
 
 - Live GitHub LICENSE (2026-07-19): **MIT License** Copyright (c) Tailwind Labs, Inc. — unrestricted use/modify/sell with notice
+- Re-read [at the source](https://heroicons.com/) (2026-11-18): unchanged, “MIT License”
 
 ## Related
 

@@ -14,7 +14,7 @@ tags: [dungeon, roguelike]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): Category **2D** • Tiny; License **Creative Commons CC0**; tags rpg/roguelike/dungeon/sewer/pixel; 130 files
+- Re-read [at the source](https://kenney.nl/assets/tiny-dungeon) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

@@ -13,7 +13,7 @@ formats: [gdshader]
 delivery: [godot-project]
 tags: [2d, 3d, demos]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ Large MIT library of 2D/3D Godot shaders with demos (from GDQuest Shader Secrets
 ## Evidence
 
 - Live `LICENSE` (2026-07-19): “demo's source code (script files, scene files, shaders…) … MIT”; “Art assets (image textures and 3D models) are CC-BY-NC-SA 4.0.”
+- Re-read [at the source](https://github.com/gdquest-demos/godot-shaders/blob/main/LICENSE) (2026-11-18): unchanged, “Art assets (image textures and 3D models) are CC-BY-NC-SA 4.0”
 
 ## Related
 

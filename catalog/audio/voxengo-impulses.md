@@ -11,7 +11,7 @@ attribution_required: false
 formats: [WAV]
 tags: [impulse-response]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -28,6 +28,7 @@ Free convolution reverb IR pack (IM Reverbs) from Voxengo — halls, rooms, cave
 ## Evidence
 
 - Live impulses page (2026-07-19): “Permission is granted to anyone to use these impulse files royalty-free for any purpose, including commercial usage.” Also: may not sell IRs or profit from their distribution as files.
+- Re-read [at the source](https://www.voxengo.com/impulses/) (2026-11-18): unchanged, “Permission is granted to anyone to use these impulse files royalty-free for any purpose, including commercial usage.”
 
 ## Related
 

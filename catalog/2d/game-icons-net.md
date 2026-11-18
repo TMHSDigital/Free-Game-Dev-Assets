@@ -13,7 +13,7 @@ formats: [SVG, PNG]
 tags: [vector]
 camera_perspective: 2d_flat
 added: 2026-07-19
-verified: 2026-08-15
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ status: active
 
 - Live about page (2026-08-15): CC BY 3.0; suggested mention “Icons made by {author}. Available on https://game-icons.net”
 - `game-icons/icons` `license.txt`: “CC 3.0 BY or CC0 if mentioned below.”
+- Re-read [at the source](https://game-icons.net/about.html) (2026-11-18): unchanged, “They are provided provided under the terms of the Creative Commons 3.0 BY license”
 
 ## Related
 

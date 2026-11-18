@@ -14,7 +14,7 @@ tags: [16x16, top-down, rpg, itch, godot, 4-directional, audio]
 grid_dimensions: 16x16
 camera_perspective: isometric_3_4
 added: 2026-08-15
-verified: 2026-08-15
+verified: 2026-11-18
 status: active
 ---
 
@@ -33,6 +33,7 @@ Pixel-Boy + AAA CC0 16×16 top-down ninja town pack: 50+ characters, 30+ monster
 ## Evidence
 
 - Live itch page (2026-08-15): “released under the Creative Commons Zero (CC0) license… even commercial ones. Attribution is not required but appreciated.” Asset license **Creative Commons Zero v1.0 Universal**
+- Re-read [at the source](https://pixel-boy.itch.io/ninja-adventure-asset-pack) (2026-11-18): unchanged, “released under the Creative Commons Zero (CC0) license”
 
 ## Related
 

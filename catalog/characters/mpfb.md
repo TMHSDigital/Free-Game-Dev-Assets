@@ -13,7 +13,7 @@ attribution_required: false
 formats: [Blend, FBX, glTF, OBJ]
 tags: [blender]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Blender-native MakeHuman character generator. **Core assets / exports are CC0** 
 
 - Live [License](https://static.makehumancommunity.org/about/license.html) (2026-07-19): “All core assets… CC0… no… attribution”; code = GPL (MPFB) / AGPL (MakeHuman app)
 - Live sell-models FAQ: exports CC0; closed-source games Yes; attribution No
+- Re-read [at the source](https://static.makehumancommunity.org/about/license.html) (2026-11-18): unchanged, “All core assets are shared under Creative Commons, CC0”
 
 ## Related
 

@@ -13,7 +13,7 @@ formats: [PNG]
 tags: [vehicles, cars, pixel]
 camera_perspective: side_scroller
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): Category **2D**; License **Creative Commons CC0**; tags car/vehicle/pixel; 50 files
+- Re-read [at the source](https://kenney.nl/assets/pixel-vehicle-pack) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

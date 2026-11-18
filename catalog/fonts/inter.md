@@ -12,7 +12,7 @@ attribution_required: false
 formats: [OTF, TTF]
 tags: [variable-font]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Rasmus Andersson’s UI/workhorse sans under SIL OFL 1.1. Broad language coverag
 
 - Live site “Free & open source”: points to SIL Open Font License 1.1
 - Live `LICENSE.txt` (GitHub master, 2026-07-19): “This Font Software is licensed under the SIL Open Font License, Version 1.1.” — OFL permits bundling/embedding/selling with software
+- Re-read [at the source](https://rsms.me/inter/) (2026-11-18): unchanged, “Refer to the SIL Open Font License 1.1”
 
 ## Related
 

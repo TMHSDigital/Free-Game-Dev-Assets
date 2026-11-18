@@ -14,7 +14,7 @@ tags: [1-bit, 10x10, rpg, itch]
 grid_dimensions: 10x10
 camera_perspective: 2d_flat
 added: 2026-08-15
-verified: 2026-08-15
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ VEXED’s CC0 10×10 1-bit fantasy items and entities (food, weapons, critters).
 ## Evidence
 
 - Live itch page (2026-08-15): “These assets are CC0, use them in commercial projects modify tiles as you wish.”
+- Re-read [at the source](https://v3x3d.itch.io/bit-bonanza) (2026-11-18): unchanged, “These assets are CC0, use them in commercial projects modify tiles as you wish”
 
 ## Related
 

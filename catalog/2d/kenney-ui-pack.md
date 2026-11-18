@@ -13,7 +13,7 @@ formats: [PNG]
 tags: [button]
 camera_perspective: 2d_flat
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): Category 2D; License = Creative Commons **CC0**; tags button/panel/slider/interface; 430 files
+- Re-read [at the source](https://kenney.nl/assets/ui-pack) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

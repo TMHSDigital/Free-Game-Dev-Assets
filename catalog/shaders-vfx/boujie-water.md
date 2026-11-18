@@ -13,7 +13,7 @@ formats: [gdshader]
 delivery: [godot-addon]
 tags: [ocean]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Godot 4.x ocean / Gerstner-style water addon ([Chrisknyfe/boujie_water_shader](h
 
 - Live `LICENSE.md` (2026-07-19): “MIT License … Copyright © 2023-present Zach Bernal and contributors” with unrestricted use/modify/sell rights subject to notice inclusion
 - GitHub repo license badge/file: MIT
+- Re-read [at the source](https://github.com/Chrisknyfe/boujie_water_shader) (2026-11-18): unchanged, “MIT License”
 
 ## Related
 

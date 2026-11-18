@@ -12,7 +12,7 @@ attribution_required: false
 formats: [ASE, PNG, PDF, HTML]
 tags: [fantasy, horror, ocean, retro]
 added: 2026-07-20
-verified: 2026-07-20
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ Four CC0 16-color pixel palettes (Fantasy RPG, Horror Dark, Deep Sea, Retro 8-bi
 
 - Live itch page (2026-07-20): “CC0 — free commercial use, no attribution required” and “LICENSE — CC0. No restrictions, no attribution. Ever.”
 - Lospec [Deep Sea](https://lospec.com/palette-list/deep-sea) tagged `cc0` and links this pack
+- Re-read [at the source](https://paleto.itch.io/paleto-vol01) (2026-11-18): unchanged, “CC0 — free commercial use, no attribution required”
 
 ## Related
 

@@ -11,7 +11,7 @@ attribution_required: false
 formats: [PNG, EPS]
 tags: [hud, spritesheet]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ Polished free UI kits, HUDs, sprites, and tilesets. **Freebie Products** license
 
 - Live File Licenses (2026-07-19) §2 FREEBIE PRODUCTS: “any number of personal and commercial projects”; “sell and distribute games with our assets. No attribution or link back… required”
 - Freebies hub also: “no restrictions on use in commercial projects”
+- Re-read [at the source](https://craftpix.net/file-licenses/) (2026-11-18): unchanged, “No attribution or link back to this site is required, however any credit will be highly appreciated”
 
 ## Related
 

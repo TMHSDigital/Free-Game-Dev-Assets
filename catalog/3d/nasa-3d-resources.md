@@ -13,7 +13,7 @@ attribution_string: "NASA 3D Resources / NASA. Suggested format; NASA asks to be
 formats: [OBJ, STL]
 tags: [government, space, models]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ US federal 3D models (spacecraft, planetary props). NASA media used in 3D models
 ## Evidence
 
 - Live [NASA Images and Media Usage Guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/) (2026-07-19): “media files used in the rendition of 3-dimensional models, such as texture maps and polygon data … generally are not subject to copyright in the United States”; commercial use must not convey NASA endorsement; NASA should be acknowledged as the source; third-party copyrighted materials remain restricted.
+- Re-read [at the source](https://www.nasa.gov/nasa-brand-center/images-and-media/) (2026-11-18): unchanged, “media files used in the rendition of 3-dimensional models, such as texture maps and polygon data”
 
 ## Related
 

@@ -13,7 +13,7 @@ attribution_required: false
 formats: [FBX, OBJ, DAE]
 tags: [character-creator]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Humanoid generator. **Core assets and exported models are CC0** — commercial c
 
 - Live [License](https://static.makehumancommunity.org/about/license.html) (2026-07-19): “All core assets… CC0… nor give attribution”; MakeHuman source AGPL
 - Live [sell models FAQ](https://static.makehumancommunity.org/makehuman/faq/can_i_sell_models_created_with_makehuman.html): exports CC0; closed-source games Yes
+- Re-read [at the source](https://static.makehumancommunity.org/about/license.html) (2026-11-18): unchanged, “All core assets are shared under Creative Commons, CC0”
 
 ## Related
 

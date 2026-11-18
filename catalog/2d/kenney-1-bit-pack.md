@@ -13,7 +13,7 @@ formats: [PNG]
 tags: [1-bit, rpg]
 grid_dimensions: 16x16
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): Category **2D**; License **Creative Commons CC0**; tags roguelike/rpg/1-bit/pixel; 1078 files
+- Re-read [at the source](https://kenney.nl/assets/1-bit-pack) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

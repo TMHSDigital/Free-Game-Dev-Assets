@@ -13,7 +13,7 @@ attribution_required: false
 formats: [TTF]
 tags: [retro]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Pixel/display family on Google Fonts under SIL OFL 1.1. Useful for chunky HUD ti
 ## Evidence
 
 - Live-checked `https://raw.githubusercontent.com/google/fonts/main/ofl/silkscreen/OFL.txt` (2026-07-19): “This Font Software is licensed under the SIL Open Font License, Version 1.1.” Copyright 2001 The Silkscreen Project Authors. OFL permits bundling/embedding/selling with software.
+- Re-read [at the source](https://github.com/google/fonts/blob/main/ofl/silkscreen/OFL.txt) (2026-11-18): unchanged, “This Font Software is licensed under the SIL Open Font License, Version 1.1.”
 
 ## Related
 

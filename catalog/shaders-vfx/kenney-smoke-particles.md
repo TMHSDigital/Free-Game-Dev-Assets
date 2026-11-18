@@ -12,7 +12,7 @@ attribution_required: false
 formats: [PNG]
 tags: [smoke, explosion, vfx]
 added: 2026-07-27
-verified: 2026-07-27
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-27): Tags particle/smoke/explosion/vfx; Category 2D · VFX; Files 70×; License = Creative Commons **CC0**
+- Re-read [at the source](https://kenney.nl/assets/smoke-particles) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

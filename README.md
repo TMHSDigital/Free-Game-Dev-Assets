@@ -49,9 +49,9 @@ re-check forty tabs before a release. (Thanks to magictools: many tool entries s
   </tr>
 </table>
 
-> **Recent:** 2026-11-07, audit pass 5 fixes #246 to #272, then 15 backlog issues.
+> **Recent:** 2026-11-18, re-verify the oldest readings, #94; backlog decisions.
+> 2026-11-07, audit pass 5 fixes #246 to #272, then 15 backlog issues.
 > 2026-10-22, open issues sweep: #77 to #114.
-> 2026-10-13, Unreal Engine sources.
 > Every run is in the [changelog](docs/review-ledger.md).
 
 ## Contents

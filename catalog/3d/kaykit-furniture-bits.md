@@ -12,7 +12,7 @@ attribution_required: false
 formats: [OBJ, FBX, glTF]
 tags: [stylized]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ status: active
 ## Evidence
 
 - Live itch page (2026-07-19): “Free for personal and commercial use, no attribution required. (CC0 Licensed)”
+- Re-read [at the source](https://kaylousberg.itch.io/furniture-bits) (2026-11-18): unchanged, “Free for personal and commercial use, no attribution required (CC0 Licensed)”
 
 ## Related
 

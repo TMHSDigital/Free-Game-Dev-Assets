@@ -12,7 +12,7 @@ attribution_required: false
 formats: [glTF, FBX, Blend]
 tags: [cars, transport]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -28,6 +28,7 @@ CC0 low-poly cars/kart racers (45 files) for traffic, racing prototypes, and cit
 ## Evidence
 
 - Live pack page (2026-07-19): Category 3D; tags car/vehicle/transportation; License = Creative Commons **CC0**; 45 files
+- Re-read [at the source](https://kenney.nl/assets/car-kit) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

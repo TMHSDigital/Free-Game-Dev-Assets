@@ -12,7 +12,7 @@ attribution_required: false
 formats: [EXR, HDR, PNG, glTF, FBX]
 tags: [pbr, concrete, metal, brick, models]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Photometrically oriented **CC0** HDRIs (up to 8K), seamless PBR textures, and en
 ## Evidence
 
 - Live License page (2026-07-19): “Our assets are all licensed as CC0 … You can use our assets for any purpose, including commercial work. You do not need to give credit … You can redistribute them.”
+- Re-read [at the source](https://polyhaven.com/license) (2026-11-18): unchanged, “Our assets are all licensed as CC0”
 
 ## Related
 

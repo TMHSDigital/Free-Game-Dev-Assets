@@ -12,7 +12,7 @@ formats: [PNG]
 tags: [lpc]
 camera_perspective: isometric_3_4
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Composable Liberated Pixel Cup paper-doll sheets. Per-layer licenses include **C
 
 - Live generator (2026-07-19): “Free/Libre pixel art… You must credit the authors”
 - Live GitHub README Licensing (2026-07-19): spritesheets under CC0 / CC-BY-SA / CC-BY / OGA-BY / GPL; “you must at least credit all the authors (except for CC0…)”
+- Re-read [at the source](https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/) (2026-11-18): unchanged, “You must credit the authors”
 
 ## Related
 

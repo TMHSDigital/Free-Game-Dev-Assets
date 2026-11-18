@@ -13,7 +13,7 @@ formats: [gdshader]
 delivery: [godot-addon]
 tags: [psx, nintendo-64]
 added: 2026-07-27
-verified: 2026-07-27
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ MIT Godot 4.2–4.7 shader pack aiming at 5th-gen console looks (CRT/PSX/N64-sty
 
 - Live `LICENSE.md` on `main` (2026-07-27): “MIT License … Copyright (c) 2024-2025 Zorochase” with unrestricted use/modify/sell subject to notice inclusion
 - GitHub repo license metadata: MIT
+- Re-read [at the source](https://github.com/Zorochase/ultimate-retro-shader-collection/blob/main/LICENSE.md) (2026-11-18): unchanged, “Copyright (c) 2024-2026 Zorochase”
 
 ## Related
 

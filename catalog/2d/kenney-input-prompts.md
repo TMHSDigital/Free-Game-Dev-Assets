@@ -15,7 +15,7 @@ grid_dimensions: 64x64
 camera_perspective: 2d_flat
 hardware_tags: [steam_deck, steam_controller, steam_frame, valve_index, switch, switch_2, xbox, playstation, meta_quest, playdate, wii, gamecube]
 added: 2026-08-15
-verified: 2026-08-15
+verified: 2026-11-18
 status: active
 ---
 
@@ -32,6 +32,7 @@ status: active
 ## Evidence
 
 - Live Kenney pack page (2026-08-15): Tile size **64 × 64**; Files **1500×**; License **Creative Commons CC0**; lists Deck / Switch 2 / Quest / PS5 among others
+- Re-read [at the source](https://kenney.nl/assets/input-prompts) (2026-11-18): unchanged, “License Creative Commons CC0”
 
 ## Related
 

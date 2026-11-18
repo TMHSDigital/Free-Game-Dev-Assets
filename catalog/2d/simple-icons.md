@@ -14,7 +14,7 @@ formats: [SVG]
 tags: [svg]
 camera_perspective: 2d_flat
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ CC0 SVG brand/logo marks for login/settings “continue with X” rows and tech 
 ## Evidence
 
 - Live [LICENSE.md](https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md) (2026-07-19): **CC0 1.0 Universal**; site simpleicons.org hosts the set
+- Re-read [at the source](https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md) (2026-11-18): unchanged, “CC0 1.0 Universal”
 
 ## Related
 

@@ -12,7 +12,7 @@ attribution_required: false
 formats: [FBX, glTF]
 tags: [low-poly, stylized]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ Stylized low-poly dungeon adventurers (5 base + extras on higher itch tiers), ri
 ## Evidence
 
 - Live itch page (2026-07-19): “Free for personal and commercial use, no attribution required. (CC0 Licensed)”
+- Re-read [at the source](https://kaylousberg.itch.io/kaykit-adventurers) (2026-11-18): unchanged, “Free for personal and commercial use, no attribution required (CC0 Licensed)”
 
 ## Related
 

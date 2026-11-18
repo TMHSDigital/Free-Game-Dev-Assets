@@ -12,7 +12,7 @@ attribution_required: false
 formats: [FBX, glTF, Blend, OBJ]
 tags: [medieval]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -28,6 +28,7 @@ status: active
 ## Evidence
 
 - Live pack page (2026-07-19): License = **CC0**; 200+ unique models; furniture/tools/weapons categories; low poly + shared textures
+- Re-read [at the source](https://quaternius.com/packs/fantasypropsmegakit.html) (2026-11-18): unchanged, “License CC0”
 
 ## Related
 

@@ -12,7 +12,7 @@ attribution_required: false
 formats: [FBX]
 tags: [humanoid]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -31,6 +31,7 @@ Adobe’s free character + animation service (Adobe ID required; no CC subscript
 ## Evidence
 
 - Live [Mixamo FAQ](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html) (checked 2026-07-19): “You can use both characters and animations royalty free for personal, commercial, and non-profit projects including: … Create video games.” Free with Adobe ID, no Creative Cloud subscription required.
+- Re-read [at the source](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html) (2026-11-18): unchanged, “You can use both characters and animations royalty free for personal, commercial, and non-profit projects including:”
 
 ## Related
 

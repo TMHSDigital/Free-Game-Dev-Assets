@@ -13,7 +13,7 @@ formats: [SVG, PNG, Sketch, Figma]
 tags: [vector]
 camera_perspective: 2d_flat
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -29,6 +29,7 @@ Hand-drawn mix-and-match people illustrations (Pablo Stanley) under **CC0** — 
 ## Evidence
 
 - Live site (2026-07-19): “Free for commercial and personal use under CC0 License”; “public domain under the CC0 License… even for commercial purposes, without asking permission.”
+- Re-read [at the source](https://www.openpeeps.com/) (2026-11-18): unchanged, “Free for commercial and personal use under CC0 License”
 
 ## Related
 

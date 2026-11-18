@@ -13,7 +13,7 @@ formats: [gdshader]
 delivery: [godot-addon]
 tags: [clouds, atmosphere]
 added: 2026-07-19
-verified: 2026-07-19
+verified: 2026-11-18
 status: active
 ---
 
@@ -30,6 +30,7 @@ Godot 4 atmospheric day/night cycle (sun/moon/stars, fog, clouds, exposure). MIT
 ## Evidence
 
 - Live `LICENSE.txt` (2026-07-19): “MIT License … Copyright (c) 2023-2025 Cory Petkovsek and Contributors” plus note: “Third party assets have their own licenses found under assets/thirdparty.”
+- Re-read [at the source](https://github.com/TokisanGames/Sky3D/blob/main/LICENSE.txt) (2026-11-18): unchanged, “Copyright (c) 2023-2026 Cory Petkovsek and Contributors”
 
 ## Related
 
