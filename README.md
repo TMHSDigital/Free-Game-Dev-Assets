@@ -9,6 +9,7 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
 [![Sources](https://img.shields.io/badge/sources-457-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Site visits](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Ftmhs.goatcounter.com%2Fcounter%2FTOTAL.json&query=%24.count&label=site%20visits&color=informational)](https://tmhs.goatcounter.com/)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 <br />
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
@@ -264,7 +265,7 @@ layout are in [CONTRIBUTING.md](CONTRIBUTING.md#repository-layout).
 
 ## Privacy
 
-The website counts usage with [GoatCounter](https://www.goatcounter.com/), so the catalog can see which searches find nothing and add what is missing. It sends the page path, title and referrer on each page view, plus two kinds of named event from the catalog: a search that found no results (the query, lowercased and cut to 40 characters) and the set of filters used. There are no cookies, no local storage and no identifiers, and the counter script is served from this site. Nothing is sent when the browser has Do Not Track or Global Privacy Control turned on, or when the site runs locally. The code is [`site/public/count.js`](site/public/count.js).
+The website counts usage with [GoatCounter](https://www.goatcounter.com/), so the catalog can see which searches find nothing and add what is missing. It sends the page path, title and referrer on each page view, plus two kinds of named event from the catalog: a search that found no results (the query, lowercased and cut to 40 characters) and the set of filters used. There are no cookies, no local storage and no identifiers, and the counter script is served from this site. Nothing is sent when the browser has Do Not Track or Global Privacy Control turned on, or when the site runs locally. Repeat views within a few hours are counted once; GoatCounter does that on its server without cookies. The [usage stats](https://tmhs.goatcounter.com/) are public, and the site-visits badge above reads their total. The code is [`site/public/count.js`](site/public/count.js).
 
 ## Support
 
