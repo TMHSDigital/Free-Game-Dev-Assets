@@ -537,6 +537,11 @@ code {
   border-top: 1px solid var(--line);
 }
 
+.guide-subhead {
+  margin: 2rem 0 0.6rem;
+  font-size: 1rem;
+}
+
 .guide-list li {
   border-bottom: 1px solid var(--line);
 }

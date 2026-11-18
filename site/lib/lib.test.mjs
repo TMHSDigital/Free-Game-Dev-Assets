@@ -2653,6 +2653,13 @@ await section("needs-review open question (#211)", async () => {
   eq("alternatives: not from a category it does not list", alt.alternativesForCategory([altDef], altEntries, "audio").length, 0);
   const altSitemap = (await import("./exports.mjs")).sitemapXml({ site: { siteUrl: "https://x.test/s/" }, entries: [], stamp: "2026-11-18", alternatives: [{ slug: "s" }] });
   has("alternatives: in the sitemap", altSitemap, "<loc>https://x.test/s/alternatives/s/</loc>");
+  // #189: the homepage links every alternatives page with its count.
+  {
+    const { alternativeRowsHtml } = await import("./home-page.mjs");
+    const rows = alternativeRowsHtml([{ slug: "a", title: "Free alternatives to stock music" }, { slug: "b", title: "Free alternatives to X" }], { a: 8, b: 1 });
+    has("alternatives rows: link and capitalised name", rows, '<a href="alternatives/a/">Stock music<span>8 free sources</span>');
+    has("alternatives rows: singular count", rows, "1 free source</span>");
+  }
   // #118: outreach pull request tracking.
   {
     const o = await import("./outreach.mjs");

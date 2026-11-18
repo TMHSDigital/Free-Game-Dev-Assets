@@ -44,7 +44,7 @@ import { serviceWorkerJs, webManifest } from "./lib/offline.mjs";
 import { auditPageHtml } from "./lib/audit-page.mjs";
 import { changeEventsFromLog, changesFeedXml } from "./lib/changes.mjs";
 import { badgeSvg } from "./lib/badge.mjs";
-import { ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
+import { alternativeRowsHtml, ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -596,6 +596,11 @@ function main() {
     FILMSTRIP: filmstripHtml(filmstripPick(visible, { count: 9, cardCategories }), { root: "" }),
     CATEGORY_CHIPS: categoryChipsHtml(visible, config.categories),
     GUIDE_ROWS: guideRowsHtml(config.guides),
+    // Links to the alternatives pages (#189), with their live source counts.
+    ALTERNATIVE_ROWS: (() => {
+      const defs = JSON.parse(fs.readFileSync(ALTERNATIVES_PATH, "utf8")).pages;
+      return alternativeRowsHtml(defs, Object.fromEntries(defs.map((d) => [d.slug, alternativesFor(d, visible).length])));
+    })(),
     // Statuses first (#99 added per-item), then commercial use; deprecated entries are hidden by default.
     CATALOG_BLURB: `${visible.length} sources: ${stats.active} active, ${stats.needsReview} need review, ${stats.perItem} per item &middot; ${stats.commercialOk} commercial use OK${stats.deprecated ? ` &middot; plus ${stats.deprecated} deprecated, hidden by default` : ""}`,
     // Deprecated entries are hidden until their switch is on, so they are not counted until then (app.js does the same).

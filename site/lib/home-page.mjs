@@ -51,6 +51,22 @@ export function starterRowsHtml(featured) {
     .join("\n");
 }
 
+/**
+ * The homepage list of "Free alternatives to ..." pages (#189), same row
+ * shape as the guides: the product name and how many active sources the
+ * page lists. `counts` maps slug to that number.
+ */
+export function alternativeRowsHtml(defs, counts = {}) {
+  return (defs || [])
+    .map((d) => {
+      const n = counts[d.slug] ?? 0;
+      const rest = String(d.title).replace(/^Free alternatives to /, "");
+      const name = rest.charAt(0).toUpperCase() + rest.slice(1);
+      return `<li><a href="alternatives/${esc(d.slug)}/">${esc(name)}<span>${n} free ${n === 1 ? "source" : "sources"}</span></a></li>`;
+    })
+    .join("\n");
+}
+
 export function guideRowsHtml(guides) {
   return (guides || [])
     .map(
