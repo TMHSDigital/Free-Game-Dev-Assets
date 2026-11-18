@@ -2653,6 +2653,20 @@ await section("needs-review open question (#211)", async () => {
   eq("alternatives: not from a category it does not list", alt.alternativesForCategory([altDef], altEntries, "audio").length, 0);
   const altSitemap = (await import("./exports.mjs")).sitemapXml({ site: { siteUrl: "https://x.test/s/" }, entries: [], stamp: "2026-11-18", alternatives: [{ slug: "s" }] });
   has("alternatives: in the sitemap", altSitemap, "<loc>https://x.test/s/alternatives/s/</loc>");
+  // #306 (regression of #27): the entry template passes the vocabulary checks.
+  {
+    const ck = await import("../checks.mjs");
+    const read = (p) => JSON.parse(fsTest.readFileSync(new URL(p, import.meta.url), "utf8"));
+    const tpl = parseFrontmatter(fsTest.readFileSync(new URL("../../catalog/TEMPLATE.md", import.meta.url), "utf8")).meta;
+    const cfg = read("../config.json");
+    const tplErrors = [
+      ...ck.checkSubcategoryList("TEMPLATE.md", tpl, cfg.categories),
+      ...ck.checkFormatVocabulary("TEMPLATE.md", tpl, read("../format-vocabulary.json")),
+      ...ck.checkValueAliases("TEMPLATE.md", tpl, read("../value-aliases.json")),
+      ...ck.checkLicenseVocabulary("TEMPLATE.md", tpl, read("../license-vocabulary.json")),
+    ];
+    eq("template: passes the vocabulary checks", tplErrors.join(" | "), "");
+  }
   // #117: every entry page has its own social card.
   const { entryCardRef, entryCardHtml } = await import("./og-card.mjs");
   const { baseHeadHtml } = await import("./shared.mjs");

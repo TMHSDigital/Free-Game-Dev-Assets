@@ -3,24 +3,27 @@ id: example-source
 name: Example Source
 url: https://example.com
 category: 3d
-subcategories: [models, props]
+subcategories: [props, modular]
 license: CC0
 # license_spdx is required when site/license-vocabulary.json maps the license to one SPDX id; omit it otherwise
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [glTF, FBX, PNG]
-# subcategories and formats spelling: see CONTRIBUTING.md (formats must be in site/format-vocabulary.json)
+# subcategories come from the category's list in site/config.json (V41); formats from site/format-vocabulary.json (V20)
 # tags describe the content; never the licence or the publisher (V19, V21)
 tags: [low-poly, modular]
 # added: the day the entry joined the catalog (npm run new-entry fills it in; never changes)
 added: 2026-07-19
 # verified: the day you read the licence at the source
 verified: 2026-07-19
-# status: set active once the licence is read and quoted in ## Evidence
+# status: set active once the licence is read and quoted in ## Evidence;
+#   per-item for an aggregator whose licence is set per file (needs license: varies and a "- Per item:" Notes line, V40)
 status: needs-review
 # Optional (omit if N/A):
 # publisher: Kenney   # rights holder when that publisher has more than one entry; not a generic host
+# license_url: https://example.com/license   # the page Evidence quotes the licence from, when it is not url (V42)
+# delivery: [desktop-app]   # how it reaches you: the closed list in site/format-vocabulary.json "delivery"
 # preview: none   # or an https:// image URL a maintainer has checked; see CONTRIBUTING.md "Preview images"
 # attribution_string: "Credit line"   # required when attribution_required is true
 # commercial: varies   # aggregators only; not a blanket commercial grant
@@ -41,6 +44,7 @@ One-paragraph summary: what you get, why it’s useful, any caveats.
 
 - Pipeline tips, known gotchas, engine compatibility
 - Attribution example if required
+- Review: what is still unresolved, in one sentence (needs-review entries only, V39)
 
 ## Evidence
 
