@@ -596,7 +596,8 @@ function main() {
     FILMSTRIP: filmstripHtml(filmstripPick(visible, { count: 9, cardCategories }), { root: "" }),
     CATEGORY_CHIPS: categoryChipsHtml(visible, config.categories),
     GUIDE_ROWS: guideRowsHtml(config.guides),
-    CATALOG_BLURB: `${visible.length} sources &middot; ${stats.active} active &middot; ${stats.commercialOk} commercial-ok &middot; ${stats.commercialVaries} per-file${stats.deprecated ? ` &middot; plus ${stats.deprecated} deprecated, hidden by default` : ""}`,
+    // Statuses first (#99 added per-item), then commercial use; deprecated entries are hidden by default.
+    CATALOG_BLURB: `${visible.length} sources: ${stats.active} active, ${stats.needsReview} need review, ${stats.perItem} per item &middot; ${stats.commercialOk} commercial use OK${stats.deprecated ? ` &middot; plus ${stats.deprecated} deprecated, hidden by default` : ""}`,
     // Deprecated entries are hidden until their switch is on, so they are not counted until then (app.js does the same).
     RESULT_COUNT: `${visible.length} of ${stats.listed} sources shown`,
     // The chrome every page shares (shared.mjs), so the homepage cannot drift from it (#253).
