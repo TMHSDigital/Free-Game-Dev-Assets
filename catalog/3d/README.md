@@ -142,5 +142,6 @@ than pack-wide. Triangle counts are geometry and survive re-hosting; file sizes 
 | [stack-o-bot](stack-o-bot.md) | Stack O Bot | custom | yes | needs-review |
 | [megascans-starter-content](megascans-starter-content.md) | Megascans Starter Content (Free on Fab) | custom | yes | needs-review |
 | [fab-free-content](fab-free-content.md) | Fab Free Listings and Limited-Time Free | varies | varies | per-item |
+| [unity-asset-store-free](unity-asset-store-free.md) | Unity Asset Store (free assets) | varies | varies | per-item |
 
 \* Fab Standard vs Epic Content License — verify per asset; Fab/Epic license pages unreachable this harden pass. Poly Haven models are under [`environment/poly-haven`](../environment/poly-haven.md) (CC0).

@@ -40,6 +40,13 @@ people and brands out of anything prominent, such as a title screen.
 | [tears-of-steel](tears-of-steel.md) | Tears of Steel | CC-BY-3.0 | yes | active |
 | [clipstill](clipstill.md) | Clipstill | custom | unknown | needs-review |
 | [vidsplay](vidsplay.md) | Vidsplay | custom | unknown | needs-review |
+| [nasa-svs](nasa-svs.md) | NASA Scientific Visualization Studio | public-domain | yes | active |
+| [iso-republic](iso-republic.md) | ISO Republic | CC0 | yes | active |
+| [beachfront-broll](beachfront-broll.md) | Beachfront B-Roll | CC-BY-3.0 | yes | active |
+| [free-stock-footage-archive](free-stock-footage-archive.md) | Free Stock Footage Archive | CC-BY-4.0 | yes | active |
+| [eso-media](eso-media.md) | ESO images and videos | CC-BY-4.0 | yes | active |
+| [free-nature-stock](free-nature-stock.md) | Free Nature Stock | CC0 | yes | active |
+| [internet-archive-moving-images](internet-archive-moving-images.md) | Internet Archive Moving Image Archive | varies | varies | per-item |
 
 See [`docs/provenance.md`](../../docs/provenance.md) for why an aggregator's labels are a
 starting point, not a clearance.

@@ -114,6 +114,16 @@ two carry obligations the rest do not.
 | [bitnuker-fantasy-environments-sampler](bitnuker-fantasy-environments-sampler.md) | BitNuker Fantasy Environments Sampler | custom | yes | active |
 | [spritelib](spritelib.md) | SpriteLib | CPL-1.0 | yes | active |
 | [orbit-loader](orbit-loader.md) | Orbit Loader (ailora will) | custom | yes | needs-review |
+| [wikimedia-commons](wikimedia-commons.md) | Wikimedia Commons | varies | varies | per-item |
+| [openverse](openverse.md) | Openverse | varies | varies | per-item |
+| [met-open-access](met-open-access.md) | The Met Open Access | CC0 | yes | active |
+| [rijksmuseum](rijksmuseum.md) | Rijksmuseum collection | varies | varies | per-item |
+| [loc-free-to-use](loc-free-to-use.md) | Library of Congress Free to Use and Reuse | unknown | unknown | needs-review |
+| [unsplash](unsplash.md) | Unsplash | custom | yes | active |
+| [openmoji](openmoji.md) | OpenMoji | CC-BY-SA-4.0 | yes | active |
+| [twemoji](twemoji.md) | Twemoji | CC-BY-4.0 | yes | needs-review |
+| [noto-emoji](noto-emoji.md) | Noto Emoji | SIL OFL | yes | active |
+| [freedoom](freedoom.md) | Freedoom | BSD-3-Clause | yes | active |
 
 † Commercial OK with attribution + share-alike / GPL obligations on asset derivatives — see [`docs/high-risk.md`](../../docs/high-risk.md).  
 †† CC0 on SVG copyright; brand trademarks still apply — identify brands only.

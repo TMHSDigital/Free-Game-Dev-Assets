@@ -4,11 +4,11 @@
 
 **Free assets and tools for commercial games, with every licence read at its source.**
 
-[**Browse 423 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
+[**Browse 457 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
-[![Sources](https://img.shields.io/badge/sources-423-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-457-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 <br />
 [![GitHub stars](https://img.shields.io/github/stars/TMHSDigital/Free-Game-Dev-Assets)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/stargazers)
@@ -129,7 +129,7 @@ is a page on the site.
 
 ## Browse the catalog
 
-The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 423 entries
+The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 457 entries
 and filters them by category, licence, format, engine, commercial use, attribution, review
 status, 2D camera view and how recently the licence was read, sorted as you choose. Press `/` to search, and keep the sources you
 are weighing on a shortlist. Filtered views and individual entries have their own URLs, so you can send
@@ -137,16 +137,16 @@ someone exactly what you are looking at.
 
 | Category | Entries | Focus | Index |
 | :--- | ---: | :--- | :--- |
-| **3D** | 77 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
-| **Tools** | 123 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
-| **2D** | 61 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
-| **Audio** | 37 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
+| **3D** | 78 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
+| **Tools** | 138 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
+| **2D** | 71 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
+| **Audio** | 38 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Characters** | 31 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
 | **Fonts** | 25 | OFL and commercial-ok typefaces, CJK | [`catalog/fonts/`](catalog/fonts/) |
 | **Environment** | 20 | HDRI, terrain DEMs, geodata | [`catalog/environment/`](catalog/environment/) |
 | **Shaders & VFX** | 18 | Shaders, particle and FX resources | [`catalog/shaders-vfx/`](catalog/shaders-vfx/) |
 | **Animation** | 18 | Motion capture and character clips | [`catalog/animation/`](catalog/animation/) |
-| **Video** | 13 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
+| **Video** | 20 | Stock footage, archival clips | [`catalog/video/`](catalog/video/) |
 
 ## Reading an entry
 

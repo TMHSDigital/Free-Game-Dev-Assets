@@ -4,16 +4,16 @@ One markdown file per source under a category folder. To add one, run `npm run n
 
 | Category | Entries | Path | Focus |
 | --- | ---: | --- | --- |
-| 3D | 77 | [`3d/`](3d/) | Models, scans, PBR textures |
-| Tools | 123 | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
-| 2D | 61 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
-| Audio | 37 | [`audio/`](audio/) | SFX, music, foley, IRs |
+| 3D | 78 | [`3d/`](3d/) | Models, scans, PBR textures |
+| Tools | 138 | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
+| 2D | 71 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
+| Audio | 38 | [`audio/`](audio/) | SFX, music, foley, IRs |
 | Characters | 31 | [`characters/`](characters/) | Generators & modular humanoids |
 | Fonts | 25 | [`fonts/`](fonts/) | OFL / commercial-ok type |
 | Environment | 20 | [`environment/`](environment/) | HDRI, terrain, geodata |
 | Shaders & VFX | 18 | [`shaders-vfx/`](shaders-vfx/) | Shaders, particle textures, FX |
 | Animation | 18 | [`animation/`](animation/) | MoCap, character clips |
-| Video | 13 | [`video/`](video/) | Stock footage, archival clips |
+| Video | 20 | [`video/`](video/) | Stock footage, archival clips |
 
 Guides: [`docs/licenses.md`](../docs/licenses.md) · [`docs/provenance.md`](../docs/provenance.md) · [`docs/high-risk.md`](../docs/high-risk.md) · [`docs/fivem.md`](../docs/fivem.md) · [`docs/ai-assets.md`](../docs/ai-assets.md) · [`docs/trust-score.md`](../docs/trust-score.md) · [`docs/fonts.md`](../docs/fonts.md) · [`docs/geodata.md`](../docs/geodata.md) · [`docs/game-vs-video-licensing.md`](../docs/game-vs-video-licensing.md) · [`docs/godot-budget-stack.md`](../docs/godot-budget-stack.md) · [`docs/unreal.md`](../docs/unreal.md) · [`docs/shipping.md`](../docs/shipping.md) · [`docs/data.md`](../docs/data.md) · [`docs/for-publishers.md`](../docs/for-publishers.md)
 

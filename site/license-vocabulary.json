@@ -14,6 +14,7 @@
     },
     "MIT": { "spdx": "MIT", "attribution": "notice" },
     "ISC": { "spdx": "ISC", "attribution": "notice" },
+    "Zlib": { "spdx": "Zlib", "attribution": "notice" },
     "Apache-2.0": { "spdx": "Apache-2.0", "attribution": "notice" },
     "BSD-2-Clause": { "spdx": "BSD-2-Clause", "attribution": "notice" },
     "BSD-3-Clause": { "spdx": "BSD-3-Clause", "attribution": "notice" },
@@ -24,6 +25,7 @@
     "GPL-3.0-only": { "spdx": "GPL-3.0-only", "attribution": "notice" },
     "GPL-3.0-or-later": { "spdx": "GPL-3.0-or-later", "attribution": "notice" },
     "LGPL-3.0-only": { "spdx": "LGPL-3.0-only", "attribution": "notice" },
+    "AGPL-3.0-only": { "spdx": "AGPL-3.0-only", "attribution": "notice" },
     "BSD": {
       "spdx": null,
       "spdx_ambiguous": "The project says 'BSD license' without a clause count or licence file. Record BSD-2-Clause or BSD-3-Clause instead once the project ships the text.",
@@ -36,6 +38,7 @@
     },
     "CC-BY-3.0": { "spdx": "CC-BY-3.0", "attribution": "required" },
     "CC-BY-4.0": { "spdx": "CC-BY-4.0", "attribution": "required" },
+    "CC-BY-SA-4.0": { "spdx": "CC-BY-SA-4.0", "attribution": "required" },
     "CC-BY": {
       "spdx": null,
       "spdx_ambiguous": "Unversioned. Record CC-BY-3.0 or CC-BY-4.0 once the source states the version.",
@@ -64,8 +67,8 @@
     "_doc": "Groups for the site's Licence filter. Every license value above belongs to exactly one family (lib.test.mjs checks this).",
     "public-domain": { "label": "CC0 / public domain", "licenses": ["CC0", "Unlicense", "public-domain"] },
     "cc-by": { "label": "CC-BY (credit)", "licenses": ["CC-BY", "CC-BY-3.0", "CC-BY-4.0"] },
-    "permissive": { "label": "Permissive (MIT, Apache, BSD, OFL)", "licenses": ["MIT", "ISC", "Apache-2.0", "BSD", "BSD-2-Clause", "BSD-3-Clause", "BSD-3-Clause-Clear", "SIL OFL", "CDLA-Permissive-2.0", "CPL-1.0"] },
-    "copyleft": { "label": "Copyleft (GPL, MPL, ODbL)", "licenses": ["GPL-2.0-only", "GPL-2.0-or-later", "GPL-3.0-only", "GPL-3.0-or-later", "LGPL-3.0-only", "MPL-2.0", "ODbL"] },
+    "permissive": { "label": "Permissive (MIT, Apache, BSD, OFL)", "licenses": ["MIT", "ISC", "Apache-2.0", "BSD", "BSD-2-Clause", "BSD-3-Clause", "BSD-3-Clause-Clear", "SIL OFL", "CDLA-Permissive-2.0", "CPL-1.0", "Zlib"] },
+    "copyleft": { "label": "Copyleft (GPL, MPL, ODbL)", "licenses": ["GPL-2.0-only", "GPL-2.0-or-later", "GPL-3.0-only", "GPL-3.0-or-later", "LGPL-3.0-only", "AGPL-3.0-only", "MPL-2.0", "ODbL", "CC-BY-SA-4.0"] },
     "custom": { "label": "Publisher's own terms", "licenses": ["custom"] },
     "mixed": { "label": "Varies or unknown", "licenses": ["varies", "unknown"] }
   },

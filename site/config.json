@@ -6,7 +6,7 @@
     "baseUrl": "/Free-Game-Dev-Assets",
     "siteUrl": "https://tmhsdigital.github.io/Free-Game-Dev-Assets/"
   },
-  "expectedEntryCount": 426,
+  "expectedEntryCount": 460,
   "linkCheck": {
     "_comment": "Hosts that refuse scripted requests whatever the source's health (403/429 every week in the link report, #77). check-links lists their entries under 'Checked by hand' with the entry's verified date instead of 'Refused'. Remove a host when it starts answering.",
     "manualHosts": {
@@ -32,14 +32,14 @@
   "categories": {
     "3d": { "label": "3D", "blurb": "Models, scans, PBR textures", "view": "cards", "subcategories": ["environment", "props", "modular", "characters", "buildings", "interior", "vehicles", "foliage", "weapons", "furniture", "textures", "materials", "hdri", "photogrammetry", "sample-projects", "prototype", "voxel", "aggregator"] },
     "environment": { "label": "Environment", "blurb": "HDRI, terrain, geodata", "view": "cards", "subcategories": ["heightmaps", "dem", "geodata", "hdri", "bathymetry", "maps", "skybox", "imagery", "lidar", "landcover", "buildings", "sample-projects"] },
-    "2d": { "label": "2D", "blurb": "Sprites, UI, icons, palettes", "view": "cards", "subcategories": ["sprites", "pixel", "tileset", "ui", "icons", "characters", "backgrounds", "vectors", "palettes", "cards", "input", "isometric", "platformer", "puzzle", "roguelike"] },
+    "2d": { "label": "2D", "blurb": "Sprites, UI, icons, palettes", "view": "cards", "subcategories": ["sprites", "pixel", "tileset", "ui", "icons", "characters", "backgrounds", "vectors", "palettes", "cards", "input", "isometric", "platformer", "puzzle", "roguelike", "photos"] },
     "characters": { "label": "Characters", "blurb": "Generators & modular humanoids", "view": "cards", "subcategories": ["rigged", "animated", "creatures", "humanoid", "base-meshes", "generator", "vrm", "modular", "library"] },
     "audio": { "label": "Audio", "blurb": "SFX, music, foley, IRs", "view": "list", "subcategories": ["sfx", "music", "ambience", "ui", "foley", "impulse-responses", "reverb", "footsteps", "field-recordings", "loops", "jingles"] },
     "animation": { "label": "Animation", "blurb": "MoCap & character clips", "view": "cards", "subcategories": ["mocap", "characters", "humanoid", "rigs", "poses", "retarget", "creatures", "sample-projects", "2d", "weapons"] },
     "video": { "label": "Video", "blurb": "Stock footage, archival clips", "view": "list", "subcategories": ["stock-footage", "open-movie", "archival", "cinemagraphs"] },
     "shaders-vfx": { "label": "Shaders & VFX", "blurb": "Shaders, particles, FX", "view": "cards", "subcategories": ["godot", "particles", "shaders", "2d-vfx", "water", "post-process", "sky", "textures", "retro", "decals", "materials"] },
     "fonts": { "label": "Fonts", "blurb": "OFL / commercial-ok type", "view": "list", "subcategories": ["display", "pixel", "sans", "serif", "mono", "ui", "cjk", "arabic", "accessibility"] },
-    "tools": { "label": "Tools", "blurb": "Editors, pipeline, TTS, add-ons", "view": "list", "subcategories": ["godot", "unreal", "pipeline", "pixel", "compression", "music", "animation", "level-editor", "atlas", "textures", "sfx-generator", "speech", "procedural", "conversion", "destruction", "accessibility", "dialogue", "ui", "terrain", "vectors", "painting", "audio-editing", "modeling", "photogrammetry", "audio-middleware", "input", "voxel", "rigs", "localization", "blender-addon", "mesh"] }
+    "tools": { "label": "Tools", "blurb": "Editors, pipeline, TTS, add-ons", "view": "list", "subcategories": ["godot", "unreal", "pipeline", "pixel", "compression", "music", "animation", "level-editor", "atlas", "textures", "sfx-generator", "speech", "procedural", "conversion", "destruction", "accessibility", "dialogue", "ui", "terrain", "vectors", "painting", "audio-editing", "modeling", "photogrammetry", "audio-middleware", "input", "voxel", "rigs", "localization", "blender-addon", "mesh", "engine"] }
   },
   "featured": [
     { "id": "kenney", "need": "Modular low-poly 3D / UI" },

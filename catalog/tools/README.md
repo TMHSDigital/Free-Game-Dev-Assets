@@ -86,6 +86,21 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [spritemate](spritemate.md) | Spritemate | MIT | active |
 | [sunvox](sunvox.md) | SunVox | custom | active |
 | [tilemancer](tilemancer.md) | Tilemancer | GPL-3.0-or-later | active |
+| [ardour](ardour.md) | Ardour | GPL-2.0-or-later | active |
+| [surge-xt](surge-xt.md) | Surge XT | GPL-3.0-or-later | active |
+| [laigter](laigter.md) | Laigter | GPL-3.0-or-later | active |
+| [sprytile](sprytile.md) | Sprytile | MIT | active |
+| [dragonbones](dragonbones.md) | DragonBones runtimes | MIT | needs-review |
+| [rive](rive.md) | Rive | custom | needs-review |
+| [cascadeur](cascadeur.md) | Cascadeur | custom | needs-review |
+| [freemocap](freemocap.md) | FreeMoCap | AGPL-3.0-only | active |
+| [armorpaint](armorpaint.md) | ArmorPaint | Zlib | active |
+| [gdevelop](gdevelop.md) | GDevelop | MIT | active |
+| [defold](defold.md) | Defold | custom | active |
+| [tic-80](tic-80.md) | TIC-80 | MIT | active |
+| [renpy](renpy.md) | Ren'Py | custom | needs-review |
+| [ultimate-doom-builder](ultimate-doom-builder.md) | Ultimate Doom Builder | GPL-3.0-only | active |
+| [slade](slade.md) | SLADE | GPL-2.0-only | active |
 
 ## Pipeline & compression
 

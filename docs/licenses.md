@@ -24,6 +24,7 @@ Quick reference for assets you might list or use. **Always re-check the source p
 | --- | --- | --- | --- |
 | **CC0** | Yes | Not required | Safest default for closed-source games. Can embed in DRM builds. |
 | **CC-BY-4.0** | Yes | Required | Credit the author; a credits-screen link to the source usually satisfies. Keep a notices file. DRM-wrapped store builds: see [shipping](shipping.md). |
+| **CC-BY-SA-4.0** | Yes, **except Unreal** | Required | Credit the author, and anything you adapt from the asset must carry the same licence. Unchanged use in a game needs the credit only. See CC-BY-SA above for the Unreal EULA. |
 | **CC-BY-3.0** | Yes | Required | Same commercial grant; some projects expect the **author named** (not only a site URL). Example: Game-Icons.net wants `Icons made by {author}. Available on https://game-icons.net`. Its anti-DRM clause has no 4.0-style waiver, so check it before a console or iOS build; see [shipping](shipping.md). |
 | **CC-BY-SA** | Yes, **except Unreal** | Required | Share-alike applies to **derivatives of the asset**, not your whole game as code. Prefer shipping SA assets in extractable bundles (`.pck`, loose folders) rather than encrypted into the binary. The Unreal Engine EULA names CC-BY-SA (and GPL/LGPL) as licences you may not combine with the engine; see [unreal.md](unreal.md). |
 | **CC-BY-NC** | No | Required | Fine for prototypes / jam games; **reject for commercial catalogs** unless clearly marked non-commercial. |
@@ -62,6 +63,7 @@ Most `tools/` entries and many libraries carry one of these. They all allow comm
 | --- | --- | --- | --- |
 | **MIT** | Yes | The copyright line and licence text, in a notices file | Applies when you redistribute the code or a build containing it. Using an MIT editor to make assets owes nothing. |
 | **ISC** | Yes | Same as MIT | Functionally the MIT licence in fewer words. |
+| **Zlib** | Yes | Do not misrepresent the origin; mark altered versions; keep the notice in source copies | Permissive, like MIT, with no notice needed in binaries. |
 | **BSD-2-Clause** | Yes | Copyright line and licence text | The bare value **BSD** is used where a project says "BSD" without naming the clause count; read its LICENSE before shipping. |
 | **BSD-3-Clause** | Yes | Copyright line and licence text | Adds a no-endorsement clause: do not use the authors' names to promote your game. **BSD-3-Clause-Clear** is the same, but states that no patent rights are granted. |
 | **Apache-2.0** | Yes | Licence text, plus the project's `NOTICE` file if it has one | Includes a patent grant, which ends if you sue the authors over patents. Modified files must say they were changed. |
@@ -77,6 +79,7 @@ Most `tools/` entries and many libraries carry one of these. They all allow comm
 | --- | --- | --- |
 | **GPL-2.0-only**, **GPL-2.0-or-later**, **GPL-3.0-only**, **GPL-3.0-or-later** | Yes | Strong copyleft on the program. Linking GPL code into your game makes the game GPL. Using a GPL editor does not, as the section below explains. A project that names a GPL version without saying "only" or "or later" is recorded as **-only** (CONTRIBUTING). App stores and consoles: see [shipping](shipping.md). |
 | **LGPL-3.0-only** | Yes | You may link the library from closed code if users can replace it, which in practice means dynamic linking. Changes to the library itself stay LGPL. The Unreal Engine EULA forbids combining LGPL code with the engine; see [unreal.md](unreal.md). Consoles that allow no relinking cannot meet this; see [shipping](shipping.md). |
+| **AGPL-3.0-only** | Yes | Strong copyleft that also reaches software run as a network service. Using an AGPL tool to make assets does not put the assets under the AGPL; shipping the tool or its code inside your game does. |
 
 ## How to read a `custom`, `varies` or `unknown` entry
 
