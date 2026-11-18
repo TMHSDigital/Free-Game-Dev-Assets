@@ -11,6 +11,9 @@ owes from the picked entries. Each stack has a page at `stack/<id>/` on the site
 | [Make a 3D third-person game in Unreal Engine 5](3d-third-person-unreal.md) | A third-person game with dialogue, quests and saves, in UE5 |
 | [Make a first-person destruction game](first-person-destruction.md) | A first-person game about breaking things |
 | [Make a mobile puzzle game](mobile-puzzle.md) | A casual match-3 or board-style game for phones |
+| [Game jam: 2D with nothing to credit](jam-2d-no-credit.md) | A 2D jam game in one 1-bit style, with no credits to track |
+| [Game jam: 3D low-poly](jam-3d-low-poly.md) | A 3D low-poly jam game in any engine |
+| [Game jam: all the audio in 10 minutes](jam-audio-10-minutes.md) | Every sound and the music for a jam game, nothing to credit |
 
 ## Writing a stack
 
