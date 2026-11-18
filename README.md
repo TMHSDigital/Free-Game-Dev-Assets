@@ -56,7 +56,7 @@ re-check forty tabs before a release. (Thanks to magictools: many tool entries s
 
 ## Contents
 
-[Start here](#start-here) · [Starter stacks](#starter-stacks) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [Unreal Engine](#unreal-engine) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Use the data](#use-the-data) · [Scope](#scope) · [Contributing](#contributing) · [Support](#support)
+[Start here](#start-here) · [Starter stacks](#starter-stacks) · [Browse the catalog](#browse-the-catalog) · [Reading an entry](#reading-an-entry) · [Safe starting points](#safe-starting-points) · [Licences](#licences) · [Godot](#godot) · [Unreal Engine](#unreal-engine) · [How the catalog stays honest](#how-the-catalog-stays-honest) · [Use the data](#use-the-data) · [Scope](#scope) · [Contributing](#contributing) · [Privacy](#privacy) · [Support](#support)
 
 ## A few of the sources
 
@@ -261,6 +261,10 @@ publish a source listed here, [`docs/for-publishers.md`](docs/for-publishers.md)
 recorded about it and how to correct it or remove its preview.
 Please follow the [Code of Conduct](CODE_OF_CONDUCT.md). Local commands and the repository
 layout are in [CONTRIBUTING.md](CONTRIBUTING.md#repository-layout).
+
+## Privacy
+
+The website counts usage with [GoatCounter](https://www.goatcounter.com/), so the catalog can see which searches find nothing and add what is missing. It sends the page path, title and referrer on each page view, plus two kinds of named event from the catalog: a search that found no results (the query, lowercased and cut to 40 characters) and the set of filters used. There are no cookies, no local storage and no identifiers, and the counter script is served from this site. Nothing is sent when the browser has Do Not Track or Global Privacy Control turned on, or when the site runs locally. The code is [`site/public/count.js`](site/public/count.js).
 
 ## Support
 

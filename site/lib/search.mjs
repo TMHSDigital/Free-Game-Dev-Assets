@@ -383,6 +383,22 @@ export function stateQuery(state, defaults) {
   return p.toString();
 }
 
+/**
+ * The usage events one settled catalog view sends (#120): what was searched
+ * and found nothing, and which filter combination was used. The query is
+ * lowercased, whitespace-collapsed and cut to 40 characters; nothing else
+ * about the reader goes in. Returns a list of event names, empty when the
+ * view is the default one.
+ */
+export function viewEvents(state, defaults, resultCount) {
+  const events = [];
+  const q = String(state.q || "").trim().toLowerCase().replace(/\s+/g, " ").slice(0, 40);
+  const filters = stateQuery({ ...state, q: "" }, defaults);
+  if (filters) events.push(`filters/${filters}`);
+  if (resultCount === 0 && (q || filters)) events.push(`no-results/${q || "(filters only)"}${filters ? ` [${filters}]` : ""}`);
+  return events;
+}
+
 /* ---------------------------------------------------------------- 404 page */
 
 /** Site sections whose pages live at <section>/<id>/. */

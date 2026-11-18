@@ -283,6 +283,7 @@ export function siteFooterHtml({ root, stamp, total, credit = true, current = nu
   return `<footer class="footer">
       <p>Catalog metadata is CC0. Linked assets keep their own licences. This is the catalog's reading of each licence, not legal advice: re-check the live source before shipping.</p>
 ${credit ? `      <p class="footer-credit">${PREVIEW_CREDIT_LINE}</p>\n` : ""}      <p>${links.join(" · ")}</p>
+      <p class="footer-privacy">Page views and searches that find nothing are counted with GoatCounter: no cookies, nothing that identifies you, and nothing is sent when your browser asks not to be tracked.</p>
       <p class="footer-sponsor">${sponsorButtonHtml()}</p>
       <p class="footer-stamp">Built ${esc(stamp)} from ${total} listed sources.</p>
     </footer>`;
@@ -362,9 +363,12 @@ export function opensearchLinkHtml(site) {
  * requests are same-origin only; inline styles stay allowed for the few
  * style="--var: ..." attributes; JSON-LD blocks are data, not script, so the
  * policy does not touch them. frame-ancestors cannot be set from a <meta>.
+ * The one cross-origin request is the cookie-less usage count (#120): the
+ * self-hosted count.js may connect to ANALYTICS_ENDPOINT's origin, nothing else.
  */
+export const ANALYTICS_ENDPOINT = "https://tmhs.goatcounter.com/count";
 export const CSP =
-  "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'";
+  `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' ${new URL(ANALYTICS_ENDPOINT).origin}; object-src 'none'; base-uri 'self'; form-action 'self'`;
 export const CSP_META = `<meta http-equiv="Content-Security-Policy" content="${CSP}" />`;
 
 /** The CSP, icon, font preloads and stylesheet, resolved against `root`. Every page type shares them. */
@@ -377,6 +381,8 @@ export function headAssetsHtml(root = "./") {
     `<link rel="manifest" href="${esc(root)}manifest.webmanifest" />`,
     // Blocking on purpose: it sets the chosen theme before the first paint (#111).
     `<script src="${esc(root)}theme.js"></script>`,
+    // Usage counts (#120): deferred, so it never delays the page.
+    `<script src="${esc(root)}count.js" defer></script>`,
   ];
 }
 

@@ -608,7 +608,7 @@ function main() {
   writeOut("manifest.webmanifest", `${JSON.stringify(webManifest(config.site), null, 2)}\n`);
   writeOut("sw.js", serviceWorkerJs({
     version: payload.generatedAt,
-    precache: [...new Set(["./", "data.js", "styles.css", "theme.js", "favicon.svg", ...PAGE_MODULES.home, ...FONT_FILES])],
+    precache: [...new Set(["./", "data.js", "styles.css", "theme.js", "count.js", "favicon.svg", ...PAGE_MODULES.home, ...FONT_FILES])],
   }));
   writeOut("opensearch.xml", opensearchXml(config.site));
   writeOut("404.html", notFoundHtml(config.site));

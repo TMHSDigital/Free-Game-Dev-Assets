@@ -1071,6 +1071,22 @@ eq("url: round trip", readState(`?${stateQuery(urlSt, URL_DEF)}`, URL_DEF, URL_A
 eq("url: defaults write nothing", stateQuery(URL_DEF, URL_DEF), "");
 eq("url: switch off written as 0", stateQuery({ ...URL_DEF, active: false }, URL_DEF), "active=0");
 eq("url: blank q not written", stateQuery({ ...URL_DEF, q: "   " }, URL_DEF), "");
+
+/* usage events (#120) ----------------------------------------------------- */
+await section("usage events from a catalog view (#120)", async () => {
+  const { viewEvents } = await import("./search.mjs");
+  const { CSP, ANALYTICS_ENDPOINT, headAssetsHtml, siteFooterHtml } = await import("./shared.mjs");
+  eq("default view sends nothing", JSON.stringify(viewEvents(URL_DEF, URL_DEF, 400)), JSON.stringify([]));
+  eq("a query with results sends nothing", JSON.stringify(viewEvents({ ...URL_DEF, q: "pixel" }, URL_DEF, 12)), JSON.stringify([]));
+  eq("a query with no results is sent normalised", JSON.stringify(viewEvents({ ...URL_DEF, q: "  Voxel   TREES " }, URL_DEF, 0)), JSON.stringify(["no-results/voxel trees"]));
+  eq("the query is cut to 40 characters", viewEvents({ ...URL_DEF, q: "x".repeat(90) }, URL_DEF, 0)[0].length, "no-results/".length + 40);
+  eq("filters are sent without the query", JSON.stringify(viewEvents({ ...URL_DEF, q: "tree", category: "2d" }, URL_DEF, 3)), JSON.stringify(["filters/cat=2d"]));
+  eq("no results with filters names both", JSON.stringify(viewEvents({ ...URL_DEF, q: "tree", category: "2d" }, URL_DEF, 0)), JSON.stringify(["filters/cat=2d", "no-results/tree [cat=2d]"]));
+  eq("CSP connects only to the counter's origin", CSP.includes(`connect-src 'self' ${new URL(ANALYTICS_ENDPOINT).origin};`), true);
+  eq("CSP keeps scripts same-origin", CSP.includes("script-src 'self';"), true);
+  eq("every page loads count.js deferred", headAssetsHtml("../").includes('<script src="../count.js" defer></script>'), true);
+  eq("the footer states what is counted", siteFooterHtml({ root: "./", stamp: "x", total: 1 }).includes("GoatCounter"), true);
+});
 await section("block at line 960", async () => {
   // #223: every choice and switch survives a round trip through the URL.
   const other = { category: "3d", sort: "verified", perspective: "top_down", license: "cc0", format: "image", engine: "godot", fresh: "6m" };

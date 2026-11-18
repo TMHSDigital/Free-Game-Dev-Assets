@@ -1,4 +1,4 @@
-import { activeFilterChips, FILTER_DEFAULTS, FILTERS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES } from "./search.js";
+import { activeFilterChips, FILTER_DEFAULTS, FILTERS, gapIssueUrl, closestEntries, computeResults as computeResultsFor, passesFilters as passes, placementKey, queryTests as compileQuery, readState, scoreFields, searchFields, shouldGroup as shouldGroupFor, slugOf, sorterFor, SORTS, stateQuery, ENGINES, viewEvents } from "./search.js";
 import { CARD_LIMIT, LIST_LIMIT, entryCardHtml, escapeHtml, groupHeadingHtml, groupMoreHtml, PERSPECTIVE_LABELS } from "./cards.mjs";
 import { installViewToggles } from "./views.js";
 import { catalogCsv } from "./exports.js";
@@ -548,6 +548,22 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
   // The entries the current view shows, for "Download these" (#110).
   let lastList = [];
 
+  // Usage counts (#120, count.js): a view is reported once it has stayed the
+  // same for two seconds, so typing does not send every keystroke, and each
+  // event name at most once per page load.
+  let countTimer;
+  const counted = new Set();
+  function countView(resultCount) {
+    clearTimeout(countTimer);
+    countTimer = setTimeout(() => {
+      for (const name of viewEvents(state, DEFAULTS, resultCount)) {
+        if (counted.has(name)) continue;
+        counted.add(name);
+        window.fgdaCount?.event(name);
+      }
+    }, 2000);
+  }
+
   function apply({ push = false } = {}) {
     clearTimeout(searchTimer);
     const results = computeResults();
@@ -556,6 +572,7 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
     renderActiveFilters();
     renderGrid(results);
     writeUrl({ push });
+    countView(results.list.length);
   }
 
   // The starter table and the guide list are prerendered by the build and
