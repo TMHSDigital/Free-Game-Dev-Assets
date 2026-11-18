@@ -23,7 +23,7 @@ import { renderGuide } from "./lib/guide-render.mjs";
 import { categoryPageHtml } from "./lib/category-page.mjs";
 import { alternativesFor, alternativesForCategory, alternativesPageHtml, checkAlternatives } from "./lib/alternatives-page.mjs";
 import { filmstripPick, isAttributionLicence, previewCredit, thumbRelPath } from "./lib/thumbs.mjs";
-import { summaryFromBody } from "./lib/frontmatter.mjs";
+import { evidenceSection, summaryFromBody } from "./lib/frontmatter.mjs";
 import { readCatalog, idMatchesFile } from "./lib/entry-files.mjs";
 import { normalizeEntry, RENDER_REQUIRED } from "./lib/entry-fields.mjs";
 import { cliArgs } from "./lib/cli.mjs";
@@ -44,7 +44,7 @@ import { serviceWorkerJs, webManifest } from "./lib/offline.mjs";
 import { auditPageHtml } from "./lib/audit-page.mjs";
 import { changeEventsFromLog, changesFeedXml } from "./lib/changes.mjs";
 import { badgeSvg } from "./lib/badge.mjs";
-import { alternativeRowsHtml, ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
+import { alternativeRowsHtml, ATTRIBUTION_RANK, categoryChipsHtml, guideRowsHtml, heroExampleHtml, headMetaHtml, licenseFamily, notFoundHtml, robotsTxt, stackRowsHtml, starterRowsHtml } from "./lib/home-page.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -596,6 +596,11 @@ function main() {
     FILMSTRIP: filmstripHtml(filmstripPick(visible, { count: 9, cardCategories }), { root: "" }),
     CATEGORY_CHIPS: categoryChipsHtml(visible, config.categories),
     GUIDE_ROWS: guideRowsHtml(config.guides),
+    // One real entry under the hero search, showing what each entry records.
+    HERO_EXAMPLE: (() => {
+      const pick = visible.find((e) => e.id === config.heroExample);
+      return pick ? heroExampleHtml(pick, evidenceSection(bodies.get(pick.id) || "")) : "";
+    })(),
     // Links to the alternatives pages (#189), with their live source counts.
     ALTERNATIVE_ROWS: (() => {
       const defs = JSON.parse(fs.readFileSync(ALTERNATIVES_PATH, "utf8")).pages;

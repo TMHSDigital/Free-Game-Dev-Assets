@@ -2653,6 +2653,19 @@ await section("needs-review open question (#211)", async () => {
   eq("alternatives: not from a category it does not list", alt.alternativesForCategory([altDef], altEntries, "audio").length, 0);
   const altSitemap = (await import("./exports.mjs")).sitemapXml({ site: { siteUrl: "https://x.test/s/" }, entries: [], stamp: "2026-11-18", alternatives: [{ slug: "s" }] });
   has("alternatives: in the sitemap", altSitemap, "<loc>https://x.test/s/alternatives/s/</loc>");
+  // The hero's real example entry: newest dated quote, its page and the date.
+  {
+    const { newestQuote, heroExampleHtml } = await import("./home-page.mjs");
+    const ev = '- Live page (2026-07-19): License **CC0** "Old words"\n- Re-read [at the source](https://k.test/p) (2026-11-18): unchanged, “License Creative Commons CC0”\n';
+    eq("hero example: picks the newest dated quote", JSON.stringify(newestQuote(ev)), JSON.stringify({ date: "2026-11-18", quote: "License Creative Commons CC0", link: "https://k.test/p" }));
+    eq("hero example: nothing without a dated quote", newestQuote("- Live page: CC0\n"), null);
+    const e = { id: "k", name: "Kit <1>", license: "CC0", commercial: true, attribution_required: false, url: "https://k.test/" };
+    const html = heroExampleHtml(e, ev);
+    has("hero example: escapes the name and links the entry", html, '<a href="entry/k/">Kit &lt;1&gt;</a>');
+    has("hero example: states licence, commercial use and credit", html, "CC0 · commercial OK · no credit needed");
+    has("hero example: links the page quoted and the date read", html, 'Quoted from <a href="https://k.test/p">k.test/p</a>, read 2026-11-18');
+    eq("hero example: empty for a missing entry", heroExampleHtml(null, ev), "");
+  }
   // #189: the homepage links every alternatives page with its count.
   {
     const { alternativeRowsHtml } = await import("./home-page.mjs");

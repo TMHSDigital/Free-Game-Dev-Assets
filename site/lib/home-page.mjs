@@ -52,6 +52,45 @@ export function starterRowsHtml(featured) {
 }
 
 /**
+ * The newest dated Evidence line of an entry body: its date, the first quote
+ * in it, and the page it links (or null). Null when no line has a date and a
+ * quote.
+ */
+export function newestQuote(evidence) {
+  let best = null;
+  for (const line of String(evidence || "").split("\n")) {
+    const date = (line.match(/\((\d{4}-\d{2}-\d{2})\)/) || [])[1];
+    const quote = (line.match(/[“"]([^”"]{3,240})[”"]/) || [])[1];
+    if (!date || !quote) continue;
+    const link = (line.match(/\]\((https?:\/\/[^)\s]+)\)/) || [])[1] || null;
+    if (!best || date >= best.date) best = { date, quote: quote.trim(), link };
+  }
+  return best;
+}
+
+const creditLabel = (v) => (v === false ? "no credit needed" : v === true ? "credit required" : "credit unclear");
+
+/**
+ * The hero's real example (site/config.json heroExample): one entry's
+ * licence, commercial use, credit, and its newest quote with the date it was
+ * read and the page it came from. Shows what every entry records, with real
+ * data. Empty when the entry is missing or has no dated quote.
+ */
+export function heroExampleHtml(entry, evidence) {
+  const q = entry && newestQuote(evidence);
+  if (!q) return "";
+  const source = q.link || entry.license_url || entry.url;
+  const shown = String(source).replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+  return `<figure class="hero-example">
+          <figcaption>What every entry records, for example</figcaption>
+          <p class="hero-example-name"><a href="entry/${esc(entry.id)}/">${esc(entry.name)}</a></p>
+          <p class="hero-example-facts">${esc(entry.license)} · ${esc(commercialLabel(entry.commercial))} · ${esc(creditLabel(entry.attribution_required))}</p>
+          <blockquote class="hero-example-quote" cite="${esc(source)}">“${esc(q.quote)}”</blockquote>
+          <p class="hero-example-meta">Quoted from <a href="${esc(source)}">${esc(shown)}</a>, read ${esc(q.date)} · <a href="guide/method/">How each licence is read</a></p>
+        </figure>`;
+}
+
+/**
  * The homepage list of "Free alternatives to ..." pages (#189), same row
  * shape as the guides: the product name and how many active sources the
  * page lists. `counts` maps slug to that number.

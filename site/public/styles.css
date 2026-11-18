@@ -271,6 +271,57 @@ code {
   font-size: 1.05rem;
 }
 
+/* One real entry under the search: what every entry records. */
+.hero-example {
+  max-width: 34rem;
+  margin: 1.5rem auto 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  text-align: left;
+}
+
+.hero-example figcaption {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.hero-example p {
+  margin: 0;
+}
+
+.hero-example-name {
+  margin-top: 0.35rem !important;
+  font-weight: 600;
+}
+
+.hero-example-name a {
+  color: var(--ink);
+}
+
+.hero-example-facts {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.hero-example-quote {
+  margin: 0.55rem 0;
+  padding-left: 0.7rem;
+  border-left: 3px solid var(--accent);
+  font-size: 1rem;
+}
+
+.hero-example-meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.hero-example-meta a:last-child {
+  white-space: nowrap;
+}
+
 .hero-search {
   display: flex;
   gap: 0.5rem;
