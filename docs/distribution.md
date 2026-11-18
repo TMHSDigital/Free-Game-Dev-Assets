@@ -20,7 +20,7 @@ The landing pages for posts: the [catalog](https://tmhsdigital.github.io/Free-Ga
 
 | Target | What to publish | Status |
 | --- | --- | --- |
-| Hugging Face Datasets | `data.json` and `catalog.csv` with the field table from [data.md](data.md) as the dataset card; CC0 | |
+| Hugging Face Datasets | `data.json` and `catalog.csv` with the field table from [data.md](data.md) as the dataset card; CC0 | Published 2026-11-18: [TMHS/free-game-dev-assets](https://huggingface.co/datasets/TMHS/free-game-dev-assets), a dated snapshot whose card points at the live files |
 | Kaggle Datasets | `catalog.csv` with the same field table; CC0 | |
 
 Keep each hub copy pointing at the live files, or re-upload on a schedule, so it does not drift from the catalog.

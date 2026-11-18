@@ -6,6 +6,8 @@ The catalog is published as machine-readable files on every deploy. The metadata
 
 ## Files
 
+The same data is also on Hugging Face as [TMHS/free-game-dev-assets](https://huggingface.co/datasets/TMHS/free-game-dev-assets), a dated snapshot for loading with the `datasets` library; the files below are the live, authoritative copy.
+
 | File | What it is |
 | --- | --- |
 | [`data.json`](https://tmhsdigital.github.io/Free-Game-Dev-Assets/data.json) | The whole catalog: every entry with its licence fields, plus categories, guides, stacks and counts |
