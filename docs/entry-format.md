@@ -30,7 +30,8 @@ file you take.
 | `commercial` | `true`, `false`, `unknown` or `varies`. `varies` means per-file review; the site's Commercial OK filter still lists these, labelled **per-file review** |
 | `attribution_required` | `true`, `false` or `unknown`. For fonts, `false` means no credit line, not no obligation: see [`docs/fonts.md`](fonts.md) |
 | `attribution_string` | Copy-paste credit line, present when attribution is required |
-| `formats` | Common download and interchange formats |
+| `formats` | Common download and interchange formats (may be empty) |
+| `delivery` | Optional. How the source reaches you: `desktop-app`, `web-app`, `cli`, `library`, `godot-addon`, `unreal-plugin` and the rest of the closed list in [`site/format-vocabulary.json`](../site/format-vocabulary.json) |
 | `verified` | Date the licence was last read at the source (`YYYY-MM-DD`) |
 | `status` | See the table above |
 | `publisher` | The rights holder, when it has more than one entry. Never a generic host |

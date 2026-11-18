@@ -37,7 +37,8 @@ Each entry in `data.json` has these fields. `catalog.csv` has the ones marked CS
 | `attribution_required` | yes | `true`, `false` or `unknown` |
 | `attribution_string` | yes | The credit line as the source words it, where it gives one |
 | `publisher` | yes | Who publishes the source, where recorded |
-| `formats`, `tags` | yes | File formats and search tags |
+| `formats`, `tags` | yes | File formats (possibly empty) and search tags |
+| `delivery` | when set | How the source reaches you: `desktop-app`, `web-app`, `godot-addon`, `unreal-plugin` and the rest of the closed list in `site/format-vocabulary.json` |
 | `added` | yes | Date the entry joined the catalog |
 | `verified` | yes | Date the licence was last read at the source. A read date, not a validity date |
 | `status` | yes | `active`, `needs-review` (an open question, read the Notes), `per-item` (an aggregator whose licence is set per file; `perItem` says how to read it) or `deprecated` |

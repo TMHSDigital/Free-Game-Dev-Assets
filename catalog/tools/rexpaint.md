@@ -7,7 +7,8 @@ subcategories: [painting]
 license: custom
 commercial: true
 attribution_required: false
-formats: [desktop-app, PNG, TXT, CSV, XML]
+formats: [PNG, TXT, CSV, XML]
+delivery: [desktop-app]
 tags: [roguelike, ui, windows]
 added: 2026-09-30
 verified: 2026-09-30

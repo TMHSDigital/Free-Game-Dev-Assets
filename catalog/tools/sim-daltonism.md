@@ -8,7 +8,8 @@ license: Apache-2.0
 license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
-formats: [desktop-app, mobile-app]
+formats: []
+delivery: [desktop-app, mobile-app]
 tags: [colorblind, simulator, macos]
 added: 2026-07-19
 verified: 2026-07-19

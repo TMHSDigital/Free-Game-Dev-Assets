@@ -20,7 +20,7 @@
       "type": "object",
       "required": [
         "id", "name", "url", "page", "category", "license", "license_spdx", "licenseFamily", "attributionClass",
-        "commercial", "attribution_required", "credit_line", "formats", "tags", "publisher", "status", "verified",
+        "commercial", "attribution_required", "credit_line", "formats", "delivery", "tags", "publisher", "status", "verified",
         "summary", "works_in", "made_for"
       ],
       "additionalProperties": false,
@@ -38,6 +38,7 @@
         "attribution_required": { "enum": [true, false, "unknown"] },
         "credit_line": { "type": ["string", "null"], "description": "Recorded credit line; {…} fields are filled in by the user" },
         "formats": { "type": "array", "items": { "type": "string" } },
+        "delivery": { "type": "array", "items": { "type": "string" }, "description": "How the source reaches you, e.g. godot-addon or desktop-app (#97)" },
         "tags": { "type": "array", "items": { "type": "string" } },
         "publisher": { "type": ["string", "null"] },
         "status": { "enum": ["active", "needs-review", "per-item"] },

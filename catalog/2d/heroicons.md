@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [SVG, React, Vue]
+formats: [SVG]
+delivery: [library]
 tags: [svg]
 camera_perspective: 2d_flat
 added: 2026-07-19

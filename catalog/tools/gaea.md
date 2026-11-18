@@ -7,7 +7,8 @@ subcategories: [terrain]
 license: custom
 commercial: false
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [heightfield]
 added: 2026-07-19
 verified: 2026-10-04

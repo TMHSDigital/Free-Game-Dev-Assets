@@ -9,6 +9,7 @@ license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
 formats: [WAV]
+delivery: [web-app]
 tags: [sfx, procedural, retro, chiptune, browser]
 added: 2026-08-24
 verified: 2026-08-24

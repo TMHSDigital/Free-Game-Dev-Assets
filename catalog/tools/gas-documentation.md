@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [Unreal]
+formats: []
+delivery: [unreal-project]
 tags: [unreal-engine, multiplayer, replication]
 ue_versions: "5.3"
 added: 2026-10-13

@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [desktop-app, JSON]
+formats: [JSON]
+delivery: [desktop-app]
 tags: [2d, levels, tilemap]
 added: 2026-09-26
 verified: 2026-09-26

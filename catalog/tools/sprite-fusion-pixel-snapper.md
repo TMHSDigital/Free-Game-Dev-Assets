@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [cli, PNG]
+formats: [PNG]
+delivery: [cli]
 tags: [cleanup, quantization, batch, rust]
 added: 2026-09-30
 verified: 2026-09-30

@@ -7,7 +7,8 @@ subcategories: [pixel]
 license: unknown
 commercial: unknown
 attribution_required: unknown
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [retro, c64, color-clash, java]
 added: 2026-09-30
 verified: 2026-10-04

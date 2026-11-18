@@ -8,6 +8,7 @@ license: custom
 commercial: true
 attribution_required: false
 formats: [PNG]
+delivery: [web-app]
 tags: [space, skybox, browser, sci-fi]
 added: 2026-09-30
 verified: 2026-09-30

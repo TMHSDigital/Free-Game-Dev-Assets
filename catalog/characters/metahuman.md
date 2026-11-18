@@ -7,7 +7,8 @@ subcategories: [humanoid, rigged]
 license: custom
 commercial: true
 attribution_required: false
-formats: [Unreal]
+formats: []
+delivery: [unreal-project]
 tags: [unreal-engine, realistic, character-creator]
 publisher: Epic Games
 ue_versions: "5.6+"

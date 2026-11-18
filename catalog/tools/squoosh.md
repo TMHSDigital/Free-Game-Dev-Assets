@@ -9,6 +9,7 @@ license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [PNG, JPG]
+delivery: [web-app]
 tags: [webp, browser]
 added: 2026-09-30
 verified: 2026-09-30

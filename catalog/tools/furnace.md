@@ -8,7 +8,8 @@ license: GPL-2.0-or-later
 license_spdx: GPL-2.0-or-later
 commercial: true
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [tracker, chiptune, retro]
 added: 2026-09-26
 verified: 2026-09-26

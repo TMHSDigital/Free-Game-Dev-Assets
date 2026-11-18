@@ -9,7 +9,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [Unity]
+formats: []
+delivery: [unity-package]
 tags: [kinect]
 added: 2026-07-19
 verified: 2026-07-19

@@ -9,7 +9,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [godot-addon, gdextension, EXR, R16, PNG]
+formats: [EXR, R16, PNG]
+delivery: [godot-addon, gdextension]
 tags: [heightmap, gdextension]
 added: 2026-08-24
 verified: 2026-08-24

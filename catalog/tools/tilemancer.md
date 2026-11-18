@@ -8,7 +8,8 @@ license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [pixel, tileset, heightmap]
 added: 2026-09-30
 verified: 2026-09-30

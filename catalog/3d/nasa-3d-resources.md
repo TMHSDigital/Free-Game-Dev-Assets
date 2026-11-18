@@ -9,7 +9,7 @@ license: public-domain
 commercial: true
 attribution_required: true
 attribution_string: "NASA 3D Resources / NASA. Suggested format; NASA asks to be acknowledged as the source and forbids implied endorsement."
-formats: [OBJ, STL, various]
+formats: [OBJ, STL]
 tags: [government, space, models]
 added: 2026-07-19
 verified: 2026-07-19

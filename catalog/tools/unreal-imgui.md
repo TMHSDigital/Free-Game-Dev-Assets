@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [unreal-plugin, C++]
+formats: [C++]
+delivery: [unreal-plugin]
 tags: [unreal-engine]
 ue_versions: "4.27-5.5"
 added: 2026-10-13

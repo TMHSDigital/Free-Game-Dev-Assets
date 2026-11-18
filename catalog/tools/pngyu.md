@@ -7,7 +7,8 @@ subcategories: [compression, pipeline]
 license: BSD
 commercial: true
 attribution_required: false
-formats: [desktop-app, PNG]
+formats: [PNG]
+delivery: [desktop-app]
 tags: [png, lossy-png, pngquant, batch, windows, macos]
 added: 2026-09-30
 verified: 2026-10-04

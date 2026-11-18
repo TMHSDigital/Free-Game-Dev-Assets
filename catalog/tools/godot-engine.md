@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [desktop-app, Godot]
+formats: []
+delivery: [desktop-app, godot-project]
 tags: [2d, 3d, editor, engine]
 added: 2026-09-26
 verified: 2026-09-26

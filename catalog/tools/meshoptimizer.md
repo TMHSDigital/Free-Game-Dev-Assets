@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [cli, library]
+formats: []
+delivery: [cli, library]
 tags: [gltf, pipeline]
 added: 2026-07-19
 verified: 2026-08-24

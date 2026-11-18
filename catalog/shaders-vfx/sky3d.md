@@ -9,7 +9,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [gdshader, godot-addon]
+formats: [gdshader]
+delivery: [godot-addon]
 tags: [clouds, atmosphere]
 added: 2026-07-19
 verified: 2026-07-19

@@ -7,7 +7,8 @@ subcategories: [sample-projects]
 license: custom
 commercial: true
 attribution_required: false
-formats: [Unreal]
+formats: []
+delivery: [unreal-project]
 tags: [unreal-engine, nanite, photogrammetry, foliage, procedural]
 publisher: Epic Games
 engine_lock: unreal

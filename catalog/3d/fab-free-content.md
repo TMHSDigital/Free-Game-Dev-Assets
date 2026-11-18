@@ -7,7 +7,7 @@ subcategories: [aggregator, environment, materials]
 license: varies
 commercial: varies
 attribution_required: unknown
-formats: [various]
+formats: []
 tags: [marketplace, unreal-engine, models]
 added: 2026-10-13
 verified: 2026-10-13

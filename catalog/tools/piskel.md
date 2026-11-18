@@ -9,6 +9,7 @@ license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
 formats: [PNG, GIF]
+delivery: [web-app]
 tags: [sprite-editor, animation, spritesheet, browser]
 added: 2026-09-30
 verified: 2026-09-30

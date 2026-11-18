@@ -7,7 +7,7 @@ subcategories: [heightmaps, imagery, dem]
 license: public-domain
 commercial: true
 attribution_required: false
-formats: [GeoTIFF, DEM, various]
+formats: [GeoTIFF, DEM]
 tags: [government, terrain, srtm]
 added: 2026-07-19
 verified: 2026-08-24

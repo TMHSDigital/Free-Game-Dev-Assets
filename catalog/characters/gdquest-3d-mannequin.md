@@ -10,7 +10,8 @@ license_spdx: CC-BY-4.0
 commercial: true
 attribution_required: true
 attribution_string: "GDQuest and contributors (https://www.gdquest.com/)"
-formats: [glTF, Godot]
+formats: [glTF]
+delivery: [godot-project]
 tags: [godot]
 added: 2026-07-19
 verified: 2026-08-24

@@ -8,7 +8,8 @@ license: BSD-3-Clause-Clear
 license_spdx: BSD-3-Clause-Clear
 commercial: true
 attribution_required: false
-formats: [unreal-plugin, C++]
+formats: [C++]
+delivery: [unreal-plugin]
 tags: [unreal-engine, latent-actions, multithreading, gameplay-programming]
 added: 2026-10-13
 verified: 2026-10-13

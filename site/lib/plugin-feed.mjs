@@ -44,6 +44,7 @@ export function pluginEntry(e) {
     // "no canned credit line; see the entry" then, and so should a plugin.
     credit_line: e.attribution_string || null,
     formats: e.formats || [],
+    delivery: e.delivery || [],
     tags: e.tags || [],
     publisher: e.publisher || null,
     status: e.status,

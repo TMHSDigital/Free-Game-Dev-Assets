@@ -1089,7 +1089,7 @@ await section("usage events from a catalog view (#120)", async () => {
 });
 await section("block at line 960", async () => {
   // #223: every choice and switch survives a round trip through the URL.
-  const other = { category: "3d", sort: "verified", perspective: "top_down", license: "cc0", format: "image", engine: "godot", fresh: "6m" };
+  const other = { category: "3d", sort: "verified", perspective: "top_down", license: "cc0", format: "image", delivery: "web", engine: "godot", fresh: "6m" };
   const allowed = Object.fromEntries(URL_CHOICES.map(([, f]) => [f, [URL_DEF[f], other[f]]]));
   const changed = { ...URL_DEF, q: "pixel art" };
   for (const [, f] of URL_CHOICES) {
@@ -1111,25 +1111,25 @@ await section("block at line 979", async () => {
   eq("engine: godot hides UE-only", passesFilters({ status: "active", engine_lock: "unreal" }, { ...URL_DEF, engine: "godot" }), false);
   eq("engine: unreal keeps UE-only", passesFilters({ status: "active", engine_lock: "unreal" }, { ...URL_DEF, engine: "unreal" }), true);
   eq("engine: agnostic entries stay", passesFilters({ status: "active" }, { ...URL_DEF, engine: "godot" }), true);
-  eq("engine: godot-tagged ranks first", er({ tags: ["godot-4"] }, "godot") - er({ tags: ["pixel"] }, "godot"), -1);
+  eq("engine: godot-tagged ranks first", er({ tags: ["godot"] }, "godot") - er({ tags: ["pixel"] }, "godot"), -1);
   eq("engine: url round-trips", readState("?engine=unity", URL_DEF, { engine: ["any", ...Object.keys(EN)] }).engine, "unity");
   eq("engine: written to the url", stateQuery({ ...URL_DEF, engine: "godot" }, URL_DEF), "engine=godot");
   eq("engine: unknown value ignored", readState("?engine=cryengine", URL_DEF, { engine: ["any", ...Object.keys(EN)] }).engine, "any");
   const { nativeEngines: ne, worksInEngine: wie, placementKey: pk } = await import("./search.mjs");
   const on = (formats, engine) => passesFilters({ status: "active", formats }, { ...URL_DEF, engine });
-  eq("engine: godot hides an Unreal project", on(["Unreal"], "godot"), false);
+  eq("engine: godot hides an Unreal project", on(["unreal-project"], "godot"), false);
   eq("engine: godot hides an Unreal plugin with its C++", on(["unreal-plugin", "C++"], "godot"), false);
   eq("engine: unity hides a Godot addon", on(["godot-addon"], "unity"), false);
-  eq("engine: unity hides a Godot project", on(["gdshader", "Godot"], "unity"), false);
-  eq("engine: unreal hides the Godot editor", on(["desktop-app", "Godot"], "unreal"), false);
-  eq("engine: godot hides a Unity-only entry", on(["Unity"], "godot"), false);
+  eq("engine: unity hides a Godot project", on(["gdshader", "godot-project"], "unity"), false);
+  eq("engine: unreal hides the Godot editor", on(["desktop-app", "godot-project"], "unreal"), false);
+  eq("engine: godot hides a Unity-only entry", on(["unity-package"], "godot"), false);
   eq("engine: an addon stays native despite asset formats", ne({ formats: ["godot-addon", "gdextension", "EXR", "PNG"] }).join(), "godot");
-  eq("engine: a sound pack with a Godot demo is agnostic", on(["WAV", "Godot"], "unity"), true);
-  eq("engine: a multi-engine export is agnostic", ne({ formats: ["Unity", "Godot", "JSON", "PNG"] }).length, 0);
-  eq("engine: a pack for two engines stays under either", on(["Unity", "Unreal"], "unity"), true);
+  eq("engine: a sound pack with a Godot demo is agnostic", on(["WAV", "godot-project"], "unity"), true);
+  eq("engine: a multi-engine export is agnostic", ne({ formats: ["unity-package", "godot-project", "JSON", "PNG"] }).length, 0);
+  eq("engine: a pack for two engines stays under either", on(["unity-package", "unreal-project"], "unity"), true);
   eq("engine: godot keeps Godot addons", on(["godot-addon"], "godot"), true);
   eq("engine: no formats is agnostic", wie({}, "godot"), true);
-  eq("engine: an unknown engine hides nothing", wie({ formats: ["Unreal"] }, "pico-8"), true);
+  eq("engine: an unknown engine hides nothing", wie({ formats: ["unreal-project"] }, "pico-8"), true);
   eq("engine: native format ranks first", er({ formats: ["unreal-plugin"] }, "unreal"), 0);
   eq("placement: key changes with the engine", pk({ sort: "name", engine: "godot" }, { ranked: false, group: true, list: [] }) === pk({ sort: "name", engine: "unity" }, { ranked: false, group: true, list: [] }), false);
   eq("placement: key ignores filters under a plain sort", pk({ sort: "name", engine: "any", q: "x" }, { ranked: false, group: false, list: [{ id: "a" }] }), pk({ sort: "name" }, { ranked: false, group: false, list: [] }));
@@ -1625,7 +1625,7 @@ await section("new-entry --from-issue (scaffold.mjs)", async () => {
   has("from-issue: the quote is the Evidence line", parsed.body, '- Reported in #42: Live licence page (2026-10-30): "Use it in games, credit Sound Co."');
   has("from-issue: a publisher submission is noted", parsed.body, "Submitted by the publisher (#42).");
   eq("from-issue: no unknown keys", checkKnownKeys("d.md", m).length, 0);
-  has("from-issue: validate fails until lists are filled", checkEntryBasics("catalog/audio/sound-pack-one.md", m, parsed.body, { stem: "sound-pack-one", dirName: "audio", categories: new Set(["audio"]), readmeText: "(sound-pack-one.md)", today: "2026-11-03" }).join(" "), "missing/empty: subcategories, formats, tags");
+  has("from-issue: validate fails until lists are filled", checkEntryBasics("catalog/audio/sound-pack-one.md", m, parsed.body, { stem: "sound-pack-one", dirName: "audio", categories: new Set(["audio"]), readmeText: "(sound-pack-one.md)", today: "2026-11-03" }).join(" "), "missing/empty: subcategories, tags");
   const odd = entryFromIssue(template, { ...form, "License as stated on the live page": "Royalty free!", "Commercial / game use": "maybe", "Licence quote and date": "no date here" }, { id: "x", issue: 7, today: "2026-11-03", vocab });
   const om = parseFrontmatter(odd.text).meta;
   eq("from-issue: an unknown licence becomes unknown", om.license, "unknown");
@@ -1788,8 +1788,8 @@ await section("engine scope and limits on entry pages (#173)", async () => {
   const { engineScope } = await import("./entry-page.mjs");
   const { seoDescription } = await import("./shared.mjs");
   const base = { license: "MIT", commercial: true, attribution_required: false, summary: "A thing." };
-  eq("scope: an Unreal project is made for Unreal", engineScope({ formats: ["Unreal"] }), "Unreal Engine");
-  eq("scope: a Godot addon is made for Godot", engineScope({ formats: ["godot-addon", "PNG"] }), "Godot");
+  eq("scope: an Unreal project is made for Unreal", engineScope({ delivery: ["unreal-project"] }), "Unreal Engine");
+  eq("scope: a Godot addon is made for Godot", engineScope({ formats: ["PNG"], delivery: ["godot-addon"] }), "Godot");
   eq("scope: a portable pack has none", engineScope({ formats: ["WAV", "Godot"] }), null);
   eq("scope: a two-engine pack has none", engineScope({ formats: ["Unity", "Unreal"] }), null);
   has("seo: the scope leads the description", seoDescription(base, undefined, { scope: "Godot" }), "no credit needed. For Godot only. A thing.");
@@ -2374,7 +2374,7 @@ await section("one filter table (#252) and the freshness filter (#271)", async (
     else eq(`filters table: ${f.field} has a chip for its non-default state`, Boolean(f.default ? f.chipOff : f.chipOn), true);
   }
   eq("filters table: URL keys are unique", new Set(FILTERS.map((f) => f.urlKey)).size, FILTERS.length);
-  eq("filters table: URL order is unchanged", CHOICES.map(([k]) => k).join(), "cat,sort,view,licence,format,engine,fresh");
+  eq("filters table: URL order is unchanged", CHOICES.map(([k]) => k).join(), "cat,sort,view,licence,format,delivery,engine,fresh");
   eq("filters table: switches", SWITCHES.map(([k]) => k).join(), "active,review,deprecated,commercial,noattr");
 
   // Every field flipped from its default survives a trip through the URL.
@@ -2620,6 +2620,21 @@ await section("needs-review open question (#211)", async () => {
   eq("singleton report: counts unique tags", report.unique, 3);
   eq("singleton report: lists one-off tags", report.singles.join(), "b,c");
   eq("singleton report: flags a share over a fifth", report.over, true);
+  // #97: delivery is a closed list beside formats, with its own filter.
+  const fv = JSON.parse(fsTest.readFileSync(new URL("../format-vocabulary.json", import.meta.url), "utf8"));
+  const { DELIVERY_GROUPS, passesFilters: pf, FILTER_DEFAULTS: FD } = await import("./search.mjs");
+  const { checkFormatVocabulary } = await import("../checks.mjs");
+  for (const d of Object.keys(fv.delivery)) {
+    eq(`delivery: "${d}" sits in exactly one filter group`, Object.values(DELIVERY_GROUPS).filter((g) => g.delivery.includes(d)).length, 1);
+  }
+  eq("delivery: groups name only listed values", Object.values(DELIVERY_GROUPS).flatMap((g) => g.delivery).every((d) => d in fv.delivery), true);
+  eq("delivery: no delivery kind is left among formats", Object.keys(fv.movedToDelivery).some((f) => fv.formats.includes(f)), false);
+  has("V20: an old app format points to delivery", checkFormatVocabulary("a.md", { formats: ["desktop-app"] }, fv).join(), "write delivery: [desktop-app]");
+  has("V20: an unknown delivery value fails", checkFormatVocabulary("a.md", { formats: [], delivery: ["dvd"] }, fv).join(), 'delivery "dvd" is not one of');
+  eq("V20: a listed delivery value passes", checkFormatVocabulary("a.md", { formats: ["PNG"], delivery: ["web-app"] }, fv).length, 0);
+  eq("delivery filter: a web app passes Web app", pf({ status: "active", delivery: ["web-app"] }, { ...FD, delivery: "web" }), true);
+  eq("delivery filter: a desktop app fails Web app", pf({ status: "active", delivery: ["desktop-app"] }, { ...FD, delivery: "web" }), false);
+  eq("delivery filter: no delivery fails a chosen group", pf({ status: "active", formats: ["PNG"] }, { ...FD, delivery: "godot" }), false);
   // Every merged tag spelling still finds an entry tagged with the kept one (#96).
   const tagAliases = JSON.parse(fsTest.readFileSync(new URL("../value-aliases.json", import.meta.url), "utf8")).tags;
   const { searchFields: sf, scoreFields: sc, queryTests: qt } = await import("./search.mjs");

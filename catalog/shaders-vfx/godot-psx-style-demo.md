@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [gdshader, Godot]
+formats: [gdshader]
+delivery: [godot-project]
 tags: [psx]
 added: 2026-07-27
 verified: 2026-07-27

@@ -7,7 +7,8 @@ subcategories: [sample-projects, environment]
 license: custom
 commercial: true
 attribution_required: false
-formats: [Unreal]
+formats: []
+delivery: [unreal-project]
 tags: [unreal-engine, top-down, stylized, blueprint]
 publisher: Epic Games
 engine_lock: unreal

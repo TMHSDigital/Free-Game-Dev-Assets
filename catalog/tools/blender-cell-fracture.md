@@ -8,7 +8,8 @@ license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
-formats: [blender-extension]
+formats: []
+delivery: [blender-extension]
 tags: [blender, fracture, debris, cell-fracture]
 added: 2026-09-23
 verified: 2026-09-23

@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [cli, JavaScript]
+formats: [JavaScript]
+delivery: [cli]
 tags: [gltf]
 added: 2026-07-19
 verified: 2026-08-24

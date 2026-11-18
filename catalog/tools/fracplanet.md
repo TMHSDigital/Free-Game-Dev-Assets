@@ -8,7 +8,8 @@ license: GPL-3.0-or-later
 license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [heightfield]
 maintenance: inactive
 added: 2026-09-30

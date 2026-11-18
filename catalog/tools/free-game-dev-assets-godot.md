@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [godot-addon]
+formats: []
+delivery: [godot-addon]
 tags: [asset-browser]
 added: 2026-11-10
 verified: 2026-11-10

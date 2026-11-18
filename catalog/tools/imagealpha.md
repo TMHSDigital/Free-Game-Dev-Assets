@@ -8,7 +8,8 @@ license: GPL-2.0-only
 license_spdx: GPL-2.0-only
 commercial: true
 attribution_required: false
-formats: [desktop-app, PNG]
+formats: [PNG]
+delivery: [desktop-app]
 tags: [png, lossy-png, pngquant, macos]
 added: 2026-09-30
 verified: 2026-09-30

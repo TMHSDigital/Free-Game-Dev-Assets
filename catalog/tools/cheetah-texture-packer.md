@@ -8,7 +8,8 @@ license: LGPL-3.0-only
 license_spdx: LGPL-3.0-only
 commercial: true
 attribution_required: false
-formats: [desktop-app, cli, PNG]
+formats: [PNG]
+delivery: [desktop-app, cli]
 tags: [spritesheet]
 added: 2026-09-30
 verified: 2026-10-04

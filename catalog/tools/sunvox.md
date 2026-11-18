@@ -7,7 +7,8 @@ subcategories: [music]
 license: custom
 commercial: true
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [tracker, sequencer]
 added: 2026-09-30
 verified: 2026-09-30

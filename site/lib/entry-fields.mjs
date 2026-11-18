@@ -18,6 +18,7 @@ export const OPTIONAL_FIELDS = [
   { key: "grid_dimensions", type: "string" },
   { key: "camera_perspective", type: "string" },
   { key: "hardware_tags", type: "list" },
+  { key: "delivery", type: "list" },
   { key: "attribution_string", type: "string" },
   { key: "publisher", type: "string" },
   { key: "license_spdx", type: "string" },

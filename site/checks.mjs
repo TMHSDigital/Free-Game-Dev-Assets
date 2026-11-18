@@ -309,7 +309,7 @@ export function checkPublisherConsistency(entries) {
 
 /* ----------------------------------------------------------------- V24 */
 /** Fields that must parse as YAML lists. `hardware_tags` is checked in V12. */
-const LIST_FIELDS = ["subcategories", "formats", "tags"];
+const LIST_FIELDS = ["subcategories", "formats", "delivery", "tags"];
 /** Fields that must parse as booleans, plus the literal words each one also allows. */
 const BOOLEAN_FIELDS = { commercial: ["varies", "unknown"], attribution_required: ["unknown"] };
 
@@ -356,7 +356,9 @@ export const STATUS_VALUES = new Set(Object.keys(STATUS_NOTES));
  */
 export function checkEntryBasics(rel, meta, body, { stem, dirName, categories, readmeText, today }) {
   const errors = [];
-  const missing = REQUIRED_KEYS.filter((k) => empty(meta[k]));
+  // `formats` must be present but may be empty (#97): a desktop tool's files
+  // are not fixed, and its delivery kind lives in `delivery`.
+  const missing = REQUIRED_KEYS.filter((k) => (k === "formats" ? meta[k] === undefined || meta[k] === null : empty(meta[k])));
   if (missing.length) errors.push(`${rel} missing/empty: ${missing.join(", ")}`);
   if (meta.id && String(meta.id) !== stem) {
     errors.push(`${rel} id "${meta.id}" does not match filename`);
@@ -541,7 +543,7 @@ export function checkCreditPlaceholders(rel, meta) {
  */
 export const KNOWN_KEYS = [
   "id", "name", "url", "publisher", "category", "subcategories", "license", "license_spdx",
-  "commercial", "attribution_required", "attribution_string", "formats", "tags", "added",
+  "commercial", "attribution_required", "attribution_string", "formats", "delivery", "tags", "added",
   "verified", "status", "engine_lock", "ue_versions", "camera_perspective", "grid_dimensions",
   "maintenance", "hardware_tags", "preview", "limits",
 ];
@@ -774,7 +776,7 @@ export function checkMaintenance(rel, meta) {
  * `5.4`, `5.4-5.8` or `5.4+`.
  */
 export const ENGINE_LOCK_VALUES = new Set(Object.keys(ENGINE_LOCK_NOTES));
-const UNREAL_FORMATS = new Set(["Unreal", "unreal-plugin"]);
+const UNREAL_FORMATS = new Set(["unreal-project", "unreal-plugin"]);
 const UE_VERSIONS_RE = /^(\d+)\.(\d+)(?:(\+)|-(\d+)\.(\d+))?$/;
 
 export function checkEngineFields(rel, meta) {
@@ -795,7 +797,7 @@ export function checkEngineFields(rel, meta) {
   // (LGPL only when dynamically linked), so a copyleft plugin cannot ship in a
   // UE game. Standalone GPL tools (Blender, GIMP) are unaffected: their output
   // is not GPL.
-  const formats = Array.isArray(meta.formats) ? meta.formats.map(String) : [];
+  const formats = [...(Array.isArray(meta.formats) ? meta.formats : []), ...(Array.isArray(meta.delivery) ? meta.delivery : [])].map(String);
   if (formats.some((f) => UNREAL_FORMATS.has(f)) && /GPL/.test(String(meta.license ?? ""))) {
     errors.push(`${rel} is Unreal content under ${meta.license}; the Unreal Engine EULA forbids combining the engine with GPL/LGPL code`);
   }
@@ -812,11 +814,22 @@ export function checkEngineFields(rel, meta) {
 export function checkFormatVocabulary(rel, meta, formatVocab) {
   const errors = [];
   const allowed = new Set(formatVocab.formats);
+  const delivery = formatVocab.delivery || {};
+  const moved = formatVocab.movedToDelivery || {};
   for (const v of Array.isArray(meta.formats) ? meta.formats.map(String) : []) {
-    if (!allowed.has(v)) {
+    if (moved[v]) {
+      errors.push(`${rel} formats "${v}" is how the entry is delivered, not a file format: write delivery: [${moved[v]}] (#97)`);
+    } else if (!allowed.has(v)) {
       errors.push(
         `${rel} formats "${v}" is not in site/format-vocabulary.json (use a listed spelling, or add the new format there first)`
       );
+    }
+  }
+  // `delivery` (#97): how the thing reaches you, a closed list beside formats.
+  if (!empty(meta.delivery) && !Array.isArray(meta.delivery)) errors.push(`${rel} delivery must be a list like [desktop-app]`);
+  for (const v of Array.isArray(meta.delivery) ? meta.delivery.map(String) : []) {
+    if (!Object.hasOwn(delivery, v)) {
+      errors.push(`${rel} delivery "${v}" is not one of ${Object.keys(delivery).join(", ")} (site/format-vocabulary.json)`);
     }
   }
   return errors;

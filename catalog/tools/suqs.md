@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [unreal-plugin, C++]
+formats: [C++]
+delivery: [unreal-plugin]
 tags: [unreal-engine, quest, blueprint]
 added: 2026-10-13
 verified: 2026-10-13

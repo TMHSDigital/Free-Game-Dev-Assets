@@ -8,7 +8,8 @@ license: GPL-3.0-only
 license_spdx: GPL-3.0-only
 commercial: true
 attribution_required: false
-formats: [PNG, desktop-app]
+formats: [PNG]
+delivery: [desktop-app]
 tags: [editor, vi-like]
 added: 2026-09-30
 verified: 2026-09-30

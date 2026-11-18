@@ -9,6 +9,7 @@ commercial: true
 attribution_required: false
 publisher: PixelArtHive
 formats: [PNG, GIF]
+delivery: [web-app]
 tags: [browser]
 added: 2026-11-17
 verified: 2026-11-17

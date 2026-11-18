@@ -9,6 +9,7 @@ license_spdx: GPL-2.0-or-later
 commercial: true
 attribution_required: false
 formats: [SVG]
+delivery: [web-app]
 tags: [vectorize, tracing, browser]
 added: 2026-09-30
 verified: 2026-09-30

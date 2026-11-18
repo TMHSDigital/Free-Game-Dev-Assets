@@ -7,7 +7,8 @@ subcategories: [audio-middleware]
 license: custom
 commercial: true
 attribution_required: unknown
-formats: [middleware]
+formats: []
+delivery: [middleware]
 tags: [audio]
 added: 2026-07-19
 verified: 2026-10-04

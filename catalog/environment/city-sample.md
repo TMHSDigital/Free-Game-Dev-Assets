@@ -7,7 +7,8 @@ subcategories: [sample-projects, buildings]
 license: custom
 commercial: true
 attribution_required: false
-formats: [Unreal]
+formats: []
+delivery: [unreal-project]
 limits: "May not be redistributed in source form or committed to a public repository"
 tags: [unreal-engine, city, realistic, nanite, vehicles]
 publisher: Epic Games

@@ -8,7 +8,8 @@ license: BSD-3-Clause
 license_spdx: BSD-3-Clause
 commercial: true
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [tracker]
 added: 2026-09-26
 verified: 2026-09-26

@@ -7,7 +7,8 @@ subcategories: [mocap]
 license: custom
 commercial: true
 attribution_required: false
-formats: [FBX, BIP, Unity, Unreal, Blend]
+formats: [FBX, BIP, Blend]
+delivery: [unity-package, unreal-project]
 tags: [professional, combat]
 added: 2026-07-19
 verified: 2026-07-19

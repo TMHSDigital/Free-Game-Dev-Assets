@@ -9,6 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [PNG]
+delivery: [web-app]
 tags: [c64, retro, sprite-editor, browser]
 added: 2026-09-30
 verified: 2026-09-30

@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [gdextension]
+formats: []
+delivery: [gdextension]
 tags: [steamworks]
 added: 2026-07-19
 verified: 2026-09-23

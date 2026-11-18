@@ -8,7 +8,8 @@ license: Apache-2.0
 license_spdx: Apache-2.0
 commercial: true
 attribution_required: false
-formats: [desktop-app, cli, PNG, ktx2]
+formats: [PNG, ktx2]
+delivery: [desktop-app, cli]
 tags: [spritesheet, java]
 added: 2026-09-30
 verified: 2026-09-30

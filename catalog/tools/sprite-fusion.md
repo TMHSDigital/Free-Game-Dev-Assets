@@ -7,7 +7,8 @@ subcategories: [level-editor]
 license: custom
 commercial: true
 attribution_required: false
-formats: [Unity, Godot, JSON, tmx, PNG]
+formats: [JSON, tmx, PNG]
+delivery: [web-app]
 tags: [tilemap, levels, 2d, browser]
 added: 2026-09-30
 verified: 2026-09-30

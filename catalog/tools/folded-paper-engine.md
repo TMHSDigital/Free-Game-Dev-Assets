@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [godot-addon, blender-extension]
+formats: []
+delivery: [godot-addon, blender-extension]
 tags: [blender, levels, third-person]
 added: 2026-09-30
 verified: 2026-09-30

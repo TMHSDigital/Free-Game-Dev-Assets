@@ -114,6 +114,7 @@
         "attribution_string": { "type": "string" },
         "publisher": { "type": "string" },
         "formats": { "$ref": "#/$defs/stringList" },
+        "delivery": { "$ref": "#/$defs/stringList", "description": "How the source reaches you (desktop-app, web-app, godot-addon...), present only when set (#97)" },
         "tags": { "$ref": "#/$defs/stringList" },
         "added": { "type": ["string", "null"], "description": "YYYY-MM-DD the entry joined the catalog" },
         "verified": { "type": ["string", "null"], "description": "YYYY-MM-DD the licence was last read at the source" },

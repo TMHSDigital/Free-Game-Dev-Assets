@@ -7,7 +7,8 @@ subcategories: [sans]
 license: varies
 commercial: varies
 attribution_required: true
-formats: [TTF, WOFF, WOFF2, npm]
+formats: [TTF, WOFF, WOFF2]
+delivery: [npm-package]
 tags: [aggregator]
 attribution_string: "See the OFL.txt / LICENSE in the @fontsource/{family} package you installed"
 added: 2026-08-24

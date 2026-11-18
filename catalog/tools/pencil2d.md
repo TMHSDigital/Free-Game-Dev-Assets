@@ -8,7 +8,8 @@ license: GPL-2.0-only
 license_spdx: GPL-2.0-only
 commercial: true
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [2d-animation, frame-by-frame, hand-drawn]
 added: 2026-09-26
 verified: 2026-09-26

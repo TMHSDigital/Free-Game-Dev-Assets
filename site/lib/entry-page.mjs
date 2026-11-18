@@ -114,6 +114,7 @@ export function entryPageHtml({ entry, leadHtml, restHtml, deprecatedReasonHtml,
     entry.ue_versions ? ["Unreal Engine", `${esc(entry.ue_versions)}, as stated by the source`] : null,
     entry.publisher ? ["Publisher", esc(entry.publisher)] : null,
     ["Formats", esc((entry.formats || []).join(", ") || "none listed")],
+    ...(entry.delivery?.length ? [["Delivery", esc(entry.delivery.join(", "))]] : []),
     entry.camera_perspective
       ? ["Perspective", esc(PERSPECTIVE_LABELS[entry.camera_perspective] || entry.camera_perspective)]
       : null,

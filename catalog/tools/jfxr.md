@@ -9,6 +9,7 @@ license_spdx: BSD-3-Clause
 commercial: true
 attribution_required: false
 formats: [WAV]
+delivery: [web-app]
 tags: [sfx, procedural, retro, browser]
 added: 2026-09-30
 verified: 2026-09-30

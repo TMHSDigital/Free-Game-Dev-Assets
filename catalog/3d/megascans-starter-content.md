@@ -7,7 +7,7 @@ subcategories: [photogrammetry, foliage, materials, environment]
 license: custom
 commercial: true
 attribution_required: false
-formats: [various]
+formats: []
 limits: "Tree packs and scenes are Unreal-only; no standalone redistribution"
 tags: [unreal-engine, trees, rocks, surfaces, decals]
 publisher: Epic Games

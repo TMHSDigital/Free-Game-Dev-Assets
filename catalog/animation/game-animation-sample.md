@@ -7,7 +7,8 @@ subcategories: [sample-projects, mocap]
 license: custom
 commercial: true
 attribution_required: false
-formats: [Unreal]
+formats: []
+delivery: [unreal-project]
 tags: [unreal-engine, third-person, locomotion, humanoid]
 publisher: Epic Games
 ue_versions: "5.4-5.8"

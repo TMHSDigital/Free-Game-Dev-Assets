@@ -9,7 +9,8 @@ license_spdx: CC-BY-4.0
 commercial: true
 attribution_required: true
 attribution_string: "PulseLite UI SFX by Bigshadex (https://bigshadex.itch.io/pulselite-ui-sfx-free), CC BY 4.0"
-formats: [WAV, Godot]
+formats: [WAV]
+delivery: [godot-project]
 tags: [ui, menu, procedural, godot]
 added: 2026-10-22
 verified: 2026-10-21

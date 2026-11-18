@@ -8,7 +8,8 @@ license: BSD-2-Clause
 license_spdx: BSD-2-Clause
 commercial: true
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [colorblind, simulator]
 added: 2026-07-19
 verified: 2026-07-19

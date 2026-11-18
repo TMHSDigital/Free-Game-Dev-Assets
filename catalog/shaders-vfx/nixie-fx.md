@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [npm, JavaScript, JSON]
+formats: [JavaScript, JSON]
+delivery: [npm-package]
 tags: [web, threejs, vfx]
 added: 2026-09-30
 verified: 2026-09-30

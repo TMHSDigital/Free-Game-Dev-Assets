@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [godot-addon]
+formats: []
+delivery: [godot-addon]
 tags: [steam-deck]
 added: 2026-07-19
 verified: 2026-08-24

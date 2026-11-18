@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [PNG, cli]
+formats: [PNG]
+delivery: [cli]
 tags: [tileset, spritesheet, splitter, python]
 added: 2026-09-30
 verified: 2026-09-30

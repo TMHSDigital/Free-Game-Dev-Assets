@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [gdshader, Godot]
+formats: [gdshader]
+delivery: [godot-project]
 tags: [shader, demos]
 added: 2026-07-19
 verified: 2026-07-19

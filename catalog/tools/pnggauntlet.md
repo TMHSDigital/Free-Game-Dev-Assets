@@ -7,7 +7,8 @@ subcategories: [compression, pipeline]
 license: custom
 commercial: true
 attribution_required: false
-formats: [desktop-app, PNG]
+formats: [PNG]
+delivery: [desktop-app]
 tags: [png, windows]
 added: 2026-09-30
 verified: 2026-10-04

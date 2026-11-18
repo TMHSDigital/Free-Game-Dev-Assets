@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [unreal-plugin, C++]
+formats: [C++]
+delivery: [unreal-plugin]
 tags: [unreal-engine, dialogue-graph, branching-dialogue, blueprint, narrative]
 ue_versions: "5.6-5.8"
 added: 2026-10-13

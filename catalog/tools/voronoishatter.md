@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [godot-addon]
+formats: []
+delivery: [godot-addon]
 tags: [fracture, debris, rigidbody]
 added: 2026-09-23
 verified: 2026-09-23

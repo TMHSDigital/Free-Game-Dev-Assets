@@ -8,7 +8,8 @@ license: custom
 commercial: true
 attribution_required: true
 attribution_string: "Made using FMOD Studio by Firelight Technologies Pty Ltd."
-formats: [middleware]
+formats: []
+delivery: [middleware]
 tags: [audio]
 added: 2026-07-19
 verified: 2026-09-26

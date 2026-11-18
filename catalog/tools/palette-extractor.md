@@ -9,6 +9,7 @@ license_spdx: MIT
 commercial: true
 attribution_required: false
 formats: [gpl-palette, JSON, PNG]
+delivery: [web-app]
 tags: [browser, quantization]
 added: 2026-09-30
 verified: 2026-09-30

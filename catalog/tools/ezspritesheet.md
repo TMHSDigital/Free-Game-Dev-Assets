@@ -9,7 +9,8 @@ license_spdx: GPL-3.0-only
 commercial: true
 attribution_required: true
 attribution_string: "EzSpriteSheet <z64.me>"
-formats: [desktop-app, PNG]
+formats: [PNG]
+delivery: [desktop-app]
 tags: [spritesheet, webp, windows]
 added: 2026-09-30
 verified: 2026-10-04

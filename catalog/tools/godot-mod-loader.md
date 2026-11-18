@@ -8,7 +8,8 @@ license: CC0
 license_spdx: CC0-1.0
 commercial: true
 attribution_required: false
-formats: [godot-addon]
+formats: []
+delivery: [godot-addon]
 tags: [workshop]
 added: 2026-07-19
 verified: 2026-09-23

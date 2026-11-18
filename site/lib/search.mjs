@@ -41,7 +41,7 @@ export function searchFields(e, body = "") {
   const field = (text) => normalize(`${text} ${joinedCompounds(text)}`);
   return [
     field([e.name, e.publisher || "", ...(e.tags || [])].join(" ")),
-    field([e.license, e.category, PERSPECTIVE_SEARCH[e.camera_perspective] || "", ...(e.formats || []), ...(e.subcategories || [])].join(" ")),
+    field([e.license, e.category, PERSPECTIVE_SEARCH[e.camera_perspective] || "", ...(e.formats || []), ...(e.delivery || []), ...(e.subcategories || [])].join(" ")),
     field(e.summary || ""),
     body ? normalize(body) : "",
   ];
@@ -148,6 +148,10 @@ export function passesFilters(entry, state, formatGroups = {}, now = Date.now())
   if (state.perspective !== "any" && entry.camera_perspective !== state.perspective) return false;
   if (state.license !== "any" && entry.licenseFamily !== state.license) return false;
   if (state.engine && state.engine !== "any" && !worksInEngine(entry, state.engine)) return false;
+  if (state.delivery && state.delivery !== "any") {
+    const wanted = DELIVERY_GROUPS[state.delivery]?.delivery || [];
+    if (!(entry.delivery || []).some((d) => wanted.includes(d))) return false;
+  }
   if (state.format !== "any") {
     const wanted = formatGroups[state.format]?.formats || [];
     if (!(entry.formats || []).some((f) => wanted.includes(f))) return false;
@@ -161,14 +165,19 @@ export function passesFilters(entry, state, formatGroups = {}, now = Date.now())
  * ships is native to one (nativeEngines). Entries made for the chosen
  * engine sort first. Everything else is engine-agnostic and stays listed.
  *
- * `formats` are the engine-native formats: a project, addon, plugin or
- * shader that only that engine opens.
+ * `formats` are the engine-native values: a project, addon, plugin or
+ * shader that only that engine opens. They are matched against an entry's
+ * `formats` and `delivery` together (engineValues), since #97 moved the
+ * project, addon and plugin kinds into `delivery`.
  */
 export const ENGINES = {
-  godot: { label: "Godot", tags: ["godot", "godot-4"], formats: ["Godot", "godot-addon", "gdextension", "gdshader"] },
-  unity: { label: "Unity", tags: ["unity"], formats: ["Unity"] },
-  unreal: { label: "Unreal Engine", tags: ["unreal-engine", "unreal"], formats: ["Unreal", "unreal-plugin"] },
+  godot: { label: "Godot", tags: ["godot"], formats: ["godot-project", "godot-addon", "gdextension", "gdshader"] },
+  unity: { label: "Unity", tags: ["unity"], formats: ["unity-package"] },
+  unreal: { label: "Unreal Engine", tags: ["unreal-engine"], formats: ["unreal-project", "unreal-plugin"] },
 };
+
+/** An entry's formats and delivery kinds, the values engine matching reads. */
+const engineValues = (entry) => [...(entry.formats || []), ...(entry.delivery || [])];
 
 /**
  * Formats that ride along with an engine-native one without making an entry
@@ -185,7 +194,7 @@ const ENGINE_COMPANION_FORMATS = new Set(["C++", "desktop-app"]);
  * usable anywhere, while [gdshader, Godot] is a Godot project.
  */
 export function nativeEngines(entry) {
-  const formats = entry.formats || [];
+  const formats = engineValues(entry);
   const engines = Object.keys(ENGINES).filter((k) => formats.some((f) => ENGINES[k].formats.includes(f)));
   if (!engines.length) return [];
   if (formats.some((f) => ["godot-addon", "gdextension", "unreal-plugin"].includes(f))) return engines;
@@ -206,7 +215,7 @@ export function engineRank(entry, engine) {
   const e = ENGINES[engine];
   if (!e) return 0;
   if (entry.engine_lock === engine) return 0;
-  if ((entry.formats || []).some((f) => e.formats.includes(f))) return 0;
+  if (engineValues(entry).some((f) => e.formats.includes(f))) return 0;
   return (entry.tags || []).some((t) => e.tags.includes(t)) ? 0 : 1;
 }
 
@@ -296,6 +305,23 @@ export function gapIssueUrl(repo, query, categoryLabel = "") {
 }
 
 /**
+ * The Delivery filter's choices (#97): how a source reaches you, grouped from
+ * the `delivery` values in site/format-vocabulary.json (a test checks every
+ * value sits in exactly one group).
+ */
+export const DELIVERY_GROUPS = Object.freeze({
+  desktop: { label: "Desktop app", delivery: ["desktop-app"] },
+  web: { label: "Web app", delivery: ["web-app"] },
+  mobile: { label: "Mobile app", delivery: ["mobile-app"] },
+  cli: { label: "Command line", delivery: ["cli"] },
+  library: { label: "Code library or middleware", delivery: ["library", "npm-package", "middleware"] },
+  godot: { label: "Godot addon or project", delivery: ["godot-addon", "gdextension", "godot-project"] },
+  unreal: { label: "Unreal plugin or project", delivery: ["unreal-plugin", "unreal-project"] },
+  unity: { label: "Unity package", delivery: ["unity-package"] },
+  blender: { label: "Blender add-on", delivery: ["blender-extension"] },
+});
+
+/**
  * Every catalog filter, in the order the URL writes them (#252). The page's
  * defaults, the URL keys, the controls it binds and syncs, and the chips
  * that show an active filter all come from here, so a new filter is one row
@@ -312,6 +338,10 @@ export const FILTERS = Object.freeze([
   { field: "perspective", urlKey: "view", kind: "choice", default: "any", control: "#perspective", chip: "view" },
   { field: "license", urlKey: "licence", kind: "choice", default: "any", control: "#license-family", chip: "licence" },
   { field: "format", urlKey: "format", kind: "choice", default: "any", control: "#format-group", chip: "format" },
+  {
+    field: "delivery", urlKey: "delivery", kind: "choice", default: "any", control: "#delivery", chip: "delivery",
+    options: Object.fromEntries(Object.entries(DELIVERY_GROUPS).map(([k, g]) => [k, g.label])),
+  },
   { field: "engine", urlKey: "engine", kind: "choice", default: "any", control: "#engine", chip: "engine" },
   {
     field: "fresh", urlKey: "fresh", kind: "choice", default: "any", control: "#fresh", chip: "licence read",

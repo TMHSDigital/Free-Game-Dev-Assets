@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [desktop-app, WAV, MIDI]
+formats: [WAV, MIDI]
+delivery: [desktop-app]
 tags: [sequencer, beginner-friendly, chiptune]
 added: 2026-09-26
 verified: 2026-09-26

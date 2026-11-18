@@ -7,7 +7,8 @@ subcategories: [painting]
 license: custom
 commercial: true
 attribution_required: false
-formats: [desktop-app]
+formats: []
+delivery: [desktop-app]
 tags: [layers, plugin, windows, raster]
 added: 2026-09-30
 verified: 2026-09-30

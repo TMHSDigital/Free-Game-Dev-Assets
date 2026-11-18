@@ -7,7 +7,8 @@ subcategories: [sample-projects, characters]
 license: custom
 commercial: true
 attribution_required: false
-formats: [Unreal]
+formats: []
+delivery: [unreal-project]
 tags: [unreal-engine, platformer, third-person, stylized, blueprint]
 publisher: Epic Games
 ue_versions: "5.0-5.8"

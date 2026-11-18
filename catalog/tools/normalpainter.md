@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [desktop-app, PNG]
+formats: [PNG]
+delivery: [desktop-app]
 tags: [normals, pixel, 2d, java]
 added: 2026-09-30
 verified: 2026-09-30

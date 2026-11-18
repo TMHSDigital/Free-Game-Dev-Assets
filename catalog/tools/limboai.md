@@ -8,7 +8,8 @@ license: MIT
 license_spdx: MIT
 commercial: true
 attribution_required: false
-formats: [godot-addon, gdextension]
+formats: []
+delivery: [godot-addon, gdextension]
 tags: [behavior-tree, ai, gdextension]
 added: 2026-08-24
 verified: 2026-08-24
