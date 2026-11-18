@@ -4,7 +4,8 @@ name: EzSpriteSheet
 url: https://github.com/z64me/EzSpriteSheet
 category: tools
 subcategories: [atlas, pipeline]
-license: GPL-3.0
+license: GPL-3.0-only
+license_spdx: GPL-3.0-only
 commercial: true
 attribution_required: true
 attribution_string: "EzSpriteSheet <z64.me>"
@@ -22,11 +23,11 @@ Sprite sheet packer by z64me. Point it at a folder and it packs, trims, rotates,
 ## Notes
 
 - Ambiguity 1, a credit on your product: the same `LICENSE.md` that names the GPL adds an "EULA" saying that if you use EzSpriteSheet to build something, "you agree" to credit `EzSpriteSheet <z64.me>` visibly in your product's credits. That is a condition on your game, not on the tool's code, and it sits oddly next to the GPL, which does not reach your packed sheets. Until the author clarifies, treat the credit as required. `attribution_required: true` reflects that clause, not the GPL
-- Ambiguity 2, the GPL version: the text says "GNU GPL3" without "only" or "or later", so no SPDX id is recorded
+- Recorded under the catalog convention (CONTRIBUTING, #95): a project that names a GPL version without saying "only" or "or later" is recorded as `-only`. The text says "GNU GPL3" without "only" or "or later"
 - The GPL covers the program. Sheets and metadata you export from your own art are your output. Redistributing a modified EzSpriteSheet is the GPL event. The paid "commercial license" is for reusing or rebranding its code, not for shipping games made with its output
 - The repository was last pushed on 2026-06-11, so it is not inactive
-- Still open on 2026-10-04: (1) whether the "EULA" credit clause is a binding condition on products built with the tool or a request, and how it squares with the GPL; (2) GPL3 "only" or "or later". `LICENSE.md` is unchanged and no source file of the project's own carries a licence header. Only the author can settle either point
-- Review: ask the author whether the EULA credit clause binds products built with the tool, and whether GPL3 means only or or-later.
+- Still open on 2026-10-04: whether the "EULA" credit clause is a binding condition on products built with the tool or a request, and how it squares with the GPL. `LICENSE.md` is unchanged and no source file of the project's own carries a licence header. Only the author can settle it
+- Review: ask the author whether the EULA credit clause binds products built with the tool.
 
 ## Evidence
 

@@ -25,7 +25,7 @@ file you take.
 | Field | Meaning |
 | :--- | :--- |
 | `license` | Licence as the source states it, from a closed vocabulary in [`site/license-vocabulary.json`](../site/license-vocabulary.json) (`CC0`, `CC-BY-4.0`, `SIL OFL`, `GPL-3.0-or-later`, `custom`, `varies`, and so on) |
-| `license_spdx` | The SPDX identifier, whenever the licence maps to exactly one. Absent when there is no single identifier: `custom`, `varies`, `unknown`, public domain, unversioned `CC-BY`, and GPL values that do not say `-only` or `-or-later` |
+| `license_spdx` | The SPDX identifier, whenever the licence maps to exactly one. Absent when there is no single identifier: `custom`, `varies`, `unknown`, public domain, unversioned `CC-BY`, and an unnumbered `BSD` |
 | `commercial` | `true`, `false`, `unknown` or `varies`. `varies` means per-file review; the site's Commercial OK filter still lists these, labelled **per-file review** |
 | `attribution_required` | `true`, `false` or `unknown`. For fonts, `false` means no credit line, not no obligation: see [`docs/fonts.md`](fonts.md) |
 | `attribution_string` | Copy-paste credit line, present when attribution is required |

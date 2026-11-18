@@ -30,13 +30,11 @@ export const PREVIEW_LICENSES = new Set([
   "Apache-2.0",
   "MPL-2.0",
   "SIL OFL",
-  "GPL-2.0",
   "GPL-2.0-only",
   "GPL-2.0-or-later",
-  "GPL-3.0",
   "GPL-3.0-only",
   "GPL-3.0-or-later",
-  "LGPL-3.0",
+  "LGPL-3.0-only",
   "CDLA-Permissive-2.0",
 ]);
 

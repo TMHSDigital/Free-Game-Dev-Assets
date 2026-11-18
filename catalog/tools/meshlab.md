@@ -4,7 +4,8 @@ name: MeshLab
 url: https://www.meshlab.net
 category: tools
 subcategories: [mesh, pipeline]
-license: GPL-3.0
+license: GPL-3.0-or-later
+license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [OBJ, PLY, glTF, 3MF]
@@ -24,7 +25,7 @@ ISTI-CNR Visual Computing Lab editor for triangle meshes: cleanup, hole fill, si
 - 2025.07 adds ARM64 Linux/macOS and 3mf. Microsoft Store build exists; store ToS is extra if you install from there
 - Filters can silently drop UVs or merge materials. Check the export dialog
 - Checklist: GPL file visible, commercial use of the *program* under GPL, no NC/ND, Store is optional, CNR lab, not blocklisted, tool vs mesh ownership unquoted
-- Version left as bare `GPL-3.0` deliberately. Source headers say "either version 2 of the License, or (at your option) any later version" while LICENSE.txt is the GPLv3 text, so the distribution is GPLv3 without an explicit election. Checked 2026-09-22; do not tighten this without a statement from the project.
+- Recorded as `-or-later` (#95): the project's own source headers grant "version 2 of the License, or (at your option) any later version", and the GPLv3 text it ships is a later version, so the distributed program may be used under GPLv3 or any later version. LICENSE.txt is the GPLv3 text.
 
 ## Evidence
 

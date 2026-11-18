@@ -142,6 +142,13 @@ rejects(
   checkLicenseVocabulary("bad.md", { license: "CC-BY 4.0" }, vocab),
   "not in site/license-vocabulary.json"
 );
+for (const bare of ["GPL-2.0", "GPL-3.0", "LGPL-3.0"]) {
+  rejects(
+    `V1 rejects the bare ${bare} value (#95: record -only or -or-later)`,
+    checkLicenseVocabulary("bad.md", { license: bare }, vocab),
+    "not in site/license-vocabulary.json"
+  );
+}
 rejects(
   "V1 rejects the OFL near-miss",
   checkLicenseVocabulary("bad.md", { license: "OFL" }, vocab),
@@ -179,14 +186,14 @@ rejects(
   "must not carry license_spdx"
 );
 rejects(
-  "V2 rejects guessing -only for a bare GPL value",
+  "V2 rejects guessing a clause count for a bare BSD value",
   checkSpdxConsistency(
     "bad.md",
-    { license: "GPL-3.0", license_spdx: "GPL-3.0-only" },
+    { license: "BSD", license_spdx: "BSD-3-Clause" },
     vocab,
     spdxAllowed
   ),
-  "deprecated the bare identifier"
+  "without a clause count"
 );
 accepts(
   "V2/V3 accept a correct pairing",
@@ -199,7 +206,7 @@ accepts(
 );
 accepts(
   "V3 accepts an absent SPDX on an ambiguous license",
-  checkSpdxConsistency("ok.md", { license: "GPL-3.0" }, vocab, spdxAllowed)
+  checkSpdxConsistency("ok.md", { license: "BSD" }, vocab, spdxAllowed)
 );
 
 /* V4 -------------------------------------------------------------------- */

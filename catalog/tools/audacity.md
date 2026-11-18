@@ -4,7 +4,8 @@ name: Audacity
 url: https://www.audacityteam.org
 category: tools
 subcategories: [audio-editing]
-license: GPL-3.0
+license: GPL-3.0-only
+license_spdx: GPL-3.0-only
 commercial: true
 attribution_required: false
 formats: [WAV, FLAC, OGG, MP3, AUP3]
@@ -24,7 +25,7 @@ Muse Group's audio editor (3.7.8 on 2026-08-24). GitHub `LICENSE.txt`: the app i
 - FAQ (2026-08-24) answers "Is Audacity free?" with "always remain free for everyone". That is price, not a second asset license
 - Extra MuseHub / cloud-saving terms were not fetched as a separate legal PDF on 2026-08-24. If you sign into Muse services, read those
 - Checklist: GPL text on GitHub, commercial use of the *program* under GPL, docs CC-BY, MuseHub is a storefront not an asset EULA, named company, not blocklisted, tool vs recording ownership split
-- Version left as bare `GPL-3.0` deliberately. The project says "licensed GPLv3" while noting most files are GPLv2-or-later, and VST3-related code constrains the combined work, so no single SPDX identifier is stated. Checked 2026-09-22.
+- Recorded under the catalog convention (CONTRIBUTING, #95): a project that names a GPL version without saying "only" or "or later" is recorded as `-only`. The project says "licensed GPLv3"; many files are GPLv2-or-later, but the project makes no "or later" statement for the program as a whole.
 
 ## Evidence
 

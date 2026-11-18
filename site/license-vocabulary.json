@@ -23,24 +23,10 @@
     "GPL-2.0-or-later": { "spdx": "GPL-2.0-or-later", "attribution": "notice" },
     "GPL-3.0-only": { "spdx": "GPL-3.0-only", "attribution": "notice" },
     "GPL-3.0-or-later": { "spdx": "GPL-3.0-or-later", "attribution": "notice" },
-    "LGPL-3.0": {
-      "spdx": null,
-      "spdx_ambiguous": "The project ships the LGPL v3 text without saying 'only' or 'or later'. Record LGPL-3.0-only or LGPL-3.0-or-later instead once the project states which.",
-      "attribution": "notice"
-    },
+    "LGPL-3.0-only": { "spdx": "LGPL-3.0-only", "attribution": "notice" },
     "BSD": {
       "spdx": null,
       "spdx_ambiguous": "The project says 'BSD license' without a clause count or licence file. Record BSD-2-Clause or BSD-3-Clause instead once the project ships the text.",
-      "attribution": "notice"
-    },
-    "GPL-2.0": {
-      "spdx": null,
-      "spdx_ambiguous": "SPDX deprecated the bare identifier. The project is either GPL-2.0-only or GPL-2.0-or-later and this value does not say which. Read the project's own statement, then record the precise license value instead of this one.",
-      "attribution": "notice"
-    },
-    "GPL-3.0": {
-      "spdx": null,
-      "spdx_ambiguous": "SPDX deprecated the bare identifier. The project is either GPL-3.0-only or GPL-3.0-or-later and this value does not say which. Read the project's own statement, then record the precise license value instead of this one.",
       "attribution": "notice"
     },
     "SIL OFL": {
@@ -79,7 +65,7 @@
     "public-domain": { "label": "CC0 / public domain", "licenses": ["CC0", "Unlicense", "public-domain"] },
     "cc-by": { "label": "CC-BY (credit)", "licenses": ["CC-BY", "CC-BY-3.0", "CC-BY-4.0"] },
     "permissive": { "label": "Permissive (MIT, Apache, BSD, OFL)", "licenses": ["MIT", "ISC", "Apache-2.0", "BSD", "BSD-2-Clause", "BSD-3-Clause", "BSD-3-Clause-Clear", "SIL OFL", "CDLA-Permissive-2.0", "CPL-1.0"] },
-    "copyleft": { "label": "Copyleft (GPL, MPL, ODbL)", "licenses": ["GPL-2.0", "GPL-2.0-only", "GPL-2.0-or-later", "GPL-3.0", "GPL-3.0-only", "GPL-3.0-or-later", "LGPL-3.0", "MPL-2.0", "ODbL"] },
+    "copyleft": { "label": "Copyleft (GPL, MPL, ODbL)", "licenses": ["GPL-2.0-only", "GPL-2.0-or-later", "GPL-3.0-only", "GPL-3.0-or-later", "LGPL-3.0-only", "MPL-2.0", "ODbL"] },
     "custom": { "label": "Publisher's own terms", "licenses": ["custom"] },
     "mixed": { "label": "Varies or unknown", "licenses": ["varies", "unknown"] }
   },

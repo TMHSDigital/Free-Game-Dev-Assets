@@ -34,26 +34,26 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | ID | Name | License | Status |
 | --- | --- | --- | --- |
 | [blender](blender.md) | Blender | GPL-2.0-or-later | active |
-| [blockbench](blockbench.md) | Blockbench | GPL-3.0 | active |
+| [blockbench](blockbench.md) | Blockbench | GPL-3.0-only | active |
 | [ldtk](ldtk.md) | LDtk | MIT | active |
 | [tiled](tiled.md) | Tiled Map Editor | GPL-2.0-or-later | active |
 | [pixelorama](pixelorama.md) | Pixelorama | MIT | active |
 | [material-maker](material-maker.md) | Material Maker | MIT | active |
 | [gaea](gaea.md) | Gaea Community Edition | custom | active |
 | [accurig](accurig.md) | AccuRig (Reallusion) | custom | active |
-| [krita](krita.md) | Krita | GPL-3.0 | active |
+| [krita](krita.md) | Krita | GPL-3.0-or-later | active |
 | [inkscape](inkscape.md) | Inkscape | GPL-3.0-or-later | active |
 | [tenacity](tenacity.md) | Tenacity | GPL-2.0-or-later | active |
 | [jsfxr](jsfxr.md) | jsfxr | Unlicense | active |
 | [chiptone](chiptone.md) | ChipTone | CC0 | active |
 | [gimp](gimp.md) | GIMP | GPL-3.0-or-later | active |
-| [libresprite](libresprite.md) | LibreSprite | GPL-2.0 | active |
+| [libresprite](libresprite.md) | LibreSprite | GPL-2.0-only | active |
 | [goxel](goxel.md) | Goxel | GPL-3.0-or-later | active |
-| [materialize](materialize.md) | Materialize | GPL-3.0 | active |
+| [materialize](materialize.md) | Materialize | GPL-3.0-only | active |
 | [lmms](lmms.md) | LMMS | GPL-2.0-or-later | active |
 | [bfxr](bfxr.md) | Bfxr | MIT | active |
 | [sfxr](sfxr.md) | sfxr | MIT | active |
-| [audacity](audacity.md) | Audacity | GPL-3.0 | active |
+| [audacity](audacity.md) | Audacity | GPL-3.0-only | active |
 | [blender-cell-fracture](blender-cell-fracture.md) | Cell Fracture (Blender extension) | GPL-3.0-or-later | active |
 | [godot-engine](godot-engine.md) | Godot Engine | MIT | active |
 | [trenchbroom](trenchbroom.md) | TrenchBroom | GPL-3.0-or-later | active |
@@ -62,7 +62,7 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [bosca-ceoil-blue](bosca-ceoil-blue.md) | Bosca Ceoil Blue | MIT | active |
 | [furnace](furnace.md) | Furnace | GPL-2.0-or-later | active |
 | [openmpt](openmpt.md) | OpenMPT | BSD-3-Clause | active |
-| [synfig](synfig.md) | Synfig Studio | GPL-3.0 | active |
+| [synfig](synfig.md) | Synfig Studio | GPL-3.0-or-later | active |
 | [opentoonz](opentoonz.md) | OpenToonz | BSD-3-Clause | active |
 | [pencil2d](pencil2d.md) | Pencil2D | GPL-2.0-only | active |
 | [dn-famitracker](dn-famitracker.md) | Dn-FamiTracker | GPL-3.0-or-later | active |
@@ -103,13 +103,13 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [quadriflow](quadriflow.md) | QuadriFlow | BSD-3-Clause | active |
 | [meshroom](meshroom.md) | Meshroom | MPL-2.0 | active |
 | [colmap](colmap.md) | COLMAP | BSD-3-Clause | active |
-| [meshlab](meshlab.md) | MeshLab | GPL-3.0 | active |
+| [meshlab](meshlab.md) | MeshLab | GPL-3.0-or-later | active |
 | [cloudcompare](cloudcompare.md) | CloudCompare | GPL-2.0-or-later | active |
 | [xnormal](xnormal.md) | xNormal | custom | active |
-| [cheetah-texture-packer](cheetah-texture-packer.md) | Cheetah Texture Packer | LGPL-3.0 | needs-review |
-| [ezspritesheet](ezspritesheet.md) | EzSpriteSheet | GPL-3.0 | needs-review |
+| [cheetah-texture-packer](cheetah-texture-packer.md) | Cheetah Texture Packer | LGPL-3.0-only | active |
+| [ezspritesheet](ezspritesheet.md) | EzSpriteSheet | GPL-3.0-only | needs-review |
 | [gdx-texture-packer-gui](gdx-texture-packer-gui.md) | GDX Texture Packer GUI | Apache-2.0 | active |
-| [imagealpha](imagealpha.md) | ImageAlpha | GPL-2.0 | active |
+| [imagealpha](imagealpha.md) | ImageAlpha | GPL-2.0-only | active |
 | [pnggauntlet](pnggauntlet.md) | PNGGauntlet | custom | active |
 | [pngyu](pngyu.md) | Pngyu | BSD | needs-review |
 | [snowb-bmf](snowb-bmf.md) | SnowB Bitmap Font | MIT | active |

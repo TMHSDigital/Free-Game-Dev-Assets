@@ -4,7 +4,8 @@ name: Blockbench
 url: https://www.blockbench.net
 category: tools
 subcategories: [modeling, animation]
-license: GPL-3.0
+license: GPL-3.0-only
+license_spdx: GPL-3.0-only
 commercial: true
 attribution_required: false
 formats: [glTF, BBMODEL]
@@ -22,7 +23,7 @@ Lightweight low-poly modeling / UV / animation editor. Ideal companion to Kenney
 
 - Source: [github.com/JannisX11/blockbench](https://github.com/JannisX11/blockbench). LICENSE file path 404 as `LICENSE` / `LICENSE.md` on 2026-08-24; SPDX metadata and homepage GPL sentence are the evidence
 - Exports glTF and `.bbmodel`. Keep `.bbmodel` as working file; ship glTF
-- Version left as bare `GPL-3.0` deliberately. The repository ships the stock GPLv3 text with no "or later" election of its own. Checked 2026-09-22; do not tighten this without a statement from the project.
+- Recorded under the catalog convention (CONTRIBUTING, #95): a project that names a GPL version without saying "only" or "or later" is recorded as `-only`. The repository ships the stock GPLv3 text with no "or later" election of its own.
 
 ## Evidence
 

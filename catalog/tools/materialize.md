@@ -4,7 +4,8 @@ name: Materialize
 url: https://boundingboxsoftware.com/materialize/
 category: tools
 subcategories: [textures, pbr, baker]
-license: GPL-3.0
+license: GPL-3.0-only
+license_spdx: GPL-3.0-only
 commercial: true
 attribution_required: false
 formats: [PNG, TGA]
@@ -25,7 +26,7 @@ Standalone Bounding Box Software tool that builds a PBR set from a photo: height
 - Clipboard/XML automation exists for batch open/save. Useful for folder dumps, easy to accidentally process third-party textures whose licenses you do not have
 - Prefer this when you already own a photo. Prefer [ambientcg](../3d/ambientcg.md) / [cgbookcase](../3d/cgbookcase.md) when you need a ready CC0 stack
 - FAQ fetched on 2026-08-24 is install troubleshooting only. No output-ownership FAQ line
-- Version left as bare `GPL-3.0` deliberately. The repository ships the stock GPLv3 text with no election of its own. Checked 2026-09-22.
+- Recorded under the catalog convention (CONTRIBUTING, #95): a project that names a GPL version without saying "only" or "or later" is recorded as `-only`. The repository ships the stock GPLv3 text with no election of its own.
 
 ## Evidence
 

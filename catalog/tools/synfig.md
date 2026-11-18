@@ -4,7 +4,8 @@ name: Synfig Studio
 url: https://www.synfig.org/
 category: tools
 subcategories: [animation, vectors]
-license: GPL-3.0
+license: GPL-3.0-or-later
+license_spdx: GPL-3.0-or-later
 commercial: true
 attribution_required: false
 formats: [desktop-app]
@@ -20,7 +21,7 @@ Vector 2D animation program built around tweening: you set keyframes and Synfig 
 
 ## Notes
 
-- **Version wording:** the site and README say GPL v3, and the repository `LICENSE` is the GPLv3 text, but the source headers read (for example `synfig-studio/src/gui/main.cpp`) say "version 2 of the License, or (at your option) any later version". The project-level statement is GPLv3 without an "or later", so this entry keeps the bare `GPL-3.0`
+- **Version wording:** the site and README say GPL v3 and the repository `LICENSE` is the GPLv3 text, while the source headers (for example `synfig-studio/src/gui/main.cpp`) say "version 2 of the License, or (at your option) any later version". Recorded as `-or-later` (#95): the GPLv3 text it ships is a later version, so the distributed program may be used under GPLv3 or any later version.
 - The GPL covers the program. Animations and rendered frames you make are your own work
 - Filed in `tools/` with [krita](krita.md) and [pixelorama](pixelorama.md), the other general 2D art and animation editors; `animation/` holds clips and capture tools
 

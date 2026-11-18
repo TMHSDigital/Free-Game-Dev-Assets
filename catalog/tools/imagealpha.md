@@ -4,7 +4,8 @@ name: ImageAlpha
 url: https://pngmini.com
 category: tools
 subcategories: [compression, pipeline]
-license: GPL-2.0
+license: GPL-2.0-only
+license_spdx: GPL-2.0-only
 commercial: true
 attribution_required: false
 formats: [desktop-app, PNG]
@@ -23,7 +24,7 @@ macOS GUI for pngquant, pngnq and posterizer by Kornel Lesiński. It converts 24
 
 - Maintenance: the GitHub repository kornelski/ImageAlpha is archived, with the last push on 2019-07-04, per the GitHub API on 2026-09-30.
 - The GPL covers the application. PNGs you convert are your own images, and the GPL does not reach them. The bundled pngquant executable carries its own licence (current pngquant is GPL-3.0-or-later), which only matters if you redistribute the tool
-- The project says "GPL v2" without "only" or "or later", so no SPDX id is recorded
+- Recorded under the catalog convention (CONTRIBUTING, #95): a project that names a GPL version without saying "only" or "or later" is recorded as `-only`. The project says "GPL v2"
 - Unmaintained Python/PyObjC app. Compatibility with current macOS releases was not tested this session. The `pngquant` CLI does the same job on any OS
 
 ## Evidence

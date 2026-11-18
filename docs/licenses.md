@@ -75,8 +75,8 @@ Most `tools/` entries and many libraries carry one of these. They all allow comm
 
 | License | Commercial use | Notes |
 | --- | --- | --- |
-| **GPL-2.0-only**, **GPL-2.0-or-later**, **GPL-3.0-only**, **GPL-3.0-or-later** | Yes | Strong copyleft on the program. Linking GPL code into your game makes the game GPL. Using a GPL editor does not, as the section below explains. The bare **GPL-2.0** and **GPL-3.0** values mean the project did not say "only" or "or later". App stores and consoles: see [shipping](shipping.md). |
-| **LGPL-3.0** | Yes | You may link the library from closed code if users can replace it, which in practice means dynamic linking. Changes to the library itself stay LGPL. The Unreal Engine EULA forbids combining LGPL code with the engine; see [unreal.md](unreal.md). Consoles that allow no relinking cannot meet this; see [shipping](shipping.md). |
+| **GPL-2.0-only**, **GPL-2.0-or-later**, **GPL-3.0-only**, **GPL-3.0-or-later** | Yes | Strong copyleft on the program. Linking GPL code into your game makes the game GPL. Using a GPL editor does not, as the section below explains. A project that names a GPL version without saying "only" or "or later" is recorded as **-only** (CONTRIBUTING). App stores and consoles: see [shipping](shipping.md). |
+| **LGPL-3.0-only** | Yes | You may link the library from closed code if users can replace it, which in practice means dynamic linking. Changes to the library itself stay LGPL. The Unreal Engine EULA forbids combining LGPL code with the engine; see [unreal.md](unreal.md). Consoles that allow no relinking cannot meet this; see [shipping](shipping.md). |
 
 ## How to read a `custom`, `varies` or `unknown` entry
 
