@@ -537,7 +537,10 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
       ticking = false;
       syncSpy();
       const btn = $("#to-top");
-      if (btn) btn.hidden = window.scrollY < 600;
+      const controls = $(".controls")?.getBoundingClientRect();
+      // Keep the button out of the way while search or filters are on screen.
+      const controlsVisible = controls && controls.top < window.innerHeight && controls.bottom > 0;
+      if (btn) btn.hidden = window.scrollY < 600 || !!controlsVisible;
     });
   }
 
@@ -797,6 +800,7 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
     toggle.addEventListener("click", () => {
       const open = controls.classList.toggle("is-collapsed") === false;
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      onScroll();
     });
 
     // On wider screens the bar stays sticky, and unfolded it covered about
@@ -841,6 +845,7 @@ import { isListed, PERSPECTIVES } from "./shared.mjs";
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
+    onScroll();
 
     // "/" focuses search, Escape leaves it. Suppressed whenever the user is
     // already typing somewhere.
