@@ -34,7 +34,7 @@ To remove yours, or to suggest a better image, open a [Correction](https://githu
 
 ## List your own work
 
-You are welcome to add your own sources. Say that you publish it, write the entry as a third party would (facts your page states, no comparisons or ranking language), and start it at `needs-review` so a maintainer re-reads the licence before it goes `active`. A free tier of a paid product is listed as the free tier only. The [New source](https://github.com/TMHSDigital/Free-Game-Dev-Assets/issues/new?template=new-source.yml) form has a box to say you are the publisher.
+You are welcome to add your own sources. Say that you publish it, write the entry as a third party would (facts your page states, no comparisons or ranking language), and start it at `needs-review` so a maintainer re-reads the licence before it goes `active`. A free tier of a paid product is listed as the free tier only, and it has to be useful on its own: a few-file demo of a paid pack is not listed, while a free sampler of a dozen or more items on its own page is. The [New source](https://github.com/TMHSDigital/Free-Game-Dev-Assets/issues/new?template=new-source.yml) form has a box to say you are the publisher.
 
 Listing is free and cannot be bought. Sponsoring the project funds licence re-reads and the link check; it does not change an entry's position, `featured` flag, status, stack picks or wording. See [Funding and independence](../README.md#support) in the README.
 
