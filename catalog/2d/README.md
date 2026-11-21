@@ -124,6 +124,7 @@ two carry obligations the rest do not.
 | [twemoji](twemoji.md) | Twemoji | CC-BY-4.0 | yes | needs-review |
 | [noto-emoji](noto-emoji.md) | Noto Emoji | SIL OFL | yes | active |
 | [freedoom](freedoom.md) | Freedoom | BSD-3-Clause | yes | active |
+| [csaf-verdant-00-tileset-sampler](csaf-verdant-00-tileset-sampler.md) | CSAF Verdant 00 Tileset Sampler | custom | yes | needs-review |
 
 † Commercial OK with attribution + share-alike / GPL obligations on asset derivatives — see [`docs/high-risk.md`](../../docs/high-risk.md).  
 †† CC0 on SVG copyright; brand trademarks still apply — identify brands only.
