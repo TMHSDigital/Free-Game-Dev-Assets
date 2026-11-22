@@ -4,11 +4,11 @@
 
 **Free assets and tools for commercial games, with every licence read at its source.**
 
-[**Browse 458 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
+[**Browse 459 sources**](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)  ·  [Starter stacks](#starter-stacks)  ·  [Choose by job](#start-here)  ·  [Licences](#licences)  ·  [Contribute](#contributing)
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftmhsdigital.github.io%2FFree-Game-Dev-Assets%2F&up_message=live&down_message=down&label=website)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Pages](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Free-Game-Dev-Assets/pages.yml?label=pages)](https://github.com/TMHSDigital/Free-Game-Dev-Assets/actions/workflows/pages.yml)
-[![Sources](https://img.shields.io/badge/sources-458-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
+[![Sources](https://img.shields.io/badge/sources-459-informational)](https://tmhsdigital.github.io/Free-Game-Dev-Assets/)
 [![Site visits](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Ftmhs.goatcounter.com%2Fcounter%2FTOTAL.json&query=%24.count&label=site%20visits&color=informational)](https://tmhs.goatcounter.com/)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey.svg)](LICENSE)
 <br />
@@ -130,7 +130,7 @@ is a page on the site.
 
 ## Browse the catalog
 
-The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 458 entries
+The [website](https://tmhsdigital.github.io/Free-Game-Dev-Assets/) searches all 459 entries
 and filters them by category, licence, format, engine, commercial use, attribution, review
 status, 2D camera view and how recently the licence was read, sorted as you choose. Press `/` to search, and keep the sources you
 are weighing on a shortlist. Filtered views and individual entries have their own URLs, so you can send
@@ -138,7 +138,7 @@ someone exactly what you are looking at.
 
 | Category | Entries | Focus | Index |
 | :--- | ---: | :--- | :--- |
-| **3D** | 78 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
+| **3D** | 79 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
 | **Tools** | 138 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 | **2D** | 72 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
 | **Audio** | 38 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |

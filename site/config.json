@@ -7,7 +7,7 @@
     "siteUrl": "https://tmhsdigital.github.io/Free-Game-Dev-Assets/"
   },
   "heroExample": "kenney-1-bit-pack",
-  "expectedEntryCount": 461,
+  "expectedEntryCount": 462,
   "linkCheck": {
     "_comment": "Hosts that refuse scripted requests whatever the source's health (403/429 every week in the link report, #77). check-links lists their entries under 'Checked by hand' with the entry's verified date instead of 'Refused'. Remove a host when it starts answering.",
     "manualHosts": {
