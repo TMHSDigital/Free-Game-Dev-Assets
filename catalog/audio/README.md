@@ -63,7 +63,7 @@ you sell or redistribute the IR files as a standalone product.
 | [soundbible](soundbible.md) | SoundBible | varies | filter | per-item |
 | [dailysounds](dailysounds.md) | DailySounds | custom | yes | needs-review |
 | [soundza](soundza.md) | Soundza | custom | yes | needs-review |
-| [retro-fps-sfx](retro-fps-sfx.md) | Retro FPS SFX | custom (royalty-free; free 5-sound demo) | yes | needs-review |
+| [retro-fps-sfx](retro-fps-sfx.md) | Retro FPS SFX Sampler (Assetsmith) | custom | yes | needs-review |
 | [sfxmint](sfxmint.md) | SFXMint | CC0 | yes | needs-review |
 | [yetiancai-cozy-ui-sfx-lite](yetiancai-cozy-ui-sfx-lite.md) | Cozy UI SFX Free Lite (yetiancai) | custom | yes | needs-review |
 | [mutopia](mutopia.md) | Mutopia Project | varies | yes | per-item |
