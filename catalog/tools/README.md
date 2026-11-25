@@ -45,6 +45,7 @@ desktop, [sim-daltonism](sim-daltonism.md) is a live lens on macOS and iOS,
 | [inkscape](inkscape.md) | Inkscape | GPL-3.0-or-later | active |
 | [tenacity](tenacity.md) | Tenacity | GPL-2.0-or-later | active |
 | [jsfxr](jsfxr.md) | jsfxr | Unlicense | active |
+| [retro-sfx-lab](retro-sfx-lab.md) | Retro SFX Lab | CC0 | active |
 | [chiptone](chiptone.md) | ChipTone | CC0 | active |
 | [gimp](gimp.md) | GIMP | GPL-3.0-or-later | active |
 | [libresprite](libresprite.md) | LibreSprite | GPL-2.0-only | active |
