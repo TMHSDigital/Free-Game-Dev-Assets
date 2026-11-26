@@ -23,6 +23,7 @@ Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 ## What does not
 
 - Paid-only marketplaces with no free content worth listing
+- A free demo of a paid pack that is only a taste of it, such as a five-sound download on the paid product's page. A free sampler that can stand on its own as a small set is welcome, ideally on its own page; the samplers in the catalog so far carry 12 or more items (see [Submitting your own source](#submitting-your-own-source))
 - Broken or abandoned sources
 - Redistributed ZIP/GLB/WAV files of third-party work
 - GTA V / RDR2 extracts, FiveM MLO leaks, Tebex reuploads, and anonymous `fivem-props` dumps (see [`docs/fivem.md`](docs/fivem.md) and [`docs/high-risk.md`](docs/high-risk.md))
@@ -111,7 +112,7 @@ with no code.
 
 ## Submitting your own source
 
-Publishers are welcome to list their own work. Say so in the pull request, write the entry as a third party would (facts the source states, no comparisons with other entries, no ranking language), and start it at `needs-review` so a maintainer re-reads the licence before it goes `active`. A free tier of a paid product is listed as the free tier only, with the paid tier named in Notes and not linked as the entry's `url`. A one-time notice or upsell inside a tool is recorded in Notes as a fact.
+Publishers are welcome to list their own work. Say so in the pull request, write the entry as a third party would (facts the source states, no comparisons with other entries, no ranking language), and start it at `needs-review` so a maintainer re-reads the licence before it goes `active`. A free tier of a paid product is listed as the free tier only, with the paid tier named in Notes and not linked as the entry's `url`. The free tier has to be useful on its own: a few-file demo of a paid pack is not listed, while a sampler of a dozen or more items on its own page is. A one-time notice or upsell inside a tool is recorded in Notes as a fact.
 
 ## Preview images
 

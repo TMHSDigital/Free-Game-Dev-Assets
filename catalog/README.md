@@ -4,9 +4,9 @@ One markdown file per source under a category folder. To add one, run `npm run n
 
 | Category | Entries | Path | Focus |
 | --- | ---: | --- | --- |
-| 3D | 78 | [`3d/`](3d/) | Models, scans, PBR textures |
+| 3D | 79 | [`3d/`](3d/) | Models, scans, PBR textures |
 | Tools | 138 | [`tools/`](tools/) | Editors, pipeline, TTS, Godot add-ons |
-| 2D | 71 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
+| 2D | 72 | [`2d/`](2d/) | Sprites, UI, icons, palettes |
 | Audio | 38 | [`audio/`](audio/) | SFX, music, foley, IRs |
 | Characters | 31 | [`characters/`](characters/) | Generators & modular humanoids |
 | Fonts | 25 | [`fonts/`](fonts/) | OFL / commercial-ok type |
