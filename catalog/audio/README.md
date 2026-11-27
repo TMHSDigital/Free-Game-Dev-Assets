@@ -58,6 +58,7 @@ you sell or redistribute the IR files as a standalone product.
 | [freesound](freesound.md) | Freesound | varies | filter | per-item |
 | [budgetpixel-sfx](budgetpixel-sfx.md) | BudgetPixel Sound Effects | CC-BY-4.0 | yes | active |
 | [pulselite-ui-sfx](pulselite-ui-sfx.md) | PulseLite UI SFX (free sample) | CC-BY-4.0 | yes | active |
+| [circuit-ui-sfx-free-sample](circuit-ui-sfx-free-sample.md) | Circuit UI SFX Free Sample | CC0 | yes | active |
 | [octave-ui-sounds](octave-ui-sounds.md) | Octave | custom | yes | active |
 | [pacdv](pacdv.md) | PacDV Free Sound Effects | custom | unknown | needs-review |
 | [soundbible](soundbible.md) | SoundBible | varies | filter | per-item |
