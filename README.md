@@ -139,7 +139,7 @@ someone exactly what you are looking at.
 | Category | Entries | Focus | Index |
 | :--- | ---: | :--- | :--- |
 | **3D** | 79 | Models, scans, PBR textures and materials | [`catalog/3d/`](catalog/3d/) |
-| **Tools** | 138 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
+| **Tools** | 139 | Editors, pipeline, TTS, Godot add-ons | [`catalog/tools/`](catalog/tools/) |
 | **2D** | 72 | Sprites, tilesets, UI and HUD, icons, palettes | [`catalog/2d/`](catalog/2d/) |
 | **Audio** | 39 | SFX, music, foley, impulse responses | [`catalog/audio/`](catalog/audio/) |
 | **Characters** | 31 | Rigged packs, generators, modular humanoids | [`catalog/characters/`](catalog/characters/) |
